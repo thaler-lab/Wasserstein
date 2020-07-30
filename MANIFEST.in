@@ -1,0 +1,2 @@
+include wasserstein/*.hh wasserstein/internal/*.hh
+recursive-include boost *.hpp

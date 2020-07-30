@@ -1,4 +1,13 @@
 .DS_Store
 *.o
+*.so
 **/__pycache__
 .ipynb_checkpoints
+build/
+Wasserstein Testing.ipynb
+Wasserstein.sublime*
+Wasserstein.egg-info
+dist/
+clean.sh
+update_boost.sh
+boost/
