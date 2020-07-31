@@ -14,32 +14,30 @@ jobs:
   include:
 
     # test on linux
-    - name: "Test Python3.7 on Linux"
+    - name: Test Python3.7 on Linux
       stage: test
-      os: linux
       dist: bionic
       python: 3.7
 
     # test on linux
-    - name: "Test Python3.8 on Linux"
+    - name: Test Python3.8 on Linux
       stage: test
-      os: linux
       dist: bionic
       python: 3.8
 
     # test on Mac
-    - name: "Test on Mac"
+    - name: Test on Mac
       stage: test
       os: mac
       osx_image: xcode12
       language: shell
-      before_install:
-        - brew update > /dev/null
-        - brew upgrade python boost
-        - brew install libomp
+      before_install: |
+        brew update > /dev/null
+        brew upgrade python boost
+        brew install libomp
 
     # test on Windows
-    - name: "Test on Windows"
+    - name: Test on Windows
       stage: test
       os: windows
       language: shell
@@ -47,11 +45,12 @@ jobs:
         - choco install python --version 3.8.0
         - ln -s /c/Python38/python.exe /c/Python38/python3.exe
       env:
-        - PATH="/c/Python38:/c/Python38/Scripts:$PATH"
+        - PATH=/c/Python38:/c/Python38/Scripts:$PATH
 
     # deploy a source distribution
-    - name: "Deploy a source distribution"
+    - name: Deploy a source distribution
       stage: build
+      dist: bionic
       script: python3 setup.py sdist --formats=gztar
       after_success: |
         if [[ ! -z $TRAVIS_TAG ]]; then
@@ -59,42 +58,36 @@ jobs:
         fi
 
     # deploy on linux
-    - name: "Build wheels on Linux"
+    - name: Build wheels on Linux
       stage: build
-      os: linux
       dist: bionic
       services: docker
-      before_install:
-        - brew update > /dev/null
-        - sudo brew install python libomp
       script: python3 -m cibuildwheel --output-dir wheelhouse
       after_success: |
         if [[ ! -z $TRAVIS_TAG ]]; then
           python3 -m twine upload --skip-existing wheelhouse/*.whl
         fi
       env:
-        - CIBW_BUILD="cp27-manylinux_x86_64 cp35-manylinux_x86_64 cp36-manylinux_x86_64 cp37-manylinux_x86_64 cp38-manylinux_x86_64"
+        - CIBW_BUILD=cp27-manylinux_x86_64 cp35-manylinux_x86_64 cp36-manylinux_x86_64 cp37-manylinux_x86_64 cp38-manylinux_x86_64
         - CIBW_MANYLINUX_X86_64_IMAGE=quay.io/pypa/manylinux2010_x86_64
 
     # deploy on mac
-    - name: "Build wheels on Mac"
+    - name: Build wheels on Mac
       stage: build
       os: mac
       osx_image: xcode12
       language: shell
-      before_install:
-        - brew update > /dev/null
-        - sudo brew install python libomp
+      before_install: brew install libomp
       script: python3 -m cibuildwheel --output-dir wheelhouse
       after_success: |
         if [[ ! -z $TRAVIS_TAG ]]; then
           python3 -m twine upload --skip-existing wheelhouse/*.whl
         fi
       env:
-        - CIBW_BUILD="cp27-macosx_x86_64 cp35-macosx_x86_64 cp36-macosx_x86_64 cp37-macosx_x86_64 cp38-macosx_x86_64"
+        - CIBW_BUILD=cp27-macosx_x86_64 cp35-macosx_x86_64 cp36-macosx_x86_64 cp37-macosx_x86_64 cp38-macosx_x86_64
 
     # deploy on windows
-    - name: "Build wheels on Windows"
+    - name: Build wheels on Windows
       stage: build
       os: windows
       language: shell
@@ -105,9 +98,11 @@ jobs:
           python3 -m twine upload --skip-existing wheelhouse/*.whl
         fi
       env:
-        - PATH="/c/Python38:/c/Python38/Scripts:$PATH"
-        - CIBW_BUILD="cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64"
+        - PATH=/c/Python38:/c/Python38/Scripts:$PATH
+        - CIBW_BUILD=cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64
 
 env:
   global:
     - TWINE_USERNAME=__token__
+    - CIBW_BEFORE_BUILD=pip3 install --upgrade numpy pytest
+    - CIBW_TEST_COMMAND=pytest {project}
