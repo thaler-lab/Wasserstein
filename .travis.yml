@@ -31,6 +31,7 @@ jobs:
 
     # deploy on windows
     - name: "Deploy on Windows"
+      stage: deploy
       os: windows
       language: shell
       script: python3 -m cibuildwheel --output-dir wheelhouse
@@ -40,6 +41,7 @@ jobs:
 
     # deploy on mac
     - name: "Deploy on Mac"
+      stage: deploy
       os: mac
       osx_image: xcode12
       language: shell
@@ -50,6 +52,7 @@ jobs:
 
     # deploy on linux
     - name: "Deploy on Linux"
+      stage: deploy
       services: docker
       arch: x86_64
       env:
