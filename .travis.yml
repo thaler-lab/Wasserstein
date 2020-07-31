@@ -11,6 +11,9 @@ stages:
   - build
 
 jobs:
+  exclude:
+    - os: mac
+      stage: test
   include:
 
     # test on linux
@@ -105,5 +108,6 @@ jobs:
 env:
   global:
     - TWINE_USERNAME=__token__
-    - CIBW_BEFORE_BUILD="pip install --upgrade numpy pytest"
-    - CIBW_TEST_COMMAND="pytest {project}""
+    - CIBW_BEFORE_BUILD="pip install --upgrade numpy"
+    - CIBW_TEST_REQUIRES=pytest
+    - CIBW_TEST_COMMAND="pytest {project}/tests"
