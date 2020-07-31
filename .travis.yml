@@ -110,4 +110,4 @@ env:
     - TWINE_USERNAME=__token__
     - CIBW_BEFORE_BUILD="pip install --upgrade numpy"
     - CIBW_TEST_REQUIRES=pytest
-    - CIBW_TEST_COMMAND="pytest {project}/tests"
+    - CIBW_TEST_COMMAND="pytest {project}"
