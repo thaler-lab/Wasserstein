@@ -22,6 +22,16 @@ jobs:
     # test on linux
     - name: "Test on Linux"
       stage: test
+      os: linux
+      script:
+        - python3 setup.py install
+        - pytest wasserstein
+
+    # test on Mac
+    - name: "Test on Mac"
+      stage: test
+      os: mac
+      osx_image: xcode12
       script:
         - python3 setup.py install
         - pytest wasserstein
