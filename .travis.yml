@@ -14,6 +14,8 @@ jobs:
   exclude:
     - os: mac
       stage: test
+    - stage: build
+      os: linux
   include:
 
     # test on linux
@@ -85,6 +87,7 @@ jobs:
       script: python3 -m cibuildwheel --output-dir wheelhouse
       after_success: |
         if [[ ! -z $TRAVIS_TAG ]]; then
+          python3 -m pip install --upgrade twine
           python3 -m twine upload --skip-existing wheelhouse/*.whl
         fi
       env:
@@ -98,9 +101,9 @@ jobs:
       before_install: choco install python --version 3.8.0
       script: python -m cibuildwheel --output-dir wheelhouse
       after_success: |
-        if [[ ! -z $TRAVIS_TAG ]]; then
+        if (Test-Path $Env:TRAVIS_TAG) {
           python3 -m twine upload --skip-existing wheelhouse/*.whl
-        fi
+        }
       env:
         - PATH=/c/Python38:/c/Python38/Scripts:$PATH
         - CIBW_BUILD="cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64"
@@ -108,6 +111,7 @@ jobs:
 env:
   global:
     - TWINE_USERNAME=__token__
+    - TRAVIS_TAG=v0.1.1
     - CIBW_BEFORE_BUILD="pip install --upgrade numpy"
     - CIBW_TEST_REQUIRES=pytest
     - CIBW_TEST_COMMAND="pytest {project}"
