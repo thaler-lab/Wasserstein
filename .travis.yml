@@ -33,7 +33,6 @@ jobs:
       language: shell
       before_install: |
         brew update > /dev/null
-        brew upgrade python boost
         brew install libomp
 
     # test on Windows
@@ -47,7 +46,7 @@ jobs:
       env:
         - PATH=/c/Python38:/c/Python38/Scripts:$PATH
 
-    # deploy a source distribution
+    # build a source distribution
     - name: Deploy a source distribution
       stage: build
       dist: bionic
@@ -57,7 +56,7 @@ jobs:
           python3 -m twine upload --skip-existing dist/*.tar.gz
         fi
 
-    # deploy on linux
+    # build on linux
     - name: Build wheels on Linux
       stage: build
       dist: bionic
@@ -68,25 +67,27 @@ jobs:
           python3 -m twine upload --skip-existing wheelhouse/*.whl
         fi
       env:
-        - CIBW_BUILD=cp27-manylinux_x86_64 cp35-manylinux_x86_64 cp36-manylinux_x86_64 cp37-manylinux_x86_64 cp38-manylinux_x86_64
+        - CIBW_BUILD="cp27-manylinux_x86_64 cp35-manylinux_x86_64 cp36-manylinux_x86_64 cp37-manylinux_x86_64 cp38-manylinux_x86_64"
         - CIBW_MANYLINUX_X86_64_IMAGE=quay.io/pypa/manylinux2010_x86_64
 
-    # deploy on mac
+    # build on mac
     - name: Build wheels on Mac
       stage: build
       os: mac
       osx_image: xcode12
       language: shell
-      before_install: brew install libomp
+      before_install: |
+        brew update > /dev/null
+        brew install libomp
       script: python3 -m cibuildwheel --output-dir wheelhouse
       after_success: |
         if [[ ! -z $TRAVIS_TAG ]]; then
           python3 -m twine upload --skip-existing wheelhouse/*.whl
         fi
       env:
-        - CIBW_BUILD=cp27-macosx_x86_64 cp35-macosx_x86_64 cp36-macosx_x86_64 cp37-macosx_x86_64 cp38-macosx_x86_64
+        - CIBW_BUILD="cp27-macosx_x86_64 cp35-macosx_x86_64 cp36-macosx_x86_64 cp37-macosx_x86_64 cp38-macosx_x86_64"
 
-    # deploy on windows
+    # build on windows
     - name: Build wheels on Windows
       stage: build
       os: windows
@@ -99,10 +100,10 @@ jobs:
         fi
       env:
         - PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - CIBW_BUILD=cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64
+        - CIBW_BUILD="cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64"
 
 env:
   global:
     - TWINE_USERNAME=__token__
-    - CIBW_BEFORE_BUILD=pip3 install --upgrade numpy pytest
-    - CIBW_TEST_COMMAND=pytest {project}
+    - CIBW_BEFORE_BUILD="pip install --upgrade numpy pytest"
+    - CIBW_TEST_COMMAND="pytest {project}""
