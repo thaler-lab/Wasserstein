@@ -16,6 +16,8 @@ jobs:
       stage: test
     - stage: build
       os: linux
+    - stage: build
+      os: macos
   include:
 
     # test on linux
@@ -101,9 +103,10 @@ jobs:
       before_install: choco install python --version 3.8.0
       script: python -m cibuildwheel --output-dir wheelhouse
       after_success: |
-        if (Test-Path $Env:TRAVIS_TAG) {
-          python3 -m twine upload --skip-existing wheelhouse/*.whl
-        }
+        if [ ! -z $TRAVIS_TAG ]; then
+          python -m pip install --upgrade twine
+          python -m twine upload --skip-existing wheelhouse/*.whl
+        fi
       env:
         - PATH=/c/Python38:/c/Python38/Scripts:$PATH
         - CIBW_BUILD="cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64"
