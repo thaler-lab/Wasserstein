@@ -36,7 +36,7 @@ jobs:
       script: python3 -m cibuildwheel --output-dir wheelhouse
       after_success: python3 -m twine upload --skip-existing wheelhouse/*.whl
       env:
-        - CIBW_BUILD="cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64"
+        - CIBW_BUILD="cp27-win_amd64 cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64"
 
     # deploy on mac
     - name: "Deploy on Mac"
