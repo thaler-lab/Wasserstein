@@ -11,27 +11,22 @@ stages:
   - name: deploy
     if: tag IS PRESENT AND repo = pkomiske/Wasserstein
 
-dist:
-  - xenial
-  - bionic
+python:
+  - 3.6
+  - 3.7
+  - 3.8
 
 jobs:
   exclude:
-
-    # ensure that the Linux distros are only deployed once
-    - stage: deploy
-      dist: xenial
-
+    - os: linux
+    - os: windows
   include:
 
     # test on linux
     - name: "Test on Linux"
       stage: test
       os: linux
-      python:
-        - 3.6
-        - 3.7
-        - 3.8
+      dist: bionic
 
     # test on Mac
     - name: "Test on Mac"
@@ -41,7 +36,8 @@ jobs:
       language: shell
       before_install:
         - brew update > /dev/null
-        - sudo brew install python libomp
+        - brew upgrade 
+        - brew install python libomp
 
     # test on Windows
     - name: "Test on Windows"
@@ -60,17 +56,16 @@ jobs:
       script: python3 setup.py sdist --formats=gztar
       after_success: python3 -m twine upload --skip-existing dist/*.tar.gz
 
-    # deploy on windows
-    - name: "Deploy on Windows"
+    # deploy on linux
+    - name: "Deploy on Linux"
       stage: deploy
-      os: windows
-      language: shell
-      before_install: choco install python --version 3.8.0
-      script: python -m cibuildwheel --output-dir wheelhouse
-      after_success: python -m twine upload --skip-existing wheelhouse/*.whl
+      os: linux
+      dist: bionic
+      services: docker
+      arch: x86_64
       env:
-        - PATH="/c/Python38:/c/Python38/Scripts:$PATH"
-        - CIBW_BUILD="cp27-win_amd64 cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64"
+        - CIBW_BUILD="cp27-manylinux_x86_64 cp35-manylinux_x86_64 cp36-manylinux_x86_64 cp37-manylinux_x86_64 cp38-manylinux_x86_64"
+        - CIBW_MANYLINUX_X86_64_IMAGE=quay.io/pypa/manylinux2010_x86_64
 
     # deploy on mac
     - name: "Deploy on Mac"
@@ -86,14 +81,17 @@ jobs:
       env:
         - CIBW_BUILD="cp27-macosx_x86_64 cp35-macosx_x86_64 cp36-macosx_x86_64 cp37-macosx_x86_64 cp38-macosx_x86_64"
 
-    # deploy on linux
-    - name: "Deploy on Linux"
+    # deploy on windows
+    - name: "Deploy on Windows"
       stage: deploy
-      services: docker
-      arch: x86_64
+      os: windows
+      language: shell
+      before_install: choco install python --version 3.8.0
+      script: python -m cibuildwheel --output-dir wheelhouse
+      after_success: python -m twine upload --skip-existing wheelhouse/*.whl
       env:
-        - CIBW_BUILD="cp27-manylinux_x86_64 cp35-manylinux_x86_64 cp36-manylinux_x86_64 cp37-manylinux_x86_64 cp38-manylinux_x86_64"
-        - CIBW_MANYLINUX_X86_64_IMAGE=quay.io/pypa/manylinux2010_x86_64
+        - PATH="/c/Python38:/c/Python38/Scripts:$PATH"
+        - CIBW_BUILD="cp27-win_amd64 cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64"
 
 env:
   global:
