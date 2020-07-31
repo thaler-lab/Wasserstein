@@ -27,6 +27,7 @@
 #define EVENTGEOMETRY_EMDUTILS_HH
 
 #include <sstream>
+#include <string>
 #include <type_traits>
 
 #include "wasserstein/internal/EventGeometryUtils.hh"
@@ -115,12 +116,12 @@ struct EuclideanParticle2D {
     return dx*dx + dy*dy;
   }
 
-  static const char * name() {
+  static std::string name() {
     std::ostringstream oss;
     oss << "EuclideanParticle2D<" << sizeof(V) << "-byte float>";
-    return oss.str().c_str();
+    return oss.str();
   }
-  static const char * distance_name() { return "EuclideanDistance2D"; }
+  static std::string distance_name() { return "EuclideanDistance2D"; }
 };
 
 template<typename V = double>
@@ -138,12 +139,12 @@ struct EuclideanParticle3D {
     return dx*dx + dy*dy + dz*dz;
   }
 
-  static const char * name() {
+  static std::string name() {
     std::ostringstream oss;
     oss << "EuclideanParticle3D<" << sizeof(V) << "-byte float>";
-    return oss.str().c_str();
+    return oss.str();
   }
-  static const char * distance_name() { return "EuclideanDistance3D"; }
+  static std::string distance_name() { return "EuclideanDistance3D"; }
 };
 
 template<unsigned int N, typename V = double>
@@ -165,15 +166,15 @@ struct EuclideanParticleND {
     return d;
   }
 
-  static const char * name() {
+  static std::string name() {
     std::ostringstream oss;
     oss << "EuclideanParticle" << N << "D<" << sizeof(V) << "-byte float>";
-    return oss.str().c_str();
+    return oss.str();
   }
-  static const char * distance_name() {
+  static std::string distance_name() {
     std::ostringstream oss;
     oss << "EuclideaDistance" << N << 'D';
-    return oss.str().c_str();
+    return oss.str();
   }
 };
 

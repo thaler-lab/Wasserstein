@@ -1,15 +1,6 @@
 language: python
 
-before_install:
-  - |
-    if [[ "$TRAVIS_OS_NAME" = windows ]]; then
-        choco install python --version 3.8.0
-        export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
-        # make sure it's on PATH as 'python3'
-        ln -s /c/Python38/python.exe /c/Python38/python3.exe
-    fi
-
-install: python3 -m pip install --upgrade numpy pytest cibuildwheel twine
+install: pip3 install --upgrade numpy pytest cibuildwheel twine
 
 script:
   - python3 setup.py install
@@ -28,11 +19,9 @@ jobs:
       stage: test
       os: linux
       dist:
-        - trusty
         - xenial
         - bionic
       python:
-        - 2.7
         - 3.6
         - 3.7
         - 3.8
@@ -43,12 +32,16 @@ jobs:
       os: mac
       osx_image: xcode12
       language: shell
+      before_install: brew install python libomp
 
     # test on Windows
     - name: "Test on Windows"
       stage: test
       os: windows
       language: shell
+      before_install: choco install python --version 3.8.0
+      env:
+        - PATH="/c/Python38:/c/Python38/Scripts:$PATH"
 
     # deploy a source distribution
     - name: "Deploy a source distribution"
@@ -61,8 +54,8 @@ jobs:
       stage: deploy
       os: windows
       language: shell
-      script: python3 -m cibuildwheel --output-dir wheelhouse
-      after_success: python3 -m twine upload --skip-existing wheelhouse/*.whl
+      script: python -m cibuildwheel --output-dir wheelhouse
+      after_success: python -m twine upload --skip-existing wheelhouse/*.whl
       env:
         - CIBW_BUILD="cp27-win_amd64 cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64"
 
@@ -72,6 +65,7 @@ jobs:
       os: mac
       osx_image: xcode12
       language: shell
+      before_install: brew install python libomp
       script: python3 -m cibuildwheel --output-dir wheelhouse
       after_success: python3 -m twine upload --skip-existing wheelhouse/*.whl
       env:
@@ -97,9 +91,11 @@ jobs:
       stage: deploy
       os: windows
       language: shell
+      before_install: choco install python --version 3.8.0
       script: python3 -m cibuildwheel --output-dir wheelhouse
       after_success: python3 -m twine upload --skip-existing wheelhouse/*.whl
       env:
+        - PATH="/c/Python38:/c/Python38/Scripts:$PATH"
         - CIBW_BUILD="cp27-win_amd64 cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64"
 
     # deploy on mac
