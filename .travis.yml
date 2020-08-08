@@ -4,7 +4,7 @@ install: pip3 install --upgrade numpy pytest cibuildwheel twine
 
 script:
   - python3 setup.py install
-  - pytest wasserstein
+  - pytest -v wasserstein
 
 stages:
   - test
@@ -59,7 +59,7 @@ jobs:
       dist: bionic
       script: python3 setup.py sdist --formats=gztar
       after_success: |
-        if [[ ! -z $TRAVIS_TAG ]]; then
+        if [ ! -z $TRAVIS_TAG ]; then
           python3 -m twine upload --skip-existing dist/*.tar.gz
         fi
 
@@ -70,12 +70,11 @@ jobs:
       services: docker
       script: python3 -m cibuildwheel --output-dir wheelhouse
       after_success: |
-        if [[ ! -z $TRAVIS_TAG ]]; then
+        if [ ! -z $TRAVIS_TAG ]; then
           python3 -m twine upload --skip-existing wheelhouse/*.whl
         fi
       env:
-        - CIBW_BUILD="cp27-manylinux_x86_64 cp35-manylinux_x86_64 cp36-manylinux_x86_64 cp37-manylinux_x86_64 cp38-manylinux_x86_64"
-        - CIBW_MANYLINUX_X86_64_IMAGE=quay.io/pypa/manylinux2010_x86_64
+        - CIBW_BUILD="cp27-manylinux_x86_64 cp35-manylinux_x86_64 cp36-manylinux_x86_64 cp37-manylinux_x86_64 cp38-manylinux_x86_64" CIBW_MANYLINUX_X86_64_IMAGE=quay.io/pypa/manylinux2010_x86_64
 
     # build on mac
     - name: Build wheels on Mac
@@ -88,7 +87,7 @@ jobs:
         brew install libomp
       script: python3 -m cibuildwheel --output-dir wheelhouse
       after_success: |
-        if [[ ! -z $TRAVIS_TAG ]]; then
+        if [ ! -z $TRAVIS_TAG ]; then
           python3 -m pip install --upgrade twine
           python3 -m twine upload --skip-existing wheelhouse/*.whl
         fi
@@ -108,13 +107,15 @@ jobs:
           python -m twine upload --skip-existing wheelhouse/*.whl
         fi
       env:
-        - PATH=/c/Python38:/c/Python38/Scripts:$PATH
-        - CIBW_BUILD="cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64"
+        - PATH=/c/Python38:/c/Python38/Scripts:$PATH CIBW_BUILD="cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64"
 
 env:
   global:
     - TWINE_USERNAME=__token__
-    - TRAVIS_TAG=v0.1.1
     - CIBW_BEFORE_BUILD="pip install --upgrade numpy"
     - CIBW_TEST_REQUIRES=pytest
-    - CIBW_TEST_COMMAND="pytest {project}"
+    - CIBW_TEST_COMMAND="pytest -v {project}"
+
+branches:
+  only:
+    - master

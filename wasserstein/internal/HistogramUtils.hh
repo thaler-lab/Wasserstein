@@ -35,14 +35,14 @@
 #include <type_traits>
 #include <utility>
 
-#include "boost/histogram.hpp"
+#include <boost/histogram.hpp>
 
 #ifdef BOOST_HISTOGRAM_SERIALIZATION_HPP
-#include "boost/archive/text_iarchive.hpp"
-#include "boost/archive/text_oarchive.hpp"
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
 #endif
 
-#include "wasserstein/internal/EventGeometryUtils.hh"
+#include "EventGeometryUtils.hh"
 
 // use fastjet::contrib namespace if part of FastJet, otherwise emd namespace
 #ifdef __FASTJET_PSEUDOJET_HH__
@@ -137,7 +137,7 @@ inline std::string print_1d_hist(const Hist & hist) {
   std::ostringstream oss;
   oss << std::setprecision(16);
 
-  for (const auto & x : boost::histogram::indexed(hist, boost::histogram::coverage::all)) {
+  for (const auto && x : boost::histogram::indexed(hist, boost::histogram::coverage::all)) {
     const auto & wsum(*x);
     oss << x.index(0) << " : " << wsum.value() << ' ' << std::sqrt(wsum.variance()) << '\n';
   }

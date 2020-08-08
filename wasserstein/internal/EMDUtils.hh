@@ -30,7 +30,7 @@
 #include <string>
 #include <type_traits>
 
-#include "wasserstein/internal/EventGeometryUtils.hh"
+#include "EventGeometryUtils.hh"
 
 #ifdef __FASTJET_PSEUDOJET_HH__
 FASTJET_BEGIN_NAMESPACE

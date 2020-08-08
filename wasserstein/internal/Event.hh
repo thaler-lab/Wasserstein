@@ -34,7 +34,7 @@
 #include <type_traits>
 #include <vector>
 
-#include "wasserstein/internal/EMDUtils.hh"
+#include "EMDUtils.hh"
 
 #ifdef __FASTJET_PSEUDOJET_HH__
 FASTJET_BEGIN_NAMESPACE

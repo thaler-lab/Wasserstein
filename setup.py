@@ -12,21 +12,20 @@ import numpy as np
 with open(os.path.join('wasserstein', '__init__.py'), 'r') as f:
     __version__ = re.search(r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read()).group(1)
 
-omp_compile_args = ['-fopenmp']
-omp_link_args = ['-fopenmp']
-extra_objects = []
+cxxflags = ['-fopenmp', '-std=c++14']
+ldflags = ['-fopenmp']
+libs = []
 if platform.system() == 'Darwin':
-    omp_compile_args.insert(0, '-Xpreprocessor')
-    omp_link_args = ['-lomp']
-    #extra_objects = ['/usr/local/lib/libomp.a']
+    cxxflags.insert(0, '-Xpreprocessor')
+    del ldflags[0]
+    libs = ['omp']
 
 wasserstein = Extension('wasserstein._wasserstein',
                         sources=['wasserstein/wasserstein.cpp'],
                         include_dirs=[np.get_include(), '.'],
-                        extra_compile_args=['-std=c++14'] + omp_compile_args,
-                        extra_objects=extra_objects,
-                        extra_link_args=omp_link_args
-                        )
+                        extra_compile_args=cxxflags,
+                        extra_link_args=ldflags,
+                        libraries=libs)
 
 if sys.argv[1] == 'swig':
     command = 'swig -python -c++ -fastproxy -py3 -w511 -keyword -o wasserstein/wasserstein.cpp swig/wasserstein.i'

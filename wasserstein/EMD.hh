@@ -41,10 +41,10 @@
 #include <utility>
 #include <vector>
 
-#include "wasserstein/internal/Event.hh"
-#include "wasserstein/internal/Measures.hh"
-#include "wasserstein/internal/NetworkSimplex.hh"
-#include "wasserstein/internal/Preprocess.hh"
+#include "internal/Event.hh"
+#include "internal/Measures.hh"
+#include "internal/NetworkSimplex.hh"
+#include "internal/Preprocess.hh"
 
 // include omp.h if we're using OpenMP
 #ifdef _OPENMP
