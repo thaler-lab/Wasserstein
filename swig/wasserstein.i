@@ -87,14 +87,19 @@ import_array();
 
 %threadallow emd::PairwiseEMD::compute();
 
-%ignore check_emd_status;
+%ignore emd::check_emd_status;
 %ignore emd::EMD::compute;
 %ignore emd::EMD::_dists;
 %ignore emd::PairwiseEMD::compute(const EventVector & events);
 %ignore emd::PairwiseEMD::compute(const EventVector & eventsA, const EventVector & eventsB);
 %ignore emd::PairwiseEMD::events;
+%ignore emd::ArrayWeightCollection;
+%ignore emd::ArrayParticleCollection;
+%ignore emd::EuclideanParticle2D;
+%ignore emd::EuclideanParticle3D;
+%ignore emd::EuclideanParticleND;
 
-%include "internal/EventGeometryUtils.hh"
+%include "internal/EMDUtils.hh"
 
 #define SWIG_PREPROCESSOR
 %include "internal/HistogramUtils.hh"
