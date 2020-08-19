@@ -187,12 +187,13 @@ class vectorString(object):
 # Register vectorString in _wasserstein:
 _wasserstein.vectorString_swigregister(vectorString)
 
-Success = _wasserstein.Success
-Empty = _wasserstein.Empty
-SupplyMismatch = _wasserstein.SupplyMismatch
-Unbounded = _wasserstein.Unbounded
-MaxIterReached = _wasserstein.MaxIterReached
-Infeasible = _wasserstein.Infeasible
+EMDStatus_Success = _wasserstein.EMDStatus_Success
+EMDStatus_Empty = _wasserstein.EMDStatus_Empty
+EMDStatus_SupplyMismatch = _wasserstein.EMDStatus_SupplyMismatch
+EMDStatus_Unbounded = _wasserstein.EMDStatus_Unbounded
+EMDStatus_MaxIterReached = _wasserstein.EMDStatus_MaxIterReached
+EMDStatus_Infeasible = _wasserstein.EMDStatus_Infeasible
+phi_fix = _wasserstein.phi_fix
 ExtraParticle_Neither = _wasserstein.ExtraParticle_Neither
 ExtraParticle_Zero = _wasserstein.ExtraParticle_Zero
 ExtraParticle_One = _wasserstein.ExtraParticle_One
@@ -208,6 +209,9 @@ class ExternalEMDHandler(object):
 
 # Register ExternalEMDHandler in _wasserstein:
 _wasserstein.ExternalEMDHandler_swigregister(ExternalEMDHandler)
+cvar = _wasserstein.cvar
+PI = cvar.PI
+TWOPI = cvar.TWOPI
 
 class Histogram1DHandler(ExternalEMDHandler):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")

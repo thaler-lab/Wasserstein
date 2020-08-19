@@ -157,7 +157,7 @@ public:
     n0_(0), n1_(0),
     extra_(ExtraParticle::Neither),
     emd_(0),
-    status_(Empty),
+    status_(EMDStatus::Empty),
     do_timing_(do_timing),
     duration_(0)
   {}
@@ -212,8 +212,8 @@ public:
 
   // runs the computation on two events without any preprocessing
   // returns the status enum value from the network simplex solver:
-  //   - Success = 0
-  //   - Empty = 1
+  //   - EMDStatus::Success = 0
+  //   - EMDStatus::Empty = 1
   //   - SupplyMismatch = 2
   //   - Unbounded = 3
   //   - MaxIterReached = 4
@@ -265,7 +265,7 @@ public:
     // run the EarthMoversDistance at this point
     status_ = network_simplex_.compute(n0(), n1());
     emd_ = network_simplex_.total_cost();
-    if (status_ == Success) emd_ *= pairwise_distance_.unscale_factor();
+    if (status_ == EMDStatus::Success) emd_ *= pairwise_distance_.unscale_factor();
 
     // end timing and get duration
     if (do_timing_) store_duration();
@@ -715,7 +715,7 @@ private:
 
             // run and check for failure
             EMDStatus status(emd_obj.compute(events_[i], events_[nevA_ + j]));
-            if (status != Success) {
+            if (status != EMDStatus::Success) {
               std::lock_guard<std::mutex> failure_lock(failure_mutex);
               record_failure(status, i, j);
             }
@@ -732,7 +732,7 @@ private:
 
             // run and check for failure
             EMDStatus status(emd_obj.compute(events_[i], events_[j]));
-            if (status != Success) {
+            if (status != EMDStatus::Success) {
               std::lock_guard<std::mutex> failure_lock(failure_mutex);
               record_failure(status, i, j);
             }

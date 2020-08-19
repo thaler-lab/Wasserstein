@@ -128,7 +128,7 @@ SOFTWARE.
 #include <utility>
 #include <vector>
 
-#include "EventGeometryUtils.hh"
+#include "EMDUtils.hh"
 
 namespace lemon {
 
@@ -208,7 +208,7 @@ public:
     NetworkSimplexStatus status(run());
 
     // store total cost if network simplex had success
-    if (status == Success) {
+    if (status == EMDStatus::Success) {
       total_cost_ = 0;
       for (Arc a = 0; a < arcNum(); a++)
         total_cost_ += _flows[a] * _costs[a];
@@ -390,7 +390,7 @@ private:
     }
 
     // check for empty problem
-    if (nodeNum() == 0) return Empty;
+    if (nodeNum() == 0) return EMDStatus::Empty;
 
     // check supply total and make secondary supplies negative
     _sum_supplies = 0;
@@ -400,7 +400,7 @@ private:
       _sum_supplies += (_supplies[i] *= -1);
     if (std::fabs(_sum_supplies) > epsilon_large_) {
       std::cerr << "sum_supplies " << _sum_supplies << '\n';
-      return SupplyMismatch;
+      return EMDStatus::SupplyMismatch;
     }
     _sum_supplies = 0;
 
@@ -457,17 +457,17 @@ private:
     _block_size = std::max(Node(BLOCK_SIZE_FACTOR * std::sqrt(double(arcNum()))), MIN_BLOCK_SIZE);
 
     // perform heuristic initial pivots
-    if (!initialPivots()) return Unbounded;
+    if (!initialPivots()) return EMDStatus::Unbounded;
 
     // Execute the Network Simplex algorithm
     iter_ = 0;
     while (findEnteringArc()) {
       if (iter_++ >= n_iter_max_)
-        return MaxIterReached;
+        return EMDStatus::MaxIterReached;
 
       findJoinNode();
       bool change(findLeavingArc());
-      if (delta >= MAX) return Unbounded;
+      if (delta >= MAX) return EMDStatus::Unbounded;
       changeFlow(change);
       if (change) {
         updateTreeStructure();
@@ -480,13 +480,13 @@ private:
       if (_flows[e] != 0) {
         if (std::fabs(_flows[e]) > epsilon_large_) {
           std::cerr << "Bad flow: " << _flows[e] << '\n';
-          return Infeasible;
+          return EMDStatus::Infeasible;
         }
         else _flows[e] = 0;
       }
     }
 
-    return Success;
+    return EMDStatus::Success;
   }
 
   //---------------------------------------------------------------------------

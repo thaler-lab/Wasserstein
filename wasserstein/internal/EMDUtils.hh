@@ -31,7 +31,15 @@
 #include <string>
 #include <type_traits>
 
-#include "EventGeometryUtils.hh"
+// enum with possible return statuses from the NetworkSimplex solver
+enum class EMDStatus : char { 
+  Success = 0,
+  Empty = 1,
+  SupplyMismatch = 2,
+  Unbounded = 3,
+  MaxIterReached = 4,
+  Infeasible = 5
+};
 
 #ifdef __FASTJET_PSEUDOJET_HH__
 FASTJET_BEGIN_NAMESPACE
@@ -50,35 +58,25 @@ inline double phi_fix(double phi, double ref_phi) {
   return phi; 
 }
 
-// enum with possible return statuses from the NetworkSimplex solver
-enum EMDStatus : char { 
-  Success = 0,
-  Empty = 1,
-  SupplyMismatch = 2,
-  Unbounded = 3,
-  MaxIterReached = 4,
-  Infeasible = 5
-};
-
 // enum for which event got an extra particle
 enum class ExtraParticle : char { Neither = -1, Zero = 0, One = 1 };
 
 inline void check_emd_status(EMDStatus status) {
-  if (status != Success)
+  if (status != EMDStatus::Success)
     switch (status) {
-      case Empty:
+      case EMDStatus::Empty:
         throw std::runtime_error("EMDStatus - Empty");
         break;
-      case SupplyMismatch:
+      case EMDStatus::SupplyMismatch:
         throw std::runtime_error("EMDStatus - SupplyMismatch, consider increasing epsilon_large_factor");
         break;
-      case Unbounded:
+      case EMDStatus::Unbounded:
         throw std::runtime_error("EMDStatus - Unbounded");
         break;
-      case MaxIterReached:
+      case EMDStatus::MaxIterReached:
         throw std::runtime_error("EMDStatus - MaxIterReached, consider increasing n_iter_max");
         break;
-      case Infeasible:
+      case EMDStatus::Infeasible:
         throw std::runtime_error("EMDStatus - Infeasible");
         break;
       default:

@@ -42,7 +42,7 @@
 #include <boost/archive/text_oarchive.hpp>
 #endif
 
-#include "EventGeometryUtils.hh"
+#include "EMDUtils.hh"
 
 // use fastjet::contrib namespace if part of FastJet, otherwise emd namespace
 #ifdef __FASTJET_PSEUDOJET_HH__
