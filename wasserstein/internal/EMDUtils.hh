@@ -48,6 +48,9 @@ namespace contrib {
 namespace emd {
 #endif
 
+#ifndef PIPHIUTILS
+#define PIPHIUTILS
+
 const double PI = 3.14159265358979323846;
 const double TWOPI = 2*PI;
 
@@ -57,6 +60,8 @@ inline double phi_fix(double phi, double ref_phi) {
   else if (diff < -PI) phi += TWOPI;
   return phi; 
 }
+
+#endif // PIPHIUTILS
 
 // enum for which event got an extra particle
 enum class ExtraParticle : char { Neither = -1, Zero = 0, One = 1 };
