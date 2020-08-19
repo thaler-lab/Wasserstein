@@ -5065,8 +5065,8 @@ SWIGINTERN void std_vector_Sl_std_string_Sg__insert__SWIG_1(std::vector< std::st
 #include <cstring>
 
 // the main library header
-#include "wasserstein/EMD.hh"
-#include "wasserstein/CorrelationDimension.hh"
+#include "EMD.hh"
+#include "CorrelationDimension.hh"
 
 
 #ifndef SWIG_FILE_WITH_INIT
@@ -5196,7 +5196,7 @@ SWIGINTERN std::string emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDi
 
 
 SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__npy_flows(emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *self,double **arr_out,int *n0,int *n1){
-    /*@SWIG:swig/wasserstein.i,137,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:swig/wasserstein.i,113,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -5215,7 +5215,7 @@ SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_
       values[i] *= unscale_factor;
   }
 SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__npy_dists(emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *self,double **arr_out,int *n0,int *n1){
-    /*@SWIG:swig/wasserstein.i,137,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:swig/wasserstein.i,113,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -5644,7 +5644,7 @@ SWIGINTERN std::string emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_CustomArrayDista
   return self->description();
 }
 SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_CustomArrayDistance_Sl__Sg__Sg__npy_flows(emd::EMD< emd::ArrayEvent< >,emd::CustomArrayDistance< > > *self,double **arr_out,int *n0,int *n1){
-    /*@SWIG:swig/wasserstein.i,137,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:swig/wasserstein.i,113,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -5663,7 +5663,7 @@ SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_CustomArrayDistance_Sl_
       values[i] *= unscale_factor;
   }
 SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_CustomArrayDistance_Sl__Sg__Sg__npy_dists(emd::EMD< emd::ArrayEvent< >,emd::CustomArrayDistance< > > *self,double **arr_out,int *n0,int *n1){
-    /*@SWIG:swig/wasserstein.i,137,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:swig/wasserstein.i,113,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -5716,7 +5716,7 @@ SWIGINTERN void emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_Eucl
     self->events().emplace_back(coords, weights, n1, d);
   }
 SWIGINTERN void emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg__npy_emds(emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *self,double **arr_out,int *n0,int *n1){
-    /*@SWIG:swig/wasserstein.i,137,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:swig/wasserstein.i,113,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->nevA();
   *n1 = self->nevB();
   size_t num_elements = size_t(*n0)*size_t(*n1);

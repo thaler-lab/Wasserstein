@@ -708,7 +708,7 @@ private:
 
         // parallelize loop over EMDs
         #pragma omp for schedule(dynamic, omp_for_dynamic_chunksize)
-        for (std::size_t k = begin; k < emd_counter_; k++) {
+        for (long long k = begin; k < (long long) emd_counter_; k++) {
 
           std::size_t i(k/nevB_), j(k%nevB_);
           if (two_event_sets_) {

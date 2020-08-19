@@ -33,8 +33,8 @@
 #include <cstring>
 
 // the main library header
-#include "wasserstein/EMD.hh"
-#include "wasserstein/CorrelationDimension.hh"
+#include "EMD.hh"
+#include "CorrelationDimension.hh"
 %}
 
 // define a subset of std exceptions to be caught
@@ -94,15 +94,15 @@ import_array();
 %ignore emd::PairwiseEMD::compute(const EventVector & eventsA, const EventVector & eventsB);
 %ignore emd::PairwiseEMD::events;
 
-%include "wasserstein/internal/EventGeometryUtils.hh"
+%include "EventGeometryUtils.hh"
 
 #define SWIG_PREPROCESSOR
-%include "wasserstein/internal/HistogramUtils.hh"
+%include "HistogramUtils.hh"
 %template(Histogram1DHandler) emd::Histogram1DHandler<>;
 %template(Histogram1DHandlerLog) emd::Histogram1DHandler<boost::histogram::axis::transform::log>;
 
-%include "wasserstein/CorrelationDimension.hh"
-%include "wasserstein/EMD.hh"
+%include "CorrelationDimension.hh"
+%include "EMD.hh"
 
 %define ADD_STR_FROM_DESCRIPTION
 std::string __str__() const {

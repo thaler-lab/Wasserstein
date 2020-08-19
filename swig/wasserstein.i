@@ -1,27 +1,3 @@
-//------------------------------------------------------------------------
-// This file is part of Wasserstein, a C++ library with a Python wrapper
-// that computes the Wasserstein/EMD distance. If you use it for academic
-// research, please cite the following works:
-//
-//   - Komiske, Metodiev, Thaler (2019) arXiv:1902.02346
-//     https://doi.org/10.1103/PhysRevLett.123.041801
-//
-// Copyright (C) 2019-2020 Patrick T. Komiske III
-// 
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <https://www.gnu.org/licenses/>.
-//------------------------------------------------------------------------
-
 %module(threads=1) wasserstein
 
 // though module is built with threads=1, turn that off for now
@@ -57,8 +33,8 @@
 #include <cstring>
 
 // the main library header
-#include "wasserstein/EMD.hh"
-#include "wasserstein/CorrelationDimension.hh"
+#include "EMD.hh"
+#include "CorrelationDimension.hh"
 %}
 
 // define a subset of std exceptions to be caught
@@ -118,15 +94,15 @@ import_array();
 %ignore emd::PairwiseEMD::compute(const EventVector & eventsA, const EventVector & eventsB);
 %ignore emd::PairwiseEMD::events;
 
-%include "wasserstein/internal/EventGeometryUtils.hh"
+%include "internal/EventGeometryUtils.hh"
 
 #define SWIG_PREPROCESSOR
-%include "wasserstein/internal/HistogramUtils.hh"
+%include "internal/HistogramUtils.hh"
 %template(Histogram1DHandler) emd::Histogram1DHandler<>;
 %template(Histogram1DHandlerLog) emd::Histogram1DHandler<boost::histogram::axis::transform::log>;
 
-%include "wasserstein/CorrelationDimension.hh"
-%include "wasserstein/EMD.hh"
+%include "CorrelationDimension.hh"
+%include "EMD.hh"
 
 %define ADD_STR_FROM_DESCRIPTION
 std::string __str__() const {
