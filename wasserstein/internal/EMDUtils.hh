@@ -26,6 +26,7 @@
 #ifndef EVENTGEOMETRY_EMDUTILS_HH
 #define EVENTGEOMETRY_EMDUTILS_HH
 
+#include <mutex>
 #include <sstream>
 #include <string>
 #include <type_traits>
@@ -38,6 +39,71 @@ namespace contrib {
 #else
 namespace emd {
 #endif
+
+const double PI = 3.14159265358979323846;
+const double TWOPI = 2*PI;
+
+inline double phi_fix(double phi, double ref_phi) {
+  double diff(phi - ref_phi);
+  if (diff > PI) phi -= TWOPI;
+  else if (diff < -PI) phi += TWOPI;
+  return phi; 
+}
+
+// enum with possible return statuses from the NetworkSimplex solver
+enum EMDStatus : char { 
+  Success = 0,
+  Empty = 1,
+  SupplyMismatch = 2,
+  Unbounded = 3,
+  MaxIterReached = 4,
+  Infeasible = 5
+};
+
+// enum for which event got an extra particle
+enum class ExtraParticle : char { Neither = -1, Zero = 0, One = 1 };
+
+inline void check_emd_status(EMDStatus status) {
+  if (status != Success)
+    switch (status) {
+      case Empty:
+        throw std::runtime_error("EMDStatus - Empty");
+        break;
+      case SupplyMismatch:
+        throw std::runtime_error("EMDStatus - SupplyMismatch, consider increasing epsilon_large_factor");
+        break;
+      case Unbounded:
+        throw std::runtime_error("EMDStatus - Unbounded");
+        break;
+      case MaxIterReached:
+        throw std::runtime_error("EMDStatus - MaxIterReached, consider increasing n_iter_max");
+        break;
+      case Infeasible:
+        throw std::runtime_error("EMDStatus - Infeasible");
+        break;
+      default:
+        throw std::runtime_error("EMDStatus - NoSuccess");
+    }
+}
+
+class ExternalEMDHandler {
+public:
+  ExternalEMDHandler() {}
+  virtual ~ExternalEMDHandler() {}
+
+  void operator()(double emd, double weight = 1) {
+    std::lock_guard<std::mutex> handler_guard(mutex_);
+    handle(emd, weight);
+  }
+
+  virtual std::string description() const = 0;
+
+protected:
+  virtual void handle(double, double) = 0; 
+
+private:
+  std::mutex mutex_;
+};
 
 // encapsulates plain 1D array with structure to enable range-based iteration
 // note: int is used for compatibility with SWIG's numpy.i
