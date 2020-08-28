@@ -23,20 +23,16 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
-#ifndef EVENTGEOMETRY_HISTOGRAMUTILS_HH
-#define EVENTGEOMETRY_HISTOGRAMUTILS_HH
+#ifndef WASSERSTEIN_HISTOGRAMUTILS_HH
+#define WASSERSTEIN_HISTOGRAMUTILS_HH
 
+// C++ standard library
 #include <cmath>
-#include <cstddef>
 #include <iomanip>
-#include <sstream>
-#include <stdexcept>
-#include <string>
-#include <type_traits>
 #include <utility>
 
+// Boost histogram headers
 #include <boost/histogram.hpp>
-
 #ifdef BOOST_HISTOGRAM_SERIALIZATION_HPP
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
@@ -44,13 +40,7 @@
 
 #include "EMDUtils.hh"
 
-// use fastjet::contrib namespace if part of FastJet, otherwise emd namespace
-#ifdef __FASTJET_PSEUDOJET_HH__
-FASTJET_BEGIN_NAMESPACE
-namespace contrib {
-#else
-namespace emd {
-#endif
+BEGIN_WASSERSTEIN_NAMESPACE
 
 namespace hist {
 
@@ -191,10 +181,11 @@ public:
     return oss.str();
   }
 
-#ifndef SWIG_PREPROCESSOR
+  // SWIG preprocessor complains about these, so hide them
+  #ifndef SWIG_PREPROCESSOR
   Hist & hist() { return hist_; }
   Axis & axis() { return axis_; }
-#endif
+  #endif
 
   std::vector<double> bin_centers() const { return hist::get_bin_centers(axis_); }
   std::vector<double> bin_edges() const { return hist::get_bin_edges(axis_); }
@@ -231,11 +222,6 @@ protected:
 
 }; // Histogram1DHandler
 
-#ifdef __FASTJET_PSEUDOJET_HH__
-} // namespace contrib
-FASTJET_END_NAMESPACE
-#else
-} // namespace emd
-#endif
+END_WASSERSTEIN_NAMESPACE
 
-#endif // EVENTGEOMETRY_HISTOGRAMUTILS_HH
+#endif // WASSERSTEIN_HISTOGRAMUTILS_HH

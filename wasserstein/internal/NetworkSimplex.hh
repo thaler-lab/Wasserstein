@@ -117,16 +117,12 @@ SOFTWARE.
 #ifndef LEMON_NETWORK_SIMPLEX_HH
 #define LEMON_NETWORK_SIMPLEX_HH
 
+// C++ standard library
 #include <algorithm>
 #include <cmath>
-#include <cstddef>
 #include <iostream>
 #include <limits>
-#include <sstream>
-#include <stdexcept>
-#include <string>
 #include <utility>
-#include <vector>
 
 #include "EMDUtils.hh"
 

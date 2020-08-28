@@ -23,18 +23,12 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
-#ifndef EVENTGEOMETRY_EXTERNALHANDLERS_HH
-#define EVENTGEOMETRY_EXTERNALHANDLERS_HH
+#ifndef WASSERSTEIN_EXTERNALHANDLERS_HH
+#define WASSERSTEIN_EXTERNALHANDLERS_HH
 
 #include "internal/HistogramUtils.hh"
 
-// use fastjet::contrib namespace if part of FastJet, otherwise emd namespace
-#ifdef __FASTJET_PSEUDOJET_HH__
-FASTJET_BEGIN_NAMESPACE
-namespace contrib {
-#else
-namespace emd {
-#endif
+BEGIN_WASSERSTEIN_NAMESPACE
 
 class CorrelationDimension : public Histogram1DHandler<boost::histogram::axis::transform::log> {
 public:
@@ -100,11 +94,6 @@ private:
 
 }; // CorrelationDimension
 
-#ifdef __FASTJET_PSEUDOJET_HH__
-} // namespace contrib
-FASTJET_END_NAMESPACE
-#else
-} // namespace emd
-#endif
+END_WASSERSTEIN_NAMESPACE
 
-#endif // EVENTGEOMETRY_EXTERNALHANDLERS_HH
+#endif // WASSERSTEIN_EXTERNALHANDLERS_HH

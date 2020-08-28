@@ -23,53 +23,41 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
-#ifndef EVENTGEOMETRY_EMD_HH
-#define EVENTGEOMETRY_EMD_HH
+#ifndef WASSERSTEIN_EMD_HH
+#define WASSERSTEIN_EMD_HH
 
+// C++ standard library
 #include <algorithm>
-#include <chrono>
-#include <cstddef>
-#include <exception>
 #include <iomanip>
 #include <iostream>
 #include <memory>
-#include <mutex>
-#include <sstream>
-#include <stdexcept>
-#include <string>
-#include <type_traits>
 #include <utility>
-#include <vector>
 
+// OpenMP for multithreading
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
+// Wasserstein headers
 #include "internal/Event.hh"
 #include "internal/Measures.hh"
 #include "internal/NetworkSimplex.hh"
 #include "internal/Preprocess.hh"
 
-// include omp.h if we're using OpenMP
-#ifdef _OPENMP
-#include <omp.h>
-#endif
+BEGIN_WASSERSTEIN_NAMESPACE
 
-// set these globally so SWIG knows how to parse them
-#ifdef SWIG
-typedef double Value;
-typedef std::vector<double> ValueVector;
-#endif
+////////////////////////////////////////////////////////////////////////////////
+// EMD - Computes the Earth/Energy Mover's Distance between two "events" which
+//       contain weights and "particles", between which a pairwise distance
+//       can be evaluated
+////////////////////////////////////////////////////////////////////////////////
 
-// use fastjet::contrib namespace if part of FastJet, otherwise emd namespace
-#ifdef __FASTJET_PSEUDOJET_HH__
-FASTJET_BEGIN_NAMESPACE
-namespace contrib {
-#else
-namespace emd {
-#endif
-
-//-----------------------------------------------------------------------------
-// EMD - Computes the Earth/Energy Mover's Distance between two "Events"
-//-----------------------------------------------------------------------------
 template<class E, class PD, class NetworkSimplex = lemon::NetworkSimplex<>>
-class EMD {
+#ifndef SWIG
+class EMD : public EMDBase<typename NetworkSimplex::Value> {
+#else
+class EMD : public EMDBase<Value> {
+#endif
 public:
 
   // allow passing FastJetParticleWeight as first template parameter
@@ -84,12 +72,6 @@ public:
   typedef typename Event::ParticleCollection ParticleCollection;
   typedef typename Event::WeightCollection WeightCollection;
   typedef EMD<E, PairwiseDistance, NetworkSimplex> Self;
-
-  // these have been defined globally if in SWIG
-  #ifndef SWIG
-  typedef typename NetworkSimplex::Value Value;
-  typedef std::vector<Value> ValueVector;
-  #endif
   
   // gives PairwiseEMD access to private members
   template<class T>
@@ -116,31 +98,6 @@ public:
                                 NetworkSimplex>::value,
                 "Second EMD template parameter should be derived from PairwiseDistanceBase<...>.");
 
-private:
-
-  // helper objects
-  PairwiseDistance pairwise_distance_;
-  NetworkSimplex network_simplex_;
-
-  // preprocessor objects
-  std::vector<std::shared_ptr<Preprocessor<Self>>> preprocessors_;
-
-  // normalize option
-  bool norm_;
-
-  // number of particles
-  std::size_t n0_, n1_;
-  ExtraParticle extra_;
-
-  // emd value and status
-  Value emd_;
-  EMDStatus status_;
-
-  // timing
-  bool do_timing_;
-  std::chrono::steady_clock::time_point start_;
-  double duration_;
-
 public:
 
   // constructor with entirely default arguments
@@ -150,17 +107,16 @@ public:
       double epsilon_large_factor = 10000,
       double epsilon_small_factor = 0) :
 
+    // base class initialization
+    EMDBase(norm, do_timing),
+
     // initialize contained objects
     pairwise_distance_(R, beta),
-    network_simplex_(n_iter_max, epsilon_large_factor, epsilon_small_factor),
-    norm_(norm),
-    n0_(0), n1_(0),
-    extra_(ExtraParticle::Neither),
-    emd_(0),
-    status_(EMDStatus::Empty),
-    do_timing_(do_timing),
-    duration_(0)
-  {}
+    network_simplex_(n_iter_max, epsilon_large_factor, epsilon_small_factor)
+  {
+    // setup units correctly (only relevant here if norm = true)
+    scale_ = 1;
+  }
 
   // virtual destructor
   virtual ~EMD() {}
@@ -259,27 +215,30 @@ public:
       *std::copy(ws1.begin(), ws1.end(), std::copy(ws0.begin(), ws0.end(), weights().begin())) = -weightdiff;
     }
 
+    // if not norm, prepare to scale each weight by the max total
+    if (!norm_) {
+      scale_ = std::max(ev0.total_weight(), ev1.total_weight());
+      for (Value & w : weights()) w /= scale_;
+    }
+
     // store distances in network simplex
     pairwise_distance_.fill_distances(ev0.particles(), ev1.particles(), dists(), extra_);
 
     // run the EarthMoversDistance at this point
     status_ = network_simplex_.compute(n0(), n1());
     emd_ = network_simplex_.total_cost();
-    if (status_ == EMDStatus::Success) emd_ *= pairwise_distance_.unscale_factor();
+
+    // account for weight scale if not normed
+    if (status_ == EMDStatus::Success && !norm_)
+      emd_ *= scale_;
 
     // end timing and get duration
-    if (do_timing_) store_duration();
+    if (do_timing_)
+      store_duration();
 
     // return status
     return status_;
   }
-
-  // which event, 0 or 1, got an extra particle (-1 if no event got one)
-  ExtraParticle extra() const { return extra_; }
-
-  // number of particles in each event (after possible addition of extra particles)
-  std::size_t n0() const { return n0_; }
-  std::size_t n1() const { return n1_; }
 
   // access dists
   ValueVector dists() const {
@@ -287,16 +246,12 @@ public:
                        network_simplex_.dists().begin() + n0_*n1_);
   }
 
-  // returns emd value and status
-  Value emd() const { return emd_; }
-  EMDStatus status() const { return status_; }
-
   // emd flow values between particle i in event0 and particle j in event1
   Value flow(std::size_t i, std::size_t j) const {
     if (i >= n0_ || j >= n1_)
       throw std::out_of_range("EMD::flow - Indices out of range");
 
-    return pairwise_distance_.unscale_factor() * network_simplex_.flows()[i*n1_ + j];
+    return network_simplex_.flows()[i*n1_ + j] * scale_;
   }
 
   // returns all flows 
@@ -306,15 +261,11 @@ public:
     ValueVector unscaled_flows(network_simplex_.flows().begin(), 
                                network_simplex_.flows().begin() + n0_*n1_);
     // unscale all values
-    Value unscale_factor(pairwise_distance_.unscale_factor());
     for (double & f: unscaled_flows)
-      f *= unscale_factor;
+      f *= scale_;
 
     return unscaled_flows;
   }
-
-  // return timing info
-  double duration() const { return duration_; }
 
 #ifdef SWIG_WASSERSTEIN
   // make dists available publicly (avoid name conflict in SWIG with leading underscore)
@@ -329,14 +280,6 @@ private:
   // set weights of network simplex
   ValueVector & weights() { return network_simplex_.weights(); }
 
-  // duration of emd computation in seconds
-  void start_timing() { start_ = std::chrono::steady_clock::now(); }
-  double store_duration() {
-    auto diff(std::chrono::steady_clock::now() - start_);
-    duration_ = std::chrono::duration_cast<std::chrono::duration<double>>(diff).count();
-    return duration_;
-  }
-
   // applies preprocessors to an event
   Event & preprocess(Event & event) const {
 
@@ -348,7 +291,8 @@ private:
     event.ensure_weights();
 
     // perform normalization
-    if (norm_) event.normalize_weights();
+    if (norm_)
+      event.normalize_weights();
 
     return event;
   }
@@ -360,11 +304,23 @@ private:
       oss << "    - " << preproc->description() << '\n';
   }
 
+  /////////////////////
+  // class data members
+  /////////////////////
+
+  // helper objects
+  PairwiseDistance pairwise_distance_;
+  NetworkSimplex network_simplex_;
+
+  // preprocessor objects
+  std::vector<std::shared_ptr<Preprocessor<Self>>> preprocessors_;
+
 }; // EMD
 
-//-----------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 // PairwiseEMD - Facilitates computing EMDs between all event-pairs in a set
-//-----------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
+
 template<class EMD>
 class PairwiseEMD {
 public:
@@ -841,11 +797,6 @@ private:
 
 }; // PairwiseEMD
 
-#ifdef __FASTJET_PSEUDOJET_HH__
-} // namespace contrib
-FASTJET_END_NAMESPACE
-#else
-} // namespace emd
-#endif
+END_WASSERSTEIN_NAMESPACE
 
-#endif // EVENTGEOMETRY_EMD_HH
+#endif // WASSERSTEIN_EMD_HH

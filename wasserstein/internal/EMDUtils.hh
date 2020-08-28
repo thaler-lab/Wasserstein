@@ -23,13 +23,18 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
-#ifndef EVENTGEOMETRY_EMDUTILS_HH
-#define EVENTGEOMETRY_EMDUTILS_HH
+#ifndef WASSERSTEIN_EMDUTILS_HH
+#define WASSERSTEIN_EMDUTILS_HH
 
+// C++ standard library
+#include <chrono>
+#include <cstddef>
 #include <mutex>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <type_traits>
+#include <vector>
 
 // enum with possible return statuses from the NetworkSimplex solver
 enum class EMDStatus : char { 
@@ -41,13 +46,21 @@ enum class EMDStatus : char {
   Infeasible = 5
 };
 
+// use fastjet::contrib if part of FastJet, otherwise emd
 #ifdef __FASTJET_PSEUDOJET_HH__
-FASTJET_BEGIN_NAMESPACE
-namespace contrib {
+  #define BEGIN_WASSERSTEIN_NAMESPACE FASTJET_BEGIN_NAMESPACE namespace contrib {
+  #define END_WASSERSTEIN_NAMESPACE } FASTJET_END_NAMESPACE
 #else
-namespace emd {
+  #define BEGIN_WASSERSTEIN_NAMESPACE namespace emd {
+  #define END_WASSERSTEIN_NAMESPACE }
 #endif
 
+BEGIN_WASSERSTEIN_NAMESPACE
+
+// enum for which event got an extra particle
+enum class ExtraParticle : char { Neither = -1, Zero = 0, One = 1 };
+
+// ensure that phi utils are provided only once
 #ifndef PIPHIUTILS
 #define PIPHIUTILS
 
@@ -60,12 +73,15 @@ inline double phi_fix(double phi, double ref_phi) {
   else if (diff < -PI) phi += TWOPI;
   return phi; 
 }
-
 #endif // PIPHIUTILS
 
-// enum for which event got an extra particle
-enum class ExtraParticle : char { Neither = -1, Zero = 0, One = 1 };
+// set these globally so SWIG knows how to parse them
+#ifdef SWIG
+typedef double Value;
+typedef std::vector<double> ValueVector;
+#endif
 
+// function that raises appropriate error from a status code
 inline void check_emd_status(EMDStatus status) {
   if (status != EMDStatus::Success)
     switch (status) {
@@ -89,31 +105,113 @@ inline void check_emd_status(EMDStatus status) {
     }
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// EMDBase - base class to reduce wrapper code for simple EMD access functions
+////////////////////////////////////////////////////////////////////////////////
+
+template<typename V>
+class EMDBase {
+protected:
+
+  // these have been defined globally if in SWIG
+  #ifndef SWIG
+  typedef V Value;
+  typedef std::vector<Value> ValueVector;
+  #endif
+
+  // normalize option
+  bool norm_;
+
+  // number of particles
+  std::size_t n0_, n1_;
+  ExtraParticle extra_;
+
+  // emd value and status
+  Value scale_, emd_;
+  EMDStatus status_;
+
+  // timing
+  bool do_timing_;
+  std::chrono::steady_clock::time_point start_;
+  double duration_;
+
+public:
+
+  // always defined, so that external classes can access the value
+  typedef Value ValuePublic;
+
+  // constructor from two boolean options
+  EMDBase(bool norm = false, bool do_timing = false) :
+    norm_(norm),
+    n0_(0), n1_(0),
+    extra_(ExtraParticle::Neither),
+    emd_(0),
+    status_(EMDStatus::Empty),
+    do_timing_(do_timing),
+    duration_(0)
+  {}
+
+  // virtual desctructor
+  virtual ~EMDBase() {}
+
+  // which event, 0 or 1, got an extra particle (-1 if no event got one)
+  ExtraParticle extra() const { return extra_; }
+
+  // number of particles in each event (after possible addition of extra particles)
+  std::size_t n0() const { return n0_; }
+  std::size_t n1() const { return n1_; }
+
+  // returns emd scale, value and status
+  Value scale() const { return scale_; }
+  Value emd() const { return emd_; }
+  EMDStatus status() const { return status_; }
+
+  // return timing info
+  double duration() const { return duration_; }
+
+protected:
+
+  // duration of emd computation in seconds
+  void start_timing() { start_ = std::chrono::steady_clock::now(); }
+  double store_duration() {
+    auto diff(std::chrono::steady_clock::now() - start_);
+    duration_ = std::chrono::duration_cast<std::chrono::duration<double>>(diff).count();
+    return duration_;
+  }
+
+}; // EMDBase
+
+////////////////////////////////////////////////////////////////////////////////
+// ExternalEMDHandler - base class for making an emd operation thread-safe
+////////////////////////////////////////////////////////////////////////////////
+
 class ExternalEMDHandler {
 public:
   ExternalEMDHandler() {}
   virtual ~ExternalEMDHandler() {}
-
+  virtual std::string description() const = 0;
   void operator()(double emd, double weight = 1) {
     std::lock_guard<std::mutex> handler_guard(mutex_);
     handle(emd, weight);
   }
-
-  virtual std::string description() const = 0;
 
 protected:
   virtual void handle(double, double) = 0; 
 
 private:
   std::mutex mutex_;
-};
 
-// encapsulates plain 1D array with structure to enable range-based iteration
-// note: int is used for compatibility with SWIG's numpy.i
+}; // ExternalEMDHandler
+
+////////////////////////////////////////////////////////////////////////////////
+// ArrayWeightCollection - implements a "smart" 1D array from a plain array
+////////////////////////////////////////////////////////////////////////////////
+
 template<typename V>
 struct ArrayWeightCollection {
   typedef V value_type;
 
+  // contructor, int is used for compatibility with SWIG's numpy.i
   ArrayWeightCollection(V * array, int size) : array_(array), size_(size) {}
 
   int size() const { return size_; }
@@ -128,8 +226,10 @@ private:
 
 }; // ArrayWeightCollection
 
-// encapsulates plain 2D array with structure to enable range-based iteration
-// note: int is used for compatibility with SWIG's numpy.i
+////////////////////////////////////////////////////////////////////////////////
+// ArrayParticleCollection - implements a "smart" 2D array from a plain array
+////////////////////////////////////////////////////////////////////////////////
+
 template<typename V>
 struct ArrayParticleCollection {
 
@@ -149,6 +249,7 @@ struct ArrayParticleCollection {
   using const_iterator = templated_iterator<const V>;
   using value_type = const_iterator;
 
+  // contructor, int is used for compatibility with SWIG's numpy.i
   ArrayParticleCollection(V * array, int size, int stride) :
     array_(array), size_(size), stride_(stride)
   {}
@@ -166,9 +267,9 @@ private:
 
 }; // ArrayParticleCollection
 
-//-----------------------------------------------------------------------------
-// Particle structs that work with the euclidean distance
-//-----------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
+// EuclideanParticles - structs that work with the euclidean pairwise distance
+////////////////////////////////////////////////////////////////////////////////
 
 template<typename V = double>
 struct EuclideanParticle2D {
@@ -191,7 +292,8 @@ struct EuclideanParticle2D {
     return oss.str();
   }
   static std::string distance_name() { return "EuclideanDistance2D"; }
-};
+
+}; // EuclideanParticle2D
 
 template<typename V = double>
 struct EuclideanParticle3D {
@@ -214,7 +316,8 @@ struct EuclideanParticle3D {
     return oss.str();
   }
   static std::string distance_name() { return "EuclideanDistance3D"; }
-};
+
+}; // EuclideanParticle3D
 
 template<unsigned int N, typename V = double>
 struct EuclideanParticleND {
@@ -245,13 +348,9 @@ struct EuclideanParticleND {
     oss << "EuclideaDistance" << N << 'D';
     return oss.str();
   }
-};
 
-#ifdef __FASTJET_PSEUDOJET_HH__
-} // namespace contrib
-FASTJET_END_NAMESPACE
-#else
-} // namespace emd
-#endif
+}; // EuclideanParticleND
 
-#endif // EVENTGEOMETRY_EMDUTILS_HH
+END_WASSERSTEIN_NAMESPACE
+
+#endif // WASSERSTEIN_EMDUTILS_HH

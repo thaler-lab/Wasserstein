@@ -23,27 +23,21 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
-#ifndef EVENTGEOMETRY_EVENT_HH
-#define EVENTGEOMETRY_EVENT_HH
+#ifndef WASSERSTEIN_EVENT_HH
+#define WASSERSTEIN_EVENT_HH
 
+// C++ standard library
 #include <cassert>
-#include <sstream>
-#include <stdexcept>
-#include <string>
 #include <tuple>
-#include <type_traits>
-#include <vector>
 
 #include "EMDUtils.hh"
 
-#ifdef __FASTJET_PSEUDOJET_HH__
-FASTJET_BEGIN_NAMESPACE
-namespace contrib {
-#else
-namespace emd {
-#endif
+BEGIN_WASSERSTEIN_NAMESPACE
 
-// base class for "events", associates weights with a particle collection
+////////////////////////////////////////////////////////////////////////////////
+// EventBase - "events" constitute a weighted collection of "particles"
+////////////////////////////////////////////////////////////////////////////////
+
 template<class ParticleCollection, class WeightCollection>
 struct EventBase {
   typedef typename WeightCollection::value_type Value;
@@ -96,38 +90,51 @@ protected:
 
 }; // EventBase
 
+////////////////////////////////////////////////////////////////////////////////
+// ArrayEvent - an event where the weights and particle are contiguous arrays
+////////////////////////////////////////////////////////////////////////////////
+
+template<typename V = double>
+struct ArrayEvent : public EventBase<ArrayParticleCollection<V>, ArrayWeightCollection<V>> {
+  typedef ArrayParticleCollection<V> ParticleCollection;
+  typedef ArrayWeightCollection<V> WeightCollection;
+
+  static_assert(std::is_floating_point<V>::value, "ArrayEvent template parameter must be floating point.");
+
+  ArrayEvent(V * particle_array, V * weight_array, int size, int stride) :
+    EventBase<ParticleCollection, WeightCollection>(ParticleCollection(particle_array, size, stride),
+                                                    WeightCollection(weight_array, size))
+  {
+    // set total weight
+    for (int i = 0; i < size; i++)
+      this->total_weight_ += weight_array[i];
+    this->has_weights_ = true;
+  }
+
+  ArrayEvent(const std::tuple<V*, V*, int, int> & tup) :
+    ArrayEvent(std::get<0>(tup), std::get<1>(tup), std::get<2>(tup), std::get<3>(tup))
+  {}
+
+  ArrayEvent() {}
+
+  static std::string name() {
+    std::ostringstream oss;
+    oss << "ArrayEvent<" << sizeof(V) << "-byte float>";
+    return oss.str();
+  }
+
+}; // ArrayEvent
+
+// FastJet events will derive from this, for checking types later
 class FastJetEventBase {};
 
 #ifdef __FASTJET_PSEUDOJET_HH__
 
-// base class to use for checking types later
-struct FastJetParticleWeight {};
+////////////////////////////////////////////////////////////////////////////////
+// FastJetEvent - an event consisting of FastJet PseudoJets and weights
+////////////////////////////////////////////////////////////////////////////////
 
-// use pT as weight, most typical choice for hadronic colliders
-struct TransverseMomentum : FastJetParticleWeight {
-  static const char * name() { return "TransverseMomentum"; }
-  static double weight(const PseudoJet & pj) { return pj.pt(); }
-};
-
-// use ET as weight, typical for hadronic colliders if mass is relevant
-struct TransverseEnergy : FastJetParticleWeight {
-  static const char * name() { return "TransverseEnergy"; }
-  static double weight(const PseudoJet & pj) { return pj.Et(); }
-};
-
-// use |p3| as weight, typical of e+e- colliders treating pjs as massless
-struct Momentum : FastJetParticleWeight {
-  static const char * name() { return "Momentum"; }
-  static double weight(const PseudoJet & pj) { return pj.modp(); }
-};
-
-// use E as weight, typical of e+e- colliders
-struct Energy : FastJetParticleWeight {
-  static const char * name() { return "Energy"; }
-  static double weight(const PseudoJet & pj) { return pj.E(); }
-};
-
-// FastJetEvent class
+// PW : a particle weight class (see below)
 template<class PW>
 struct FastJetEvent : public EventBase<std::vector<PseudoJet>, std::vector<double>>,
                       public FastJetEventBase {
@@ -137,7 +144,9 @@ struct FastJetEvent : public EventBase<std::vector<PseudoJet>, std::vector<doubl
 
   // constructor from PseudoJet, possibly with constituents
   FastJetEvent(const PseudoJet & pj) :
-    EventBase<ParticleCollection, WeightCollection>(pj.has_constituents() ? pj.constituents() : ParticleCollection{pj}),
+    EventBase<ParticleCollection, WeightCollection>(pj.has_constituents() ? 
+                                                    pj.constituents() : 
+                                                    ParticleCollection{pj}),
     axis_(pj)
   {}
 
@@ -177,14 +186,49 @@ private:
 
 }; // FastJetEvent
 
+////////////////////////////////////////////////////////////////////////////////
+// FastJetParticleWeight - extracts weight from a PseudoJet
+////////////////////////////////////////////////////////////////////////////////
+
+// base class to use for checking types later
+struct FastJetParticleWeight {};
+
+// use pT as weight, most typical choice for hadronic colliders
+struct TransverseMomentum : FastJetParticleWeight {
+  static std::string name() { return "TransverseMomentum"; }
+  static double weight(const PseudoJet & pj) { return pj.pt(); }
+};
+
+// use ET as weight, typical for hadronic colliders if mass is relevant
+struct TransverseEnergy : FastJetParticleWeight {
+  static std::string name() { return "TransverseEnergy"; }
+  static double weight(const PseudoJet & pj) { return pj.Et(); }
+};
+
+// use |p3| as weight, typical of e+e- colliders treating pjs as massless
+struct Momentum : FastJetParticleWeight {
+  static std::string name() { return "Momentum"; }
+  static double weight(const PseudoJet & pj) { return pj.modp(); }
+};
+
+// use E as weight, typical of e+e- colliders
+struct Energy : FastJetParticleWeight {
+  static std::string name() { return "Energy"; }
+  static double weight(const PseudoJet & pj) { return pj.E(); }
+};
+
 #endif // __FASTJET_PSEUDOJET_HH__
 
-// generic event contains a vector of particles
+////////////////////////////////////////////////////////////////////////////////
+// GenericEvent - an event constructed from a vector of "particles"
+////////////////////////////////////////////////////////////////////////////////
+
 template<class P>
 struct GenericEvent : public EventBase<std::vector<P>, std::vector<typename P::Value>> {
   typedef std::vector<P> ParticleCollection;
   typedef std::vector<typename P::Value> WeightCollection;
 
+  GenericEvent() {}
   GenericEvent(const ParticleCollection & particles) :
     EventBase<ParticleCollection, WeightCollection>(particles)
   {
@@ -197,58 +241,23 @@ struct GenericEvent : public EventBase<std::vector<P>, std::vector<typename P::V
     this->has_weights_ = true;
   }
 
-  GenericEvent() {}
-
   static std::string name() {
     std::ostringstream oss;
     oss << "GenericEvent<" << P::name() << '>';
     return oss.str();
   }
+
 }; // GenericEvent
 
-// define some double-precision euclidean events
+////////////////////////////////////////////////////////////////////////////////
+// EuclideanEvent - consists of double-precision euclidean particles
+////////////////////////////////////////////////////////////////////////////////
+
 using EuclideanEvent2D = GenericEvent<EuclideanParticle2D<>>;
 using EuclideanEvent3D = GenericEvent<EuclideanParticle3D<>>;
 template<unsigned int N>
 using EuclideanEventND = GenericEvent<EuclideanParticleND<N>>;
 
-// event that wraps plain arrays of particles and weights
-template<typename V = double>
-struct ArrayEvent : public EventBase<ArrayParticleCollection<V>, ArrayWeightCollection<V>> {
-  typedef ArrayParticleCollection<V> ParticleCollection;
-  typedef ArrayWeightCollection<V> WeightCollection;
+END_WASSERSTEIN_NAMESPACE
 
-  static_assert(std::is_floating_point<V>::value, "ArrayEvent template parameter must be floating point.");
-
-  ArrayEvent(V * particle_array, V * weight_array, int size, int stride) :
-    EventBase<ParticleCollection, WeightCollection>(ParticleCollection(particle_array, size, stride),
-                                                    WeightCollection(weight_array, size))
-  {
-    // set total weight
-    for (int i = 0; i < size; i++)
-      this->total_weight_ += weight_array[i];
-    this->has_weights_ = true;
-  }
-
-  ArrayEvent(const std::tuple<V*, V*, int, int> & tup) :
-    ArrayEvent(std::get<0>(tup), std::get<1>(tup), std::get<2>(tup), std::get<3>(tup))
-  {}
-
-  ArrayEvent() {}
-
-  static std::string name() {
-    std::ostringstream oss;
-    oss << "ArrayEvent<" << sizeof(V) << "-byte float>";
-    return oss.str();
-  }
-
-}; // ArrayEvent
-
-#ifdef __FASTJET_PSEUDOJET_HH__
-} // namespace contrib
-FASTJET_END_NAMESPACE
-#else
-} // namespace emd
-#endif
-
-#endif // EVENTGEOMETRY_EVENT_HH
+#endif // WASSERSTEIN_EVENT_HH

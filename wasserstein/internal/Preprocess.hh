@@ -23,30 +23,20 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
-#ifndef EVENTGEOMETRY_PREPROCESS_HH
-#define EVENTGEOMETRY_PREPROCESS_HH
+#ifndef WASSERSTEIN_PREPROCESS_HH
+#define WASSERSTEIN_PREPROCESS_HH
 
+// C++ standard library
 #include <algorithm>
 #include <cassert>
-#include <cstddef>
-#include <sstream>
-#include <stdexcept>
-#include <string>
-#include <type_traits>
-#include <vector>
 
 #include "Event.hh"
 
-#ifdef __FASTJET_PSEUDOJET_HH__
-FASTJET_BEGIN_NAMESPACE
-namespace contrib {
-#else
-namespace emd {
-#endif
+BEGIN_WASSERSTEIN_NAMESPACE
 
-//-----------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 // Preprocessor - base class for preprocessing operations
-//-----------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
 // base class for preprocessing events
 template<class EMD>
@@ -64,25 +54,21 @@ public:
 
 }; // Preprocessor
 
-//-----------------------------------------------------------------------------
-// Preprocessing utility functions
-//-----------------------------------------------------------------------------
-
-// these preprocessors require fastjet
+// currently, all preprocessors require FastJet
 #ifdef __FASTJET_PSEUDOJET_HH__
 
 // center all the particles in a vector according to a given rapidity and azimuth
 template<class ParticleWeight>
-void center_event(FastJetEvent<ParticleWeight> & event, double rap, double phi) {
+void center_event(FastJetEvent<ParticleWeight> & event, Value rap, Value phi) {
   PseudoJet & axis(event.axis());
   axis.reset_momentum_PtYPhiM(axis.pt(), axis.rap() - rap, phi_fix(axis.phi(), phi) - phi, axis.m());
   for (PseudoJet & pj: event.particles())
     pj.reset_momentum_PtYPhiM(pj.pt(), pj.rap() - rap, phi_fix(pj.phi(), phi) - phi, pj.m());
 }
 
-//-----------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 // CenterEScheme - center all the particles according to their Escheme axis
-//-----------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
 template<class EMD>
 class CenterEScheme : public Preprocessor<typename EMD::Self> {
@@ -93,7 +79,6 @@ public:
                 "CenterEScheme works only with FastJet events.");
 
   std::string description() const { return "Center according to E-scheme axis"; }
-
   Event & operator()(Event & event) const {
 
     // set pj to Escheme axis if it isn't already
@@ -111,28 +96,29 @@ public:
 
     return event;
   }
+
 }; // CenterEScheme
 
-//-----------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 // CenterPtCentroid - center all the particles according to their pT centroid
-//-----------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
 template<class EMD>
 class CenterPtCentroid : public Preprocessor<typename EMD::Self> {
 public:
   typedef typename EMD::Event Event;
+  typedef typename EMD::ValuePublic Value;
 
   static_assert(std::is_base_of<FastJetEventBase, Event>::value,
                 "CenterPtCentroid works only with FastJet events.");
 
   std::string description() const { return "Center according to pT centroid"; }
-
   Event & operator()(Event & event) const {
 
     // determine pt centroid
-    double pttot(0), y(0), phi(0);
+    Value pttot(0), y(0), phi(0);
     for (const PseudoJet & pj : event.particles()) {
-      double pt(pj.pt());
+      Value pt(pj.pt());
       pttot += pt;
       y += pt * pj.rap();
       phi += pt * phi_fix(pj.phi(), event.particles()[0].phi());
@@ -148,21 +134,22 @@ public:
 
     return event;
   }
+
 }; // CenterPtCentroid
 
-//-----------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 // CenterWeightedCentroid - center all the particles according to their weighted centroid
-//-----------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
 template<class EMD>
 class CenterWeightedCentroid : public Preprocessor<typename EMD::Self> {
 public:
   typedef typename EMD::Event Event;
+  typedef typename EMD::ValuePublic Value;
   typedef typename Event::ParticleCollection ParticleCollection;
   typedef typename Event::WeightCollection WeightCollection;
 
   std::string description() const { return "Center according to weighted centroid"; }
-
   Event & operator()(Event & event) const {
     event.ensure_weights();
 
@@ -170,7 +157,7 @@ public:
     const WeightCollection & ws(event.weights());
 
     // determine weighted centroid
-    double x(0), y(0);
+    Value x(0), y(0);
     for (std::size_t i = 0; i < ps.size(); i++) {
       x += ws[i] * ps[i].rap();
       y += ws[i] * phi_fix(ps[i].phi(), ps[0].phi());
@@ -195,11 +182,10 @@ template<class EMD>
 class MaskCircleRapPhi : public Preprocessor<typename EMD::Self> {
 public:
   typedef typename EMD::Event Event;
+  typedef typename EMD::ValuePublic Value;
 
-  MaskCircleRapPhi(double R) : R_(R), R2_(R*R) {}
-
+  MaskCircleRapPhi(Value R) : R_(R), R2_(R*R) {}
   std::string description() const { return "Mask particles farther than " + std::to_string(R_) + " from axis"; }
-
   Event & operator()(Event & event) const {
 
     std::vector<PseudoJet> & ps(event.particles());
@@ -229,17 +215,13 @@ public:
   }
 
 private:
-  double R_, R2_;
+
+  Value R_, R2_;
 
 }; // MaskCircleRapPhi
 
 #endif // __FASTJET_PSEUDOJET_HH__
 
-#ifdef __FASTJET_PSEUDOJET_HH__
-} // namespace contrib
-FASTJET_END_NAMESPACE
-#else
-} // namespace emd
-#endif
+END_WASSERSTEIN_NAMESPACE
 
-#endif // EVENTGEOMETRY_PREPROCESS_HH
+#endif // WASSERSTEIN_PREPROCESS_HH
