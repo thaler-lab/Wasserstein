@@ -72,7 +72,7 @@ struct EventBase {
   // normalize weights and total
   void normalize_weights() {
     if (!has_weights_)
-      throw std::runtime_error("Weights must be set prior to calling normalize_weights.");
+      throw std::logic_error("Weights must be set prior to calling normalize_weights.");
 
     // normalize each weight
     Value norm_total(0);

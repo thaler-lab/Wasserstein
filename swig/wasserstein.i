@@ -1,17 +1,42 @@
-%module(threads=1) wasserstein
+//------------------------------------------------------------------------
+// This file is part of Wasserstein, a C++ library with a Python wrapper
+// that computes the Wasserstein/EMD distance. If you use it for academic
+// research, please cite or acknowledge the following works:
+//
+//   - Komiske, Metodiev, Thaler (2019) arXiv:1902.02346
+//       https://doi.org/10.1103/PhysRevLett.123.041801
+//   - Boneel, van de Panne, Paris, Heidrich (2011)
+//       https://doi.org/10.1145/2070781.2024192
+//   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//------------------------------------------------------------------------
 
-// though module is built with threads=1, turn that off for now
-%nothreadallow;
+%module wasserstein
 
+// C++ standard library wrappers
+%include "std_pair.i"
 %include "std_string.i"
 %include "std_vector.i"
 %include "exception.i"
 
-// include vector of doubles so we can do testing
+// vector templates
 %template(vectorDouble) std::vector<double>;
 %template(vectorString) std::vector<std::string>;
+%template(pairVectorDouble) std::pair<std::vector<double>, std::vector<double>>;
 
-// this ensures SWIG parses class membes properly
+// this ensures SWIG parses class members properly
 #define SWIG_WASSERSTEIN
 
 %{
@@ -32,51 +57,24 @@
 #include <cstdlib>
 #include <cstring>
 
-// the main library header
+// the main library headers
 #include "EMD.hh"
 #include "CorrelationDimension.hh"
 %}
 
-// define a subset of std exceptions to be caught
-%define SWIG_CATCH_SOME_STDEXCEPT(T)
-%exception T {
-    try { $action }
-    catch (std::out_of_range & e) { SWIG_exception(SWIG_IndexError, e.what()); }
-    catch (std::invalid_argument & e) { SWIG_exception(SWIG_ValueError, e.what()); }
-    catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
-}
-%enddef
-
-// catch exceptions in methods that throw them
-SWIG_CATCH_SOME_STDEXCEPT(emd::EMD::EMD)
-SWIG_CATCH_SOME_STDEXCEPT(emd::PairwiseEMD::PairwiseEMD)
-SWIG_CATCH_SOME_STDEXCEPT(emd::EMD::flow)
-SWIG_CATCH_SOME_STDEXCEPT(emd::PairwiseEMD::emd)
-
-// check for python errors raised by other methods
-%exception emd::EMD::operator() {
-  $action
-  if (PyErr_Occurred() != NULL)
-    SWIG_fail;
-}
-
-%exception emd::PairwiseEMD::compute() {
-  try { $action }
-  catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
-}
-
-// some extra python code at the beginning
+// Python imports at the top of the module
 %pythonbegin %{
 import itertools
 import numpy as np
 %}
 
+// numpy wrapping and initialization
 %include numpy.i
-
 %init %{
 import_array();
 %}
 
+// numpy typemaps
 %apply (double* IN_ARRAY1, int DIM1) {(double* weights0, int n0), (double* weights1, int n1)}
 %apply (double* IN_ARRAY2, int DIM1, int DIM2) {(double* coords0, int n00, int n01),
                                                 (double* coords1, int n10, int n11),
@@ -85,36 +83,114 @@ import_array();
 %apply (double* INPLACE_ARRAY2, int DIM1, int DIM2) {(double* coords, int n1, int d)}
 %apply (double** ARGOUTVIEWM_ARRAY2, int* DIM1, int* DIM2) {(double** arr_out, int* n0, int* n1)}
 
+// allow threads in PairwiseEMD computation
 %threadallow emd::PairwiseEMD::compute();
 
-%ignore emd::check_emd_status;
+// basic exception handling for all functions
+%exception {
+  try { $action }
+  catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
+}
+
+// EMD exceptions
+%exception emd::EMD::EMD {
+  try { $action }
+  catch (std::invalid_argument & e) { SWIG_exception(SWIG_ValueError, e.what()); }
+  catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
+}
+%exception emd::EMD::operator() {
+  try { $action }
+  catch (std::runtime_error & e) { SWIG_exception(SWIG_RuntimeError, e.what()); }
+  catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
+  if (PyErr_Occurred() != NULL)
+    SWIG_fail;
+}
+%exception emd::EMD::flow {
+  try { $action }
+  catch (std::out_of_range & e) { SWIG_exception(SWIG_IndexError, e.what()); }
+  catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
+}
+
+// PairwiseEMD exceptions
+%exception emd::PairwiseEMD::PairwiseEMD {
+  try { $action }
+  catch (std::invalid_argument & e) { SWIG_exception(SWIG_ValueError, e.what()); }
+  catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
+}
+%exception emd::PairwiseEMD::emd {
+  try { $action }
+  catch (std::out_of_range & e) { SWIG_exception(SWIG_IndexError, e.what()); }
+  catch (std::logic_error & e) { SWIG_exception(SWIG_RuntimeError, e.what()); }
+  catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
+}
+%exception emd::PairwiseEMD::compute() {
+  try { $action }
+  catch (std::runtime_error & e) { SWIG_exception(SWIG_RuntimeError, e.what()); }
+  catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
+}
+
+// EMDUtils exceptions
+%exception emd::check_emd_status {
+  try { $action }
+  catch (std::runtime_error & e) { SWIG_exception(SWIG_RuntimeError, e.what()); }
+  catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); } 
+}
+
+// Histogram exceptions
+%exception emd::Histogram1DHandler::Histogram1DHandler {
+  try { $action }
+  catch (std::invalid_argument & e) { SWIG_exception(SWIG_ValueError, e.what()); }
+  catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }  
+}
+
+// CorrelationDimension exceptions
+%exception emd::CorrelationDimension::CorrelationDimension {
+  try { $action }
+  catch (std::invalid_argument & e) { SWIG_exception(SWIG_ValueError, e.what()); }
+  catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
+}
+
+// ignore certain functions
 %ignore emd::EMD::compute;
 %ignore emd::EMD::_dists;
 %ignore emd::PairwiseEMD::compute(const EventVector & events);
 %ignore emd::PairwiseEMD::compute(const EventVector & eventsA, const EventVector & eventsB);
 %ignore emd::PairwiseEMD::events;
-%ignore emd::ArrayWeightCollection;
-%ignore emd::ArrayParticleCollection;
-%ignore emd::EuclideanParticle2D;
-%ignore emd::EuclideanParticle3D;
-%ignore emd::EuclideanParticleND;
 
+// include EMD utilities
 %include "internal/EMDUtils.hh"
 
+// handle templated base class
+%template(EMDBaseDouble) emd::EMDBase<double>;
+
+// include main EMD code
+%include "EMD.hh"
+
+// include histogram code
 #define SWIG_PREPROCESSOR
 %include "internal/HistogramUtils.hh"
 %template(Histogram1DHandler) emd::Histogram1DHandler<>;
 %template(Histogram1DHandlerLog) emd::Histogram1DHandler<boost::histogram::axis::transform::log>;
 
+// include correlation dimension
 %include "CorrelationDimension.hh"
-%include "EMD.hh"
 
+// prepare to extend classes by renaming some methods
+%rename(flows_vec) emd::EMD::flows;
+%rename(dists_vec) emd::EMD::dists;
+%rename(flows) emd::EMD::npy_flows;
+%rename(dists) emd::EMD::npy_dists;
+%rename(emds_vec) emd::PairwiseEMD::emds;
+%rename(emds) emd::PairwiseEMD::npy_emds;
+
+// makes python class printable from a description method
 %define ADD_STR_FROM_DESCRIPTION
 std::string __str__() const {
   return $self->description();
 }
 %enddef
 
+// mallocs a 2D array of doubles of the specified size
 %define MALLOC_2D_VALUE_ARRAY(a, b)
   *n0 = a;
   *n1 = b;
@@ -128,13 +204,7 @@ std::string __str__() const {
   *arr_out = values;
 %enddef
 
-%rename(flows_vec) emd::EMD::flows;
-%rename(dists_vec) emd::EMD::dists;
-%rename(emds_vec) emd::PairwiseEMD::emds;
-%rename(flows) emd::EMD::npy_flows;
-%rename(dists) emd::EMD::npy_dists;
-%rename(emds) emd::EMD::npy_emds;
-
+// add functionality to get flows and dists as numpy arrays
 %extend emd::EMD {
   ADD_STR_FROM_DESCRIPTION
 
@@ -142,9 +212,8 @@ std::string __str__() const {
     MALLOC_2D_VALUE_ARRAY($self->n0(), $self->n1())
     memcpy(*arr_out, $self->network_simplex().flows().data(), nbytes);
     
-    double unscale_factor = $self->pairwise_distance().unscale_factor();
     for (size_t i = 0; i < num_elements; i++)
-      values[i] *= unscale_factor;
+      values[i] *= $self->scale();
   }
 
   void npy_dists(double** arr_out, int* n0, int* n1) {
@@ -154,6 +223,8 @@ std::string __str__() const {
 }
 
 %extend emd::EMD<emd::ArrayEvent<>, emd::EuclideanArrayDistance<>> {
+
+  // provide weights and particle coordinates as numpy arrays
   double operator()(double* weights0, int n0,
                     double* coords0, int n00, int n01,
                     double* weights1, int n1,
@@ -174,6 +245,8 @@ std::string __str__() const {
 }
 
 %extend emd::EMD<emd::ArrayEvent<>, emd::CustomArrayDistance<>> {
+
+  // provide weights and pairwise distances as numpy arrays
   double operator()(double* weights0, int n0,
                     double* weights1, int n1,
                     double* external_dists, int d0, int d1) {
@@ -207,6 +280,7 @@ std::string __str__() const {
     memcpy(*arr_out, $self->emds().data(), nbytes);
   }
 
+  // python function to get events from container of 2d arrays, first column becomes the weights
   %pythoncode %{
     def __call__(self, events0, events1=None, gdim=None):
 
@@ -235,12 +309,14 @@ std::string __str__() const {
   %}
 }
 
+// ensure that python array of events is deleted also
 %feature("shadow") emd::PairwiseEMD::clear %{
   def clear(self):
       $action(self)
       self.event_arrs = []
 %}
 
+// instantiate specific (Pairwise)EMD templates
 %template(EMDArrayEuclidean) emd::EMD<emd::ArrayEvent<>, emd::EuclideanArrayDistance<>>;
 %template(EMDArray) emd::EMD<emd::ArrayEvent<>, emd::CustomArrayDistance<>>;
 %template(PairwiseEMDArrayEuclidean) emd::PairwiseEMD<emd::EMD<emd::ArrayEvent<>, emd::EuclideanArrayDistance<>>>;

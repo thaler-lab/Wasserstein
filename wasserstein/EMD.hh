@@ -505,7 +505,7 @@ public:
 
     // check for External handling, in which case we don't have any emds stored
     if (handler_ != nullptr)
-      throw std::runtime_error("EMD requested but external handler provided, so no EMDs stored");
+      throw std::logic_error("EMD requested but external handler provided, so no EMDs stored");
 
     // allow for negative indices
     if (i < 0) i += nevA_;
@@ -569,6 +569,7 @@ public:
   std::size_t nevB() const { return nevB_; }
   const EventVector & events() const { return events_; }
 
+// wasserstein needs access to these functions in order to use CustomArrayDistance
 #ifndef SWIG_WASSERSTEIN
 private:
 #endif
@@ -700,7 +701,7 @@ private:
               (*handler_)(emd_obj.emd());
             else if (emd_storage_ == FullSymmetric)
               emds_[i*nevB_ + j] = emds_[j*nevB_ + i] = emd_obj.emd();
-            else throw std::logic_error("Improper emd_storage_");
+            else std::cerr << "Should never get here\n";
           }
         }
       }

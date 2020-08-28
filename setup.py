@@ -35,9 +35,9 @@ if sys.argv[1] == 'swig':
     command = 'swig -python -c++ -fastproxy -py3 -w511 -keyword -Iwasserstein -o wasserstein/wasserstein.cpp swig/wasserstein.i'
     print(command)
     subprocess.run(command.split())
-    sys.exit()
 
-setup(
-    ext_modules=[wasserstein],
-    version=__version__
-)
+else:
+    setup(
+        ext_modules=[wasserstein],
+        version=__version__
+    )

@@ -187,16 +187,44 @@ class vectorString(object):
 # Register vectorString in _wasserstein:
 _wasserstein.vectorString_swigregister(vectorString)
 
+class pairVectorDouble(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        _wasserstein.pairVectorDouble_swiginit(self, _wasserstein.new_pairVectorDouble(*args))
+    first = property(_wasserstein.pairVectorDouble_first_get, _wasserstein.pairVectorDouble_first_set)
+    second = property(_wasserstein.pairVectorDouble_second_get, _wasserstein.pairVectorDouble_second_set)
+    def __len__(self):
+        return 2
+    def __repr__(self):
+        return str((self.first, self.second))
+    def __getitem__(self, index): 
+        if not (index % 2):
+            return self.first
+        else:
+            return self.second
+    def __setitem__(self, index, val):
+        if not (index % 2):
+            self.first = val
+        else:
+            self.second = val
+    __swig_destroy__ = _wasserstein.delete_pairVectorDouble
+
+# Register pairVectorDouble in _wasserstein:
+_wasserstein.pairVectorDouble_swigregister(pairVectorDouble)
+
 EMDStatus_Success = _wasserstein.EMDStatus_Success
 EMDStatus_Empty = _wasserstein.EMDStatus_Empty
 EMDStatus_SupplyMismatch = _wasserstein.EMDStatus_SupplyMismatch
 EMDStatus_Unbounded = _wasserstein.EMDStatus_Unbounded
 EMDStatus_MaxIterReached = _wasserstein.EMDStatus_MaxIterReached
 EMDStatus_Infeasible = _wasserstein.EMDStatus_Infeasible
-phi_fix = _wasserstein.phi_fix
 ExtraParticle_Neither = _wasserstein.ExtraParticle_Neither
 ExtraParticle_Zero = _wasserstein.ExtraParticle_Zero
 ExtraParticle_One = _wasserstein.ExtraParticle_One
+phi_fix = _wasserstein.phi_fix
+check_emd_status = _wasserstein.check_emd_status
 class ExternalEMDHandler(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
@@ -204,14 +232,32 @@ class ExternalEMDHandler(object):
         raise AttributeError("No constructor defined - class is abstract")
     __repr__ = _swig_repr
     __swig_destroy__ = _wasserstein.delete_ExternalEMDHandler
-    __call__ = _swig_new_instance_method(_wasserstein.ExternalEMDHandler___call__)
     description = _swig_new_instance_method(_wasserstein.ExternalEMDHandler_description)
+    __call__ = _swig_new_instance_method(_wasserstein.ExternalEMDHandler___call__)
 
 # Register ExternalEMDHandler in _wasserstein:
 _wasserstein.ExternalEMDHandler_swigregister(ExternalEMDHandler)
 cvar = _wasserstein.cvar
 PI = cvar.PI
 TWOPI = cvar.TWOPI
+
+class EMDBaseDouble(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, norm: "bool"=False, do_timing: "bool"=False):
+        _wasserstein.EMDBaseDouble_swiginit(self, _wasserstein.new_EMDBaseDouble(norm, do_timing))
+    __swig_destroy__ = _wasserstein.delete_EMDBaseDouble
+    extra = _swig_new_instance_method(_wasserstein.EMDBaseDouble_extra)
+    n0 = _swig_new_instance_method(_wasserstein.EMDBaseDouble_n0)
+    n1 = _swig_new_instance_method(_wasserstein.EMDBaseDouble_n1)
+    scale = _swig_new_instance_method(_wasserstein.EMDBaseDouble_scale)
+    emd = _swig_new_instance_method(_wasserstein.EMDBaseDouble_emd)
+    status = _swig_new_instance_method(_wasserstein.EMDBaseDouble_status)
+    duration = _swig_new_instance_method(_wasserstein.EMDBaseDouble_duration)
+
+# Register EMDBaseDouble in _wasserstein:
+_wasserstein.EMDBaseDouble_swigregister(EMDBaseDouble)
 
 class Histogram1DHandler(ExternalEMDHandler):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
@@ -261,7 +307,7 @@ class CorrelationDimension(Histogram1DHandlerLog):
 # Register CorrelationDimension in _wasserstein:
 _wasserstein.CorrelationDimension_swigregister(CorrelationDimension)
 
-class EMDArrayEuclidean(object):
+class EMDArrayEuclidean(EMDBaseDouble):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
@@ -272,15 +318,9 @@ class EMDArrayEuclidean(object):
     network_simplex = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_network_simplex)
     pairwise_distance = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_pairwise_distance)
     clear = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_clear)
-    extra = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_extra)
-    n0 = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_n0)
-    n1 = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_n1)
     dists_vec = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_dists_vec)
-    emd = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_emd)
-    status = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_status)
     flow = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_flow)
     flows_vec = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_flows_vec)
-    duration = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_duration)
     __str__ = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean___str__)
     flows = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_flows)
     dists = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_dists)
@@ -289,7 +329,7 @@ class EMDArrayEuclidean(object):
 # Register EMDArrayEuclidean in _wasserstein:
 _wasserstein.EMDArrayEuclidean_swigregister(EMDArrayEuclidean)
 
-class EMDArray(object):
+class EMDArray(EMDBaseDouble):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
@@ -300,15 +340,9 @@ class EMDArray(object):
     network_simplex = _swig_new_instance_method(_wasserstein.EMDArray_network_simplex)
     pairwise_distance = _swig_new_instance_method(_wasserstein.EMDArray_pairwise_distance)
     clear = _swig_new_instance_method(_wasserstein.EMDArray_clear)
-    extra = _swig_new_instance_method(_wasserstein.EMDArray_extra)
-    n0 = _swig_new_instance_method(_wasserstein.EMDArray_n0)
-    n1 = _swig_new_instance_method(_wasserstein.EMDArray_n1)
     dists_vec = _swig_new_instance_method(_wasserstein.EMDArray_dists_vec)
-    emd = _swig_new_instance_method(_wasserstein.EMDArray_emd)
-    status = _swig_new_instance_method(_wasserstein.EMDArray_status)
     flow = _swig_new_instance_method(_wasserstein.EMDArray_flow)
     flows_vec = _swig_new_instance_method(_wasserstein.EMDArray_flows_vec)
-    duration = _swig_new_instance_method(_wasserstein.EMDArray_duration)
     __str__ = _swig_new_instance_method(_wasserstein.EMDArray___str__)
     flows = _swig_new_instance_method(_wasserstein.EMDArray_flows)
     dists = _swig_new_instance_method(_wasserstein.EMDArray_dists)
@@ -345,7 +379,7 @@ class PairwiseEMDArrayEuclidean(object):
     compute = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_compute)
     __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean___str__)
     _add_event = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean__add_event)
-    npy_emds = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_npy_emds)
+    emds = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_emds)
 
     def __call__(self, events0, events1=None, gdim=None):
 
