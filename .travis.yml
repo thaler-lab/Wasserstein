@@ -89,7 +89,7 @@ jobs:
     # build on mac
     - name: Build wheels on Mac
       stage: build
-      os: mac
+      os: osx
       osx_image: xcode12
       language: shell
       before_install: |
