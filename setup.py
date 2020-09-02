@@ -27,7 +27,7 @@ elif platform.system() == 'Windows':
 
 wasserstein = Extension('wasserstein._wasserstein',
                         sources=[os.path.join(wass_path, 'wasserstein.cpp')],
-                        include_dirs=[np.get_include(), '.'],
+                        include_dirs=[np.get_include(), os.path.dirname(__file__)],
                         extra_compile_args=cxxflags,
                         extra_link_args=ldflags,
                         libraries=libs)
