@@ -52,7 +52,7 @@ jobs:
       before_install: 
         - choco install python --version 3.8.3
         - ln -s /c/Python38/python.exe /c/Python38/python3.exe
-      install: python3 -m pip install numpy pot
+      install: python3 -m pip install numpy h5py pot
       env:
         - PATH=/c/Python38:/c/Python38/Scripts:$PATH
 
@@ -113,7 +113,7 @@ jobs:
       before_install:
         - choco install python --version 3.8.3
         - ln -s /c/Python38/python.exe /c/Python38/python3.exe
-      install: python3 -m pip install cibuildwheel numpy twine
+      install: python3 -m pip install cibuildwheel numpy h5py pot twine
       script: python3 -m cibuildwheel --output-dir wheelhouse
       after_success: |
         if [ ! -z $TRAVIS_TAG ]; then
