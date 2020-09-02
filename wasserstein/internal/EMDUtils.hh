@@ -119,8 +119,8 @@ protected:
   typedef std::vector<Value> ValueVector;
   #endif
 
-  // normalize option
-  bool norm_;
+  // boolean options
+  bool norm_, do_timing_, external_dists_;
 
   // number of particles
   std::size_t n0_, n1_;
@@ -131,7 +131,6 @@ protected:
   EMDStatus status_;
 
   // timing
-  bool do_timing_;
   std::chrono::steady_clock::time_point start_;
   double duration_;
 
@@ -141,18 +140,23 @@ public:
   typedef Value ValuePublic;
 
   // constructor from two boolean options
-  EMDBase(bool norm = false, bool do_timing = false) :
+  EMDBase(bool norm = false, bool do_timing = false, bool external_dists = false) :
     norm_(norm),
+    do_timing_(do_timing),
+    external_dists_(external_dists),
     n0_(0), n1_(0),
     extra_(ExtraParticle::Neither),
     emd_(0),
     status_(EMDStatus::Empty),
-    do_timing_(do_timing),
     duration_(0)
   {}
 
   // virtual desctructor
   virtual ~EMDBase() {}
+
+  // get/set whether we're currently setup to use external distances
+  bool external_dists() const { return external_dists_; }
+  void set_external_dists(bool exdists) { external_dists_ = exdists; }
 
   // which event, 0 or 1, got an extra particle (-1 if no event got one)
   ExtraParticle extra() const { return extra_; }

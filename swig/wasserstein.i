@@ -76,9 +76,7 @@ import_array();
 
 // numpy typemaps
 %apply (double* IN_ARRAY1, int DIM1) {(double* weights0, int n0), (double* weights1, int n1)}
-%apply (double* IN_ARRAY2, int DIM1, int DIM2) {(double* ev0, int n00, int n01),
-                                                (double* ev1, int n10, int n11),
-                                                (double* coords0, int n00, int n01),
+%apply (double* IN_ARRAY2, int DIM1, int DIM2) {(double* coords0, int n00, int n01),
                                                 (double* coords1, int n10, int n11),
                                                 (double* external_dists, int d0, int d1)}
 %apply (double* INPLACE_ARRAY1, int DIM1) {(double* weights, int n0)}
@@ -244,22 +242,11 @@ std::string __str__() const {
                    n01, n11);
       return -1;
     }
+
+    $self->set_external_dists(false);
+
     return (*$self)(std::make_tuple(coords0, weights0, n0, n01), std::make_tuple(coords1, weights1, n1, n11));
   }
-
-  // provide events as individual arrays
-  /*double operator()(double* ev0, int n00, int n01, double* ev1, int n10, int n11) {
-
-    if (n00 != n10 || n01 != n11) {
-        PyErr_SetString(PyExc_ValueError, "Event dimensions mismatched");
-        return -1;
-    }
-    
-    return (*$self)(std::make_tuple(coords0, weights0, n0, n01), std::make_tuple(coords1, weights1, n1, n11));
-  }*/
-}
-
-%extend emd::EMD<emd::ArrayEvent<>, emd::CustomArrayDistance<>> {
 
   // provide weights and pairwise distances as numpy arrays
   double operator()(double* weights0, int n0,
@@ -277,6 +264,8 @@ std::string __str__() const {
     std::size_t ndists(std::size_t(d0) * std::size_t(d1));
     $self->_dists().resize(ndists);
     std::copy(external_dists, external_dists + ndists, $self->_dists().begin());
+
+    $self->set_external_dists(true);
 
     return (*$self)(std::make_tuple(nullptr, weights0, n0, -1), std::make_tuple(nullptr, weights1, n1, -1));
   }
@@ -333,6 +322,5 @@ std::string __str__() const {
 %}
 
 // instantiate specific (Pairwise)EMD templates
-%template(EMDArrayEuclidean) emd::EMD<emd::ArrayEvent<>, emd::EuclideanArrayDistance<>>;
-%template(EMDArray) emd::EMD<emd::ArrayEvent<>, emd::CustomArrayDistance<>>;
-%template(PairwiseEMDArrayEuclidean) emd::PairwiseEMD<emd::EMD<emd::ArrayEvent<>, emd::EuclideanArrayDistance<>>>;
+%template(EMD) emd::EMD<emd::ArrayEvent<>, emd::EuclideanArrayDistance<>>;
+%template(PairwiseEMD) emd::PairwiseEMD<emd::EMD<emd::ArrayEvent<>, emd::EuclideanArrayDistance<>>>;

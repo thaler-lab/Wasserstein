@@ -150,31 +150,6 @@ struct EuclideanArrayDistance : PairwiseDistanceBase<EuclideanArrayDistance<V>, 
 }; // EuclideanArrayDistance
 
 ////////////////////////////////////////////////////////////////////////////////
-// CustomArrayDistance - for use externally setting the pairwise distances
-////////////////////////////////////////////////////////////////////////////////
-
-template<typename V = double>
-struct CustomArrayDistance : PairwiseDistanceBase<CustomArrayDistance<V>, ArrayParticleCollection<V>, V> {
-  typedef ArrayParticleCollection<V> ParticleCollection;
-  typedef typename ParticleCollection::value_type Particle;
-  typedef V Value;
-
-  CustomArrayDistance(Value R, Value beta) :
-    PairwiseDistanceBase<CustomArrayDistance<V>, ArrayParticleCollection<V>, V>(R, beta)
-  {}
-  static std::string name() { return "CustomArrayDistance"; }
-  static Value plain_distance(const Particle & p0, const Particle & p1) {
-    throw std::runtime_error("Should never call this function.");
-    return -1;
-  }
-
-  // override method of base class because distances already exist
-  void fill_distances(const ParticleCollection & ps0, const ParticleCollection & ps1,
-                      std::vector<Value> & dists, ExtraParticle extra)
-  {}
-}; // CustomArrayDistance
-
-////////////////////////////////////////////////////////////////////////////////
 // FastJet-specific pairwise distances
 ////////////////////////////////////////////////////////////////////////////////
 

@@ -43,8 +43,53 @@ def test_emd(num_particles, dim, beta, R, norm):
             pytest.skip()
 
         # wasserstein computation
-        wassEMD = wasserstein.EMDArrayEuclidean(beta=beta, R=R, norm=(norm is True))
+        wassEMD = wasserstein.EMD(beta=beta, R=R, norm=(norm is True))
         wass_emd = wassEMD(ws0[:num_particles], coords0, ws1[:num_particles], coords1)
+
+        emd_diff = abs(pot_emd - wass_emd)
+        emd_percent_diff = 2*emd_diff/(pot_emd + wass_emd)
+        assert emd_percent_diff < 1e-13 or emd_diff < 1e-13, 'emds do not match'
+
+@pytest.mark.emd
+@pytest.mark.emdcustom
+@pytest.mark.parametrize('norm', [True, False, 'extra'])
+@pytest.mark.parametrize('R', np.arange(0.2, 2.1, 0.2).tolist() + [4, 6, 8, 10])
+@pytest.mark.parametrize('beta', [0.5, 1.0, 1.5, 2.0, 3.0])
+@pytest.mark.parametrize('dim', [2, 3])
+@pytest.mark.parametrize('num_particles', [2, 4, 8, 16, 32])
+def test_emd_custom(num_particles, dim, beta, R, norm):
+
+    for i in range(5):
+        ws0, ws1 = np.random.rand(2, num_particles)
+        coords0, coords1 = 2*np.random.rand(2, num_particles, dim) - 1
+
+        # by hand computation with pot
+        dists = (ot.dist(coords0, coords1, metric='euclidean')/R)**beta
+        if norm is True:
+            ws0 /= np.sum(ws0)
+            ws1 /= np.sum(ws1)
+        elif norm == 'extra':
+            diff = np.sum(ws0) - np.sum(ws1)
+            if diff > 0:
+                ws1 = np.append(ws1, diff)
+                dists = np.hstack((dists, np.ones((num_particles, 1))))
+            elif diff < 0:
+                ws0 = np.append(ws0, abs(diff))
+                dists = np.vstack((dists, np.ones(num_particles)))
+        else:
+            ws0 /= np.sum(ws0)
+            ws0 *= np.sum(ws1)
+            ws0[0] += np.sum(ws1) - np.sum(ws0)
+
+        pot_emd = ot.emd2(ws0, ws1, dists)
+
+        # sometimes pot fails (especially on mac)
+        if pot_emd == 0:
+            pytest.skip()
+
+        # wasserstein computation
+        wassEMD = wasserstein.EMD(norm=(norm is True), external_dists=True)
+        wass_emd = wassEMD(ws0, ws1, dists)
 
         emd_diff = abs(pot_emd - wass_emd)
         emd_percent_diff = 2*emd_diff/(pot_emd + wass_emd)
@@ -84,7 +129,7 @@ def test_emd_flows(num_particles, beta, R, norm):
             pytest.skip()
 
         # wasserstein computation
-        wassEMD = wasserstein.EMDArrayEuclidean(beta=beta, R=R, norm=norm)
+        wassEMD = wasserstein.EMD(beta=beta, R=R, norm=norm)
         wassEMD(ws0[:num_particles], coords0, ws1[:num_particles], coords1)
 
         # check that numpy and vector agree for wasserstein
@@ -112,7 +157,7 @@ def test_emd_dists(num_particles, beta, R, norm):
         dists = (ot.dist(coords0, coords1, metric='euclidean')/R)**beta
 
         # wasserstein computation
-        wassEMD = wasserstein.EMDArrayEuclidean(beta=beta, R=R, norm=norm)
+        wassEMD = wasserstein.EMD(beta=beta, R=R, norm=norm)
         wassEMD(ws0, coords0, ws1, coords1)
 
         # check that numpy and vector agree for wasserstein
@@ -143,7 +188,7 @@ def test_emd_attributes(beta, R, norm):
     coords0, coords1 = 2*np.random.rand(n0, 2) - 1, 2*np.random.rand(n1, 2) - 1
 
     # wasserstein computation
-    wassEMD = wasserstein.EMDArrayEuclidean(beta=beta, R=R, norm=norm)
+    wassEMD = wasserstein.EMD(beta=beta, R=R, norm=norm)
     wassEMD(ws0, coords0, ws1, coords1)
 
     if norm:
@@ -161,15 +206,15 @@ def test_emd_attributes(beta, R, norm):
 @pytest.mark.parametrize('store_sym_flattened', [True, False])
 @pytest.mark.parametrize('norm', [True, False])
 @pytest.mark.parametrize('chunksize', [-2, -1, 0, 1, 2, 1000000000])
-@pytest.mark.parametrize('num_threads', [1, 2, 4, -1])
+@pytest.mark.parametrize('num_threads', [1, 2, -1])
 @pytest.mark.parametrize('num_events', [1, 2, 16, 128])
 def test_pairwise_emd(num_events, num_threads, chunksize, norm, store_sym_flattened):
 
     beta, R = 1.0, 1.0
     eventsA, eventsB = np.random.rand(2, num_events, 10, 3)
 
-    wassEMD = wasserstein.EMDArrayEuclidean(beta=beta, R=R, norm=norm)
-    wassPairwiseEMD = wasserstein.PairwiseEMDArrayEuclidean(beta=beta, R=R, norm=norm, 
+    wassEMD = wasserstein.EMD(beta=beta, R=R, norm=norm)
+    wassPairwiseEMD = wasserstein.PairwiseEMD(beta=beta, R=R, norm=norm, 
                         num_threads=num_threads, store_sym_emds_flattened=store_sym_flattened)
 
     # symmetric computation
@@ -214,7 +259,7 @@ def test_pairwise_emd_with_ef(num_events, num_particles, num_threads, beta, R, n
     import energyflow as ef
     eventsA, eventsB = np.random.rand(2, num_events, num_particles, 3)
 
-    wassPairwiseEMD = wasserstein.PairwiseEMDArrayEuclidean(beta=beta, R=R, norm=norm, num_threads=num_threads)
+    wassPairwiseEMD = wasserstein.PairwiseEMD(beta=beta, R=R, norm=norm, num_threads=num_threads)
 
     # symmetric computation
     wassPairwiseEMD(eventsA)

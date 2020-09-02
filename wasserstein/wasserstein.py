@@ -245,9 +245,11 @@ class EMDBaseDouble(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self, norm=False, do_timing=False):
-        _wasserstein.EMDBaseDouble_swiginit(self, _wasserstein.new_EMDBaseDouble(norm, do_timing))
+    def __init__(self, norm=False, do_timing=False, external_dists=False):
+        _wasserstein.EMDBaseDouble_swiginit(self, _wasserstein.new_EMDBaseDouble(norm, do_timing, external_dists))
     __swig_destroy__ = _wasserstein.delete_EMDBaseDouble
+    external_dists = _swig_new_instance_method(_wasserstein.EMDBaseDouble_external_dists)
+    set_external_dists = _swig_new_instance_method(_wasserstein.EMDBaseDouble_set_external_dists)
     extra = _swig_new_instance_method(_wasserstein.EMDBaseDouble_extra)
     n0 = _swig_new_instance_method(_wasserstein.EMDBaseDouble_n0)
     n1 = _swig_new_instance_method(_wasserstein.EMDBaseDouble_n1)
@@ -307,76 +309,56 @@ class CorrelationDimension(Histogram1DHandlerLog):
 # Register CorrelationDimension in _wasserstein:
 _wasserstein.CorrelationDimension_swigregister(CorrelationDimension)
 
-class EMDArrayEuclidean(EMDBaseDouble):
+class EMD(EMDBaseDouble):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self, R=1, beta=1, norm=False, do_timing=False, n_iter_max=100000, epsilon_large_factor=10000, epsilon_small_factor=0):
-        _wasserstein.EMDArrayEuclidean_swiginit(self, _wasserstein.new_EMDArrayEuclidean(R, beta, norm, do_timing, n_iter_max, epsilon_large_factor, epsilon_small_factor))
-    __swig_destroy__ = _wasserstein.delete_EMDArrayEuclidean
-    description = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_description)
-    clear = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_clear)
-    dists_vec = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_dists_vec)
-    flow = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_flow)
-    flows_vec = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_flows_vec)
-    __str__ = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean___str__)
-    flows = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_flows)
-    dists = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_dists)
-    __call__ = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean___call__)
+    def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=10000, epsilon_small_factor=0):
+        _wasserstein.EMD_swiginit(self, _wasserstein.new_EMD(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
+    __swig_destroy__ = _wasserstein.delete_EMD
+    description = _swig_new_instance_method(_wasserstein.EMD_description)
+    clear = _swig_new_instance_method(_wasserstein.EMD_clear)
+    dists_vec = _swig_new_instance_method(_wasserstein.EMD_dists_vec)
+    flow = _swig_new_instance_method(_wasserstein.EMD_flow)
+    flows_vec = _swig_new_instance_method(_wasserstein.EMD_flows_vec)
+    __str__ = _swig_new_instance_method(_wasserstein.EMD___str__)
+    flows = _swig_new_instance_method(_wasserstein.EMD_flows)
+    dists = _swig_new_instance_method(_wasserstein.EMD_dists)
+    __call__ = _swig_new_instance_method(_wasserstein.EMD___call__)
 
-# Register EMDArrayEuclidean in _wasserstein:
-_wasserstein.EMDArrayEuclidean_swigregister(EMDArrayEuclidean)
+# Register EMD in _wasserstein:
+_wasserstein.EMD_swigregister(EMD)
 
-class EMDArray(EMDBaseDouble):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
-
-    def __init__(self, R=1, beta=1, norm=False, do_timing=False, n_iter_max=100000, epsilon_large_factor=10000, epsilon_small_factor=0):
-        _wasserstein.EMDArray_swiginit(self, _wasserstein.new_EMDArray(R, beta, norm, do_timing, n_iter_max, epsilon_large_factor, epsilon_small_factor))
-    __swig_destroy__ = _wasserstein.delete_EMDArray
-    description = _swig_new_instance_method(_wasserstein.EMDArray_description)
-    clear = _swig_new_instance_method(_wasserstein.EMDArray_clear)
-    dists_vec = _swig_new_instance_method(_wasserstein.EMDArray_dists_vec)
-    flow = _swig_new_instance_method(_wasserstein.EMDArray_flow)
-    flows_vec = _swig_new_instance_method(_wasserstein.EMDArray_flows_vec)
-    __str__ = _swig_new_instance_method(_wasserstein.EMDArray___str__)
-    flows = _swig_new_instance_method(_wasserstein.EMDArray_flows)
-    dists = _swig_new_instance_method(_wasserstein.EMDArray_dists)
-    __call__ = _swig_new_instance_method(_wasserstein.EMDArray___call__)
-
-# Register EMDArray in _wasserstein:
-_wasserstein.EMDArray_swigregister(EMDArray)
-
-class PairwiseEMDArrayEuclidean(object):
+class PairwiseEMD(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
     def __init__(self, *args, **kwargs):
-        _wasserstein.PairwiseEMDArrayEuclidean_swiginit(self, _wasserstein.new_PairwiseEMDArrayEuclidean(*args, **kwargs))
-    __swig_destroy__ = _wasserstein.delete_PairwiseEMDArrayEuclidean
-    description = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_description)
-    set_omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_set_omp_dynamic_chunksize)
-    set_external_emd_handler = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_set_external_emd_handler)
+        _wasserstein.PairwiseEMD_swiginit(self, _wasserstein.new_PairwiseEMD(*args, **kwargs))
+    __swig_destroy__ = _wasserstein.delete_PairwiseEMD
+    description = _swig_new_instance_method(_wasserstein.PairwiseEMD_description)
+    set_omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMD_set_omp_dynamic_chunksize)
+    set_external_emd_handler = _swig_new_instance_method(_wasserstein.PairwiseEMD_set_external_emd_handler)
 
     def clear(self):
-        _wasserstein.PairwiseEMDArrayEuclidean_clear(self)
+        _wasserstein.PairwiseEMD_clear(self)
         self.event_arrs = []
 
 
-    emd = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_emd)
-    emds_vec = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_emds_vec)
-    errored = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_errored)
-    error_messages = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_error_messages)
-    report_errors = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_report_errors)
-    num_emds = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_num_emds)
-    nevA = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_nevA)
-    nevB = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_nevB)
-    preprocess_back_event = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_preprocess_back_event)
-    init = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_init)
-    compute = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_compute)
-    __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean___str__)
-    _add_event = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean__add_event)
-    emds = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_emds)
+    emd = _swig_new_instance_method(_wasserstein.PairwiseEMD_emd)
+    emds_vec = _swig_new_instance_method(_wasserstein.PairwiseEMD_emds_vec)
+    errored = _swig_new_instance_method(_wasserstein.PairwiseEMD_errored)
+    error_messages = _swig_new_instance_method(_wasserstein.PairwiseEMD_error_messages)
+    report_errors = _swig_new_instance_method(_wasserstein.PairwiseEMD_report_errors)
+    num_emds = _swig_new_instance_method(_wasserstein.PairwiseEMD_num_emds)
+    nevA = _swig_new_instance_method(_wasserstein.PairwiseEMD_nevA)
+    nevB = _swig_new_instance_method(_wasserstein.PairwiseEMD_nevB)
+    preprocess_back_event = _swig_new_instance_method(_wasserstein.PairwiseEMD_preprocess_back_event)
+    init = _swig_new_instance_method(_wasserstein.PairwiseEMD_init)
+    compute = _swig_new_instance_method(_wasserstein.PairwiseEMD_compute)
+    __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMD___str__)
+    _add_event = _swig_new_instance_method(_wasserstein.PairwiseEMD__add_event)
+    emds = _swig_new_instance_method(_wasserstein.PairwiseEMD_emds)
 
     def __call__(self, events0, events1=None, gdim=None):
 
@@ -404,8 +386,8 @@ class PairwiseEMDArrayEuclidean(object):
         self.compute()
 
 
-# Register PairwiseEMDArrayEuclidean in _wasserstein:
-_wasserstein.PairwiseEMDArrayEuclidean_swigregister(PairwiseEMDArrayEuclidean)
+# Register PairwiseEMD in _wasserstein:
+_wasserstein.PairwiseEMD_swigregister(PairwiseEMD)
 
 
 

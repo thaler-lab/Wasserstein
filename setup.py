@@ -9,8 +9,7 @@ from setuptools.extension import Extension
 
 import numpy as np
 
-wass_path = os.path.join(os.path.dirname(__file__), 'wasserstein')
-with open(os.path.join(wass_path, '__init__.py'), 'r') as f:
+with open(os.path.join('wasserstein', '__init__.py'), 'r') as f:
     __version__ = re.search(r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read()).group(1)
 
 cxxflags = ['-fopenmp', '-std=c++14', '-Iwasserstein']
@@ -26,8 +25,8 @@ elif platform.system() == 'Windows':
     del ldflags[0]
 
 wasserstein = Extension('wasserstein._wasserstein',
-                        sources=[os.path.join(wass_path, 'wasserstein.cpp')],
-                        include_dirs=[np.get_include(), os.path.dirname(__file__)],
+                        sources=[os.path.join('wasserstein', 'wasserstein.cpp')],
+                        include_dirs=[np.get_include(), '.'],
                         extra_compile_args=cxxflags,
                         extra_link_args=ldflags,
                         libraries=libs)
@@ -38,7 +37,7 @@ if sys.argv[1] == 'swig':
         opts += ' -py3'
     command = 'swig -python -c++ {} -Iwasserstein -o wasserstein/wasserstein.cpp swig/wasserstein.i'.format(opts)
     print(command)
-    subprocess.call(command.split())
+    subprocess.run(command.split())
 
 else:
     setup(

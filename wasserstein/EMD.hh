@@ -102,13 +102,13 @@ public:
 
   // constructor with entirely default arguments
   EMD(double R = 1, double beta = 1, bool norm = false,
-      bool do_timing = false,
+      bool do_timing = false, bool external_dists = false,
       unsigned int n_iter_max = 100000,
       double epsilon_large_factor = 10000,
       double epsilon_small_factor = 0) :
 
     // base class initialization
-    EMDBase(norm, do_timing),
+    EMDBase(norm, do_timing, external_dists),
 
     // initialize contained objects
     pairwise_distance_(R, beta),
@@ -188,10 +188,10 @@ public:
     // handle adding fictitious particle
     Value weightdiff(ev1.total_weight() - ev0.total_weight());
 
-    // for norm or already equal, don't add particle
-    if (norm_ || weightdiff == 0) {
+    // for norm or already equal or custom distance, don't add particle
+    if (norm_ || external_dists() || weightdiff == 0) {
       extra_ = ExtraParticle::Neither;
-      weights().resize(n0() + n1() + 1); // +1 is to match what network simplex will do anyway
+      weights().resize(n0() + n1() + 1); // + 1 is to match what network simplex will do anyway
       std::copy(ws1.begin(), ws1.end(), std::copy(ws0.begin(), ws0.end(), weights().begin()));
     }
 
@@ -221,8 +221,9 @@ public:
       for (Value & w : weights()) w /= scale_;
     }
 
-    // store distances in network simplex
-    pairwise_distance_.fill_distances(ev0.particles(), ev1.particles(), dists(), extra_);
+    // store distances in network simplex if not externally provided
+    if (!external_dists())
+      pairwise_distance_.fill_distances(ev0.particles(), ev1.particles(), dists(), extra());
 
     // run the EarthMoversDistance at this point
     status_ = network_simplex_.compute(n0(), n1());
@@ -270,12 +271,14 @@ public:
 #ifdef SWIG_WASSERSTEIN
   // make dists available publicly (avoid name conflict in SWIG with leading underscore)
   ValueVector & _dists() { return dists(); }
-#endif
 
 private:
+#endif
 
   // writeable dists
   ValueVector & dists() { return network_simplex_.dists(); }
+
+private:
 
   // set weights of network simplex
   ValueVector & weights() { return network_simplex_.weights(); }
@@ -331,9 +334,6 @@ public:
 #endif
   typedef std::vector<Event> EventVector;
 
-  static_assert(!std::is_base_of<CustomArrayDistance<Value>, typename EMD::PairwiseDistance>::value,
-                "Cannot use Pairwise EMD with CustomArrayDistance.");
-
 private:
 
   // records how the emd pairs are being stored
@@ -376,7 +376,8 @@ public:
               double epsilon_large_factor = 10000,
               double epsilon_small_factor = 0) :
     num_threads_(determine_num_threads(num_threads)),
-    emd_objs_(num_threads_, EMD(R, beta, norm, do_timing, n_iter_max, epsilon_large_factor, epsilon_small_factor))
+    emd_objs_(num_threads_, EMD(R, beta, norm, do_timing, false,
+                                n_iter_max, epsilon_large_factor, epsilon_small_factor))
   {
     setup(chunksize, &os, store_sym_emds_flattened, throw_on_error);
   }
@@ -394,6 +395,9 @@ public:
     num_threads_(determine_num_threads(num_threads)),
     emd_objs_(num_threads_, emd)
   {
+    if (emd.external_dists())
+      throw std::invalid_argument("Cannot use PairwiseEMD with external distances");
+
     setup(chunksize, &os, store_sym_emds_flattened, throw_on_error);
   }
 
