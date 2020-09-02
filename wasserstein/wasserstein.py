@@ -245,7 +245,7 @@ class EMDBaseDouble(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self, norm: "bool"=False, do_timing: "bool"=False):
+    def __init__(self, norm=False, do_timing=False):
         _wasserstein.EMDBaseDouble_swiginit(self, _wasserstein.new_EMDBaseDouble(norm, do_timing))
     __swig_destroy__ = _wasserstein.delete_EMDBaseDouble
     extra = _swig_new_instance_method(_wasserstein.EMDBaseDouble_extra)
@@ -311,7 +311,7 @@ class EMDArrayEuclidean(EMDBaseDouble):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self, R: "double"=1, beta: "double"=1, norm: "bool"=False, do_timing: "bool"=False, n_iter_max: "unsigned int"=100000, epsilon_large_factor: "double"=10000, epsilon_small_factor: "double"=0):
+    def __init__(self, R=1, beta=1, norm=False, do_timing=False, n_iter_max=100000, epsilon_large_factor=10000, epsilon_small_factor=0):
         _wasserstein.EMDArrayEuclidean_swiginit(self, _wasserstein.new_EMDArrayEuclidean(R, beta, norm, do_timing, n_iter_max, epsilon_large_factor, epsilon_small_factor))
     __swig_destroy__ = _wasserstein.delete_EMDArrayEuclidean
     description = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_description)
@@ -331,7 +331,7 @@ class EMDArray(EMDBaseDouble):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self, R: "double"=1, beta: "double"=1, norm: "bool"=False, do_timing: "bool"=False, n_iter_max: "unsigned int"=100000, epsilon_large_factor: "double"=10000, epsilon_small_factor: "double"=0):
+    def __init__(self, R=1, beta=1, norm=False, do_timing=False, n_iter_max=100000, epsilon_large_factor=10000, epsilon_small_factor=0):
         _wasserstein.EMDArray_swiginit(self, _wasserstein.new_EMDArray(R, beta, norm, do_timing, n_iter_max, epsilon_large_factor, epsilon_small_factor))
     __swig_destroy__ = _wasserstein.delete_EMDArray
     description = _swig_new_instance_method(_wasserstein.EMDArray_description)

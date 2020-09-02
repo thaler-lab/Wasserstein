@@ -33,9 +33,12 @@ wasserstein = Extension('wasserstein._wasserstein',
                         libraries=libs)
 
 if sys.argv[1] == 'swig':
-    command = 'swig -python -c++ -fastproxy -py3 -w511 -keyword -Iwasserstein -o wasserstein/wasserstein.cpp swig/wasserstein.i'
+    opts = '-fastproxy -w511 -keyword'
+    if len(sys.argv) >= 3 and sys.argv[2] == '-py3':
+        opts += ' -py3'
+    command = 'swig -python -c++ {} -Iwasserstein -o wasserstein/wasserstein.cpp swig/wasserstein.i'.format(opts)
     print(command)
-    subprocess.run(command.split())
+    subprocess.call(command.split())
 
 else:
     setup(
