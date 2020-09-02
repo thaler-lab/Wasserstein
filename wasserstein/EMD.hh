@@ -577,6 +577,11 @@ private:
   // access modifiable events
   EventVector & events() { return events_; }
 
+  // preprocesses the last event added
+  void preprocess_back_event() {
+    emd_objs_[0].preprocess(events_.back());
+  }
+
   // init self pairs
   void init(std::size_t nev) {
 
@@ -585,7 +590,8 @@ private:
     two_event_sets_ = false;
 
     // start clock for overall timing
-    if (do_pairwise_timing_) emd_objs_[0].start_timing();
+    if (do_pairwise_timing_)
+      emd_objs_[0].start_timing();
 
     // resize emds
     num_emds_ = nevA_*(nevA_ - 1)/2;
@@ -607,7 +613,8 @@ private:
     two_event_sets_ = true;
     
     // start clock for overall timing
-    if (do_pairwise_timing_) emd_objs_[0].start_timing();
+    if (do_pairwise_timing_)
+      emd_objs_[0].start_timing();
 
     // resize emds
     num_emds_ = nevA_*nevB_;
@@ -754,7 +761,7 @@ private:
   void store_proto_events(const std::vector<ProtoEvent> & proto_events) {
     for (const ProtoEvent & proto_event : proto_events) {
       events_.emplace_back(proto_event);
-      emd_objs_[0].preprocess(events_.back());
+      preprocess_back_event();
     }
   }
 

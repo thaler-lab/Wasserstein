@@ -136,10 +136,15 @@ struct EuclideanArrayDistance : PairwiseDistanceBase<EuclideanArrayDistance<V>, 
   static std::string name() { return "EuclideanArrayDistance"; }
   static Value plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
     Value d(0);
-    for (int i = 0; i < p0.stride(); i++) {
-      Value dx((*p0)[i] - (*p1)[i]);
-      d += dx*dx;
+    if (p0.stride() == 2) {
+      Value dx((*p0)[0] - (*p1)[0]), dy((*p0)[1] - (*p1)[1]);
+      d = dx*dx + dy*dy;
     }
+    else 
+      for (int i = 0; i < p0.stride(); i++) {
+        Value dx((*p0)[i] - (*p1)[i]);
+        d += dx*dx;
+      }
     return d;
   }
 }; // EuclideanArrayDistance

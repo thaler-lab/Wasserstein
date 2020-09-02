@@ -76,7 +76,9 @@ import_array();
 
 // numpy typemaps
 %apply (double* IN_ARRAY1, int DIM1) {(double* weights0, int n0), (double* weights1, int n1)}
-%apply (double* IN_ARRAY2, int DIM1, int DIM2) {(double* coords0, int n00, int n01),
+%apply (double* IN_ARRAY2, int DIM1, int DIM2) {(double* ev0, int n00, int n01),
+                                                (double* ev1, int n10, int n11),
+                                                (double* coords0, int n00, int n01),
                                                 (double* coords1, int n10, int n11),
                                                 (double* external_dists, int d0, int d1)}
 %apply (double* INPLACE_ARRAY1, int DIM1) {(double* weights, int n0)}
@@ -152,6 +154,8 @@ import_array();
 
 // ignore certain functions
 %ignore emd::EMD::compute;
+%ignore emd::EMD::network_simplex;
+%ignore emd::EMD::pairwise_distance;
 %ignore emd::EMD::_dists;
 %ignore emd::PairwiseEMD::compute(const EventVector & events);
 %ignore emd::PairwiseEMD::compute(const EventVector & eventsA, const EventVector & eventsB);
@@ -242,6 +246,17 @@ std::string __str__() const {
     }
     return (*$self)(std::make_tuple(coords0, weights0, n0, n01), std::make_tuple(coords1, weights1, n1, n11));
   }
+
+  // provide events as individual arrays
+  /*double operator()(double* ev0, int n00, int n01, double* ev1, int n10, int n11) {
+
+    if (n00 != n10 || n01 != n11) {
+        PyErr_SetString(PyExc_ValueError, "Event dimensions mismatched");
+        return -1;
+    }
+    
+    return (*$self)(std::make_tuple(coords0, weights0, n0, n01), std::make_tuple(coords1, weights1, n1, n11));
+  }*/
 }
 
 %extend emd::EMD<emd::ArrayEvent<>, emd::CustomArrayDistance<>> {
@@ -273,6 +288,7 @@ std::string __str__() const {
   // add a single event to the PairwiseEMD object
   void _add_event(double* weights, int n0, double* coords, int n1, int d) {
     $self->events().emplace_back(coords, weights, n1, d);
+    $self->preprocess_back_event();
   }
 
   void npy_emds(double** arr_out, int* n0, int* n1) {

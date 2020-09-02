@@ -108,7 +108,6 @@ struct ArrayEvent : public EventBase<ArrayParticleCollection<V>, ArrayWeightColl
     // set total weight
     for (int i = 0; i < size; i++)
       this->total_weight_ += weight_array[i];
-    this->has_weights_ = true;
   }
 
   ArrayEvent(const std::tuple<V*, V*, int, int> & tup) :
@@ -238,7 +237,6 @@ struct GenericEvent : public EventBase<std::vector<P>, std::vector<typename P::V
       this->total_weight_ += particle.weight;
       this->weights_.push_back(particle.weight);
     }
-    this->has_weights_ = true;
   }
 
   static std::string name() {

@@ -14,10 +14,10 @@ jobs:
   exclude:
     - os: mac
       stage: test
-    - stage: build
-      os: linux
-    - stage: build
-      os: macos
+    # - stage: build
+    #   os: linux
+    # - stage: build
+    #   os: macos
   include:
 
     # test on linux
@@ -99,7 +99,7 @@ jobs:
       stage: build
       os: windows
       language: shell
-      before_install: choco install python --version 3.8.0
+      before_install: choco install python --version 3.8.3
       script: python -m cibuildwheel --output-dir wheelhouse
       after_success: |
         if [ ! -z $TRAVIS_TAG ]; then
@@ -114,7 +114,7 @@ env:
     - TWINE_USERNAME=__token__
     - CIBW_BEFORE_BUILD="pip install --upgrade numpy"
     - CIBW_TEST_REQUIRES=pytest
-    - CIBW_TEST_COMMAND="pytest -v {project}"
+    - CIBW_TEST_COMMAND="pytest -v {package}/tests"
 
 branches:
   only:

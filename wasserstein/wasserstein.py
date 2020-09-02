@@ -315,8 +315,6 @@ class EMDArrayEuclidean(EMDBaseDouble):
         _wasserstein.EMDArrayEuclidean_swiginit(self, _wasserstein.new_EMDArrayEuclidean(R, beta, norm, do_timing, n_iter_max, epsilon_large_factor, epsilon_small_factor))
     __swig_destroy__ = _wasserstein.delete_EMDArrayEuclidean
     description = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_description)
-    network_simplex = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_network_simplex)
-    pairwise_distance = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_pairwise_distance)
     clear = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_clear)
     dists_vec = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_dists_vec)
     flow = _swig_new_instance_method(_wasserstein.EMDArrayEuclidean_flow)
@@ -337,8 +335,6 @@ class EMDArray(EMDBaseDouble):
         _wasserstein.EMDArray_swiginit(self, _wasserstein.new_EMDArray(R, beta, norm, do_timing, n_iter_max, epsilon_large_factor, epsilon_small_factor))
     __swig_destroy__ = _wasserstein.delete_EMDArray
     description = _swig_new_instance_method(_wasserstein.EMDArray_description)
-    network_simplex = _swig_new_instance_method(_wasserstein.EMDArray_network_simplex)
-    pairwise_distance = _swig_new_instance_method(_wasserstein.EMDArray_pairwise_distance)
     clear = _swig_new_instance_method(_wasserstein.EMDArray_clear)
     dists_vec = _swig_new_instance_method(_wasserstein.EMDArray_dists_vec)
     flow = _swig_new_instance_method(_wasserstein.EMDArray_flow)
@@ -375,6 +371,7 @@ class PairwiseEMDArrayEuclidean(object):
     num_emds = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_num_emds)
     nevA = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_nevA)
     nevB = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_nevB)
+    preprocess_back_event = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_preprocess_back_event)
     init = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_init)
     compute = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean_compute)
     __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMDArrayEuclidean___str__)
