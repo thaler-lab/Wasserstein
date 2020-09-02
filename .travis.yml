@@ -52,7 +52,7 @@ jobs:
       before_install: 
         - choco install python --version 3.8.3
         - ln -s /c/Python38/python.exe /c/Python38/python3.exe
-      install: python3 -m pip install numpy
+      install: python3 -m pip install numpy pot
       env:
         - PATH=/c/Python38:/c/Python38/Scripts:$PATH
 
