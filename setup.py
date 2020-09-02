@@ -9,7 +9,8 @@ from setuptools.extension import Extension
 
 import numpy as np
 
-with open(os.path.join(os.path.dirname(__file__), 'wasserstein', '__init__.py'), 'r') as f:
+wass_path = os.path.join(os.path.dirname(__file__), 'wasserstein')
+with open(os.path.join(wass_path, '__init__.py'), 'r') as f:
     __version__ = re.search(r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read()).group(1)
 
 cxxflags = ['-fopenmp', '-std=c++14', '-Iwasserstein']
@@ -25,7 +26,7 @@ elif platform.system() == 'Windows':
     del ldflags[0]
 
 wasserstein = Extension('wasserstein._wasserstein',
-                        sources=['wasserstein/wasserstein.cpp'],
+                        sources=[os.path.join(wass_path, 'wasserstein.cpp')],
                         include_dirs=[np.get_include(), '.'],
                         extra_compile_args=cxxflags,
                         extra_link_args=ldflags,
