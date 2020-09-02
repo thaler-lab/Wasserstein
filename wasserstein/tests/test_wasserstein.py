@@ -1,3 +1,5 @@
+import platform
+
 import numpy as np
 import ot
 import pytest
@@ -205,6 +207,9 @@ def test_pairwise_emd(num_events, num_threads, chunksize, norm, store_sym_flatte
 @pytest.mark.parametrize('num_particles', [4, 12])
 @pytest.mark.parametrize('num_events', [1, 2, 16, 128])
 def test_pairwise_emd_with_ef(num_events, num_particles, num_threads, beta, R, norm):
+
+    if platform.system() == 'Windows':
+        pytest.skip()
 
     import energyflow as ef
     eventsA, eventsB = np.random.rand(2, num_events, num_particles, 3)
