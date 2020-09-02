@@ -125,8 +125,8 @@ jobs:
 env:
   global:
     - TWINE_USERNAME=__token__
-    - CIBW_BEFORE_BUILD="pip install numpy"
-    - CIBW_TEST_COMMAND="python3 {project}/setup.py test"
+    - CIBW_BEFORE_BUILD="python3 -m pip install numpy"
+  # - CIBW_TEST_COMMAND="python3 {project}/setup.py test"
 
 branches:
   only:
