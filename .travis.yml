@@ -1,10 +1,7 @@
 language: python
 
-install: pip3 install --upgrade numpy pytest cibuildwheel twine
-
 script:
-  - python3 setup.py install
-  - pytest -v wasserstein
+  - python3 setup.py test
 
 stages:
   - test
@@ -21,13 +18,13 @@ jobs:
   include:
 
     # test on linux
-    - name: Test Python3.7 on Linux
+    - name: Python3.7 - Linux
       stage: test
       dist: bionic
       python: 3.7
 
     # test on linux
-    - name: Test Python3.8 on Linux
+    - name: Python3.8 - Linux
       stage: test
       dist: bionic
       python: 3.8
@@ -57,6 +54,7 @@ jobs:
     - name: Deploy a source distribution
       stage: build
       dist: bionic
+      install: python3 -m pip install twine
       script: python3 setup.py sdist --formats=gztar
       after_success: |
         if [ ! -z $TRAVIS_TAG ]; then
@@ -68,9 +66,11 @@ jobs:
       stage: build
       dist: bionic
       services: docker
+      install: python3 -m pip install cibuildwheel twine
       script: python3 -m cibuildwheel --output-dir wheelhouse
       after_success: |
         if [ ! -z $TRAVIS_TAG ]; then
+          python3 -m pip install twine
           python3 -m twine upload --skip-existing wheelhouse/*.whl
         fi
       env:
@@ -85,6 +85,7 @@ jobs:
       before_install: |
         brew update > /dev/null
         brew install libomp
+      install: python3 -m pip install cibuildwheel twine
       script: python3 -m cibuildwheel --output-dir wheelhouse
       after_success: |
         if [ ! -z $TRAVIS_TAG ]; then
@@ -100,6 +101,7 @@ jobs:
       os: windows
       language: shell
       before_install: choco install python --version 3.8.3
+      install: python -m pip install cibuildwheel twine
       script: python -m cibuildwheel --output-dir wheelhouse
       after_success: |
         if [ ! -z $TRAVIS_TAG ]; then
@@ -107,14 +109,13 @@ jobs:
           python -m twine upload --skip-existing wheelhouse/*.whl
         fi
       env:
-        - PATH=/c/Python38:/c/Python38/Scripts:$PATH CIBW_BUILD="cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64"
+        global:
+          - PATH=/c/Python38:/c/Python38/Scripts:$PATH CIBW_BUILD="cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64" CIBW_TEST_COMMAND="python {project}/setup.py test"
 
 env:
   global:
     - TWINE_USERNAME=__token__
-    - CIBW_BEFORE_BUILD="pip install --upgrade numpy"
-    - CIBW_TEST_REQUIRES=pytest
-    - CIBW_TEST_COMMAND="pytest -v {package}/tests"
+    - CIBW_TEST_COMMAND="python3 {project}/setup.py test"
 
 branches:
   only:

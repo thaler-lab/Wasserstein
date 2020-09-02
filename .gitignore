@@ -10,3 +10,5 @@ Wasserstein.egg-info
 dist/
 clean.sh
 update_boost.sh
+.pytest_cache/
+.eggs/
