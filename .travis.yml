@@ -76,7 +76,7 @@ jobs:
       stage: build
       dist: bionic
       services: docker
-      install: python3 -m pip install cibuildwheel twine
+      install: python3 -m pip install cibuildwheel numpy twine
       script: python3 -m cibuildwheel --output-dir wheelhouse
       after_success: |
         if [ ! -z $TRAVIS_TAG ]; then
@@ -95,7 +95,7 @@ jobs:
       before_install: |
         brew update > /dev/null
         brew install libomp
-      install: python3 -m pip install cibuildwheel twine
+      install: python3 -m pip install cibuildwheel numpy twine
       script: python3 -m cibuildwheel --output-dir wheelhouse
       after_success: |
         if [ ! -z $TRAVIS_TAG ]; then
@@ -117,12 +117,10 @@ jobs:
       script: python3 -m cibuildwheel --output-dir wheelhouse
       after_success: |
         if [ ! -z $TRAVIS_TAG ]; then
-          python3 -m pip install --upgrade twine
           python3 -m twine upload --skip-existing wheelhouse/*.whl
         fi
       env:
-        global:
-          - PATH=/c/Python38:/c/Python38/Scripts:$PATH CIBW_BUILD="cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64"
+        - PATH=/c/Python38:/c/Python38/Scripts:$PATH CIBW_BUILD="cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64"
 
 env:
   global:
