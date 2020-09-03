@@ -70,20 +70,21 @@ inline std::vector<double> get_bin_edges(const Axis & axis) {
 }
 
 template<class Axis>
-std::size_t get_1d_hist_size(const Axis & axis, bool overflows = true) {
+std::size_t get_1d_hist_size(const Axis & axis, bool overflows) {
   return axis.size() + (overflows ? 2 : 0);
 }
 
 template<class Hist>
 std::pair<std::vector<double>, std::vector<double>>
-get_1d_hist(const Hist & hist, bool overflows = true) {
+get_1d_hist(const Hist & hist, bool overflows) {
 
   // setup containers to hold histogram values
-  std::size_t size(hist::get_1d_hist_size(hist.template axis<0>(), overflows));
+  long long size(hist::get_1d_hist_size(hist.template axis<0>(), overflows)),
+            nbins(hist.template axis<0>().size());
   std::vector<double> hist_vals(size), hist_errs(size);
 
-  for (std::size_t i = (overflows ? -1 : 0), end = (overflows ? size : size + 1), a = 0;
-       i < end; i++, a++) {
+  for (long long i = (overflows ? -1 : 0), a = 0;
+       i < nbins + (overflows ? 1 : 0); i++, a++) {
     const auto & x(hist.at(i));
     hist_vals[a] = x.value();
     hist_errs[a] = std::sqrt(x.variance());

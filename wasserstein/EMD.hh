@@ -369,7 +369,7 @@ public:
   // contructor that initializes the EMD object, uses the same default arguments
   PairwiseEMD(double R = 1, double beta = 1, bool norm = false,
               int num_threads = -1,
-              long long chunksize = -1,
+              long long chunksize = 0,
               bool do_timing = true,
               std::ostream & os = std::cout,
               bool store_sym_emds_flattened = true,
@@ -390,7 +390,7 @@ public:
   // contructor uses existing EMD instance
   PairwiseEMD(const EMD & emd,
               int num_threads = -1,
-              long long chunksize = -1,
+              long long chunksize = 0,
               std::ostream & os = std::cout,
               bool store_sym_emds_flattened = true,
               bool throw_on_error = false) :
@@ -442,12 +442,12 @@ public:
   }
 
   // externally set the number of EMD evaluations that will be spooled to each OpenMP thread at a time
-  void set_omp_dynamic_chunksize(int chunksize) { omp_dynamic_chunksize_ = std::abs(chunksize); }
+  void set_omp_dynamic_chunksize(int chunksize) {
+    omp_dynamic_chunksize_ = std::abs(chunksize);
+  }
 
   // set a handler to process EMDs on the fly instead of storing them
   void set_external_emd_handler(ExternalEMDHandler & handler) {
-    if (handler_ != nullptr && handler_ != &handler)
-      delete handler_;
     handler_ = &handler;
   }
 

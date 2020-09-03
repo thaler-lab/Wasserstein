@@ -293,8 +293,11 @@ class PairwiseEMD(object):
     set_omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMD_set_omp_dynamic_chunksize)
 
     def set_external_emd_handler(self, handler):
+        if not handler.thisown:
+            raise RuntimeError('ExternalEMDHandler must own itself; perhaps it is already in use elsewhere')
         handler.thisown = 0
         _wasserstein.PairwiseEMD_set_external_emd_handler(self, handler)
+        self.external_emd_handler = handler
 
 
 
@@ -317,6 +320,15 @@ class PairwiseEMD(object):
     __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMD___str__)
     _add_event = _swig_new_instance_method(_wasserstein.PairwiseEMD__add_event)
     emds = _swig_new_instance_method(_wasserstein.PairwiseEMD_emds)
+
+
+        # ensure proper destruction of objects held by this instance
+    def __del__(self):
+        if hasattr(self, 'event_arrs'):
+            del self.event_arrs
+        if hasattr(self, 'external_emd_handler'):
+            self.external_emd_handler.thisown = 1
+            del self.external_emd_handler
 
     def __call__(self, events0, events1=None, gdim=None):
 
@@ -358,10 +370,11 @@ class Histogram1DHandler(ExternalEMDHandler):
     description = _swig_new_instance_method(_wasserstein.Histogram1DHandler_description)
     bin_centers_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandler_bin_centers_vec)
     bin_edges_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandler_bin_edges_vec)
-    hist_vals_errs = _swig_new_instance_method(_wasserstein.Histogram1DHandler_hist_vals_errs)
+    hist_vals_errs_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandler_hist_vals_errs_vec)
     __str__ = _swig_new_instance_method(_wasserstein.Histogram1DHandler___str__)
     bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandler_bin_centers)
     bin_edges = _swig_new_instance_method(_wasserstein.Histogram1DHandler_bin_edges)
+    hist_vals_errs = _swig_new_instance_method(_wasserstein.Histogram1DHandler_hist_vals_errs)
 
 # Register Histogram1DHandler in _wasserstein:
 _wasserstein.Histogram1DHandler_swigregister(Histogram1DHandler)
@@ -377,10 +390,11 @@ class Histogram1DHandlerLog(ExternalEMDHandler):
     description = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_description)
     bin_centers_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_bin_centers_vec)
     bin_edges_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_bin_edges_vec)
-    hist_vals_errs = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_hist_vals_errs)
+    hist_vals_errs_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_hist_vals_errs_vec)
     __str__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog___str__)
     bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_bin_centers)
     bin_edges = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_bin_edges)
+    hist_vals_errs = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_hist_vals_errs)
 
 # Register Histogram1DHandlerLog in _wasserstein:
 _wasserstein.Histogram1DHandlerLog_swigregister(Histogram1DHandlerLog)

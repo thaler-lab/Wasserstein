@@ -184,8 +184,10 @@ import_array();
 %rename(emds) emd::PairwiseEMD::npy_emds;
 %rename(bin_centers_vec) emd::Histogram1DHandler::bin_centers;
 %rename(bin_edges_vec) emd::Histogram1DHandler::bin_edges;
+%rename(hist_vals_errs_vec) emd::Histogram1DHandler::hist_vals_errs;
 %rename(bin_centers) emd::Histogram1DHandler::npy_bin_centers;
 %rename(bin_edges) emd::Histogram1DHandler::npy_bin_edges;
+%rename(hist_vals_errs) emd::Histogram1DHandler::npy_hist_vals_errs;
 %rename(cumulative_vals_vars_vec) emd::CorrelationDimension::cumulative_vals_vars;
 %rename(corrdim_bins_vec) emd::CorrelationDimension::corrdim_bins;
 %rename(corrdims_vec) emd::CorrelationDimension::corrdims;
@@ -218,13 +220,17 @@ void pyname(double** arr_out0, int* n0) {
 }
 %enddef
 
-%define RETURN_PAIRED_1DNUMPY_FROM_VECPAIR(pyname, cppname, size)
+%define PAIRED_1DNUMPY_FROM_VECPAIR(cppfunccall, size)
+MALLOC_1D_VALUE_ARRAY(arr_out0, n0, size, nbytes0)
+MALLOC_1D_VALUE_ARRAY(arr_out1, n1, size, nbytes1)
+std::pair<std::vector<double>, std::vector<double>> vecpair($self->cppfunccall);
+memcpy(*arr_out0, vecpair.first.data(), nbytes0);
+memcpy(*arr_out1, vecpair.second.data(), nbytes1);
+%enddef
+
+%define RETURN_PAIRED_1DNUMPY_FROM_VECPAIR(pyname, cppfunccall, size)
 void pyname(double** arr_out0, int* n0, double** arr_out1, int* n1) {
-  MALLOC_1D_VALUE_ARRAY(arr_out0, n0, size, nbytes0)
-  MALLOC_1D_VALUE_ARRAY(arr_out1, n1, size, nbytes1)
-  std::pair<std::vector<double>, std::vector<double>> vecpair($self->cppname());
-  memcpy(*arr_out0, vecpair.first.data(), nbytes0);
-  memcpy(*arr_out1, vecpair.first.data(), nbytes1);
+  PAIRED_1DNUMPY_FROM_VECPAIR(cppfunccall, size)
 }
 %enddef
 
@@ -320,6 +326,15 @@ void pyname(double** arr_out0, int* n0, double** arr_out1, int* n1) {
 
   // python function to get events from container of 2d arrays, first column becomes the weights
   %pythoncode %{
+
+    # ensure proper destruction of objects held by this instance
+    def __del__(self):
+        if hasattr(self, 'event_arrs'):
+            del self.event_arrs
+        if hasattr(self, 'external_emd_handler'):
+            self.external_emd_handler.thisown = 1
+            del self.external_emd_handler
+
     def __call__(self, events0, events1=None, gdim=None):
 
         if events1 is None:
@@ -357,8 +372,11 @@ void pyname(double** arr_out0, int* n0, double** arr_out1, int* n1) {
 // ensure that python array of events is deleted also
 %feature("shadow") emd::PairwiseEMD::set_external_emd_handler %{
   def set_external_emd_handler(self, handler):
+      if not handler.thisown:
+          raise RuntimeError('ExternalEMDHandler must own itself; perhaps it is already in use elsewhere')
       handler.thisown = 0
       $action(self, handler)
+      self.external_emd_handler = handler
 %}
 
 // instantiate specific (Pairwise)EMD templates
@@ -370,14 +388,19 @@ void pyname(double** arr_out0, int* n0, double** arr_out1, int* n1) {
   ADD_STR_FROM_DESCRIPTION
   RETURN_1DNUMPY_FROM_VECTOR(npy_bin_centers, bin_centers, $self->nbins())
   RETURN_1DNUMPY_FROM_VECTOR(npy_bin_edges, bin_edges, $self->nbins() + 1)
+
+  void npy_hist_vals_errs(double** arr_out0, int* n0, double** arr_out1, int* n1, bool overflows = true) {
+    unsigned int nbins = $self->nbins() + (overflows ? 2 : 0);
+    PAIRED_1DNUMPY_FROM_VECPAIR(hist_vals_errs(overflows), nbins)
+  }
 }
 
 // extend CorrelationDimension
 %extend emd::CorrelationDimension {
   ADD_STR_FROM_DESCRIPTION
   RETURN_1DNUMPY_FROM_VECTOR(npy_corrdim_bins, corrdim_bins, $self->nbins() - 1)
-  RETURN_PAIRED_1DNUMPY_FROM_VECPAIR(npy_corrdims, corrdims, $self->nbins() - 1)
-  RETURN_PAIRED_1DNUMPY_FROM_VECPAIR(npy_cumulative_vals_vars, cumulative_vals_vars, $self->nbins())
+  RETURN_PAIRED_1DNUMPY_FROM_VECPAIR(npy_corrdims, corrdims(), $self->nbins() - 1)
+  RETURN_PAIRED_1DNUMPY_FROM_VECPAIR(npy_cumulative_vals_vars, cumulative_vals_vars(), $self->nbins())
 }
 
 // instantiate explicit Histogram1DHandler classes
