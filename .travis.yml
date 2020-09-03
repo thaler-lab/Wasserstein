@@ -9,13 +9,11 @@ stages:
 
 jobs:
   exclude:
-    # - os: mac
-    #  stage: test
-    # - stage: test
-    # - stage: build
-    #   os: linux
-    # - stage: build
-    #   os: macos
+    - stage: test
+    - stage: build
+       os: linux
+    - stage: build
+       os: windows
 
   include:
 
