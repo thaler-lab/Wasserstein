@@ -1,5 +1,4 @@
 import platform
-import sys
 
 import energyflow as ef
 import numpy as np
@@ -301,7 +300,7 @@ def test_corrdim(nbins, low, high):
     emds = wasserstein.PairwiseEMD(throw_on_error=True)
     emds.set_external_emd_handler(corrdim)
 
-    if platform.system() == 'Darwin' and sys.version_info[0] < 3:
+    if platform.system() == 'Darwin':
         pytest.skip()
 
     global X, y, loaded_ef_events
