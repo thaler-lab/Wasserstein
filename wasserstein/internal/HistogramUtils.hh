@@ -170,12 +170,13 @@ public:
   Histogram1DHandler() {}
   virtual ~Histogram1DHandler() {}
 
-  virtual std::string description() const {
+  unsigned int nbins() const { return axis_.size(); }
+  std::string description() const {
     std::ostringstream oss;
     oss << std::setprecision(8)
         << "  ExternalEMDHandler - " << name() << '\n'
         << "    range - [" << axis_.bin(0).lower() << ", " << axis_.bin(axis_.size() - 1).upper() << ")\n"
-        << "    bins - " << axis_.size() << '\n'
+        << "    bins - " << nbins() << '\n'
         << "    axis_transform - " << hist::name_transform<Transform>() << '\n';
 
     return oss.str();

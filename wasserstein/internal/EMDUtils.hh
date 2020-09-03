@@ -191,19 +191,22 @@ protected:
 
 class ExternalEMDHandler {
 public:
-  ExternalEMDHandler() {}
+  ExternalEMDHandler() : num_calls_(0) {}
   virtual ~ExternalEMDHandler() {}
   virtual std::string description() const = 0;
   void operator()(double emd, double weight = 1) {
     std::lock_guard<std::mutex> handler_guard(mutex_);
     handle(emd, weight);
+    num_calls_++;
   }
+  std::size_t num_calls() const { return num_calls_; }
 
 protected:
   virtual void handle(double, double) = 0; 
 
 private:
   std::mutex mutex_;
+  std::size_t num_calls_;
 
 }; // ExternalEMDHandler
 

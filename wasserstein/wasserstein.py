@@ -234,6 +234,7 @@ class ExternalEMDHandler(object):
     __swig_destroy__ = _wasserstein.delete_ExternalEMDHandler
     description = _swig_new_instance_method(_wasserstein.ExternalEMDHandler_description)
     __call__ = _swig_new_instance_method(_wasserstein.ExternalEMDHandler___call__)
+    num_calls = _swig_new_instance_method(_wasserstein.ExternalEMDHandler_num_calls)
 
 # Register ExternalEMDHandler in _wasserstein:
 _wasserstein.ExternalEMDHandler_swigregister(ExternalEMDHandler)
@@ -260,54 +261,6 @@ class EMDBaseDouble(object):
 
 # Register EMDBaseDouble in _wasserstein:
 _wasserstein.EMDBaseDouble_swigregister(EMDBaseDouble)
-
-class Histogram1DHandler(ExternalEMDHandler):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
-
-    def __init__(self, *args):
-        _wasserstein.Histogram1DHandler_swiginit(self, _wasserstein.new_Histogram1DHandler(*args))
-    __swig_destroy__ = _wasserstein.delete_Histogram1DHandler
-    description = _swig_new_instance_method(_wasserstein.Histogram1DHandler_description)
-    bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandler_bin_centers)
-    bin_edges = _swig_new_instance_method(_wasserstein.Histogram1DHandler_bin_edges)
-    hist_vals_errs = _swig_new_instance_method(_wasserstein.Histogram1DHandler_hist_vals_errs)
-    print_axis = _swig_new_instance_method(_wasserstein.Histogram1DHandler_print_axis)
-    print_hist = _swig_new_instance_method(_wasserstein.Histogram1DHandler_print_hist)
-
-# Register Histogram1DHandler in _wasserstein:
-_wasserstein.Histogram1DHandler_swigregister(Histogram1DHandler)
-
-class Histogram1DHandlerLog(ExternalEMDHandler):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
-
-    def __init__(self, *args):
-        _wasserstein.Histogram1DHandlerLog_swiginit(self, _wasserstein.new_Histogram1DHandlerLog(*args))
-    __swig_destroy__ = _wasserstein.delete_Histogram1DHandlerLog
-    description = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_description)
-    bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_bin_centers)
-    bin_edges = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_bin_edges)
-    hist_vals_errs = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_hist_vals_errs)
-    print_axis = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_print_axis)
-    print_hist = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_print_hist)
-
-# Register Histogram1DHandlerLog in _wasserstein:
-_wasserstein.Histogram1DHandlerLog_swigregister(Histogram1DHandlerLog)
-
-class CorrelationDimension(Histogram1DHandlerLog):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
-
-    def __init__(self, *args):
-        _wasserstein.CorrelationDimension_swiginit(self, _wasserstein.new_CorrelationDimension(*args))
-    __swig_destroy__ = _wasserstein.delete_CorrelationDimension
-    cumulative_vals_vars = _swig_new_instance_method(_wasserstein.CorrelationDimension_cumulative_vals_vars)
-    corrdims = _swig_new_instance_method(_wasserstein.CorrelationDimension_corrdims)
-    corrdim_bins = _swig_new_instance_method(_wasserstein.CorrelationDimension_corrdim_bins)
-
-# Register CorrelationDimension in _wasserstein:
-_wasserstein.CorrelationDimension_swigregister(CorrelationDimension)
 
 class EMD(EMDBaseDouble):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
@@ -338,7 +291,12 @@ class PairwiseEMD(object):
     __swig_destroy__ = _wasserstein.delete_PairwiseEMD
     description = _swig_new_instance_method(_wasserstein.PairwiseEMD_description)
     set_omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMD_set_omp_dynamic_chunksize)
-    set_external_emd_handler = _swig_new_instance_method(_wasserstein.PairwiseEMD_set_external_emd_handler)
+
+    def set_external_emd_handler(self, handler):
+        handler.thisown = 0
+        _wasserstein.PairwiseEMD_set_external_emd_handler(self, handler)
+
+
 
     def clear(self):
         _wasserstein.PairwiseEMD_clear(self)
@@ -388,6 +346,62 @@ class PairwiseEMD(object):
 
 # Register PairwiseEMD in _wasserstein:
 _wasserstein.PairwiseEMD_swigregister(PairwiseEMD)
+
+class Histogram1DHandler(ExternalEMDHandler):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        _wasserstein.Histogram1DHandler_swiginit(self, _wasserstein.new_Histogram1DHandler(*args))
+    __swig_destroy__ = _wasserstein.delete_Histogram1DHandler
+    nbins = _swig_new_instance_method(_wasserstein.Histogram1DHandler_nbins)
+    description = _swig_new_instance_method(_wasserstein.Histogram1DHandler_description)
+    bin_centers_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandler_bin_centers_vec)
+    bin_edges_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandler_bin_edges_vec)
+    hist_vals_errs = _swig_new_instance_method(_wasserstein.Histogram1DHandler_hist_vals_errs)
+    __str__ = _swig_new_instance_method(_wasserstein.Histogram1DHandler___str__)
+    bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandler_bin_centers)
+    bin_edges = _swig_new_instance_method(_wasserstein.Histogram1DHandler_bin_edges)
+
+# Register Histogram1DHandler in _wasserstein:
+_wasserstein.Histogram1DHandler_swigregister(Histogram1DHandler)
+
+class Histogram1DHandlerLog(ExternalEMDHandler):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        _wasserstein.Histogram1DHandlerLog_swiginit(self, _wasserstein.new_Histogram1DHandlerLog(*args))
+    __swig_destroy__ = _wasserstein.delete_Histogram1DHandlerLog
+    nbins = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_nbins)
+    description = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_description)
+    bin_centers_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_bin_centers_vec)
+    bin_edges_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_bin_edges_vec)
+    hist_vals_errs = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_hist_vals_errs)
+    __str__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog___str__)
+    bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_bin_centers)
+    bin_edges = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_bin_edges)
+
+# Register Histogram1DHandlerLog in _wasserstein:
+_wasserstein.Histogram1DHandlerLog_swigregister(Histogram1DHandlerLog)
+
+class CorrelationDimension(Histogram1DHandlerLog):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        _wasserstein.CorrelationDimension_swiginit(self, _wasserstein.new_CorrelationDimension(*args))
+    __swig_destroy__ = _wasserstein.delete_CorrelationDimension
+    cumulative_vals_vars_vec = _swig_new_instance_method(_wasserstein.CorrelationDimension_cumulative_vals_vars_vec)
+    corrdims_vec = _swig_new_instance_method(_wasserstein.CorrelationDimension_corrdims_vec)
+    corrdim_bins_vec = _swig_new_instance_method(_wasserstein.CorrelationDimension_corrdim_bins_vec)
+    __str__ = _swig_new_instance_method(_wasserstein.CorrelationDimension___str__)
+    corrdim_bins = _swig_new_instance_method(_wasserstein.CorrelationDimension_corrdim_bins)
+    corrdims = _swig_new_instance_method(_wasserstein.CorrelationDimension_corrdims)
+    cumulative_vals_vars = _swig_new_instance_method(_wasserstein.CorrelationDimension_cumulative_vals_vars)
+
+# Register CorrelationDimension in _wasserstein:
+_wasserstein.CorrelationDimension_swigregister(CorrelationDimension)
 
 
 

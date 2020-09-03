@@ -302,9 +302,11 @@ private:
 
   // output description of preprocessors contained in this object
   void output_preprocessors(std::ostream & oss) const {
+  #ifndef SWIG_WASSERSTEIN
     oss << "\n  Preprocessors:\n";
     for (const auto & preproc : preprocessors_)
       oss << "    - " << preproc->description() << '\n';
+  #endif
   }
 
   /////////////////////
@@ -444,6 +446,8 @@ public:
 
   // set a handler to process EMDs on the fly instead of storing them
   void set_external_emd_handler(ExternalEMDHandler & handler) {
+    if (handler_ != nullptr && handler_ != &handler)
+      delete handler_;
     handler_ = &handler;
   }
 
@@ -455,12 +459,13 @@ public:
     full_emds_.clear();
     error_messages_.clear();
 
-    handler_ = nullptr;
     emd_storage_ = External;
     nevA_ = nevB_ = emd_counter_ = num_emds_ = 0;
     omp_dynamic_chunksize_ = 10;
 
     if (free_memory) {
+      delete handler_;
+      handler_ = nullptr;
       EventVector().swap(events_);
       ValueVector().swap(emds_);
       ValueVector().swap(full_emds_);
@@ -747,6 +752,7 @@ private:
     store_sym_emds_flattened_ = store_sym_emds_flattened;
     throw_on_error_ = throw_on_error;
     print_stream_ = os;
+    handler_ = nullptr;
 
     // setup stringstream for printing
     oss_ = std::ostringstream(std::ios_base::ate);

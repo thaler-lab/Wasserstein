@@ -207,7 +207,7 @@ def test_emd_attributes(beta, R, norm):
 @pytest.mark.parametrize('norm', [True, False])
 @pytest.mark.parametrize('chunksize', [-2, -1, 0, 1, 2, 1000000000])
 @pytest.mark.parametrize('num_threads', [1, 2, -1])
-@pytest.mark.parametrize('num_events', [1, 2, 16, 128])
+@pytest.mark.parametrize('num_events', [1, 2, 16, 64])
 def test_pairwise_emd(num_events, num_threads, chunksize, norm, store_sym_flattened):
 
     beta, R = 1.0, 1.0
@@ -250,7 +250,7 @@ def test_pairwise_emd(num_events, num_threads, chunksize, norm, store_sym_flatte
 @pytest.mark.parametrize('beta', [0.5, 1.0, 1.5, 2.0])
 @pytest.mark.parametrize('num_threads', [1, 2, -1])
 @pytest.mark.parametrize('num_particles', [4, 12])
-@pytest.mark.parametrize('num_events', [1, 2, 16, 128])
+@pytest.mark.parametrize('num_events', [1, 2, 16, 64])
 def test_pairwise_emd_with_ef(num_events, num_particles, num_threads, beta, R, norm):
 
     if platform.system() == 'Windows':

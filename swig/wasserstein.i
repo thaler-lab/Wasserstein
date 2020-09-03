@@ -81,6 +81,7 @@ import_array();
                                                 (double* external_dists, int d0, int d1)}
 %apply (double* INPLACE_ARRAY1, int DIM1) {(double* weights, int n0)}
 %apply (double* INPLACE_ARRAY2, int DIM1, int DIM2) {(double* coords, int n1, int d)}
+%apply (double** ARGOUTVIEWM_ARRAY1, int* DIM1) {(double** arr_out0, int* n0), (double** arr_out1, int* n1)}
 %apply (double** ARGOUTVIEWM_ARRAY2, int* DIM1, int* DIM2) {(double** arr_out, int* n0, int* n1)}
 
 // allow threads in PairwiseEMD computation
@@ -158,6 +159,8 @@ import_array();
 %ignore emd::PairwiseEMD::compute(const EventVector & events);
 %ignore emd::PairwiseEMD::compute(const EventVector & eventsA, const EventVector & eventsB);
 %ignore emd::PairwiseEMD::events;
+%ignore emd::Histogram1DHandler::print_axis;
+%ignore emd::Histogram1DHandler::print_hist;
 
 // include EMD utilities
 %include "internal/EMDUtils.hh"
@@ -171,11 +174,6 @@ import_array();
 // include histogram code
 #define SWIG_PREPROCESSOR
 %include "internal/HistogramUtils.hh"
-%template(Histogram1DHandler) emd::Histogram1DHandler<>;
-%template(Histogram1DHandlerLog) emd::Histogram1DHandler<boost::histogram::axis::transform::log>;
-
-// include correlation dimension
-%include "CorrelationDimension.hh"
 
 // prepare to extend classes by renaming some methods
 %rename(flows_vec) emd::EMD::flows;
@@ -184,11 +182,49 @@ import_array();
 %rename(dists) emd::EMD::npy_dists;
 %rename(emds_vec) emd::PairwiseEMD::emds;
 %rename(emds) emd::PairwiseEMD::npy_emds;
+%rename(bin_centers_vec) emd::Histogram1DHandler::bin_centers;
+%rename(bin_edges_vec) emd::Histogram1DHandler::bin_edges;
+%rename(bin_centers) emd::Histogram1DHandler::npy_bin_centers;
+%rename(bin_edges) emd::Histogram1DHandler::npy_bin_edges;
+%rename(cumulative_vals_vars_vec) emd::CorrelationDimension::cumulative_vals_vars;
+%rename(corrdim_bins_vec) emd::CorrelationDimension::corrdim_bins;
+%rename(corrdims_vec) emd::CorrelationDimension::corrdims;
+%rename(cumulative_vals_vars) emd::CorrelationDimension::npy_cumulative_vals_vars;
+%rename(corrdim_bins) emd::CorrelationDimension::npy_corrdim_bins;
+%rename(corrdims) emd::CorrelationDimension::npy_corrdims;
 
 // makes python class printable from a description method
 %define ADD_STR_FROM_DESCRIPTION
 std::string __str__() const {
   return $self->description();
+}
+%enddef
+
+// mallocs a 1D array of doubles of the specified size
+%define MALLOC_1D_VALUE_ARRAY(arr_out, n, size, nbytes)
+  *n = size;
+  size_t nbytes = size_t(*n)*sizeof(double);
+  *arr_out = (double *) malloc(nbytes);
+  if (*arr_out == NULL) {
+    PyErr_Format(PyExc_MemoryError, "Failed to allocate %zu bytes", nbytes);
+    return;
+  }
+%enddef
+
+%define RETURN_1DNUMPY_FROM_VECTOR(pyname, cppname, size)
+void pyname(double** arr_out0, int* n0) {
+  MALLOC_1D_VALUE_ARRAY(arr_out0, n0, size, nbytes)
+  memcpy(*arr_out0, $self->cppname().data(), nbytes);
+}
+%enddef
+
+%define RETURN_PAIRED_1DNUMPY_FROM_VECPAIR(pyname, cppname, size)
+void pyname(double** arr_out0, int* n0, double** arr_out1, int* n1) {
+  MALLOC_1D_VALUE_ARRAY(arr_out0, n0, size, nbytes0)
+  MALLOC_1D_VALUE_ARRAY(arr_out1, n1, size, nbytes1)
+  std::pair<std::vector<double>, std::vector<double>> vecpair($self->cppname());
+  memcpy(*arr_out0, vecpair.first.data(), nbytes0);
+  memcpy(*arr_out1, vecpair.first.data(), nbytes1);
 }
 %enddef
 
@@ -207,7 +243,7 @@ std::string __str__() const {
 %enddef
 
 // add functionality to get flows and dists as numpy arrays
-%extend emd::EMD {
+%extend emd::EMD<emd::ArrayEvent<>, emd::EuclideanArrayDistance<>> {
   ADD_STR_FROM_DESCRIPTION
 
   void npy_flows(double** arr_out, int* n0, int* n1) {
@@ -222,9 +258,6 @@ std::string __str__() const {
     MALLOC_2D_VALUE_ARRAY($self->n0(), $self->n1())
     memcpy(*arr_out, $self->network_simplex().dists().data(), nbytes);
   }
-}
-
-%extend emd::EMD<emd::ArrayEvent<>, emd::EuclideanArrayDistance<>> {
 
   // provide weights and particle coordinates as numpy arrays
   double operator()(double* weights0, int n0,
@@ -321,6 +354,35 @@ std::string __str__() const {
       self.event_arrs = []
 %}
 
+// ensure that python array of events is deleted also
+%feature("shadow") emd::PairwiseEMD::set_external_emd_handler %{
+  def set_external_emd_handler(self, handler):
+      handler.thisown = 0
+      $action(self, handler)
+%}
+
 // instantiate specific (Pairwise)EMD templates
 %template(EMD) emd::EMD<emd::ArrayEvent<>, emd::EuclideanArrayDistance<>>;
 %template(PairwiseEMD) emd::PairwiseEMD<emd::EMD<emd::ArrayEvent<>, emd::EuclideanArrayDistance<>>>;
+
+// extend Histogram1DHandler
+%extend emd::Histogram1DHandler {
+  ADD_STR_FROM_DESCRIPTION
+  RETURN_1DNUMPY_FROM_VECTOR(npy_bin_centers, bin_centers, $self->nbins())
+  RETURN_1DNUMPY_FROM_VECTOR(npy_bin_edges, bin_edges, $self->nbins() + 1)
+}
+
+// extend CorrelationDimension
+%extend emd::CorrelationDimension {
+  ADD_STR_FROM_DESCRIPTION
+  RETURN_1DNUMPY_FROM_VECTOR(npy_corrdim_bins, corrdim_bins, $self->nbins() - 1)
+  RETURN_PAIRED_1DNUMPY_FROM_VECPAIR(npy_corrdims, corrdims, $self->nbins() - 1)
+  RETURN_PAIRED_1DNUMPY_FROM_VECPAIR(npy_cumulative_vals_vars, cumulative_vals_vars, $self->nbins())
+}
+
+// instantiate explicit Histogram1DHandler classes
+%template(Histogram1DHandler) emd::Histogram1DHandler<>;
+%template(Histogram1DHandlerLog) emd::Histogram1DHandler<boost::histogram::axis::transform::log>;
+
+// include correlation dimension
+%include "CorrelationDimension.hh"
