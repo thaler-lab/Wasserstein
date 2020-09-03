@@ -11,7 +11,7 @@ jobs:
   exclude:
     # - os: mac
     #  stage: test
-    - stage: test
+    # - stage: test
     # - stage: build
     #   os: linux
     # - stage: build
@@ -128,6 +128,7 @@ env:
     - CIBW_BEFORE_TEST="pip install cython"
     - CIBW_TEST_REQUIRES="pytest numpy pot energyflow"
     - CIBW_TEST_COMMAND="pytest {package}"
+    - TRAVIS_TAG=v0.2.0
 
 branches:
   only:
