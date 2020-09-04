@@ -9,10 +9,9 @@ stages:
 
 jobs:
   exclude:
-    stage: test
-    os:
-      - linux
-      - windows
+    - stage: test
+    - os: linux
+    - os: windows
 
   include:
 
