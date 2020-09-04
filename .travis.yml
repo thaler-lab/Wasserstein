@@ -8,7 +8,11 @@ stages:
   - build
 
 jobs:
-  # exclude:
+  exclude:
+    stage: test
+    os:
+      - linux
+      - windows
 
   include:
 
