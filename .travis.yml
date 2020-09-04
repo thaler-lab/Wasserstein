@@ -8,11 +8,7 @@ stages:
   - build
 
 jobs:
-  exclude:
-    - stage: test
-    - os:
-      - windows
-      - linux
+  # exclude:
 
   include:
 
@@ -92,10 +88,11 @@ jobs:
       before_install: |
         brew update > /dev/null
         brew install libomp
-      install: python3 -m pip install cibuildwheel twine
+      install: python3 -m pip install cibuildwheel
       script: python3 -m cibuildwheel --output-dir wheelhouse
       after_success: |
         if [ ! -z $TRAVIS_TAG ]; then
+          python3 -m pip install twine
           python3 -m twine upload --skip-existing wheelhouse/*.whl
         fi
       env:
@@ -109,10 +106,11 @@ jobs:
       before_install:
         - choco install python --version 3.8.3
         - ln -s /c/Python38/python.exe /c/Python38/python3.exe
-      install: python3 -m pip install cibuildwheel twine
+      install: python3 -m pip install cibuildwheel
       script: python3 -m cibuildwheel --output-dir wheelhouse
       after_success: |
         if [ ! -z $TRAVIS_TAG ]; then
+          python3 -m pip install twine
           python3 -m twine upload --skip-existing wheelhouse/*.whl
         fi
       env:
