@@ -262,103 +262,6 @@ class EMDBaseDouble(object):
 # Register EMDBaseDouble in _wasserstein:
 _wasserstein.EMDBaseDouble_swigregister(EMDBaseDouble)
 
-class EMD(EMDBaseDouble):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
-
-    def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=10000, epsilon_small_factor=0):
-        _wasserstein.EMD_swiginit(self, _wasserstein.new_EMD(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
-    __swig_destroy__ = _wasserstein.delete_EMD
-    description = _swig_new_instance_method(_wasserstein.EMD_description)
-    clear = _swig_new_instance_method(_wasserstein.EMD_clear)
-    dists_vec = _swig_new_instance_method(_wasserstein.EMD_dists_vec)
-    flow = _swig_new_instance_method(_wasserstein.EMD_flow)
-    flows_vec = _swig_new_instance_method(_wasserstein.EMD_flows_vec)
-    __str__ = _swig_new_instance_method(_wasserstein.EMD___str__)
-    flows = _swig_new_instance_method(_wasserstein.EMD_flows)
-    dists = _swig_new_instance_method(_wasserstein.EMD_dists)
-    __call__ = _swig_new_instance_method(_wasserstein.EMD___call__)
-
-# Register EMD in _wasserstein:
-_wasserstein.EMD_swigregister(EMD)
-
-class PairwiseEMD(object):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
-
-    def __init__(self, *args, **kwargs):
-        _wasserstein.PairwiseEMD_swiginit(self, _wasserstein.new_PairwiseEMD(*args, **kwargs))
-    __swig_destroy__ = _wasserstein.delete_PairwiseEMD
-    description = _swig_new_instance_method(_wasserstein.PairwiseEMD_description)
-    set_omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMD_set_omp_dynamic_chunksize)
-
-    def set_external_emd_handler(self, handler):
-        if not handler.thisown:
-            raise RuntimeError('ExternalEMDHandler must own itself; perhaps it is already in use elsewhere')
-        handler.thisown = 0
-        _wasserstein.PairwiseEMD_set_external_emd_handler(self, handler)
-        self.external_emd_handler = handler
-
-
-
-    def clear(self):
-        _wasserstein.PairwiseEMD_clear(self)
-        self.event_arrs = []
-
-
-    emd = _swig_new_instance_method(_wasserstein.PairwiseEMD_emd)
-    emds_vec = _swig_new_instance_method(_wasserstein.PairwiseEMD_emds_vec)
-    errored = _swig_new_instance_method(_wasserstein.PairwiseEMD_errored)
-    error_messages = _swig_new_instance_method(_wasserstein.PairwiseEMD_error_messages)
-    report_errors = _swig_new_instance_method(_wasserstein.PairwiseEMD_report_errors)
-    num_emds = _swig_new_instance_method(_wasserstein.PairwiseEMD_num_emds)
-    nevA = _swig_new_instance_method(_wasserstein.PairwiseEMD_nevA)
-    nevB = _swig_new_instance_method(_wasserstein.PairwiseEMD_nevB)
-    preprocess_back_event = _swig_new_instance_method(_wasserstein.PairwiseEMD_preprocess_back_event)
-    init = _swig_new_instance_method(_wasserstein.PairwiseEMD_init)
-    compute = _swig_new_instance_method(_wasserstein.PairwiseEMD_compute)
-    __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMD___str__)
-    _add_event = _swig_new_instance_method(_wasserstein.PairwiseEMD__add_event)
-    emds = _swig_new_instance_method(_wasserstein.PairwiseEMD_emds)
-
-
-        # ensure proper destruction of objects held by this instance
-    def __del__(self):
-        if hasattr(self, 'event_arrs'):
-            del self.event_arrs
-        if hasattr(self, 'external_emd_handler'):
-            self.external_emd_handler.thisown = 1
-            del self.external_emd_handler
-
-    def __call__(self, events0, events1=None, gdim=None):
-
-        if events1 is None:
-            self.init(len(events0))
-            events1 = []
-        else:
-            self.init(len(events0), len(events1))
-
-        self.event_arrs = []
-        for event in itertools.chain(events0, events1):
-
-    # extract weights and coords from 
-            event = np.atleast_2d(event)
-            weights = np.ascontiguousarray(event[:,0], dtype=np.double)
-            coords = np.ascontiguousarray(event[:,1:] if gdim is None else event[:,1:gdim+1])
-
-    # ensure that the lifetime of these arrays lasts through the computation
-            self.event_arrs.append((weights, coords))
-
-    # store individual event
-            self._add_event(weights, coords)
-
-    # run actual computation
-        self.compute()
-
-
-# Register PairwiseEMD in _wasserstein:
-_wasserstein.PairwiseEMD_swigregister(PairwiseEMD)
-
 class Histogram1DHandler(ExternalEMDHandler):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
@@ -416,6 +319,105 @@ class CorrelationDimension(Histogram1DHandlerLog):
 
 # Register CorrelationDimension in _wasserstein:
 _wasserstein.CorrelationDimension_swigregister(CorrelationDimension)
+
+class EMD(EMDBaseDouble):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=10000, epsilon_small_factor=0):
+        _wasserstein.EMD_swiginit(self, _wasserstein.new_EMD(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
+    __swig_destroy__ = _wasserstein.delete_EMD
+    description = _swig_new_instance_method(_wasserstein.EMD_description)
+    clear = _swig_new_instance_method(_wasserstein.EMD_clear)
+    dists_vec = _swig_new_instance_method(_wasserstein.EMD_dists_vec)
+    flow = _swig_new_instance_method(_wasserstein.EMD_flow)
+    flows_vec = _swig_new_instance_method(_wasserstein.EMD_flows_vec)
+    __str__ = _swig_new_instance_method(_wasserstein.EMD___str__)
+    flows = _swig_new_instance_method(_wasserstein.EMD_flows)
+    dists = _swig_new_instance_method(_wasserstein.EMD_dists)
+    __call__ = _swig_new_instance_method(_wasserstein.EMD___call__)
+
+# Register EMD in _wasserstein:
+_wasserstein.EMD_swigregister(EMD)
+
+class PairwiseEMD(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, *args, **kwargs):
+        _wasserstein.PairwiseEMD_swiginit(self, _wasserstein.new_PairwiseEMD(*args, **kwargs))
+    __swig_destroy__ = _wasserstein.delete_PairwiseEMD
+    description = _swig_new_instance_method(_wasserstein.PairwiseEMD_description)
+    set_omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMD_set_omp_dynamic_chunksize)
+
+    def set_external_emd_handler(self, handler):
+        if not handler.thisown:
+            raise RuntimeError('ExternalEMDHandler must own itself; perhaps it is already in use elsewhere')
+        handler.thisown = 0
+        _wasserstein.PairwiseEMD_set_external_emd_handler(self, handler)
+        self.external_emd_handler = handler
+
+
+
+    def clear(self):
+        _wasserstein.PairwiseEMD_clear(self)
+        self.event_arrs = []
+
+
+    emd = _swig_new_instance_method(_wasserstein.PairwiseEMD_emd)
+    emds_vec = _swig_new_instance_method(_wasserstein.PairwiseEMD_emds_vec)
+    errored = _swig_new_instance_method(_wasserstein.PairwiseEMD_errored)
+    error_messages = _swig_new_instance_method(_wasserstein.PairwiseEMD_error_messages)
+    report_errors = _swig_new_instance_method(_wasserstein.PairwiseEMD_report_errors)
+    num_emds = _swig_new_instance_method(_wasserstein.PairwiseEMD_num_emds)
+    nevA = _swig_new_instance_method(_wasserstein.PairwiseEMD_nevA)
+    nevB = _swig_new_instance_method(_wasserstein.PairwiseEMD_nevB)
+    preprocess_back_event = _swig_new_instance_method(_wasserstein.PairwiseEMD_preprocess_back_event)
+    init = _swig_new_instance_method(_wasserstein.PairwiseEMD_init)
+    compute = _swig_new_instance_method(_wasserstein.PairwiseEMD_compute)
+    __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMD___str__)
+    emds = _swig_new_instance_method(_wasserstein.PairwiseEMD_emds)
+
+
+        # ensure proper destruction of objects held by this instance
+    def __del__(self):
+        if hasattr(self, 'event_arrs'):
+            del self.event_arrs
+        if hasattr(self, 'external_emd_handler'):
+            self.external_emd_handler.thisown = 1
+            del self.external_emd_handler
+
+    _add_event = _swig_new_instance_method(_wasserstein.PairwiseEMD__add_event)
+
+
+    def __call__(self, events0, events1=None, gdim=None):
+
+        if events1 is None:
+            self.init(len(events0))
+            events1 = []
+        else:
+            self.init(len(events0), len(events1))
+
+        self.event_arrs = []
+        for event in itertools.chain(events0, events1):
+
+    # extract weights and coords from 
+            event = np.atleast_2d(event)
+            weights = np.ascontiguousarray(event[:,0], dtype=np.double)
+            coords = np.ascontiguousarray(event[:,1:] if gdim is None else event[:,1:gdim+1])
+
+    # ensure that the lifetime of these arrays lasts through the computation
+            self.event_arrs.append((weights, coords))
+
+    # store individual event
+            self._add_event(weights, coords)
+
+    # run actual computation
+        self.compute()
+
+
+# Register PairwiseEMD in _wasserstein:
+_wasserstein.PairwiseEMD_swigregister(PairwiseEMD)
 
 
 
