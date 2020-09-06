@@ -33,7 +33,7 @@ BEGIN_WASSERSTEIN_NAMESPACE
 class CorrelationDimension : public Histogram1DHandler<boost::histogram::axis::transform::log> {
 public:
 
-  CorrelationDimension(unsigned int nbins, double axis_min, double axis_max) :
+  CorrelationDimension(unsigned nbins, double axis_min, double axis_max) :
     Histogram1DHandler(nbins, axis_min, axis_max)
   {}
 

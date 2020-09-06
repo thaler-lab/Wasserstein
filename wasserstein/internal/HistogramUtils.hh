@@ -158,7 +158,7 @@ protected:
 
 public:
 
-  Histogram1DHandler(unsigned int nbins, double axis_min, double axis_max) :
+  Histogram1DHandler(unsigned nbins, double axis_min, double axis_max) :
     axis_(nbins, axis_min, axis_max),
     hist_(boost::histogram::make_weighted_histogram(axis_))
   {
@@ -171,7 +171,7 @@ public:
   Histogram1DHandler() {}
   virtual ~Histogram1DHandler() {}
 
-  unsigned int nbins() const { return axis_.size(); }
+  unsigned nbins() const { return axis_.size(); }
   std::string description() const {
     std::ostringstream oss;
     oss << std::setprecision(8)

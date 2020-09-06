@@ -169,7 +169,7 @@ public:
   typedef std::vector<char> StateVector;
 
   // constructor
-  NetworkSimplex(unsigned int n_iter_max, double epsilon_large_factor, double epsilon_small_factor) :
+  NetworkSimplex(unsigned n_iter_max, double epsilon_large_factor, double epsilon_small_factor) :
     n_iter_max_(n_iter_max),
     epsilon_large_(epsilon_large_factor*std::numeric_limits<Value>::epsilon()),
     epsilon_small_(epsilon_small_factor*std::numeric_limits<Value>::epsilon()),
@@ -259,7 +259,7 @@ private:
   //---------------------------------------------------------------------------
   
   // constructor parameters
-  unsigned int n_iter_max_, iter_;
+  unsigned n_iter_max_, iter_;
   Value epsilon_large_, epsilon_small_;
 
   // large consts initialized in constructor

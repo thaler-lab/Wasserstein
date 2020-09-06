@@ -23,6 +23,11 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
+%include <exception.i>
+%include <std_pair.i>
+%include <std_string.i>
+%include <std_vector.i>
+
 // vector templates
 %template(vectorDouble) std::vector<double>;
 %template(vectorString) std::vector<std::string>;
@@ -44,6 +49,13 @@
 // the main library headers
 #include "EMD.hh"
 #include "CorrelationDimension.hh"
+
+// macros for exception handling
+#define CATCH_STD_EXCEPTION catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
+#define CATCH_STD_INVALID_ARGUMENT catch (std::invalid_argument & e) { SWIG_exception(SWIG_ValueError, e.what()); }
+#define CATCH_STD_RUNTIME_ERROR catch (std::runtime_error & e) { SWIG_exception(SWIG_RuntimeError, e.what()); }
+#define CATCH_STD_LOGIC_ERROR catch (std::logic_error & e) { SWIG_exception(SWIG_RuntimeError, e.what()); }
+#define CATCH_STD_OUT_OF_RANGE catch (std::out_of_range & e) { SWIG_exception(SWIG_IndexError, e.what()); }
 %}
 
 // numpy wrapping and initialization

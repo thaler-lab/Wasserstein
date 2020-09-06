@@ -326,7 +326,7 @@ struct EuclideanParticle3D {
 
 }; // EuclideanParticle3D
 
-template<unsigned int N, typename V = double>
+template<unsigned N, typename V = double>
 struct EuclideanParticleND {
   typedef V Value;
   typedef EuclideanParticleND<N, Value> Self;
@@ -338,7 +338,7 @@ struct EuclideanParticleND {
   
   static Value plain_distance(const Self & p0, const Self & p1) {
     Value d(0);
-    for (unsigned int i = 0; i < N; i++) {
+    for (unsigned i = 0; i < N; i++) {
       Value dx(p0.xs[i] - p1.xs[i]);
       d += dx*dx;
     }

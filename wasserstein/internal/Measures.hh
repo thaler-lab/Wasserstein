@@ -290,7 +290,7 @@ struct GenericDistance : public PairwiseDistanceBase<GenericDistance<P>, std::ve
 // euclidean distances with double-precision particles
 using EuclideanDistance2D = GenericDistance<EuclideanParticle2D<>>;
 using EuclideanDistance3D = GenericDistance<EuclideanParticle3D<>>;
-template<unsigned int N>
+template<unsigned N>
 using EuclideanDistanceND = GenericDistance<EuclideanParticleND<N>>;
 
 END_WASSERSTEIN_NAMESPACE

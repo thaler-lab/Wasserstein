@@ -103,7 +103,7 @@ public:
   // constructor with entirely default arguments
   EMD(double R = 1, double beta = 1, bool norm = false,
       bool do_timing = false, bool external_dists = false,
-      unsigned int n_iter_max = 100000,
+      unsigned n_iter_max = 100000,
       double epsilon_large_factor = 10000,
       double epsilon_small_factor = 0) :
 
@@ -374,7 +374,7 @@ public:
               std::ostream & os = std::cout,
               bool store_sym_emds_flattened = true,
               bool throw_on_error = false,
-              unsigned int n_iter_max = 100000,
+              unsigned n_iter_max = 100000,
               double epsilon_large_factor = 10000,
               double epsilon_small_factor = 0) :
     num_threads_(determine_num_threads(num_threads)),

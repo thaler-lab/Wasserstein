@@ -253,7 +253,7 @@ struct GenericEvent : public EventBase<std::vector<P>, std::vector<typename P::V
 
 using EuclideanEvent2D = GenericEvent<EuclideanParticle2D<>>;
 using EuclideanEvent3D = GenericEvent<EuclideanParticle3D<>>;
-template<unsigned int N>
+template<unsigned N>
 using EuclideanEventND = GenericEvent<EuclideanParticleND<N>>;
 
 END_WASSERSTEIN_NAMESPACE
