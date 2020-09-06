@@ -44,6 +44,13 @@
 // the main library headers
 #include "EMD.hh"
 #include "CorrelationDimension.hh"
+
+// macros for exception handling
+#define CATCH_STD_EXCEPTION catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
+#define CATCH_STD_INVALID_ARGUMENT catch (std::invalid_argument & e) { SWIG_exception(SWIG_ValueError, e.what()); }
+#define CATCH_STD_RUNTIME_ERROR catch (std::runtime_error & e) { SWIG_exception(SWIG_RuntimeError, e.what()); }
+#define CATCH_STD_LOGIC_ERROR catch (std::logic_error & e) { SWIG_exception(SWIG_RuntimeError, e.what()); }
+#define CATCH_STD_OUT_OF_RANGE catch (std::out_of_range & e) { SWIG_exception(SWIG_IndexError, e.what()); }
 %}
 
 // numpy wrapping and initialization
@@ -92,65 +99,65 @@ import_array();
 // basic exception handling for all functions
 %exception {
   try { $action }
-  catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
+  CATCH_STD_EXCEPTION
 }
 
 // EMD exceptions
 %exception EMDNAMESPACE::EMD::EMD {
   try { $action }
-  catch (std::invalid_argument & e) { SWIG_exception(SWIG_ValueError, e.what()); }
-  catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
+  CATCH_STD_INVALID_ARGUMENT
+  CATCH_STD_EXCEPTION
 }
 %exception EMDNAMESPACE::EMD::operator() {
   try { $action }
-  catch (std::runtime_error & e) { SWIG_exception(SWIG_RuntimeError, e.what()); }
-  catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
+  CATCH_STD_RUNTIME_ERROR
+  CATCH_STD_EXCEPTION
   if (PyErr_Occurred() != NULL)
     SWIG_fail;
 }
 %exception EMDNAMESPACE::EMD::flow {
   try { $action }
-  catch (std::out_of_range & e) { SWIG_exception(SWIG_IndexError, e.what()); }
-  catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
+  CATCH_STD_OUT_OF_RANGE
+  CATCH_STD_EXCEPTION
 }
 
 // PairwiseEMD exceptions
 %exception EMDNAMESPACE::PairwiseEMD::PairwiseEMD {
   try { $action }
-  catch (std::invalid_argument & e) { SWIG_exception(SWIG_ValueError, e.what()); }
-  catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
+  CATCH_STD_INVALID_ARGUMENT
+  CATCH_STD_EXCEPTION
 }
 %exception EMDNAMESPACE::PairwiseEMD::emd {
   try { $action }
-  catch (std::out_of_range & e) { SWIG_exception(SWIG_IndexError, e.what()); }
-  catch (std::logic_error & e) { SWIG_exception(SWIG_RuntimeError, e.what()); }
-  catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
+  CATCH_STD_OUT_OF_RANGE
+  CATCH_STD_LOGIC_ERROR
+  CATCH_STD_EXCEPTION
 }
 %exception EMDNAMESPACE::PairwiseEMD::compute() {
   try { $action }
-  catch (std::runtime_error & e) { SWIG_exception(SWIG_RuntimeError, e.what()); }
-  catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
+  CATCH_STD_RUNTIME_ERROR
+  CATCH_STD_EXCEPTION
 }
 
 // EMDUtils exceptions
 %exception EMDNAMESPACE::check_emd_status {
   try { $action }
-  catch (std::runtime_error & e) { SWIG_exception(SWIG_RuntimeError, e.what()); }
-  catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); } 
+  CATCH_STD_RUNTIME_ERROR
+  CATCH_STD_EXCEPTION
 }
 
 // Histogram exceptions
 %exception EMDNAMESPACE::Histogram1DHandler::Histogram1DHandler {
   try { $action }
-  catch (std::invalid_argument & e) { SWIG_exception(SWIG_ValueError, e.what()); }
-  catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }  
+  CATCH_STD_INVALID_ARGUMENT
+  CATCH_STD_EXCEPTION
 }
 
 // CorrelationDimension exceptions
 %exception EMDNAMESPACE::CorrelationDimension::CorrelationDimension {
   try { $action }
-  catch (std::invalid_argument & e) { SWIG_exception(SWIG_ValueError, e.what()); }
-  catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
+  CATCH_STD_INVALID_ARGUMENT
+  CATCH_STD_EXCEPTION
 }
 
 // ignore certain functions
