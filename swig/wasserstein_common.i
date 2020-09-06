@@ -23,12 +23,6 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
-// C++ standard library wrappers
-%include <std_pair.i>
-%include <std_string.i>
-%include <std_vector.i>
-%include <exception.i>
-
 // vector templates
 %template(vectorDouble) std::vector<double>;
 %template(vectorString) std::vector<std::string>;

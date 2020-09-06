@@ -29,6 +29,12 @@
 emd
 %enddef
 
+// C++ standard library wrappers
+%include <std_pair.i>
+%include <std_string.i>
+%include <std_vector.i>
+%include <exception.i>
+
 // this ensures SWIG parses class members properly
 #define SWIG_WASSERSTEIN
 
