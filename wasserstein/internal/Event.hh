@@ -28,6 +28,7 @@
 
 // C++ standard library
 #include <cassert>
+#include <cmath>
 #include <tuple>
 
 #include "EMDUtils.hh"
@@ -196,24 +197,38 @@ struct FastJetParticleWeight {};
 struct TransverseMomentum : FastJetParticleWeight {
   static std::string name() { return "TransverseMomentum"; }
   static double weight(const PseudoJet & pj) { return pj.pt(); }
+  static void set_weight(PseudoJet & pj, double w) {
+    pj.reset_momentum_PtYPhiM(w, pj.rap(), pj.phi(), pj.m());
+  }
 };
 
 // use ET as weight, typical for hadronic colliders if mass is relevant
 struct TransverseEnergy : FastJetParticleWeight {
   static std::string name() { return "TransverseEnergy"; }
   static double weight(const PseudoJet & pj) { return pj.Et(); }
+  static void set_weight(PseudoJet & pj, double w) {
+    double pt2(w*w - pj.m2()), pt(pt2 > 0 ? std::sqrt(pt2) : -std::sqrt(-pt2));
+    pj.reset_momentum_PtYPhiM(pt, pj.rap(), pj.phi(), pj.m());
+  }
 };
 
 // use |p3| as weight, typical of e+e- colliders treating pjs as massless
 struct Momentum : FastJetParticleWeight {
   static std::string name() { return "Momentum"; }
   static double weight(const PseudoJet & pj) { return pj.modp(); }
+  static void set_weight(PseudoJet & pj, double w) {
+    double e2(w*w + pj.m2()), e(e2 > 0 ? std::sqrt(e2) : -std::sqrt(-e2));
+    pj.reset_momentum(pj.px(), pj.py(), pj.pz(), e);
+  }
 };
 
 // use E as weight, typical of e+e- colliders
 struct Energy : FastJetParticleWeight {
   static std::string name() { return "Energy"; }
   static double weight(const PseudoJet & pj) { return pj.E(); }
+  static void set_weight(PseudoJet & pj, double w) {
+    pj.reset_momentum(pj.px(), pj.py(), pj.pz(), w);
+  }
 };
 
 #endif // __FASTJET_PSEUDOJET_HH__

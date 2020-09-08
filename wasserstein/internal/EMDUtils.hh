@@ -161,6 +161,9 @@ public:
   // which event, 0 or 1, got an extra particle (-1 if no event got one)
   ExtraParticle extra() const { return extra_; }
 
+  // the norm setting
+  bool norm() const { return norm_; }
+
   // number of particles in each event (after possible addition of extra particles)
   std::size_t n0() const { return n0_; }
   std::size_t n1() const { return n1_; }

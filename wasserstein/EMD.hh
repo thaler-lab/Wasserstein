@@ -40,8 +40,8 @@
 
 // Wasserstein headers
 #include "internal/Event.hh"
-#include "internal/Measures.hh"
 #include "internal/NetworkSimplex.hh"
+#include "internal/PairwiseDistance.hh"
 #include "internal/Preprocess.hh"
 
 BEGIN_WASSERSTEIN_NAMESPACE
@@ -121,15 +121,6 @@ public:
   // virtual destructor
   virtual ~EMD() {}
 
-  // add preprocessor to internal list
-  template<template<class> class P, typename... Args>
-  EMD & preprocess(Args && ... args) {
-    static_assert(std::is_base_of<FastJetEventBase, Event>::value,
-                  "EMD::preprocess - Only available for FastJetEvent.");
-    preprocessors_.emplace_back(new P<Self>(std::forward<Args>(args)...));
-    return *this;
-  }
-
   // return a description of this object
   std::string description(bool write_preprocessors = true) const {
     std::ostringstream oss;
@@ -147,9 +138,22 @@ public:
     return oss.str();
   }
 
+  // add preprocessor to internal list
+  template<template<class> class P, typename... Args>
+  EMD & preprocess(Args && ... args) {
+    static_assert(std::is_base_of<FastJetEventBase, Event>::value,
+                  "EMD::preprocess - Only available for FastJetEvent.");
+    preprocessors_.emplace_back(new P<Self>(std::forward<Args>(args)...));
+    return *this;
+  }
+
   // access underlying network simplex and pairwise distance objects
   const NetworkSimplex & network_simplex() const { return network_simplex_; }
   const PairwiseDistance & pairwise_distance() const { return pairwise_distance_; }
+
+  // access R and beta parameters
+  Value R() const { return pairwise_distance_.R(); }
+  Value beta() const { return pairwise_distance_.beta(); }
 
   // free all dynamic memory help by this object
   void clear() {

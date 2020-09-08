@@ -23,8 +23,8 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
-#ifndef WASSERSTEIN_MEASURES_HH
-#define WASSERSTEIN_MEASURES_HH
+#ifndef WASSERSTEIN_PAIRWISEDISTANCE_HH
+#define WASSERSTEIN_PAIRWISEDISTANCE_HH
 
 // C++ standard library
 #include <cmath>
@@ -295,4 +295,4 @@ using EuclideanDistanceND = GenericDistance<EuclideanParticleND<N>>;
 
 END_WASSERSTEIN_NAMESPACE
 
-#endif // WASSERSTEIN_MEASURES_HH
+#endif // WASSERSTEIN_PAIRWISEDISTANCE_HH
