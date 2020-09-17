@@ -33,7 +33,7 @@
 
 #include "EMDUtils.hh"
 
-BEGIN_WASSERSTEIN_NAMESPACE
+BEGIN_EMD_NAMESPACE
 
 ////////////////////////////////////////////////////////////////////////////////
 // EventBase - "events" constitute a weighted collection of "particles"
@@ -125,114 +125,6 @@ struct ArrayEvent : public EventBase<ArrayParticleCollection<V>, ArrayWeightColl
 
 }; // ArrayEvent
 
-// FastJet events will derive from this, for checking types later
-class FastJetEventBase {};
-
-#ifdef __FASTJET_PSEUDOJET_HH__
-
-////////////////////////////////////////////////////////////////////////////////
-// FastJetEvent - an event consisting of FastJet PseudoJets and weights
-////////////////////////////////////////////////////////////////////////////////
-
-// PW : a particle weight class (see below)
-template<class PW>
-struct FastJetEvent : public EventBase<std::vector<PseudoJet>, std::vector<double>>,
-                      public FastJetEventBase {
-  typedef PW ParticleWeight;
-  typedef std::vector<PseudoJet> ParticleCollection;
-  typedef std::vector<double> WeightCollection;
-
-  // constructor from PseudoJet, possibly with constituents
-  FastJetEvent(const PseudoJet & pj) :
-    EventBase<ParticleCollection, WeightCollection>(pj.has_constituents() ? 
-                                                    pj.constituents() : 
-                                                    ParticleCollection{pj}),
-    axis_(pj)
-  {}
-
-  // constructor from vector of PseudoJets
-  FastJetEvent(const ParticleCollection & pjs) :
-    EventBase<ParticleCollection, WeightCollection>(pjs)
-  {}
-
-  FastJetEvent() {}
-
-  // name of event
-  static std::string name() {
-    std::ostringstream oss;
-    oss << "FastJetEvent<" << ParticleWeight::name() << '>';
-    return oss.str();
-  }
-
-  // determine weights
-  void ensure_weights() {
-    if (!has_weights_) {
-      weights_.reserve(particles_.size());
-      for (const PseudoJet & pj : particles_) {
-        weights_.push_back(ParticleWeight::weight(pj));
-        total_weight_ += weights_.back();
-      }
-      has_weights_ = true;
-    }
-  }
-
-  // access/set PseudoJet
-  PseudoJet & axis() { return axis_; }
-
-private:
-
-  // hold original PseudoJet if given one
-  PseudoJet axis_;
-
-}; // FastJetEvent
-
-////////////////////////////////////////////////////////////////////////////////
-// FastJetParticleWeight - extracts weight from a PseudoJet
-////////////////////////////////////////////////////////////////////////////////
-
-// base class to use for checking types later
-struct FastJetParticleWeight {};
-
-// use pT as weight, most typical choice for hadronic colliders
-struct TransverseMomentum : FastJetParticleWeight {
-  static std::string name() { return "TransverseMomentum"; }
-  static double weight(const PseudoJet & pj) { return pj.pt(); }
-  static void set_weight(PseudoJet & pj, double w) {
-    pj.reset_momentum_PtYPhiM(w, pj.rap(), pj.phi(), pj.m());
-  }
-};
-
-// use ET as weight, typical for hadronic colliders if mass is relevant
-struct TransverseEnergy : FastJetParticleWeight {
-  static std::string name() { return "TransverseEnergy"; }
-  static double weight(const PseudoJet & pj) { return pj.Et(); }
-  static void set_weight(PseudoJet & pj, double w) {
-    double pt2(w*w - pj.m2()), pt(pt2 > 0 ? std::sqrt(pt2) : -std::sqrt(-pt2));
-    pj.reset_momentum_PtYPhiM(pt, pj.rap(), pj.phi(), pj.m());
-  }
-};
-
-// use |p3| as weight, typical of e+e- colliders treating pjs as massless
-struct Momentum : FastJetParticleWeight {
-  static std::string name() { return "Momentum"; }
-  static double weight(const PseudoJet & pj) { return pj.modp(); }
-  static void set_weight(PseudoJet & pj, double w) {
-    double e2(w*w + pj.m2()), e(e2 > 0 ? std::sqrt(e2) : -std::sqrt(-e2));
-    pj.reset_momentum(pj.px(), pj.py(), pj.pz(), e);
-  }
-};
-
-// use E as weight, typical of e+e- colliders
-struct Energy : FastJetParticleWeight {
-  static std::string name() { return "Energy"; }
-  static double weight(const PseudoJet & pj) { return pj.E(); }
-  static void set_weight(PseudoJet & pj, double w) {
-    pj.reset_momentum(pj.px(), pj.py(), pj.pz(), w);
-  }
-};
-
-#endif // __FASTJET_PSEUDOJET_HH__
-
 ////////////////////////////////////////////////////////////////////////////////
 // GenericEvent - an event constructed from a vector of "particles"
 ////////////////////////////////////////////////////////////////////////////////
@@ -271,6 +163,6 @@ using EuclideanEvent3D = GenericEvent<EuclideanParticle3D<>>;
 template<unsigned N>
 using EuclideanEventND = GenericEvent<EuclideanParticleND<N>>;
 
-END_WASSERSTEIN_NAMESPACE
+END_EMD_NAMESPACE
 
 #endif // WASSERSTEIN_EVENT_HH

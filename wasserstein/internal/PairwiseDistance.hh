@@ -31,10 +31,10 @@
 
 #include "EMDUtils.hh"
 
-BEGIN_WASSERSTEIN_NAMESPACE
+BEGIN_EMD_NAMESPACE
 
 ////////////////////////////////////////////////////////////////////////////////
-// PairwiseDistanceBAse - implements (theta_ij/R)^beta between particles i and j
+// PairwiseDistanceBase - implements (theta_ij/R)^beta between particles i and j
 ////////////////////////////////////////////////////////////////////////////////
 
 template <class PairwiseDistance, class ParticleCollection, class Value>
@@ -150,122 +150,6 @@ struct EuclideanArrayDistance : PairwiseDistanceBase<EuclideanArrayDistance<V>, 
 }; // EuclideanArrayDistance
 
 ////////////////////////////////////////////////////////////////////////////////
-// FastJet-specific pairwise distances
-////////////////////////////////////////////////////////////////////////////////
-
-#ifdef __FASTJET_PSEUDOJET_HH__
-
-// Hadronic Delta_R measure with proper checking for phi
-struct DeltaR : public PairwiseDistanceBase<DeltaR, std::vector<PseudoJet>, double> {
-  typedef PseudoJet Particle;
-  typedef double Value;
-
-  DeltaR(Value R, Value beta) :
-    PairwiseDistanceBase<DeltaR, std::vector<PseudoJet>, double>(R, beta)
-  {}
-  static std::string name() { return "DeltaR"; }
-  static Value plain_distance(const PseudoJet & p0, const PseudoJet & p1) {
-    Value dphiabs(std::fabs(p0.phi() - p1.phi()));
-    Value dy(p0.rap() - p1.rap()), dphi(dphiabs > PI ? TWOPI - dphiabs : dphiabs);
-    return dy*dy + dphi*dphi;
-  }
-}; // DeltaR
-
-// Massless dot product measure normalized with transverse momenta
-struct HadronicDot : public PairwiseDistanceBase<HadronicDot, std::vector<PseudoJet>, double> {
-  typedef PseudoJet Particle;
-  typedef double Value;
-
-  HadronicDot(Value R, Value beta) :
-    PairwiseDistanceBase<HadronicDot, std::vector<PseudoJet>, double>(R, beta)
-  {}
-  static std::string name() { return "HadronicDot"; }
-  static Value plain_distance(const PseudoJet & p0, const PseudoJet & p1) {
-    Value d(2*(p0.E()*p1.E() - p0.px()*p1.px() - p0.py()*p1.py() - p0.pz()*p1.pz())/(p0.pt()*p1.pt()));
-    return (d > 0 ? d : 0);
-  }  
-}; // HadronicDot
-
-// Massless dot product measure normalized by total momenta
-struct EEDot : public PairwiseDistanceBase<EEDot, std::vector<PseudoJet>, double> {
-  typedef PseudoJet Particle;
-  typedef double Value;
-
-  EEDot(Value R, Value beta) :
-    PairwiseDistanceBase<EEDot, std::vector<PseudoJet>, double>(R, beta)
-  {}
-  static std::string name() { return "EEDot"; }
-  static Value plain_distance(const PseudoJet & p0, const PseudoJet & p1) {
-    Value d(2 - 2*(p0.px()*p1.px() + p0.py()*p1.py() + p0.pz()*p1.pz())/(p0.modp()*p1.modp()));
-    return (d > 0 ? d : 0);
-  }
-}; // EEDot
-
-// Massive dot product measure normalized with transverse energies
-struct HadronicDotMassive : public PairwiseDistanceBase<HadronicDotMassive, std::vector<PseudoJet>, double> {
-  typedef PseudoJet Particle;
-  typedef double Value;
-
-  HadronicDotMassive(Value R, Value beta) :
-    PairwiseDistanceBase<HadronicDotMassive, std::vector<PseudoJet>, double>(R, beta)
-  {}
-  static std::string name() { return "HadronicDotMassive"; }
-  static Value plain_distance(const PseudoJet & p0, const PseudoJet & p1) {
-    Value d(2*(p0.E()*p1.E() - p0.px()*p1.px() - p0.py()*p1.py() - p0.pz()*p1.pz())/(p0.Et()*p1.Et())
-             - p0.m2()/p0.Et2() - p1.m2()/p1.Et2());
-    return (d > 0 ? d : 0);
-  }
-}; // HadronicDotMassive
-
-// Massive dot product measure normalized with energies
-struct EEDotMassive : public PairwiseDistanceBase<EEDotMassive, std::vector<PseudoJet>, double> {
-  typedef PseudoJet Particle;
-  typedef double Value;
-
-  EEDotMassive(Value R, Value beta) :
-    PairwiseDistanceBase<EEDotMassive, std::vector<PseudoJet>, double>(R, beta)
-  {}
-  static std::string name() { return "EEDotMassive"; }
-  static Value plain_distance(const PseudoJet & p0, const PseudoJet & p1) {
-    Value d(2 - 2*(p0.px()*p1.px() + p0.py()*p1.py() + p0.pz()*p1.pz())/(p0.E()*p1.E())
-               - p0.m2()/(p0.E()*p0.E()) - p1.m2()/(p1.E()*p1.E()));
-    return (d > 0 ? d : 0);
-  }
-}; // EEDotMassive
-
-// Arc length between momentum vectors
-struct EEArcLength : public PairwiseDistanceBase<EEArcLength, std::vector<PseudoJet>, double> {
-  typedef PseudoJet Particle;
-  typedef double Value;
-
-  EEArcLength(Value R, Value beta) :
-    PairwiseDistanceBase<EEArcLength, std::vector<PseudoJet>, double>(R, beta)
-  {}
-  static std::string name() { return "EEArcLength"; }
-  static Value plain_distance(const PseudoJet & p0, const PseudoJet & p1) {
-    Value dot((p0.px()*p1.px() + p0.py()*p1.py() + p0.pz()*p1.pz())/(p0.modp()*p1.modp()));
-    return (dot > 1 ? 0 : (dot < -1 ? pi : std::acos(dot)));
-  }
-}; // EEArcLength
-
-// Arc length between momentum vectors, normalized by the energy
-struct EEArcLengthMassive : public PairwiseDistanceBase<EEArcLengthMassive, std::vector<PseudoJet>, double> {
-  typedef PseudoJet Particle;
-  typedef double Value;
-
-  EEArcLengthMassive(Value R, Value beta) :
-    PairwiseDistanceBase<EEArcLengthMassive, std::vector<PseudoJet>, double>(R, beta)
-  {}
-  static std::string name() { return "EEArcLengthMassive"; }
-  static Value plain_distance(const PseudoJet & p0, const PseudoJet & p1) {
-    Value dot((p0.px()*p1.px() + p0.py()*p1.py() + p0.pz()*p1.pz())/(p0.E()*p1.E()));
-    return (dot > 1 ? 0 : (dot < -1 ? pi : std::acos(dot)));
-  }
-}; // EEArcLengthMassive
-
-#endif // __FASTJET_PSEUDOJET_HH__
-
-////////////////////////////////////////////////////////////////////////////////
 // GenericDistance - base class for a pairwise distance between two "particles"
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -293,6 +177,6 @@ using EuclideanDistance3D = GenericDistance<EuclideanParticle3D<>>;
 template<unsigned N>
 using EuclideanDistanceND = GenericDistance<EuclideanParticleND<N>>;
 
-END_WASSERSTEIN_NAMESPACE
+END_EMD_NAMESPACE
 
 #endif // WASSERSTEIN_PAIRWISEDISTANCE_HH

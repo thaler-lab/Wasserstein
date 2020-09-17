@@ -5236,6 +5236,13 @@ SWIGINTERN void std_vector_Sl_std_string_Sg__insert__SWIG_1(std::vector< std::st
 #include "EMD.hh"
 #include "CorrelationDimension.hh"
 
+// macros for exception handling
+#define CATCH_STD_EXCEPTION catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
+#define CATCH_STD_INVALID_ARGUMENT catch (std::invalid_argument & e) { SWIG_exception(SWIG_ValueError, e.what()); }
+#define CATCH_STD_RUNTIME_ERROR catch (std::runtime_error & e) { SWIG_exception(SWIG_RuntimeError, e.what()); }
+#define CATCH_STD_LOGIC_ERROR catch (std::logic_error & e) { SWIG_exception(SWIG_RuntimeError, e.what()); }
+#define CATCH_STD_OUT_OF_RANGE catch (std::out_of_range & e) { SWIG_exception(SWIG_IndexError, e.what()); }
+
 
 #ifndef SWIG_FILE_WITH_INIT
 #define NO_IMPORT_ARRAY
@@ -5387,7 +5394,7 @@ SWIGINTERN std::string emd_Histogram1DHandler_Sl__Sg____str__(emd::Histogram1DHa
 
 
 SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_bin_centers(emd::Histogram1DHandler< > *self,double **arr_out0,int *n0){
-  /*@SWIG:swig/wasserstein_common.i,194,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:swig/wasserstein_common.i,201,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins();
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -5399,7 +5406,7 @@ SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_bin_centers(emd::Histogram1DH
   memcpy(*arr_out0, self->bin_centers().data(), nbytes);
 }
 SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_bin_edges(emd::Histogram1DHandler< > *self,double **arr_out0,int *n0){
-  /*@SWIG:swig/wasserstein_common.i,194,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:swig/wasserstein_common.i,201,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() + 1;
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -5412,8 +5419,8 @@ SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_bin_edges(emd::Histogram1DHan
 }
 SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_hist_vals_errs(emd::Histogram1DHandler< > *self,double **arr_out0,int *n0,double **arr_out1,int *n1,bool overflows=true){
     unsigned int nbins = self->nbins() + (overflows ? 2 : 0);
-    /*@SWIG:swig/wasserstein_common.i,211,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-/*@SWIG:swig/wasserstein_common.i,194,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:swig/wasserstein_common.i,218,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+/*@SWIG:swig/wasserstein_common.i,201,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = nbins;
   size_t nbytes0 = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes0);
@@ -5422,7 +5429,7 @@ SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_hist_vals_errs(emd::Histogram
     return;
   }
 /*@SWIG@*/
-/*@SWIG:swig/wasserstein_common.i,194,MALLOC_1D_VALUE_ARRAY@*/
+/*@SWIG:swig/wasserstein_common.i,201,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = nbins;
   size_t nbytes1 = size_t(*n1)*sizeof(double);
   *arr_out1 = (double *) malloc(nbytes1);
@@ -5440,7 +5447,7 @@ SWIGINTERN std::string emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_
   return self->description();
 }
 SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg__npy_bin_centers(emd::Histogram1DHandler< boost::histogram::axis::transform::log > *self,double **arr_out0,int *n0){
-  /*@SWIG:swig/wasserstein_common.i,194,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:swig/wasserstein_common.i,201,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins();
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -5452,7 +5459,7 @@ SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg_
   memcpy(*arr_out0, self->bin_centers().data(), nbytes);
 }
 SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg__npy_bin_edges(emd::Histogram1DHandler< boost::histogram::axis::transform::log > *self,double **arr_out0,int *n0){
-  /*@SWIG:swig/wasserstein_common.i,194,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:swig/wasserstein_common.i,201,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() + 1;
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -5465,8 +5472,8 @@ SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg_
 }
 SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg__npy_hist_vals_errs(emd::Histogram1DHandler< boost::histogram::axis::transform::log > *self,double **arr_out0,int *n0,double **arr_out1,int *n1,bool overflows=true){
     unsigned int nbins = self->nbins() + (overflows ? 2 : 0);
-    /*@SWIG:swig/wasserstein_common.i,211,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-/*@SWIG:swig/wasserstein_common.i,194,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:swig/wasserstein_common.i,218,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+/*@SWIG:swig/wasserstein_common.i,201,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = nbins;
   size_t nbytes0 = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes0);
@@ -5475,7 +5482,7 @@ SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg_
     return;
   }
 /*@SWIG@*/
-/*@SWIG:swig/wasserstein_common.i,194,MALLOC_1D_VALUE_ARRAY@*/
+/*@SWIG:swig/wasserstein_common.i,201,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = nbins;
   size_t nbytes1 = size_t(*n1)*sizeof(double);
   *arr_out1 = (double *) malloc(nbytes1);
@@ -5493,7 +5500,7 @@ SWIGINTERN std::string emd_CorrelationDimension___str__(emd::CorrelationDimensio
   return self->description();
 }
 SWIGINTERN void emd_CorrelationDimension_npy_corrdim_bins(emd::CorrelationDimension *self,double **arr_out0,int *n0){
-  /*@SWIG:swig/wasserstein_common.i,194,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:swig/wasserstein_common.i,201,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() - 1;
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -5505,8 +5512,8 @@ SWIGINTERN void emd_CorrelationDimension_npy_corrdim_bins(emd::CorrelationDimens
   memcpy(*arr_out0, self->corrdim_bins().data(), nbytes);
 }
 SWIGINTERN void emd_CorrelationDimension_npy_corrdims(emd::CorrelationDimension *self,double **arr_out0,int *n0,double **arr_out1,int *n1){
-  /*@SWIG:swig/wasserstein_common.i,211,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-/*@SWIG:swig/wasserstein_common.i,194,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:swig/wasserstein_common.i,218,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+/*@SWIG:swig/wasserstein_common.i,201,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() - 1;
   size_t nbytes0 = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes0);
@@ -5515,7 +5522,7 @@ SWIGINTERN void emd_CorrelationDimension_npy_corrdims(emd::CorrelationDimension 
     return;
   }
 /*@SWIG@*/
-/*@SWIG:swig/wasserstein_common.i,194,MALLOC_1D_VALUE_ARRAY@*/
+/*@SWIG:swig/wasserstein_common.i,201,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = self->nbins() - 1;
   size_t nbytes1 = size_t(*n1)*sizeof(double);
   *arr_out1 = (double *) malloc(nbytes1);
@@ -5530,8 +5537,8 @@ memcpy(*arr_out1, vecpair.second.data(), nbytes1);
 /*@SWIG@*/
 }
 SWIGINTERN void emd_CorrelationDimension_npy_cumulative_vals_vars(emd::CorrelationDimension *self,double **arr_out0,int *n0,double **arr_out1,int *n1){
-  /*@SWIG:swig/wasserstein_common.i,211,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-/*@SWIG:swig/wasserstein_common.i,194,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:swig/wasserstein_common.i,218,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+/*@SWIG:swig/wasserstein_common.i,201,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins();
   size_t nbytes0 = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes0);
@@ -5540,7 +5547,7 @@ SWIGINTERN void emd_CorrelationDimension_npy_cumulative_vals_vars(emd::Correlati
     return;
   }
 /*@SWIG@*/
-/*@SWIG:swig/wasserstein_common.i,194,MALLOC_1D_VALUE_ARRAY@*/
+/*@SWIG:swig/wasserstein_common.i,201,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = self->nbins();
   size_t nbytes1 = size_t(*n1)*sizeof(double);
   *arr_out1 = (double *) malloc(nbytes1);
@@ -5558,7 +5565,7 @@ SWIGINTERN std::string emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDi
   return self->description();
 }
 SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__npy_flows(emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *self,double **arr_out,int *n0,int *n1){
-    /*@SWIG:swig/wasserstein_common.i,226,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:swig/wasserstein_common.i,233,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -5576,7 +5583,7 @@ SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_
       values[i] *= self->scale();
   }
 SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__npy_dists(emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *self,double **arr_out,int *n0,int *n1){
-    /*@SWIG:swig/wasserstein_common.i,226,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:swig/wasserstein_common.i,233,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -6026,7 +6033,7 @@ SWIGINTERN std::string emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_e
   return self->description();
 }
 SWIGINTERN void emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg__npy_emds(emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *self,double **arr_out,int *n0,int *n1){
-    /*@SWIG:swig/wasserstein_common.i,226,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:swig/wasserstein_common.i,233,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->nevA();
   *n1 = self->nevB();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -8597,9 +8604,7 @@ SWIGINTERN PyObject *_wrap_delete_vectorDouble(PyObject *SWIGUNUSEDPARM(self), P
     try {
       delete arg1; 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -10489,9 +10494,7 @@ SWIGINTERN PyObject *_wrap_delete_vectorString(PyObject *SWIGUNUSEDPARM(self), P
     try {
       delete arg1; 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -10749,9 +10752,7 @@ SWIGINTERN PyObject *_wrap_delete_pairVectorDouble(PyObject *SWIGUNUSEDPARM(self
     try {
       delete arg1; 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -10829,9 +10830,7 @@ SWIGINTERN PyObject *_wrap_phi_fix(PyObject *SWIGUNUSEDPARM(self), PyObject *arg
     try {
       result = (double)emd::phi_fix(arg1,arg2); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_double(static_cast< double >(result));
   return resultobj;
@@ -10860,12 +10859,8 @@ SWIGINTERN PyObject *_wrap_check_emd_status(PyObject *SWIGUNUSEDPARM(self), PyOb
     try {
       emd::check_emd_status(arg1); 
     }
-    catch (std::runtime_error & e) {
-      SWIG_exception(SWIG_RuntimeError, e.what()); 
-    }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    } 
+    CATCH_STD_RUNTIME_ERROR
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -10892,9 +10887,7 @@ SWIGINTERN PyObject *_wrap_delete_ExternalEMDHandler(PyObject *SWIGUNUSEDPARM(se
     try {
       delete arg1; 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -10922,9 +10915,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandler_description(PyObject *SWIGUNUSEDPA
     try {
       result = ((emd::ExternalEMDHandler const *)arg1)->description(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_std_string(static_cast< std::string >(result));
   return resultobj;
@@ -10973,9 +10964,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandler___call__(PyObject *SWIGUNUSEDPARM(
     try {
       (arg1)->operator ()(arg2,arg3); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -11003,9 +10992,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandler_num_calls(PyObject *SWIGUNUSEDPARM
     try {
       result = ((emd::ExternalEMDHandler const *)arg1)->num_calls(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_size_t(static_cast< size_t >(result));
   return resultobj;
@@ -11066,9 +11053,7 @@ SWIGINTERN PyObject *_wrap_new_EMDBaseDouble(PyObject *SWIGUNUSEDPARM(self), PyO
     try {
       result = (emd::EMDBase< double > *)new emd::EMDBase< double >(arg1,arg2,arg3); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_emd__EMDBaseT_double_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
@@ -11095,9 +11080,7 @@ SWIGINTERN PyObject *_wrap_delete_EMDBaseDouble(PyObject *SWIGUNUSEDPARM(self), 
     try {
       delete arg1; 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -11125,9 +11108,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseDouble_external_dists(PyObject *SWIGUNUSEDPARM
     try {
       result = (bool)((emd::EMDBase< double > const *)arg1)->external_dists(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
@@ -11165,9 +11146,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseDouble_set_external_dists(PyObject *SWIGUNUSED
     try {
       (arg1)->set_external_dists(arg2); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -11195,11 +11174,37 @@ SWIGINTERN PyObject *_wrap_EMDBaseDouble_extra(PyObject *SWIGUNUSEDPARM(self), P
     try {
       result = (emd::ExtraParticle)((emd::EMDBase< double > const *)arg1)->extra(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMDBaseDouble_norm(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  emd::EMDBase< double > *arg1 = (emd::EMDBase< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  bool result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__EMDBaseT_double_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseDouble_norm" "', argument " "1"" of type '" "emd::EMDBase< double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMDBase< double > * >(argp1);
+  {
+    try {
+      result = (bool)((emd::EMDBase< double > const *)arg1)->norm(); 
+    }
+    CATCH_STD_EXCEPTION
+  }
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
 fail:
   return NULL;
@@ -11225,9 +11230,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseDouble_n0(PyObject *SWIGUNUSEDPARM(self), PyOb
     try {
       result = ((emd::EMDBase< double > const *)arg1)->n0(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_size_t(static_cast< size_t >(result));
   return resultobj;
@@ -11255,9 +11258,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseDouble_n1(PyObject *SWIGUNUSEDPARM(self), PyOb
     try {
       result = ((emd::EMDBase< double > const *)arg1)->n1(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_size_t(static_cast< size_t >(result));
   return resultobj;
@@ -11285,9 +11286,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseDouble_scale(PyObject *SWIGUNUSEDPARM(self), P
     try {
       result = (emd::Value)((emd::EMDBase< double > const *)arg1)->scale(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_double(static_cast< double >(result));
   return resultobj;
@@ -11315,9 +11314,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseDouble_emd(PyObject *SWIGUNUSEDPARM(self), PyO
     try {
       result = (emd::Value)((emd::EMDBase< double > const *)arg1)->emd(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_double(static_cast< double >(result));
   return resultobj;
@@ -11345,9 +11342,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseDouble_status(PyObject *SWIGUNUSEDPARM(self), 
     try {
       result = (EMDStatus)((emd::EMDBase< double > const *)arg1)->status(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_int(static_cast< int >(result));
   return resultobj;
@@ -11375,9 +11370,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseDouble_duration(PyObject *SWIGUNUSEDPARM(self)
     try {
       result = (double)((emd::EMDBase< double > const *)arg1)->duration(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_double(static_cast< double >(result));
   return resultobj;
@@ -11430,12 +11423,8 @@ SWIGINTERN PyObject *_wrap_new_Histogram1DHandler__SWIG_0(PyObject *SWIGUNUSEDPA
     try {
       result = (emd::Histogram1DHandler< > *)new emd::Histogram1DHandler< >(arg1,arg2,arg3); 
     }
-    catch (std::invalid_argument & e) {
-      SWIG_exception(SWIG_ValueError, e.what()); 
-    }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }  
+    CATCH_STD_INVALID_ARGUMENT
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__id_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
@@ -11453,12 +11442,8 @@ SWIGINTERN PyObject *_wrap_new_Histogram1DHandler__SWIG_1(PyObject *SWIGUNUSEDPA
     try {
       result = (emd::Histogram1DHandler< > *)new emd::Histogram1DHandler< >(); 
     }
-    catch (std::invalid_argument & e) {
-      SWIG_exception(SWIG_ValueError, e.what()); 
-    }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }  
+    CATCH_STD_INVALID_ARGUMENT
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__id_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
@@ -11528,9 +11513,7 @@ SWIGINTERN PyObject *_wrap_delete_Histogram1DHandler(PyObject *SWIGUNUSEDPARM(se
     try {
       delete arg1; 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -11558,9 +11541,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandler_nbins(PyObject *SWIGUNUSEDPARM(sel
     try {
       result = (unsigned int)((emd::Histogram1DHandler< > const *)arg1)->nbins(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
   return resultobj;
@@ -11588,9 +11569,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandler_description(PyObject *SWIGUNUSEDPA
     try {
       result = ((emd::Histogram1DHandler< > const *)arg1)->description(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_std_string(static_cast< std::string >(result));
   return resultobj;
@@ -11618,9 +11597,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandler_bin_centers_vec(PyObject *SWIGUNUS
     try {
       result = ((emd::Histogram1DHandler< > const *)arg1)->bin_centers(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = swig::from(static_cast< std::vector< double,std::allocator< double > > >(result));
   return resultobj;
@@ -11648,9 +11625,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandler_bin_edges_vec(PyObject *SWIGUNUSED
     try {
       result = ((emd::Histogram1DHandler< > const *)arg1)->bin_edges(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = swig::from(static_cast< std::vector< double,std::allocator< double > > >(result));
   return resultobj;
@@ -11691,9 +11666,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandler_hist_vals_errs_vec(PyObject *SWIGU
     try {
       result = ((emd::Histogram1DHandler< > const *)arg1)->hist_vals_errs(arg2); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = swig::from(static_cast< std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > >(result));
   return resultobj;
@@ -11721,9 +11694,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandler___str__(PyObject *SWIGUNUSEDPARM(s
     try {
       result = emd_Histogram1DHandler_Sl__Sg____str__((emd::Histogram1DHandler< > const *)arg1); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_std_string(static_cast< std::string >(result));
   return resultobj;
@@ -11758,9 +11729,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandler_bin_centers(PyObject *SWIGUNUSEDPA
     try {
       emd_Histogram1DHandler_Sl__Sg__npy_bin_centers(arg1,arg2,arg3); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   {
@@ -11818,9 +11787,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandler_bin_edges(PyObject *SWIGUNUSEDPARM
     try {
       emd_Histogram1DHandler_Sl__Sg__npy_bin_edges(arg1,arg2,arg3); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   {
@@ -11899,9 +11866,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandler_hist_vals_errs(PyObject *SWIGUNUSE
     try {
       emd_Histogram1DHandler_Sl__Sg__npy_hist_vals_errs(arg1,arg2,arg3,arg4,arg5,arg6); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   {
@@ -12000,12 +11965,8 @@ SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerLog__SWIG_0(PyObject *SWIGUNUSE
     try {
       result = (emd::Histogram1DHandler< boost::histogram::axis::transform::log > *)new emd::Histogram1DHandler< boost::histogram::axis::transform::log >(arg1,arg2,arg3); 
     }
-    catch (std::invalid_argument & e) {
-      SWIG_exception(SWIG_ValueError, e.what()); 
-    }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }  
+    CATCH_STD_INVALID_ARGUMENT
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
@@ -12023,12 +11984,8 @@ SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerLog__SWIG_1(PyObject *SWIGUNUSE
     try {
       result = (emd::Histogram1DHandler< boost::histogram::axis::transform::log > *)new emd::Histogram1DHandler< boost::histogram::axis::transform::log >(); 
     }
-    catch (std::invalid_argument & e) {
-      SWIG_exception(SWIG_ValueError, e.what()); 
-    }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }  
+    CATCH_STD_INVALID_ARGUMENT
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
@@ -12098,9 +12055,7 @@ SWIGINTERN PyObject *_wrap_delete_Histogram1DHandlerLog(PyObject *SWIGUNUSEDPARM
     try {
       delete arg1; 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -12128,9 +12083,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLog_nbins(PyObject *SWIGUNUSEDPARM(
     try {
       result = (unsigned int)((emd::Histogram1DHandler< boost::histogram::axis::transform::log > const *)arg1)->nbins(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
   return resultobj;
@@ -12158,9 +12111,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLog_description(PyObject *SWIGUNUSE
     try {
       result = ((emd::Histogram1DHandler< boost::histogram::axis::transform::log > const *)arg1)->description(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_std_string(static_cast< std::string >(result));
   return resultobj;
@@ -12188,9 +12139,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLog_bin_centers_vec(PyObject *SWIGU
     try {
       result = ((emd::Histogram1DHandler< boost::histogram::axis::transform::log > const *)arg1)->bin_centers(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = swig::from(static_cast< std::vector< double,std::allocator< double > > >(result));
   return resultobj;
@@ -12218,9 +12167,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLog_bin_edges_vec(PyObject *SWIGUNU
     try {
       result = ((emd::Histogram1DHandler< boost::histogram::axis::transform::log > const *)arg1)->bin_edges(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = swig::from(static_cast< std::vector< double,std::allocator< double > > >(result));
   return resultobj;
@@ -12261,9 +12208,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLog_hist_vals_errs_vec(PyObject *SW
     try {
       result = ((emd::Histogram1DHandler< boost::histogram::axis::transform::log > const *)arg1)->hist_vals_errs(arg2); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = swig::from(static_cast< std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > >(result));
   return resultobj;
@@ -12291,9 +12236,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLog___str__(PyObject *SWIGUNUSEDPAR
     try {
       result = emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg____str__((emd::Histogram1DHandler< boost::histogram::axis::transform::log > const *)arg1); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_std_string(static_cast< std::string >(result));
   return resultobj;
@@ -12328,9 +12271,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLog_bin_centers(PyObject *SWIGUNUSE
     try {
       emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg__npy_bin_centers(arg1,arg2,arg3); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   {
@@ -12388,9 +12329,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLog_bin_edges(PyObject *SWIGUNUSEDP
     try {
       emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg__npy_bin_edges(arg1,arg2,arg3); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   {
@@ -12469,9 +12408,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLog_hist_vals_errs(PyObject *SWIGUN
     try {
       emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg__npy_hist_vals_errs(arg1,arg2,arg3,arg4,arg5,arg6); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   {
@@ -12570,12 +12507,8 @@ SWIGINTERN PyObject *_wrap_new_CorrelationDimension__SWIG_0(PyObject *SWIGUNUSED
     try {
       result = (emd::CorrelationDimension *)new emd::CorrelationDimension(arg1,arg2,arg3); 
     }
-    catch (std::invalid_argument & e) {
-      SWIG_exception(SWIG_ValueError, e.what()); 
-    }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_INVALID_ARGUMENT
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_emd__CorrelationDimension, SWIG_POINTER_NEW |  0 );
   return resultobj;
@@ -12593,12 +12526,8 @@ SWIGINTERN PyObject *_wrap_new_CorrelationDimension__SWIG_1(PyObject *SWIGUNUSED
     try {
       result = (emd::CorrelationDimension *)new emd::CorrelationDimension(); 
     }
-    catch (std::invalid_argument & e) {
-      SWIG_exception(SWIG_ValueError, e.what()); 
-    }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_INVALID_ARGUMENT
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_emd__CorrelationDimension, SWIG_POINTER_NEW |  0 );
   return resultobj;
@@ -12668,9 +12597,7 @@ SWIGINTERN PyObject *_wrap_delete_CorrelationDimension(PyObject *SWIGUNUSEDPARM(
     try {
       delete arg1; 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -12698,9 +12625,7 @@ SWIGINTERN PyObject *_wrap_CorrelationDimension_cumulative_vals_vars_vec(PyObjec
     try {
       result = ((emd::CorrelationDimension const *)arg1)->cumulative_vals_vars(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = swig::from(static_cast< std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > >(result));
   return resultobj;
@@ -12741,9 +12666,7 @@ SWIGINTERN PyObject *_wrap_CorrelationDimension_corrdims_vec(PyObject *SWIGUNUSE
     try {
       result = ((emd::CorrelationDimension const *)arg1)->corrdims(arg2); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = swig::from(static_cast< std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > >(result));
   return resultobj;
@@ -12771,9 +12694,7 @@ SWIGINTERN PyObject *_wrap_CorrelationDimension_corrdim_bins_vec(PyObject *SWIGU
     try {
       result = ((emd::CorrelationDimension const *)arg1)->corrdim_bins(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = swig::from(static_cast< std::vector< double,std::allocator< double > > >(result));
   return resultobj;
@@ -12801,9 +12722,7 @@ SWIGINTERN PyObject *_wrap_CorrelationDimension___str__(PyObject *SWIGUNUSEDPARM
     try {
       result = emd_CorrelationDimension___str__((emd::CorrelationDimension const *)arg1); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_std_string(static_cast< std::string >(result));
   return resultobj;
@@ -12838,9 +12757,7 @@ SWIGINTERN PyObject *_wrap_CorrelationDimension_corrdim_bins(PyObject *SWIGUNUSE
     try {
       emd_CorrelationDimension_npy_corrdim_bins(arg1,arg2,arg3); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   {
@@ -12906,9 +12823,7 @@ SWIGINTERN PyObject *_wrap_CorrelationDimension_corrdims(PyObject *SWIGUNUSEDPAR
     try {
       emd_CorrelationDimension_npy_corrdims(arg1,arg2,arg3,arg4,arg5); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   {
@@ -12997,9 +12912,7 @@ SWIGINTERN PyObject *_wrap_CorrelationDimension_cumulative_vals_vars(PyObject *S
     try {
       emd_CorrelationDimension_npy_cumulative_vals_vars(arg1,arg2,arg3,arg4,arg5); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   {
@@ -13165,12 +13078,8 @@ SWIGINTERN PyObject *_wrap_new_EMD(PyObject *SWIGUNUSEDPARM(self), PyObject *arg
     try {
       result = (emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *)new emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > >(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8); 
     }
-    catch (std::invalid_argument & e) {
-      SWIG_exception(SWIG_ValueError, e.what()); 
-    }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_INVALID_ARGUMENT
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
@@ -13197,9 +13106,7 @@ SWIGINTERN PyObject *_wrap_delete_EMD(PyObject *SWIGUNUSEDPARM(self), PyObject *
     try {
       delete arg1; 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -13240,11 +13147,65 @@ SWIGINTERN PyObject *_wrap_EMD_description(PyObject *SWIGUNUSEDPARM(self), PyObj
     try {
       result = ((emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > const *)arg1)->description(arg2); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMD_R(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *arg1 = (emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  emd::Value result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMD_R" "', argument " "1"" of type '" "emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > const *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > * >(argp1);
+  {
+    try {
+      result = (emd::Value)((emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > const *)arg1)->R(); 
+    }
+    CATCH_STD_EXCEPTION
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMD_beta(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *arg1 = (emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  emd::Value result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMD_beta" "', argument " "1"" of type '" "emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > const *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > * >(argp1);
+  {
+    try {
+      result = (emd::Value)((emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > const *)arg1)->beta(); 
+    }
+    CATCH_STD_EXCEPTION
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
   return resultobj;
 fail:
   return NULL;
@@ -13269,9 +13230,7 @@ SWIGINTERN PyObject *_wrap_EMD_clear(PyObject *SWIGUNUSEDPARM(self), PyObject *a
     try {
       (arg1)->clear(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -13299,9 +13258,7 @@ SWIGINTERN PyObject *_wrap_EMD_dists_vec(PyObject *SWIGUNUSEDPARM(self), PyObjec
     try {
       result = ((emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > const *)arg1)->dists(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = swig::from(static_cast< std::vector< double,std::allocator< double > > >(result));
   return resultobj;
@@ -13349,12 +13306,8 @@ SWIGINTERN PyObject *_wrap_EMD_flow(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
     try {
       result = (emd::Value)((emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > const *)arg1)->flow(arg2,arg3); 
     }
-    catch (std::out_of_range & e) {
-      SWIG_exception(SWIG_IndexError, e.what()); 
-    }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_OUT_OF_RANGE
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_double(static_cast< double >(result));
   return resultobj;
@@ -13382,9 +13335,7 @@ SWIGINTERN PyObject *_wrap_EMD_flows_vec(PyObject *SWIGUNUSEDPARM(self), PyObjec
     try {
       result = ((emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > const *)arg1)->flows(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = swig::from(static_cast< std::vector< double,std::allocator< double > > >(result));
   return resultobj;
@@ -13412,9 +13363,7 @@ SWIGINTERN PyObject *_wrap_EMD___str__(PyObject *SWIGUNUSEDPARM(self), PyObject 
     try {
       result = emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg____str__((emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > const *)arg1); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_std_string(static_cast< std::string >(result));
   return resultobj;
@@ -13452,9 +13401,7 @@ SWIGINTERN PyObject *_wrap_EMD_flows(PyObject *SWIGUNUSEDPARM(self), PyObject *a
     try {
       emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__npy_flows(arg1,arg2,arg3,arg4); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   {
@@ -13515,9 +13462,7 @@ SWIGINTERN PyObject *_wrap_EMD_dists(PyObject *SWIGUNUSEDPARM(self), PyObject *a
     try {
       emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__npy_dists(arg1,arg2,arg3,arg4); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   {
@@ -13632,12 +13577,8 @@ SWIGINTERN PyObject *_wrap_EMD___call____SWIG_1(PyObject *SWIGUNUSEDPARM(self), 
     try {
       result = (double)emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__operator_Sp__SP___SWIG_1(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11); 
     }
-    catch (std::runtime_error & e) {
-      SWIG_exception(SWIG_RuntimeError, e.what()); 
-    }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_RUNTIME_ERROR
+    CATCH_STD_EXCEPTION
     if (PyErr_Occurred() != NULL)
     SWIG_fail;
   }
@@ -13762,12 +13703,8 @@ SWIGINTERN PyObject *_wrap_EMD___call____SWIG_2(PyObject *SWIGUNUSEDPARM(self), 
     try {
       result = (double)emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__operator_Sp__SP___SWIG_2(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8); 
     }
-    catch (std::runtime_error & e) {
-      SWIG_exception(SWIG_RuntimeError, e.what()); 
-    }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_RUNTIME_ERROR
+    CATCH_STD_EXCEPTION
     if (PyErr_Occurred() != NULL)
     SWIG_fail;
   }
@@ -14056,12 +13993,8 @@ SWIGINTERN PyObject *_wrap_new_PairwiseEMD(PyObject *SWIGUNUSEDPARM(self), PyObj
     try {
       result = (emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *)new emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > >(arg1,arg2,arg3,arg4,arg5,arg6,*arg7,arg8,arg9,arg10,arg11,arg12); 
     }
-    catch (std::invalid_argument & e) {
-      SWIG_exception(SWIG_ValueError, e.what()); 
-    }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_INVALID_ARGUMENT
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
@@ -14088,9 +14021,7 @@ SWIGINTERN PyObject *_wrap_delete_PairwiseEMD(PyObject *SWIGUNUSEDPARM(self), Py
     try {
       delete arg1; 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -14118,9 +14049,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_description(PyObject *SWIGUNUSEDPARM(self
     try {
       result = ((emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *)arg1)->description(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_std_string(static_cast< std::string >(result));
   return resultobj;
@@ -14158,9 +14087,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_set_omp_dynamic_chunksize(PyObject *SWIGU
     try {
       (arg1)->set_omp_dynamic_chunksize(arg2); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -14201,9 +14128,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_set_external_emd_handler(PyObject *SWIGUN
     try {
       (arg1)->set_external_emd_handler(*arg2); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -14243,9 +14168,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_clear(PyObject *SWIGUNUSEDPARM(self), PyO
     try {
       (arg1)->clear(arg2); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -14293,15 +14216,9 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_emd(PyObject *SWIGUNUSEDPARM(self), PyObj
     try {
       result = (emd::Value)((emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *)arg1)->emd(arg2,arg3); 
     }
-    catch (std::out_of_range & e) {
-      SWIG_exception(SWIG_IndexError, e.what()); 
-    }
-    catch (std::logic_error & e) {
-      SWIG_exception(SWIG_RuntimeError, e.what()); 
-    }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_OUT_OF_RANGE
+    CATCH_STD_LOGIC_ERROR
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_double(static_cast< double >(result));
   return resultobj;
@@ -14329,9 +14246,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_emds_vec(PyObject *SWIGUNUSEDPARM(self), 
     try {
       result = (emd::ValueVector *) &(arg1)->emds(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = swig::from(static_cast< std::vector< double,std::allocator< double > > >(*result));
   return resultobj;
@@ -14359,9 +14274,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_errored(PyObject *SWIGUNUSEDPARM(self), P
     try {
       result = (bool)((emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *)arg1)->errored(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
@@ -14389,9 +14302,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_error_messages(PyObject *SWIGUNUSEDPARM(s
     try {
       result = (std::vector< std::string,std::allocator< std::string > > *) &((emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *)arg1)->error_messages(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = swig::from(static_cast< std::vector< std::string,std::allocator< std::string > > >(*result));
   return resultobj;
@@ -14435,9 +14346,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_report_errors(PyObject *SWIGUNUSEDPARM(se
     try {
       ((emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *)arg1)->report_errors(*arg2); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -14465,9 +14374,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_num_emds(PyObject *SWIGUNUSEDPARM(self), 
     try {
       result = ((emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *)arg1)->num_emds(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_size_t(static_cast< size_t >(result));
   return resultobj;
@@ -14495,9 +14402,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_nevA(PyObject *SWIGUNUSEDPARM(self), PyOb
     try {
       result = ((emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *)arg1)->nevA(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_size_t(static_cast< size_t >(result));
   return resultobj;
@@ -14525,9 +14430,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_nevB(PyObject *SWIGUNUSEDPARM(self), PyOb
     try {
       result = ((emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *)arg1)->nevB(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_size_t(static_cast< size_t >(result));
   return resultobj;
@@ -14554,9 +14457,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_preprocess_back_event(PyObject *SWIGUNUSE
     try {
       (arg1)->preprocess_back_event(); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -14589,9 +14490,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_init__SWIG_0(PyObject *SWIGUNUSEDPARM(sel
     try {
       (arg1)->init(arg2); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -14632,9 +14531,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_init__SWIG_1(PyObject *SWIGUNUSEDPARM(sel
     try {
       (arg1)->init(arg2,arg3); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -14715,12 +14612,8 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_compute(PyObject *SWIGUNUSEDPARM(self), P
     try {
       (arg1)->compute(); 
     }
-    catch (std::runtime_error & e) {
-      SWIG_exception(SWIG_RuntimeError, e.what()); 
-    }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_RUNTIME_ERROR
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -14748,9 +14641,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD___str__(PyObject *SWIGUNUSEDPARM(self), P
     try {
       result = emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg____str__((emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *)arg1); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_std_string(static_cast< std::string >(result));
   return resultobj;
@@ -14788,9 +14679,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_emds(PyObject *SWIGUNUSEDPARM(self), PyOb
     try {
       emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg__npy_emds(arg1,arg2,arg3,arg4); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   {
@@ -14868,9 +14757,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD__add_event(PyObject *SWIGUNUSEDPARM(self)
     try {
       emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg___add_event(arg1,arg2,arg3,arg4,arg5,arg6); 
     }
-    catch (std::exception & e) {
-      SWIG_exception(SWIG_SystemError, e.what()); 
-    }
+    CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -15001,6 +14888,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "EMDBaseDouble_external_dists", _wrap_EMDBaseDouble_external_dists, METH_O, NULL},
 	 { "EMDBaseDouble_set_external_dists", (PyCFunction)(void(*)(void))_wrap_EMDBaseDouble_set_external_dists, METH_VARARGS|METH_KEYWORDS, NULL},
 	 { "EMDBaseDouble_extra", _wrap_EMDBaseDouble_extra, METH_O, NULL},
+	 { "EMDBaseDouble_norm", _wrap_EMDBaseDouble_norm, METH_O, NULL},
 	 { "EMDBaseDouble_n0", _wrap_EMDBaseDouble_n0, METH_O, NULL},
 	 { "EMDBaseDouble_n1", _wrap_EMDBaseDouble_n1, METH_O, NULL},
 	 { "EMDBaseDouble_scale", _wrap_EMDBaseDouble_scale, METH_O, NULL},
@@ -15049,6 +14937,8 @@ static PyMethodDef SwigMethods[] = {
 	 { "new_EMD", (PyCFunction)(void(*)(void))_wrap_new_EMD, METH_VARARGS|METH_KEYWORDS, NULL},
 	 { "delete_EMD", _wrap_delete_EMD, METH_O, NULL},
 	 { "EMD_description", (PyCFunction)(void(*)(void))_wrap_EMD_description, METH_VARARGS|METH_KEYWORDS, NULL},
+	 { "EMD_R", _wrap_EMD_R, METH_O, NULL},
+	 { "EMD_beta", _wrap_EMD_beta, METH_O, NULL},
 	 { "EMD_clear", _wrap_EMD_clear, METH_O, NULL},
 	 { "EMD_dists_vec", _wrap_EMD_dists_vec, METH_O, NULL},
 	 { "EMD_flow", (PyCFunction)(void(*)(void))_wrap_EMD_flow, METH_VARARGS|METH_KEYWORDS, NULL},
@@ -15195,6 +15085,7 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "EMDBaseDouble_external_dists", _wrap_EMDBaseDouble_external_dists, METH_O, NULL},
 	 { "EMDBaseDouble_set_external_dists", (PyCFunction)(void(*)(void))_wrap_EMDBaseDouble_set_external_dists, METH_VARARGS|METH_KEYWORDS, NULL},
 	 { "EMDBaseDouble_extra", _wrap_EMDBaseDouble_extra, METH_O, NULL},
+	 { "EMDBaseDouble_norm", _wrap_EMDBaseDouble_norm, METH_O, NULL},
 	 { "EMDBaseDouble_n0", _wrap_EMDBaseDouble_n0, METH_O, NULL},
 	 { "EMDBaseDouble_n1", _wrap_EMDBaseDouble_n1, METH_O, NULL},
 	 { "EMDBaseDouble_scale", _wrap_EMDBaseDouble_scale, METH_O, NULL},
@@ -15243,6 +15134,8 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "new_EMD", (PyCFunction)(void(*)(void))_wrap_new_EMD, METH_VARARGS|METH_KEYWORDS, NULL},
 	 { "delete_EMD", _wrap_delete_EMD, METH_O, NULL},
 	 { "EMD_description", (PyCFunction)(void(*)(void))_wrap_EMD_description, METH_VARARGS|METH_KEYWORDS, NULL},
+	 { "EMD_R", _wrap_EMD_R, METH_O, NULL},
+	 { "EMD_beta", _wrap_EMD_beta, METH_O, NULL},
 	 { "EMD_clear", _wrap_EMD_clear, METH_O, NULL},
 	 { "EMD_dists_vec", _wrap_EMD_dists_vec, METH_O, NULL},
 	 { "EMD_flow", (PyCFunction)(void(*)(void))_wrap_EMD_flow, METH_VARARGS|METH_KEYWORDS, NULL},

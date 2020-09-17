@@ -25,9 +25,7 @@
 
 %module wasserstein
 
-%define EMDNAMESPACE
-emd
-%enddef
+#define EMDNAMESPACE emd
 
 // this ensures SWIG parses class members properly
 #define SWIG_WASSERSTEIN
@@ -49,7 +47,7 @@ import numpy as np
 %}
 
 // include common wasserstein wrappers
-%include wasserstein_common.i
+%include "wasserstein_common.i"
 
 // add functionality to get flows and dists as numpy arrays
 %extend emd::EMD<emd::ArrayEvent<>, emd::EuclideanArrayDistance<>> {

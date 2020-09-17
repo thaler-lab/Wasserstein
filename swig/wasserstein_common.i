@@ -100,7 +100,7 @@ import_array();
 #endif // SWIG_NUMPY
 
 // allow threads in PairwiseEMD computation
-%threadallow EMDNAMESPACE::PairwiseEMD::compute();
+%threadallow EMDNAMESPACE::PairwiseEMD::compute;
 
 // basic exception handling for all functions
 %exception {

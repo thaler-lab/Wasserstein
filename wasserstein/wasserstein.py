@@ -252,6 +252,7 @@ class EMDBaseDouble(object):
     external_dists = _swig_new_instance_method(_wasserstein.EMDBaseDouble_external_dists)
     set_external_dists = _swig_new_instance_method(_wasserstein.EMDBaseDouble_set_external_dists)
     extra = _swig_new_instance_method(_wasserstein.EMDBaseDouble_extra)
+    norm = _swig_new_instance_method(_wasserstein.EMDBaseDouble_norm)
     n0 = _swig_new_instance_method(_wasserstein.EMDBaseDouble_n0)
     n1 = _swig_new_instance_method(_wasserstein.EMDBaseDouble_n1)
     scale = _swig_new_instance_method(_wasserstein.EMDBaseDouble_scale)
@@ -328,6 +329,8 @@ class EMD(EMDBaseDouble):
         _wasserstein.EMD_swiginit(self, _wasserstein.new_EMD(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
     __swig_destroy__ = _wasserstein.delete_EMD
     description = _swig_new_instance_method(_wasserstein.EMD_description)
+    R = _swig_new_instance_method(_wasserstein.EMD_R)
+    beta = _swig_new_instance_method(_wasserstein.EMD_beta)
     clear = _swig_new_instance_method(_wasserstein.EMD_clear)
     dists_vec = _swig_new_instance_method(_wasserstein.EMD_dists_vec)
     flow = _swig_new_instance_method(_wasserstein.EMD_flow)

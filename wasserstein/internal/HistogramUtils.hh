@@ -40,7 +40,7 @@
 
 #include "EMDUtils.hh"
 
-BEGIN_WASSERSTEIN_NAMESPACE
+BEGIN_EMD_NAMESPACE
 
 namespace hist {
 
@@ -224,6 +224,6 @@ protected:
 
 }; // Histogram1DHandler
 
-END_WASSERSTEIN_NAMESPACE
+END_EMD_NAMESPACE
 
 #endif // WASSERSTEIN_HISTOGRAMUTILS_HH

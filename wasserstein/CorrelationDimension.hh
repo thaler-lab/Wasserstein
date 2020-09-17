@@ -28,7 +28,7 @@
 
 #include "internal/HistogramUtils.hh"
 
-BEGIN_WASSERSTEIN_NAMESPACE
+BEGIN_EMD_NAMESPACE
 
 class CorrelationDimension : public Histogram1DHandler<boost::histogram::axis::transform::log> {
 public:
@@ -94,6 +94,6 @@ private:
 
 }; // CorrelationDimension
 
-END_WASSERSTEIN_NAMESPACE
+END_EMD_NAMESPACE
 
 #endif // WASSERSTEIN_EXTERNALHANDLERS_HH

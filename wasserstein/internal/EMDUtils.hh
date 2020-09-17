@@ -46,16 +46,12 @@ enum class EMDStatus : char {
   Infeasible = 5
 };
 
-// use fastjet::contrib if part of FastJet, otherwise emd
-#ifdef __FASTJET_PSEUDOJET_HH__
-  #define BEGIN_WASSERSTEIN_NAMESPACE FASTJET_BEGIN_NAMESPACE namespace contrib {
-  #define END_WASSERSTEIN_NAMESPACE } FASTJET_END_NAMESPACE
-#else
-  #define BEGIN_WASSERSTEIN_NAMESPACE namespace emd {
-  #define END_WASSERSTEIN_NAMESPACE }
+#ifndef BEGIN_EMD_NAMESPACE
+#define BEGIN_EMD_NAMESPACE namespace emd {
+#define END_EMD_NAMESPACE }
 #endif
 
-BEGIN_WASSERSTEIN_NAMESPACE
+BEGIN_EMD_NAMESPACE
 
 // enum for which event got an extra particle
 enum class ExtraParticle : char { Neither = -1, Zero = 0, One = 1 };
@@ -361,6 +357,26 @@ struct EuclideanParticleND {
 
 }; // EuclideanParticleND
 
-END_WASSERSTEIN_NAMESPACE
+////////////////////////////////////////////////////////////////////////////////
+// Preprocessor - base class for preprocessing operations
+////////////////////////////////////////////////////////////////////////////////
+
+// base class for preprocessing events
+template<class EMD>
+class Preprocessor {
+public:
+  typedef typename EMD::Event Event;
+
+  virtual ~Preprocessor() {}
+
+  // returns description
+  virtual std::string description() const { return "Preprocessor"; };
+
+  // call this preprocessor on event
+  virtual Event & operator()(Event & event) const { return event; };
+
+}; // Preprocessor
+
+END_EMD_NAMESPACE
 
 #endif // WASSERSTEIN_EMDUTILS_HH

@@ -42,9 +42,8 @@
 #include "internal/Event.hh"
 #include "internal/NetworkSimplex.hh"
 #include "internal/PairwiseDistance.hh"
-#include "internal/Preprocess.hh"
 
-BEGIN_WASSERSTEIN_NAMESPACE
+BEGIN_EMD_NAMESPACE
 
 ////////////////////////////////////////////////////////////////////////////////
 // EMD - Computes the Earth/Energy Mover's Distance between two "events" which
@@ -53,18 +52,14 @@ BEGIN_WASSERSTEIN_NAMESPACE
 ////////////////////////////////////////////////////////////////////////////////
 
 template<class E, class PD, class NetworkSimplex = lemon::NetworkSimplex<>>
-#ifndef SWIG
-class EMD : public EMDBase<typename NetworkSimplex::Value> {
-#else
 class EMD : public EMDBase<Value> {
-#endif
 public:
 
   // allow passing FastJetParticleWeight as first template parameter
   #ifdef __FASTJET_PSEUDOJET_HH__
   typedef E ParticleWeight;
   typedef typename std::conditional<std::is_base_of<FastJetParticleWeight, E>::value, FastJetEvent<E>, E>::type Event;
-  #else 
+  #else
   typedef E Event;
   #endif
 
@@ -131,8 +126,7 @@ public:
         << pairwise_distance_.description()
         << network_simplex_.description();
 
-    // only write preprocessors if we're part of FastJet
-    if (write_preprocessors && std::is_base_of<FastJetEventBase, Event>::value)
+    if (write_preprocessors)
       output_preprocessors(oss);
 
     return oss.str();
@@ -141,8 +135,6 @@ public:
   // add preprocessor to internal list
   template<template<class> class P, typename... Args>
   EMD & preprocess(Args && ... args) {
-    static_assert(std::is_base_of<FastJetEventBase, Event>::value,
-                  "EMD::preprocess - Only available for FastJetEvent.");
     preprocessors_.emplace_back(new P<Self>(std::forward<Args>(args)...));
     return *this;
   }
@@ -437,7 +429,7 @@ public:
     return oss.str();
   }
 
-  // add preprocessor to internal list (currently only for use with FastJet)
+  // add preprocessor to internal list
   template<template<class> class P, typename... Args>
   PairwiseEMD & preprocess(Args && ... args) {
     for (EMD & emd_obj : emd_objs_)
@@ -819,6 +811,6 @@ private:
 
 }; // PairwiseEMD
 
-END_WASSERSTEIN_NAMESPACE
+END_EMD_NAMESPACE
 
 #endif // WASSERSTEIN_EMD_HH
