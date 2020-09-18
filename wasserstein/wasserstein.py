@@ -265,7 +265,6 @@ _wasserstein.EMDBaseDouble_swigregister(EMDBaseDouble)
 
 class Histogram1DHandler(ExternalEMDHandler):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         _wasserstein.Histogram1DHandler_swiginit(self, _wasserstein.new_Histogram1DHandler(*args))
@@ -276,6 +275,7 @@ class Histogram1DHandler(ExternalEMDHandler):
     bin_edges_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandler_bin_edges_vec)
     hist_vals_errs_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandler_hist_vals_errs_vec)
     __str__ = _swig_new_instance_method(_wasserstein.Histogram1DHandler___str__)
+    __repr__ = _swig_new_instance_method(_wasserstein.Histogram1DHandler___repr__)
     bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandler_bin_centers)
     bin_edges = _swig_new_instance_method(_wasserstein.Histogram1DHandler_bin_edges)
     hist_vals_errs = _swig_new_instance_method(_wasserstein.Histogram1DHandler_hist_vals_errs)
@@ -285,7 +285,6 @@ _wasserstein.Histogram1DHandler_swigregister(Histogram1DHandler)
 
 class Histogram1DHandlerLog(ExternalEMDHandler):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         _wasserstein.Histogram1DHandlerLog_swiginit(self, _wasserstein.new_Histogram1DHandlerLog(*args))
@@ -296,6 +295,7 @@ class Histogram1DHandlerLog(ExternalEMDHandler):
     bin_edges_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_bin_edges_vec)
     hist_vals_errs_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_hist_vals_errs_vec)
     __str__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog___str__)
+    __repr__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog___repr__)
     bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_bin_centers)
     bin_edges = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_bin_edges)
     hist_vals_errs = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_hist_vals_errs)
@@ -305,7 +305,6 @@ _wasserstein.Histogram1DHandlerLog_swigregister(Histogram1DHandlerLog)
 
 class CorrelationDimension(Histogram1DHandlerLog):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args):
         _wasserstein.CorrelationDimension_swiginit(self, _wasserstein.new_CorrelationDimension(*args))
@@ -314,6 +313,7 @@ class CorrelationDimension(Histogram1DHandlerLog):
     corrdims_vec = _swig_new_instance_method(_wasserstein.CorrelationDimension_corrdims_vec)
     corrdim_bins_vec = _swig_new_instance_method(_wasserstein.CorrelationDimension_corrdim_bins_vec)
     __str__ = _swig_new_instance_method(_wasserstein.CorrelationDimension___str__)
+    __repr__ = _swig_new_instance_method(_wasserstein.CorrelationDimension___repr__)
     corrdim_bins = _swig_new_instance_method(_wasserstein.CorrelationDimension_corrdim_bins)
     corrdims = _swig_new_instance_method(_wasserstein.CorrelationDimension_corrdims)
     cumulative_vals_vars = _swig_new_instance_method(_wasserstein.CorrelationDimension_cumulative_vals_vars)
@@ -323,7 +323,6 @@ _wasserstein.CorrelationDimension_swigregister(CorrelationDimension)
 
 class EMD(EMDBaseDouble):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=10000, epsilon_small_factor=0):
         _wasserstein.EMD_swiginit(self, _wasserstein.new_EMD(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
@@ -336,6 +335,7 @@ class EMD(EMDBaseDouble):
     flow = _swig_new_instance_method(_wasserstein.EMD_flow)
     flows_vec = _swig_new_instance_method(_wasserstein.EMD_flows_vec)
     __str__ = _swig_new_instance_method(_wasserstein.EMD___str__)
+    __repr__ = _swig_new_instance_method(_wasserstein.EMD___repr__)
     flows = _swig_new_instance_method(_wasserstein.EMD_flows)
     dists = _swig_new_instance_method(_wasserstein.EMD_dists)
     __call__ = _swig_new_instance_method(_wasserstein.EMD___call__)
@@ -345,7 +345,6 @@ _wasserstein.EMD_swigregister(EMD)
 
 class PairwiseEMD(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
     def __init__(self, *args, **kwargs):
         _wasserstein.PairwiseEMD_swiginit(self, _wasserstein.new_PairwiseEMD(*args, **kwargs))
@@ -379,6 +378,7 @@ class PairwiseEMD(object):
     init = _swig_new_instance_method(_wasserstein.PairwiseEMD_init)
     compute = _swig_new_instance_method(_wasserstein.PairwiseEMD_compute)
     __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMD___str__)
+    __repr__ = _swig_new_instance_method(_wasserstein.PairwiseEMD___repr__)
     emds = _swig_new_instance_method(_wasserstein.PairwiseEMD_emds)
 
 

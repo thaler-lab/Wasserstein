@@ -195,6 +195,9 @@ import_array();
 std::string __str__() const {
   return $self->description();
 }
+std::string __repr__() const {
+  return $self->description();
+}
 %enddef
 
 // mallocs a 1D array of doubles of the specified size

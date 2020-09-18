@@ -36,6 +36,20 @@
 #include <type_traits>
 #include <vector>
 
+#ifndef BEGIN_EMD_NAMESPACE
+#define BEGIN_EMD_NAMESPACE namespace emd {
+#define END_EMD_NAMESPACE }
+#define EMDNAMESPACE emd
+#endif
+
+BEGIN_EMD_NAMESPACE
+
+// set these globally so SWIG knows how to parse them
+#ifdef SWIG
+typedef double Value;
+typedef std::vector<double> ValueVector;
+#endif
+
 // enum with possible return statuses from the NetworkSimplex solver
 enum class EMDStatus : char { 
   Success = 0,
@@ -46,19 +60,8 @@ enum class EMDStatus : char {
   Infeasible = 5
 };
 
-#ifndef BEGIN_EMD_NAMESPACE
-#define BEGIN_EMD_NAMESPACE namespace emd {
-#define END_EMD_NAMESPACE }
-#endif
-
-BEGIN_EMD_NAMESPACE
-
 // enum for which event got an extra particle
 enum class ExtraParticle : char { Neither = -1, Zero = 0, One = 1 };
-
-// ensure that phi utils are provided only once
-#ifndef PIPHIUTILS
-#define PIPHIUTILS
 
 const double PI = 3.14159265358979323846;
 const double TWOPI = 2*PI;
@@ -69,13 +72,6 @@ inline double phi_fix(double phi, double ref_phi) {
   else if (diff < -PI) phi += TWOPI;
   return phi; 
 }
-#endif // PIPHIUTILS
-
-// set these globally so SWIG knows how to parse them
-#ifdef SWIG
-typedef double Value;
-typedef std::vector<double> ValueVector;
-#endif
 
 // function that raises appropriate error from a status code
 inline void check_emd_status(EMDStatus status) {
