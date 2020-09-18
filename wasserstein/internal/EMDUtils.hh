@@ -247,7 +247,7 @@ struct ArrayParticleCollection {
     bool operator!=(const templated_iterator & other) const { return ptr_ != other.ptr_; }
     int stride() const { return stride_; }
   };
-  //using iterator = templated_iterator<V>;
+
   using const_iterator = templated_iterator<const V>;
   using value_type = const_iterator;
 
@@ -256,10 +256,8 @@ struct ArrayParticleCollection {
     array_(array), size_(size), stride_(stride)
   {}
 
-  std::size_t size() const { return size_; }
+  int size() const { return size_; }
   int stride() const { return stride_; }
-  //iterator begin() { return iterator(array_, stride_); }
-  //iterator end() { return iterator(array_ + size_*stride_, stride_); }
   const_iterator begin() const { return const_iterator(array_, stride_); }
   const_iterator end() const { return const_iterator(array_ + size_*stride_, stride_); }
 

@@ -73,7 +73,6 @@ struct PairwiseDistanceBase {
   void fill_distances(const ParticleCollection & ps0, const ParticleCollection & ps1,
                       std::vector<Value> & dists, ExtraParticle extra) {
 
-    //static_cast<const PairwiseDistance &>(*this).init(ps0, ps1);
     std::size_t k(0);
 
     if (extra == ExtraParticle::Neither) {
