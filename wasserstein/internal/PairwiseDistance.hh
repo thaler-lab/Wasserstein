@@ -86,7 +86,7 @@ struct PairwiseDistanceBase {
       for (ParticleIterator p0 = ps0.begin(), end0 = ps0.end(), end1 = ps1.end(); p0 != end0; ++p0)
         for (ParticleIterator p1 = ps1.begin(); p1 != end1; ++p1)
           dists[k++] = distance(p0, p1);
-      for (std::size_t j = 0; j < ps1.size(); j++)
+      for (std::size_t j = 0, end = ps1.size(); j < end; j++)
         dists[k++] = 1;
     }
 
