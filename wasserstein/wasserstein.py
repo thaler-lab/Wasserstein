@@ -71,6 +71,8 @@ class _SwigNonDynamicMeta(type):
 
 
 class SwigPyIterator(object):
+    r"""Proxy of C++ swig::SwigPyIterator class."""
+
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
@@ -100,6 +102,8 @@ class SwigPyIterator(object):
 _wasserstein.SwigPyIterator_swigregister(SwigPyIterator)
 
 class vectorDouble(object):
+    r"""Proxy of C++ std::vector< double > class."""
+
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
     iterator = _swig_new_instance_method(_wasserstein.vectorDouble_iterator)
@@ -129,6 +133,12 @@ class vectorDouble(object):
     erase = _swig_new_instance_method(_wasserstein.vectorDouble_erase)
 
     def __init__(self, *args):
+        r"""
+        __init__(vectorDouble self) -> vectorDouble
+        __init__(vectorDouble self, vectorDouble other) -> vectorDouble
+        __init__(vectorDouble self, std::vector< double >::size_type size) -> vectorDouble
+        __init__(vectorDouble self, std::vector< double >::size_type size, std::vector< double >::value_type const & value) -> vectorDouble
+        """
         _wasserstein.vectorDouble_swiginit(self, _wasserstein.new_vectorDouble(*args))
     push_back = _swig_new_instance_method(_wasserstein.vectorDouble_push_back)
     front = _swig_new_instance_method(_wasserstein.vectorDouble_front)
@@ -144,6 +154,8 @@ class vectorDouble(object):
 _wasserstein.vectorDouble_swigregister(vectorDouble)
 
 class vectorString(object):
+    r"""Proxy of C++ std::vector< std::string > class."""
+
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
     iterator = _swig_new_instance_method(_wasserstein.vectorString_iterator)
@@ -173,6 +185,12 @@ class vectorString(object):
     erase = _swig_new_instance_method(_wasserstein.vectorString_erase)
 
     def __init__(self, *args):
+        r"""
+        __init__(vectorString self) -> vectorString
+        __init__(vectorString self, vectorString other) -> vectorString
+        __init__(vectorString self, std::vector< std::string >::size_type size) -> vectorString
+        __init__(vectorString self, std::vector< std::string >::size_type size, std::vector< std::string >::value_type const & value) -> vectorString
+        """
         _wasserstein.vectorString_swiginit(self, _wasserstein.new_vectorString(*args))
     push_back = _swig_new_instance_method(_wasserstein.vectorString_push_back)
     front = _swig_new_instance_method(_wasserstein.vectorString_front)
@@ -188,13 +206,20 @@ class vectorString(object):
 _wasserstein.vectorString_swigregister(vectorString)
 
 class pairVectorDouble(object):
+    r"""Proxy of C++ std::pair< std::vector< double >,std::vector< double > > class."""
+
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
     def __init__(self, *args):
+        r"""
+        __init__(pairVectorDouble self) -> pairVectorDouble
+        __init__(pairVectorDouble self, vectorDouble first, vectorDouble second) -> pairVectorDouble
+        __init__(pairVectorDouble self, pairVectorDouble other) -> pairVectorDouble
+        """
         _wasserstein.pairVectorDouble_swiginit(self, _wasserstein.new_pairVectorDouble(*args))
-    first = property(_wasserstein.pairVectorDouble_first_get, _wasserstein.pairVectorDouble_first_set)
-    second = property(_wasserstein.pairVectorDouble_second_get, _wasserstein.pairVectorDouble_second_set)
+    first = property(_wasserstein.pairVectorDouble_first_get, _wasserstein.pairVectorDouble_first_set, doc=r"""first : std::vector<(double,std::allocator<(double)>)>""")
+    second = property(_wasserstein.pairVectorDouble_second_get, _wasserstein.pairVectorDouble_second_set, doc=r"""second : std::vector<(double,std::allocator<(double)>)>""")
     def __len__(self):
         return 2
     def __repr__(self):
@@ -215,17 +240,28 @@ class pairVectorDouble(object):
 _wasserstein.pairVectorDouble_swigregister(pairVectorDouble)
 
 EMDStatus_Success = _wasserstein.EMDStatus_Success
+
 EMDStatus_Empty = _wasserstein.EMDStatus_Empty
+
 EMDStatus_SupplyMismatch = _wasserstein.EMDStatus_SupplyMismatch
+
 EMDStatus_Unbounded = _wasserstein.EMDStatus_Unbounded
+
 EMDStatus_MaxIterReached = _wasserstein.EMDStatus_MaxIterReached
+
 EMDStatus_Infeasible = _wasserstein.EMDStatus_Infeasible
+
 ExtraParticle_Neither = _wasserstein.ExtraParticle_Neither
+
 ExtraParticle_Zero = _wasserstein.ExtraParticle_Zero
+
 ExtraParticle_One = _wasserstein.ExtraParticle_One
+
 phi_fix = _wasserstein.phi_fix
 check_emd_status = _wasserstein.check_emd_status
 class ExternalEMDHandler(object):
+    r"""Proxy of C++ emd::ExternalEMDHandler class."""
+
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
@@ -243,10 +279,13 @@ PI = cvar.PI
 TWOPI = cvar.TWOPI
 
 class EMDBaseDouble(object):
+    r"""Proxy of C++ emd::EMDBase< double > class."""
+
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
     def __init__(self, norm=False, do_timing=False, external_dists=False):
+        r"""__init__(EMDBaseDouble self, bool norm=False, bool do_timing=False, bool external_dists=False) -> EMDBaseDouble"""
         _wasserstein.EMDBaseDouble_swiginit(self, _wasserstein.new_EMDBaseDouble(norm, do_timing, external_dists))
     __swig_destroy__ = _wasserstein.delete_EMDBaseDouble
     external_dists = _swig_new_instance_method(_wasserstein.EMDBaseDouble_external_dists)
@@ -264,9 +303,18 @@ class EMDBaseDouble(object):
 _wasserstein.EMDBaseDouble_swigregister(EMDBaseDouble)
 
 class Histogram1DHandler(ExternalEMDHandler):
+    r"""
+    Proxy of C++ emd::Histogram1DHandler< > class.
+    Proxy of C++ emd::Histogram1DHandler< > class.
+    """
+
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args):
+        r"""
+        __init__(Histogram1DHandler self, unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandler
+        __init__(Histogram1DHandler self) -> Histogram1DHandler
+        """
         _wasserstein.Histogram1DHandler_swiginit(self, _wasserstein.new_Histogram1DHandler(*args))
     __swig_destroy__ = _wasserstein.delete_Histogram1DHandler
     nbins = _swig_new_instance_method(_wasserstein.Histogram1DHandler_nbins)
@@ -284,9 +332,15 @@ class Histogram1DHandler(ExternalEMDHandler):
 _wasserstein.Histogram1DHandler_swigregister(Histogram1DHandler)
 
 class Histogram1DHandlerLog(ExternalEMDHandler):
+    r"""Proxy of C++ emd::Histogram1DHandler< boost::histogram::axis::transform::log > class."""
+
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args):
+        r"""
+        __init__(Histogram1DHandlerLog self, unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandlerLog
+        __init__(Histogram1DHandlerLog self) -> Histogram1DHandlerLog
+        """
         _wasserstein.Histogram1DHandlerLog_swiginit(self, _wasserstein.new_Histogram1DHandlerLog(*args))
     __swig_destroy__ = _wasserstein.delete_Histogram1DHandlerLog
     nbins = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_nbins)
@@ -304,9 +358,15 @@ class Histogram1DHandlerLog(ExternalEMDHandler):
 _wasserstein.Histogram1DHandlerLog_swigregister(Histogram1DHandlerLog)
 
 class CorrelationDimension(Histogram1DHandlerLog):
+    r"""Proxy of C++ emd::CorrelationDimension class."""
+
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args):
+        r"""
+        __init__(CorrelationDimension self, unsigned int nbins, double axis_min, double axis_max) -> CorrelationDimension
+        __init__(CorrelationDimension self) -> CorrelationDimension
+        """
         _wasserstein.CorrelationDimension_swiginit(self, _wasserstein.new_CorrelationDimension(*args))
     __swig_destroy__ = _wasserstein.delete_CorrelationDimension
     cumulative_vals_vars_vec = _swig_new_instance_method(_wasserstein.CorrelationDimension_cumulative_vals_vars_vec)
@@ -322,9 +382,15 @@ class CorrelationDimension(Histogram1DHandlerLog):
 _wasserstein.CorrelationDimension_swigregister(CorrelationDimension)
 
 class EMD(EMDBaseDouble):
+    r"""
+    Proxy of C++ emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > class.
+    Proxy of C++ emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > class.
+    """
+
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=10000, epsilon_small_factor=0):
+        r"""__init__(EMD self, double R=1, double beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, unsigned int n_iter_max=100000, double epsilon_large_factor=10000, double epsilon_small_factor=0) -> EMD"""
         _wasserstein.EMD_swiginit(self, _wasserstein.new_EMD(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
     __swig_destroy__ = _wasserstein.delete_EMD
     description = _swig_new_instance_method(_wasserstein.EMD_description)
@@ -344,9 +410,15 @@ class EMD(EMDBaseDouble):
 _wasserstein.EMD_swigregister(EMD)
 
 class PairwiseEMD(object):
+    r"""
+    Proxy of C++ emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > class.
+    Proxy of C++ emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > class.
+    """
+
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
+        r"""__init__(PairwiseEMD self, double R=1, double beta=1, bool norm=False, int num_threads=-1, long long chunksize=0, bool do_timing=True, std::ostream & os=std::cout, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, double epsilon_large_factor=10000, double epsilon_small_factor=0) -> PairwiseEMD"""
         _wasserstein.PairwiseEMD_swiginit(self, _wasserstein.new_PairwiseEMD(*args, **kwargs))
     __swig_destroy__ = _wasserstein.delete_PairwiseEMD
     description = _swig_new_instance_method(_wasserstein.PairwiseEMD_description)

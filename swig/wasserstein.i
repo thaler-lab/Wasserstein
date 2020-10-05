@@ -46,6 +46,8 @@ import itertools
 import numpy as np
 %}
 
+%feature("autodoc", "1");
+
 // include common wasserstein wrappers
 %include "wasserstein_common.i"
 
