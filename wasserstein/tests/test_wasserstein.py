@@ -269,7 +269,10 @@ def test_pairwise_emd_with_ef(num_events, num_particles, num_threads, beta, R, n
     assert np.all(wassEMDs == wassVecEMDs)
 
     nj = num_threads if num_threads != -1 else None
-    efEMDs = ef.emd.emds_pot(eventsA, R=R, beta=beta, norm=norm, n_jobs=nj)
+    if hasattr(ef.emd, 'emds_pot')
+        efEMDs = ef.emd.emds_pot(eventsA, R=R, beta=beta, norm=norm, n_jobs=nj)
+    else:
+        efEMDs = ef.emd.emds(eventsA, R=R, beta=beta, norm=norm, n_jobs=nj)
 
     print(wassEMDs)
     assert np.all(np.abs(efEMDs - wassEMDs) < 1e-13)
@@ -281,7 +284,10 @@ def test_pairwise_emd_with_ef(num_events, num_particles, num_threads, beta, R, n
     assert np.all(wassEMDs == wassVecEMDs)
 
     nj = num_threads if num_threads != -1 else None
-    efEMDs = ef.emd.emds_pot(eventsA, eventsB, R=R, beta=beta, norm=norm, n_jobs=nj)
+    if hasattr(ef.emd, 'emds_pot'):
+        efEMDs = ef.emd.emds_pot(eventsA, eventsB, R=R, beta=beta, norm=norm, n_jobs=nj)
+    else:
+        efEMDs = ef.emd.emds(eventsA, eventsB, R=R, beta=beta, norm=norm, n_jobs=nj)
 
     print(wassEMDs)
     assert np.all(np.abs(efEMDs - wassEMDs) < 1e-13)
