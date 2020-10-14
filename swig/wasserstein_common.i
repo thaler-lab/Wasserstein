@@ -114,6 +114,16 @@ import_array();
   CATCH_STD_INVALID_ARGUMENT
   CATCH_STD_EXCEPTION
 }
+%exception EMDNAMESPACE::EMD::set_R {
+  try { $action }
+  CATCH_STD_INVALID_ARGUMENT
+  CATCH_STD_EXCEPTION
+}
+%exception EMDNAMESPACE::EMD::set_beta {
+  try { $action }
+  CATCH_STD_INVALID_ARGUMENT
+  CATCH_STD_EXCEPTION
+}
 %exception EMDNAMESPACE::EMD::operator() {
   try { $action }
   CATCH_STD_RUNTIME_ERROR

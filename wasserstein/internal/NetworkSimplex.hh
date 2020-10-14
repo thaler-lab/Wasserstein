@@ -161,6 +161,14 @@ public:
   typedef V Value;
   typedef B Bool;
 
+  // rough type checking
+  static_assert(std::is_integral<Node>::value && std::is_signed<Node>::value,
+                "Node should be a signed integral type.");
+  static_assert(std::is_integral<Arc>::value && std::is_signed<Arc>::value,
+                "Arc should be a signed integral type.");
+  static_assert(std::is_floating_point<Value>::value, "Value should be a floating point type.");
+  static_assert(std::is_integral<Bool>::value, "Bool should be an integral type.");
+
   // vector typedefs
   typedef std::vector<Node> NodeVector;
   typedef std::vector<Arc> ArcVector;
@@ -169,18 +177,17 @@ public:
   typedef std::vector<char> StateVector;
 
   // constructor
-  NetworkSimplex(unsigned n_iter_max, double epsilon_large_factor, double epsilon_small_factor) :
-    n_iter_max_(n_iter_max),
-    epsilon_large_(epsilon_large_factor*std::numeric_limits<Value>::epsilon()),
-    epsilon_small_(epsilon_small_factor*std::numeric_limits<Value>::epsilon()),
+  NetworkSimplex(unsigned n_iter_max, Value epsilon_large_factor, Value epsilon_small_factor) :
     MAX(std::numeric_limits<Value>::max()),
     INF(std::numeric_limits<Value>::has_infinity ? std::numeric_limits<Value>::infinity() : MAX)
   {
-    // rough type checking
-    static_assert(std::is_integral<Node>::value, "Node should be an integral type.");
-    static_assert(std::is_integral<Arc>::value, "Arc should be an integral type.");
-    static_assert(std::is_floating_point<Value>::value, "Value should be a floating point type.");
-    static_assert(std::is_integral<Bool>::value, "Bool should be an integral type.");
+    set_params(n_iter_max, epsilon_large_factor, epsilon_small_factor);
+  }
+
+  void set_params(unsigned n_iter_max, Value epsilon_large_factor, Value epsilon_small_factor) {
+    n_iter_max_ = n_iter_max;
+    epsilon_large_ = epsilon_large_factor * std::numeric_limits<Value>::epsilon();
+    epsilon_small_ = epsilon_small_factor * std::numeric_limits<Value>::epsilon();
   }
 
   // get description of this network simplex
@@ -450,7 +457,7 @@ private:
 
     // initialize block search pivot rule
     _next_arc = 0;
-    _block_size = std::max(Node(BLOCK_SIZE_FACTOR * std::sqrt(double(arcNum()))), MIN_BLOCK_SIZE);
+    _block_size = std::max(Node(BLOCK_SIZE_FACTOR * std::sqrt(Value(arcNum()))), MIN_BLOCK_SIZE);
 
     // perform heuristic initial pivots
     if (!initialPivots()) return NetworkSimplexStatus::Unbounded;

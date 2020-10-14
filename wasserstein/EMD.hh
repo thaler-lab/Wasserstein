@@ -52,7 +52,11 @@ BEGIN_EMD_NAMESPACE
 ////////////////////////////////////////////////////////////////////////////////
 
 template<class E, class PD, class NetworkSimplex = lemon::NetworkSimplex<>>
+#ifdef SWIG
 class EMD : public EMDBase<Value> {
+#else
+class EMD : public EMDBase<typename NetworkSimplex::Value> {
+#endif
 public:
 
   // allow passing FastJetParticleWeight as first template parameter
@@ -96,11 +100,11 @@ public:
 public:
 
   // constructor with entirely default arguments
-  EMD(double R = 1, double beta = 1, bool norm = false,
+  EMD(Value R = 1, Value beta = 1, bool norm = false,
       bool do_timing = false, bool external_dists = false,
       unsigned n_iter_max = 100000,
-      double epsilon_large_factor = 10000,
-      double epsilon_small_factor = 0) :
+      Value epsilon_large_factor = 10000,
+      Value epsilon_small_factor = 1) :
 
     // base class initialization
     EMDBase(norm, do_timing, external_dists),
@@ -143,9 +147,16 @@ public:
   const NetworkSimplex & network_simplex() const { return network_simplex_; }
   const PairwiseDistance & pairwise_distance() const { return pairwise_distance_; }
 
-  // access R and beta parameters
+  // access/set R and beta parameters
   Value R() const { return pairwise_distance_.R(); }
   Value beta() const { return pairwise_distance_.beta(); }
+  void set_R(Value r) { pairwise_distance_.set_R(r); }
+  void set_beta(Value beta) { pairwise_distance_.set_beta(beta); }
+
+  // set network simplex parameters
+  void set_network_simplex_params(unsigned n_iter_max, Value epsilon_large_factor, Value epsilon_small_factor) {
+    network_simplex_.set_params(n_iter_max, epsilon_large_factor, epsilon_small_factor);
+  }
 
   // free all dynamic memory help by this object
   void clear() {
@@ -182,24 +193,24 @@ public:
     n1_ = ws1.size();
 
     // handle adding fictitious particle
-    Value weightdiff(ev1.total_weight() - ev0.total_weight());
+    weightdiff_ = ev1.total_weight() - ev0.total_weight();
 
     // for norm or already equal or custom distance, don't add particle
-    if (norm_ || external_dists() || weightdiff == 0) {
+    if (norm_ || external_dists() || weightdiff_ == 0) {
       extra_ = ExtraParticle::Neither;
       weights().resize(n0() + n1() + 1); // + 1 is to match what network simplex will do anyway
       std::copy(ws1.begin(), ws1.end(), std::copy(ws0.begin(), ws0.end(), weights().begin()));
     }
 
     // total weights unequal, add extra particle to event0 as it has less total weight
-    else if (weightdiff > 0) {
+    else if (weightdiff_ > 0) {
       extra_ = ExtraParticle::Zero;
       n0_++;
       weights().resize(n0() + n1() + 1); // +1 is to match what network simplex will do anyway
 
       // put weight diff after ws0
       auto it(std::copy(ws0.begin(), ws0.end(), weights().begin()));
-      *it = weightdiff;
+      *it = weightdiff_;
       std::copy(ws1.begin(), ws1.end(), ++it);
     }
 
@@ -208,7 +219,7 @@ public:
       extra_ = ExtraParticle::One;
       n1_++;
       weights().resize(n0() + n1() + 1); // +1 is to match what network simplex will do anyway
-      *std::copy(ws1.begin(), ws1.end(), std::copy(ws0.begin(), ws0.end(), weights().begin())) = -weightdiff;
+      *std::copy(ws1.begin(), ws1.end(), std::copy(ws0.begin(), ws0.end(), weights().begin())) = -weightdiff_;
     }
 
     // if not norm, prepare to scale each weight by the max total
@@ -258,7 +269,7 @@ public:
     ValueVector unscaled_flows(network_simplex_.flows().begin(), 
                                network_simplex_.flows().begin() + n0_*n1_);
     // unscale all values
-    for (double & f: unscaled_flows)
+    for (Value & f: unscaled_flows)
       f *= scale_;
 
     return unscaled_flows;
@@ -325,11 +336,13 @@ private:
 template<class EMD>
 class PairwiseEMD {
 public:
-  typedef typename EMD::Event Event;
-#ifndef SWIG
+
+  #ifndef SWIG
   typedef typename EMD::Value Value;
   typedef std::vector<Value> ValueVector;
-#endif
+  #endif
+
+  typedef typename EMD::Event Event;
   typedef std::vector<Event> EventVector;
 
 private:
@@ -363,7 +376,7 @@ private:
 public:
 
   // contructor that initializes the EMD object, uses the same default arguments
-  PairwiseEMD(double R = 1, double beta = 1, bool norm = false,
+  PairwiseEMD(Value R = 1, Value beta = 1, bool norm = false,
               int num_threads = -1,
               long long chunksize = 0,
               bool do_timing = true,
@@ -371,8 +384,8 @@ public:
               bool store_sym_emds_flattened = true,
               bool throw_on_error = false,
               unsigned n_iter_max = 100000,
-              double epsilon_large_factor = 10000,
-              double epsilon_small_factor = 0) :
+              Value epsilon_large_factor = 10000,
+              Value epsilon_small_factor = 1) :
     num_threads_(determine_num_threads(num_threads)),
     emd_objs_(num_threads_, EMD(R, beta, norm, do_timing, false,
                                 n_iter_max, epsilon_large_factor, epsilon_small_factor))

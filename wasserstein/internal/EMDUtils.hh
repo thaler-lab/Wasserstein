@@ -119,7 +119,7 @@ protected:
   ExtraParticle extra_;
 
   // emd value and status
-  Value scale_, emd_;
+  Value weightdiff_, scale_, emd_;
   EMDStatus status_;
 
   // timing
@@ -146,21 +146,26 @@ public:
   // virtual desctructor
   virtual ~EMDBase() {}
 
+  // the norm setting
+  bool norm() const { return norm_; }
+  void set_norm(bool nrm) { norm_ = nrm; } 
+
+  // timing setting
+  void set_do_timing(bool timing) { do_timing_ = timing; }
+
   // get/set whether we're currently setup to use external distances
   bool external_dists() const { return external_dists_; }
   void set_external_dists(bool exdists) { external_dists_ = exdists; }
-
-  // which event, 0 or 1, got an extra particle (-1 if no event got one)
-  ExtraParticle extra() const { return extra_; }
-
-  // the norm setting
-  bool norm() const { return norm_; }
 
   // number of particles in each event (after possible addition of extra particles)
   std::size_t n0() const { return n0_; }
   std::size_t n1() const { return n1_; }
 
+  // which event, 0 or 1, got an extra particle (-1 if no event got one)
+  ExtraParticle extra() const { return extra_; }
+
   // returns emd scale, value and status
+  Value weightdiff() const { return weightdiff_; }
   Value scale() const { return scale_; }
   Value emd() const { return emd_; }
   EMDStatus status() const { return status_; }

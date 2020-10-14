@@ -288,12 +288,15 @@ class EMDBaseDouble(object):
         r"""__init__(EMDBaseDouble self, bool norm=False, bool do_timing=False, bool external_dists=False) -> EMDBaseDouble"""
         _wasserstein.EMDBaseDouble_swiginit(self, _wasserstein.new_EMDBaseDouble(norm, do_timing, external_dists))
     __swig_destroy__ = _wasserstein.delete_EMDBaseDouble
+    norm = _swig_new_instance_method(_wasserstein.EMDBaseDouble_norm)
+    set_norm = _swig_new_instance_method(_wasserstein.EMDBaseDouble_set_norm)
+    set_do_timing = _swig_new_instance_method(_wasserstein.EMDBaseDouble_set_do_timing)
     external_dists = _swig_new_instance_method(_wasserstein.EMDBaseDouble_external_dists)
     set_external_dists = _swig_new_instance_method(_wasserstein.EMDBaseDouble_set_external_dists)
-    extra = _swig_new_instance_method(_wasserstein.EMDBaseDouble_extra)
-    norm = _swig_new_instance_method(_wasserstein.EMDBaseDouble_norm)
     n0 = _swig_new_instance_method(_wasserstein.EMDBaseDouble_n0)
     n1 = _swig_new_instance_method(_wasserstein.EMDBaseDouble_n1)
+    extra = _swig_new_instance_method(_wasserstein.EMDBaseDouble_extra)
+    weightdiff = _swig_new_instance_method(_wasserstein.EMDBaseDouble_weightdiff)
     scale = _swig_new_instance_method(_wasserstein.EMDBaseDouble_scale)
     emd = _swig_new_instance_method(_wasserstein.EMDBaseDouble_emd)
     status = _swig_new_instance_method(_wasserstein.EMDBaseDouble_status)
@@ -390,12 +393,15 @@ class EMD(EMDBaseDouble):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=10000, epsilon_small_factor=0):
-        r"""__init__(EMD self, double R=1, double beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, unsigned int n_iter_max=100000, double epsilon_large_factor=10000, double epsilon_small_factor=0) -> EMD"""
+        r"""__init__(EMD self, emd::Value R=1, emd::Value beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=0) -> EMD"""
         _wasserstein.EMD_swiginit(self, _wasserstein.new_EMD(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
     __swig_destroy__ = _wasserstein.delete_EMD
     description = _swig_new_instance_method(_wasserstein.EMD_description)
     R = _swig_new_instance_method(_wasserstein.EMD_R)
     beta = _swig_new_instance_method(_wasserstein.EMD_beta)
+    set_R = _swig_new_instance_method(_wasserstein.EMD_set_R)
+    set_beta = _swig_new_instance_method(_wasserstein.EMD_set_beta)
+    set_network_simplex_params = _swig_new_instance_method(_wasserstein.EMD_set_network_simplex_params)
     clear = _swig_new_instance_method(_wasserstein.EMD_clear)
     dists_vec = _swig_new_instance_method(_wasserstein.EMD_dists_vec)
     flow = _swig_new_instance_method(_wasserstein.EMD_flow)
@@ -418,7 +424,7 @@ class PairwiseEMD(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
-        r"""__init__(PairwiseEMD self, double R=1, double beta=1, bool norm=False, int num_threads=-1, long long chunksize=0, bool do_timing=True, std::ostream & os=std::cout, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, double epsilon_large_factor=10000, double epsilon_small_factor=0) -> PairwiseEMD"""
+        r"""__init__(PairwiseEMD self, emd::Value R=1, emd::Value beta=1, bool norm=False, int num_threads=-1, long long chunksize=0, bool do_timing=True, std::ostream & os=std::cout, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=0) -> PairwiseEMD"""
         _wasserstein.PairwiseEMD_swiginit(self, _wasserstein.new_PairwiseEMD(*args, **kwargs))
     __swig_destroy__ = _wasserstein.delete_PairwiseEMD
     description = _swig_new_instance_method(_wasserstein.PairwiseEMD_description)

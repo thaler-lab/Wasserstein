@@ -39,20 +39,18 @@ BEGIN_EMD_NAMESPACE
 
 template <class PairwiseDistance, class ParticleCollection, class Value>
 struct PairwiseDistanceBase {
+
   typedef typename ParticleCollection::value_type Particle;
   typedef typename ParticleCollection::const_iterator ParticleIterator;
 
-  PairwiseDistanceBase(Value R, Value beta) :
-    R_(R), R2_(R*R), beta_(beta), halfbeta_(beta_/2)
-  {
+  PairwiseDistanceBase(Value R, Value beta) {
+    set_R(R);
+    set_beta(beta);
 
     // check that we properly have passed a derived class
-    static_assert(std::is_base_of<PairwiseDistanceBase<PairwiseDistance, ParticleCollection, Value>, PairwiseDistance>::value, 
+    static_assert(std::is_base_of<PairwiseDistanceBase<PairwiseDistance, ParticleCollection, Value>,
+                                  PairwiseDistance>::value, 
                   "Template parameter must be a derived class of PairwiseDistanceBase.");
-
-    // check parameters
-    if (beta_ < 0) throw std::invalid_argument("beta must be non-negative.");
-    if (R_ <= 0) throw std::invalid_argument("R must be positive.");
   }
 
   // description of class
@@ -65,9 +63,19 @@ struct PairwiseDistanceBase {
     return oss.str();
   }
 
-  // access parameters
+  // access/set parameters
   Value R() const { return R_; }
   Value beta() const { return beta_; }
+  void set_R(Value r) {
+    if (r <= 0) throw std::invalid_argument("R must be positive.");
+    R_ = r;
+    R2_ = r*r;
+  }
+  void set_beta(Value beta) {
+    if (beta < 0) throw std::invalid_argument("beta must be non-negative.");
+    beta_ = beta;
+    halfbeta_ = beta/2;
+  }
 
   // computes pairwise distances between two particle collections
   void fill_distances(const ParticleCollection & ps0, const ParticleCollection & ps1,
