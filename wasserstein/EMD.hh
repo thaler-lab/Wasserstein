@@ -380,12 +380,12 @@ public:
               int num_threads = -1,
               long long chunksize = 0,
               bool do_timing = true,
-              std::ostream & os = std::cout,
               bool store_sym_emds_flattened = true,
               bool throw_on_error = false,
               unsigned n_iter_max = 100000,
               Value epsilon_large_factor = 10000,
-              Value epsilon_small_factor = 1) :
+              Value epsilon_small_factor = 1,
+              std::ostream & os = std::cout) :
     num_threads_(determine_num_threads(num_threads)),
     emd_objs_(num_threads_, EMD(R, beta, norm, do_timing, false,
                                 n_iter_max, epsilon_large_factor, epsilon_small_factor))
@@ -400,9 +400,9 @@ public:
   PairwiseEMD(const EMD & emd,
               int num_threads = -1,
               long long chunksize = 0,
-              std::ostream & os = std::cout,
               bool store_sym_emds_flattened = true,
-              bool throw_on_error = false) :
+              bool throw_on_error = false,
+              std::ostream & os = std::cout) :
     num_threads_(determine_num_threads(num_threads)),
     emd_objs_(num_threads_, emd)
   {
@@ -811,14 +811,15 @@ private:
       oss_ << "  -  " << std::setprecision(3) << emd_objs_[0].store_duration() << 's';
     }
 
-    *print_stream_ << oss_.str() << std::endl;
-
-    // check for signals if wrapping with swig
+    // acquire Python GIL if in SWIG in order to check for signals
     #ifdef SWIG
       SWIG_PYTHON_THREAD_BEGIN_BLOCK;
+      *print_stream_ << oss_.str() << std::endl;
       if (PyErr_CheckSignals() != 0)
         throw std::runtime_error("KeyboardInterrupt received in PairwiseEMD::compute");
       SWIG_PYTHON_THREAD_END_BLOCK;
+    #else
+      *print_stream_ << oss_.str() << std::endl;
     #endif
   }
 

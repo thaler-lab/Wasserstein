@@ -23,7 +23,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
-%module wasserstein
+%module("threads"=1) wasserstein
 
 #define EMDNAMESPACE emd
 
@@ -47,6 +47,7 @@ import numpy as np
 %}
 
 %feature("autodoc", "1");
+%nothreadallow;
 
 // include common wasserstein wrappers
 %include "wasserstein_common.i"
@@ -124,7 +125,7 @@ import numpy as np
             # extract weights and coords from 
             event = np.atleast_2d(event)
             weights = np.ascontiguousarray(event[:,0], dtype=np.double)
-            coords = np.ascontiguousarray(event[:,1:] if gdim is None else event[:,1:gdim+1])
+            coords = np.ascontiguousarray(event[:,1:] if gdim is None else event[:,1:gdim+1], dtype=np.double)
             
             # ensure that the lifetime of these arrays lasts through the computation
             self.event_arrs.append((weights, coords))
