@@ -9,7 +9,7 @@ stages:
 
 jobs:
   exclude:
-  #  - stage: build
+    - stage: build
   #  - os: linux
   #  - os: windows
 
@@ -123,9 +123,9 @@ env:
   global:
     - TWINE_USERNAME=__token__
     - CIBW_BEFORE_BUILD="pip install numpy"
-    #- CIBW_BEFORE_TEST="pip install cython"
-    #- CIBW_TEST_REQUIRES="pytest numpy pot energyflow"
-    #- CIBW_TEST_COMMAND="pytest {package}"
+    - CIBW_BEFORE_TEST="pip install cython"
+    - CIBW_TEST_REQUIRES="pytest numpy pot energyflow"
+    - CIBW_TEST_COMMAND="pytest {package}"
 
 branches:
   only:
