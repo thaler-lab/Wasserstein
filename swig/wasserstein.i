@@ -24,6 +24,7 @@
 //------------------------------------------------------------------------
 
 %module("threads"=1) wasserstein
+%nothreadallow;
 
 #define EMDNAMESPACE emd
 
@@ -47,7 +48,6 @@ import numpy as np
 %}
 
 %feature("autodoc", "1");
-%nothreadallow;
 
 // include common wasserstein wrappers
 %include "wasserstein_common.i"
@@ -111,7 +111,7 @@ import numpy as np
   // python function to get events from container of 2d arrays, first column becomes the weights
   %pythoncode %{
 
-    def __call__(self, events0, events1=None, gdim=None):
+    def __call__(self, events0, events1=None, gdim=None, mask=False):
 
         if events1 is None:
             self.init(len(events0))
@@ -119,13 +119,26 @@ import numpy as np
         else:
             self.init(len(events0), len(events1))
 
+        if mask:
+            R2 = self.R()*self.R()
+
         self.event_arrs = []
         for event in itertools.chain(events0, events1):
 
-            # extract weights and coords from 
+            # ensure event is 2d
             event = np.atleast_2d(event)
+
+            # consider gdim
+            if gdim is not None:
+                event = event[:,:gdim+1]
+
+            # consider mask
+            if mask:
+                event = event[np.sum(event**2, axis=1) <= R2]
+
+            # extract weights and coords
             weights = np.ascontiguousarray(event[:,0], dtype=np.double)
-            coords = np.ascontiguousarray(event[:,1:] if gdim is None else event[:,1:gdim+1], dtype=np.double)
+            coords = np.ascontiguousarray(event[:,1:], dtype=np.double)
             
             # ensure that the lifetime of these arrays lasts through the computation
             self.event_arrs.append((weights, coords))

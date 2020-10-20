@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Patrick T. Komiske III">
+  <link rel="canonical" href="https://pkomiske.github.io/Wasserstein/faqs/">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>FAQs - Wasserstein</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link href="../css/eftheme.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "FAQs";
+    var mkdocs_page_input_path = "faqs.md";
+    var mkdocs_page_url = "/Wasserstein/faqs/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-122962541-3', 'Wasserstein');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+  <a href="..">
+    <div class="eflogo">
+      <img src="../img/eflogowhite.png"  class="eflogo-img"> Wasserstein
+    </div>
+  </a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Getting Started</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../installation/">Installation</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../demos/">Python Demos</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../examples/">C++ Examples</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">FAQs</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#how-do-i-cite-the-energyflow-package">How do I cite the EnergyFlow package?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#how-do-i-cite-the-datasets-available-through-energyflow">How do I cite the datasets available through EnergyFlow?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#why-python-instead-of-c">Why Python instead of C++?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#can-i-contribute-to-the-code">Can I contribute to the code?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#how-do-i-report-an-issue">How do I report an issue?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#where-can-i-get-graph-image-files">Where can I get graph image files?</a>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../releases/">Release Notes</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Documentation</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../docs/emd/">EMD</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../docs/emds/">PairwiseEMD</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../docs/correlationdimension/">CorrelationDimension</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Wasserstein</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Getting Started &raquo;</li>
+        
+      
+    
+    <li>FAQs</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="frequently-asked-energyflow-questions">Frequently Asked EnergyFlow Questions</h1>
+<ul>
+<li><a href="#how-do-i-cite-the-energyflow-package">How do I cite the EnergyFlow package?</a></li>
+<li><a href="#how-do-i-cite-the-datasets-available-through-energyflow">How do I cite the datasets available through EnergyFlow?</a></li>
+<li><a href="#why-python-instead-of-c">Why Python instead of C++?</a></li>
+<li><a href="#can-i-contribute-to-the-code">Can I contribute to the code?</a></li>
+<li><a href="#how-do-i-report-an-issue">How do I report an issue or a bug?</a></li>
+<li><a href="#where-can-i-get-graph-image-files">Where can I get graph image files?</a></li>
+</ul>
+<hr />
+<h2 id="how-do-i-cite-the-energyflow-package">How do I cite the EnergyFlow package?</h2>
+<p>Please cite the relevant papers if they or this package help your research. Here are the BibTeX entries to use:</p>
+<pre><code>@article{Komiske:2017aww,
+  author        = &quot;Komiske, Patrick T. and Metodiev, Eric M. and Thaler, Jesse&quot;,
+  title         = &quot;{Energy flow polynomials: A complete linear basis for jet substructure}&quot;,
+  eprint        = &quot;1712.07124&quot;,
+  archivePrefix = &quot;arXiv&quot;,
+  primaryClass  = &quot;hep-ph&quot;,
+  reportNumber  = &quot;MIT-CTP-4965&quot;,
+  doi           = &quot;10.1007/JHEP04(2018)013&quot;,
+  journal       = &quot;JHEP&quot;,
+  volume        = &quot;04&quot;,
+  pages         = &quot;013&quot;,
+  year          = &quot;2018&quot;
+}
+
+@article{Komiske:2018cqr,
+  author        = &quot;Komiske, Patrick T. and Metodiev, Eric M. and Thaler, Jesse&quot;,
+  title         = &quot;{Energy Flow Networks: Deep Sets for Particle Jets}&quot;,
+  eprint        = &quot;1810.05165&quot;,
+  archivePrefix = &quot;arXiv&quot;,
+  primaryClass  = &quot;hep-ph&quot;,
+  reportNumber  = &quot;MIT-CTP 5064&quot;,
+  doi           = &quot;10.1007/JHEP01(2019)121&quot;,
+  journal       = &quot;JHEP&quot;,
+  volume        = &quot;01&quot;,
+  pages         = &quot;121&quot;,
+  year          = &quot;2019&quot;
+}
+
+@article{Komiske:2019fks,
+  author        = &quot;Komiske, Patrick T. and Metodiev, Eric M. and Thaler, Jesse&quot;,
+  title         = &quot;{Metric Space of Collider Events}&quot;,
+  eprint        = &quot;1902.02346&quot;,
+  archivePrefix = &quot;arXiv&quot;,
+  primaryClass  = &quot;hep-ph&quot;,
+  reportNumber  = &quot;MIT-CTP 5102&quot;,
+  doi           = &quot;10.1103/PhysRevLett.123.041801&quot;,
+  journal       = &quot;Phys. Rev. Lett.&quot;,
+  volume        = &quot;123&quot;,
+  number        = &quot;4&quot;,
+  pages         = &quot;041801&quot;,
+  year          = &quot;2019&quot;
+}
+
+@article{Komiske:2019jim,
+  author        = &quot;Komiske, Patrick T. and Mastandrea, Radha and Metodiev, Eric M. and Naik, Preksha and Thaler, Jesse&quot;,
+  title         = &quot;{Exploring the Space of Jets with CMS Open Data}&quot;,
+  eprint        = &quot;1908.08542&quot;,
+  archivePrefix = &quot;arXiv&quot;,
+  primaryClass  = &quot;hep-ph&quot;,
+  reportNumber  = &quot;MIT-CTP 5129&quot;,
+  doi           = &quot;10.1103/PhysRevD.101.034009&quot;,
+  journal       = &quot;Phys. Rev. D&quot;,
+  volume        = &quot;101&quot;,
+  number        = &quot;3&quot;,
+  pages         = &quot;034009&quot;,
+  year          = &quot;2020&quot;
+}
+
+@article{Komiske:2019asc,
+  author        = &quot;Komiske, Patrick T. and Metodiev, Eric M. and Thaler, Jesse&quot;,
+  title         = &quot;{Cutting Multiparticle Correlators Down to Size}&quot;,
+  eprint        = &quot;1911.04491&quot;,
+  archivePrefix = &quot;arXiv&quot;,
+  primaryClass  = &quot;hep-ph&quot;,
+  reportNumber  = &quot;MIT-CTP 5150&quot;,
+  doi           = &quot;10.1103/PhysRevD.101.036019&quot;,
+  journal       = &quot;Phys. Rev. D&quot;,
+  volume        = &quot;101&quot;,
+  number        = &quot;3&quot;,
+  pages         = &quot;036019&quot;,
+  year          = &quot;2020&quot;
+}
+
+@article{Andreassen:2019cjw,
+  author        = &quot;Andreassen, Anders and Komiske, Patrick T. and Metodiev, Eric M. and Nachman, Benjamin and Thaler, Jesse&quot;,
+  title         = &quot;{OmniFold: A Method to Simultaneously Unfold All Observables}&quot;,
+  eprint        = &quot;1911.09107&quot;,
+  archivePrefix = &quot;arXiv&quot;,
+  primaryClass  = &quot;hep-ph&quot;,
+  reportNumber  = &quot;MIT-CTP 5155&quot;,
+  doi           = &quot;10.1103/PhysRevLett.124.182001&quot;,
+  journal       = &quot;Phys. Rev. Lett.&quot;,
+  volume        = &quot;124&quot;,
+  number        = &quot;18&quot;,
+  pages         = &quot;182001&quot;,
+  year          = &quot;2020&quot;
+}
+
+@article{Komiske:2020qhg,
+  author        = &quot;Komiske, Patrick T. and Metodiev, Eric M. and Thaler, Jesse&quot;,
+  title         = &quot;{The Hidden Geometry of Particle Collisions}&quot;,
+  eprint        = &quot;2004.04159&quot;,
+  archivePrefix = &quot;arXiv&quot;,
+  primaryClass  = &quot;hep-ph&quot;,
+  reportNumber  = &quot;MIT-CTP 5185&quot;,
+  doi           = &quot;10.1007/JHEP07(2020)006&quot;,
+  journal       = &quot;JHEP&quot;,
+  volume        = &quot;07&quot;,
+  pages         = &quot;006&quot;,
+  year          = &quot;2020&quot;
+}
+</code></pre>
+
+<h2 id="how-do-i-cite-the-datasets-available-through-energyflow">How do I cite the datasets available through EnergyFlow?</h2>
+<p>If any of the datasets provided through EnergyFlow are used in your research, we ask that you cite their Zenodo records, which are provided below in BibTeX format (confirmed to give a sensible citation in the JHEP and RevTeX bibliography styles).</p>
+<p><a href="/docs/datasets/#cms-open-data-and-the-mod-hdf5-format"><strong>CMS Open Data in MOD HDF5 Format</strong></a></p>
+<pre><code>@article{Zenodo:MODCMS2011A:Jets,
+  author  = {Komiske, Patrick and Mastandrea, Radha and Metodiev, Eric and
+             Naik, Preksha and Thaler, Jesse},
+  title   = {{CMS 2011A Open Data $|$ Jet Primary Dataset $|$ pT $&gt;$ 
+              375 GeV $|$ MOD HDF5 Format}},
+  journal = &quot;Zenodo&quot;,
+  year    = 2019,
+  doi     = {10.5281/zenodo.3340205}
+}
+
+@article{Zenodo:MODCMS2011A:MC170,
+  author  = {Komiske, Patrick and Mastandrea, Radha and Metodiev, Eric and
+             Naik, Preksha and Thaler, Jesse},
+  title   = {{CMS 2011A Simulation $|$ Pythia 6 QCD 170-300 $|$ pT $&gt;$ 
+              375 GeV $|$ MOD HDF5 Format}},
+  journal = &quot;Zenodo&quot;,
+  year    = 2019,
+  doi     = {10.5281/zenodo.3341500}
+}
+
+@article{Zenodo:MODCMS2011A:MC300,
+  author  = {Komiske, Patrick and Mastandrea, Radha and Metodiev, Eric and
+             Naik, Preksha and Thaler, Jesse},
+  title   = {{CMS 2011A Simulation $|$ Pythia 6 QCD 300-470 $|$ pT $&gt;$ 
+              375 GeV $|$ MOD HDF5 Format}},
+  journal = &quot;Zenodo&quot;,
+  year    = 2019,
+  doi     = {10.5281/zenodo.3341498}
+}
+
+@article{Zenodo:MODCMS2011A:MC470,
+  author  = {Komiske, Patrick and Mastandrea, Radha and Metodiev, Eric and
+             Naik, Preksha and Thaler, Jesse},
+  title   = {{CMS 2011A Simulation $|$ Pythia 6 QCD 470-600 $|$ pT $&gt;$ 
+              375 GeV $|$ MOD HDF5 Format}},
+  journal = &quot;Zenodo&quot;,
+  year    = 2019,
+  doi     = {10.5281/zenodo.3341419}
+}
+
+@article{Zenodo:MODCMS2011A:MC600,
+  author  = {Komiske, Patrick and Mastandrea, Radha and Metodiev, Eric and
+             Naik, Preksha and Thaler, Jesse},
+  title   = {{CMS 2011A Simulation $|$ Pythia 6 QCD 600-800 $|$ pT $&gt;$ 
+              375 GeV $|$ MOD HDF5 Format}},
+  journal = &quot;Zenodo&quot;,
+  year    = 2019,
+  doi     = {10.5281/zenodo.3364139}
+}
+
+@article{Zenodo:MODCMS2011A:MC800,
+  author  = {Komiske, Patrick and Mastandrea, Radha and Metodiev, Eric and
+             Naik, Preksha and Thaler, Jesse},
+  title   = {{CMS 2011A Simulation $|$ Pythia 6 QCD 800-1000 $|$ pT $&gt;$ 
+              375 GeV $|$ MOD HDF5 Format}},
+  journal = &quot;Zenodo&quot;,
+  year    = 2019,
+  doi     = {10.5281/zenodo.3341413}
+}
+
+@article{Zenodo:MODCMS2011A:MC1000,
+  author  = {Komiske, Patrick and Mastandrea, Radha and Metodiev, Eric and
+             Naik, Preksha and Thaler, Jesse},
+  title   = {{CMS 2011A Simulation $|$ Pythia 6 QCD 1000-1400 $|$ pT $&gt;$
+              375 GeV $|$ MOD HDF5 Format}},
+  journal = &quot;Zenodo&quot;,
+  year    = 2019,
+  doi     = {10.5281/zenodo.3341502}
+}
+
+@article{Zenodo:MODCMS2011A:MC1400,
+  author  = {Komiske, Patrick and Mastandrea, Radha and Metodiev, Eric and
+             Naik, Preksha and Thaler, Jesse},
+  title   = {{CMS 2011A Simulation $|$ Pythia 6 QCD 1400-1800 $|$ pT $&gt;$
+              375 GeV $|$ MOD HDF5 Format}},
+  journal = &quot;Zenodo&quot;,
+  year    = 2019,
+  doi     = {10.5281/zenodo.3341770}
+}
+
+@article{Zenodo:MODCMS2011A:MC1800,
+  author  = {Komiske, Patrick and Mastandrea, Radha and Metodiev, Eric and
+             Naik, Preksha and Thaler, Jesse},
+  title   = {{CMS 2011A Simulation $|$ Pythia 6 QCD1800-inf $|$ pT $&gt;$ 
+              375 GeV $|$ MOD HDF5 Format}},
+  journal = &quot;Zenodo&quot;,
+  year    = 2019,
+  doi     = {10.5281/zenodo.3341772}
+}
+</code></pre>
+
+<p><a href="https://
+doi.org/10.5281/zenodo.3340205"><img alt="DOI" src="/img/zenodo.3340205.svg" /></a> - CMS 2011A Jets, pT &gt; 375 GeV
+<br>
+<a href="https://
+doi.org/10.5281/zenodo.3341500"><img alt="DOI" src="/img/zenodo.3341500.svg" /></a> - SIM/GEN QCD Jets 170-300 GeV
+<br>
+<a href="https://
+doi.org/10.5281/zenodo.3341498"><img alt="DOI" src="/img/zenodo.3341498.svg" /></a> - SIM/GEN QCD Jets 300-470 GeV
+<br>
+<a href="https://
+doi.org/10.5281/zenodo.3341419"><img alt="DOI" src="/img/zenodo.3341419.svg" /></a> - SIM/GEN QCD Jets 470-600 GeV
+<br>
+<a href="https://
+doi.org/10.5281/zenodo.3364139"><img alt="DOI" src="/img/zenodo.3364139.svg" /></a> - SIM/GEN QCD Jets 600-800 GeV
+<br>
+<a href="https://
+doi.org/10.5281/zenodo.3341413"><img alt="DOI" src="/img/zenodo.3341413.svg" /></a> - SIM/GEN QCD Jets 800-1000 GeV
+<br>
+<a href="https://
+doi.org/10.5281/zenodo.3341502"><img alt="DOI" src="/img/zenodo.3341502.svg" /></a> - SIM/GEN QCD Jets 1000-1400 GeV
+<br>
+<a href="https://
+doi.org/10.5281/zenodo.3341770"><img alt="DOI" src="/img/zenodo.3341770.svg" /></a> - SIM/GEN QCD Jets 1400-1800 GeV
+<br>
+<a href="https://
+doi.org/10.5281/zenodo.3341772"><img alt="DOI" src="/img/zenodo.3341772.svg" /></a> - SIM/GEN QCD Jets 1800-$\infty$ GeV</p>
+<p><a href="/docs/datasets/#quark-and-gluon-jets"><strong>Quark and Gluon Datasets</strong></a></p>
+<pre><code>@article{Zenodo:EnergyFlow:Pythia8QGs,
+  author  = {Komiske, Patrick and Metodiev, Eric and Thaler, Jesse},
+  title   = {Pythia8 Quark and Gluon Jets for Energy Flow},
+  journal = &quot;Zenodo&quot;,
+  year    = 2019,
+  doi     = {10.5281/zenodo.3164691}
+}
+
+@article{Zenodo:EnergyFlow:Herwig7QGs,
+  author  = {Pathak, Aditya and Komiske, Patrick and
+             Metodiev, Eric and Schwartz, Matthew},
+  title   = {Herwig7.1 Quark and Gluon Jets},
+  journal = &quot;Zenodo&quot;,
+  year    = 2019,
+  doi     = {10.5281/zenodo.3066475}
+}
+</code></pre>
+
+<p><a href="https://doi.org/10.5281/zenodo.3164691"><img alt="DOI" src="/img/zenodo.3164691.svg" /></a> - Pythia samples
+<br>
+<a href="https://doi.org/10.5281/zenodo.3066475"><img alt="DOI" src="/img/zenodo.3066475.svg" /></a> - Herwig samples</p>
+<p><a href="/docs/datasets/#z-jets-with-delphes-simulation"><strong>Z + Jets with Delphes Datasets</strong></a></p>
+<pre><code>@article{Zenodo:EnergyFlow:ZJetsDelphes,
+  author  = {Andreassen, Anders and Komiske, Patrick and Metodiev, Eric and
+             Nachman, Benjamin and Thaler, Jesse},
+  title   = {{Pythia/Herwig + Delphes Jet Datasets for OmniFold Unfolding}},
+  journal = &quot;Zenodo&quot;,
+  year    = 2019,
+  doi     = {10.5281/zenodo.3548091}
+}
+</code></pre>
+
+<p><a href="https://doi.org/10.5281/zenodo.3548091"><img alt="DOI" src="/img/zenodo.3548091.svg" /></a> - Pythia/Herwig + Delphes samples</p>
+<h2 id="why-python-instead-of-c">Why Python instead of C++?</h2>
+<p>Computing the EFPs requires a function such as NumPy's <a href="https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.einsum.html">einsum</a> that can efficiently evaluate arbitrary tensor contractions. To write such a function from scratch in C++ is difficult, and there is no obvious library in C++ to use (though if one were to attempt this the <a href="http://tensor-compiler.org/">tensor algebra compiler</a> seems like a promising tool).</p>
+<p><a href="http://www.numpy.org">NumPy</a> is a highly-optimized Python library written in C that provides all of the tools required to efficiently compute the EFPs. Libraries like NumPy take advantage of optimizations that the physicist-programmer typically does not, such as architecture-optimized libraries like BLAS or LAPACK and low-level features such as SSE/AVX instructions.</p>
+<p>Beyond just computing EFPs, EnergyFlow makes use of other libraries written in python including <a href="https://keras.io/">Keras</a> and <a href="https://scikit-learn.org/">scikit-learn</a> for the architecture implementations, <a href="https://pot.readthedocs.io/en/stable/">POT</a> and <a href="https://www.scipy.org/">SciPy</a> for EMD computations, and <a href="https://matplotlib.org/index.html">matplotlib</a> for the examples.</p>
+<h2 id="can-i-contribute-to-the-code">Can I contribute to the code?</h2>
+<p>All of our code is open source and hosted on <a href="https://www.github.com/pkomiske/EnergyFlow/">GitHub</a>. We welcome additional contributors, and if you are interested in getting involved please contact us directly. Contact information is included in the relevant Energy Flow papers and our GitHub repository.</p>
+<h2 id="how-do-i-report-an-issue">How do I report an issue?</h2>
+<p>Please let us know of any issues you encounter as soon as possible by creating a GitHub <a href="https://github.com/pkomiske/EnergyFlow">Issue</a>.</p>
+<h2 id="where-can-i-get-graph-image-files">Where can I get graph image files?</h2>
+<p>Image files for all connected multigraphs with up to 7 edges in the EFP style are available as PDF files <a href="https://github.com/pkomiske/EnergyFlow/tree/images/graphs">here</a>. You are free to use them with the proper attribution.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../releases/" class="btn btn-neutral float-right" title="Release Notes">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../examples/" class="btn btn-neutral" title="C++ Examples"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/pkomiske/Wasserstein/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../examples/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../releases/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+      <script src="../js/eftheme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

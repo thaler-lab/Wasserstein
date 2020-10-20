@@ -99,6 +99,7 @@ template<typename V = double>
 struct ArrayEvent : public EventBase<ArrayParticleCollection<V>, ArrayWeightCollection<V>> {
   typedef ArrayParticleCollection<V> ParticleCollection;
   typedef ArrayWeightCollection<V> WeightCollection;
+  typedef EventBase<ParticleCollection, WeightCollection> Base;
 
   static_assert(std::is_floating_point<V>::value, "ArrayEvent template parameter must be floating point.");
 
@@ -110,12 +111,16 @@ struct ArrayEvent : public EventBase<ArrayParticleCollection<V>, ArrayWeightColl
     for (int i = 0; i < size; i++)
       this->total_weight_ += weight_array[i];
   }
-
   ArrayEvent(const std::tuple<V*, V*, int, int> & tup) :
     ArrayEvent(std::get<0>(tup), std::get<1>(tup), std::get<2>(tup), std::get<3>(tup))
   {}
-
   ArrayEvent() {}
+
+  // ensure that we don't modify original array
+  void normalize_weights() {
+    this->weights_.copy();
+    Base::normalize_weights();
+  }
 
   static std::string name() {
     std::ostringstream oss;

@@ -149,6 +149,16 @@ import_array();
   CATCH_STD_LOGIC_ERROR
   CATCH_STD_EXCEPTION
 }
+%exception EMDNAMESPACE::PairwiseEMD::emds {
+  try { $action }
+  CATCH_STD_LOGIC_ERROR
+  CATCH_STD_EXCEPTION
+}
+%exception EMDNAMESPACE::PairwiseEMD::npy_emds {
+  try { $action }
+  CATCH_STD_LOGIC_ERROR
+  CATCH_STD_EXCEPTION
+}
 %exception EMDNAMESPACE::PairwiseEMD::compute() {
   try { $action }
   CATCH_STD_RUNTIME_ERROR

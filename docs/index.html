@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Documentation for Wasserstein">
+  <meta name="author" content="Patrick T. Komiske III">
+  <link rel="canonical" href="https://pkomiske.github.io/Wasserstein/">
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <title>Wasserstein</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link href="css/eftheme.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Home";
+    var mkdocs_page_input_path = "index.md";
+    var mkdocs_page_url = "/Wasserstein/";
+  </script>
+  
+  <script src="js/jquery-2.1.1.min.js" defer></script>
+  <script src="js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-122962541-3', 'Wasserstein');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+  <a href=".">
+    <div class="eflogo">
+      <img src="./img/eflogowhite.png"  class="eflogo-img"> Wasserstein
+    </div>
+  </a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href=".">Home</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#features">Features</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#copyright">Copyright</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Getting Started</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="installation/">Installation</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="demos/">Python Demos</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="examples/">C++ Examples</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="faqs/">FAQs</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="releases/">Release Notes</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Documentation</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="docs/emd/">EMD</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="docs/emds/">PairwiseEMD</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="docs/correlationdimension/">CorrelationDimension</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href=".">Wasserstein</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Home</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="welcome-to-wasserstein">Welcome to Wasserstein</h1>
+<p><img src="https://github.com/pkomiske/EnergyFlow/raw/images/JetCustom_29522924_24981665_EMD.jpg" width="60%"/></p>
+<h2 id="features">Features</h2>
+<p>The Wasserstein package computes Wasserstein distances and related quantities efficiently. It contains an efficient implementation of the network simplex algorithm originally written by <a href="https://github.com/nbonneel/network_simplex">Nicolas Boneel</a>, modified by the authors of the <a href="https://pythonot.github.io/">Python Optimal Transport (POT)</a> library, and further modified in this package by Patrick Komiske. The main code is written in C++ with a Python wrapper provided via <a href="http://swig.org/">SWIG</a>.</p>
+<p>The following classes contain the main functionalities of Wasserstein:</p>
+<ul>
+<li><a href="docs/emd">EMD</a>: EFPs are a collection of jet substructure observables which form a complete linear basis of IRC-safe observables. EnergyFlow provides tools to compute EFPs on events for several energy and angular measures as well as custom measures.
+<br><br></li>
+<li><a href="docs/emds">PairwiseEMD</a>: EFNs are infrared- and collinear-safe models designed for learning from collider events as unordered, variable-length sets of particles. EnergyFlow contains customizable Keras implementations of EFNs. Available from version <code>0.10.0</code> onward.
+<br><br></li>
+<li><a href="docs/correlationdimension">CorrelationDimension</a>: PFNs are general models designed for learning from collider events as unordered, variable-length sets of particles, based on the <a href="https://arxiv.org/abs/1703.06114">Deep Sets</a> framework. EnergyFlow contains customizable Keras implementations of PFNs. Available from version <code>0.10.0</code> onward.</li>
+</ul>
+<p>The current version is <code>0.2.0</code>. Changes are summarized in the <a href="releases">Release Notes</a>. Using the most up-to-date version is recommended. As of version <code>0.2.0</code>, tests have been written covering the majority of the code. The source code can be found on <a href="https://github.com/pkomiske/Wasserstein">GitHub</a>.</p>
+<p>Get started by <a href="installation">installing EnergyFlow</a>, <a href="demos">exploring the demos</a>, and <a href="examples">running the examples</a>!</p>
+<h2 id="references">References</h2>
+<p>[1] P. T. Komiske, E. M. Metodiev, and J. Thaler, <em>The Metric Space of Collider Events</em>, <a href="https://doi.org/10.1103/PhysRevLett.123.041801">Phys. Rev. Lett. <strong>123</strong> (2019) 041801</a> [<a href="https://arxiv.org/abs/1902.02346">1902.02346</a>].</p>
+<p>[2] P. T. Komiske, E. M. Metodiev, and J. Thaler, <em>The Hidden Geometry of Particle Collisions</em>, <a href="https://doi.org/10.1007/JHEP07(2020)006">JHEP <strong>07</strong> (2020) 006</a> [<a href="https://arxiv.org/abs/2004.04159">2004.04159</a>].</p>
+<h2 id="copyright">Copyright</h2>
+<p>Wasserstein is licensed under <a href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>. See the <a href="https://github.com/pkomiske/EnergyFlow/blob/master/LICENSE">LICENSE</a> for detailed copyright information. EnergyFlow uses a customized <code>einsumfunc.py</code> from the <a href="https://github.com/numpy/numpy">NumPy GitHub</a> repository as well as a few functions relating to downloading files copied from the <a href="https://github.com/keras-team/keras">Keras GitHub</a> repository. The copyrights for these parts of the code are attributed to their respective owners in the <a href="https://github.com/pkomiske/EnergyFlow/blob/master/LICENSE">LICENSE</a> file.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="installation/" class="btn btn-neutral float-right" title="Installation">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/pkomiske/Wasserstein/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+      
+        <span style="margin-left: 15px"><a href="installation/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme.js" defer></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+      <script src="js/eftheme.js" defer></script>
+      <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.1.2
+Build Date UTC : 2020-10-19 21:54:04.852526+00:00
+-->

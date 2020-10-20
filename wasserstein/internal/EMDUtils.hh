@@ -29,6 +29,8 @@
 // C++ standard library
 #include <chrono>
 #include <cstddef>
+#include <cstdlib>
+#include <cstring>
 #include <mutex>
 #include <sstream>
 #include <stdexcept>
@@ -151,6 +153,7 @@ public:
   void set_norm(bool nrm) { norm_ = nrm; } 
 
   // timing setting
+  bool do_timing() const { return do_timing_; }
   void set_do_timing(bool timing) { do_timing_ = timing; }
 
   // get/set whether we're currently setup to use external distances
@@ -219,7 +222,11 @@ struct ArrayWeightCollection {
   typedef V value_type;
 
   // contructor, int is used for compatibility with SWIG's numpy.i
-  ArrayWeightCollection(V * array, int size) : array_(array), size_(size) {}
+  ArrayWeightCollection(V * array, int size) : array_(array), size_(size), free_(false) {}
+  ~ArrayWeightCollection() {
+    if (free_)
+      free(array_);
+  }
 
   int size() const { return size_; }
   V * begin() { return array_; }
@@ -227,9 +234,25 @@ struct ArrayWeightCollection {
   const V * begin() const { return array_; }
   const V * end() const { return array_ + size_; }
 
+  // copy internal memory
+  void copy() {
+    if (free_)
+      throw std::runtime_error("Should not call copy twice on an ArrayWeightCollection");
+    free_ = true;
+
+    // get new chunk of memory
+    size_t nbytes(size_t(size())*sizeof(V));
+    V * new_array((V*) malloc(nbytes));
+
+    // copy old array into new one
+    memcpy(new_array, array_, nbytes);
+    array_ = new_array;
+  }
+
 private:
   V * array_;
   int size_;
+  bool free_;
 
 }; // ArrayWeightCollection
 

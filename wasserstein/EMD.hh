@@ -357,9 +357,10 @@ private:
   std::vector<EMD> emd_objs_;
 
   // variables local to this class
-  long long chunksize_;
+  long long print_every_;
   ExternalEMDHandler * handler_;
-  bool do_pairwise_timing_, store_sym_emds_flattened_, throw_on_error_;
+  unsigned verbose_;
+  bool store_sym_emds_flattened_, throw_on_error_;
   std::ostream * print_stream_;
   std::ostringstream oss_;
 
@@ -378,8 +379,8 @@ public:
   // contructor that initializes the EMD object, uses the same default arguments
   PairwiseEMD(Value R = 1, Value beta = 1, bool norm = false,
               int num_threads = -1,
-              long long chunksize = 0,
-              bool do_timing = true,
+              long long print_every = -10,
+              unsigned verbose = 1,
               bool store_sym_emds_flattened = true,
               bool throw_on_error = false,
               unsigned n_iter_max = 100000,
@@ -387,10 +388,10 @@ public:
               Value epsilon_small_factor = 1,
               std::ostream & os = std::cout) :
     num_threads_(determine_num_threads(num_threads)),
-    emd_objs_(num_threads_, EMD(R, beta, norm, do_timing, false,
+    emd_objs_(num_threads_, EMD(R, beta, norm, false, false,
                                 n_iter_max, epsilon_large_factor, epsilon_small_factor))
   {
-    setup(chunksize, &os, store_sym_emds_flattened, throw_on_error);
+    setup(print_every, verbose, store_sym_emds_flattened, throw_on_error, &os);
   }
 
 // avoid overloading constructor so swig can handle keyword arguments
@@ -399,7 +400,8 @@ public:
   // contructor uses existing EMD instance
   PairwiseEMD(const EMD & emd,
               int num_threads = -1,
-              long long chunksize = 0,
+              long long print_every = -10,
+              unsigned verbose = 1,
               bool store_sym_emds_flattened = true,
               bool throw_on_error = false,
               std::ostream & os = std::cout) :
@@ -409,7 +411,7 @@ public:
     if (emd.external_dists())
       throw std::invalid_argument("Cannot use PairwiseEMD with external distances");
 
-    setup(chunksize, &os, store_sym_emds_flattened, throw_on_error);
+    setup(print_every, verbose, store_sym_emds_flattened, throw_on_error, &os);
   }
 
 #endif // SWIG
@@ -422,14 +424,12 @@ public:
     std::ostringstream oss;
     oss << "Pairwise" << emd_objs_[0].description(false) << '\n'
         << "  num_threads - " << num_threads_ << '\n'
-        << "  chunksize - ";
+        << "  print_every - ";
 
-    // handle chunksize logic
-    if (chunksize_ > 0) oss << chunksize_;
-    else {
-      oss << "auto, " << (chunksize_ != 0 ? std::abs(chunksize_) : 1) << " total chunks";
-      if (chunksize_ == 0) oss << ", no printing";
-    }
+    // handle print_every logic
+    if (print_every_ > 0) oss << print_every_;
+    else
+      oss << "auto, " << std::abs(print_every_) << " total chunks";
 
     oss << '\n'
         << "  store_sym_emds_flattened - " << (store_sym_emds_flattened_ ? "true\n" : "false\n")
@@ -459,6 +459,15 @@ public:
   void set_external_emd_handler(ExternalEMDHandler & handler) {
     handler_ = &handler;
   }
+
+  // access timing information
+  double duration() const {
+    return emd_objs_[0].duration();
+  }
+
+  // access R and beta parameters
+  Value R() const { return emd_objs_[0].R(); }
+  Value beta() const { return emd_objs_[0].beta(); }
 
   // clears internal storage
   void clear(bool free_memory = true) {
@@ -522,7 +531,7 @@ public:
   Value emd(std::ptrdiff_t i, std::ptrdiff_t j) const {
 
     // check for External handling, in which case we don't have any emds stored
-    if (handler_ != nullptr)
+    if (emd_storage_ == External)
       throw std::logic_error("EMD requested but external handler provided, so no EMDs stored");
 
     // allow for negative indices
@@ -545,6 +554,10 @@ public:
   // access all emds as a matrix flattened into a vector
   const ValueVector & emds() {
 
+    // check for having no emds stored
+    if (emd_storage_ == External)
+      throw std::logic_error("No EMDs stored");
+
     // check if we need to construct a new full matrix from a flattened symmetric one
     if (emd_storage_ == FlattenedSymmetric) {
 
@@ -562,9 +575,6 @@ public:
 
       return full_emds_;
     }
-
-    // no emds stored
-    else if (emd_storage_ == External) return full_emds_;
 
     // full emds stored
     else return emds_;
@@ -608,8 +618,7 @@ private:
     two_event_sets_ = false;
 
     // start clock for overall timing
-    if (do_pairwise_timing_)
-      emd_objs_[0].start_timing();
+    emd_objs_[0].start_timing();
 
     // resize emds
     num_emds_ = nevA_*(nevA_ - 1)/2;
@@ -631,8 +640,7 @@ private:
     two_event_sets_ = true;
     
     // start clock for overall timing
-    if (do_pairwise_timing_)
-      emd_objs_[0].start_timing();
+    emd_objs_[0].start_timing();
 
     // resize emds
     num_emds_ = nevA_*nevB_;
@@ -649,32 +657,29 @@ private:
 
     num_emds_width_ = std::to_string(num_emds_).size();
 
-    long long chunksize(chunksize_);
-    if (chunksize < 0) {
-      chunksize = num_emds_/std::abs(chunksize_);
-      if (num_emds_ % std::abs(chunksize_) != 0)
-        chunksize++;
+    long long print_every(print_every_);
+    if (print_every < 0) {
+      print_every = num_emds_/std::abs(print_every_);
+      if (print_every == 0 || num_emds_ % std::abs(print_every_) != 0)
+        print_every++;
     }
-    else if (chunksize == 0)
-      chunksize = num_emds_;
 
-    if (chunksize_ != 0) {
+    if (verbose_) {
       oss_.str("Finished preprocessing ");
-      oss_ << events_.size() << " events";
-      if (do_pairwise_timing_)
-        oss_ << " in " << std::setprecision(4) << emd_objs_[0].store_duration() << 's';
+      oss_ << events_.size() << " events in "
+           << std::setprecision(4) << emd_objs_[0].store_duration() << 's';
       *print_stream_ << oss_.str() << std::endl;
     }
 
     int omp_for_dynamic_chunksize(omp_dynamic_chunksize_);
-    if (omp_for_dynamic_chunksize < chunksize/num_threads_)
-      omp_for_dynamic_chunksize = chunksize/num_threads_;
+    if (omp_for_dynamic_chunksize < print_every/num_threads_)
+      omp_for_dynamic_chunksize = print_every/num_threads_;
 
     // iterate over emd pairs
     std::mutex failure_mutex;
     std::size_t begin(0);
     while (emd_counter_ < num_emds_ && !(throw_on_error_ && error_messages_.size())) {
-      emd_counter_ += std::size_t(chunksize);
+      emd_counter_ += std::size_t(print_every);
       if (emd_counter_ > num_emds_) emd_counter_ = num_emds_;
 
       #pragma omp parallel num_threads(num_threads_) default(shared)
@@ -733,8 +738,7 @@ private:
 
       // update and do printing
       begin = emd_counter_;
-      if (chunksize_ != 0)
-        print_update();
+      print_update();
     }
 
     if (throw_on_error_ && error_messages_.size())
@@ -753,22 +757,28 @@ private:
   }
 
   // init from constructor
-  void setup(long long chunksize, std::ostream * os,
-             bool store_sym_emds_flattened, bool throw_on_error) {
+  void setup(long long print_every, unsigned verbose,
+             bool store_sym_emds_flattened, bool throw_on_error,
+             std::ostream * os) {
     
     // store arguments, from constructor
-    chunksize_ = chunksize;
+    print_every_ = print_every;
+    verbose_ = verbose;
     store_sym_emds_flattened_ = store_sym_emds_flattened;
     throw_on_error_ = throw_on_error;
     print_stream_ = os;
     handler_ = nullptr;
 
+    // print_every of 0 is equivalent to -1
+    if (print_every_ == 0) {
+      print_every_ = -1;
+    }
+
     // setup stringstream for printing
     oss_ = std::ostringstream(std::ios_base::ate);
     oss_.setf(std::ios_base::fixed, std::ios_base::floatfield);
 
-    // handle timing
-    do_pairwise_timing_ = emd_objs_[0].do_timing_;
+    // turn off timing in EMD objects
     for (EMD & emd_obj : emd_objs_) emd_obj.do_timing_ = false;
 
     // clear is meant to be used between computations, call it here for consistency
@@ -786,10 +796,10 @@ private:
 
   void record_failure(EMDStatus status, std::size_t i, std::size_t j) {
     std::ostringstream message;
-    message << "PairwiseEMD::compute - Issue with EMD ("
+    message << "PairwiseEMD::compute - Issue with EMD between events ("
             << i << ", " << j << "), error code " << int(status);
     error_messages_.push_back(message.str());
-    *print_stream_ << error_messages_.back() << '\n';
+    std::cerr << error_messages_.back() << '\n';
   }
 
   // indexes lower triangle of symmetric matrix with zeros on diagonal that has been flattened into 1D
@@ -799,27 +809,25 @@ private:
 
   void print_update() {
 
-    // output to oss
-    oss_.str("  ");
-    oss_ << std::setw(num_emds_width_) << emd_counter_ << " / "
-         << std::setw(num_emds_width_) << num_emds_ << "  EMDs computed  - "
-         << std::setprecision(2) << std::setw(6) << double(emd_counter_)/num_emds_*100
-         << "% completed";
-
-    // check for timing
-    if (do_pairwise_timing_) {
-      oss_ << "  -  " << std::setprecision(3) << emd_objs_[0].store_duration() << 's';
+    // prepare message
+    if (verbose_) {
+      oss_.str("  ");
+      oss_ << std::setw(num_emds_width_) << emd_counter_ << " / "
+           << std::setw(num_emds_width_) << num_emds_ << "  EMDs computed  - "
+           << std::setprecision(2) << std::setw(6) << double(emd_counter_)/num_emds_*100
+           << "% completed - "
+           << std::setprecision(3) << emd_objs_[0].store_duration() << 's';  
     }
 
-    // acquire Python GIL if in SWIG in order to check for signals
+    // acquire Python GIL if in SWIG in order to check for signals and print message
     #ifdef SWIG
       SWIG_PYTHON_THREAD_BEGIN_BLOCK;
-      *print_stream_ << oss_.str() << std::endl;
+      if (verbose_) *print_stream_ << oss_.str() << std::endl;
       if (PyErr_CheckSignals() != 0)
         throw std::runtime_error("KeyboardInterrupt received in PairwiseEMD::compute");
       SWIG_PYTHON_THREAD_END_BLOCK;
     #else
-      *print_stream_ << oss_.str() << std::endl;
+      if (verbose_) *print_stream_ << oss_.str() << std::endl;
     #endif
   }
 

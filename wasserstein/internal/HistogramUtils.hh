@@ -158,7 +158,7 @@ protected:
 
 public:
 
-  Histogram1DHandler(unsigned nbins, double axis_min, double axis_max) :
+  Histogram1DHandler(double axis_min, double axis_max, unsigned nbins) :
     axis_(nbins, axis_min, axis_max),
     hist_(boost::histogram::make_weighted_histogram(axis_))
   {

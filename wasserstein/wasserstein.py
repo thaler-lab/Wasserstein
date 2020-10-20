@@ -290,6 +290,7 @@ class EMDBaseDouble(object):
     __swig_destroy__ = _wasserstein.delete_EMDBaseDouble
     norm = _swig_new_instance_method(_wasserstein.EMDBaseDouble_norm)
     set_norm = _swig_new_instance_method(_wasserstein.EMDBaseDouble_set_norm)
+    do_timing = _swig_new_instance_method(_wasserstein.EMDBaseDouble_do_timing)
     set_do_timing = _swig_new_instance_method(_wasserstein.EMDBaseDouble_set_do_timing)
     external_dists = _swig_new_instance_method(_wasserstein.EMDBaseDouble_external_dists)
     set_external_dists = _swig_new_instance_method(_wasserstein.EMDBaseDouble_set_external_dists)
@@ -315,7 +316,7 @@ class Histogram1DHandler(ExternalEMDHandler):
 
     def __init__(self, *args):
         r"""
-        __init__(Histogram1DHandler self, unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandler
+        __init__(Histogram1DHandler self, double axis_min, double axis_max, unsigned int nbins) -> Histogram1DHandler
         __init__(Histogram1DHandler self) -> Histogram1DHandler
         """
         _wasserstein.Histogram1DHandler_swiginit(self, _wasserstein.new_Histogram1DHandler(*args))
@@ -341,7 +342,7 @@ class Histogram1DHandlerLog(ExternalEMDHandler):
 
     def __init__(self, *args):
         r"""
-        __init__(Histogram1DHandlerLog self, unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandlerLog
+        __init__(Histogram1DHandlerLog self, double axis_min, double axis_max, unsigned int nbins) -> Histogram1DHandlerLog
         __init__(Histogram1DHandlerLog self) -> Histogram1DHandlerLog
         """
         _wasserstein.Histogram1DHandlerLog_swiginit(self, _wasserstein.new_Histogram1DHandlerLog(*args))
@@ -367,7 +368,7 @@ class CorrelationDimension(Histogram1DHandlerLog):
 
     def __init__(self, *args):
         r"""
-        __init__(CorrelationDimension self, unsigned int nbins, double axis_min, double axis_max) -> CorrelationDimension
+        __init__(CorrelationDimension self, double axis_min, double axis_max, unsigned int nbins) -> CorrelationDimension
         __init__(CorrelationDimension self) -> CorrelationDimension
         """
         _wasserstein.CorrelationDimension_swiginit(self, _wasserstein.new_CorrelationDimension(*args))
@@ -424,7 +425,7 @@ class PairwiseEMD(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
-        r"""__init__(PairwiseEMD self, emd::Value R=1, emd::Value beta=1, bool norm=False, int num_threads=-1, long long chunksize=0, bool do_timing=True, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMD"""
+        r"""__init__(PairwiseEMD self, emd::Value R=1, emd::Value beta=1, bool norm=False, int num_threads=-1, long long print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMD"""
         _wasserstein.PairwiseEMD_swiginit(self, _wasserstein.new_PairwiseEMD(*args, **kwargs))
     __swig_destroy__ = _wasserstein.delete_PairwiseEMD
     description = _swig_new_instance_method(_wasserstein.PairwiseEMD_description)
@@ -438,6 +439,9 @@ class PairwiseEMD(object):
         self.external_emd_handler = handler
 
 
+    duration = _swig_new_instance_method(_wasserstein.PairwiseEMD_duration)
+    R = _swig_new_instance_method(_wasserstein.PairwiseEMD_R)
+    beta = _swig_new_instance_method(_wasserstein.PairwiseEMD_beta)
 
     def clear(self):
         _wasserstein.PairwiseEMD_clear(self)
@@ -471,7 +475,7 @@ class PairwiseEMD(object):
     _add_event = _swig_new_instance_method(_wasserstein.PairwiseEMD__add_event)
 
 
-    def __call__(self, events0, events1=None, gdim=None):
+    def __call__(self, events0, events1=None, gdim=None, mask=False):
 
         if events1 is None:
             self.init(len(events0))
@@ -479,13 +483,26 @@ class PairwiseEMD(object):
         else:
             self.init(len(events0), len(events1))
 
+        if mask:
+            R2 = self.R()*self.R()
+
         self.event_arrs = []
         for event in itertools.chain(events0, events1):
 
-    # extract weights and coords from 
+    # ensure event is 2d
             event = np.atleast_2d(event)
+
+    # consider gdim
+            if gdim is not None:
+                event = event[:,:gdim+1]
+
+    # consider mask
+            if mask:
+                event = event[np.sum(event**2, axis=1) <= R2]
+
+    # extract weights and coords
             weights = np.ascontiguousarray(event[:,0], dtype=np.double)
-            coords = np.ascontiguousarray(event[:,1:] if gdim is None else event[:,1:gdim+1], dtype=np.double)
+            coords = np.ascontiguousarray(event[:,1:], dtype=np.double)
 
     # ensure that the lifetime of these arrays lasts through the computation
             self.event_arrs.append((weights, coords))
