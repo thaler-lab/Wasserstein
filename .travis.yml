@@ -80,7 +80,7 @@ jobs:
           python3 -m twine upload --skip-existing wheelhouse/*.whl
         fi
       env:
-        - CIBW_BUILD="cp27-manylinux_x86_64 cp35-manylinux_x86_64 cp36-manylinux_x86_64 cp37-manylinux_x86_64 cp38-manylinux_x86_64" CIBW_MANYLINUX_X86_64_IMAGE=quay.io/pypa/manylinux2010_x86_64
+        - CIBW_BUILD="cp27-manylinux_x86_64 cp35-manylinux_x86_64 cp36-manylinux_x86_64 cp37-manylinux_x86_64 cp38-manylinux_x86_64 cp39-manylinux_x86_64"
 
     # build on mac
     - name: Build wheels on Mac
@@ -99,7 +99,7 @@ jobs:
           python3 -m twine upload --skip-existing wheelhouse/*.whl
         fi
       env:
-        - CIBW_BUILD="cp27-macosx_x86_64 cp35-macosx_x86_64 cp36-macosx_x86_64 cp37-macosx_x86_64 cp38-macosx_x86_64"
+        - CIBW_BUILD="cp27-macosx_x86_64 cp35-macosx_x86_64 cp36-macosx_x86_64 cp37-macosx_x86_64 cp38-macosx_x86_64 cp39-macosx_x86_64"
 
     # build on windows
     - name: Build wheels on Windows
@@ -117,15 +117,15 @@ jobs:
           python3 -m twine upload --skip-existing wheelhouse/*.whl
         fi
       env:
-        - PATH=/c/Python38:/c/Python38/Scripts:$PATH CIBW_BUILD="cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64"
+        - PATH=/c/Python38:/c/Python38/Scripts:$PATH CIBW_BUILD="cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64 cp39-win_amd64"
 
 env:
   global:
     - TWINE_USERNAME=__token__
     - CIBW_BEFORE_BUILD="pip install numpy"
-    - CIBW_BEFORE_TEST="pip install cython"
-    - CIBW_TEST_REQUIRES="pytest numpy pot energyflow"
-    - CIBW_TEST_COMMAND="pytest {package}"
+    #- CIBW_BEFORE_TEST="pip install cython"
+    #- CIBW_TEST_REQUIRES="pytest numpy pot energyflow"
+    #- CIBW_TEST_COMMAND="pytest {package}"
 
 branches:
   only:
