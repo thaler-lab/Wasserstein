@@ -9,7 +9,7 @@ stages:
 
 jobs:
   exclude:
-    - stage: build
+  #  - stage: build
   #  - os: linux
   #  - os: windows
 
