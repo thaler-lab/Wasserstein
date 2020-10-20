@@ -1,3 +1,26 @@
+Wasserstein is licensed under the GPLv3 license, which is included below. The
+core algorithm of the library, the network simplex algorithm contained in 
+NetworkSimplex.hh, is based on code from the LEMON graph library, which has
+been modified by Nicolas Boneel and subsequently Rémi Flamary. Their copyright
+notices appear after the GPLv3 text. Additionally, we use the Boost Histogram
+package, a copy of which is included in Wasserstein. That license follows the
+others.
+
+If you use Wasserstein for academic research, please cite or acknowledge the
+following works:
+
+- Komiske, Metodiev, Thaler (2019) arXiv:1902.02346
+    https://doi.org/10.1103/PhysRevLett.123.041801
+- Komiske, Metodiev, Thaler (2020) arXiv:2004.04159
+    https://doi.org/10.1007/JHEP07%282020%29006
+- Boneel, van de Panne, Paris, Heidrich (2011)
+    https://doi.org/10.1145/2070781.2024192
+- LEMON graph library https://lemon.cs.elte.hu/trac/lemon
+
+--------------------------------------------------------------------------------
+Wasserstein License
+--------------------------------------------------------------------------------
+
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
@@ -672,3 +695,113 @@ may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <https://www.gnu.org/licenses/why-not-lgpl.html>.
+
+--------------------------------------------------------------------------------
+POT License: https://github.com/PythonOT/POT/blob/master/LICENSE
+--------------------------------------------------------------------------------
+
+MIT License
+
+Copyright (c) 2016 Rémi Flamary
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+--------------------------------------------------------------------------------
+Copyright notice from network_simplex_simple.h
+--------------------------------------------------------------------------------
+
+This file has been adapted by Nicolas Bonneel (2013),
+from network_simplex.h from LEMON, a generic C++ optimization library,
+to implement a lightweight network simplex for mass transport, more
+memory efficient than the original file. A previous version of this file
+is used as part of the Displacement Interpolation project,
+Web: http://www.cs.ubc.ca/labs/imager/tr/2011/DisplacementInterpolation/
+
+Revisions:
+March 2015: added OpenMP parallelization
+March 2017: included Antoine Rolet's trick to make it more robust
+April 2018: IMPORTANT bug fix + uses 64bit integers (slightly slower but 
+less risks of overflows), updated to a newer version of the algo by LEMON,
+sparse flow by default + minor edits.
+
+*** Original file Copyright Notice :
+
+Copyright (C) 2003-2010
+Egervary Jeno Kombinatorikus Optimalizalasi Kutatocsoport
+(Egervary Research Group on Combinatorial Optimization, EGRES).
+
+Permission to use, modify and distribute this software is granted
+provided that this copyright notice appears in all copies. For
+precise terms see the accompanying LICENSE file.
+
+This software is provided "AS IS" with no warranty of any kind,
+express or implied, and with no claim as to its suitability for any
+purpose.
+
+--------------------------------------------------------------------------------
+Copyright notice from full_bipartite.h
+--------------------------------------------------------------------------------
+
+This file has been adapted by Nicolas Bonneel (2013), 
+from full_graph.h from LEMON, a generic C++ optimization library,
+to implement a lightweight fully connected bipartite graph. A previous
+version of this file is used as part of the Displacement Interpolation 
+project, 
+Web: http://www.cs.ubc.ca/labs/imager/tr/2011/DisplacementInterpolation/
+
+** Original file Copyright Notice :
+Copyright (C) 2003-2010
+Egervary Jeno Kombinatorikus Optimalizalasi Kutatocsoport
+(Egervary Research Group on Combinatorial Optimization, EGRES).
+
+Permission to use, modify and distribute this software is granted
+provided that this copyright notice appears in all copies. For
+precise terms see the accompanying LICENSE file.
+
+This software is provided "AS IS" with no warranty of any kind,
+express or implied, and with no claim as to its suitability for any
+purpose.
+
+--------------------------------------------------------------------------------
+Boost Histogram license
+--------------------------------------------------------------------------------
+
+Boost Software License - Version 1.0 - August 17th, 2003
+
+Permission is hereby granted, free of charge, to any person or organization
+obtaining a copy of the software and accompanying documentation covered by
+this license (the "Software") to use, reproduce, display, distribute,
+execute, and transmit the Software, and to prepare derivative works of the
+Software, and to permit third-parties to whom the Software is furnished to
+do so, all subject to the following:
+
+The copyright notices in the Software and this entire statement, including
+the above license grant, this restriction and the following disclaimer,
+must be included in all copies of the Software, in whole or in part, and
+all derivative works of the Software, unless such copies or derivative
+works are solely in the form of machine-executable object code generated by
+a source language processor.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
+SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
+FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.

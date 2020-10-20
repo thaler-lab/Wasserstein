@@ -76,17 +76,13 @@
                     </li>
                     <li class="toctree-l1 current"><a class="reference internal current" href="./">FAQs</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#how-do-i-cite-the-energyflow-package">How do I cite the EnergyFlow package?</a>
+    <li class="toctree-l2"><a class="reference internal" href="#why-should-i-use-wasserstein-instead-of-the-python-optimal-transport-pot-library">Why should I use Wasserstein instead of the Python Optimal Transport (POT) library?</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#how-do-i-cite-the-datasets-available-through-energyflow">How do I cite the datasets available through EnergyFlow?</a>
+    <li class="toctree-l2"><a class="reference internal" href="#how-do-i-cite-the-wasserstein-package">How do I cite the Wasserstein package?</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#why-python-instead-of-c">Why Python instead of C++?</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#can-i-contribute-to-the-code">Can I contribute to the code?</a>
+    <li class="toctree-l2"><a class="reference internal" href="#where-can-i-get-the-code">Where can I get the code?</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#how-do-i-report-an-issue">How do I report an issue?</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#where-can-i-get-graph-image-files">Where can I get graph image files?</a>
     </li>
     </ul>
                     </li>
@@ -140,42 +136,32 @@
               
                 <h1 id="frequently-asked-energyflow-questions">Frequently Asked EnergyFlow Questions</h1>
 <ul>
-<li><a href="#how-do-i-cite-the-energyflow-package">How do I cite the EnergyFlow package?</a></li>
-<li><a href="#how-do-i-cite-the-datasets-available-through-energyflow">How do I cite the datasets available through EnergyFlow?</a></li>
-<li><a href="#why-python-instead-of-c">Why Python instead of C++?</a></li>
-<li><a href="#can-i-contribute-to-the-code">Can I contribute to the code?</a></li>
+<li><a href="#why-should-i-use-wasserstein-instead-of-the-python-optimal-transport-pot-library">Why should I use Wasserstein instead of the Python Optimal Transport (POT) library?</a></li>
+<li><a href="#how-do-i-cite-the-wasserstein-package">How do I cite the Wasserstein package?</a></li>
+<li><a href="#where-can-i-get-the-code">Where can I get the code?</a></li>
 <li><a href="#how-do-i-report-an-issue">How do I report an issue or a bug?</a></li>
-<li><a href="#where-can-i-get-graph-image-files">Where can I get graph image files?</a></li>
 </ul>
 <hr />
-<h2 id="how-do-i-cite-the-energyflow-package">How do I cite the EnergyFlow package?</h2>
+<h2 id="why-should-i-use-wasserstein-instead-of-the-python-optimal-transport-pot-library">Why should I use Wasserstein instead of the Python Optimal Transport (POT) library?</h2>
+<p><a href="https://pythonot.github.io/">POT</a> offers EMD functionality based on the same algorithm as Wasserstein. You'll find that Wasserstein is faster (up to 2x) for small problems (around 100 particles) due to the more efficient way in which we interface with NumPy. Also, Wasserstein offers greater numerical flexibility, with the ability to control certain floating point epsilons that POT hard codes and can cause failure (especially on macOS, we have found). And then there is the C++ interface that Wasserstein exposes in case you work in that language.</p>
+<h2 id="how-do-i-cite-the-wasserstein-package">How do I cite the Wasserstein package?</h2>
 <p>Please cite the relevant papers if they or this package help your research. Here are the BibTeX entries to use:</p>
-<pre><code>@article{Komiske:2017aww,
-  author        = &quot;Komiske, Patrick T. and Metodiev, Eric M. and Thaler, Jesse&quot;,
-  title         = &quot;{Energy flow polynomials: A complete linear basis for jet substructure}&quot;,
-  eprint        = &quot;1712.07124&quot;,
-  archivePrefix = &quot;arXiv&quot;,
-  primaryClass  = &quot;hep-ph&quot;,
-  reportNumber  = &quot;MIT-CTP-4965&quot;,
-  doi           = &quot;10.1007/JHEP04(2018)013&quot;,
-  journal       = &quot;JHEP&quot;,
-  volume        = &quot;04&quot;,
-  pages         = &quot;013&quot;,
-  year          = &quot;2018&quot;
-}
-
-@article{Komiske:2018cqr,
-  author        = &quot;Komiske, Patrick T. and Metodiev, Eric M. and Thaler, Jesse&quot;,
-  title         = &quot;{Energy Flow Networks: Deep Sets for Particle Jets}&quot;,
-  eprint        = &quot;1810.05165&quot;,
-  archivePrefix = &quot;arXiv&quot;,
-  primaryClass  = &quot;hep-ph&quot;,
-  reportNumber  = &quot;MIT-CTP 5064&quot;,
-  doi           = &quot;10.1007/JHEP01(2019)121&quot;,
-  journal       = &quot;JHEP&quot;,
-  volume        = &quot;01&quot;,
-  pages         = &quot;121&quot;,
-  year          = &quot;2019&quot;
+<pre><code>@article{10.1145/2070781.2024192,
+  author     = &quot;Bonneel, Nicolas and van de Panne, Michiel and Paris, Sylvain and Heidrich, Wolfgang&quot;,
+  title      = &quot;{Displacement Interpolation Using Lagrangian Mass Transport}&quot;,
+  year       = &quot;2011&quot;,
+  issue_date = &quot;December 2011&quot;,
+  publisher  = &quot;Association for Computing Machinery&quot;,
+  address    = &quot;New York, NY, USA&quot;,
+  volume     = &quot;30&quot;,
+  number     = &quot;6&quot;,
+  issn       = &quot;0730-0301&quot;,
+  url        = &quot;https://doi.org/10.1145/2070781.2024192&quot;,
+  doi        = &quot;10.1145/2070781.2024192&quot;,
+  journal    = &quot;ACM Trans. Graph.&quot;,
+  month      = &quot;dec&quot;,
+  pages      = &quot;1–12&quot;,
+  numpages   = &quot;12&quot;
 }
 
 @article{Komiske:2019fks,
@@ -193,51 +179,6 @@
   year          = &quot;2019&quot;
 }
 
-@article{Komiske:2019jim,
-  author        = &quot;Komiske, Patrick T. and Mastandrea, Radha and Metodiev, Eric M. and Naik, Preksha and Thaler, Jesse&quot;,
-  title         = &quot;{Exploring the Space of Jets with CMS Open Data}&quot;,
-  eprint        = &quot;1908.08542&quot;,
-  archivePrefix = &quot;arXiv&quot;,
-  primaryClass  = &quot;hep-ph&quot;,
-  reportNumber  = &quot;MIT-CTP 5129&quot;,
-  doi           = &quot;10.1103/PhysRevD.101.034009&quot;,
-  journal       = &quot;Phys. Rev. D&quot;,
-  volume        = &quot;101&quot;,
-  number        = &quot;3&quot;,
-  pages         = &quot;034009&quot;,
-  year          = &quot;2020&quot;
-}
-
-@article{Komiske:2019asc,
-  author        = &quot;Komiske, Patrick T. and Metodiev, Eric M. and Thaler, Jesse&quot;,
-  title         = &quot;{Cutting Multiparticle Correlators Down to Size}&quot;,
-  eprint        = &quot;1911.04491&quot;,
-  archivePrefix = &quot;arXiv&quot;,
-  primaryClass  = &quot;hep-ph&quot;,
-  reportNumber  = &quot;MIT-CTP 5150&quot;,
-  doi           = &quot;10.1103/PhysRevD.101.036019&quot;,
-  journal       = &quot;Phys. Rev. D&quot;,
-  volume        = &quot;101&quot;,
-  number        = &quot;3&quot;,
-  pages         = &quot;036019&quot;,
-  year          = &quot;2020&quot;
-}
-
-@article{Andreassen:2019cjw,
-  author        = &quot;Andreassen, Anders and Komiske, Patrick T. and Metodiev, Eric M. and Nachman, Benjamin and Thaler, Jesse&quot;,
-  title         = &quot;{OmniFold: A Method to Simultaneously Unfold All Observables}&quot;,
-  eprint        = &quot;1911.09107&quot;,
-  archivePrefix = &quot;arXiv&quot;,
-  primaryClass  = &quot;hep-ph&quot;,
-  reportNumber  = &quot;MIT-CTP 5155&quot;,
-  doi           = &quot;10.1103/PhysRevLett.124.182001&quot;,
-  journal       = &quot;Phys. Rev. Lett.&quot;,
-  volume        = &quot;124&quot;,
-  number        = &quot;18&quot;,
-  pages         = &quot;182001&quot;,
-  year          = &quot;2020&quot;
-}
-
 @article{Komiske:2020qhg,
   author        = &quot;Komiske, Patrick T. and Metodiev, Eric M. and Thaler, Jesse&quot;,
   title         = &quot;{The Hidden Geometry of Particle Collisions}&quot;,
@@ -253,170 +194,10 @@
 }
 </code></pre>
 
-<h2 id="how-do-i-cite-the-datasets-available-through-energyflow">How do I cite the datasets available through EnergyFlow?</h2>
-<p>If any of the datasets provided through EnergyFlow are used in your research, we ask that you cite their Zenodo records, which are provided below in BibTeX format (confirmed to give a sensible citation in the JHEP and RevTeX bibliography styles).</p>
-<p><a href="/docs/datasets/#cms-open-data-and-the-mod-hdf5-format"><strong>CMS Open Data in MOD HDF5 Format</strong></a></p>
-<pre><code>@article{Zenodo:MODCMS2011A:Jets,
-  author  = {Komiske, Patrick and Mastandrea, Radha and Metodiev, Eric and
-             Naik, Preksha and Thaler, Jesse},
-  title   = {{CMS 2011A Open Data $|$ Jet Primary Dataset $|$ pT $&gt;$ 
-              375 GeV $|$ MOD HDF5 Format}},
-  journal = &quot;Zenodo&quot;,
-  year    = 2019,
-  doi     = {10.5281/zenodo.3340205}
-}
-
-@article{Zenodo:MODCMS2011A:MC170,
-  author  = {Komiske, Patrick and Mastandrea, Radha and Metodiev, Eric and
-             Naik, Preksha and Thaler, Jesse},
-  title   = {{CMS 2011A Simulation $|$ Pythia 6 QCD 170-300 $|$ pT $&gt;$ 
-              375 GeV $|$ MOD HDF5 Format}},
-  journal = &quot;Zenodo&quot;,
-  year    = 2019,
-  doi     = {10.5281/zenodo.3341500}
-}
-
-@article{Zenodo:MODCMS2011A:MC300,
-  author  = {Komiske, Patrick and Mastandrea, Radha and Metodiev, Eric and
-             Naik, Preksha and Thaler, Jesse},
-  title   = {{CMS 2011A Simulation $|$ Pythia 6 QCD 300-470 $|$ pT $&gt;$ 
-              375 GeV $|$ MOD HDF5 Format}},
-  journal = &quot;Zenodo&quot;,
-  year    = 2019,
-  doi     = {10.5281/zenodo.3341498}
-}
-
-@article{Zenodo:MODCMS2011A:MC470,
-  author  = {Komiske, Patrick and Mastandrea, Radha and Metodiev, Eric and
-             Naik, Preksha and Thaler, Jesse},
-  title   = {{CMS 2011A Simulation $|$ Pythia 6 QCD 470-600 $|$ pT $&gt;$ 
-              375 GeV $|$ MOD HDF5 Format}},
-  journal = &quot;Zenodo&quot;,
-  year    = 2019,
-  doi     = {10.5281/zenodo.3341419}
-}
-
-@article{Zenodo:MODCMS2011A:MC600,
-  author  = {Komiske, Patrick and Mastandrea, Radha and Metodiev, Eric and
-             Naik, Preksha and Thaler, Jesse},
-  title   = {{CMS 2011A Simulation $|$ Pythia 6 QCD 600-800 $|$ pT $&gt;$ 
-              375 GeV $|$ MOD HDF5 Format}},
-  journal = &quot;Zenodo&quot;,
-  year    = 2019,
-  doi     = {10.5281/zenodo.3364139}
-}
-
-@article{Zenodo:MODCMS2011A:MC800,
-  author  = {Komiske, Patrick and Mastandrea, Radha and Metodiev, Eric and
-             Naik, Preksha and Thaler, Jesse},
-  title   = {{CMS 2011A Simulation $|$ Pythia 6 QCD 800-1000 $|$ pT $&gt;$ 
-              375 GeV $|$ MOD HDF5 Format}},
-  journal = &quot;Zenodo&quot;,
-  year    = 2019,
-  doi     = {10.5281/zenodo.3341413}
-}
-
-@article{Zenodo:MODCMS2011A:MC1000,
-  author  = {Komiske, Patrick and Mastandrea, Radha and Metodiev, Eric and
-             Naik, Preksha and Thaler, Jesse},
-  title   = {{CMS 2011A Simulation $|$ Pythia 6 QCD 1000-1400 $|$ pT $&gt;$
-              375 GeV $|$ MOD HDF5 Format}},
-  journal = &quot;Zenodo&quot;,
-  year    = 2019,
-  doi     = {10.5281/zenodo.3341502}
-}
-
-@article{Zenodo:MODCMS2011A:MC1400,
-  author  = {Komiske, Patrick and Mastandrea, Radha and Metodiev, Eric and
-             Naik, Preksha and Thaler, Jesse},
-  title   = {{CMS 2011A Simulation $|$ Pythia 6 QCD 1400-1800 $|$ pT $&gt;$
-              375 GeV $|$ MOD HDF5 Format}},
-  journal = &quot;Zenodo&quot;,
-  year    = 2019,
-  doi     = {10.5281/zenodo.3341770}
-}
-
-@article{Zenodo:MODCMS2011A:MC1800,
-  author  = {Komiske, Patrick and Mastandrea, Radha and Metodiev, Eric and
-             Naik, Preksha and Thaler, Jesse},
-  title   = {{CMS 2011A Simulation $|$ Pythia 6 QCD1800-inf $|$ pT $&gt;$ 
-              375 GeV $|$ MOD HDF5 Format}},
-  journal = &quot;Zenodo&quot;,
-  year    = 2019,
-  doi     = {10.5281/zenodo.3341772}
-}
-</code></pre>
-
-<p><a href="https://
-doi.org/10.5281/zenodo.3340205"><img alt="DOI" src="/img/zenodo.3340205.svg" /></a> - CMS 2011A Jets, pT &gt; 375 GeV
-<br>
-<a href="https://
-doi.org/10.5281/zenodo.3341500"><img alt="DOI" src="/img/zenodo.3341500.svg" /></a> - SIM/GEN QCD Jets 170-300 GeV
-<br>
-<a href="https://
-doi.org/10.5281/zenodo.3341498"><img alt="DOI" src="/img/zenodo.3341498.svg" /></a> - SIM/GEN QCD Jets 300-470 GeV
-<br>
-<a href="https://
-doi.org/10.5281/zenodo.3341419"><img alt="DOI" src="/img/zenodo.3341419.svg" /></a> - SIM/GEN QCD Jets 470-600 GeV
-<br>
-<a href="https://
-doi.org/10.5281/zenodo.3364139"><img alt="DOI" src="/img/zenodo.3364139.svg" /></a> - SIM/GEN QCD Jets 600-800 GeV
-<br>
-<a href="https://
-doi.org/10.5281/zenodo.3341413"><img alt="DOI" src="/img/zenodo.3341413.svg" /></a> - SIM/GEN QCD Jets 800-1000 GeV
-<br>
-<a href="https://
-doi.org/10.5281/zenodo.3341502"><img alt="DOI" src="/img/zenodo.3341502.svg" /></a> - SIM/GEN QCD Jets 1000-1400 GeV
-<br>
-<a href="https://
-doi.org/10.5281/zenodo.3341770"><img alt="DOI" src="/img/zenodo.3341770.svg" /></a> - SIM/GEN QCD Jets 1400-1800 GeV
-<br>
-<a href="https://
-doi.org/10.5281/zenodo.3341772"><img alt="DOI" src="/img/zenodo.3341772.svg" /></a> - SIM/GEN QCD Jets 1800-$\infty$ GeV</p>
-<p><a href="/docs/datasets/#quark-and-gluon-jets"><strong>Quark and Gluon Datasets</strong></a></p>
-<pre><code>@article{Zenodo:EnergyFlow:Pythia8QGs,
-  author  = {Komiske, Patrick and Metodiev, Eric and Thaler, Jesse},
-  title   = {Pythia8 Quark and Gluon Jets for Energy Flow},
-  journal = &quot;Zenodo&quot;,
-  year    = 2019,
-  doi     = {10.5281/zenodo.3164691}
-}
-
-@article{Zenodo:EnergyFlow:Herwig7QGs,
-  author  = {Pathak, Aditya and Komiske, Patrick and
-             Metodiev, Eric and Schwartz, Matthew},
-  title   = {Herwig7.1 Quark and Gluon Jets},
-  journal = &quot;Zenodo&quot;,
-  year    = 2019,
-  doi     = {10.5281/zenodo.3066475}
-}
-</code></pre>
-
-<p><a href="https://doi.org/10.5281/zenodo.3164691"><img alt="DOI" src="/img/zenodo.3164691.svg" /></a> - Pythia samples
-<br>
-<a href="https://doi.org/10.5281/zenodo.3066475"><img alt="DOI" src="/img/zenodo.3066475.svg" /></a> - Herwig samples</p>
-<p><a href="/docs/datasets/#z-jets-with-delphes-simulation"><strong>Z + Jets with Delphes Datasets</strong></a></p>
-<pre><code>@article{Zenodo:EnergyFlow:ZJetsDelphes,
-  author  = {Andreassen, Anders and Komiske, Patrick and Metodiev, Eric and
-             Nachman, Benjamin and Thaler, Jesse},
-  title   = {{Pythia/Herwig + Delphes Jet Datasets for OmniFold Unfolding}},
-  journal = &quot;Zenodo&quot;,
-  year    = 2019,
-  doi     = {10.5281/zenodo.3548091}
-}
-</code></pre>
-
-<p><a href="https://doi.org/10.5281/zenodo.3548091"><img alt="DOI" src="/img/zenodo.3548091.svg" /></a> - Pythia/Herwig + Delphes samples</p>
-<h2 id="why-python-instead-of-c">Why Python instead of C++?</h2>
-<p>Computing the EFPs requires a function such as NumPy's <a href="https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.einsum.html">einsum</a> that can efficiently evaluate arbitrary tensor contractions. To write such a function from scratch in C++ is difficult, and there is no obvious library in C++ to use (though if one were to attempt this the <a href="http://tensor-compiler.org/">tensor algebra compiler</a> seems like a promising tool).</p>
-<p><a href="http://www.numpy.org">NumPy</a> is a highly-optimized Python library written in C that provides all of the tools required to efficiently compute the EFPs. Libraries like NumPy take advantage of optimizations that the physicist-programmer typically does not, such as architecture-optimized libraries like BLAS or LAPACK and low-level features such as SSE/AVX instructions.</p>
-<p>Beyond just computing EFPs, EnergyFlow makes use of other libraries written in python including <a href="https://keras.io/">Keras</a> and <a href="https://scikit-learn.org/">scikit-learn</a> for the architecture implementations, <a href="https://pot.readthedocs.io/en/stable/">POT</a> and <a href="https://www.scipy.org/">SciPy</a> for EMD computations, and <a href="https://matplotlib.org/index.html">matplotlib</a> for the examples.</p>
-<h2 id="can-i-contribute-to-the-code">Can I contribute to the code?</h2>
-<p>All of our code is open source and hosted on <a href="https://www.github.com/pkomiske/EnergyFlow/">GitHub</a>. We welcome additional contributors, and if you are interested in getting involved please contact us directly. Contact information is included in the relevant Energy Flow papers and our GitHub repository.</p>
+<h2 id="where-can-i-get-the-code">Where can I get the code?</h2>
+<p>The code is open source and hosted on <a href="https://www.github.com/pkomiske/Wasserstein/">GitHub</a>.</p>
 <h2 id="how-do-i-report-an-issue">How do I report an issue?</h2>
-<p>Please let us know of any issues you encounter as soon as possible by creating a GitHub <a href="https://github.com/pkomiske/EnergyFlow">Issue</a>.</p>
-<h2 id="where-can-i-get-graph-image-files">Where can I get graph image files?</h2>
-<p>Image files for all connected multigraphs with up to 7 edges in the EFP style are available as PDF files <a href="https://github.com/pkomiske/EnergyFlow/tree/images/graphs">here</a>. You are free to use them with the proper attribution.</p>
+<p>Please report any issues you encounter by creating a GitHub <a href="https://github.com/pkomiske/Wasserstein">Issue</a>.</p>
               
             </div>
           </div>

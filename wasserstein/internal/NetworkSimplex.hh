@@ -8,6 +8,8 @@
 //
 //   - Komiske, Metodiev, Thaler (2019) arXiv:1902.02346
 //       https://doi.org/10.1103/PhysRevLett.123.041801
+//   - Komiske, Metodiev, Thaler (2020) arXiv:2004.04159
+//       https://doi.org/10.1007/JHEP07%282020%29006
 //   - Boneel, van de Panne, Paris, Heidrich (2011)
 //       https://doi.org/10.1145/2070781.2024192
 //   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon

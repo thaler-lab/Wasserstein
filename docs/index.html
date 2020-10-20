@@ -131,22 +131,22 @@
                 <h1 id="welcome-to-wasserstein">Welcome to Wasserstein</h1>
 <p><img src="https://github.com/pkomiske/EnergyFlow/raw/images/JetCustom_29522924_24981665_EMD.jpg" width="60%"/></p>
 <h2 id="features">Features</h2>
-<p>The Wasserstein package computes Wasserstein distances and related quantities efficiently. It contains an efficient implementation of the network simplex algorithm originally written by <a href="https://github.com/nbonneel/network_simplex">Nicolas Boneel</a>, modified by the authors of the <a href="https://pythonot.github.io/">Python Optimal Transport (POT)</a> library, and further modified in this package by Patrick Komiske. The main code is written in C++ with a Python wrapper provided via <a href="http://swig.org/">SWIG</a>.</p>
+<p>The Wasserstein package computes Wasserstein distances and related quantities efficiently. It contains an efficient implementation of the network simplex algorithm originally from the <a href="https://lemon.cs.elte.hu/trac/lemon">LEMON graph library</a>, modified by <a href="https://github.com/nbonneel/network_simplex">Nicolas Boneel</a>, modified by the authors of the <a href="https://pythonot.github.io/">Python Optimal Transport (POT)</a> library, and further modified in this package by Patrick Komiske. The main code is written in C++ with a Python wrapper provided via <a href="http://swig.org/">SWIG</a>.</p>
 <p>The following classes contain the main functionalities of Wasserstein:</p>
 <ul>
-<li><a href="docs/emd">EMD</a>: EFPs are a collection of jet substructure observables which form a complete linear basis of IRC-safe observables. EnergyFlow provides tools to compute EFPs on events for several energy and angular measures as well as custom measures.
+<li><a href="docs/emd">EMD</a>: Computes the Wasserstein distance between two distributions, including a possible penalty term. Can use either the builtin Euclidean ground distance (with the possibility of raising these to a power <code>beta</code>) or a custom ground distance between distributions.
 <br><br></li>
-<li><a href="docs/emds">PairwiseEMD</a>: EFNs are infrared- and collinear-safe models designed for learning from collider events as unordered, variable-length sets of particles. EnergyFlow contains customizable Keras implementations of EFNs. Available from version <code>0.10.0</code> onward.
+<li><a href="docs/emds">PairwiseEMD</a>: Computes pairs of Wasserstein distances between collections of distributions. Multi-threading support is provided via OMP. 
 <br><br></li>
-<li><a href="docs/correlationdimension">CorrelationDimension</a>: PFNs are general models designed for learning from collider events as unordered, variable-length sets of particles, based on the <a href="https://arxiv.org/abs/1703.06114">Deep Sets</a> framework. EnergyFlow contains customizable Keras implementations of PFNs. Available from version <code>0.10.0</code> onward.</li>
+<li><a href="docs/correlationdimension">CorrelationDimension</a>: The correlation dimension is a type of fractal dimension that estimates dimensionality of the underlying data manifold on which the distributions live. It has been applied to <a href="https://doi.org/10.1103/PhysRevD.101.034009">CMS Open Data</a>.</li>
 </ul>
-<p>The current version is <code>0.2.0</code>. Changes are summarized in the <a href="releases">Release Notes</a>. Using the most up-to-date version is recommended. As of version <code>0.2.0</code>, tests have been written covering the majority of the code. The source code can be found on <a href="https://github.com/pkomiske/Wasserstein">GitHub</a>.</p>
-<p>Get started by <a href="installation">installing EnergyFlow</a>, <a href="demos">exploring the demos</a>, and <a href="examples">running the examples</a>!</p>
+<p>The current version is <code>0.3.0</code>. Changes are summarized in the <a href="releases">Release Notes</a>. Using the most up-to-date version is recommended. As of version <code>0.2.0</code>, tests have been written covering the majority of the code. The source code can be found on <a href="https://github.com/pkomiske/Wasserstein">GitHub</a>.</p>
 <h2 id="references">References</h2>
-<p>[1] P. T. Komiske, E. M. Metodiev, and J. Thaler, <em>The Metric Space of Collider Events</em>, <a href="https://doi.org/10.1103/PhysRevLett.123.041801">Phys. Rev. Lett. <strong>123</strong> (2019) 041801</a> [<a href="https://arxiv.org/abs/1902.02346">1902.02346</a>].</p>
-<p>[2] P. T. Komiske, E. M. Metodiev, and J. Thaler, <em>The Hidden Geometry of Particle Collisions</em>, <a href="https://doi.org/10.1007/JHEP07(2020)006">JHEP <strong>07</strong> (2020) 006</a> [<a href="https://arxiv.org/abs/2004.04159">2004.04159</a>].</p>
+<p>[1] N. Bonneel, M. van de Panne, S. Paris, W. Heidrich, <em>Displacement interpolation using Lagrangian mass transport</em>, <a href="https://doi.org/10.1145/2070781.2024192">ACM Trans. Graph. <strong>30</strong></a> (2011).</p>
+<p>[2] P. T. Komiske, E. M. Metodiev, and J. Thaler, <em>The Metric Space of Collider Events</em>, <a href="https://doi.org/10.1103/PhysRevLett.123.041801">Phys. Rev. Lett. <strong>123</strong> (2019) 041801</a> [<a href="https://arxiv.org/abs/1902.02346">1902.02346</a>].</p>
+<p>[3] P. T. Komiske, E. M. Metodiev, and J. Thaler, <em>The Hidden Geometry of Particle Collisions</em>, <a href="https://doi.org/10.1007/JHEP07(2020)006">JHEP <strong>07</strong> (2020) 006</a> [<a href="https://arxiv.org/abs/2004.04159">2004.04159</a>].</p>
 <h2 id="copyright">Copyright</h2>
-<p>Wasserstein is licensed under <a href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>. See the <a href="https://github.com/pkomiske/EnergyFlow/blob/master/LICENSE">LICENSE</a> for detailed copyright information. EnergyFlow uses a customized <code>einsumfunc.py</code> from the <a href="https://github.com/numpy/numpy">NumPy GitHub</a> repository as well as a few functions relating to downloading files copied from the <a href="https://github.com/keras-team/keras">Keras GitHub</a> repository. The copyrights for these parts of the code are attributed to their respective owners in the <a href="https://github.com/pkomiske/EnergyFlow/blob/master/LICENSE">LICENSE</a> file.</p>
+<p>Wasserstein is licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU Puplic License v3</a>. See the <a href="https://github.com/pkomiske/Wasserstein/blob/master/LICENSE">LICENSE</a> for detailed copyright information.</p>
               
             </div>
           </div>
@@ -204,5 +204,5 @@
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2020-10-20 02:02:34.170658+00:00
+Build Date UTC : 2020-10-20 02:56:56.210300+00:00
 -->

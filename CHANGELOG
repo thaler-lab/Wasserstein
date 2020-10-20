@@ -1,0 +1,18 @@
+## 0.3.x
+
+**0.3.0**
+
+- Chanages to some argument names.
+- First version that EnergyFlow depends on publicly.
+- First version with online documentation.
+
+## 0.2.x
+
+**0.2.0**
+
+- First public version that should have reliable functionality.
+- Tests written that cover most of the code.
+
+## 0.1.x
+
+- Rapid testing and development including getting the Python build system on [Travis-CI](https://travis-ci.org/github/pkomiske/Wasserstein).

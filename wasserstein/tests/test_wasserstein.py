@@ -206,16 +206,16 @@ def test_emd_attributes(beta, R, norm):
 @pytest.mark.pairwise_emd
 @pytest.mark.parametrize('store_sym_flattened', [True, False])
 @pytest.mark.parametrize('norm', [True, False])
-@pytest.mark.parametrize('chunksize', [-2, -1, 0, 1, 2, 1000000000])
+@pytest.mark.parametrize('print_every', [-2, -1, 0, 1, 2, 1000000000])
 @pytest.mark.parametrize('num_threads', [1, 2, -1])
 @pytest.mark.parametrize('num_events', [1, 2, 16, 64])
-def test_pairwise_emd(num_events, num_threads, chunksize, norm, store_sym_flattened):
+def test_pairwise_emd(num_events, num_threads, print_every, norm, store_sym_flattened):
 
     beta, R = 1.0, 1.0
     eventsA, eventsB = np.random.rand(2, num_events, 10, 3)
 
     wassEMD = wasserstein.EMD(beta=beta, R=R, norm=norm)
-    wassPairwiseEMD = wasserstein.PairwiseEMD(beta=beta, R=R, norm=norm, 
+    wassPairwiseEMD = wasserstein.PairwiseEMD(beta=beta, R=R, norm=norm, print_every=print_every,
                         num_threads=num_threads, store_sym_emds_flattened=store_sym_flattened)
 
     # symmetric computation
@@ -295,14 +295,14 @@ def test_pairwise_emd_with_ef(num_events, num_particles, num_threads, beta, R, n
 loaded_ef_events = False
 
 @pytest.mark.corrdim
+@pytest.mark.parametrize('nbins', [pytest.param(0, marks=pytest.mark.xfail), 1, 2, 4, 1000])
 @pytest.mark.parametrize('high', [10.0000001, 100, 1000])
 @pytest.mark.parametrize('low', [1e-10, 1, 10])
-@pytest.mark.parametrize('nbins', [pytest.param(0, marks=pytest.mark.xfail), 1, 2, 4, 1000])
-def test_corrdim(nbins, low, high):
+def test_corrdim(low, high, nbins):
 
     nevents = 150
 
-    corrdim = wasserstein.CorrelationDimension(nbins, low, high)
+    corrdim = wasserstein.CorrelationDimension(low, high, nbins)
     emds = wasserstein.PairwiseEMD(throw_on_error=True)
     emds.set_external_emd_handler(corrdim)
 
