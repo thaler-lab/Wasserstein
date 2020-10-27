@@ -156,7 +156,7 @@ public:
   void set_beta(Value beta) { pairwise_distance_.set_beta(beta); }
 
   // set network simplex parameters
-  void set_network_simplex_params(unsigned n_iter_max, Value epsilon_large_factor, Value epsilon_small_factor) {
+  void set_network_simplex_params(unsigned n_iter_max=100000, Value epsilon_large_factor=10000, Value epsilon_small_factor=1) {
     network_simplex_.set_params(n_iter_max, epsilon_large_factor, epsilon_small_factor);
   }
 
