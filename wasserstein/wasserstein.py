@@ -439,13 +439,6 @@ class PairwiseEMD(object):
     norm = _swig_new_instance_method(_wasserstein.PairwiseEMD_norm)
     set_norm = _swig_new_instance_method(_wasserstein.PairwiseEMD_set_norm)
     set_network_simplex_params = _swig_new_instance_method(_wasserstein.PairwiseEMD_set_network_simplex_params)
-    description = _swig_new_instance_method(_wasserstein.PairwiseEMD_description)
-
-    def clear(self):
-        _wasserstein.PairwiseEMD_clear(self)
-        self.event_arrs = []
-
-
     set_omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMD_set_omp_dynamic_chunksize)
     omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMD_omp_dynamic_chunksize)
 
@@ -457,7 +450,14 @@ class PairwiseEMD(object):
         self.external_emd_handler = handler
 
 
-    external_emds = _swig_new_instance_method(_wasserstein.PairwiseEMD_external_emds)
+    external_handler = _swig_new_instance_method(_wasserstein.PairwiseEMD_external_handler)
+    description = _swig_new_instance_method(_wasserstein.PairwiseEMD_description)
+
+    def clear(self):
+        _wasserstein.PairwiseEMD_clear(self)
+        self.event_arrs = []
+
+
     emds_vec = _swig_new_instance_method(_wasserstein.PairwiseEMD_emds_vec)
     emd = _swig_new_instance_method(_wasserstein.PairwiseEMD_emd)
     errored = _swig_new_instance_method(_wasserstein.PairwiseEMD_errored)

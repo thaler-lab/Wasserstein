@@ -59,7 +59,7 @@ wasserstein = Extension('wasserstein._wasserstein',
                         libraries=libs)
 
 if sys.argv[1] == 'swig':
-    opts = '-fastproxy -w511 -keyword'
+    opts = '-fastproxy -w511,315 -keyword'
     if len(sys.argv) >= 3 and sys.argv[2] == '-py3':
         opts += ' -py3'
     command = 'swig -python -c++ {} -Iwasserstein -o wasserstein/wasserstein.cpp swig/wasserstein.i'.format(opts)
