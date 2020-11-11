@@ -120,7 +120,6 @@ SOFTWARE.
 #define LEMON_NETWORK_SIMPLEX_HH
 
 // C++ standard library
-#include <algorithm>
 #include <cmath>
 #include <iostream>
 #include <limits>
@@ -132,11 +131,7 @@ namespace lemon {
 
 typedef EMDNAMESPACE::EMDStatus NetworkSimplexStatus;
 
-// helps with freeing memory
-template<typename T>
-void free_vector(std::vector<T> & vec) {
-  std::vector<T>().swap(vec);
-}
+using EMDNAMESPACE::free_vector;
 
 //-----------------------------------------------------------------------------
 // NetworkSimplex

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Patrick T. Komiske III">
+  <link rel="canonical" href="https://pkomiske.github.io/Wasserstein/docs/externalemdhandler/">
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>External EMD Handlers - Wasserstein</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link href="../../css/eftheme.css" rel="stylesheet" />
+  <link href="../../css/pygmentize_friendly.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "External EMD Handlers";
+    var mkdocs_page_input_path = "docs/externalemdhandler.md";
+    var mkdocs_page_url = "/Wasserstein/docs/externalemdhandler/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-122962541-3', 'Wasserstein');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+  <a href="../..">
+    <div class="eflogo">
+      <img src="../../img/eflogowhite.png"  class="eflogo-img"> Wasserstein
+    </div>
+  </a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Getting Started</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../installation/">Installation</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../demos/">Python Demos</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../examples/">C++ Examples</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../faqs/">FAQs</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../releases/">Release Notes</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Documentation</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../emd/">EMD</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../emds/">PairwiseEMD</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">External EMD Handlers</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#python">Python</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#externalemdhandler">ExternalEMDHandler</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#num_calls">num_calls</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#description">description</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#histogram1dhandler">Histogram1DHandler</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#hist_vals_errs">hist_vals_errs</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#bin_centers">bin_centers</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#bin_edges">bin_edges</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#print_axis">print_axis</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#print_hist">print_hist</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#axis_min">axis_min</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#axis_max">axis_max</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#nbins">nbins</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#correlationdimension">CorrelationDimension</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#corrdims">corrdims</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#corrdim_bins">corrdim_bins</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#cumulative_vals_vars">cumulative_vals_vars</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#c">C++</a>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../utils/">Utils</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Wasserstein</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Documentation &raquo;</li>
+        
+      
+    
+    <li>External EMD Handlers</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="external-emd-handlers">External EMD Handlers</h1>
+<hr />
+<h2 id="python">Python</h2>
+<h3 id="externalemdhandler">ExternalEMDHandler</h3>
+<p>Base class for all external EMD handlers. Should never be directly instantiated. This takes care of thread safety and tracks the number of calls to the handler.</p>
+<h4 id="num_calls">num_calls</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">num_calls</span><span class="p">()</span>
+</code></pre></div>
+
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>int</em><ul>
+<li>The number of times that the handler has been called.</li>
+</ul>
+</li>
+</ul>
+<h4 id="description">description</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">description</span><span class="p">()</span>
+</code></pre></div>
+
+<ul>
+<li><em>str</em><ul>
+<li>A string describing the handler.</li>
+</ul>
+</li>
+</ul>
+<h3 id="histogram1dhandler">Histogram1DHandler</h3>
+<p>Histograms the EMD values into a pre-determined histogram. <code>Histogram1DHandler</code> uses a linearly-spaced axis whereas <code>Histogram1DHandlerLog</code> uses a log-spaced axis. This wraps the C++ class, which itself uses the <a href="https://www.boost.org/doc/libs/1_74_0/libs/histogram/doc/html/index.html">Boost Histogram Package</a>.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">wasserstein</span><span class="o">.</span><span class="n">Histogram1DHandler</span><span class="p">(</span><span class="n">axis_min</span><span class="p">,</span> <span class="n">axis_max</span><span class="p">,</span> <span class="n">nbins</span><span class="p">)</span>
+<span class="n">wasserstein</span><span class="o">.</span><span class="n">Histogram1DHandlerLog</span><span class="p">(</span><span class="n">axis_min</span><span class="p">,</span> <span class="n">axis_max</span><span class="p">,</span> <span class="n">nbins</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>axis_min</strong> : <em>float</em><ul>
+<li>The lower bound of the axis.</li>
+</ul>
+</li>
+<li><strong>axis_max</strong> : <em>float</em><ul>
+<li>The upper bound of the axis.</li>
+</ul>
+</li>
+<li><strong>nbins</strong> : <em>int</em><ul>
+<li>The number of bins to create in the histogram.</li>
+</ul>
+</li>
+</ul>
+<h4 id="hist_vals_errs">hist_vals_errs</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">hist_vals_errs</span><span class="p">(</span><span class="n">overflows</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+
+<p>This accesses the histogram values and errors (which are the squqare root of the sum of the squared weights).</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>overflows</strong> : <em>bool</em><ul>
+<li>Wether or not to include the overflow bins as the first and last entry of the histogram contents and errors.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>(<em>numpy.ndarray</em>, <em>numpy.ndarray</em>)<ul>
+<li>A pair of numpy arrays, the first is the values of the histogram and the second is the errors. If <code>overflows</code> is <code>True</code> then each will have length <code>nbins+2</code>, otherwise they will have length <code>nbins</code>.</li>
+</ul>
+</li>
+</ul>
+<h4 id="bin_centers">bin_centers</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">bin_centers</span><span class="p">()</span>
+</code></pre></div>
+
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>numpy.ndarray</em><ul>
+<li>The centers of each of the bins as a <code>nbins</code> length numpy array. For the linearly-spaced axis this is the arithmetic mean of the bin edges and for the log-spaced axis this is the geometric mean of the bin edges.</li>
+</ul>
+</li>
+</ul>
+<h4 id="bin_edges">bin_edges</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">bin_edges</span><span class="p">()</span>
+</code></pre></div>
+
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>numpy.ndarray</em><ul>
+<li>The bin edges as a <code>nbins+1</code> length numpy array.</li>
+</ul>
+</li>
+</ul>
+<h4 id="print_axis">print_axis</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">print_axis</span><span class="p">()</span>
+</code></pre></div>
+
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>str</em><ul>
+<li>A textual representation of the histogram axis.</li>
+</ul>
+</li>
+</ul>
+<h4 id="print_hist">print_hist</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">print_hist</span><span class="p">()</span>
+</code></pre></div>
+
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>str</em><ul>
+<li>A textual representation of the histogram.</li>
+</ul>
+</li>
+</ul>
+<h4 id="axis_min">axis_min</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">axis_min</span><span class="p">()</span>
+</code></pre></div>
+
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>float</em><ul>
+<li>The lower bound of the histogram axis.</li>
+</ul>
+</li>
+</ul>
+<h4 id="axis_max">axis_max</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">axis_max</span><span class="p">()</span>
+</code></pre></div>
+
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>float</em><ul>
+<li>The upper bound of the histogram axis.</li>
+</ul>
+</li>
+</ul>
+<h4 id="nbins">nbins</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">nbins</span><span class="p">()</span>
+</code></pre></div>
+
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>int</em><ul>
+<li>The number of bins of the histogram axis.</li>
+</ul>
+</li>
+</ul>
+<h3 id="correlationdimension">CorrelationDimension</h3>
+<p>This class inherits from <code>Histogram1DHandlerLog</code> and can be used to compute the correlation dimension of the collection of EMDs.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">wasserstein</span><span class="o">.</span><span class="n">CorrelationDimension</span><span class="p">(</span><span class="n">axis_min</span><span class="p">,</span> <span class="n">axis_max</span><span class="p">,</span> <span class="n">nbins</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Arguments</strong></p>
+<p>Same as those of <a href="#histogram1dhandler"><code>Histogram1DHandlerLog</code></a></p>
+<h4 id="corrdims">corrdims</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">corrdims</span><span class="p">(</span><span class="n">eps</span><span class="o">=</span><span class="mf">1e-100</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>eps</strong> : <em>float</em><ul>
+<li>The epsilon value to use to avoid dividing by zero or taking the log of zero.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>(<em>numpy.ndarray</em>, <em>numpy.ndarray</em>)<ul>
+<li>A pair of numpy arrays, the first is the correlation dimension values and the second is the correlation dimension errors. Each of these will be length<code>nbins-1</code> because a derivative was taken.</li>
+</ul>
+</li>
+</ul>
+<h4 id="corrdim_bins">corrdim_bins</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">corrdim_bins</span><span class="p">()</span>
+</code></pre></div>
+
+<p>The EMD bins corresponding to the correlation dimension values and errors returned by <a href="#corrdims"><code>corrdims</code></a>.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>numpy.ndarray</em><ul>
+<li>The distance scales of the correlation dimension values. This has length <code>nbins-1</code> because a derivative was taken.</li>
+</ul>
+</li>
+</ul>
+<h4 id="cumulative_vals_vars">cumulative_vals_vars</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">cumulative_vals_vars</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Accesses, the raw cumulative histogram of EMD values and their variances, excluding the overflow bins.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li>(<em>numpy.ndarray</em>, <em>numpy.ndarray</em>)<ul>
+<li>A pair of numpy arrays, the first is the cumulative EMD histogram values and the second is the variances of these bins. Each of these will be length<code>nbins</code>.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="c">C++</h2>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../utils/" class="btn btn-neutral float-right" title="Utils">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../emds/" class="btn btn-neutral" title="PairwiseEMD"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/pkomiske/Wasserstein/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../emds/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../utils/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../js/extra.js" defer></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6" defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

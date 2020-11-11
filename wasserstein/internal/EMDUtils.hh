@@ -29,6 +29,8 @@
 #define WASSERSTEIN_EMDUTILS_HH
 
 // C++ standard library
+#include <algorithm>
+#include <array>
 #include <chrono>
 #include <cstddef>
 #include <cstdlib>
@@ -55,7 +57,7 @@ typedef std::vector<double> ValueVector;
 #endif
 
 // enum with possible return statuses from the NetworkSimplex solver
-enum class EMDStatus : char { 
+enum class EMDStatus { 
   Success = 0,
   Empty = 1,
   SupplyMismatch = 2,
@@ -65,7 +67,7 @@ enum class EMDStatus : char {
 };
 
 // enum for which event got an extra particle
-enum class ExtraParticle : char { Neither = -1, Zero = 0, One = 1 };
+enum class ExtraParticle { Neither = -1, Zero = 0, One = 1 };
 
 const double PI = 3.14159265358979323846;
 const double TWOPI = 2*PI;
@@ -97,8 +99,14 @@ inline void check_emd_status(EMDStatus status) {
         throw std::runtime_error("EMDStatus - Infeasible");
         break;
       default:
-        throw std::runtime_error("EMDStatus - NoSuccess");
+        throw std::runtime_error("EMDStatus - Unknown");
     }
+}
+
+// helps with freeing memory
+template<typename T>
+void free_vector(std::vector<T> & vec) {
+  std::vector<T>().swap(vec);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -304,15 +312,22 @@ private:
 template<typename V = double>
 struct EuclideanParticle2D {
   typedef V Value;
+  typedef std::array<Value, 2> Coords;
   typedef EuclideanParticle2D<Value> Self;
 
   static_assert(std::is_floating_point<V>::value, "Template parameter must be floating point.");
 
-  // data storage
-  Value weight, x, y;
+  // constructor from weight, x, y
+  EuclideanParticle2D(Value weight, Value x, Value y) :
+    weight_(weight), xs_({x, y})
+  {}
+
+  Value weight() const { return weight_; }
+  Coords & coords() { return xs_; }
+  const Coords & coords() const { return xs_; }
 
   static Value plain_distance(const Self & p0, const Self & p1) {
-    Value dx(p0.x - p1.x), dy(p0.y - p1.y);
+    Value dx(p0.xs_[0] - p1.xs_[0]), dy(p0.xs_[1] - p1.xs_[1]);
     return dx*dx + dy*dy;
   }
 
@@ -323,20 +338,33 @@ struct EuclideanParticle2D {
   }
   static std::string distance_name() { return "EuclideanDistance2D"; }
 
+private:
+
+  // store particle info
+  Value weight_;
+  Coords xs_;
+
 }; // EuclideanParticle2D
 
 template<typename V = double>
 struct EuclideanParticle3D {
   typedef V Value;
+  typedef std::array<Value, 3> Coords;
   typedef EuclideanParticle3D<Value> Self;
 
   static_assert(std::is_floating_point<V>::value, "Template parameter must be floating point.");
 
-  // data storage
-  Value weight, x, y, z;
-  
+  // constructor from weight, x, y, z
+  EuclideanParticle3D(Value weight, Value x, Value y, Value z) :
+    weight_(weight), xs_({x, y, z})
+  {}
+
+  Value weight() const { return weight_; }
+  Coords & coords() { return xs_; }
+  const Coords & coords() const { return xs_; }
+
   static Value plain_distance(const Self & p0, const Self & p1) {
-    Value dx(p0.x - p1.x), dy(p0.y - p1.y), dz(p0.z - p1.z);
+    Value dx(p0.xs_[0] - p1.xs_[0]), dy(p0.xs_[1] - p1.xs_[1]), dz(p0.xs_[2] - p1.xs_[2]);
     return dx*dx + dy*dy + dz*dz;
   }
 
@@ -347,22 +375,37 @@ struct EuclideanParticle3D {
   }
   static std::string distance_name() { return "EuclideanDistance3D"; }
 
+private:
+
+  // store particle info
+  Value weight_;
+  Coords xs_;
+
 }; // EuclideanParticle3D
 
 template<unsigned N, typename V = double>
 struct EuclideanParticleND {
   typedef V Value;
+  typedef std::array<Value, N> Coords;
   typedef EuclideanParticleND<N, Value> Self;
 
   static_assert(std::is_floating_point<V>::value, "Template parameter must be floating point.");
 
-  // data storage
-  Value weight, xs[N];
-  
+  // constructor from weight, x, y
+  EuclideanParticleND(Value weight, const std::array<Value, N> & xs) :
+    weight_(weight)
+  {
+    std::copy(xs.begin(), xs.end(), xs_.begin());
+  }
+
+  Value weight() const { return weight_; }
+  Coords & coords() { return xs_; }
+  const Coords & coords() const { return xs_; }
+
   static Value plain_distance(const Self & p0, const Self & p1) {
     Value d(0);
     for (unsigned i = 0; i < N; i++) {
-      Value dx(p0.xs[i] - p1.xs[i]);
+      Value dx(p0.xs_[i] - p1.xs_[i]);
       d += dx*dx;
     }
     return d;
@@ -378,6 +421,12 @@ struct EuclideanParticleND {
     oss << "EuclideaDistance" << N << 'D';
     return oss.str();
   }
+
+private:
+
+  // store particle info
+  Value weight_;
+  Coords xs_;
 
 }; // EuclideanParticleND
 
@@ -400,6 +449,41 @@ public:
   virtual Event & operator()(Event & event) const { return event; };
 
 }; // Preprocessor
+
+////////////////////////////////////////////////////////////////////////////////
+// Preprocessor - base class for preprocessing operations
+////////////////////////////////////////////////////////////////////////////////
+
+// center generic event according to weighted centroid
+template<class EMD>
+class CenterWeightedCentroid : public Preprocessor<typename EMD::Self> {
+public:
+  typedef typename EMD::Event Event;
+  typedef typename EMD::ValuePublic Value;
+
+  std::string description() const { return "Center according to weighted centroid"; }
+  Event & operator()(Event & event) const {
+
+    // determine weighted centroid
+    typename Event::Particle::Coords coords;
+    coords.fill(0);
+    for (const auto & particle : event.particles())
+      for (unsigned i = 0; i < coords.size(); i++) 
+        coords[i] += particle.weight() * particle.coords()[i];
+
+    for (unsigned i = 0; i < coords.size(); i++)
+      coords[i] /= event.total_weight();
+
+    // center the particles
+    for (auto & particle : event.particles())
+      for (unsigned i = 0; i < coords.size(); i++) {
+        particle.coords()[i] -= coords[i];
+      }
+
+    return event;
+  }
+
+}; // CenterWeightedCentroid
 
 END_EMD_NAMESPACE
 

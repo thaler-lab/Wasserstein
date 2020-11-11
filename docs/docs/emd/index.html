@@ -14,8 +14,8 @@
 
   <link rel="stylesheet" href="../../css/theme.css" />
   <link rel="stylesheet" href="../../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
   <link href="../../css/eftheme.css" rel="stylesheet" />
+  <link href="../../css/pygmentize_friendly.css" rel="stylesheet" />
   
   <script>
     // Current page data
@@ -25,9 +25,7 @@
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js" defer></script>
-  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script> 
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script> 
   
   <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -82,10 +80,62 @@
                 <p class="caption"><span class="caption-text">Documentation</span></p>
                 <ul class="current">
                     <li class="toctree-l1 current"><a class="reference internal current" href="./">EMD</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#python">Python</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#compute-distance">Compute Distance</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#__call__">__call__</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#access-results">Access Results</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#emd_1">emd</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#dists">dists</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#flows">flows</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#flow">flow</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#status">status</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#n0">n0</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#n1">n1</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#extra">extra</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#weightdiff">weightdiff</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#scale">scale</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#duration">duration</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#getset-options">Get/Set Options</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#other-methods">Other Methods</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#description">description</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#clear">clear</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#c">C++</a>
+    </li>
+    </ul>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../emds/">PairwiseEMD</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../correlationdimension/">CorrelationDimension</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../externalemdhandler/">External EMD Handlers</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../utils/">Utils</a>
                     </li>
                 </ul>
       </div>
@@ -124,7 +174,317 @@
           <div role="main">
             <div class="section">
               
-                <p>Coming soon!</p>
+                <h1 id="emd">EMD</h1>
+<p>The <code>EMD</code> class handles computation of individual Wasserstein distances between pairs of distributions. Adopting language from particle physics, we will call the distributions "events," the discrete entities in the ground space "particles," and the particle weights (probability mass) "energy".</p>
+<p>The optimal transport problem can be specified as:</p>
+<div>
+<div class="MathJax_Preview">\text{EMD}_{\beta,R}(\mathcal E,\mathcal E^\prime)=\min_{\{f_{ij}\ge0\}}\sum_{i=1}^M\sum_{j=1}^{M'}f_{ij}\left(\frac{
+\theta_{ij}}{R}\right)^\beta + \left|\sum_{i=1}^ME_i-\sum_{j=1}^{M'}E^\prime_j
+\right|,</div>
+<script type="math/tex; mode=display">\text{EMD}_{\beta,R}(\mathcal E,\mathcal E^\prime)=\min_{\{f_{ij}\ge0\}}\sum_{i=1}^M\sum_{j=1}^{M'}f_{ij}\left(\frac{
+\theta_{ij}}{R}\right)^\beta + \left|\sum_{i=1}^ME_i-\sum_{j=1}^{M'}E^\prime_j
+\right|,</script>
+</div>
+<div>
+<div class="MathJax_Preview">\sum_{j=1}^{M'}f_{ij}\le E_i, \quad \sum_{i=1}^Mf_{ij}\le E^\prime_j,
+\quad\sum_{i=1}^M\sum_{j=1}^{M'}f_{ij}=E_\text{min}.</div>
+<script type="math/tex; mode=display">\sum_{j=1}^{M'}f_{ij}\le E_i, \quad \sum_{i=1}^Mf_{ij}\le E^\prime_j,
+\quad\sum_{i=1}^M\sum_{j=1}^{M'}f_{ij}=E_\text{min}.</script>
+</div>
+<hr />
+<h2 id="python">Python</h2>
+<p>The Python <code>EMD</code> class wraps the templated C++ class of the same name. It is designed to work with numpy arrays efficiently.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">wasserstein</span><span class="o">.</span><span class="n">EMD</span><span class="p">(</span><span class="n">R</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">do_timing</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">n_iter_max</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span> <span class="n">epsilon_large_factor</span><span class="o">=</span><span class="mf">10000.0</span><span class="p">,</span> <span class="n">epsilon_small_factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>R</strong> : <em>float</em><ul>
+<li>The R parameter in the EMD definition that controls the relative 
+importance of the two terms. Must be greater than or equal to half 
+of the maximum ground distance in the space in order for the EMD 
+to be a valid metric satisfying the triangle inequality.</li>
+</ul>
+</li>
+<li><strong>beta</strong> : <em>float</em><ul>
+<li>The angular weighting exponent. The internal pairwsie distance
+matrix is raised to this power prior to solving the optimal
+transport problem.</li>
+</ul>
+</li>
+<li><strong>norm</strong> : <em>bool</em><ul>
+<li>Whether or not to normalize the particle weights to sum to one
+prior to computing the EMD.</li>
+</ul>
+</li>
+<li><strong>do_timing</strong> : <em>bool</em><ul>
+<li>Whether or not to keep track of the duration of the underlying computation.</li>
+</ul>
+</li>
+<li><strong>n_iter_max</strong> : <em>int</em><ul>
+<li>Maximum number of iterations for solving the optimal transport 
+problem.</li>
+</ul>
+</li>
+<li><strong>epsilon_large_factor</strong> : <em>float</em><ul>
+<li>Controls some tolerances in the optimal transport solver. This
+value is multiplied by the floating points epsilon (around 1e-16 for
+64-bit floats) to determine the actual tolerance.</li>
+</ul>
+</li>
+<li><strong>epsilon_small_factor</strong> : <em>float</em><ul>
+<li>Analogous to <code>epsilon_large_factor</code> but used where the numerical
+tolerance can be stricter.</li>
+</ul>
+</li>
+</ul>
+<h3 id="compute-distance">Compute Distance</h3>
+<h4 id="__call__"><strong><em>_</em>_call</strong>__</h4>
+<div class="codehilite"><pre><span></span><code><span class="fm">__call__</span><span class="p">(</span><span class="n">weights0</span><span class="p">,</span> <span class="n">coords0</span><span class="p">,</span> <span class="n">weights1</span><span class="p">,</span> <span class="n">coords1</span><span class="p">)</span>
+</code></pre></div>
+
+<p>or, if <code>external_dists</code> is <code>True</code>,</p>
+<div class="codehilite"><pre><span></span><code><span class="fm">__call__</span><span class="p">(</span><span class="n">weights0</span><span class="p">,</span> <span class="n">weights1</span><span class="p">,</span> <span class="n">dists</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Compute the Wasserstein distance between two events using the EMD object.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>weights0</strong> : <em>1d numpy.ndarray</em><ul>
+<li>The weight values of the first event.</li>
+</ul>
+</li>
+<li><strong>weights1</strong> : <em>1d numpy.ndarray</em><ul>
+<li>The weight values of the second event.</li>
+</ul>
+</li>
+</ul>
+<p>In the first version, the Euclidean ground distance is used where the particle coordinates are specified as:</p>
+<ul>
+<li><strong>coords0</strong> : <em>2d numpy.ndarray</em><ul>
+<li>The Cartesian coordinates of the particles in the first event. If the ground space dimension is <code>d</code>, then it has shape <code>(M0, d)</code> where <code>M0</code> is the length of <code>weights0</code>.</li>
+</ul>
+</li>
+<li><strong>coords1</strong> : <em>2d numpy.ndarray</em><ul>
+<li>The Cartesian coordinates of the particles in the second event. If the ground space dimension is <code>d</code>, then it has shape <code>(M1, d)</code> where <code>M1</code> is the length of <code>weights1</code>.</li>
+</ul>
+</li>
+</ul>
+<p>In the second version, the ground space distances are provided directly:</p>
+<ul>
+<li><strong>dists</strong> : <em>2d numpy.ndarray</em><ul>
+<li>The ground distances between particles in the first and second events. To use the above notation, it has shape <code>(M0, M1)</code>.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>float</em><ul>
+<li>The Wasserstein distance between event0 and event1. See also <code>emd()</code>.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="access-results">Access Results</h3>
+<p>These methods access quantities determined during the most recent computation.</p>
+<h4 id="emd_1">emd</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">emd</span><span class="p">()</span>
+</code></pre></div>
+
+<p>The Wasserstein distance.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>float</em><ul>
+<li>The cost of transporting <code>event0</code> to <code>event1</code>.</li>
+</ul>
+</li>
+</ul>
+<h4 id="dists">dists</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">dists</span><span class="p">()</span>
+</code></pre></div>
+
+<p>The ground distances between the particles.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>numpy.ndarray</em><ul>
+<li>The ground distance matrix as an array with shape <code>(n0, n1)</code>.</li>
+</ul>
+</li>
+</ul>
+<h4 id="flows">flows</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">flows</span><span class="p">()</span>
+</code></pre></div>
+
+<p>The optimal flow matrix.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>numpy.ndarray</em><ul>
+<li>The flow matrix as an array with shape <code>(n0, n1)</code>.</li>
+</ul>
+</li>
+</ul>
+<h4 id="flow">flow</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">flow</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Access the flow between particle <code>i</code> in <code>event0</code> and <code>j</code> in <code>event1</code>. Note that negative indices are accepted and count from the end, as usual in Python.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>i</strong> : <em>int</em><ul>
+<li>Index of particle in <code>event0</code>. An <code>IndexError</code> is raised if out of range.</li>
+</ul>
+</li>
+<li><strong>j</strong> : <em>int</em><ul>
+<li>Index of particle in <code>event1</code>. An <code>IndexError</code> is raised if out of range.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>float</em><ul>
+<li>The amount of flow between the specified particles.</li>
+</ul>
+</li>
+</ul>
+<h4 id="status">status</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">status</span><span class="p">()</span>
+</code></pre></div>
+
+<p>The status code of the solver. A non-zero value indicates a problem. See the <code>check_emd_status</code> function for interpretting the code.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>int</em><ul>
+<li>Networks simplex status code. Zero indicates success, a non-zero value indicates an error.</li>
+</ul>
+</li>
+</ul>
+<h4 id="n0">n0</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">n0</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Number of entities passed to the network simplex solver for <code>event0</code>.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>int</em><ul>
+<li>The number of particles ultimately used in <code>event0</code>. This may be one greater than the number of given particles in <code>event0</code> if <code>norm=False</code> and <code>event0</code> has less total weight than <code>event1</code>.</li>
+</ul>
+</li>
+</ul>
+<h4 id="n1">n1</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">n1</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Number of entities passed to the network simplex solver for <code>event1</code>.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>int</em><ul>
+<li>The number of particles ultimately used in <code>event1</code>. This may be one greater than the number of given particles in <code>event1</code> if <code>norm=False</code> and <code>event1</code> has less total weight than <code>event0</code>.</li>
+</ul>
+</li>
+</ul>
+<h4 id="extra">extra</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">extra</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Which event, if any, got an extra particle.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>int</em><ul>
+<li>Which event, <code>0</code> or <code>1</code>, got an extra particle, or if neither did, <code>-1</code>.</li>
+</ul>
+</li>
+</ul>
+<h4 id="weightdiff">weightdiff</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">weightdiff</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Total weight in <code>event1</code> minus total weight in <code>event0</code>.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>float</em><ul>
+<li>The internally calculated difference in total weight between <code>event1</code> and <code>event0</code>.</li>
+</ul>
+</li>
+</ul>
+<h4 id="scale">scale</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">scale</span><span class="p">()</span>
+</code></pre></div>
+
+<p>The optimal transport problem is internally rescaled in order to provide more numerically stable computations. The <code>scale</code> is the value that the weights are divided by prior to running the network simplex algorithm.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>float</em><ul>
+<li>The internally utilized scaling factor for the weights.</li>
+</ul>
+</li>
+</ul>
+<h4 id="duration">duration</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">duration</span><span class="p">()</span>
+</code></pre></div>
+
+<p>The duration of the core of the optimal transport calculation via the network simplex algorithm.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>float</em><ul>
+<li>The time, in seconds, of the computation. If <code>do_timing</code> was not <code>True</code> for this computation then this value is not meaningful.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="getset-options">Get/Set Options</h3>
+<p>These methods can be used to get the current settings of the <code>EMD</code> object or to set new ones. The getter methods are:</p>
+<ul>
+<li><code>R()</code> : returns <em>float</em></li>
+<li><code>beta()</code> : returns <em>float</em></li>
+<li><code>norm()</code> : returns <em>bool</em></li>
+<li><code>do_timing</code> : returns <em>bool</em></li>
+</ul>
+<p>The setter methods are:</p>
+<ul>
+<li><code>set_R(new_R)</code> : accepts <em>float</em></li>
+<li><code>set_beta(new_beta)</code> : accepts <em>float</em></li>
+<li><code>set_norm(new_norm)</code> : accepts <em>bool</em></li>
+<li><code>set_do_timing(new_do_timing)</code> : accepts <em>bool</em></li>
+<li><code>set_network_simplex_params(n_iter_max=100000, epsilon_large_factor=10000.0, epsilon_small_factor=1.0)</code><ul>
+<li>This method resets all of the underlying network simplex solver's parameters at once.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="other-methods">Other Methods</h3>
+<h4 id="description">description</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">description</span><span class="p">(</span><span class="n">write_preprocessors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Returns a string that describes the <code>EMD</code> object. Printing the <code>EMD</code> object uses this method to describe the object.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>write_preprocessors</strong> : <em>bool</em><ul>
+<li>Whether or not to include preprocessors in the description. There are currently no preprocessors included in the Wasserstein package but this may change in the future.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>string</em><ul>
+<li>The description of the <code>EMD</code> object.</li>
+</ul>
+</li>
+</ul>
+<h4 id="clear">clear</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">clear</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Frees some memory in use by the <code>EMD</code> object. This should not normally need to be called by the user.</p>
+<hr />
+<h2 id="c">C++</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">emd</span><span class="o">::</span><span class="n">EMD</span><span class="p">(</span><span class="n">Value</span> <span class="n">R</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Value</span> <span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">norm</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
+      <span class="kt">bool</span> <span class="n">do_timing</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">external_dists</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
+      <span class="kt">unsigned</span> <span class="n">n_iter_max</span> <span class="o">=</span> <span class="mi">100000</span><span class="p">,</span>
+      <span class="n">Value</span> <span class="n">epsilon_large_factor</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
+      <span class="n">Value</span> <span class="n">epsilon_small_factor</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
               
             </div>
           </div>
@@ -172,8 +532,9 @@
 </div>
     <script>var base_url = '../..';</script>
     <script src="../../js/theme.js" defer></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
-      <script src="../../js/eftheme.js" defer></script>
+      <script src="../../js/extra.js" defer></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6" defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" defer></script>
       <script src="../../search/main.js" defer></script>
     <script defer>
         window.onload = function () {

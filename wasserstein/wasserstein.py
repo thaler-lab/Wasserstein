@@ -321,11 +321,13 @@ class Histogram1DHandler(ExternalEMDHandler):
         """
         _wasserstein.Histogram1DHandler_swiginit(self, _wasserstein.new_Histogram1DHandler(*args))
     __swig_destroy__ = _wasserstein.delete_Histogram1DHandler
+    axis_min = _swig_new_instance_method(_wasserstein.Histogram1DHandler_axis_min)
+    axis_max = _swig_new_instance_method(_wasserstein.Histogram1DHandler_axis_max)
     nbins = _swig_new_instance_method(_wasserstein.Histogram1DHandler_nbins)
     description = _swig_new_instance_method(_wasserstein.Histogram1DHandler_description)
+    hist_vals_errs_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandler_hist_vals_errs_vec)
     bin_centers_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandler_bin_centers_vec)
     bin_edges_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandler_bin_edges_vec)
-    hist_vals_errs_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandler_hist_vals_errs_vec)
     __str__ = _swig_new_instance_method(_wasserstein.Histogram1DHandler___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.Histogram1DHandler___repr__)
     bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandler_bin_centers)
@@ -347,11 +349,13 @@ class Histogram1DHandlerLog(ExternalEMDHandler):
         """
         _wasserstein.Histogram1DHandlerLog_swiginit(self, _wasserstein.new_Histogram1DHandlerLog(*args))
     __swig_destroy__ = _wasserstein.delete_Histogram1DHandlerLog
+    axis_min = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_axis_min)
+    axis_max = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_axis_max)
     nbins = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_nbins)
     description = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_description)
+    hist_vals_errs_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_hist_vals_errs_vec)
     bin_centers_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_bin_centers_vec)
     bin_edges_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_bin_edges_vec)
-    hist_vals_errs_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_hist_vals_errs_vec)
     __str__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog___repr__)
     bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_bin_centers)
@@ -373,9 +377,9 @@ class CorrelationDimension(Histogram1DHandlerLog):
         """
         _wasserstein.CorrelationDimension_swiginit(self, _wasserstein.new_CorrelationDimension(*args))
     __swig_destroy__ = _wasserstein.delete_CorrelationDimension
-    cumulative_vals_vars_vec = _swig_new_instance_method(_wasserstein.CorrelationDimension_cumulative_vals_vars_vec)
     corrdims_vec = _swig_new_instance_method(_wasserstein.CorrelationDimension_corrdims_vec)
     corrdim_bins_vec = _swig_new_instance_method(_wasserstein.CorrelationDimension_corrdim_bins_vec)
+    cumulative_vals_vars_vec = _swig_new_instance_method(_wasserstein.CorrelationDimension_cumulative_vals_vars_vec)
     __str__ = _swig_new_instance_method(_wasserstein.CorrelationDimension___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.CorrelationDimension___repr__)
     corrdim_bins = _swig_new_instance_method(_wasserstein.CorrelationDimension_corrdim_bins)
@@ -397,16 +401,16 @@ class EMD(EMDBaseDouble):
         r"""__init__(EMD self, emd::Value R=1, emd::Value beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=1) -> EMD"""
         _wasserstein.EMD_swiginit(self, _wasserstein.new_EMD(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
     __swig_destroy__ = _wasserstein.delete_EMD
-    description = _swig_new_instance_method(_wasserstein.EMD_description)
     R = _swig_new_instance_method(_wasserstein.EMD_R)
     beta = _swig_new_instance_method(_wasserstein.EMD_beta)
     set_R = _swig_new_instance_method(_wasserstein.EMD_set_R)
     set_beta = _swig_new_instance_method(_wasserstein.EMD_set_beta)
     set_network_simplex_params = _swig_new_instance_method(_wasserstein.EMD_set_network_simplex_params)
+    description = _swig_new_instance_method(_wasserstein.EMD_description)
     clear = _swig_new_instance_method(_wasserstein.EMD_clear)
     dists_vec = _swig_new_instance_method(_wasserstein.EMD_dists_vec)
-    flow = _swig_new_instance_method(_wasserstein.EMD_flow)
     flows_vec = _swig_new_instance_method(_wasserstein.EMD_flows_vec)
+    flow = _swig_new_instance_method(_wasserstein.EMD_flow)
     __str__ = _swig_new_instance_method(_wasserstein.EMD___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.EMD___repr__)
     flows = _swig_new_instance_method(_wasserstein.EMD_flows)
@@ -428,8 +432,22 @@ class PairwiseEMD(object):
         r"""__init__(PairwiseEMD self, emd::Value R=1, emd::Value beta=1, bool norm=False, int num_threads=-1, long long print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMD"""
         _wasserstein.PairwiseEMD_swiginit(self, _wasserstein.new_PairwiseEMD(*args, **kwargs))
     __swig_destroy__ = _wasserstein.delete_PairwiseEMD
+    R = _swig_new_instance_method(_wasserstein.PairwiseEMD_R)
+    set_R = _swig_new_instance_method(_wasserstein.PairwiseEMD_set_R)
+    beta = _swig_new_instance_method(_wasserstein.PairwiseEMD_beta)
+    set_beta = _swig_new_instance_method(_wasserstein.PairwiseEMD_set_beta)
+    norm = _swig_new_instance_method(_wasserstein.PairwiseEMD_norm)
+    set_norm = _swig_new_instance_method(_wasserstein.PairwiseEMD_set_norm)
+    set_network_simplex_params = _swig_new_instance_method(_wasserstein.PairwiseEMD_set_network_simplex_params)
     description = _swig_new_instance_method(_wasserstein.PairwiseEMD_description)
+
+    def clear(self):
+        _wasserstein.PairwiseEMD_clear(self)
+        self.event_arrs = []
+
+
     set_omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMD_set_omp_dynamic_chunksize)
+    omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMD_omp_dynamic_chunksize)
 
     def set_external_emd_handler(self, handler):
         if not handler.thisown:
@@ -439,23 +457,15 @@ class PairwiseEMD(object):
         self.external_emd_handler = handler
 
 
-    duration = _swig_new_instance_method(_wasserstein.PairwiseEMD_duration)
-    R = _swig_new_instance_method(_wasserstein.PairwiseEMD_R)
-    beta = _swig_new_instance_method(_wasserstein.PairwiseEMD_beta)
-
-    def clear(self):
-        _wasserstein.PairwiseEMD_clear(self)
-        self.event_arrs = []
-
-
-    emd = _swig_new_instance_method(_wasserstein.PairwiseEMD_emd)
+    external_emds = _swig_new_instance_method(_wasserstein.PairwiseEMD_external_emds)
     emds_vec = _swig_new_instance_method(_wasserstein.PairwiseEMD_emds_vec)
+    emd = _swig_new_instance_method(_wasserstein.PairwiseEMD_emd)
     errored = _swig_new_instance_method(_wasserstein.PairwiseEMD_errored)
     error_messages = _swig_new_instance_method(_wasserstein.PairwiseEMD_error_messages)
-    report_errors = _swig_new_instance_method(_wasserstein.PairwiseEMD_report_errors)
     num_emds = _swig_new_instance_method(_wasserstein.PairwiseEMD_num_emds)
     nevA = _swig_new_instance_method(_wasserstein.PairwiseEMD_nevA)
     nevB = _swig_new_instance_method(_wasserstein.PairwiseEMD_nevB)
+    duration = _swig_new_instance_method(_wasserstein.PairwiseEMD_duration)
     preprocess_back_event = _swig_new_instance_method(_wasserstein.PairwiseEMD_preprocess_back_event)
     init = _swig_new_instance_method(_wasserstein.PairwiseEMD_init)
     compute = _swig_new_instance_method(_wasserstein.PairwiseEMD_compute)
@@ -475,19 +485,19 @@ class PairwiseEMD(object):
     _add_event = _swig_new_instance_method(_wasserstein.PairwiseEMD__add_event)
 
 
-    def __call__(self, events0, events1=None, gdim=None, mask=False):
+    def __call__(self, eventsA, eventsB=None, gdim=None, mask=False):
 
-        if events1 is None:
-            self.init(len(events0))
-            events1 = []
+        if eventsB is None:
+            self.init(len(eventsA))
+            eventsB = []
         else:
-            self.init(len(events0), len(events1))
+            self.init(len(eventsA), len(eventsB))
 
         if mask:
             R2 = self.R()*self.R()
 
         self.event_arrs = []
-        for event in itertools.chain(events0, events1):
+        for event in itertools.chain(eventsA, eventsB):
 
     # ensure event is 2d
             event = np.atleast_2d(event)

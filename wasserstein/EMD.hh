@@ -29,7 +29,6 @@
 #define WASSERSTEIN_EMD_HH
 
 // C++ standard library
-#include <algorithm>
 #include <iomanip>
 #include <iostream>
 #include <memory>
@@ -67,6 +66,12 @@ public:
   typedef typename std::conditional<std::is_base_of<FastJetParticleWeight, E>::value, FastJetEvent<E>, E>::type Event;
   #else
   typedef E Event;
+  #endif
+
+  // use Value from base class if not in swig
+  #ifndef SWIG
+  using Value = typename EMDBase<typename NetworkSimplex::Value>::Value;
+  using ValueVector = typename EMDBase<typename NetworkSimplex::Value>::ValueVector;
   #endif
 
   typedef PD PairwiseDistance;
@@ -109,25 +114,38 @@ public:
       Value epsilon_small_factor = 1) :
 
     // base class initialization
-    EMDBase(norm, do_timing, external_dists),
+    EMDBase<Value>(norm, do_timing, external_dists),
 
     // initialize contained objects
     pairwise_distance_(R, beta),
     network_simplex_(n_iter_max, epsilon_large_factor, epsilon_small_factor)
   {
     // setup units correctly (only relevant here if norm = true)
-    scale_ = 1;
+    this->scale_ = 1;
   }
 
   // virtual destructor
   virtual ~EMD() {}
+
+  // access/set R and beta parameters
+  Value R() const { return pairwise_distance_.R(); }
+  Value beta() const { return pairwise_distance_.beta(); }
+  void set_R(Value r) { pairwise_distance_.set_R(r); }
+  void set_beta(Value beta) { pairwise_distance_.set_beta(beta); }
+
+  // set network simplex parameters
+  void set_network_simplex_params(unsigned n_iter_max=100000,
+                                  Value epsilon_large_factor=10000,
+                                  Value epsilon_small_factor=1) {
+    network_simplex_.set_params(n_iter_max, epsilon_large_factor, epsilon_small_factor);
+  }
 
   // return a description of this object
   std::string description(bool write_preprocessors = true) const {
     std::ostringstream oss;
     oss << "EMD" << '\n'
         << "  " << Event::name() << '\n'
-        << "    norm - " << (norm_ ? "true" : "false") << '\n'
+        << "    norm - " << (this->norm() ? "true" : "false") << '\n'
         << '\n'
         << pairwise_distance_.description()
         << network_simplex_.description();
@@ -149,17 +167,6 @@ public:
   const NetworkSimplex & network_simplex() const { return network_simplex_; }
   const PairwiseDistance & pairwise_distance() const { return pairwise_distance_; }
 
-  // access/set R and beta parameters
-  Value R() const { return pairwise_distance_.R(); }
-  Value beta() const { return pairwise_distance_.beta(); }
-  void set_R(Value r) { pairwise_distance_.set_R(r); }
-  void set_beta(Value beta) { pairwise_distance_.set_beta(beta); }
-
-  // set network simplex parameters
-  void set_network_simplex_params(unsigned n_iter_max=100000, Value epsilon_large_factor=10000, Value epsilon_small_factor=1) {
-    network_simplex_.set_params(n_iter_max, epsilon_large_factor, epsilon_small_factor);
-  }
-
   // free all dynamic memory help by this object
   void clear() {
     preprocessors_.clear();
@@ -172,7 +179,7 @@ public:
   Value operator()(const ProtoEvent0 & pev0, const ProtoEvent1 & pev1) {
     Event ev0(pev0), ev1(pev1);
     check_emd_status(compute(preprocess(ev0), preprocess(ev1)));
-    return emd_;
+    return this->emd();
   }
 
   // runs the computation on two events without any preprocessing
@@ -188,80 +195,72 @@ public:
     const WeightCollection & ws0(ev0.weights()), & ws1(ev1.weights());
 
     // check for timing request
-    if (do_timing_) start_timing();
+    if (this->do_timing()) this->start_timing();
 
     // grab number of particles
-    n0_ = ws0.size();
-    n1_ = ws1.size();
+    this->n0_ = ws0.size();
+    this->n1_ = ws1.size();
 
     // handle adding fictitious particle
-    weightdiff_ = ev1.total_weight() - ev0.total_weight();
+    this->weightdiff_ = ev1.total_weight() - ev0.total_weight();
 
     // for norm or already equal or custom distance, don't add particle
-    if (norm_ || external_dists() || weightdiff_ == 0) {
-      extra_ = ExtraParticle::Neither;
-      weights().resize(n0() + n1() + 1); // + 1 is to match what network simplex will do anyway
+    if (this->norm() || this->external_dists() || this->weightdiff() == 0) {
+      this->extra_ = ExtraParticle::Neither;
+      weights().resize(this->n0() + this->n1() + 1); // + 1 is to match what network simplex will do anyway
       std::copy(ws1.begin(), ws1.end(), std::copy(ws0.begin(), ws0.end(), weights().begin()));
     }
 
     // total weights unequal, add extra particle to event0 as it has less total weight
-    else if (weightdiff_ > 0) {
-      extra_ = ExtraParticle::Zero;
-      n0_++;
-      weights().resize(n0() + n1() + 1); // +1 is to match what network simplex will do anyway
+    else if (this->weightdiff() > 0) {
+      this->extra_ = ExtraParticle::Zero;
+      this->n0_++;
+      weights().resize(this->n0() + this->n1() + 1); // +1 is to match what network simplex will do anyway
 
       // put weight diff after ws0
       auto it(std::copy(ws0.begin(), ws0.end(), weights().begin()));
-      *it = weightdiff_;
+      *it = this->weightdiff();
       std::copy(ws1.begin(), ws1.end(), ++it);
     }
 
     // total weights unequal, add extra particle to event1 as it has less total weight
     else {
-      extra_ = ExtraParticle::One;
-      n1_++;
-      weights().resize(n0() + n1() + 1); // +1 is to match what network simplex will do anyway
-      *std::copy(ws1.begin(), ws1.end(), std::copy(ws0.begin(), ws0.end(), weights().begin())) = -weightdiff_;
+      this->extra_ = ExtraParticle::One;
+      this->n1_++;
+      weights().resize(this->n0() + this->n1() + 1); // +1 is to match what network simplex will do anyway
+      *std::copy(ws1.begin(), ws1.end(), std::copy(ws0.begin(), ws0.end(), weights().begin())) = -this->weightdiff();
     }
 
     // if not norm, prepare to scale each weight by the max total
-    if (!norm_) {
-      scale_ = std::max(ev0.total_weight(), ev1.total_weight());
-      for (Value & w : weights()) w /= scale_;
+    if (!this->norm()) {
+      this->scale_ = std::max(ev0.total_weight(), ev1.total_weight());
+      for (Value & w : weights()) w /= this->scale();
     }
 
     // store distances in network simplex if not externally provided
-    if (!external_dists())
-      pairwise_distance_.fill_distances(ev0.particles(), ev1.particles(), dists(), extra());
+    if (!this->external_dists())
+      pairwise_distance_.fill_distances(ev0.particles(), ev1.particles(), dists(), this->extra());
 
     // run the EarthMoversDistance at this point
-    status_ = network_simplex_.compute(n0(), n1());
-    emd_ = network_simplex_.total_cost();
+    this->status_ = network_simplex_.compute(this->n0(), this->n1());
+    this->emd_ = network_simplex_.total_cost();
 
     // account for weight scale if not normed
-    if (status_ == EMDStatus::Success && !norm_)
-      emd_ *= scale_;
+    if (this->status() == EMDStatus::Success && !this->norm())
+      this->emd_ *= this->scale();
 
     // end timing and get duration
-    if (do_timing_)
-      store_duration();
+    if (this->do_timing())
+      this->store_duration();
 
     // return status
-    return status_;
+    return this->status();
   }
 
   // access dists
   ValueVector dists() const {
     return ValueVector(network_simplex_.dists().begin(),
-                       network_simplex_.dists().begin() + n0_*n1_);
-  }
-
-  // emd flow values between particle i in event0 and particle j in event1
-  Value flow(std::size_t i, std::size_t j) const {
-    if (i >= n0_ || j >= n1_)
-      throw std::out_of_range("EMD::flow - Indices out of range");
-
-    return network_simplex_.flows()[i*n1_ + j] * scale_;
+                       network_simplex_.dists().begin() + this->n0()*this->n1());
   }
 
   // returns all flows 
@@ -269,12 +268,26 @@ public:
 
     // copy flows in the valid range
     ValueVector unscaled_flows(network_simplex_.flows().begin(), 
-                               network_simplex_.flows().begin() + n0_*n1_);
+                               network_simplex_.flows().begin() + this->n0()*this->n1());
     // unscale all values
     for (Value & f: unscaled_flows)
-      f *= scale_;
+      f *= this->scale();
 
     return unscaled_flows;
+  }
+
+  // emd flow values between particle i in event0 and particle j in event1
+  Value flow(long long i, long long j) const {
+
+    // allow for negative indices
+    if (i < 0) i += this->n0();
+    if (j < 0) j += this->n1();
+
+    // check for improper indexing
+    if (size_t(i) >= this->n0() || size_t(j) >= this->n1() || i < 0 || j < 0)
+      throw std::out_of_range("EMD::flow - Indices out of range");
+
+    return network_simplex_.flows()[i*this->n1() + j] * this->scale();
   }
 
 #ifdef SWIG_WASSERSTEIN
@@ -303,7 +316,7 @@ private:
     event.ensure_weights();
 
     // perform normalization
-    if (norm_)
+    if (this->norm())
       event.normalize_weights();
 
     return event;
@@ -372,7 +385,7 @@ private:
   std::vector<std::string> error_messages_;
 
   // info about stored events
-  std::size_t nevA_, nevB_, emd_counter_, num_emds_, num_emds_width_;
+  size_t nevA_, nevB_, emd_counter_, num_emds_, num_emds_width_;
   EMDPairsStorage emd_storage_;
   bool two_event_sets_;
 
@@ -421,8 +434,42 @@ public:
   // virtual destructor
   virtual ~PairwiseEMD() {}
 
+  // add preprocessor to internal list
+  template<template<class> class P, typename... Args>
+  PairwiseEMD & preprocess(Args && ... args) {
+    for (EMD & emd_obj : emd_objs_)
+      emd_obj.template preprocess<P>(std::forward<Args>(args)...);
+    return *this;
+  }
+
+  // get/set R
+  Value R() const { return emd_objs_[0].R(); }
+  void set_R(Value R) {
+    for (EMD & emd_obj : emd_objs_) emd_obj.set_R(R);
+  }
+
+  // get/set beta
+  Value beta() const { return emd_objs_[0].beta(); }
+  void set_beta(Value beta) {
+    for (EMD & emd_obj : emd_objs_) emd_obj.set_beta(beta);
+  }
+
+  // get/set norm
+  bool norm() const { return emd_objs_[0].norm(); }
+  void set_norm(bool norm) {
+    for (EMD & emd_obj : emd_objs_) emd_obj.set_norm(norm);
+  }
+
+  // set network simplex parameters
+  void set_network_simplex_params(unsigned n_iter_max=100000,
+                                  Value epsilon_large_factor=10000,
+                                  Value epsilon_small_factor=1) {
+    for (EMD & emd_obj : emd_objs_)
+      emd_obj.set_network_simplex_params(n_iter_max, epsilon_large_factor, epsilon_small_factor);
+  }
+
   // return a description of this object as a string
-  std::string description() const {
+  std::string description(bool write_preprocessors = true) const {
     std::ostringstream oss;
     oss << "Pairwise" << emd_objs_[0].description(false) << '\n'
         << "  num_threads - " << num_threads_ << '\n'
@@ -439,37 +486,11 @@ public:
         << '\n'
         << (handler_ ? handler_->description() : "  Pairwise EMD distance matrix stored internally\n");
         
-    emd_objs_[0].output_preprocessors(oss);
+    if (write_preprocessors)
+      emd_objs_[0].output_preprocessors(oss);
 
     return oss.str();
   }
-
-  // add preprocessor to internal list
-  template<template<class> class P, typename... Args>
-  PairwiseEMD & preprocess(Args && ... args) {
-    for (EMD & emd_obj : emd_objs_)
-      emd_obj.template preprocess<P>(std::forward<Args>(args)...);
-    return *this;
-  }
-
-  // externally set the number of EMD evaluations that will be spooled to each OpenMP thread at a time
-  void set_omp_dynamic_chunksize(int chunksize) {
-    omp_dynamic_chunksize_ = std::abs(chunksize);
-  }
-
-  // set a handler to process EMDs on the fly instead of storing them
-  void set_external_emd_handler(ExternalEMDHandler & handler) {
-    handler_ = &handler;
-  }
-
-  // access timing information
-  double duration() const {
-    return emd_objs_[0].duration();
-  }
-
-  // access R and beta parameters
-  Value R() const { return emd_objs_[0].R(); }
-  Value beta() const { return emd_objs_[0].beta(); }
 
   // clears internal storage
   void clear(bool free_memory = true) {
@@ -483,17 +504,31 @@ public:
     nevA_ = nevB_ = emd_counter_ = num_emds_ = 0;
     omp_dynamic_chunksize_ = 10;
 
+    // start clock for overall timing
+    emd_objs_[0].start_timing();
+
     if (free_memory) {
-      delete handler_;
       handler_ = nullptr;
-      EventVector().swap(events_);
-      ValueVector().swap(emds_);
-      ValueVector().swap(full_emds_);
-      std::vector<std::string>().swap(error_messages_);
+      //EventVector().swap(events_);
+      //ValueVector().swap(emds_);
+      //ValueVector().swap(full_emds_);
+      //std::vector<std::string>().swap(error_messages_);
+      free_vector(events_);
+      free_vector(emds_);
+      free_vector(full_emds_);
+      free_vector(error_messages_);
       for (EMD & emd_obj : emd_objs_)
         emd_obj.clear();
     }
   }
+
+  // externally set the number of EMD evaluations that will be spooled to each OpenMP thread at a time
+  void set_omp_dynamic_chunksize(int chunksize) { omp_dynamic_chunksize_ = std::abs(chunksize); }
+  int omp_dynamic_chunksize() const { return omp_dynamic_chunksize_; }
+
+  // set a handler to process EMDs on the fly instead of storing them
+  void set_external_emd_handler(ExternalEMDHandler & handler) { handler_ = &handler; }
+  bool external_emds() const { return handler_ != nullptr; }
 
   // compute EMDs between all pairs of proto events, including preprocessing
   template<class ProtoEvent>
@@ -529,32 +564,11 @@ public:
     compute();
   }
 
-  // access a specific emd
-  Value emd(std::ptrdiff_t i, std::ptrdiff_t j) const {
-
-    // check for External handling, in which case we don't have any emds stored
-    if (emd_storage_ == External)
-      throw std::logic_error("EMD requested but external handler provided, so no EMDs stored");
-
-    // allow for negative indices
-    if (i < 0) i += nevA_;
-    if (j < 0) j += nevB_;
-
-    // check for improper indexing
-    if (std::size_t(i) >= nevA_ || std::size_t(j) >= nevB_) {
-      std::ostringstream message("PairwiseEMD::emd - Accessing emd value at (", std::ios_base::ate);
-      message << i << ", " << j << ") exceeds allowed range";
-      throw std::out_of_range(message.str());
-    }
-
-    // index into emd vector
-    if (emd_storage_ == FlattenedSymmetric)
-      return (i == j ? 0 : emds_[i > j ? index_symmetric(i, j) : index_symmetric(j, i)]);
-    else return emds_[i*nevB_ + j];
-  }
-
   // access all emds as a matrix flattened into a vector
-  const ValueVector & emds() {
+  const ValueVector & emds(bool raw = false) {
+
+    // return raw emds if requested
+    if (raw) return emds_;
 
     // check for having no emds stored
     if (emd_storage_ == External)
@@ -567,12 +581,12 @@ public:
       full_emds_.resize(nevA_*nevB_);
 
       // zeros on the diagonal
-      for (std::size_t i = 0; i < nevA_; i++)
+      for (size_t i = 0; i < nevA_; i++)
         full_emds_[i*i] = 0;
 
       // fill out matrix
-      for (std::size_t i = 0; i < nevA_; i++)
-        for (std::size_t j = 0; j < i; j++)
+      for (size_t i = 0; i < nevA_; i++)
+        for (size_t j = 0; j < i; j++)
           full_emds_[i*nevB_ + j] = full_emds_[j*nevB_ + i] = emds_[index_symmetric(i, j)];
 
       return full_emds_;
@@ -582,22 +596,49 @@ public:
     else return emds_;
   }
 
+  // access a specific emd
+  Value emd(long long i, long long j) const {
+
+    // check for External handling, in which case we don't have any emds stored
+    if (emd_storage_ == External)
+      throw std::logic_error("EMD requested but external handler provided, so no EMDs stored");
+
+    // allow for negative indices
+    if (i < 0) i += nevA_;
+    if (j < 0) j += nevB_;
+
+    // check for improper indexing
+    if (size_t(i) >= nevA_ || size_t(j) >= nevB_ || i < 0 || j < 0) {
+      std::ostringstream message("PairwiseEMD::emd - Accessing emd value at (", std::ios_base::ate);
+      message << i << ", " << j << ") exceeds allowed range";
+      throw std::out_of_range(message.str());
+    }
+
+    // index into emd vector
+    if (emd_storage_ == FlattenedSymmetric)
+      return (i == j ? 0 : emds_[i > j ? index_symmetric(i, j) : index_symmetric(j, i)]);
+    else return emds_[i*nevB_ + j];
+  }
+
   // error reporting
   bool errored() const { return error_messages_.size() > 0; }
   const std::vector<std::string> & error_messages() const { return error_messages_; }
-  void report_errors(std::ostream & os = std::cerr) const {
-    for (const std::string & err : error_messages_)
+  /*void report_errors(std::ostream & os = std::cerr) const {
+    for (const std::string & err : error_messages())
       os << err << '\n';
     os << std::flush;
-  }
+  }*/
 
   // number of unique emds computed
-  std::size_t num_emds() const { return num_emds_; }
+  size_t num_emds() const { return num_emds_; }
 
   // access events
-  std::size_t nevA() const { return nevA_; }
-  std::size_t nevB() const { return nevB_; }
+  size_t nevA() const { return nevA_; }
+  size_t nevB() const { return nevB_; }
   const EventVector & events() const { return events_; }
+
+  // access timing information
+  double duration() const { return emd_objs_[0].duration(); }
 
 // wasserstein needs access to these functions in order to use CustomArrayDistance
 #ifndef SWIG_WASSERSTEIN
@@ -613,7 +654,7 @@ private:
   }
 
   // init self pairs
-  void init(std::size_t nev) {
+  void init(size_t nev) {
 
     clear(false);
     nevA_ = nevB_ = nev;
@@ -624,7 +665,7 @@ private:
 
     // resize emds
     num_emds_ = nevA_*(nevA_ - 1)/2;
-    if (handler_ == nullptr) {
+    if (!external_emds()) {
       emd_storage_ = (store_sym_emds_flattened_ ? FlattenedSymmetric : FullSymmetric);
       emds_.resize(emd_storage_ == FullSymmetric ? nevA_*nevB_ : num_emds_);
     }
@@ -634,7 +675,7 @@ private:
   }
 
   // init pairs
-  void init(std::size_t nevA, std::size_t nevB) {
+  void init(size_t nevA, size_t nevB) {
 
     clear(false);
     nevA_ = nevA;
@@ -646,7 +687,7 @@ private:
 
     // resize emds
     num_emds_ = nevA_*nevB_;
-    if (handler_ == nullptr) {
+    if (!external_emds()) {
       emd_storage_ = Full;
       emds_.resize(num_emds_);  
     }
@@ -679,9 +720,9 @@ private:
 
     // iterate over emd pairs
     std::mutex failure_mutex;
-    std::size_t begin(0);
-    while (emd_counter_ < num_emds_ && !(throw_on_error_ && error_messages_.size())) {
-      emd_counter_ += std::size_t(print_every);
+    size_t begin(0);
+    while (emd_counter_ < num_emds_ && !(throw_on_error_ && error_messages().size())) {
+      emd_counter_ += size_t(print_every);
       if (emd_counter_ > num_emds_) emd_counter_ = num_emds_;
 
       #pragma omp parallel num_threads(num_threads_) default(shared)
@@ -699,7 +740,7 @@ private:
         #pragma omp for schedule(dynamic, omp_for_dynamic_chunksize)
         for (long long k = begin; k < (long long) emd_counter_; k++) {
 
-          std::size_t i(k/nevB_), j(k%nevB_);
+          size_t i(k/nevB_), j(k%nevB_);
           if (two_event_sets_) {
 
             // run and check for failure
@@ -752,7 +793,9 @@ private:
   // determine the number of threads to use
   int determine_num_threads(int num_threads) {
     #ifdef _OPENMP
-      return num_threads == -1 ? omp_get_max_threads() : num_threads;
+      if (num_threads == -1 || num_threads > omp_get_max_threads())
+        return omp_get_max_threads();
+      return num_threads;
     #else
       return 1;
     #endif
@@ -772,9 +815,8 @@ private:
     handler_ = nullptr;
 
     // print_every of 0 is equivalent to -1
-    if (print_every_ == 0) {
+    if (print_every_ == 0)
       print_every_ = -1;
-    }
 
     // setup stringstream for printing
     oss_ = std::ostringstream(std::ios_base::ate);
@@ -796,16 +838,24 @@ private:
     }
   }
 
-  void record_failure(EMDStatus status, std::size_t i, std::size_t j) {
+  void record_failure(EMDStatus status, size_t i, size_t j) {
     std::ostringstream message;
     message << "PairwiseEMD::compute - Issue with EMD between events ("
             << i << ", " << j << "), error code " << int(status);
     error_messages_.push_back(message.str());
-    std::cerr << error_messages_.back() << '\n';
+
+    // acquire Python GIL if in SWIG in order to print message
+    #ifdef SWIG
+      SWIG_PYTHON_THREAD_BEGIN_BLOCK;
+        std::cerr << error_messages().back() << '\n';
+      SWIG_PYTHON_THREAD_END_BLOCK;
+    #else
+      std::cerr << error_messages().back() << '\n';
+    #endif
   }
 
   // indexes lower triangle of symmetric matrix with zeros on diagonal that has been flattened into 1D
-  static std::size_t index_symmetric(std::size_t i, std::size_t j) {
+  static size_t index_symmetric(size_t i, size_t j) {
     return i*(i - 1)/2 + j;
   }
 

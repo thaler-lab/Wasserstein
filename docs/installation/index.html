@@ -14,8 +14,8 @@
 
   <link rel="stylesheet" href="../css/theme.css" />
   <link rel="stylesheet" href="../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
   <link href="../css/eftheme.css" rel="stylesheet" />
+  <link href="../css/pygmentize_friendly.css" rel="stylesheet" />
   
   <script>
     // Current page data
@@ -25,9 +25,7 @@
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
-  <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script> 
+  <script src="../js/modernizr-2.8.3.min.js" defer></script> 
   
   <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -97,7 +95,9 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../docs/emds/">PairwiseEMD</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../docs/correlationdimension/">CorrelationDimension</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../docs/externalemdhandler/">External EMD Handlers</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../docs/utils/">Utils</a>
                     </li>
                 </ul>
       </div>
@@ -141,19 +141,19 @@
 <h2 id="python">Python</h2>
 <h3 id="install-via-pip">Install via <code>pip</code></h3>
 <p>Precompiled Python wheels are available for Linux, maxOS, and Windows via PyPI. The only strict dependency is NumPy, though Wurlitzer is also installed in order to redirect standard output into Jupyter notebooks in the demos. Simply run the following in a terminal to install Wasserstein:</p>
-<pre><code class="python">pip3 install wasserstein
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">pip3</span> <span class="n">install</span> <span class="n">wasserstein</span>
+</code></pre></div>
 
 <h3 id="install-from-python-source">Install from Python source</h3>
 <p>The only reason to bother with the source code when using Wasserstein in Python is if one wants to develop some feature in the package. The Wasserstein source code can be obtained from <a href="https://github.com/pkomiske/Wasserstein">GitHub</a>. Running <code>python3 setup.py swig</code> (which requires the <code>swig</code> binary to be available on the path) will regenerate the Python wrapper code. Running <code>python3 setup.py build_ext --inplace</code> will compile the library, and <code>pip3 install -e .</code> will install a development version pointing to the current directory.</p>
 <h2 id="c">C++</h2>
 <p>The Wasserstein source code can be obtained from <a href="https://github.com/pkomiske/Wasserstein">GitHub</a>. Since the library is header-only, no compilation is required to install it. The provided <code>install_wasserstein.sh</code> script can be used (on a UNIX-like system, at least) to move the requisite header files to an appropriate location such as <code>/usr/local/include</code>. If your system does not have the <a href="https://www.boost.org/">Boost libraries</a> (version 1.70.0 or newer is required to access the histogram package) available, set the second argument to <code>true</code> in order to use the provided <a href="https://www.boost.org/doc/libs/1_74_0/libs/histogram/doc/html/index.html">Boost Histogram</a> header files.</p>
 <p>Try the following in order to move the Wasserstein header files to an installed location, in this case <code>/usr/local/include</code>:</p>
-<pre><code class="shell">git clone https://github.com/pkomiske/Wasserstein
-cd Wasserstein
+<div class="codehilite"><pre><span></span><code>git clone https://github.com/pkomiske/Wasserstein
+<span class="nb">cd</span> Wasserstein
 chmod +x install_wasserstein.sh
-./install_wasserstein /usr/local false
-</code></pre>
+./install_wasserstein /usr/local <span class="nb">false</span>
+</code></pre></div>
               
             </div>
           </div>
@@ -201,8 +201,9 @@ chmod +x install_wasserstein.sh
 </div>
     <script>var base_url = '..';</script>
     <script src="../js/theme.js" defer></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
-      <script src="../js/eftheme.js" defer></script>
+      <script src="../js/extra.js" defer></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6" defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" defer></script>
       <script src="../search/main.js" defer></script>
     <script defer>
         window.onload = function () {

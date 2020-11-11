@@ -138,19 +138,21 @@ struct ArrayEvent : public EventBase<ArrayParticleCollection<V>, ArrayWeightColl
 
 template<class P>
 struct GenericEvent : public EventBase<std::vector<P>, std::vector<typename P::Value>> {
-  typedef std::vector<P> ParticleCollection;
-  typedef std::vector<typename P::Value> WeightCollection;
+  typedef P Particle;
+  typedef std::vector<Particle> ParticleCollection;
+  typedef std::vector<typename Particle::Value> WeightCollection;
 
   GenericEvent() {}
   GenericEvent(const ParticleCollection & particles) :
     EventBase<ParticleCollection, WeightCollection>(particles)
   {
-    // weights are assumed to be contained in the particles as public properties
+    // weights are assumed to be contained in the particles as public methods
     this->weights_.reserve(particles.size());
     for (const P & particle : particles) {
-      this->total_weight_ += particle.weight;
-      this->weights_.push_back(particle.weight);
+      this->total_weight_ += particle.weight();
+      this->weights_.push_back(particle.weight());
     }
+    this->has_weights_ = true;
   }
 
   static std::string name() {

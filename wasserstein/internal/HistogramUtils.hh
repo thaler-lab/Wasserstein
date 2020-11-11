@@ -173,12 +173,16 @@ public:
   Histogram1DHandler() {}
   virtual ~Histogram1DHandler() {}
 
+  // access the constructor arguments
+  double axis_min() const { return axis().bin(0).lower(); }
+  double axis_max() const { return axis().bin(axis().size() - 1).upper(); }
   unsigned nbins() const { return axis_.size(); }
+
   std::string description() const {
     std::ostringstream oss;
     oss << std::setprecision(8)
         << "  ExternalEMDHandler - " << name() << '\n'
-        << "    range - [" << axis_.bin(0).lower() << ", " << axis_.bin(axis_.size() - 1).upper() << ")\n"
+        << "    range - [" << axis_min() << ", " << axis_max() << ")\n"
         << "    bins - " << nbins() << '\n'
         << "    axis_transform - " << hist::name_transform<Transform>() << '\n';
 
@@ -189,31 +193,33 @@ public:
   #ifndef SWIG_PREPROCESSOR
   Hist & hist() { return hist_; }
   Axis & axis() { return axis_; }
+  const Hist & hist() const { return hist_; }
+  const Axis & axis() const { return axis_; }
   #endif
 
-  std::vector<double> bin_centers() const { return hist::get_bin_centers(axis_); }
-  std::vector<double> bin_edges() const { return hist::get_bin_edges(axis_); }
-
+  // get histogram values and errors
   std::pair<std::vector<double>, std::vector<double>> hist_vals_errs(bool overflows = true) const {
     return hist::get_1d_hist(hist_, overflows);
   }
 
+  // get bins
+  std::vector<double> bin_centers() const { return hist::get_bin_centers(axis_); }
+  std::vector<double> bin_edges() const { return hist::get_bin_edges(axis_); }
+
+  // return textual representation of axs/hist
   std::string print_axis() const { return hist::print_axis(axis_); }
   std::string print_hist() const { return hist::print_1d_hist(hist_); }
 
 #ifdef BOOST_HISTOGRAM_SERIALIZATION_HPP
-  
   void load(std::istream & is) {
     boost::archive::text_iarchive ia(is);
     ia >> axis_ >> hist_;
   }
-
   void save(std::ostream & os) {
     boost::archive::text_oarchive oa(os);
     oa << axis_;
     oa << hist_;
   }
-
 #endif // BOOST_HISTOGRAM_SERIALIZATION_HPP
 
 protected:

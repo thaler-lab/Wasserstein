@@ -13,3 +13,5 @@ update_boost.sh
 .pytest_cache/
 .eggs/
 mkdocs/
+basic_example
+**/.deps

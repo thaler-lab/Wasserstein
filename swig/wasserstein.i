@@ -113,19 +113,19 @@ import numpy as np
   // python function to get events from container of 2d arrays, first column becomes the weights
   %pythoncode %{
 
-    def __call__(self, events0, events1=None, gdim=None, mask=False):
+    def __call__(self, eventsA, eventsB=None, gdim=None, mask=False):
 
-        if events1 is None:
-            self.init(len(events0))
-            events1 = []
+        if eventsB is None:
+            self.init(len(eventsA))
+            eventsB = []
         else:
-            self.init(len(events0), len(events1))
+            self.init(len(eventsA), len(eventsB))
 
         if mask:
             R2 = self.R()*self.R()
 
         self.event_arrs = []
-        for event in itertools.chain(events0, events1):
+        for event in itertools.chain(eventsA, eventsB):
 
             # ensure event is 2d
             event = np.atleast_2d(event)

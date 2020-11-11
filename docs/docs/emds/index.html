@@ -14,8 +14,8 @@
 
   <link rel="stylesheet" href="../../css/theme.css" />
   <link rel="stylesheet" href="../../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
   <link href="../../css/eftheme.css" rel="stylesheet" />
+  <link href="../../css/pygmentize_friendly.css" rel="stylesheet" />
   
   <script>
     // Current page data
@@ -25,9 +25,7 @@
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js" defer></script>
-  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script> 
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script> 
   
   <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -84,8 +82,58 @@
                     <li class="toctree-l1"><a class="reference internal" href="../emd/">EMD</a>
                     </li>
                     <li class="toctree-l1 current"><a class="reference internal current" href="./">PairwiseEMD</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#python">Python</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#compute-distances">Compute Distances</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#__call__">__call__</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#access-results">Access Results</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#emds">emds</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#emd">emd</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#neva">nevA</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#nevb">nevB</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#num_emds">num_emds</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#duration">duration</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#errored">errored</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#error_messages">error_messages</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#getset-options">Get/Set Options</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#set_external_emd_handler">set_external_emd_handler</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#other-methods">Other Methods</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#description">description</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#clear">clear</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#c">C++</a>
+    </li>
+    </ul>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../correlationdimension/">CorrelationDimension</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../externalemdhandler/">External EMD Handlers</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../utils/">Utils</a>
                     </li>
                 </ul>
       </div>
@@ -124,7 +172,271 @@
           <div role="main">
             <div class="section">
               
-                <p>Coming soon!</p>
+                <h1 id="pairwiseemd">PairwiseEMD</h1>
+<p>The <code>PairwiseEMD</code> class handles the collective computation of Wasserstein distances between pairs of events. Adopting language from particle physics, we will call the distributions "events," the discrete entities in the ground space "particles," and the particle weights (probability mass) "energy". It automatically parallelizes the computations across a specified number of threads for the greatest efficiency.</p>
+<hr />
+<h2 id="python">Python</h2>
+<p>The Python <code>EMD</code> class wraps the templated C++ class of the same name. It is designed to work with numpy arrays efficiently.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">wasserstein</span><span class="o">.</span><span class="n">PairwiseEMD</span><span class="p">(</span><span class="n">R</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">num_threads</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">print_every</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                        <span class="n">store_sym_emds_flattened</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">throw_on_error</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">n_iter_max</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span> <span class="n">epsilon_large_factor</span><span class="o">=</span><span class="mf">10000.0</span><span class="p">,</span> <span class="n">epsilon_small_factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>R</strong> : <em>float</em><ul>
+<li>The R parameter in the EMD definition that controls the relative 
+importance of the two terms. Must be greater than or equal to half 
+of the maximum ground distance in the space in order for the EMD 
+to be a valid metric satisfying the triangle inequality.</li>
+</ul>
+</li>
+<li><strong>beta</strong> : <em>float</em><ul>
+<li>The angular weighting exponent. The internal pairwsie distance
+matrix is raised to this power prior to solving the optimal
+transport problem.</li>
+</ul>
+</li>
+<li><strong>norm</strong> : <em>bool</em><ul>
+<li>Whether or not to normalize the particle weights to sum to one
+prior to computing the EMD.</li>
+</ul>
+</li>
+<li><strong>num_threads</strong> : <em>int</em><ul>
+<li>The number of threads to use when executing the computations. A value of <code>-1</code> uses the maximum number according to <code>omp_get_max_threads()</code> and should be used for the greatest efficiency.</li>
+</ul>
+</li>
+<li><strong>print_every</strong> : <em>int</em><ul>
+<li>This controls how the slate of EMD computations is divied up. If positive, it is essentially a batch size - i.e. how many computations to do before printing progress (see <code>verbose</code>), checking for signals, etc., and then continuing. If negative, it is the approximate total number of times to print progress, etc. A value of <code>0</code> is equivalent to <code>-1</code>. Setting this to a small positive number or a large (in absolute value) negative number tends to be inefficient.</li>
+</ul>
+</li>
+<li><strong>verbose</strong> : <em>int</em><ul>
+<li>Controls verbosity of the object. All printing is turned off if equal to <code>0</code>. Larger numbers turn on successively more printing. Currently there is only one verbosity level but more may be added. For capturing this output in a Jupyter notebook, run <a href="https://github.com/minrk/wurlitzer"><code>%load_ext wurlitzer</code></a> prior to starting the computation.</li>
+</ul>
+</li>
+<li><strong>store_sym_emds_flattened</strong> : <em>bool</em></li>
+<li><strong>throw_on_error</strong> : <em>bool</em></li>
+<li><strong>n_iter_max</strong> : <em>int</em><ul>
+<li>Maximum number of iterations for solving the optimal transport 
+problem.</li>
+</ul>
+</li>
+<li><strong>epsilon_large_factor</strong> : <em>float</em><ul>
+<li>Controls some tolerances in the optimal transport solver. This
+value is multiplied by the floating points epsilon (around 1e-16 for
+64-bit floats) to determine the actual tolerance.</li>
+</ul>
+</li>
+<li><strong>epsilon_small_factor</strong> : <em>float</em><ul>
+<li>Analogous to <code>epsilon_large_factor</code> but used where the numerical
+tolerance can be stricter.</li>
+</ul>
+</li>
+</ul>
+<h3 id="compute-distances">Compute Distances</h3>
+<h4 id="__call__"><strong><em>_</em>_call</strong>__</h4>
+<div class="codehilite"><pre><span></span><code><span class="fm">__call__</span><span class="p">(</span><span class="n">eventsA</span><span class="p">,</span> <span class="n">eventsB</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gdim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Compute the Wasserstein distances between all pairs of events using the Euclidean ground distance. If <code>eventsB</code> is <code>None</code> then the computations will be between pairs of events drawn from <code>eventsA</code>, otherwise they are between all pairs of events between <code>eventsA</code> and <code>eventsB</code>. Each event should be a two-dimensional numpy array where the first column is the weights and the remaining columns are the coordinates of the particles in the Euclidean ground space. This method does not return anything; see the <a href="#access-results">Access Results</a> section below.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>eventsA</strong> : {<em>numpy.ndarray</em>, <em>list</em>} of <em>numpy.ndarray</em><ul>
+<li>The first dataset of events as a list or numpy object array of events. Each event should be a two-dimensional numpy array where the weights are the first column and the Euclidean coordinates are the remaining columns.</li>
+</ul>
+</li>
+<li><strong>eventsB</strong> : {<em>numpy.ndarray</em>, <em>list</em>} of <em>numpy.ndarray</em> or <code>None</code><ul>
+<li>A collection of events with the same structure as <code>eventsA</code>, if not <code>None</code>. This may be <code>None</code> in which case the computations are between all pairs of events from <code>eventsA</code> (effectively, <code>eventsB</code> is set equal to <code>eventsA</code>).</li>
+</ul>
+</li>
+<li><strong>gdim</strong> : <em>int</em> or <code>None</code><ul>
+<li>If <code>None</code>, has no effect. If an integer, then this is the dimension of the ground space and the first <code>gdim</code> columns after the first (which contains the weights) are used as the particle coordinates. Concretely, for an event the weights are <code>event[:,0]</code> and the coordinates are <code>#!python event[:,1:gdim+1]</code>.</li>
+</ul>
+</li>
+<li><strong>mask</strong> : <em>bool</em><ul>
+<li>If <code>True</code>, then particles farther than <code>R</code> away from the origin of the ground space will be ignored in the EMD computations, where <code>R</code> is the parameter given to the constructor of the <code>PairwiseEMD</code> object.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="access-results">Access Results</h3>
+<p>These methods access quantities determined during the most recent call to <code>__call__</code>.</p>
+<h4 id="emds">emds</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">emds</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Matrix of Wasserstein distances as a numpy array. If <code>eventsB</code> was <code>None</code> then this will have shape <code>(nevA, nevA)</code>, otherwise it will have shape <code>(nevA, nevB)</code>.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>2d numpy.ndarray</em><ul>
+<li>Matrix of Wasserstein distances. If <code>eventsB</code> was <code>None</code> then it will be symmetric.</li>
+</ul>
+</li>
+</ul>
+<h4 id="emd">emd</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">emd</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+</code></pre></div>
+
+<p>The Wasserstein distance between event <code>i</code> from <code>eventsA</code> and event <code>j</code> from <code>eventsB</code> (or <code>eventsA</code> if <code>eventsB</code> is <code>None</code>). Note that negative indices are accepted and count from the end, as usual in Python.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>i</strong> : <em>int</em><ul>
+<li>The index of an event from <code>eventsA</code>. An <code>IndexError</code> is raised if it is out of range.</li>
+</ul>
+</li>
+<li><strong>j</strong> : <em>int</em><ul>
+<li>The index of an event from <code>eventsB</code>, or <code>eventsA</code> if <code>eventsB</code> was <code>None</code>. An <code>IndexError</code> is raised if it is out of range.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>float</em><ul>
+<li>The Wasserstein distance between the specified events.</li>
+</ul>
+</li>
+</ul>
+<h4 id="neva">nevA</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">nevA</span><span class="p">()</span>
+</code></pre></div>
+
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>int</em><ul>
+<li>The number of events in dataset A.</li>
+</ul>
+</li>
+</ul>
+<h4 id="nevb">nevB</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">nevB</span><span class="p">()</span>
+</code></pre></div>
+
+<p>If <code>eventsB</code> was <code>None</code>, this will be the same as <code>nevA</code>.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>int</em><ul>
+<li>The number of events in dataset B.</li>
+</ul>
+</li>
+</ul>
+<h4 id="num_emds">num_emds</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">num_emds</span><span class="p">()</span>
+</code></pre></div>
+
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>int</em><ul>
+<li>The number of unique EMD computations carried out.</li>
+</ul>
+</li>
+</ul>
+<h4 id="duration">duration</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">duration</span><span class="p">()</span>
+</code></pre></div>
+
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>float</em><ul>
+<li>The wall time, in seconds, of the previous computation.</li>
+</ul>
+</li>
+</ul>
+<h4 id="errored">errored</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">errored</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Whether or not any individual computations had a non-zero return status, indicating an error.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>bool</em><ul>
+<li>Whether any errors occurred among the computations.</li>
+</ul>
+</li>
+</ul>
+<h4 id="error_messages">error_messages</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">error_messages</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Error messages, if any, that have occurred during the computations.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>list</em> of <em>str</em><ul>
+<li>A list of the error messages for anything that went wrong during the computations. An empty list means there were no errors.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="getset-options">Get/Set Options</h3>
+<p>These methods can be used to get the current settings of the <code>PairwiseEMD</code> object or to set new ones. The getter methods are:</p>
+<ul>
+<li><code>R()</code> : returns <em>float</em></li>
+<li><code>beta()</code> : returns <em>float</em></li>
+<li><code>norm()</code> : returns <em>bool</em></li>
+<li><code>omp_dynamic_chunksize()</code> : returns <em>int</em><ul>
+<li>The number of EMD computations spooled to each thread at a time.</li>
+</ul>
+</li>
+<li><code>external_emds()</code> : returns <em>bool</em><ul>
+<li>This will be <code>True</code> if there is an external EMD handler associated with the <code>PairwiseEMD</code> object and <code>False</code> otherwise.</li>
+</ul>
+</li>
+</ul>
+<p>The setter methods are:</p>
+<ul>
+<li><code>set_R(new_R)</code> : accepts <em>float</em></li>
+<li><code>set_beta(new_beta)</code> : accepts <em>float</em></li>
+<li><code>set_norm(new_norm)</code> : accepts <em>bool</em></li>
+<li><code>set_network_simplex_params(n_iter_max=100000, epsilon_large_factor=10000.0, epsilon_small_factor=1.0)</code><ul>
+<li>This method resets all of the underlying network simplex solver's parameters at once.</li>
+</ul>
+</li>
+<li><code>set_omp_dynamic_chunksize(new_chunksize)</code> : accepts <em>int</em><ul>
+<li>Sets the number of EMD evaluations spooled to each thread at a time.</li>
+</ul>
+</li>
+</ul>
+<h4 id="set_external_emd_handler">set_external_emd_handler</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">set_external_emd_handler</span><span class="p">(</span><span class="n">emd_handler</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Associates this <code>PairwiseEMD</code> object with an <code>ExternalEMDHandler</code>. The results of the EMD computations will not be internally stored but will be passed on to the handler in a thread-safe manner for processing.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>emd_handler</strong> : <code>ExternalEMDHandler</code><ul>
+<li>An instance of <code>ExternalEMDHandler</code> that processes EMD values in an online manner.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="other-methods">Other Methods</h3>
+<h4 id="description">description</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">description</span><span class="p">(</span><span class="n">write_preprocessors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Returns a string that describes the <code>PairwiseEMD</code> object. Printing the <code>PairwiseEMD</code> object uses this method to describe the object.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>write_preprocessors</strong> : <em>bool</em><ul>
+<li>Whether or not to include preprocessors in the description. There are currently no preprocessors included in the Wasserstein package but this may change in the future.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>string</em><ul>
+<li>The description of the <code>PairwiseEMD</code> object.</li>
+</ul>
+</li>
+</ul>
+<h4 id="clear">clear</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">clear</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Frees some memory in use by the <code>PairwiseEMD</code> object. This should not normally need to be called by the user, except possibly after a larger computation. Note that this also removes any external EMD handler that may be present.</p>
+<hr />
+<h2 id="c">C++</h2>
+<p>C++ documentation coming soon!</p>
               
             </div>
           </div>
@@ -132,7 +444,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../correlationdimension/" class="btn btn-neutral float-right" title="CorrelationDimension">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../externalemdhandler/" class="btn btn-neutral float-right" title="External EMD Handlers">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../emd/" class="btn btn-neutral" title="EMD"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -166,14 +478,15 @@
         <span><a href="../emd/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../correlationdimension/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../externalemdhandler/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
     <script>var base_url = '../..';</script>
     <script src="../../js/theme.js" defer></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
-      <script src="../../js/eftheme.js" defer></script>
+      <script src="../../js/extra.js" defer></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6" defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" defer></script>
       <script src="../../search/main.js" defer></script>
     <script defer>
         window.onload = function () {

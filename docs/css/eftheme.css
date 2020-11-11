@@ -62,3 +62,7 @@ a:visited code {
 .wy-nav-content {
     max-width: 900px;
 }
+
+.wy-side-nav-search input[type=text] {
+    border-color: #db6623;
+}
