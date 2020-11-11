@@ -36,6 +36,7 @@ jobs:
       stage: test
       dist: bionic
       python: 3.9
+      install: python -m pip install cython
 
     # test on Mac
     - name: Test on Mac
