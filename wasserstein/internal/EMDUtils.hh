@@ -178,10 +178,10 @@ public:
   ExtraParticle extra() const { return extra_; }
 
   // returns emd scale, value and status
-  Value weightdiff() const { return weightdiff_; }
-  Value scale() const { return scale_; }
   Value emd() const { return emd_; }
   EMDStatus status() const { return status_; }
+  Value weightdiff() const { return weightdiff_; }
+  Value scale() const { return scale_; }
 
   // return timing info
   double duration() const { return duration_; }
@@ -224,164 +224,8 @@ private:
 }; // ExternalEMDHandler
 
 ////////////////////////////////////////////////////////////////////////////////
-// ArrayWeightCollection - implements a "smart" 1D array from a plain array
-////////////////////////////////////////////////////////////////////////////////
-
-template<typename V>
-struct ArrayWeightCollection {
-  typedef V value_type;
-
-  // contructor, int is used for compatibility with SWIG's numpy.i
-  ArrayWeightCollection(V * array, int size) : array_(array), size_(size), free_(false) {}
-  ~ArrayWeightCollection() {
-    if (free_)
-      free(array_);
-  }
-
-  int size() const { return size_; }
-  V * begin() { return array_; }
-  V * end() { return array_ + size_; }
-  const V * begin() const { return array_; }
-  const V * end() const { return array_ + size_; }
-
-  // copy internal memory
-  void copy() {
-    if (free_)
-      throw std::runtime_error("Should not call copy twice on an ArrayWeightCollection");
-    free_ = true;
-
-    // get new chunk of memory
-    size_t nbytes(size_t(size())*sizeof(V));
-    V * new_array((V*) malloc(nbytes));
-
-    // copy old array into new one
-    memcpy(new_array, array_, nbytes);
-    array_ = new_array;
-  }
-
-private:
-  V * array_;
-  int size_;
-  bool free_;
-
-}; // ArrayWeightCollection
-
-////////////////////////////////////////////////////////////////////////////////
-// ArrayParticleCollection - implements a "smart" 2D array from a plain array
-////////////////////////////////////////////////////////////////////////////////
-
-template<typename V>
-struct ArrayParticleCollection {
-
-  template<typename T>
-  class templated_iterator {
-    T * ptr_;
-    int stride_;
-
-  public:
-    templated_iterator(T * ptr, int stride) : ptr_(ptr), stride_(stride) {}
-    templated_iterator<T> & operator++() { ptr_ += stride_; return *this; }
-    T * operator*() const { return ptr_; }
-    bool operator!=(const templated_iterator & other) const { return ptr_ != other.ptr_; }
-    int stride() const { return stride_; }
-  };
-
-  using const_iterator = templated_iterator<const V>;
-  using value_type = const_iterator;
-
-  // contructor, int is used for compatibility with SWIG's numpy.i
-  ArrayParticleCollection(V * array, int size, int stride) :
-    array_(array), size_(size), stride_(stride)
-  {}
-
-  int size() const { return size_; }
-  int stride() const { return stride_; }
-  const_iterator begin() const { return const_iterator(array_, stride_); }
-  const_iterator end() const { return const_iterator(array_ + size_*stride_, stride_); }
-
-private:
-  V * array_;
-  int size_, stride_;
-
-}; // ArrayParticleCollection
-
-////////////////////////////////////////////////////////////////////////////////
 // EuclideanParticles - structs that work with the euclidean pairwise distance
 ////////////////////////////////////////////////////////////////////////////////
-
-template<typename V = double>
-struct EuclideanParticle2D {
-  typedef V Value;
-  typedef std::array<Value, 2> Coords;
-  typedef EuclideanParticle2D<Value> Self;
-
-  static_assert(std::is_floating_point<V>::value, "Template parameter must be floating point.");
-
-  // constructor from weight, x, y
-  EuclideanParticle2D(Value weight, Value x, Value y) :
-    weight_(weight), xs_({x, y})
-  {}
-
-  Value weight() const { return weight_; }
-  Coords & coords() { return xs_; }
-  const Coords & coords() const { return xs_; }
-
-  static Value plain_distance(const Self & p0, const Self & p1) {
-    Value dx(p0.xs_[0] - p1.xs_[0]), dy(p0.xs_[1] - p1.xs_[1]);
-    return dx*dx + dy*dy;
-  }
-
-  static std::string name() {
-    std::ostringstream oss;
-    oss << "EuclideanParticle2D<" << sizeof(V) << "-byte float>";
-    return oss.str();
-  }
-  static std::string distance_name() { return "EuclideanDistance2D"; }
-
-private:
-
-  // store particle info
-  Value weight_;
-  Coords xs_;
-
-}; // EuclideanParticle2D
-
-template<typename V = double>
-struct EuclideanParticle3D {
-  typedef V Value;
-  typedef std::array<Value, 3> Coords;
-  typedef EuclideanParticle3D<Value> Self;
-
-  static_assert(std::is_floating_point<V>::value, "Template parameter must be floating point.");
-
-  // constructor from weight, x, y, z
-  EuclideanParticle3D(Value weight, Value x, Value y, Value z) :
-    weight_(weight), xs_({x, y, z})
-  {}
-
-  Value weight() const { return weight_; }
-  Coords & coords() { return xs_; }
-  const Coords & coords() const { return xs_; }
-
-  static Value plain_distance(const Self & p0, const Self & p1) {
-    Value dx(p0.xs_[0] - p1.xs_[0]), dy(p0.xs_[1] - p1.xs_[1]), dz(p0.xs_[2] - p1.xs_[2]);
-    return dx*dx + dy*dy + dz*dz;
-  }
-
-  static std::string name() {
-    std::ostringstream oss;
-    oss << "EuclideanParticle3D<" << sizeof(V) << "-byte float>";
-    return oss.str();
-  }
-  static std::string distance_name() { return "EuclideanDistance3D"; }
-
-private:
-
-  // store particle info
-  Value weight_;
-  Coords xs_;
-
-}; // EuclideanParticle3D
 
 template<unsigned N, typename V = double>
 struct EuclideanParticleND {
@@ -391,12 +235,8 @@ struct EuclideanParticleND {
 
   static_assert(std::is_floating_point<V>::value, "Template parameter must be floating point.");
 
-  // constructor from weight, x, y
-  EuclideanParticleND(Value weight, const std::array<Value, N> & xs) :
-    weight_(weight)
-  {
-    std::copy(xs.begin(), xs.end(), xs_.begin());
-  }
+  // constructor from weight and coord array
+  EuclideanParticleND(Value weight, const std::array<Value, N> & xs) : weight_(weight), xs_(xs) {}
 
   Value weight() const { return weight_; }
   Coords & coords() { return xs_; }
@@ -422,13 +262,51 @@ struct EuclideanParticleND {
     return oss.str();
   }
 
-private:
+protected:
 
   // store particle info
   Value weight_;
   Coords xs_;
 
 }; // EuclideanParticleND
+
+template<typename V = double>
+struct EuclideanParticle2D : public EuclideanParticleND<2, V> {
+  typedef typename EuclideanParticleND<2, V>::Value Value;
+  typedef EuclideanParticle2D<Value> Self;
+
+  // constructor from weight, x, y
+  EuclideanParticle2D(Value weight, Value x, Value y) :
+    EuclideanParticleND<2>(weight, {x, y}) {}
+  EuclideanParticle2D(Value weight, const std::array<Value, 2> & xs) :
+    EuclideanParticleND<2>(weight, xs) {}
+
+  // overload this to avoid for loop
+  static Value plain_distance(const Self & p0, const Self & p1) {
+    Value dx(p0.xs_[0] - p1.xs_[0]), dy(p0.xs_[1] - p1.xs_[1]);
+    return dx*dx + dy*dy;
+  }
+
+}; // EuclideanParticle2D
+
+template<typename V = double>
+struct EuclideanParticle3D : public EuclideanParticleND<3, V> {
+  typedef typename EuclideanParticleND<3, V>::Value Value;
+  typedef EuclideanParticle3D<Value> Self;
+
+  // constructor from weight, x, y
+  EuclideanParticle3D(Value weight, Value x, Value y, Value z) :
+    EuclideanParticleND<3>(weight, {x, y, z}) {}
+  EuclideanParticle3D(Value weight, const std::array<Value, 3> & xs) :
+    EuclideanParticleND<3>(weight, xs) {}
+
+  // overload this to avoid for loop
+  static Value plain_distance(const Self & p0, const Self & p1) {
+    Value dx(p0.xs_[0] - p1.xs_[0]), dy(p0.xs_[1] - p1.xs_[1]), dz(p0.xs_[2] - p1.xs_[2]);
+    return dx*dx + dy*dy + dz*dz;
+  }
+
+}; // EuclideanParticle3D
 
 ////////////////////////////////////////////////////////////////////////////////
 // Preprocessor - base class for preprocessing operations

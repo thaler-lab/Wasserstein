@@ -94,45 +94,6 @@ protected:
 }; // EventBase
 
 ////////////////////////////////////////////////////////////////////////////////
-// ArrayEvent - an event where the weights and particle are contiguous arrays
-////////////////////////////////////////////////////////////////////////////////
-
-template<typename V = double>
-struct ArrayEvent : public EventBase<ArrayParticleCollection<V>, ArrayWeightCollection<V>> {
-  typedef ArrayParticleCollection<V> ParticleCollection;
-  typedef ArrayWeightCollection<V> WeightCollection;
-  typedef EventBase<ParticleCollection, WeightCollection> Base;
-
-  static_assert(std::is_floating_point<V>::value, "ArrayEvent template parameter must be floating point.");
-
-  ArrayEvent(V * particle_array, V * weight_array, int size, int stride) :
-    EventBase<ParticleCollection, WeightCollection>(ParticleCollection(particle_array, size, stride),
-                                                    WeightCollection(weight_array, size))
-  {
-    // set total weight
-    for (int i = 0; i < size; i++)
-      this->total_weight_ += weight_array[i];
-  }
-  ArrayEvent(const std::tuple<V*, V*, int, int> & tup) :
-    ArrayEvent(std::get<0>(tup), std::get<1>(tup), std::get<2>(tup), std::get<3>(tup))
-  {}
-  ArrayEvent() {}
-
-  // ensure that we don't modify original array
-  void normalize_weights() {
-    this->weights_.copy();
-    Base::normalize_weights();
-  }
-
-  static std::string name() {
-    std::ostringstream oss;
-    oss << "ArrayEvent<" << sizeof(V) << "-byte float>";
-    return oss.str();
-  }
-
-}; // ArrayEvent
-
-////////////////////////////////////////////////////////////////////////////////
 // GenericEvent - an event constructed from a vector of "particles"
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -171,6 +132,127 @@ using EuclideanEvent2D = GenericEvent<EuclideanParticle2D<>>;
 using EuclideanEvent3D = GenericEvent<EuclideanParticle3D<>>;
 template<unsigned N>
 using EuclideanEventND = GenericEvent<EuclideanParticleND<N>>;
+
+////////////////////////////////////////////////////////////////////////////////
+// ArrayWeightCollection - implements a "smart" 1D array from a plain array
+////////////////////////////////////////////////////////////////////////////////
+
+template<typename V>
+struct ArrayWeightCollection {
+  typedef V value_type;
+
+  // contructor, int is used for compatibility with SWIG's numpy.i
+  ArrayWeightCollection(V * array, int size) : array_(array), size_(size), free_(false) {}
+  ~ArrayWeightCollection() {
+    if (free_)
+      free(array_);
+  }
+
+  int size() const { return size_; }
+  V * begin() { return array_; }
+  V * end() { return array_ + size_; }
+  const V * begin() const { return array_; }
+  const V * end() const { return array_ + size_; }
+
+  // copy internal memory
+  void copy() {
+    if (free_)
+      throw std::runtime_error("Should not call copy twice on an ArrayWeightCollection");
+    free_ = true;
+
+    // get new chunk of memory
+    size_t nbytes(size_t(size())*sizeof(V));
+    V * new_array((V*) malloc(nbytes));
+
+    // copy old array into new one
+    memcpy(new_array, array_, nbytes);
+    array_ = new_array;
+  }
+
+private:
+  V * array_;
+  int size_;
+  bool free_;
+
+}; // ArrayWeightCollection
+
+////////////////////////////////////////////////////////////////////////////////
+// ArrayParticleCollection - implements a "smart" 2D array from a plain array
+////////////////////////////////////////////////////////////////////////////////
+
+template<typename V>
+struct ArrayParticleCollection {
+
+  template<typename T>
+  class templated_iterator {
+    T * ptr_;
+    int stride_;
+
+  public:
+    templated_iterator(T * ptr, int stride) : ptr_(ptr), stride_(stride) {}
+    templated_iterator<T> & operator++() { ptr_ += stride_; return *this; }
+    T * operator*() const { return ptr_; }
+    bool operator!=(const templated_iterator & other) const { return ptr_ != other.ptr_; }
+    int stride() const { return stride_; }
+  };
+
+  using const_iterator = templated_iterator<const V>;
+  using value_type = const_iterator;
+
+  // contructor, int is used for compatibility with SWIG's numpy.i
+  ArrayParticleCollection(V * array, int size, int stride) :
+    array_(array), size_(size), stride_(stride)
+  {}
+
+  int size() const { return size_; }
+  int stride() const { return stride_; }
+  const_iterator begin() const { return const_iterator(array_, stride_); }
+  const_iterator end() const { return const_iterator(array_ + size_*stride_, stride_); }
+
+private:
+  V * array_;
+  int size_, stride_;
+
+}; // ArrayParticleCollection
+
+////////////////////////////////////////////////////////////////////////////////
+// ArrayEvent - an event where the weights and particle are contiguous arrays
+////////////////////////////////////////////////////////////////////////////////
+
+template<typename V = double>
+struct ArrayEvent : public EventBase<ArrayParticleCollection<V>, ArrayWeightCollection<V>> {
+  typedef ArrayParticleCollection<V> ParticleCollection;
+  typedef ArrayWeightCollection<V> WeightCollection;
+  typedef EventBase<ParticleCollection, WeightCollection> Base;
+
+  static_assert(std::is_floating_point<V>::value, "ArrayEvent template parameter must be floating point.");
+
+  ArrayEvent(V * particle_array, V * weight_array, int size, int stride) :
+    EventBase<ParticleCollection, WeightCollection>(ParticleCollection(particle_array, size, stride),
+                                                    WeightCollection(weight_array, size))
+  {
+    // set total weight
+    for (int i = 0; i < size; i++)
+      this->total_weight_ += weight_array[i];
+  }
+  ArrayEvent(const std::tuple<V*, V*, int, int> & tup) :
+    ArrayEvent(std::get<0>(tup), std::get<1>(tup), std::get<2>(tup), std::get<3>(tup))
+  {}
+  ArrayEvent() {}
+
+  // ensure that we don't modify original array
+  void normalize_weights() {
+    this->weights_.copy();
+    Base::normalize_weights();
+  }
+
+  static std::string name() {
+    std::ostringstream oss;
+    oss << "ArrayEvent<" << sizeof(V) << "-byte float>";
+    return oss.str();
+  }
+
+}; // ArrayEvent
 
 END_EMD_NAMESPACE
 

@@ -93,8 +93,8 @@ import numpy as np
 
     // copy distances into vector for network simplex
     std::size_t ndists(std::size_t(d0) * std::size_t(d1));
-    $self->_dists().resize(ndists);
-    std::copy(external_dists, external_dists + ndists, $self->_dists().begin());
+    $self->ground_dists().resize(ndists);
+    std::copy(external_dists, external_dists + ndists, $self->ground_dists().begin());
 
     $self->set_external_dists(true);
 

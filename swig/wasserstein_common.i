@@ -192,7 +192,7 @@ import_array();
 %ignore EMDNAMESPACE::EMD::compute;
 %ignore EMDNAMESPACE::EMD::network_simplex;
 %ignore EMDNAMESPACE::EMD::pairwise_distance;
-%ignore EMDNAMESPACE::EMD::_dists;
+%ignore EMDNAMESPACE::EMD::ground_dists;
 %ignore EMDNAMESPACE::PairwiseEMD::compute(const EventVector & events);
 %ignore EMDNAMESPACE::PairwiseEMD::compute(const EventVector & eventsA, const EventVector & eventsB);
 %ignore EMDNAMESPACE::PairwiseEMD::events;
@@ -282,7 +282,7 @@ void pyname(double** arr_out0, int* n0, double** arr_out1, int* n1) {
   }
   void npy_dists(double** arr_out, int* n0, int* n1) {
     MALLOC_2D_VALUE_ARRAY($self->n0(), $self->n1())
-    memcpy(*arr_out, $self->network_simplex().dists().data(), nbytes);
+    memcpy(*arr_out, $self->ground_dists().data(), nbytes);
   }
   #endif // SWIG_NUMPY
 }

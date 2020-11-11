@@ -5,19 +5,19 @@
 #include "EMD.hh"
 #include "CorrelationDimension.hh"
 
-std::vector<emd::EuclideanParticle2D<>> convert2event(const std::vector<Particle> & particles) {
-  std::vector<emd::EuclideanParticle2D<>> euclidean_particles;
+template<class P>
+std::vector<P> convert2event(const std::vector<Particle> & particles) {
+  std::vector<P> euclidean_particles;
   euclidean_particles.reserve(particles.size());
   for (const Particle & particle : particles)
-    euclidean_particles.emplace_back(particle.pt, particle.y, particle.phi);
+    euclidean_particles.push_back(P(particle.pt, {particle.y, particle.phi}));
   return euclidean_particles;
 }
 
 void single_emds(EventProducer * evp) {
 
   // get EMD object with R = 0.4, beta = 1.0, norm = false
-  emd::EMD<emd::GenericEvent<emd::EuclideanParticle2D<>>,
-           emd::GenericDistance<emd::EuclideanParticle2D<>>> emd_obj(0.4, 1.0, false);
+  emd::EMD<emd::EuclideanEventND<2>, emd::EuclideanDistanceND<2>> emd_obj(0.4, 1.0, false);
 
   // preprocess events to center
   emd_obj.preprocess<emd::CenterWeightedCentroid>();
@@ -34,11 +34,11 @@ void single_emds(EventProducer * evp) {
 
     // get first event
     if (!evp->next()) break;
-    std::vector<emd::EuclideanParticle2D<>> event0(convert2event(evp->particles()));
+    std::vector<emd::EuclideanParticleND<2>> event0(convert2event<emd::EuclideanParticleND<2>>(evp->particles()));
 
     // get second event
     if (!evp->next()) break;
-    std::vector<emd::EuclideanParticle2D<>> event1(convert2event(evp->particles()));
+    std::vector<emd::EuclideanParticleND<2>> event1(convert2event<emd::EuclideanParticleND<2>>(evp->particles()));
 
     // compute emd and add it to vector
     emds.push_back(emd_obj(event0, event1));
@@ -54,8 +54,7 @@ void single_emds(EventProducer * evp) {
 void pairwise_emds(EventProducer * evp) {
 
   // get EMD object with R = 0.4, beta = 1.0, norm = false
-  emd::PairwiseEMD<emd::EMD<emd::GenericEvent<emd::EuclideanParticle2D<>>,
-                   emd::GenericDistance<emd::EuclideanParticle2D<>>>> pairwise_emd_obj(0.4, 1.0, true);
+  emd::PairwiseEMD<emd::EMD<emd::EuclideanEvent2D, emd::EuclideanDistance2D>>pairwise_emd_obj(0.4, 1.0, true);
 
   // preprocess events to center
   pairwise_emd_obj.preprocess<emd::CenterWeightedCentroid>();
@@ -69,7 +68,7 @@ void pairwise_emds(EventProducer * evp) {
   // loop over events and compute the EMD between each successive pair
   evp->reset();
   for (int i = 0; i < 1000 && evp->next(); i++)
-    events.push_back(convert2event(evp->particles()));
+    events.push_back(convert2event<emd::EuclideanParticle2D<>>(evp->particles()));
 
   // run computation
   pairwise_emd_obj(events);  
@@ -81,7 +80,6 @@ void pairwise_emds(EventProducer * evp) {
             << '\n';
 
   // setup correlation dimension
-  pairwise_emd_obj.clear();
   emd::CorrelationDimension corrdim(0.04, 1, 40);
   pairwise_emd_obj.set_external_emd_handler(corrdim);
 
@@ -124,7 +122,7 @@ EventProducer * load_events(int argc, char** argv) {
   try {
     npz = new NPZEventProducer(filepath, num_events, evtype);
   }
-  catch (std::exception) {
+  catch (std::exception & e) {
     std::cerr << "Error: cannot open file " << filepath << ", try running "
               << "`python3 -c \"import energyflow as ef; ef.qg_jets.load()\"`\n";
     return nullptr;

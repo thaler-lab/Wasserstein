@@ -297,10 +297,10 @@ class EMDBaseDouble(object):
     n0 = _swig_new_instance_method(_wasserstein.EMDBaseDouble_n0)
     n1 = _swig_new_instance_method(_wasserstein.EMDBaseDouble_n1)
     extra = _swig_new_instance_method(_wasserstein.EMDBaseDouble_extra)
-    weightdiff = _swig_new_instance_method(_wasserstein.EMDBaseDouble_weightdiff)
-    scale = _swig_new_instance_method(_wasserstein.EMDBaseDouble_scale)
     emd = _swig_new_instance_method(_wasserstein.EMDBaseDouble_emd)
     status = _swig_new_instance_method(_wasserstein.EMDBaseDouble_status)
+    weightdiff = _swig_new_instance_method(_wasserstein.EMDBaseDouble_weightdiff)
+    scale = _swig_new_instance_method(_wasserstein.EMDBaseDouble_scale)
     duration = _swig_new_instance_method(_wasserstein.EMDBaseDouble_duration)
 
 # Register EMDBaseDouble in _wasserstein:

@@ -5608,7 +5608,7 @@ SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_
   }
   *arr_out = values;
 /*@SWIG@*/
-    memcpy(*arr_out, self->network_simplex().dists().data(), nbytes);
+    memcpy(*arr_out, self->ground_dists().data(), nbytes);
   }
 
 /* Macros to extract array attributes.
@@ -6035,8 +6035,8 @@ SWIGINTERN double emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistanc
 
     // copy distances into vector for network simplex
     std::size_t ndists(std::size_t(d0) * std::size_t(d1));
-    self->_dists().resize(ndists);
-    std::copy(external_dists, external_dists + ndists, self->_dists().begin());
+    self->ground_dists().resize(ndists);
+    std::copy(external_dists, external_dists + ndists, self->ground_dists().begin());
 
     self->set_external_dists(true);
 
@@ -11387,62 +11387,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_EMDBaseDouble_weightdiff(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  emd::EMDBase< double > *arg1 = (emd::EMDBase< double > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  emd::Value result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__EMDBaseT_double_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseDouble_weightdiff" "', argument " "1"" of type '" "emd::EMDBase< double > const *""'"); 
-  }
-  arg1 = reinterpret_cast< emd::EMDBase< double > * >(argp1);
-  {
-    try {
-      result = (emd::Value)((emd::EMDBase< double > const *)arg1)->weightdiff(); 
-    }
-    CATCH_STD_EXCEPTION
-  }
-  resultobj = SWIG_From_double(static_cast< double >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EMDBaseDouble_scale(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  emd::EMDBase< double > *arg1 = (emd::EMDBase< double > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  emd::Value result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__EMDBaseT_double_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseDouble_scale" "', argument " "1"" of type '" "emd::EMDBase< double > const *""'"); 
-  }
-  arg1 = reinterpret_cast< emd::EMDBase< double > * >(argp1);
-  {
-    try {
-      result = (emd::Value)((emd::EMDBase< double > const *)arg1)->scale(); 
-    }
-    CATCH_STD_EXCEPTION
-  }
-  resultobj = SWIG_From_double(static_cast< double >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_EMDBaseDouble_emd(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   emd::EMDBase< double > *arg1 = (emd::EMDBase< double > *) 0 ;
@@ -11493,6 +11437,62 @@ SWIGINTERN PyObject *_wrap_EMDBaseDouble_status(PyObject *SWIGUNUSEDPARM(self), 
     CATCH_STD_EXCEPTION
   }
   resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMDBaseDouble_weightdiff(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  emd::EMDBase< double > *arg1 = (emd::EMDBase< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  emd::Value result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__EMDBaseT_double_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseDouble_weightdiff" "', argument " "1"" of type '" "emd::EMDBase< double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMDBase< double > * >(argp1);
+  {
+    try {
+      result = (emd::Value)((emd::EMDBase< double > const *)arg1)->weightdiff(); 
+    }
+    CATCH_STD_EXCEPTION
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMDBaseDouble_scale(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  emd::EMDBase< double > *arg1 = (emd::EMDBase< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  emd::Value result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__EMDBaseT_double_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseDouble_scale" "', argument " "1"" of type '" "emd::EMDBase< double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMDBase< double > * >(argp1);
+  {
+    try {
+      result = (emd::Value)((emd::EMDBase< double > const *)arg1)->scale(); 
+    }
+    CATCH_STD_EXCEPTION
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
   return resultobj;
 fail:
   return NULL;
@@ -13526,7 +13526,7 @@ SWIGINTERN PyObject *_wrap_EMD_set_R(PyObject *SWIGUNUSEDPARM(self), PyObject *a
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"r",  NULL 
+    (char *)"self",  (char *)"R",  NULL 
   };
   
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:EMD_set_R", kwnames, &obj0, &obj1)) SWIG_fail;
@@ -15018,24 +15018,37 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_PairwiseEMD_emds_vec(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_PairwiseEMD_emds_vec(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *arg1 = (emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *) 0 ;
+  bool arg2 = (bool) false ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  PyObject *swig_obj[1] ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char * kwnames[] = {
+    (char *)"self",  (char *)"raw",  NULL 
+  };
   emd::ValueVector *result = 0 ;
   
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t, 0 |  0 );
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:PairwiseEMD_emds_vec", kwnames, &obj0, &obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMD_emds_vec" "', argument " "1"" of type '" "emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *""'"); 
   }
   arg1 = reinterpret_cast< emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > * >(argp1);
+  if (obj1) {
+    ecode2 = SWIG_AsVal_bool(obj1, &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMD_emds_vec" "', argument " "2"" of type '" "bool""'");
+    } 
+    arg2 = static_cast< bool >(val2);
+  }
   {
     try {
-      result = (emd::ValueVector *) &(arg1)->emds(); 
+      result = (emd::ValueVector *) &(arg1)->emds(arg2); 
     }
     CATCH_STD_LOGIC_ERROR
     CATCH_STD_EXCEPTION
@@ -15814,10 +15827,10 @@ static PyMethodDef SwigMethods[] = {
 	 { "EMDBaseDouble_n0", _wrap_EMDBaseDouble_n0, METH_O, "EMDBaseDouble_n0(EMDBaseDouble self) -> std::size_t"},
 	 { "EMDBaseDouble_n1", _wrap_EMDBaseDouble_n1, METH_O, "EMDBaseDouble_n1(EMDBaseDouble self) -> std::size_t"},
 	 { "EMDBaseDouble_extra", _wrap_EMDBaseDouble_extra, METH_O, "EMDBaseDouble_extra(EMDBaseDouble self) -> emd::ExtraParticle"},
-	 { "EMDBaseDouble_weightdiff", _wrap_EMDBaseDouble_weightdiff, METH_O, "EMDBaseDouble_weightdiff(EMDBaseDouble self) -> emd::Value"},
-	 { "EMDBaseDouble_scale", _wrap_EMDBaseDouble_scale, METH_O, "EMDBaseDouble_scale(EMDBaseDouble self) -> emd::Value"},
 	 { "EMDBaseDouble_emd", _wrap_EMDBaseDouble_emd, METH_O, "EMDBaseDouble_emd(EMDBaseDouble self) -> emd::Value"},
 	 { "EMDBaseDouble_status", _wrap_EMDBaseDouble_status, METH_O, "EMDBaseDouble_status(EMDBaseDouble self) -> emd::EMDStatus"},
+	 { "EMDBaseDouble_weightdiff", _wrap_EMDBaseDouble_weightdiff, METH_O, "EMDBaseDouble_weightdiff(EMDBaseDouble self) -> emd::Value"},
+	 { "EMDBaseDouble_scale", _wrap_EMDBaseDouble_scale, METH_O, "EMDBaseDouble_scale(EMDBaseDouble self) -> emd::Value"},
 	 { "EMDBaseDouble_duration", _wrap_EMDBaseDouble_duration, METH_O, "EMDBaseDouble_duration(EMDBaseDouble self) -> double"},
 	 { "EMDBaseDouble_swigregister", EMDBaseDouble_swigregister, METH_O, NULL},
 	 { "EMDBaseDouble_swiginit", EMDBaseDouble_swiginit, METH_VARARGS, NULL},
@@ -15878,7 +15891,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "delete_EMD", _wrap_delete_EMD, METH_O, "delete_EMD(EMD self)"},
 	 { "EMD_R", _wrap_EMD_R, METH_O, "EMD_R(EMD self) -> emd::Value"},
 	 { "EMD_beta", _wrap_EMD_beta, METH_O, "EMD_beta(EMD self) -> emd::Value"},
-	 { "EMD_set_R", (PyCFunction)(void(*)(void))_wrap_EMD_set_R, METH_VARARGS|METH_KEYWORDS, "EMD_set_R(EMD self, emd::Value r)"},
+	 { "EMD_set_R", (PyCFunction)(void(*)(void))_wrap_EMD_set_R, METH_VARARGS|METH_KEYWORDS, "EMD_set_R(EMD self, emd::Value R)"},
 	 { "EMD_set_beta", (PyCFunction)(void(*)(void))_wrap_EMD_set_beta, METH_VARARGS|METH_KEYWORDS, "EMD_set_beta(EMD self, emd::Value beta)"},
 	 { "EMD_set_network_simplex_params", (PyCFunction)(void(*)(void))_wrap_EMD_set_network_simplex_params, METH_VARARGS|METH_KEYWORDS, "EMD_set_network_simplex_params(EMD self, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=1)"},
 	 { "EMD_description", (PyCFunction)(void(*)(void))_wrap_EMD_description, METH_VARARGS|METH_KEYWORDS, "EMD_description(EMD self, bool write_preprocessors=True) -> std::string"},
@@ -15911,7 +15924,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "PairwiseEMD_omp_dynamic_chunksize", _wrap_PairwiseEMD_omp_dynamic_chunksize, METH_O, "PairwiseEMD_omp_dynamic_chunksize(PairwiseEMD self) -> int"},
 	 { "PairwiseEMD_set_external_emd_handler", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_set_external_emd_handler, METH_VARARGS|METH_KEYWORDS, "PairwiseEMD_set_external_emd_handler(PairwiseEMD self, ExternalEMDHandler handler)"},
 	 { "PairwiseEMD_external_emds", _wrap_PairwiseEMD_external_emds, METH_O, "PairwiseEMD_external_emds(PairwiseEMD self) -> bool"},
-	 { "PairwiseEMD_emds_vec", _wrap_PairwiseEMD_emds_vec, METH_O, "PairwiseEMD_emds_vec(PairwiseEMD self) -> vectorDouble"},
+	 { "PairwiseEMD_emds_vec", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_emds_vec, METH_VARARGS|METH_KEYWORDS, "PairwiseEMD_emds_vec(PairwiseEMD self, bool raw=False) -> vectorDouble"},
 	 { "PairwiseEMD_emd", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_emd, METH_VARARGS|METH_KEYWORDS, "PairwiseEMD_emd(PairwiseEMD self, long long i, long long j) -> emd::Value"},
 	 { "PairwiseEMD_errored", _wrap_PairwiseEMD_errored, METH_O, "PairwiseEMD_errored(PairwiseEMD self) -> bool"},
 	 { "PairwiseEMD_error_messages", _wrap_PairwiseEMD_error_messages, METH_O, "PairwiseEMD_error_messages(PairwiseEMD self) -> vectorString"},
@@ -16112,10 +16125,10 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "EMDBaseDouble_n0", _wrap_EMDBaseDouble_n0, METH_O, "n0(EMDBaseDouble self) -> std::size_t"},
 	 { "EMDBaseDouble_n1", _wrap_EMDBaseDouble_n1, METH_O, "n1(EMDBaseDouble self) -> std::size_t"},
 	 { "EMDBaseDouble_extra", _wrap_EMDBaseDouble_extra, METH_O, "extra(EMDBaseDouble self) -> emd::ExtraParticle"},
-	 { "EMDBaseDouble_weightdiff", _wrap_EMDBaseDouble_weightdiff, METH_O, "weightdiff(EMDBaseDouble self) -> emd::Value"},
-	 { "EMDBaseDouble_scale", _wrap_EMDBaseDouble_scale, METH_O, "scale(EMDBaseDouble self) -> emd::Value"},
 	 { "EMDBaseDouble_emd", _wrap_EMDBaseDouble_emd, METH_O, "emd(EMDBaseDouble self) -> emd::Value"},
 	 { "EMDBaseDouble_status", _wrap_EMDBaseDouble_status, METH_O, "status(EMDBaseDouble self) -> emd::EMDStatus"},
+	 { "EMDBaseDouble_weightdiff", _wrap_EMDBaseDouble_weightdiff, METH_O, "weightdiff(EMDBaseDouble self) -> emd::Value"},
+	 { "EMDBaseDouble_scale", _wrap_EMDBaseDouble_scale, METH_O, "scale(EMDBaseDouble self) -> emd::Value"},
 	 { "EMDBaseDouble_duration", _wrap_EMDBaseDouble_duration, METH_O, "duration(EMDBaseDouble self) -> double"},
 	 { "EMDBaseDouble_swigregister", EMDBaseDouble_swigregister, METH_O, NULL},
 	 { "EMDBaseDouble_swiginit", EMDBaseDouble_swiginit, METH_VARARGS, NULL},
@@ -16176,7 +16189,7 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "delete_EMD", _wrap_delete_EMD, METH_O, "delete_EMD(EMD self)"},
 	 { "EMD_R", _wrap_EMD_R, METH_O, "R(EMD self) -> emd::Value"},
 	 { "EMD_beta", _wrap_EMD_beta, METH_O, "beta(EMD self) -> emd::Value"},
-	 { "EMD_set_R", (PyCFunction)(void(*)(void))_wrap_EMD_set_R, METH_VARARGS|METH_KEYWORDS, "set_R(EMD self, emd::Value r)"},
+	 { "EMD_set_R", (PyCFunction)(void(*)(void))_wrap_EMD_set_R, METH_VARARGS|METH_KEYWORDS, "set_R(EMD self, emd::Value R)"},
 	 { "EMD_set_beta", (PyCFunction)(void(*)(void))_wrap_EMD_set_beta, METH_VARARGS|METH_KEYWORDS, "set_beta(EMD self, emd::Value beta)"},
 	 { "EMD_set_network_simplex_params", (PyCFunction)(void(*)(void))_wrap_EMD_set_network_simplex_params, METH_VARARGS|METH_KEYWORDS, "set_network_simplex_params(EMD self, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=1)"},
 	 { "EMD_description", (PyCFunction)(void(*)(void))_wrap_EMD_description, METH_VARARGS|METH_KEYWORDS, "description(EMD self, bool write_preprocessors=True) -> std::string"},
@@ -16209,7 +16222,7 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "PairwiseEMD_omp_dynamic_chunksize", _wrap_PairwiseEMD_omp_dynamic_chunksize, METH_O, "omp_dynamic_chunksize(PairwiseEMD self) -> int"},
 	 { "PairwiseEMD_set_external_emd_handler", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_set_external_emd_handler, METH_VARARGS|METH_KEYWORDS, "set_external_emd_handler(PairwiseEMD self, ExternalEMDHandler handler)"},
 	 { "PairwiseEMD_external_emds", _wrap_PairwiseEMD_external_emds, METH_O, "external_emds(PairwiseEMD self) -> bool"},
-	 { "PairwiseEMD_emds_vec", _wrap_PairwiseEMD_emds_vec, METH_O, "emds_vec(PairwiseEMD self) -> vectorDouble"},
+	 { "PairwiseEMD_emds_vec", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_emds_vec, METH_VARARGS|METH_KEYWORDS, "emds_vec(PairwiseEMD self, bool raw=False) -> vectorDouble"},
 	 { "PairwiseEMD_emd", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_emd, METH_VARARGS|METH_KEYWORDS, "emd(PairwiseEMD self, long long i, long long j) -> emd::Value"},
 	 { "PairwiseEMD_errored", _wrap_PairwiseEMD_errored, METH_O, "errored(PairwiseEMD self) -> bool"},
 	 { "PairwiseEMD_error_messages", _wrap_PairwiseEMD_error_messages, METH_O, "error_messages(PairwiseEMD self) -> vectorString"},

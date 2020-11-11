@@ -7,6 +7,7 @@ ifeq ($(shell uname), Darwin)
 endif
 ifeq ($(shell uname), Linux)
 	CXXFLAGS += -fopenmp
+	LDFLAGS += -fopenmp
 endif
 
 INCLUDES  += -I../wasserstein
@@ -24,7 +25,7 @@ COMPILE.cpp = $(CXX) $(DEPFLAGS) $(CXXFLAGS) $(INCLUDES) -c
 all: $(SRCS:.cpp=.o) basic_example
 
 basic_example: basic_example.o cnpy.o
-	$(CXX) -o $@ $^ $(LIBRARIES)
+	$(CXX) -o $@ $^ $(LIBRARIES) $(LDFLAGS)
 
 clean:
 	rm -fv *.o

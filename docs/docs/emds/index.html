@@ -128,6 +128,30 @@
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#c">C++</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#compute-distances_1">Compute Distances</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#operator">operator()</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#compute">compute</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#access-results_1">Access Results</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#getset-options_1">Get/Set Options</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#other-methods_1">Other Methods</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#preprocess">preprocess</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#description_1">description</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#clear_1">clear</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
     </li>
     </ul>
                     </li>
@@ -377,7 +401,7 @@ tolerance can be stricter.</li>
 <li>The number of EMD computations spooled to each thread at a time.</li>
 </ul>
 </li>
-<li><code>external_emds()</code> : returns <em>bool</em><ul>
+<li><code>external_handler()</code> : returns <em>bool</em><ul>
 <li>This will be <code>True</code> if there is an external EMD handler associated with the <code>PairwiseEMD</code> object and <code>False</code> otherwise.</li>
 </ul>
 </li>
@@ -436,7 +460,127 @@ tolerance can be stricter.</li>
 <p>Frees some memory in use by the <code>PairwiseEMD</code> object. This should not normally need to be called by the user, except possibly after a larger computation. Note that this also removes any external EMD handler that may be present.</p>
 <hr />
 <h2 id="c">C++</h2>
-<p>C++ documentation coming soon!</p>
+<p>The <code>PairwiseEMD</code> C++ class is a template class that accepts a fully-qualified <code>EMD</code> type parameter, from which it obtains information about event types, pairwise distance types, etc. There are two constructors: one that takes many of the same arguments as the <code>EMD</code> class in order to construct them internally and one that accepts a fully built <code>EMD</code> object.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">EMD</span><span class="o">&gt;</span>
+<span class="n">emd</span><span class="o">::</span><span class="n">PairwiseEMD</span><span class="p">(</span><span class="n">Value</span> <span class="n">R</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Value</span> <span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">norm</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">num_threads</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">,</span>
+                 <span class="kt">long</span> <span class="kt">long</span> <span class="n">print_every</span> <span class="o">=</span> <span class="mi">-10</span><span class="p">,</span>
+                 <span class="kt">unsigned</span> <span class="n">verbose</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="kt">bool</span> <span class="n">store_sym_emds_flattened</span> <span class="o">=</span> <span class="nb">true</span><span class="p">,</span>
+                 <span class="kt">bool</span> <span class="n">throw_on_error</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
+                 <span class="kt">unsigned</span> <span class="n">n_iter_max</span> <span class="o">=</span> <span class="mi">100000</span><span class="p">,</span>
+                 <span class="n">Value</span> <span class="n">epsilon_large_factor</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
+                 <span class="n">Value</span> <span class="n">epsilon_small_factor</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span> <span class="n">os</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">);</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">EMD</span><span class="o">&gt;</span>
+<span class="n">emd</span><span class="o">::</span><span class="n">PairwiseEMD</span><span class="p">(</span><span class="k">const</span> <span class="n">EMD</span> <span class="o">&amp;</span> <span class="n">emd</span><span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">num_threads</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">,</span>
+                 <span class="kt">long</span> <span class="kt">long</span> <span class="n">print_every</span> <span class="o">=</span> <span class="mi">-10</span><span class="p">,</span>
+                 <span class="kt">unsigned</span> <span class="n">verbose</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="kt">bool</span> <span class="n">store_sym_emds_flattened</span> <span class="o">=</span> <span class="nb">true</span><span class="p">,</span>
+                 <span class="kt">bool</span> <span class="n">throw_on_error</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
+                 <span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span> <span class="n">os</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">)</span>
+</code></pre></div>
+
+<p>See the <a href="#python">Python class</a> of the same name for the meaning of these arguments. <code>os</code> is an output stream that will be used for printing if <code>verbose</code>.</p>
+<hr />
+<h3 id="compute-distances_1">Compute Distances</h3>
+<p>The <code>operator()</code> and <code>compute</code> methods are overloaded to compute collections of EMD distances between two sets of events in different ways. Each has a one-argument version that computes all EMDs between every pair of events in the provided collection. Each also has a two-argument version that computes all EMDs between pairs of events with one from each set. Just as with the <code>EMD</code> methods of the same name, the <code>operator()</code> methods accept "proto events" (which may be of type <code>Event</code> or are something that <code>Event</code> can be constructed from) that will be preprocessed and <code>compute</code> accepts fully-constructed events that will not be preprocessed.</p>
+<h4 id="operator">operator()</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">ProtoEvent</span><span class="o">&gt;</span>
+<span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ProtoEvent</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">proto_events</span><span class="p">);</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">ProtoEventA</span><span class="p">,</span> <span class="k">class</span> <span class="nc">ProtoEventB</span><span class="o">&gt;</span>
+<span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ProtoEventA</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">proto_eventsA</span><span class="p">,</span>
+                <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ProtoEventB</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">proto_eventsB</span><span class="p">);</span>
+</code></pre></div>
+
+<p>This version preprocesses each event to ensure any preprocessors are called and the weights are normalized properly (if <code>norm=true</code>).</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>proto_events[A/B]</strong><ul>
+<li>Collection of proto events; the actual events will be obtained by calling <code>Event(proto_event)</code> for each <code>proto_event</code> in the vector.</li>
+</ul>
+</li>
+</ul>
+<h4 id="compute">compute</h4>
+<div class="codehilite"><pre><span></span><code><span class="kt">void</span> <span class="nf">compute</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Event</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">events</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">compute</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Event</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">eventsA</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Event</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">eventsB</span><span class="p">);</span>
+</code></pre></div>
+
+<p>This version does not apply any preprocessing.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>events[A/B]</strong><ul>
+<li>Collection of fully-constructed events.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="access-results_1">Access Results</h3>
+<p>Many of the methods share the same names as the <a href="#access-results">Python ones</a>. These are:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">emds</span><span class="p">(</span><span class="kt">bool</span> <span class="n">raw</span> <span class="o">=</span> <span class="nb">false</span><span class="p">);</span>
+<span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Event</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">events</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="n">Value</span> <span class="nf">emd</span><span class="p">(</span><span class="kt">long</span> <span class="kt">long</span> <span class="n">i</span><span class="p">,</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">j</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<span class="kt">size_t</span> <span class="nf">nevA</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="kt">size_t</span> <span class="nf">nevB</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="kt">size_t</span> <span class="nf">num_emds</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="kt">double</span> <span class="nf">duration</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="kt">bool</span> <span class="nf">errored</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">error_messages</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+</code></pre></div>
+
+<p>The <code>emds</code> method returns a reference to a vector of the EMD results, where the distance matrix has been flattened into a <code>nevA()*nevB()</code>-sized vector in row-major (C-style) order. If only a single set of events was passed and <code>raw=true</code> then the non-symmetrized results of size <code>nevA()*(nevA()-1)/2</code> are returned. This throws an error if there was an external EMD handler present.</p>
+<p>The <code>events</code> method returns a const reference to the vector of events that was used for the computations.</p>
+<hr />
+<h3 id="getset-options_1">Get/Set Options</h3>
+<p>These methods can be used to get the current settings of the <code>EMD</code> object or to set new ones. The getter methods are:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">Value</span> <span class="nf">R</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="n">Value</span> <span class="nf">beta</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="kt">bool</span> <span class="nf">norm</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="kt">bool</span> <span class="nf">external_handler</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="kt">int</span> <span class="nf">omp_dynamic_chunksize</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+</code></pre></div>
+
+<p><code>external_dists()</code> indicates whether or not to use the internal <code>PairwiseDistance</code> object or to assume that the ground distances have been externally set. <code>network_simplex()</code> and <code>pairwise_distance()</code> access the underlying objects used to do the heavy lifting of the computation.</p>
+<p>The setter methods are:</p>
+<div class="codehilite"><pre><span></span><code><span class="kt">void</span> <span class="nf">set_R</span><span class="p">(</span><span class="n">Value</span> <span class="n">R</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">set_beta</span><span class="p">(</span><span class="n">Value</span> <span class="n">beta</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">set_norm</span><span class="p">(</span><span class="kt">bool</span> <span class="n">norm</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">set_external_emd_handler</span><span class="p">(</span><span class="n">ExternalEMDHandler</span> <span class="o">&amp;</span> <span class="n">handler</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">set_omp_dynamic_chunksize</span><span class="p">(</span><span class="kt">int</span> <span class="n">chunksize</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">set_network_simplex_params</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">n_iter_max</span> <span class="o">=</span> <span class="mi">100000</span><span class="p">,</span>
+                                <span class="n">Value</span> <span class="n">epsilon_large_factor</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
+                                <span class="n">Value</span> <span class="n">epsilon_small_factor</span> <span class="o">=</span> <span class="mi">1</span><span class="p">);</span>
+</code></pre></div>
+
+<p>See <a href="../externalemdhandler">External EMD Handlers</a> for more details.</p>
+<hr />
+<h3 id="other-methods_1">Other Methods</h3>
+<h4 id="preprocess">preprocess</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">template</span><span class="o">&lt;</span><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">P</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span>
+<span class="n">PairwiseEMD</span> <span class="o">&amp;</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">Args</span> <span class="o">&amp;&amp;</span> <span class="p">...</span> <span class="n">args</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Adds a preprocessor to the internal list. Each event will be preprocessed by the preprocessors in the order they were given. Currently, there is one preprocessor as part of Wasserstein, <a href="../utils/#centerweightedcentroid"><code>CenterWeightedCentroid</code></a>. Since this preprocessor takes no arguments, it can be added as:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">pairwise_emd_obj</span><span class="p">.</span><span class="n">preprocess</span><span class="o">&lt;</span><span class="n">emd</span><span class="o">::</span><span class="n">CenterWeightedCentroid</span><span class="o">&gt;</span><span class="p">()</span>
+</code></pre></div>
+
+<p>In general, any arguments to the preprocessor class are given as arguments to this method. A reference to the <code>PairwiseEMD</code> object is returned.</p>
+<h4 id="description_1">description</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">description</span><span class="p">()</span>
+</code></pre></div>
+
+<p><strong>Returns</strong></p>
+<ul>
+<li>A string that describes the <code>PairwiseEMD</code> object.</li>
+</ul>
+<h4 id="clear_1">clear</h4>
+<div class="codehilite"><pre><span></span><code><span class="kt">void</span> <span class="n">clear</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Frees some memory in use by the <code>PairwiseEMD</code> object. This should not normally need to be called by the user.</p>
               
             </div>
           </div>
