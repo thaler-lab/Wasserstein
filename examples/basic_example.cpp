@@ -2,6 +2,8 @@
 
 #include "NPZEventProducer.hh"
 
+#define BOOST_HISTOGRAM_SERIALIZATION_HPP
+
 #include "EMD.hh"
 #include "CorrelationDimension.hh"
 

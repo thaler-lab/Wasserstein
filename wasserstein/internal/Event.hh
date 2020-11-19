@@ -25,6 +25,13 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
+//  ________      ________ _   _ _______ 
+// |  ____\ \    / /  ____| \ | |__   __|
+// | |__   \ \  / /| |__  |  \| |  | |   
+// |  __|   \ \/ / |  __| | . ` |  | |   
+// | |____   \  /  | |____| |\  |  | |   
+// |______|   \/   |______|_| \_|  |_|   
+
 #ifndef WASSERSTEIN_EVENT_HH
 #define WASSERSTEIN_EVENT_HH
 
@@ -142,10 +149,10 @@ struct ArrayWeightCollection {
   typedef V value_type;
 
   // contructor, int is used for compatibility with SWIG's numpy.i
-  ArrayWeightCollection(V * array, int size) : array_(array), size_(size), free_(false) {}
+  ArrayWeightCollection(V * array, int size) : array_(array), size_(size), delete_(false) {}
   ~ArrayWeightCollection() {
-    if (free_)
-      free(array_);
+    if (delete_)
+      delete[] array_;
   }
 
   int size() const { return size_; }
@@ -156,23 +163,23 @@ struct ArrayWeightCollection {
 
   // copy internal memory
   void copy() {
-    if (free_)
+    if (delete_)
       throw std::runtime_error("Should not call copy twice on an ArrayWeightCollection");
-    free_ = true;
+    delete_ = true;
 
     // get new chunk of memory
-    size_t nbytes(size_t(size())*sizeof(V));
-    V * new_array((V*) malloc(nbytes));
+    //V * new_array((V*) malloc(nbytes));
+    V * new_array(new V[size()]);
 
     // copy old array into new one
-    memcpy(new_array, array_, nbytes);
+    memcpy(new_array, array_, size_t(size())*sizeof(V));
     array_ = new_array;
   }
 
 private:
   V * array_;
   int size_;
-  bool free_;
+  bool delete_;
 
 }; // ArrayWeightCollection
 
@@ -190,7 +197,10 @@ struct ArrayParticleCollection {
 
   public:
     templated_iterator(T * ptr, int stride) : ptr_(ptr), stride_(stride) {}
-    templated_iterator<T> & operator++() { ptr_ += stride_; return *this; }
+    templated_iterator<T> & operator++() {
+      ptr_ += stride_;
+      return *this;
+    }
     T * operator*() const { return ptr_; }
     bool operator!=(const templated_iterator & other) const { return ptr_ != other.ptr_; }
     int stride() const { return stride_; }
@@ -227,17 +237,22 @@ struct ArrayEvent : public EventBase<ArrayParticleCollection<V>, ArrayWeightColl
 
   static_assert(std::is_floating_point<V>::value, "ArrayEvent template parameter must be floating point.");
 
+  // full constructor
   ArrayEvent(V * particle_array, V * weight_array, int size, int stride) :
-    EventBase<ParticleCollection, WeightCollection>(ParticleCollection(particle_array, size, stride),
-                                                    WeightCollection(weight_array, size))
+    Base(ParticleCollection(particle_array, size, stride),
+         WeightCollection(weight_array, size))
   {
     // set total weight
     for (int i = 0; i < size; i++)
       this->total_weight_ += weight_array[i];
   }
+
+  // constructor from single argument (for use with Python)
   ArrayEvent(const std::tuple<V*, V*, int, int> & tup) :
     ArrayEvent(std::get<0>(tup), std::get<1>(tup), std::get<2>(tup), std::get<3>(tup))
   {}
+
+  // default constructor
   ArrayEvent() {}
 
   // ensure that we don't modify original array
@@ -253,6 +268,51 @@ struct ArrayEvent : public EventBase<ArrayParticleCollection<V>, ArrayWeightColl
   }
 
 }; // ArrayEvent
+
+////////////////////////////////////////////////////////////////////////////////
+// VectorEvent - an event where the weights and particle are vectors
+////////////////////////////////////////////////////////////////////////////////
+
+template<typename V = double>
+struct VectorEvent : public EventBase<std::vector<V>, std::vector<V>> {
+  typedef std::vector<V> ParticleCollection;
+  typedef std::vector<V> WeightCollection;
+  typedef EventBase<ParticleCollection, WeightCollection> Base;
+
+  static_assert(std::is_floating_point<V>::value, "VectorEvent template parameter must be floating point.");
+
+  // constructor with a single argument
+  VectorEvent(const std::pair<ParticleCollection, WeightCollection> && proto_event) :
+    VectorEvent(proto_event.first, proto_event.second)
+  {}
+
+  // constructor from vectors of particles and weights
+  VectorEvent(const ParticleCollection & particles, const WeightCollection & weights) :
+    Base(particles, weights)
+  {
+    if (particles.size() % weights.size() != 0)
+      throw std::invalid_argument("particles.size() must be cleanly divisible by weights.size()");
+
+    // set total weight
+    for (V weight : this->weights_)
+      this->total_weight_ += weight;
+  }
+
+  // constructor from single vector of weights (for use with external dists)
+  VectorEvent(const WeightCollection & weights) :
+    VectorEvent(ParticleCollection(), weights)
+  {}
+
+  // default constructor
+  VectorEvent() {}
+
+  static std::string name() {
+    std::ostringstream oss;
+    oss << "VectorEvent<" << sizeof(V) << "-byte float>";
+    return oss.str();
+  }
+
+}; // VectorEvent
 
 END_EMD_NAMESPACE
 

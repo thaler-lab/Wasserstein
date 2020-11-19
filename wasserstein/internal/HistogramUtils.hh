@@ -25,6 +25,19 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
+//  _    _ _____  _____ _______ ____   _____ _____            __  __ 
+// | |  | |_   _|/ ____|__   __/ __ \ / ____|  __ \     /\   |  \/  |
+// | |__| | | | | (___    | | | |  | | |  __| |__) |   /  \  | \  / |
+// |  __  | | |  \___ \   | | | |  | | | |_ |  _  /   / /\ \ | |\/| |
+// | |  | |_| |_ ____) |  | | | |__| | |__| | | \ \  / ____ \| |  | |
+// |_|  |_|_____|_____/   |_|  \____/ \_____|_|  \_\/_/    \_\_|  |_|
+//  _    _ _______ _____ _       _____ 
+// | |  | |__   __|_   _| |     / ____|
+// | |  | |  | |    | | | |    | (___  
+// | |  | |  | |    | | | |     \___ \ 
+// | |__| |  | |   _| |_| |____ ____) |
+//  \____/   |_|  |_____|______|_____/ 
+
 #ifndef WASSERSTEIN_HISTOGRAMUTILS_HH
 #define WASSERSTEIN_HISTOGRAMUTILS_HH
 
@@ -215,10 +228,19 @@ public:
     boost::archive::text_iarchive ia(is);
     ia >> axis_ >> hist_;
   }
+
   void save(std::ostream & os) {
     boost::archive::text_oarchive oa(os);
     oa << axis_;
     oa << hist_;
+  }
+
+  Histogram1DHandler<Transform> & operator+=(const Histogram1DHandler<Transform> & other) {
+    if (other.axis() != axis_)
+      throw std::invalid_argument("other histogram does not have the same axis and so cannot be added");
+    
+    hist_ += other.hist();
+    return *this;
   }
 #endif // BOOST_HISTOGRAM_SERIALIZATION_HPP
 

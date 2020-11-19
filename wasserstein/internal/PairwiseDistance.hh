@@ -25,6 +25,19 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
+//  _____        _____ _______          _______  _____ ______ 
+// |  __ \ /\   |_   _|  __ \ \        / /_   _|/ ____|  ____|
+// | |__) /  \    | | | |__) \ \  /\  / /  | | | (___ | |__   
+// |  ___/ /\ \   | | |  _  / \ \/  \/ /   | |  \___ \|  __|  
+// | |  / ____ \ _| |_| | \ \  \  /\  /   _| |_ ____) | |____ 
+// |_| /_/    \_\_____|_|  \_\  \/  \/   |_____|_____/|______|
+//  _____ _____  _____ _______       _   _  _____ ______ 
+// |  __ \_   _|/ ____|__   __|/\   | \ | |/ ____|  ____|
+// | |  | || | | (___    | |  /  \  |  \| | |    | |__   
+// | |  | || |  \___ \   | | / /\ \ | . ` | |    |  __|  
+// | |__| || |_ ____) |  | |/ ____ \| |\  | |____| |____ 
+// |_____/_____|_____/   |_/_/    \_\_| \_|\_____|______|
+
 #ifndef WASSERSTEIN_PAIRWISEDISTANCE_HH
 #define WASSERSTEIN_PAIRWISEDISTANCE_HH
 
@@ -122,6 +135,12 @@ struct PairwiseDistanceBase {
     return PairwiseDistance::plain_distance(*p0, *p1);
   }
 
+  // ensure this method is overloaded
+  static Value plain_distance(const Particle & p0, const Particle & p1) {
+    throw std::runtime_error("called pairwise distance without any particles");
+    return -1;
+  }
+
 private:
 
   Value R_, R2_, beta_, halfbeta_;
@@ -129,11 +148,28 @@ private:
 }; // PairwiseDistanceBase
 
 ////////////////////////////////////////////////////////////////////////////////
+// DefaultPairwiseDistance - does nothing by default, for use with external dists
+////////////////////////////////////////////////////////////////////////////////
+
+template<typename V = double, class PC = std::vector<V>>
+struct DefaultPairwiseDistance : public PairwiseDistanceBase<DefaultPairwiseDistance<V>, PC, V> {
+  typedef PC ParticleCollection;
+  typedef V Value;
+
+  DefaultPairwiseDistance(Value R, Value beta) :
+    PairwiseDistanceBase<DefaultPairwiseDistance<V>, PC, V>(R, beta)
+  {}
+
+  static std::string name() { return "DefaultPairwiseDistance (none)"; }
+
+}; // DefaultPairwiseDistance
+
+////////////////////////////////////////////////////////////////////////////////
 // EuclideanArrayDistance - euclidean distance between two particle arrays
 ////////////////////////////////////////////////////////////////////////////////
 
 template<typename V = double>
-struct EuclideanArrayDistance : PairwiseDistanceBase<EuclideanArrayDistance<V>, ArrayParticleCollection<V>, V> {
+struct EuclideanArrayDistance : public PairwiseDistanceBase<EuclideanArrayDistance<V>, ArrayParticleCollection<V>, V> {
   typedef ArrayParticleCollection<V> ParticleCollection;
   typedef typename ParticleCollection::value_type Particle;
   typedef typename ParticleCollection::const_iterator ParticleIterator;
@@ -142,6 +178,7 @@ struct EuclideanArrayDistance : PairwiseDistanceBase<EuclideanArrayDistance<V>, 
   EuclideanArrayDistance(Value R, Value beta) :
     PairwiseDistanceBase<EuclideanArrayDistance<V>, ArrayParticleCollection<V>, V>(R, beta)
   {}
+
   static std::string name() { return "EuclideanArrayDistance"; }
   static Value plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
     Value d(0);
@@ -170,6 +207,7 @@ struct GenericDistance : public PairwiseDistanceBase<GenericDistance<P>, std::ve
   GenericDistance(Value R, Value beta) :
     PairwiseDistanceBase<GenericDistance, std::vector<P>, Value>(R, beta)
   {}
+
   static std::string name() { return Particle::distance_name(); }
   static Value plain_distance(const Particle & p0, const Particle & p1) {
     return Particle::plain_distance(p0, p1);

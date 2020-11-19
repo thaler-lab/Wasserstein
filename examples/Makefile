@@ -1,4 +1,4 @@
-SRCS = cnpy.cpp basic_example.cpp
+SRCS = cnpy.cpp basic_example.cpp theory_space_example.cpp
 CXXFLAGS = -O3 -Wall -std=c++14 -g
 
 ifeq ($(shell uname), Darwin)
@@ -22,9 +22,12 @@ COMPILE.cpp = $(CXX) $(DEPFLAGS) $(CXXFLAGS) $(INCLUDES) -c
 	$(COMPILE.cpp) $(OUTPUT_OPTION) $<
 
 .PHONY: all clean
-all: $(SRCS:.cpp=.o) basic_example
+all: $(SRCS:.cpp=.o) basic_example theory_space_example
 
 basic_example: basic_example.o cnpy.o
+	$(CXX) -o $@ $^ $(LIBRARIES) $(LDFLAGS)
+
+theory_space_example: theory_space_example.o cnpy.o
 	$(CXX) -o $@ $^ $(LIBRARIES) $(LDFLAGS)
 
 clean:

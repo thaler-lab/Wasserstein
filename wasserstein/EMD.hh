@@ -25,6 +25,13 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
+//  ______ __  __ _____  
+// |  ____|  \/  |  __ \ 
+// | |__  | \  / | |  | |
+// |  __| | |\/| | |  | |
+// | |____| |  | | |__| |
+// |______|_|  |_|_____/ 
+
 #ifndef WASSERSTEIN_EMD_HH
 #define WASSERSTEIN_EMD_HH
 
@@ -52,7 +59,7 @@ BEGIN_EMD_NAMESPACE
 //       can be evaluated
 ////////////////////////////////////////////////////////////////////////////////
 
-template<class E, class PD, class NetworkSimplex = lemon::NetworkSimplex<>>
+template<class E, class PD = DefaultPairwiseDistance<>, class NetworkSimplex = lemon::NetworkSimplex<>>
 #ifdef SWIG
 class EMD : public EMDBase<Value> {
 #else
@@ -108,7 +115,7 @@ public:
 
   // constructor with entirely default arguments
   EMD(Value R = 1, Value beta = 1, bool norm = false,
-      bool do_timing = false, bool external_dists = false,
+      bool do_timing = false, bool external_dists = std::is_same<PairwiseDistance, DefaultPairwiseDistance<Value>>::value,
       unsigned n_iter_max = 100000,
       Value epsilon_large_factor = 10000,
       Value epsilon_small_factor = 1) :
