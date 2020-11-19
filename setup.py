@@ -51,13 +51,6 @@ elif platform.system() == 'Windows':
     cxxflags[1] = '/std:c++14'
     del ldflags[0]
 
-wasserstein = Extension('wasserstein._wasserstein',
-                        sources=[os.path.join('wasserstein', 'wasserstein.cpp')],
-                        include_dirs=[np.get_include(), '.'],
-                        extra_compile_args=cxxflags,
-                        extra_link_args=ldflags,
-                        libraries=libs)
-
 if sys.argv[1] == 'swig':
     opts = '-fastproxy -w511,315 -keyword'
     if len(sys.argv) >= 3 and sys.argv[2] == '-py3':
@@ -67,6 +60,13 @@ if sys.argv[1] == 'swig':
     subprocess.run(command.split())
 
 else:
+    wasserstein = Extension('wasserstein._wasserstein',
+                            sources=[os.path.join('wasserstein', 'wasserstein.cpp')],
+                            include_dirs=[np.get_include(), '.'],
+                            extra_compile_args=cxxflags,
+                            extra_link_args=ldflags,
+                            libraries=libs)
+
     setup(
         ext_modules=[wasserstein],
         version=__version__
