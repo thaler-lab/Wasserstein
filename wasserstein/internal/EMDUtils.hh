@@ -50,10 +50,16 @@
 #include <type_traits>
 #include <vector>
 
+// namespace macros
 #ifndef BEGIN_EMD_NAMESPACE
-#define BEGIN_EMD_NAMESPACE namespace emd {
-#define END_EMD_NAMESPACE }
 #define EMDNAMESPACE emd
+#define BEGIN_EMD_NAMESPACE namespace EMDNAMESPACE {
+#define END_EMD_NAMESPACE }
+#endif
+
+// fastjet macros
+#ifdef __FASTJET_PSEUDOJET_HH__
+#define WASSERSTEIN_FASTJET
 #endif
 
 BEGIN_EMD_NAMESPACE
@@ -340,18 +346,34 @@ public:
 // Preprocessor - base class for preprocessing operations
 ////////////////////////////////////////////////////////////////////////////////
 
+// forward declare fastjet event
+class FastJetEventBase;
+template<class ParticleWeight> struct FastJetEvent;
+
 // center generic event according to weighted centroid
 template<class EMD>
 class CenterWeightedCentroid : public Preprocessor<typename EMD::Self> {
 public:
   typedef typename EMD::Event Event;
   typedef typename EMD::ValuePublic Value;
+  typedef typename Event::ParticleCollection ParticleCollection;
+  typedef typename Event::WeightCollection WeightCollection;
 
   std::string description() const { return "Center according to weighted centroid"; }
   Event & operator()(Event & event) const {
+    return center(event);
+  }
+
+private:
+
+  // this version will be used for everything that's not FastJetEvent
+  template<class E>
+  typename std::enable_if<!std::is_base_of<FastJetEventBase, E>::value, E &>::type
+  center(E & event) const {
+    static_assert(std::is_same<E, Event>::value, "Event must match that of the EMD class");
 
     // determine weighted centroid
-    typename Event::Particle::Coords coords;
+    typename E::Particle::Coords coords;
     coords.fill(0);
     for (const auto & particle : event.particles())
       for (unsigned i = 0; i < coords.size(); i++) 
@@ -368,6 +390,9 @@ public:
 
     return event;
   }
+
+  // enable overloaded operator for FastJetEvent
+  FastJetEvent<typename EMD::ParticleWeight> & center(FastJetEvent<typename EMD::ParticleWeight> & event) const;
 
 }; // CenterWeightedCentroid
 

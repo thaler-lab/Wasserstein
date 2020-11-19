@@ -205,11 +205,9 @@ import_array();
 // handle templated base class
 %template(EMDBaseDouble) EMDNAMESPACE::EMDBase<double>;
 
-// include main EMD code
-%include "EMD.hh"
-
-// include histogram code
+// include main EMD code and histogram code
 #define SWIG_PREPROCESSOR
+%include "EMD.hh"
 %include "internal/HistogramUtils.hh"
 
 // makes python class printable from a description method

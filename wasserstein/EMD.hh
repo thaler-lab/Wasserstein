@@ -69,7 +69,7 @@ class EMD : public EMDBase<typename NetworkSimplex::Value> {
 public:
 
   // allow passing FastJetParticleWeight as first template parameter
-  #ifdef __FASTJET_PSEUDOJET_HH__
+  #ifdef WASSERSTEIN_FASTJET
   typedef E ParticleWeight;
   typedef typename std::conditional<std::is_base_of<FastJetParticleWeight, E>::value, FastJetEvent<E>, E>::type Event;
   #else
@@ -145,16 +145,18 @@ public:
   void set_beta(Value beta) { pairwise_distance_.set_beta(beta); }
 
   // these avoid needing this-> everywhere
-  using EMDBase<Value>::norm;
-  using EMDBase<Value>::external_dists;
-  using EMDBase<Value>::n0;
-  using EMDBase<Value>::n1;
-  using EMDBase<Value>::extra;
-  using EMDBase<Value>::weightdiff;
-  using EMDBase<Value>::scale;
-  using EMDBase<Value>::emd;
-  using EMDBase<Value>::status;
-  using EMDBase<Value>::do_timing;
+  #ifndef SWIG_PREPROCESSOR
+    using EMDBase<Value>::norm;
+    using EMDBase<Value>::external_dists;
+    using EMDBase<Value>::n0;
+    using EMDBase<Value>::n1;
+    using EMDBase<Value>::extra;
+    using EMDBase<Value>::weightdiff;
+    using EMDBase<Value>::scale;
+    using EMDBase<Value>::emd;
+    using EMDBase<Value>::status;
+    using EMDBase<Value>::do_timing;
+  #endif
 
   // set network simplex parameters
   void set_network_simplex_params(unsigned n_iter_max=100000,
