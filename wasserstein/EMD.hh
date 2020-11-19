@@ -25,12 +25,13 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
-//  ______ __  __ _____  
-// |  ____|  \/  |  __ \ 
-// | |__  | \  / | |  | |
-// |  __| | |\/| | |  | |
-// | |____| |  | | |__| |
-// |______|_|  |_|_____/ 
+/*  ______ __  __ _____  
+ * |  ____|  \/  |  __ \
+ * | |__  | \  / | |  | |
+ * |  __| | |\/| | |  | |
+ * | |____| |  | | |__| |
+ * |______|_|  |_|_____/
+ */
 
 #ifndef WASSERSTEIN_EMD_HH
 #define WASSERSTEIN_EMD_HH
@@ -115,7 +116,7 @@ public:
 
   // constructor with entirely default arguments
   EMD(Value R = 1, Value beta = 1, bool norm = false,
-      bool do_timing = false, bool external_dists = std::is_same<PairwiseDistance, DefaultPairwiseDistance<Value>>::value,
+      bool do_timing = false, bool external_dists = false,
       unsigned n_iter_max = 100000,
       Value epsilon_large_factor = 10000,
       Value epsilon_small_factor = 1) :
@@ -129,6 +130,9 @@ public:
   {
     // setup units correctly (only relevant here if norm = true)
     this->scale_ = 1;
+
+    // automatically set external dists in the default case
+    set_external_dists(std::is_same<PairwiseDistance, DefaultPairwiseDistance<Value>>::value);
   }
 
   // virtual destructor
