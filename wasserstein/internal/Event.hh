@@ -151,6 +151,7 @@ struct ArrayWeightCollection {
 
   // contructor, int is used for compatibility with SWIG's numpy.i
   ArrayWeightCollection(V * array, int size) : array_(array), size_(size), delete_(false) {}
+
   ~ArrayWeightCollection() {
     if (delete_)
       delete[] array_;
@@ -254,7 +255,7 @@ struct ArrayEvent : public EventBase<ArrayParticleCollection<V>, ArrayWeightColl
   {}
 
   // default constructor
-  ArrayEvent() {}
+  ArrayEvent() : ArrayEvent(nullptr, nullptr, 0, 0) {}
 
   // ensure that we don't modify original array
   void normalize_weights() {

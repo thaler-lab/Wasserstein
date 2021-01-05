@@ -1,5 +1,5 @@
 SRCS = cnpy.cpp basic_example.cpp theory_space_example.cpp
-CXXFLAGS = -O3 -Wall -std=c++14 -g
+CXXFLAGS = -O3 -Wall -std=c++14 -g -ffast-math
 
 ifeq ($(shell uname), Darwin)
 	CXXFLAGS += -Xpreprocessor -fopenmp

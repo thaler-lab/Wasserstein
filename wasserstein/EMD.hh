@@ -132,7 +132,7 @@ public:
     this->scale_ = 1;
 
     // automatically set external dists in the default case
-    set_external_dists(std::is_same<PairwiseDistance, DefaultPairwiseDistance<Value>>::value);
+    this->set_external_dists(std::is_same<PairwiseDistance, DefaultPairwiseDistance<Value>>::value);
   }
 
   // virtual destructor
@@ -394,7 +394,7 @@ private:
   long long print_every_;
   ExternalEMDHandler * handler_;
   unsigned verbose_;
-  bool store_sym_emds_flattened_, throw_on_error_;
+  bool store_sym_emds_flattened_, throw_on_error_, request_mode_;
   std::ostream * print_stream_;
   std::ostringstream oss_;
 
@@ -503,6 +503,15 @@ public:
     return handler_ != nullptr;
   }
 
+  // turn on or off request mode, where nothing is stored or handled but
+  // EMD distances can be queried and computed on the fly
+  void set_request_mode(bool mode) {
+    request_mode_ = mode;
+  }
+  bool request_mode() const {
+    return request_mode_;
+  }
+
   // return a description of this object as a string
   std::string description(bool write_preprocessors = true) const {
     std::ostringstream oss;
@@ -537,7 +546,6 @@ public:
 
     emd_storage_ = External;
     nevA_ = nevB_ = emd_counter_ = num_emds_ = 0;
-    omp_dynamic_chunksize_ = 10;
 
     // start clock for overall timing
     emd_objs_[0].start_timing();
@@ -624,11 +632,7 @@ public:
   }
 
   // access a specific emd
-  Value emd(long long i, long long j) const {
-
-    // check for External handling, in which case we don't have any emds stored
-    if (emd_storage_ == External)
-      throw std::logic_error("EMD requested but external handler provided, so no EMDs stored");
+  Value emd(long long i, long long j, int thread = 0) {
 
     // allow for negative indices
     if (i < 0) i += nevA_;
@@ -640,6 +644,22 @@ public:
       message << i << ", " << j << ") exceeds allowed range";
       throw std::out_of_range(message.str());
     }
+
+    // calculate EMD if in request mode
+    if (request_mode()) {
+
+      if (thread >= num_threads_)
+        throw std::out_of_range("invalid thread index");
+
+      // run and check for failure
+      check_emd_status(emd_objs_[thread].compute(events_[i], events_[two_event_sets_ ? nevA_ + j : j]));
+      if (handler_) (*handler_)(emd_objs_[thread].emd());
+      return emd_objs_[thread].emd();
+    }
+
+    // check for External handling, in which case we don't have any emds stored
+    if (emd_storage_ == External)
+      throw std::logic_error("EMD requested but external handler provided, so no EMDs stored");
 
     // index into emd vector
     if (emd_storage_ == FlattenedSymmetric)
@@ -683,13 +703,15 @@ private:
   // init self pairs
   void init(size_t nev) {
 
-    clear(false);
+    if (!request_mode())
+      clear(false);
+
     nevA_ = nevB_ = nev;
     two_event_sets_ = false;
 
     // resize emds
     num_emds_ = nevA_*(nevA_ - 1)/2;
-    if (!external_handler()) {
+    if (!external_handler() && !request_mode()) {
       emd_storage_ = (store_sym_emds_flattened_ ? FlattenedSymmetric : FullSymmetric);
       emds_.resize(emd_storage_ == FullSymmetric ? nevA_*nevB_ : num_emds_);
     }
@@ -701,14 +723,16 @@ private:
   // init pairs
   void init(size_t nevA, size_t nevB) {
 
-    clear(false);
+    if (!request_mode())
+      clear(false);
+
     nevA_ = nevA;
     nevB_ = nevB;
     two_event_sets_ = true;
 
     // resize emds
     num_emds_ = nevA_*nevB_;
-    if (!external_handler()) {
+    if (!external_handler() && !request_mode()) {
       emd_storage_ = Full;
       emds_.resize(num_emds_);  
     }
@@ -718,6 +742,10 @@ private:
   }
 
   void compute() {
+
+    // check that we're not in request mode
+    if (request_mode())
+      throw std::runtime_error("cannot compute pairwise EMDs in request mode");
 
     num_emds_width_ = std::to_string(num_emds_).size();
 
@@ -834,6 +862,10 @@ private:
     throw_on_error_ = throw_on_error;
     print_stream_ = os;
     handler_ = nullptr;
+
+    // turn off request mode by default
+    request_mode_ = false;
+    set_omp_dynamic_chunksize(10);
 
     // print_every of 0 is equivalent to -1
     if (print_every_ == 0)

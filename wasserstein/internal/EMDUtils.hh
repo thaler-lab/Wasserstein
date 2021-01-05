@@ -392,7 +392,9 @@ private:
   }
 
   // enable overloaded operator for FastJetEvent
+#ifdef WASSERSTEIN_FASTJET
   FastJetEvent<typename EMD::ParticleWeight> & center(FastJetEvent<typename EMD::ParticleWeight> & event) const;
+#endif
 
 }; // CenterWeightedCentroid
 

@@ -389,6 +389,37 @@ class CorrelationDimension(Histogram1DHandlerLog):
 # Register CorrelationDimension in _wasserstein:
 _wasserstein.CorrelationDimension_swigregister(CorrelationDimension)
 
+
+
+# function for storing events in a pairwise_emd object
+def _store_events(pairwise_emd, events, gdim, mask):
+
+    if mask:
+        R2 = pairwise_emd.R()**2
+
+    for event in events:
+
+# ensure event is 2d
+        event = np.atleast_2d(event)
+
+# consider gdim
+        if gdim is not None:
+            event = event[:,:gdim+1]
+
+# consider mask
+        if mask:
+            event = event[np.sum(event**2, axis=1) <= R2]
+
+# extract weights and coords
+        weights = np.asarray(event[:,0], dtype=np.double, order='C')
+        coords = np.asarray(event[:,1:], dtype=np.double, order='C')
+
+# ensure that the lifetime of these arrays lasts through the computation
+        pairwise_emd.event_arrs.append((weights, coords))
+
+# store individual event
+        pairwise_emd._add_event(weights, coords)
+
 class EMD(EMDBaseDouble):
     r"""
     Proxy of C++ emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > class.
@@ -451,6 +482,8 @@ class PairwiseEMD(object):
 
 
     external_handler = _swig_new_instance_method(_wasserstein.PairwiseEMD_external_handler)
+    set_request_mode = _swig_new_instance_method(_wasserstein.PairwiseEMD_set_request_mode)
+    request_mode = _swig_new_instance_method(_wasserstein.PairwiseEMD_request_mode)
     description = _swig_new_instance_method(_wasserstein.PairwiseEMD_description)
 
     def clear(self):
@@ -483,6 +516,7 @@ class PairwiseEMD(object):
             del self.external_emd_handler
 
     _add_event = _swig_new_instance_method(_wasserstein.PairwiseEMD__add_event)
+    _reset_B_events = _swig_new_instance_method(_wasserstein.PairwiseEMD__reset_B_events)
 
 
     def __call__(self, eventsA, eventsB=None, gdim=None, mask=False):
@@ -493,35 +527,28 @@ class PairwiseEMD(object):
         else:
             self.init(len(eventsA), len(eventsB))
 
-        if mask:
-            R2 = self.R()*self.R()
-
         self.event_arrs = []
-        for event in itertools.chain(eventsA, eventsB):
-
-    # ensure event is 2d
-            event = np.atleast_2d(event)
-
-    # consider gdim
-            if gdim is not None:
-                event = event[:,:gdim+1]
-
-    # consider mask
-            if mask:
-                event = event[np.sum(event**2, axis=1) <= R2]
-
-    # extract weights and coords
-            weights = np.ascontiguousarray(event[:,0], dtype=np.double)
-            coords = np.ascontiguousarray(event[:,1:], dtype=np.double)
-
-    # ensure that the lifetime of these arrays lasts through the computation
-            self.event_arrs.append((weights, coords))
-
-    # store individual event
-            self._add_event(weights, coords)
+        _store_events(self, itertools.chain(eventsA, eventsB), gdim, mask)
 
     # run actual computation
-        self.compute()
+        if not self.request_mode():
+            self.compute()
+
+    def set_new_eventsB(self, eventsB, gdim=None, mask=False):
+
+    # check that we have been initialized before
+        if not hasattr(self, 'event_arrs'):
+            raise RuntimeError('PairwiseEMD object must be called on some events before the B events can be reset')
+
+    # clear away old B events in underlying object
+        self._reset_B_events()
+
+    # clear B events from python array
+        del self.event_arrs[self.nevA():]
+
+    # reinitialize
+        self.init(self.nevA(), len(eventsB))
+        _store_events(self, eventsB, gdim, mask)
 
 
 # Register PairwiseEMD in _wasserstein:
