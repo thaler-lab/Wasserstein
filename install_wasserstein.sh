@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # check usage
 if [ $# -gt 2 ] || [ "$1" = "-h" ]; then
@@ -17,8 +17,14 @@ if [ -z "$1" ]; then
 else
     PREFIX="$1"
 fi
+
+if [[ "$PREFIX" == *"/include"* ]]; then
+    WASSERSTEIN_PATH="$PREFIX/wasserstein"
+else
+    WASSERSTEIN_PATH="$PREFIX/include/wasserstein"
+fi
 echo "Prefix: $PREFIX"
-WASSERSTEIN_PATH="$PREFIX/include/wasserstein"
+echo "Install location: $WASSERSTEIN_PATH"
 
 # handle existing directories
 if [ -d "$WASSERSTEIN_PATH" ]; then
