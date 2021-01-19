@@ -48,7 +48,7 @@
 #include <utility>
 
 // Boost histogram headers
-#include "boost/histogram.hpp"
+#include <boost/histogram.hpp>
 #ifdef BOOST_HISTOGRAM_SERIALIZATION_HPP
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
