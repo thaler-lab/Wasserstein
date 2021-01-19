@@ -57,10 +57,10 @@ for header in $WASSERSTEIN_INTERNAL_HEADERS; do
 done
 
 # determine if we're installing boost
-if [ ! -z "$2" ] && [ "$2" != "false" ]; then
-    BOOST_PATH="$WASSERSTEIN_PATH/internal/boost"
-    echo "Installing boost histogram package to: $BOOST_PATH"
-    cp -a "./boost" "$BOOST_PATH"
-fi
+#if [ ! -z "$2" ] && [ "$2" != "false" ]; then
+#    BOOST_PATH="$WASSERSTEIN_PATH/internal/boost"
+#    echo "Installing boost histogram package to: $BOOST_PATH"
+#    cp -a "./wasserstein/internal/boost" "$BOOST_PATH"
+#fi
 
 echo "Wasserstein is installed at: $WASSERSTEIN_PATH"

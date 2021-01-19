@@ -48,7 +48,7 @@
 #include <utility>
 
 // Boost histogram headers
-#include <boost/histogram.hpp>
+#include "boost/histogram.hpp"
 #ifdef BOOST_HISTOGRAM_SERIALIZATION_HPP
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
@@ -95,7 +95,7 @@ std::pair<std::vector<double>, std::vector<double>>
 get_1d_hist(const Hist & hist, bool overflows) {
 
   // setup containers to hold histogram values
-  long long size(hist::get_1d_hist_size(hist.template axis<0>(), overflows)),
+  long long size(get_1d_hist_size(hist.template axis<0>(), overflows)),
             nbins(hist.template axis<0>().size());
   std::vector<double> hist_vals(size), hist_errs(size);
 

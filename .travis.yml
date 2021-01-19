@@ -42,7 +42,7 @@ jobs:
     - name: Test on Mac
       stage: test
       os: mac
-      osx_image: xcode12
+      osx_image: xcode11
       language: shell
       before_install: |
         brew update > /dev/null
