@@ -5234,8 +5234,8 @@ SWIGINTERN void std_vector_Sl_std_string_Sg__insert__SWIG_1(std::vector< std::st
 #include <cstring>
 
 // the main library headers
-#include "EMD.hh"
-#include "CorrelationDimension.hh"
+#include "wasserstein/EMD.hh"
+#include "wasserstein/CorrelationDimension.hh"
 
 // macros for exception handling
 #define CATCH_STD_EXCEPTION catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }

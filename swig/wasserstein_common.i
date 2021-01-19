@@ -50,8 +50,8 @@
 #include <cstring>
 
 // the main library headers
-#include "EMD.hh"
-#include "CorrelationDimension.hh"
+#include "wasserstein/EMD.hh"
+#include "wasserstein/CorrelationDimension.hh"
 
 // macros for exception handling
 #define CATCH_STD_EXCEPTION catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
@@ -200,15 +200,15 @@ import_array();
 %ignore EMDNAMESPACE::Histogram1DHandler::print_hist;
 
 // include EMD utilities
-%include "internal/EMDUtils.hh"
+%include "wasserstein/internal/EMDUtils.hh"
 
 // handle templated base class
 %template(EMDBaseDouble) EMDNAMESPACE::EMDBase<double>;
 
 // include main EMD code and histogram code
 #define SWIG_PREPROCESSOR
-%include "EMD.hh"
-%include "internal/HistogramUtils.hh"
+%include "wasserstein/EMD.hh"
+%include "wasserstein/internal/HistogramUtils.hh"
 
 // makes python class printable from a description method
 %define ADD_STR_FROM_DESCRIPTION
@@ -348,4 +348,4 @@ void pyname(double** arr_out0, int* n0, double** arr_out1, int* n1) {
 %template(Histogram1DHandlerLog) EMDNAMESPACE::Histogram1DHandler<boost::histogram::axis::transform::log>;
 
 // include correlation dimension
-%include "CorrelationDimension.hh"
+%include "wasserstein/CorrelationDimension.hh"
