@@ -55,7 +55,7 @@ if sys.argv[1] == 'swig':
     opts = '-fastproxy -w511 -keyword'
     if len(sys.argv) >= 3 and sys.argv[2] == '-py3':
         opts += ' -py3'
-    command = 'swig -python -c++ {} -o wasserstein/wasserstein.cpp swig/wasserstein.i'.format(opts)
+    command = 'swig -python -c++ {} -o wasserstein/wasserstein.cpp wasserstein/swig/wasserstein.i'.format(opts)
     print(command)
     subprocess.run(command.split())
 

@@ -5337,7 +5337,7 @@ SWIGINTERN std::string emd_Histogram1DHandler_Sl__Sg____repr__(emd::Histogram1DH
     if (py_obj == Py_None       ) return "Python None" ;
     if (PyCallable_Check(py_obj)) return "callable"    ;
     if (PyBytes_Check(   py_obj)) return "string"      ;
-    if (PyInt_Check(     py_obj)) return "int"         ;
+    if (PyLong_Check(    py_obj)) return "int"         ;
     if (PyFloat_Check(   py_obj)) return "float"       ;
     if (PyDict_Check(    py_obj)) return "dict"        ;
     if (PyList_Check(    py_obj)) return "list"        ;
@@ -5398,7 +5398,7 @@ SWIGINTERN std::string emd_Histogram1DHandler_Sl__Sg____repr__(emd::Histogram1DH
 
 
 SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_bin_centers(emd::Histogram1DHandler< > *self,double **arr_out0,int *n0){
-  /*@SWIG:swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins();
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -5410,7 +5410,7 @@ SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_bin_centers(emd::Histogram1DH
   memcpy(*arr_out0, self->bin_centers().data(), nbytes);
 }
 SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_bin_edges(emd::Histogram1DHandler< > *self,double **arr_out0,int *n0){
-  /*@SWIG:swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() + 1;
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -5423,8 +5423,8 @@ SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_bin_edges(emd::Histogram1DHan
 }
 SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_hist_vals_errs(emd::Histogram1DHandler< > *self,double **arr_out0,int *n0,double **arr_out1,int *n1,bool overflows=true){
     unsigned int nbins = self->nbins() + (overflows ? 2 : 0);
-    /*@SWIG:swig/wasserstein_common.i,241,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-/*@SWIG:swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,241,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = nbins;
   size_t nbytes0 = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes0);
@@ -5433,7 +5433,7 @@ SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_hist_vals_errs(emd::Histogram
     return;
   }
 /*@SWIG@*/
-/*@SWIG:swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = nbins;
   size_t nbytes1 = size_t(*n1)*sizeof(double);
   *arr_out1 = (double *) malloc(nbytes1);
@@ -5454,7 +5454,7 @@ SWIGINTERN std::string emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_
   return self->description();
 }
 SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg__npy_bin_centers(emd::Histogram1DHandler< boost::histogram::axis::transform::log > *self,double **arr_out0,int *n0){
-  /*@SWIG:swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins();
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -5466,7 +5466,7 @@ SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg_
   memcpy(*arr_out0, self->bin_centers().data(), nbytes);
 }
 SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg__npy_bin_edges(emd::Histogram1DHandler< boost::histogram::axis::transform::log > *self,double **arr_out0,int *n0){
-  /*@SWIG:swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() + 1;
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -5479,8 +5479,8 @@ SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg_
 }
 SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg__npy_hist_vals_errs(emd::Histogram1DHandler< boost::histogram::axis::transform::log > *self,double **arr_out0,int *n0,double **arr_out1,int *n1,bool overflows=true){
     unsigned int nbins = self->nbins() + (overflows ? 2 : 0);
-    /*@SWIG:swig/wasserstein_common.i,241,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-/*@SWIG:swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,241,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = nbins;
   size_t nbytes0 = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes0);
@@ -5489,7 +5489,7 @@ SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg_
     return;
   }
 /*@SWIG@*/
-/*@SWIG:swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = nbins;
   size_t nbytes1 = size_t(*n1)*sizeof(double);
   *arr_out1 = (double *) malloc(nbytes1);
@@ -5510,7 +5510,7 @@ SWIGINTERN std::string emd_CorrelationDimension___repr__(emd::CorrelationDimensi
   return self->description();
 }
 SWIGINTERN void emd_CorrelationDimension_npy_corrdim_bins(emd::CorrelationDimension *self,double **arr_out0,int *n0){
-  /*@SWIG:swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() - 1;
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -5522,8 +5522,8 @@ SWIGINTERN void emd_CorrelationDimension_npy_corrdim_bins(emd::CorrelationDimens
   memcpy(*arr_out0, self->corrdim_bins().data(), nbytes);
 }
 SWIGINTERN void emd_CorrelationDimension_npy_corrdims(emd::CorrelationDimension *self,double **arr_out0,int *n0,double **arr_out1,int *n1){
-  /*@SWIG:swig/wasserstein_common.i,241,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-/*@SWIG:swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,241,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() - 1;
   size_t nbytes0 = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes0);
@@ -5532,7 +5532,7 @@ SWIGINTERN void emd_CorrelationDimension_npy_corrdims(emd::CorrelationDimension 
     return;
   }
 /*@SWIG@*/
-/*@SWIG:swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = self->nbins() - 1;
   size_t nbytes1 = size_t(*n1)*sizeof(double);
   *arr_out1 = (double *) malloc(nbytes1);
@@ -5547,8 +5547,8 @@ memcpy(*arr_out1, vecpair.second.data(), nbytes1);
 /*@SWIG@*/
 }
 SWIGINTERN void emd_CorrelationDimension_npy_cumulative_vals_vars(emd::CorrelationDimension *self,double **arr_out0,int *n0,double **arr_out1,int *n1){
-  /*@SWIG:swig/wasserstein_common.i,241,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-/*@SWIG:swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,241,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins();
   size_t nbytes0 = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes0);
@@ -5557,7 +5557,7 @@ SWIGINTERN void emd_CorrelationDimension_npy_cumulative_vals_vars(emd::Correlati
     return;
   }
 /*@SWIG@*/
-/*@SWIG:swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,224,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = self->nbins();
   size_t nbytes1 = size_t(*n1)*sizeof(double);
   *arr_out1 = (double *) malloc(nbytes1);
@@ -5578,7 +5578,7 @@ SWIGINTERN std::string emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDi
   return self->description();
 }
 SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__npy_flows(emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *self,double **arr_out,int *n0,int *n1){
-    /*@SWIG:swig/wasserstein_common.i,256,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,256,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -5596,7 +5596,7 @@ SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_
       values[i] *= self->scale();
   }
 SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__npy_dists(emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *self,double **arr_out,int *n0,int *n1){
-    /*@SWIG:swig/wasserstein_common.i,256,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,256,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -6049,7 +6049,7 @@ SWIGINTERN std::string emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_e
   return self->description();
 }
 SWIGINTERN void emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg__npy_emds(emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *self,double **arr_out,int *n0,int *n1){
-    /*@SWIG:swig/wasserstein_common.i,256,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,256,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->nevA();
   *n1 = self->nevB();
   size_t num_elements = size_t(*n0)*size_t(*n1);
