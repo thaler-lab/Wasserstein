@@ -312,7 +312,12 @@ public:
     if (size_t(i) >= n0() || size_t(j) >= n1() || i < 0 || j < 0)
       throw std::out_of_range("EMD::flow - Indices out of range");
 
-    return network_simplex_.flows()[i*n1() + j] * scale();
+    return flow(i*n1() + j);
+  }
+
+  // "raw" access to EMD flow
+  Value flow(std::size_t ind) const {
+    return network_simplex_.flows()[ind] * scale(); 
   }
 
   // access ground dists in network simplex directly

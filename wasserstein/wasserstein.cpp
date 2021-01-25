@@ -13782,7 +13782,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_EMD_flow(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_EMD_flow__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *arg1 = (emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *) 0 ;
   long long arg2 ;
@@ -13793,26 +13793,20 @@ SWIGINTERN PyObject *_wrap_EMD_flow(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   int ecode2 = 0 ;
   long long val3 ;
   int ecode3 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  char * kwnames[] = {
-    (char *)"self",  (char *)"i",  (char *)"j",  NULL 
-  };
   emd::Value result;
   
-  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:EMD_flow", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0 |  0 );
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMD_flow" "', argument " "1"" of type '" "emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > const *""'"); 
   }
   arg1 = reinterpret_cast< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > * >(argp1);
-  ecode2 = SWIG_AsVal_long_SS_long(obj1, &val2);
+  ecode2 = SWIG_AsVal_long_SS_long(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMD_flow" "', argument " "2"" of type '" "long long""'");
   } 
   arg2 = static_cast< long long >(val2);
-  ecode3 = SWIG_AsVal_long_SS_long(obj2, &val3);
+  ecode3 = SWIG_AsVal_long_SS_long(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "EMD_flow" "', argument " "3"" of type '" "long long""'");
   } 
@@ -13828,6 +13822,95 @@ SWIGINTERN PyObject *_wrap_EMD_flow(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   return resultobj;
 fail:
   return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMD_flow__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *arg1 = (emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *) 0 ;
+  std::size_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  emd::Value result;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMD_flow" "', argument " "1"" of type '" "emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > const *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMD_flow" "', argument " "2"" of type '" "std::size_t""'");
+  } 
+  arg2 = static_cast< std::size_t >(val2);
+  {
+    try {
+      result = (emd::Value)((emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > const *)arg1)->flow(arg2); 
+    }
+    CATCH_STD_OUT_OF_RANGE
+    CATCH_STD_EXCEPTION
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMD_flow(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[4] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "EMD_flow", 0, 3, argv))) SWIG_fail;
+  --argc;
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_size_t(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_EMD_flow__SWIG_1(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_long_SS_long(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_long_SS_long(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_EMD_flow__SWIG_0(self, argc, argv);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'EMD_flow'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > >::flow(long long,long long) const\n"
+    "    emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > >::flow(std::size_t) const\n");
+  return 0;
 }
 
 
@@ -16005,7 +16088,10 @@ static PyMethodDef SwigMethods[] = {
 	 { "EMD_clear", _wrap_EMD_clear, METH_O, "EMD_clear(EMD self)"},
 	 { "EMD_dists_vec", _wrap_EMD_dists_vec, METH_O, "EMD_dists_vec(EMD self) -> vectorDouble"},
 	 { "EMD_flows_vec", _wrap_EMD_flows_vec, METH_O, "EMD_flows_vec(EMD self) -> vectorDouble"},
-	 { "EMD_flow", (PyCFunction)(void(*)(void))_wrap_EMD_flow, METH_VARARGS|METH_KEYWORDS, "EMD_flow(EMD self, long long i, long long j) -> emd::Value"},
+	 { "EMD_flow", _wrap_EMD_flow, METH_VARARGS, "\n"
+		"EMD_flow(EMD self, long long i, long long j) -> emd::Value\n"
+		"EMD_flow(EMD self, std::size_t ind) -> emd::Value\n"
+		""},
 	 { "EMD___str__", _wrap_EMD___str__, METH_O, "EMD___str__(EMD self) -> std::string"},
 	 { "EMD___repr__", _wrap_EMD___repr__, METH_O, "EMD___repr__(EMD self) -> std::string"},
 	 { "EMD_flows", _wrap_EMD_flows, METH_O, "EMD_flows(EMD self)"},
@@ -16306,7 +16392,10 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "EMD_clear", _wrap_EMD_clear, METH_O, "clear(EMD self)"},
 	 { "EMD_dists_vec", _wrap_EMD_dists_vec, METH_O, "dists_vec(EMD self) -> vectorDouble"},
 	 { "EMD_flows_vec", _wrap_EMD_flows_vec, METH_O, "flows_vec(EMD self) -> vectorDouble"},
-	 { "EMD_flow", (PyCFunction)(void(*)(void))_wrap_EMD_flow, METH_VARARGS|METH_KEYWORDS, "flow(EMD self, long long i, long long j) -> emd::Value"},
+	 { "EMD_flow", _wrap_EMD_flow, METH_VARARGS, "\n"
+		"flow(EMD self, long long i, long long j) -> emd::Value\n"
+		"flow(EMD self, std::size_t ind) -> emd::Value\n"
+		""},
 	 { "EMD___str__", _wrap_EMD___str__, METH_O, "__str__(EMD self) -> std::string"},
 	 { "EMD___repr__", _wrap_EMD___repr__, METH_O, "__repr__(EMD self) -> std::string"},
 	 { "EMD_flows", _wrap_EMD_flows, METH_O, "flows(EMD self)"},
