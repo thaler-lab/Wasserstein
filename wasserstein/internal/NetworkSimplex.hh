@@ -14,7 +14,7 @@
 //       https://doi.org/10.1145/2070781.2024192
 //   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon
 //
-// Copyright (C) 2019-2020 Patrick T. Komiske III
+// Copyright (C) 2019-2021 Patrick T. Komiske III
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

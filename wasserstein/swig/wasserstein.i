@@ -1,3 +1,4 @@
+// -*- C -*-
 //------------------------------------------------------------------------
 // This file is part of Wasserstein, a C++ library with a Python wrapper
 // that computes the Wasserstein/EMD distance. If you use it for academic
@@ -10,6 +11,8 @@
 //   - Boneel, van de Panne, Paris, Heidrich (2011)
 //       https://doi.org/10.1145/2070781.2024192
 //   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon
+//
+// Copyright (C) 2019-2021 Patrick T. Komiske III
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -63,16 +66,10 @@ import numpy as np
                     double* weights1, int n1,
                     double* coords1, int n10, int n11) {
 
-    if (n0 != n00 || n1 != n10) {
-        PyErr_SetString(PyExc_ValueError, "Number of weights does not match number of coordinates");
-        return -1;
-    }
-    if (n01 != n11) {
-      PyErr_Format(PyExc_ValueError,
-                   "Dimension of coordinates must match, coords0 has dimension %i while coords1 has dimension %i",
-                   n01, n11);
-      return -1;
-    }
+    if (n0 != n00 || n1 != n10)
+      throw std::invalid_argument("Number of weights does not match number of coordinates");
+    if (n01 != n11)
+      throw std::invalid_argument("Coordinate dimensions do not match");
 
     $self->set_external_dists(false);
 
@@ -84,12 +81,8 @@ import numpy as np
                     double* weights1, int n1,
                     double* external_dists, int d0, int d1) {
 
-    if (n0 != d0 || n1 != d1) {
-      PyErr_Format(PyExc_ValueError,
-                   "Incompatible distance matrix of shape (%i, %i) whereas weights0 shape is (%i,) and weights1 shape is (%i,)",
-                   d0, d1, n0, n1);
-      return -1;
-    }
+    if (n0 != d0 || n1 != d1)
+      throw std::invalid_argument("Weights and distance matrix are incompatible");
 
     // copy distances into vector for network simplex
     std::size_t ndists(std::size_t(d0) * std::size_t(d1));

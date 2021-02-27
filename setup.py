@@ -10,6 +10,8 @@
 #   - Boneel, van de Panne, Paris, Heidrich (2011)
 #       https://doi.org/10.1145/2070781.2024192
 #   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon
+#
+# Copyright (C) 2019-2021 Patrick T. Komiske III
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -49,7 +51,7 @@ if platform.system() == 'Darwin':
 elif platform.system() == 'Windows':
     cxxflags[0] = ldflags[0] = '/openmp'
     cxxflags[1] = '/std:c++14'
-    del ldflags[0]
+    del cxxflags[2]
 
 if sys.argv[1] == 'swig':
     opts = '-fastproxy -w511 -keyword'

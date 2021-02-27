@@ -1,3 +1,4 @@
+---
 language: python
 
 script:
@@ -54,11 +55,11 @@ jobs:
       os: windows
       language: shell
       before_install: 
-        - choco install python --version 3.8.3
-        - ln -s /c/Python38/python.exe /c/Python38/python3.exe
+        - choco install python --version 3.9.2
+        - ln -s /c/Python39/python.exe /c/Python39/python3.exe
       install: python3 -m pip install numpy h5py pot
       env:
-        - PATH=/c/Python38:/c/Python38/Scripts:$PATH
+        - PATH=/c/Python38:/c/Python39/Scripts:$PATH
 
   ##############################################################################
   # BUILDS
@@ -93,7 +94,7 @@ jobs:
     - name: Build wheels on Mac
       stage: build
       os: osx
-      osx_image: xcode12
+      osx_image: xcode11
       language: shell
       before_install: |
         brew update > /dev/null
@@ -114,8 +115,8 @@ jobs:
       os: windows
       language: shell
       before_install:
-        - choco install python --version 3.8.3
-        - ln -s /c/Python38/python.exe /c/Python38/python3.exe
+        - choco install python --version 3.9.2
+        - ln -s /c/Python39/python.exe /c/Python39/python3.exe
       install: python3 -m pip install cibuildwheel
       script: python3 -m cibuildwheel --output-dir wheelhouse
       after_success: |
@@ -124,7 +125,7 @@ jobs:
           python3 -m twine upload --skip-existing wheelhouse/*.whl
         fi
       env:
-        - PATH=/c/Python38:/c/Python38/Scripts:$PATH CIBW_BUILD="cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64 cp39-win_amd64"
+        - PATH=/c/Python39:/c/Python39/Scripts:$PATH CIBW_BUILD="cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64 cp39-win_amd64"
 
 env:
   global:

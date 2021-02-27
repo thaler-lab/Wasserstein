@@ -1,3 +1,4 @@
+// -*- C -*-
 //------------------------------------------------------------------------
 // This file is part of Wasserstein, a C++ library with a Python wrapper
 // that computes the Wasserstein/EMD distance. If you use it for academic
@@ -10,6 +11,8 @@
 //   - Boneel, van de Panne, Paris, Heidrich (2011)
 //       https://doi.org/10.1145/2070781.2024192
 //   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon
+//
+// Copyright (C) 2019-2021 Patrick T. Komiske III
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -52,13 +55,6 @@
 // the main library headers
 #include "wasserstein/EMD.hh"
 #include "wasserstein/CorrelationDimension.hh"
-
-// macros for exception handling
-#define CATCH_STD_EXCEPTION catch (std::exception & e) { SWIG_exception(SWIG_SystemError, e.what()); }
-#define CATCH_STD_INVALID_ARGUMENT catch (std::invalid_argument & e) { SWIG_exception(SWIG_ValueError, e.what()); }
-#define CATCH_STD_RUNTIME_ERROR catch (std::runtime_error & e) { SWIG_exception(SWIG_RuntimeError, e.what()); }
-#define CATCH_STD_LOGIC_ERROR catch (std::logic_error & e) { SWIG_exception(SWIG_RuntimeError, e.what()); }
-#define CATCH_STD_OUT_OF_RANGE catch (std::out_of_range & e) { SWIG_exception(SWIG_IndexError, e.what()); }
 %}
 
 // numpy wrapping and initialization
@@ -101,103 +97,29 @@ import_array();
 
 #endif // SWIG_NUMPY
 
+namespace EMDNAMESPACE {
+
 // allow threads in PairwiseEMD computation
-%threadallow EMDNAMESPACE::PairwiseEMD::compute;
+%threadallow PairwiseEMD::compute;
 
 // basic exception handling for all functions
 %exception {
   try { $action }
-  CATCH_STD_EXCEPTION
-}
-
-// EMD exceptions
-%exception EMDNAMESPACE::EMD::EMD {
-  try { $action }
-  CATCH_STD_INVALID_ARGUMENT
-  CATCH_STD_EXCEPTION
-}
-%exception EMDNAMESPACE::EMD::set_R {
-  try { $action }
-  CATCH_STD_INVALID_ARGUMENT
-  CATCH_STD_EXCEPTION
-}
-%exception EMDNAMESPACE::EMD::set_beta {
-  try { $action }
-  CATCH_STD_INVALID_ARGUMENT
-  CATCH_STD_EXCEPTION
-}
-%exception EMDNAMESPACE::EMD::operator() {
-  try { $action }
-  CATCH_STD_RUNTIME_ERROR
-  CATCH_STD_EXCEPTION
-  if (PyErr_Occurred() != NULL)
-    SWIG_fail;
-}
-%exception EMDNAMESPACE::EMD::flow {
-  try { $action }
-  CATCH_STD_OUT_OF_RANGE
-  CATCH_STD_EXCEPTION
-}
-
-// PairwiseEMD exceptions
-%exception EMDNAMESPACE::PairwiseEMD::PairwiseEMD {
-  try { $action }
-  CATCH_STD_INVALID_ARGUMENT
-  CATCH_STD_EXCEPTION
-}
-%exception EMDNAMESPACE::PairwiseEMD::emd {
-  try { $action }
-  CATCH_STD_OUT_OF_RANGE
-  CATCH_STD_LOGIC_ERROR
-  CATCH_STD_EXCEPTION
-}
-%exception EMDNAMESPACE::PairwiseEMD::emds {
-  try { $action }
-  CATCH_STD_LOGIC_ERROR
-  CATCH_STD_EXCEPTION
-}
-%exception EMDNAMESPACE::PairwiseEMD::npy_emds {
-  try { $action }
-  CATCH_STD_LOGIC_ERROR
-  CATCH_STD_EXCEPTION
-}
-%exception EMDNAMESPACE::PairwiseEMD::compute() {
-  try { $action }
-  CATCH_STD_RUNTIME_ERROR
-  CATCH_STD_EXCEPTION
-}
-
-// EMDUtils exceptions
-%exception EMDNAMESPACE::check_emd_status {
-  try { $action }
-  CATCH_STD_RUNTIME_ERROR
-  CATCH_STD_EXCEPTION
-}
-
-// Histogram exceptions
-%exception EMDNAMESPACE::Histogram1DHandler::Histogram1DHandler {
-  try { $action }
-  CATCH_STD_INVALID_ARGUMENT
-  CATCH_STD_EXCEPTION
-}
-
-// CorrelationDimension exceptions
-%exception EMDNAMESPACE::CorrelationDimension::CorrelationDimension {
-  try { $action }
-  CATCH_STD_INVALID_ARGUMENT
-  CATCH_STD_EXCEPTION
+  SWIG_CATCH_STDEXCEPT
 }
 
 // ignore certain functions
-%ignore EMDNAMESPACE::EMD::compute;
-%ignore EMDNAMESPACE::EMD::network_simplex;
-%ignore EMDNAMESPACE::EMD::pairwise_distance;
-%ignore EMDNAMESPACE::EMD::ground_dists;
-%ignore EMDNAMESPACE::PairwiseEMD::compute(const EventVector & events);
-%ignore EMDNAMESPACE::PairwiseEMD::compute(const EventVector & eventsA, const EventVector & eventsB);
-%ignore EMDNAMESPACE::PairwiseEMD::events;
-%ignore EMDNAMESPACE::Histogram1DHandler::print_axis;
-%ignore EMDNAMESPACE::Histogram1DHandler::print_hist;
+%ignore EMD::compute;
+%ignore EMD::network_simplex;
+%ignore EMD::pairwise_distance;
+%ignore EMD::ground_dists;
+%ignore PairwiseEMD::compute(const EventVector & events);
+%ignore PairwiseEMD::compute(const EventVector & eventsA, const EventVector & eventsB);
+%ignore PairwiseEMD::events;
+%ignore Histogram1DHandler::print_axis;
+%ignore Histogram1DHandler::print_hist;
+
+} // namespace EMDNAMESPACE
 
 // include EMD utilities
 %include "wasserstein/internal/EMDUtils.hh"
@@ -226,7 +148,7 @@ std::string __repr__() const {
   size_t nbytes = size_t(*n)*sizeof(double);
   *arr_out = (double *) malloc(nbytes);
   if (*arr_out == NULL) {
-    PyErr_Format(PyExc_MemoryError, "Failed to allocate %zu bytes", nbytes);
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes) + " bytes");
     return;
   }
 %enddef
@@ -259,10 +181,8 @@ void pyname(double** arr_out0, int* n0, double** arr_out1, int* n1) {
   size_t num_elements = size_t(*n0)*size_t(*n1);
   size_t nbytes = num_elements*sizeof(double);
   double * values = (double *) malloc(nbytes);
-  if (values == NULL) {
-    PyErr_Format(PyExc_MemoryError, "Failed to allocate %zu bytes", nbytes);
-    return;
-  }
+  if (values == NULL)
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes) + " bytes");
   *arr_out = values;
 %enddef
 
