@@ -118,7 +118,7 @@ env:
     - CIBW_BEFORE_TEST="pip install cython"
     - CIBW_TEST_REQUIRES="pytest numpy pot energyflow"
     - CIBW_TEST_COMMAND="pytest {package}"
-    - PYPI=true
+    - PYPI_TEST=true
 
 branches:
   only:

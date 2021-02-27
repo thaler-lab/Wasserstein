@@ -5330,7 +5330,7 @@ SWIGINTERN std::string emd_Histogram1DHandler_Sl__Sg____repr__(emd::Histogram1DH
     if (py_obj == Py_None       ) return "Python None" ;
     if (PyCallable_Check(py_obj)) return "callable"    ;
     if (PyBytes_Check(   py_obj)) return "string"      ;
-    if (PyLong_Check(    py_obj)) return "int"         ;
+    if (PyInt_Check(     py_obj)) return "int"         ;
     if (PyFloat_Check(   py_obj)) return "float"       ;
     if (PyDict_Check(    py_obj)) return "dict"        ;
     if (PyList_Check(    py_obj)) return "list"        ;
@@ -5712,7 +5712,6 @@ SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_
     {
       result = ary;
       *is_new_object = 0;
-      std::cout << "Array is already contiguous!\n";
     }
     else
     {
@@ -5721,7 +5720,6 @@ SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_
                                                               min_dims,
                                                               max_dims);
       *is_new_object = 1;
-      std::cout << "Converting array to contiguous!\n";
     }
     return result;
   }

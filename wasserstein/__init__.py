@@ -41,4 +41,8 @@ from __future__ import absolute_import
 
 from .wasserstein import *
 
+# basic package info
+__author__ = 'Patrick T. Komiske III'
+__email__ = 'pkomiske@mit.edu'
+__license__ = 'GPLv3'
 __version__ = '0.3.2'

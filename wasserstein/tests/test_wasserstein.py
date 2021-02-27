@@ -216,7 +216,7 @@ def test_pairwise_emd(num_events, num_threads, print_every, norm, store_sym_flat
 
     wassEMD = wasserstein.EMD(beta=beta, R=R, norm=norm)
     wassPairwiseEMD = wasserstein.PairwiseEMD(beta=beta, R=R, norm=norm, print_every=print_every,
-                        num_threads=num_threads, store_sym_emds_flattened=store_sym_flattened)
+                        num_threads=num_threads, store_sym_emds_flattened=store_sym_flattened, verbose=False)
 
     # symmetric computation
     wassPairwiseEMD(eventsA)
@@ -260,7 +260,7 @@ def test_pairwise_emd_with_ef(num_events, num_particles, num_threads, beta, R, n
     import energyflow as ef
     eventsA, eventsB = np.random.rand(2, num_events, num_particles, 3)
 
-    wassPairwiseEMD = wasserstein.PairwiseEMD(beta=beta, R=R, norm=norm, num_threads=num_threads)
+    wassPairwiseEMD = wasserstein.PairwiseEMD(beta=beta, R=R, norm=norm, num_threads=num_threads, verbose=False)
 
     # symmetric computation
     wassPairwiseEMD(eventsA)
