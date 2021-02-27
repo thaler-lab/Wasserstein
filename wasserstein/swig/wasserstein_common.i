@@ -97,16 +97,19 @@ import_array();
 
 #endif // SWIG_NUMPY
 
-namespace EMDNAMESPACE {
-
-// allow threads in PairwiseEMD computation
-%threadallow PairwiseEMD::compute;
-
 // basic exception handling for all functions
 %exception {
   try { $action }
   SWIG_CATCH_STDEXCEPT
+  catch (...) {
+    SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+  }
 }
+
+namespace EMDNAMESPACE {
+
+// allow threads in PairwiseEMD computation
+%threadallow PairwiseEMD::compute;
 
 // ignore certain functions
 %ignore EMD::compute;

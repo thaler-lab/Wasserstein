@@ -146,10 +146,8 @@ inline std::string print_1d_hist(const Hist & hist) {
   std::ostringstream oss;
   oss << std::setprecision(16);
 
-  for (const auto && x : boost::histogram::indexed(hist, boost::histogram::coverage::all)) {
-    const auto & wsum(*x);
-    oss << x.index(0) << " : " << wsum.value() << ' ' << std::sqrt(wsum.variance()) << '\n';
-  }
+  for (const auto && x : boost::histogram::indexed(hist, boost::histogram::coverage::all))
+    oss << x.index(0) << " : " << x->value() << ' ' << std::sqrt(x->variance()) << '\n';
   oss << '\n';
 
   return oss.str();
@@ -176,30 +174,31 @@ protected:
 
 public:
 
-  Histogram1DHandler(double axis_min, double axis_max, unsigned nbins) :
-    axis_(nbins, axis_min, axis_max),
-    hist_(boost::histogram::make_weighted_histogram(axis_))
-  {
+  Histogram1DHandler(unsigned nbins, double axis_min, double axis_max) {
+
     if (nbins == 0)
       throw std::invalid_argument("Number of histogram bins should be a positive integer");
     if (axis_min >= axis_max)
       throw std::invalid_argument("axis_min should be less than axis_max");
+
+    axis_ = Axis(nbins, axis_min, axis_max);
+    hist_ = boost::histogram::make_weighted_histogram(axis_);
   }
 
   Histogram1DHandler() {}
   virtual ~Histogram1DHandler() {}
 
   // access the constructor arguments
-  double axis_min() const { return axis().bin(0).lower(); }
-  double axis_max() const { return axis().bin(axis().size() - 1).upper(); }
   unsigned nbins() const { return axis_.size(); }
+  double axis_min() const { return axis().value(0); }
+  double axis_max() const { return axis().value(axis().size()); }
 
   std::string description() const {
     std::ostringstream oss;
     oss << std::setprecision(8)
         << "  ExternalEMDHandler - " << name() << '\n'
-        << "    range - [" << axis_min() << ", " << axis_max() << ")\n"
         << "    bins - " << nbins() << '\n'
+        << "    range - [" << axis_min() << ", " << axis_max() << ")\n"
         << "    axis_transform - " << hist::name_transform<Transform>() << '\n';
 
     return oss.str();

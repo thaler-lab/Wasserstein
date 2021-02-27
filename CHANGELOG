@@ -1,6 +1,9 @@
 ## 0.3.x
 
+**0.3.2**
+
 - Migrated to use travis-ci.com.
+- Changed location of `nbins` argument to `CorrelationDimension` to better match boost histogram usage.
 
 **0.3.1**
 

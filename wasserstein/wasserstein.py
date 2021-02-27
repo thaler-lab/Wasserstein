@@ -316,14 +316,14 @@ class Histogram1DHandler(ExternalEMDHandler):
 
     def __init__(self, *args):
         r"""
-        __init__(Histogram1DHandler self, double axis_min, double axis_max, unsigned int nbins) -> Histogram1DHandler
+        __init__(Histogram1DHandler self, unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandler
         __init__(Histogram1DHandler self) -> Histogram1DHandler
         """
         _wasserstein.Histogram1DHandler_swiginit(self, _wasserstein.new_Histogram1DHandler(*args))
     __swig_destroy__ = _wasserstein.delete_Histogram1DHandler
+    nbins = _swig_new_instance_method(_wasserstein.Histogram1DHandler_nbins)
     axis_min = _swig_new_instance_method(_wasserstein.Histogram1DHandler_axis_min)
     axis_max = _swig_new_instance_method(_wasserstein.Histogram1DHandler_axis_max)
-    nbins = _swig_new_instance_method(_wasserstein.Histogram1DHandler_nbins)
     description = _swig_new_instance_method(_wasserstein.Histogram1DHandler_description)
     hist_vals_errs_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandler_hist_vals_errs_vec)
     bin_centers_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandler_bin_centers_vec)
@@ -344,14 +344,14 @@ class Histogram1DHandlerLog(ExternalEMDHandler):
 
     def __init__(self, *args):
         r"""
-        __init__(Histogram1DHandlerLog self, double axis_min, double axis_max, unsigned int nbins) -> Histogram1DHandlerLog
+        __init__(Histogram1DHandlerLog self, unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandlerLog
         __init__(Histogram1DHandlerLog self) -> Histogram1DHandlerLog
         """
         _wasserstein.Histogram1DHandlerLog_swiginit(self, _wasserstein.new_Histogram1DHandlerLog(*args))
     __swig_destroy__ = _wasserstein.delete_Histogram1DHandlerLog
+    nbins = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_nbins)
     axis_min = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_axis_min)
     axis_max = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_axis_max)
-    nbins = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_nbins)
     description = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_description)
     hist_vals_errs_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_hist_vals_errs_vec)
     bin_centers_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_bin_centers_vec)
@@ -372,7 +372,7 @@ class CorrelationDimension(Histogram1DHandlerLog):
 
     def __init__(self, *args):
         r"""
-        __init__(CorrelationDimension self, double axis_min, double axis_max, unsigned int nbins) -> CorrelationDimension
+        __init__(CorrelationDimension self, unsigned int nbins, double axis_min, double axis_max) -> CorrelationDimension
         __init__(CorrelationDimension self) -> CorrelationDimension
         """
         _wasserstein.CorrelationDimension_swiginit(self, _wasserstein.new_CorrelationDimension(*args))

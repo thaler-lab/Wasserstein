@@ -51,8 +51,8 @@ BEGIN_EMD_NAMESPACE
 class CorrelationDimension : public Histogram1DHandler<boost::histogram::axis::transform::log> {
 public:
 
-  CorrelationDimension(double axis_min, double axis_max, unsigned nbins) :
-    Histogram1DHandler(axis_min, axis_max, nbins)
+  CorrelationDimension(unsigned nbins, double axis_min, double axis_max) :
+    Histogram1DHandler(nbins, axis_min, axis_max)
   {}
 
   CorrelationDimension() {}

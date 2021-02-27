@@ -302,7 +302,7 @@ def test_corrdim(low, high, nbins):
 
     nevents = 150
 
-    corrdim = wasserstein.CorrelationDimension(low, high, nbins)
+    corrdim = wasserstein.CorrelationDimension(nbins, low, high)
     emds = wasserstein.PairwiseEMD(throw_on_error=True)
     emds.set_external_emd_handler(corrdim)
 

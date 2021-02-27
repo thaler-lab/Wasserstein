@@ -198,22 +198,22 @@
 </ul>
 <h3 id="histogram1dhandler">Histogram1DHandler</h3>
 <p>Histograms the EMD values into a pre-determined histogram. <code>Histogram1DHandler</code> uses a linearly-spaced axis whereas <code>Histogram1DHandlerLog</code> uses a log-spaced axis. This wraps the C++ class, which itself uses the <a href="https://www.boost.org/doc/libs/1_74_0/libs/histogram/doc/html/index.html">Boost Histogram Package</a>.</p>
-<div class="codehilite"><pre><span></span><code><span class="n">wasserstein</span><span class="o">.</span><span class="n">Histogram1DHandler</span><span class="p">(</span><span class="n">axis_min</span><span class="p">,</span> <span class="n">axis_max</span><span class="p">,</span> <span class="n">nbins</span><span class="p">)</span>
-<span class="n">wasserstein</span><span class="o">.</span><span class="n">Histogram1DHandlerLog</span><span class="p">(</span><span class="n">axis_min</span><span class="p">,</span> <span class="n">axis_max</span><span class="p">,</span> <span class="n">nbins</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="n">wasserstein</span><span class="o">.</span><span class="n">Histogram1DHandler</span><span class="p">(</span><span class="n">nbins</span><span class="p">,</span> <span class="n">axis_min</span><span class="p">,</span> <span class="n">axis_max</span><span class="p">)</span>
+<span class="n">wasserstein</span><span class="o">.</span><span class="n">Histogram1DHandlerLog</span><span class="p">(</span><span class="n">nbins</span><span class="p">,</span> <span class="n">axis_min</span><span class="p">,</span> <span class="n">axis_max</span><span class="p">)</span>
 </code></pre></div>
 
 <p><strong>Arguments</strong></p>
 <ul>
+<li><strong>nbins</strong> : <em>int</em><ul>
+<li>The number of bins to create in the histogram.</li>
+</ul>
+</li>
 <li><strong>axis_min</strong> : <em>float</em><ul>
 <li>The lower bound of the axis.</li>
 </ul>
 </li>
 <li><strong>axis_max</strong> : <em>float</em><ul>
 <li>The upper bound of the axis.</li>
-</ul>
-</li>
-<li><strong>nbins</strong> : <em>int</em><ul>
-<li>The number of bins to create in the histogram.</li>
 </ul>
 </li>
 </ul>
