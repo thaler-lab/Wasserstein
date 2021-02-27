@@ -42,16 +42,22 @@ with open(os.path.join('wasserstein', '__init__.py'), 'r') as f:
     __version__ = re.search(r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read()).group(1)
 
 cxxflags = ['-fopenmp', '-std=c++14']
-ldflags = ['-fopenmp']
+ldflags = []
 libs = []
+
+# MaxOS
 if platform.system() == 'Darwin':
     cxxflags.insert(0, '-Xpreprocessor')
-    del ldflags[0]
-    libs = ['omp']
+    libs.append('omp')
+
+# Linux
+elif platform.system() = 'Linux':
+    ldflags.append('-fopenmp')
+
+# Windows
 elif platform.system() == 'Windows':
-    cxxflags[0] = ldflags[0] = '/openmp'
-    cxxflags[1] = '/std:c++14'
-    del cxxflags[2]
+    cxxflags = ['/openmp', '/std:c++14']
+    ldflags = ['/openmp']
 
 if sys.argv[1] == 'swig':
     opts = '-fastproxy -w511 -keyword'
