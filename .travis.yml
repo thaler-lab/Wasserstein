@@ -10,9 +10,7 @@ stages:
 
 jobs:
   exclude:
-    - stage: build
-  #  - os: linux
-  #  - os: windows
+    #- stage: build
 
   include:
 
@@ -45,9 +43,9 @@ jobs:
       os: mac
       osx_image: xcode11
       language: shell
-      before_install: |
-        brew update > /dev/null
-        brew install libomp
+      before_install:
+        - brew update > /dev/null
+        - brew install libomp
 
     # test on Windows
     - name: Test on Windows
@@ -66,28 +64,17 @@ jobs:
   # BUILDS
   ##############################################################################
 
-    # build a source distribution
-    - name: Deploy a source distribution
-      stage: build
-      dist: bionic
-      install: python3 -m pip install twine
-      script: python3 setup.py sdist --formats=gztar
-      after_success: |
-        if [ ! -z $TRAVIS_TAG ]; then
-          python3 -m twine upload --skip-existing dist/*.tar.gz
-        fi
-
     # build on linux
     - name: Build wheels on Linux
       stage: build
       dist: bionic
       services: docker
       install: python3 -m pip install cibuildwheel twine
-      script: python3 -m cibuildwheel --output-dir wheelhouse
-      after_success: |
-        if [ ! -z $TRAVIS_TAG ]; then
-          python3 -m twine upload --skip-existing wheelhouse/*.whl
-        fi
+      script:
+        - python3 setup.py sdist --formats=gztar
+        - python3 -m cibuildwheel --output-dir wheelhouse
+      after_success:
+        - ./scripts/pypi-upload.sh sdist
       env:
         - CIBW_BUILD="cp27-manylinux_x86_64 cp35-manylinux_x86_64 cp36-manylinux_x86_64 cp37-manylinux_x86_64 cp38-manylinux_x86_64 cp39-manylinux_x86_64"
 
@@ -97,16 +84,14 @@ jobs:
       os: osx
       osx_image: xcode11
       language: shell
-      before_install: |
-        brew update > /dev/null
-        brew install libomp
+      before_install:
+        - brew update > /dev/null
+        - brew install libomp
       install: python3 -m pip install cibuildwheel
       script: python3 -m cibuildwheel --output-dir wheelhouse
-      after_success: |
-        if [ ! -z $TRAVIS_TAG ]; then
-          python3 -m pip install twine
-          python3 -m twine upload --skip-existing wheelhouse/*.whl
-        fi
+      after_success:
+        - python3 -m pip install twine
+        - ./scripts/pypi-upload.sh
       env:
         - CIBW_BUILD="cp27-macosx_x86_64 cp35-macosx_x86_64 cp36-macosx_x86_64 cp37-macosx_x86_64 cp38-macosx_x86_64 cp39-macosx_x86_64"
 
@@ -120,11 +105,9 @@ jobs:
         - ln -s /c/Python38/python.exe /c/Python38/python3.exe
       install: python3 -m pip install cibuildwheel
       script: python3 -m cibuildwheel --output-dir wheelhouse
-      after_success: |
-        if [ ! -z $TRAVIS_TAG ]; then
-          python3 -m pip install twine
-          python3 -m twine upload --skip-existing wheelhouse/*.whl
-        fi
+      after_success:
+        - python3 -m pip install twine
+        - ./scripts/pypi-upload.sh
       env:
         - PATH=/c/Python38:/c/Python38/Scripts:$PATH CIBW_BUILD="cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64 cp39-win_amd64"
 
@@ -135,6 +118,7 @@ env:
     - CIBW_BEFORE_TEST="pip install cython"
     - CIBW_TEST_REQUIRES="pytest numpy pot energyflow"
     - CIBW_TEST_COMMAND="pytest {package}"
+    - PYPI=true
 
 branches:
   only:
