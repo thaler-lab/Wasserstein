@@ -51,7 +51,7 @@ if platform.system() == 'Darwin':
     libs.append('omp')
 
 # Linux
-elif platform.system() = 'Linux':
+elif platform.system() == 'Linux':
     ldflags.append('-fopenmp')
 
 # Windows

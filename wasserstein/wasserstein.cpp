@@ -5330,7 +5330,7 @@ SWIGINTERN std::string emd_Histogram1DHandler_Sl__Sg____repr__(emd::Histogram1DH
     if (py_obj == Py_None       ) return "Python None" ;
     if (PyCallable_Check(py_obj)) return "callable"    ;
     if (PyBytes_Check(   py_obj)) return "string"      ;
-    if (PyInt_Check(     py_obj)) return "int"         ;
+    if (PyLong_Check(    py_obj)) return "int"         ;
     if (PyFloat_Check(   py_obj)) return "float"       ;
     if (PyDict_Check(    py_obj)) return "dict"        ;
     if (PyList_Check(    py_obj)) return "list"        ;
