@@ -75,8 +75,6 @@ jobs:
         - python3 -m cibuildwheel --output-dir wheelhouse
       after_success:
         - ./scripts/pypi-upload.sh sdist
-      env:
-        - CIBW_BUILD="cp27-manylinux_x86_64 cp35-manylinux_x86_64 cp36-manylinux_x86_64 cp37-manylinux_x86_64 cp38-manylinux_x86_64 cp39-manylinux_x86_64"
 
     # build on mac
     - name: Build wheels on Mac
@@ -92,8 +90,6 @@ jobs:
       after_success:
         - python3 -m pip install twine
         - ./scripts/pypi-upload.sh
-      env:
-        - CIBW_BUILD="cp27-macosx_x86_64 cp35-macosx_x86_64 cp36-macosx_x86_64 cp37-macosx_x86_64 cp38-macosx_x86_64 cp39-macosx_x86_64"
 
     # build on windows
     - name: Build wheels on Windows
@@ -109,15 +105,17 @@ jobs:
         - python3 -m pip install twine
         - ./scripts/pypi-upload.sh
       env:
-        - PATH=/c/Python38:/c/Python38/Scripts:$PATH CIBW_BUILD="cp35-win_amd64 cp36-win_amd64 cp37-win_amd64 cp38-win_amd64 cp39-win_amd64"
+        - PATH=/c/Python38:/c/Python38/Scripts:$PATH
 
 env:
   global:
     - TWINE_USERNAME=__token__
-    - CIBW_BEFORE_BUILD="pip install numpy"
+    - CIBW_BEFORE_BUILD="pip install -U numpy"
     - CIBW_BEFORE_TEST="pip install cython"
-    - CIBW_TEST_REQUIRES="pytest numpy pot energyflow"
+    - CIBW_SKIP="pp* *s390x"
     - CIBW_TEST_COMMAND="pytest {package}"
+    - CIBW_TEST_REQUIRES="pytest numpy pot energyflow"
+    - CIBW_TEST_SKIP="*i686 *aarch64 *ppc64le *universal2 *win32"
     - PYPI_TEST=true
 
 branches:
