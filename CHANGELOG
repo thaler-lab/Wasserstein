@@ -5,6 +5,7 @@
 - Migrated continuous integration testing and building to travis-ci.com.
 - Changed location of `nbins` argument to `CorrelationDimension` to better match boost histogram usage.
 - Building wheels for more architectures now.
+- Using SWIG 4.0.2.
 
 **0.3.1**
 

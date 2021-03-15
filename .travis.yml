@@ -112,11 +112,11 @@ env:
     - TWINE_USERNAME=__token__
     - CIBW_BEFORE_BUILD="pip install -U numpy"
     - CIBW_BEFORE_TEST="pip install cython"
-    - CIBW_SKIP="pp* *s390x"
+    - CIBW_SKIP="pp*"
     - CIBW_TEST_COMMAND="pytest {package}"
     - CIBW_TEST_REQUIRES="pytest numpy pot energyflow"
-    - CIBW_TEST_SKIP="*i686 *aarch64 *ppc64le *universal2 *win32"
-    - PYPI_TEST=true
+    - CIBW_TEST_SKIP="*i686 *win32"
+    - PYPI=true
 
 branches:
   only:
