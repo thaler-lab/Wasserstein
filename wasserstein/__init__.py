@@ -45,4 +45,4 @@ from .wasserstein import *
 __author__ = 'Patrick T. Komiske III'
 __email__ = 'pkomiske@mit.edu'
 __license__ = 'GPLv3'
-__version__ = '0.3.2'
+__version__ = '0.4.0a0'
