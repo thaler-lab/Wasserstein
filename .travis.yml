@@ -2,6 +2,7 @@
 language: python
 
 script:
+  - python3 setup.py build
   - python3 setup.py test
 
 stages:
@@ -56,7 +57,7 @@ jobs:
         - choco install python --version 3.8.3
         - ln -s /c/Python38/python.exe /c/Python38/python3.exe
         - python3 -m pip install cython
-      install: python3 -m pip install numpy h5py pot
+      #install: python3 -m pip install
       env:
         - PATH=/c/Python38:/c/Python38/Scripts:$PATH
 
@@ -114,7 +115,7 @@ env:
     - CIBW_BEFORE_TEST="pip install cython"
     - CIBW_SKIP="pp* cp27*"
     - CIBW_TEST_COMMAND="pytest {package}"
-    - CIBW_TEST_REQUIRES="pytest numpy pot energyflow"
+    #- CIBW_TEST_REQUIRES="pytest numpy pot energyflow"
     - CIBW_TEST_SKIP="*i686 *win32"
     - PYPI_TEST=true
 
