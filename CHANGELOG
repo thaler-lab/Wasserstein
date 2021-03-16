@@ -1,11 +1,8 @@
-## 0.4.x
-
-**0.4.0
-
-- Removed support for Python 2.7. Python 3.5 or higher is now required.
-- Wheels are built against older NumPy versions to facilitate compatibility.
-
 ## 0.3.x
+
+**0.3.3**
+
+- Wheels are now built against older NumPy versions to facilitate compatibility.
 
 **0.3.2**
 

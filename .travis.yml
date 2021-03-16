@@ -115,13 +115,12 @@ jobs:
 env:
   global:
     - TWINE_USERNAME=__token__
-    #- CIBW_BEFORE_BUILD="pip install oldest-supported-numpy"
     - CIBW_BEFORE_TEST="pip install cython"
     - CIBW_SKIP="pp*"
     - CIBW_TEST_COMMAND="pytest {package}"
     - CIBW_TEST_REQUIRES="pytest numpy pot energyflow"
     - CIBW_TEST_SKIP="*i686 *win32"
-    - PYPI_TEST=true
+    - PYPI=true
 
 branches:
   only:
