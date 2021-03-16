@@ -2,8 +2,7 @@
 language: python
 
 install:
-  - python3 -m pip install oldest-supported-numpy
-  - python3 setup.py install
+  - python3 -m pip install .
 
 before_script:
   - python3 -m pip install pytest energyflow pot
@@ -42,7 +41,7 @@ jobs:
       stage: test
       dist: bionic
       python: 3.9
-      after_install:
+      before_install:
         - python3 -m pip install cython
 
     # test on Mac
@@ -116,7 +115,7 @@ jobs:
 env:
   global:
     - TWINE_USERNAME=__token__
-    - CIBW_BEFORE_BUILD="pip install oldest-supported-numpy"
+    #- CIBW_BEFORE_BUILD="pip install oldest-supported-numpy"
     - CIBW_BEFORE_TEST="pip install cython"
     - CIBW_SKIP="pp*"
     - CIBW_TEST_COMMAND="pytest {package}"
