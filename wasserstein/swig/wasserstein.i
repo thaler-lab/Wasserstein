@@ -114,7 +114,7 @@ def _store_events(pairwise_emd, events, gdim, mask):
 
         # consider mask
         if mask:
-            event = event[np.sum(event**2, axis=1) <= R2]
+            event = event[np.sum(event[:,1:]**2, axis=1) <= R2]
 
         # extract weights and coords
         weights = np.asarray(event[:,0], dtype=np.double, order='C')

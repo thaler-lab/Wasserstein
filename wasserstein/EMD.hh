@@ -559,10 +559,6 @@ public:
 
     if (free_memory) {
       handler_ = nullptr;
-      //EventVector().swap(events_);
-      //ValueVector().swap(emds_);
-      //ValueVector().swap(full_emds_);
-      //std::vector<std::string>().swap(error_messages_);
       free_vector(events_);
       free_vector(emds_);
       free_vector(full_emds_);

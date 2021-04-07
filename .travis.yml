@@ -16,7 +16,6 @@ stages:
 
 jobs:
   exclude:
-    #- stage: build
 
   include:
 
