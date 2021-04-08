@@ -85,6 +85,9 @@ enum class EMDStatus {
 // enum for which event got an extra particle
 enum class ExtraParticle { Neither = -1, Zero = 0, One = 1 };
 
+// records how the emd pairs are being stored
+enum class EMDPairsStorage { Full, FullSymmetric, FlattenedSymmetric, External };
+
 const double PI = 3.14159265358979323846;
 const double TWOPI = 2*PI;
 

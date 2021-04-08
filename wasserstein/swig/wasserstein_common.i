@@ -65,6 +65,8 @@
 import_array();
 %}
 
+%numpy_typemaps(double, NPY_DOUBLE, std::ptrdiff_t)
+
 // numpy typemaps
 %apply (double* IN_ARRAY1, int DIM1) {(double* weights0, int n0), (double* weights1, int n1)}
 %apply (double* IN_ARRAY2, int DIM1, int DIM2) {(double* coords0, int n00, int n01),
@@ -73,6 +75,7 @@ import_array();
 %apply (double* INPLACE_ARRAY1, int DIM1) {(double* weights, int n0)}
 %apply (double* INPLACE_ARRAY2, int DIM1, int DIM2) {(double* coords, int n1, int d)}
 %apply (double** ARGOUTVIEWM_ARRAY1, int* DIM1) {(double** arr_out0, int* n0), (double** arr_out1, int* n1)}
+%apply (double** ARGOUTVIEWM_ARRAY1, std::ptrdiff_t* DIM1) {(double** arr_out, std::ptrdiff_t* n)}
 %apply (double** ARGOUTVIEWM_ARRAY2, int* DIM1, int* DIM2) {(double** arr_out, int* n0, int* n1)}
 
 // prepare to extend classes by renaming some methods
@@ -215,6 +218,14 @@ void pyname(double** arr_out0, int* n0, double** arr_out1, int* n1) {
   void npy_emds(double** arr_out, int* n0, int* n1) {
     MALLOC_2D_VALUE_ARRAY($self->nevA(), $self->nevB())
     memcpy(*arr_out, $self->emds().data(), nbytes);
+  }
+
+  void emds_flattened(double** arr_out, std::ptrdiff_t* n) {
+    if ($self->storage() != emd::EMDPairsStorage::FlattenedSymmetric)
+      throw std::runtime_error("flattened emds only available with flattened symmetric storage");
+
+    MALLOC_1D_VALUE_ARRAY(arr_out, n, $self->num_emds(), nbytes)
+    memcpy(*arr_out, $self->emds(true).data(), nbytes);
   }
   #endif // SWIG_NUMPY
 

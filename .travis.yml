@@ -119,7 +119,7 @@ env:
     - CIBW_TEST_COMMAND="pytest {package}"
     - CIBW_TEST_REQUIRES="pytest numpy pot energyflow"
     - CIBW_TEST_SKIP="*i686 *win32"
-    - PYPI=true
+    - PYPI_TEST=true
 
 branches:
   only:

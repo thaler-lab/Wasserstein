@@ -1,5 +1,7 @@
 ## 0.3.x
 
+- Changed symmetric EMD storage from lower triangular to upper triangular to match SciPy's `squareform` function.
+
 **0.3.4**
 
 - Fixed bug with masking out particles farther than R from the origin.

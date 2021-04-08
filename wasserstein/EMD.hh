@@ -304,14 +304,14 @@ public:
   }
 
   // emd flow values between particle i in event0 and particle j in event1
-  Value flow(long long i, long long j) const {
+  Value flow(std::ptrdiff_t i, std::ptrdiff_t j) const {
 
     // allow for negative indices
     if (i < 0) i += n0();
     if (j < 0) j += n1();
 
     // check for improper indexing
-    if (size_t(i) >= n0() || size_t(j) >= n1() || i < 0 || j < 0)
+    if (std::size_t(i) >= n0() || std::size_t(j) >= n1() || i < 0 || j < 0)
       throw std::out_of_range("EMD::flow - Indices out of range");
 
     return flow(i*n1() + j);
@@ -388,9 +388,6 @@ public:
 
 private:
 
-  // records how the emd pairs are being stored
-  enum EMDPairsStorage : char { Full, FullSymmetric, FlattenedSymmetric, External };
-
   // needs to be before emd_objs_ in order to determine actual number of threads
   int num_threads_, omp_dynamic_chunksize_;
 
@@ -398,7 +395,7 @@ private:
   std::vector<EMD> emd_objs_;
 
   // variables local to this class
-  long long print_every_;
+  long print_every_;
   ExternalEMDHandler * handler_;
   unsigned verbose_;
   bool store_sym_emds_flattened_, throw_on_error_, request_mode_;
@@ -411,7 +408,7 @@ private:
   std::vector<std::string> error_messages_;
 
   // info about stored events
-  size_t nevA_, nevB_, emd_counter_, num_emds_, num_emds_width_;
+  std::ptrdiff_t nevA_, nevB_, num_emds_, emd_counter_, num_emds_width_;
   EMDPairsStorage emd_storage_;
   bool two_event_sets_;
 
@@ -420,7 +417,7 @@ public:
   // contructor that initializes the EMD object, uses the same default arguments
   PairwiseEMD(Value R = 1, Value beta = 1, bool norm = false,
               int num_threads = -1,
-              long long print_every = -10,
+              long print_every = -10,
               unsigned verbose = 1,
               bool store_sym_emds_flattened = true,
               bool throw_on_error = false,
@@ -441,7 +438,7 @@ public:
   // contructor uses existing EMD instance
   PairwiseEMD(const EMD & emd,
               int num_threads = -1,
-              long long print_every = -10,
+              long print_every = -10,
               unsigned verbose = 1,
               bool store_sym_emds_flattened = true,
               bool throw_on_error = false,
@@ -519,6 +516,11 @@ public:
     return request_mode_;
   }
 
+  // query storage mode
+  EMDPairsStorage storage() const {
+    return emd_storage_;
+  }
+
   // return a description of this object as a string
   std::string description(bool write_preprocessors = true) const {
     std::ostringstream oss;
@@ -551,7 +553,7 @@ public:
     full_emds_.clear();
     error_messages_.clear();
 
-    emd_storage_ = External;
+    emd_storage_ = EMDPairsStorage::External;
     nevA_ = nevB_ = emd_counter_ = num_emds_ = 0;
 
     // start clock for overall timing
@@ -609,22 +611,22 @@ public:
     if (raw) return emds_;
 
     // check for having no emds stored
-    if (emd_storage_ == External)
+    if (emd_storage_ == EMDPairsStorage::External)
       throw std::logic_error("No EMDs stored");
 
     // check if we need to construct a new full matrix from a flattened symmetric one
-    if (emd_storage_ == FlattenedSymmetric) {
+    if (emd_storage_ == EMDPairsStorage::FlattenedSymmetric) {
 
       // allocate a new vector for holding the full emds
       full_emds_.resize(nevA_*nevB_);
 
       // zeros on the diagonal
-      for (size_t i = 0; i < nevA_; i++)
+      for (std::ptrdiff_t i = 0; i < nevA_; i++)
         full_emds_[i*i] = 0;
 
-      // fill out matrix
-      for (size_t i = 0; i < nevA_; i++)
-        for (size_t j = 0; j < i; j++)
+      // fill out matrix (index into upper triangular part)
+      for (std::ptrdiff_t i = 0; i < nevA_; i++)
+        for (std::ptrdiff_t j = i + 1; j < nevB_; j++)
           full_emds_[i*nevB_ + j] = full_emds_[j*nevB_ + i] = emds_[index_symmetric(i, j)];
 
       return full_emds_;
@@ -635,14 +637,14 @@ public:
   }
 
   // access a specific emd
-  Value emd(long long i, long long j, int thread = 0) {
+  Value emd(std::ptrdiff_t i, std::ptrdiff_t j, int thread = 0) {
 
     // allow for negative indices
     if (i < 0) i += nevA_;
     if (j < 0) j += nevB_;
 
     // check for improper indexing
-    if (size_t(i) >= nevA_ || size_t(j) >= nevB_ || i < 0 || j < 0) {
+    if (i >= nevA_ || j >= nevB_ || i < 0 || j < 0) {
       std::ostringstream message("PairwiseEMD::emd - Accessing emd value at (", std::ios_base::ate);
       message << i << ", " << j << ") exceeds allowed range";
       throw std::out_of_range(message.str());
@@ -661,12 +663,13 @@ public:
     }
 
     // check for External handling, in which case we don't have any emds stored
-    if (emd_storage_ == External)
+    if (emd_storage_ == EMDPairsStorage::External)
       throw std::logic_error("EMD requested but external handler provided, so no EMDs stored");
 
-    // index into emd vector
-    if (emd_storage_ == FlattenedSymmetric)
-      return (i == j ? 0 : emds_[i > j ? index_symmetric(i, j) : index_symmetric(j, i)]);
+    // index into emd vector (j always bigger than i because upper triangular storage)
+    if (emd_storage_ == EMDPairsStorage::FlattenedSymmetric)
+      return (i == j ? 0 : emds_[index_symmetric(i, j)]);
+
     else return emds_[i*nevB_ + j];
   }
 
@@ -680,11 +683,11 @@ public:
   }*/
 
   // number of unique emds computed
-  size_t num_emds() const { return num_emds_; }
+  std::ptrdiff_t num_emds() const { return num_emds_; }
 
   // access events
-  size_t nevA() const { return nevA_; }
-  size_t nevB() const { return nevB_; }
+  std::ptrdiff_t nevA() const { return nevA_; }
+  std::ptrdiff_t nevB() const { return nevB_; }
   const EventVector & events() const { return events_; }
 
   // access timing information
@@ -704,7 +707,7 @@ private:
   }
 
   // init self pairs
-  void init(size_t nev) {
+  void init(std::ptrdiff_t nev) {
 
     if (!request_mode())
       clear(false);
@@ -715,8 +718,8 @@ private:
     // resize emds
     num_emds_ = nevA_*(nevA_ - 1)/2;
     if (!external_handler() && !request_mode()) {
-      emd_storage_ = (store_sym_emds_flattened_ ? FlattenedSymmetric : FullSymmetric);
-      emds_.resize(emd_storage_ == FullSymmetric ? nevA_*nevB_ : num_emds_);
+      emd_storage_ = (store_sym_emds_flattened_ ? EMDPairsStorage::FlattenedSymmetric : EMDPairsStorage::FullSymmetric);
+      emds_.resize(emd_storage_ == EMDPairsStorage::FullSymmetric ? nevA_*nevB_ : num_emds_);
     }
 
     // reserve space for events
@@ -724,7 +727,7 @@ private:
   }
 
   // init pairs
-  void init(size_t nevA, size_t nevB) {
+  void init(std::ptrdiff_t nevA, std::ptrdiff_t nevB) {
 
     if (!request_mode())
       clear(false);
@@ -736,7 +739,7 @@ private:
     // resize emds
     num_emds_ = nevA_*nevB_;
     if (!external_handler() && !request_mode()) {
-      emd_storage_ = Full;
+      emd_storage_ = EMDPairsStorage::Full;
       emds_.resize(num_emds_);  
     }
 
@@ -752,7 +755,7 @@ private:
 
     num_emds_width_ = std::to_string(num_emds_).size();
 
-    long long print_every(print_every_);
+    long print_every(print_every_);
     if (print_every < 0) {
       print_every = num_emds_/std::abs(print_every_);
       if (print_every == 0 || num_emds_ % std::abs(print_every_) != 0)
@@ -772,9 +775,9 @@ private:
 
     // iterate over emd pairs
     std::mutex failure_mutex;
-    size_t begin(0);
+    std::size_t begin(0);
     while (emd_counter_ < num_emds_ && !(throw_on_error_ && error_messages().size())) {
-      emd_counter_ += size_t(print_every);
+      emd_counter_ += std::size_t(print_every);
       if (emd_counter_ > num_emds_) emd_counter_ = num_emds_;
 
       #pragma omp parallel num_threads(num_threads_) default(shared)
@@ -790,9 +793,9 @@ private:
 
         // parallelize loop over EMDs
         #pragma omp for schedule(dynamic, omp_for_dynamic_chunksize)
-        for (long long k = begin; k < (long long) emd_counter_; k++) {
+        for (std::ptrdiff_t k = begin; k < emd_counter_; k++) {
 
-          size_t i(k/nevB_), j(k%nevB_);
+          std::ptrdiff_t i(k/nevB_), j(k%nevB_);
           if (two_event_sets_) {
 
             // run and check for failure
@@ -820,11 +823,11 @@ private:
             }
 
             // store emd value
-            if (emd_storage_ == FlattenedSymmetric)
+            if (emd_storage_ == EMDPairsStorage::FlattenedSymmetric)
               emds_[index_symmetric(i, j)] = emd_obj.emd();
-            else if (emd_storage_ == External)
+            else if (emd_storage_ == EMDPairsStorage::External)
               (*handler_)(emd_obj.emd());
-            else if (emd_storage_ == FullSymmetric)
+            else if (emd_storage_ == EMDPairsStorage::FullSymmetric)
               emds_[i*nevB_ + j] = emds_[j*nevB_ + i] = emd_obj.emd();
             else std::cerr << "Should never get here\n";
           }
@@ -854,7 +857,7 @@ private:
   }
 
   // init from constructor
-  void setup(long long print_every, unsigned verbose,
+  void setup(long print_every, unsigned verbose,
              bool store_sym_emds_flattened, bool throw_on_error,
              std::ostream * os) {
     
@@ -894,7 +897,7 @@ private:
     }
   }
 
-  void record_failure(EMDStatus status, size_t i, size_t j) {
+  void record_failure(EMDStatus status, std::ptrdiff_t i, std::ptrdiff_t j) {
     std::ostringstream message;
     message << "PairwiseEMD::compute - Issue with EMD between events ("
             << i << ", " << j << "), error code " << int(status);
@@ -910,9 +913,19 @@ private:
     #endif
   }
 
-  // indexes lower triangle of symmetric matrix with zeros on diagonal that has been flattened into 1D
-  static size_t index_symmetric(size_t i, size_t j) {
-    return i*(i - 1)/2 + j;
+  // indexes upper triangle of symmetric matrix with zeros on diagonal that has been flattened into 1D
+  // see scipy's squareform function
+  std::ptrdiff_t index_symmetric(std::ptrdiff_t i, std::ptrdiff_t j) {
+
+    // treat i as the row and j as the column
+    if (j > i)
+      return num_emds_ - (nevA_ - i)*(nevA_ - i - 1)/2 + j - i - 1;
+
+    // treat i as the column and j as the row
+    if (i > j)
+      return num_emds_ - (nevA_ - j)*(nevA_ - j - 1)/2 + i - j - 1;
+
+    return -1;
   }
 
   void print_update() {

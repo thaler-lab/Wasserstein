@@ -257,6 +257,14 @@ ExtraParticle_Zero = _wasserstein.ExtraParticle_Zero
 
 ExtraParticle_One = _wasserstein.ExtraParticle_One
 
+EMDPairsStorage_Full = _wasserstein.EMDPairsStorage_Full
+
+EMDPairsStorage_FullSymmetric = _wasserstein.EMDPairsStorage_FullSymmetric
+
+EMDPairsStorage_FlattenedSymmetric = _wasserstein.EMDPairsStorage_FlattenedSymmetric
+
+EMDPairsStorage_External = _wasserstein.EMDPairsStorage_External
+
 phi_fix = _wasserstein.phi_fix
 check_emd_status = _wasserstein.check_emd_status
 class ExternalEMDHandler(object):
@@ -460,7 +468,7 @@ class PairwiseEMD(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
-        r"""__init__(PairwiseEMD self, emd::Value R=1, emd::Value beta=1, bool norm=False, int num_threads=-1, long long print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMD"""
+        r"""__init__(PairwiseEMD self, emd::Value R=1, emd::Value beta=1, bool norm=False, int num_threads=-1, long print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMD"""
         _wasserstein.PairwiseEMD_swiginit(self, _wasserstein.new_PairwiseEMD(*args, **kwargs))
     __swig_destroy__ = _wasserstein.delete_PairwiseEMD
     R = _swig_new_instance_method(_wasserstein.PairwiseEMD_R)
@@ -484,6 +492,7 @@ class PairwiseEMD(object):
     external_handler = _swig_new_instance_method(_wasserstein.PairwiseEMD_external_handler)
     set_request_mode = _swig_new_instance_method(_wasserstein.PairwiseEMD_set_request_mode)
     request_mode = _swig_new_instance_method(_wasserstein.PairwiseEMD_request_mode)
+    storage = _swig_new_instance_method(_wasserstein.PairwiseEMD_storage)
     description = _swig_new_instance_method(_wasserstein.PairwiseEMD_description)
 
     def clear(self):
@@ -505,6 +514,7 @@ class PairwiseEMD(object):
     __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMD___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.PairwiseEMD___repr__)
     emds = _swig_new_instance_method(_wasserstein.PairwiseEMD_emds)
+    emds_flattened = _swig_new_instance_method(_wasserstein.PairwiseEMD_emds_flattened)
 
 
         # ensure proper destruction of objects held by this instance
