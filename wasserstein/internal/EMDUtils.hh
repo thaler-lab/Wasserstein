@@ -146,7 +146,7 @@ protected:
   bool norm_, do_timing_, external_dists_;
 
   // number of particles
-  std::size_t n0_, n1_;
+  std::ptrdiff_t n0_, n1_;
   ExtraParticle extra_;
 
   // emd value and status
@@ -190,8 +190,8 @@ public:
   void set_external_dists(bool exdists) { external_dists_ = exdists; }
 
   // number of particles in each event (after possible addition of extra particles)
-  std::size_t n0() const { return n0_; }
-  std::size_t n1() const { return n1_; }
+  std::ptrdiff_t n0() const { return n0_; }
+  std::ptrdiff_t n1() const { return n1_; }
 
   // which event, 0 or 1, got an extra particle (-1 if no event got one)
   ExtraParticle extra() const { return extra_; }

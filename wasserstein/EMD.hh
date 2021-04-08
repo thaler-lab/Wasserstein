@@ -311,7 +311,7 @@ public:
     if (j < 0) j += n1();
 
     // check for improper indexing
-    if (std::size_t(i) >= n0() || std::size_t(j) >= n1() || i < 0 || j < 0)
+    if (i >= n0() || j >= n1() || i < 0 || j < 0)
       throw std::out_of_range("EMD::flow - Indices out of range");
 
     return flow(i*n1() + j);
@@ -395,7 +395,7 @@ private:
   std::vector<EMD> emd_objs_;
 
   // variables local to this class
-  long print_every_;
+  std::ptrdiff_t print_every_;
   ExternalEMDHandler * handler_;
   unsigned verbose_;
   bool store_sym_emds_flattened_, throw_on_error_, request_mode_;
@@ -417,7 +417,7 @@ public:
   // contructor that initializes the EMD object, uses the same default arguments
   PairwiseEMD(Value R = 1, Value beta = 1, bool norm = false,
               int num_threads = -1,
-              long print_every = -10,
+              std::ptrdiff_t print_every = -10,
               unsigned verbose = 1,
               bool store_sym_emds_flattened = true,
               bool throw_on_error = false,
@@ -438,7 +438,7 @@ public:
   // contructor uses existing EMD instance
   PairwiseEMD(const EMD & emd,
               int num_threads = -1,
-              long print_every = -10,
+              std::ptrdiff_t print_every = -10,
               unsigned verbose = 1,
               bool store_sym_emds_flattened = true,
               bool throw_on_error = false,
@@ -503,7 +503,13 @@ public:
   void set_external_emd_handler(ExternalEMDHandler & handler) {
     handler_ = &handler;
   }
-  bool external_handler() const {
+  ExternalEMDHandler * external_emd_handler() {
+    if (!have_external_emd_handler())
+      throw std::logic_error("no external emd handler set");
+
+    return handler_;
+  }
+  bool have_external_emd_handler() const {
     return handler_ != nullptr;
   }
 
@@ -598,17 +604,32 @@ public:
   // compute pairs between different sets of events
   void compute(const EventVector & eventsA, const EventVector & eventsB) {
     init(eventsA.size(), eventsB.size());
-    events_.reserve(nevA_ + nevB_);
+    events_.reserve(nevA() + nevB());
     events_.insert(events_.end(), eventsA.begin(), eventsA.end());
     events_.insert(events_.end(), eventsB.begin(), eventsB.end());
     compute();
   }
 
-  // access all emds as a matrix flattened into a vector
-  const ValueVector & emds(bool raw = false) {
+  // access events
+  std::ptrdiff_t nevA() const { return nevA_; }
+  std::ptrdiff_t nevB() const { return nevB_; }
+  const EventVector & events() const { return events_; }
 
-    // return raw emds if requested
-    if (raw) return emds_;
+  // number of unique EMDs computed
+  std::ptrdiff_t num_emds() const { return num_emds_; }
+
+  // error reporting
+  bool errored() const { return error_messages_.size() > 0; }
+  const std::vector<std::string> & error_messages() const { return error_messages_; }
+
+  // access timing information
+  double duration() const { return emd_objs_[0].duration(); }
+
+  // access all emds as a matrix flattened into a vector
+  const ValueVector & emds(bool flattened = false) {
+
+    // return flattened emds if requested
+    if (flattened) return emds_;
 
     // check for having no emds stored
     if (emd_storage_ == EMDPairsStorage::External)
@@ -618,16 +639,16 @@ public:
     if (emd_storage_ == EMDPairsStorage::FlattenedSymmetric) {
 
       // allocate a new vector for holding the full emds
-      full_emds_.resize(nevA_*nevB_);
+      full_emds_.resize(nevA()*nevB());
 
       // zeros on the diagonal
-      for (std::ptrdiff_t i = 0; i < nevA_; i++)
+      for (std::ptrdiff_t i = 0; i < nevA(); i++)
         full_emds_[i*i] = 0;
 
       // fill out matrix (index into upper triangular part)
-      for (std::ptrdiff_t i = 0; i < nevA_; i++)
-        for (std::ptrdiff_t j = i + 1; j < nevB_; j++)
-          full_emds_[i*nevB_ + j] = full_emds_[j*nevB_ + i] = emds_[index_symmetric(i, j)];
+      for (std::ptrdiff_t i = 0; i < nevA(); i++)
+        for (std::ptrdiff_t j = i + 1; j < nevB(); j++)
+          full_emds_[i*nevB() + j] = full_emds_[j*nevB() + i] = emds_[index_symmetric(i, j)];
 
       return full_emds_;
     }
@@ -640,11 +661,11 @@ public:
   Value emd(std::ptrdiff_t i, std::ptrdiff_t j, int thread = 0) {
 
     // allow for negative indices
-    if (i < 0) i += nevA_;
-    if (j < 0) j += nevB_;
+    if (i < 0) i += nevA();
+    if (j < 0) j += nevB();
 
     // check for improper indexing
-    if (i >= nevA_ || j >= nevB_ || i < 0 || j < 0) {
+    if (i >= nevA() || j >= nevB() || i < 0 || j < 0) {
       std::ostringstream message("PairwiseEMD::emd - Accessing emd value at (", std::ios_base::ate);
       message << i << ", " << j << ") exceeds allowed range";
       throw std::out_of_range(message.str());
@@ -657,7 +678,7 @@ public:
         throw std::out_of_range("invalid thread index");
 
       // run and check for failure
-      check_emd_status(emd_objs_[thread].compute(events_[i], events_[two_event_sets_ ? nevA_ + j : j]));
+      check_emd_status(emd_objs_[thread].compute(events_[i], events_[two_event_sets_ ? nevA() + j : j]));
       if (handler_) (*handler_)(emd_objs_[thread].emd());
       return emd_objs_[thread].emd();
     }
@@ -670,28 +691,8 @@ public:
     if (emd_storage_ == EMDPairsStorage::FlattenedSymmetric)
       return (i == j ? 0 : emds_[index_symmetric(i, j)]);
 
-    else return emds_[i*nevB_ + j];
+    else return emds_[i*nevB() + j];
   }
-
-  // error reporting
-  bool errored() const { return error_messages_.size() > 0; }
-  const std::vector<std::string> & error_messages() const { return error_messages_; }
-  /*void report_errors(std::ostream & os = std::cerr) const {
-    for (const std::string & err : error_messages())
-      os << err << '\n';
-    os << std::flush;
-  }*/
-
-  // number of unique emds computed
-  std::ptrdiff_t num_emds() const { return num_emds_; }
-
-  // access events
-  std::ptrdiff_t nevA() const { return nevA_; }
-  std::ptrdiff_t nevB() const { return nevB_; }
-  const EventVector & events() const { return events_; }
-
-  // access timing information
-  double duration() const { return emd_objs_[0].duration(); }
 
 // wasserstein needs access to these functions in order to use CustomArrayDistance
 #ifndef SWIG_WASSERSTEIN
@@ -716,14 +717,14 @@ private:
     two_event_sets_ = false;
 
     // resize emds
-    num_emds_ = nevA_*(nevA_ - 1)/2;
-    if (!external_handler() && !request_mode()) {
+    num_emds_ = nev*(nev - 1)/2;
+    if (!have_external_emd_handler() && !request_mode()) {
       emd_storage_ = (store_sym_emds_flattened_ ? EMDPairsStorage::FlattenedSymmetric : EMDPairsStorage::FullSymmetric);
-      emds_.resize(emd_storage_ == EMDPairsStorage::FullSymmetric ? nevA_*nevB_ : num_emds_);
+      emds_.resize(emd_storage_ == EMDPairsStorage::FullSymmetric ? nevA()*nevB() : num_emds());
     }
 
     // reserve space for events
-    events_.reserve(nevA_);
+    events_.reserve(nevA());
   }
 
   // init pairs
@@ -737,14 +738,14 @@ private:
     two_event_sets_ = true;
 
     // resize emds
-    num_emds_ = nevA_*nevB_;
-    if (!external_handler() && !request_mode()) {
+    num_emds_ = nevA * nevB;
+    if (!have_external_emd_handler() && !request_mode()) {
       emd_storage_ = EMDPairsStorage::Full;
-      emds_.resize(num_emds_);  
+      emds_.resize(num_emds());  
     }
 
     // reserve space for events
-    events_.reserve(nevA_ + nevB_);
+    events_.reserve(nevA + nevB);
   }
 
   void compute() {
@@ -753,12 +754,13 @@ private:
     if (request_mode())
       throw std::runtime_error("cannot compute pairwise EMDs in request mode");
 
-    num_emds_width_ = std::to_string(num_emds_).size();
+    num_emds_width_ = std::to_string(num_emds()).size();
 
-    long print_every(print_every_);
+    // note that print_every == 0 is handled in setup()
+    std::ptrdiff_t print_every(print_every_);
     if (print_every < 0) {
-      print_every = num_emds_/std::abs(print_every_);
-      if (print_every == 0 || num_emds_ % std::abs(print_every_) != 0)
+      print_every = num_emds()/std::abs(print_every_);
+      if (print_every == 0 || num_emds() % std::abs(print_every_) != 0)
         print_every++;
     }
 
@@ -769,16 +771,12 @@ private:
       *print_stream_ << oss_.str() << std::endl;
     }
 
-    int omp_for_dynamic_chunksize(omp_dynamic_chunksize_);
-    if (omp_for_dynamic_chunksize < print_every/num_threads_)
-      omp_for_dynamic_chunksize = print_every/num_threads_;
-
     // iterate over emd pairs
     std::mutex failure_mutex;
-    std::size_t begin(0);
-    while (emd_counter_ < num_emds_ && !(throw_on_error_ && error_messages().size())) {
-      emd_counter_ += std::size_t(print_every);
-      if (emd_counter_ > num_emds_) emd_counter_ = num_emds_;
+    std::ptrdiff_t begin(0);
+    while (emd_counter_ < num_emds() && !(throw_on_error_ && error_messages().size())) {
+      emd_counter_ += print_every;
+      if (emd_counter_ > num_emds()) emd_counter_ = num_emds();
 
       #pragma omp parallel num_threads(num_threads_) default(shared)
       {
@@ -792,14 +790,14 @@ private:
         EMD & emd_obj(emd_objs_[thread]);
 
         // parallelize loop over EMDs
-        #pragma omp for schedule(dynamic, omp_for_dynamic_chunksize)
+        #pragma omp for schedule(dynamic, omp_dynamic_chunksize())
         for (std::ptrdiff_t k = begin; k < emd_counter_; k++) {
 
-          std::ptrdiff_t i(k/nevB_), j(k%nevB_);
+          std::ptrdiff_t i(k/nevB()), j(k%nevB());
           if (two_event_sets_) {
 
             // run and check for failure
-            EMDStatus status(emd_obj.compute(events_[i], events_[nevA_ + j]));
+            EMDStatus status(emd_obj.compute(events_[i], events_[nevA() + j]));
             if (status != EMDStatus::Success) {
               std::lock_guard<std::mutex> failure_lock(failure_mutex);
               record_failure(status, i, j);
@@ -811,8 +809,8 @@ private:
 
             // this properly sets indexing for symmetric case
             if (j >= ++i) {
-              i = nevA_ - i;
-              j = nevA_ - j - 1;
+              i = nevA() - i;
+              j = nevA() - j - 1;
             }
 
             // run and check for failure
@@ -828,7 +826,7 @@ private:
             else if (emd_storage_ == EMDPairsStorage::External)
               (*handler_)(emd_obj.emd());
             else if (emd_storage_ == EMDPairsStorage::FullSymmetric)
-              emds_[i*nevB_ + j] = emds_[j*nevB_ + i] = emd_obj.emd();
+              emds_[i*nevB() + j] = emds_[j*nevB() + i] = emd_obj.emd();
             else std::cerr << "Should never get here\n";
           }
         }
@@ -857,7 +855,7 @@ private:
   }
 
   // init from constructor
-  void setup(long print_every, unsigned verbose,
+  void setup(std::ptrdiff_t print_every, unsigned verbose,
              bool store_sym_emds_flattened, bool throw_on_error,
              std::ostream * os) {
     
@@ -919,11 +917,11 @@ private:
 
     // treat i as the row and j as the column
     if (j > i)
-      return num_emds_ - (nevA_ - i)*(nevA_ - i - 1)/2 + j - i - 1;
+      return num_emds() - (nevA() - i)*(nevA() - i - 1)/2 + j - i - 1;
 
     // treat i as the column and j as the row
     if (i > j)
-      return num_emds_ - (nevA_ - j)*(nevA_ - j - 1)/2 + i - j - 1;
+      return num_emds() - (nevA() - j)*(nevA() - j - 1)/2 + i - j - 1;
 
     return -1;
   }
@@ -934,8 +932,8 @@ private:
     if (verbose_) {
       oss_.str("  ");
       oss_ << std::setw(num_emds_width_) << emd_counter_ << " / "
-           << std::setw(num_emds_width_) << num_emds_ << "  EMDs computed  - "
-           << std::setprecision(2) << std::setw(6) << double(emd_counter_)/num_emds_*100
+           << std::setw(num_emds_width_) << num_emds() << "  EMDs computed  - "
+           << std::setprecision(2) << std::setw(6) << double(emd_counter_)/num_emds()*100
            << "% completed - "
            << std::setprecision(3) << emd_objs_[0].store_duration() << 's';  
     }

@@ -220,7 +220,7 @@ void pyname(double** arr_out0, int* n0, double** arr_out1, int* n1) {
     memcpy(*arr_out, $self->emds().data(), nbytes);
   }
 
-  void emds_flattened(double** arr_out, std::ptrdiff_t* n) {
+  void flat_emds(double** arr_out, std::ptrdiff_t* n) {
     if ($self->storage() != emd::EMDPairsStorage::FlattenedSymmetric)
       throw std::runtime_error("flattened emds only available with flattened symmetric storage");
 

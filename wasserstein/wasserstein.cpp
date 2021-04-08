@@ -6041,7 +6041,7 @@ SWIGINTERN void emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_Eucl
 /*@SWIG@*/
     memcpy(*arr_out, self->emds().data(), nbytes);
   }
-SWIGINTERN void emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg__emds_flattened(emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *self,double **arr_out,std::ptrdiff_t *n){
+SWIGINTERN void emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg__flat_emds(emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *self,double **arr_out,std::ptrdiff_t *n){
     if (self->storage() != emd::EMDPairsStorage::FlattenedSymmetric)
       throw std::runtime_error("flattened emds only available with flattened symmetric storage");
 
@@ -11627,7 +11627,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseDouble_n0(PyObject *SWIGUNUSEDPARM(self), PyOb
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  std::size_t result;
+  std::ptrdiff_t result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
@@ -11661,7 +11661,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseDouble_n0(PyObject *SWIGUNUSEDPARM(self), PyOb
       SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
     }
   }
-  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  resultobj = SWIG_From_ptrdiff_t(static_cast< ptrdiff_t >(result));
   return resultobj;
 fail:
   return NULL;
@@ -11674,7 +11674,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseDouble_n1(PyObject *SWIGUNUSEDPARM(self), PyOb
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  std::size_t result;
+  std::ptrdiff_t result;
   
   if (!args) SWIG_fail;
   swig_obj[0] = args;
@@ -11708,7 +11708,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseDouble_n1(PyObject *SWIGUNUSEDPARM(self), PyOb
       SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
     }
   }
-  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  resultobj = SWIG_From_ptrdiff_t(static_cast< ptrdiff_t >(result));
   return resultobj;
 fail:
   return NULL;
@@ -16039,7 +16039,7 @@ SWIGINTERN PyObject *_wrap_new_PairwiseEMD(PyObject *SWIGUNUSEDPARM(self), PyObj
   emd::Value arg2 = (emd::Value) 1 ;
   bool arg3 = (bool) false ;
   int arg4 = (int) -1 ;
-  long arg5 = (long) -10 ;
+  std::ptrdiff_t arg5 = (std::ptrdiff_t) -10 ;
   unsigned int arg6 = (unsigned int) 1 ;
   bool arg7 = (bool) true ;
   bool arg8 = (bool) false ;
@@ -16056,7 +16056,7 @@ SWIGINTERN PyObject *_wrap_new_PairwiseEMD(PyObject *SWIGUNUSEDPARM(self), PyObj
   int ecode3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
-  long val5 ;
+  ptrdiff_t val5 ;
   int ecode5 = 0 ;
   unsigned int val6 ;
   int ecode6 = 0 ;
@@ -16119,11 +16119,11 @@ SWIGINTERN PyObject *_wrap_new_PairwiseEMD(PyObject *SWIGUNUSEDPARM(self), PyObj
     arg4 = static_cast< int >(val4);
   }
   if (obj4) {
-    ecode5 = SWIG_AsVal_long(obj4, &val5);
+    ecode5 = SWIG_AsVal_ptrdiff_t(obj4, &val5);
     if (!SWIG_IsOK(ecode5)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_PairwiseEMD" "', argument " "5"" of type '" "long""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_PairwiseEMD" "', argument " "5"" of type '" "std::ptrdiff_t""'");
     } 
-    arg5 = static_cast< long >(val5);
+    arg5 = static_cast< std::ptrdiff_t >(val5);
   }
   if (obj5) {
     ecode6 = SWIG_AsVal_unsigned_SS_int(obj5, &val6);
@@ -16812,7 +16812,54 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_PairwiseEMD_external_handler(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_PairwiseEMD_external_emd_handler(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *arg1 = (emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  emd::ExternalEMDHandler *result = 0 ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMD_external_emd_handler" "', argument " "1"" of type '" "emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > * >(argp1);
+  {
+    try {
+      result = (emd::ExternalEMDHandler *)(arg1)->external_emd_handler(); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_emd__ExternalEMDHandler, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_PairwiseEMD_have_external_emd_handler(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *arg1 = (emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *) 0 ;
   void *argp1 = 0 ;
@@ -16824,12 +16871,12 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_external_handler(PyObject *SWIGUNUSEDPARM
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMD_external_handler" "', argument " "1"" of type '" "emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMD_have_external_emd_handler" "', argument " "1"" of type '" "emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *""'"); 
   }
   arg1 = reinterpret_cast< emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > * >(argp1);
   {
     try {
-      result = (bool)((emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *)arg1)->external_handler(); 
+      result = (bool)((emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *)arg1)->have_external_emd_handler(); 
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -17129,37 +17176,24 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_PairwiseEMD_emds_vec(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_PairwiseEMD_nevA(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *arg1 = (emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *) 0 ;
-  bool arg2 = (bool) false ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  bool val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  char * kwnames[] = {
-    (char *)"self",  (char *)"raw",  NULL 
-  };
-  emd::ValueVector *result = 0 ;
+  PyObject *swig_obj[1] ;
+  std::ptrdiff_t result;
   
-  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:PairwiseEMD_emds_vec", kwnames, &obj0, &obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t, 0 |  0 );
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMD_emds_vec" "', argument " "1"" of type '" "emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMD_nevA" "', argument " "1"" of type '" "emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *""'"); 
   }
   arg1 = reinterpret_cast< emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > * >(argp1);
-  if (obj1) {
-    ecode2 = SWIG_AsVal_bool(obj1, &val2);
-    if (!SWIG_IsOK(ecode2)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMD_emds_vec" "', argument " "2"" of type '" "bool""'");
-    } 
-    arg2 = static_cast< bool >(val2);
-  }
   {
     try {
-      result = (emd::ValueVector *) &(arg1)->emds(arg2); 
+      result = ((emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *)arg1)->nevA(); 
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -17182,62 +17216,31 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_emds_vec(PyObject *SWIGUNUSEDPARM(self), 
       SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
     }
   }
-  resultobj = swig::from(static_cast< std::vector< double,std::allocator< double > > >(*result));
+  resultobj = SWIG_From_ptrdiff_t(static_cast< ptrdiff_t >(result));
   return resultobj;
 fail:
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_PairwiseEMD_emd(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_PairwiseEMD_nevB(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *arg1 = (emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *) 0 ;
-  std::ptrdiff_t arg2 ;
-  std::ptrdiff_t arg3 ;
-  int arg4 = (int) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  ptrdiff_t val2 ;
-  int ecode2 = 0 ;
-  ptrdiff_t val3 ;
-  int ecode3 = 0 ;
-  int val4 ;
-  int ecode4 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  char * kwnames[] = {
-    (char *)"self",  (char *)"i",  (char *)"j",  (char *)"thread",  NULL 
-  };
-  emd::Value result;
+  PyObject *swig_obj[1] ;
+  std::ptrdiff_t result;
   
-  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO|O:PairwiseEMD_emd", kwnames, &obj0, &obj1, &obj2, &obj3)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t, 0 |  0 );
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMD_emd" "', argument " "1"" of type '" "emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMD_nevB" "', argument " "1"" of type '" "emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *""'"); 
   }
   arg1 = reinterpret_cast< emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > * >(argp1);
-  ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMD_emd" "', argument " "2"" of type '" "std::ptrdiff_t""'");
-  } 
-  arg2 = static_cast< std::ptrdiff_t >(val2);
-  ecode3 = SWIG_AsVal_ptrdiff_t(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "PairwiseEMD_emd" "', argument " "3"" of type '" "std::ptrdiff_t""'");
-  } 
-  arg3 = static_cast< std::ptrdiff_t >(val3);
-  if (obj3) {
-    ecode4 = SWIG_AsVal_int(obj3, &val4);
-    if (!SWIG_IsOK(ecode4)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "PairwiseEMD_emd" "', argument " "4"" of type '" "int""'");
-    } 
-    arg4 = static_cast< int >(val4);
-  }
   {
     try {
-      result = (emd::Value)(arg1)->emd(arg2,arg3,arg4); 
+      result = ((emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *)arg1)->nevB(); 
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -17260,7 +17263,54 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_emd(PyObject *SWIGUNUSEDPARM(self), PyObj
       SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
     }
   }
-  resultobj = SWIG_From_double(static_cast< double >(result));
+  resultobj = SWIG_From_ptrdiff_t(static_cast< ptrdiff_t >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_PairwiseEMD_num_emds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *arg1 = (emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  std::ptrdiff_t result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMD_num_emds" "', argument " "1"" of type '" "emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > * >(argp1);
+  {
+    try {
+      result = ((emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *)arg1)->num_emds(); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_From_ptrdiff_t(static_cast< ptrdiff_t >(result));
   return resultobj;
 fail:
   return NULL;
@@ -17361,147 +17411,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_PairwiseEMD_num_emds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *arg1 = (emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  std::ptrdiff_t result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMD_num_emds" "', argument " "1"" of type '" "emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *""'"); 
-  }
-  arg1 = reinterpret_cast< emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > * >(argp1);
-  {
-    try {
-      result = ((emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *)arg1)->num_emds(); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_From_ptrdiff_t(static_cast< ptrdiff_t >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_PairwiseEMD_nevA(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *arg1 = (emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  std::ptrdiff_t result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMD_nevA" "', argument " "1"" of type '" "emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *""'"); 
-  }
-  arg1 = reinterpret_cast< emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > * >(argp1);
-  {
-    try {
-      result = ((emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *)arg1)->nevA(); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_From_ptrdiff_t(static_cast< ptrdiff_t >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_PairwiseEMD_nevB(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *arg1 = (emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  std::ptrdiff_t result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMD_nevB" "', argument " "1"" of type '" "emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *""'"); 
-  }
-  arg1 = reinterpret_cast< emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > * >(argp1);
-  {
-    try {
-      result = ((emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *)arg1)->nevB(); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_From_ptrdiff_t(static_cast< ptrdiff_t >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_PairwiseEMD_duration(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *arg1 = (emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *) 0 ;
@@ -17520,6 +17429,144 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_duration(PyObject *SWIGUNUSEDPARM(self), 
   {
     try {
       result = (double)((emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *)arg1)->duration(); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_PairwiseEMD_emds_vec(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *arg1 = (emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *) 0 ;
+  bool arg2 = (bool) false ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char * kwnames[] = {
+    (char *)"self",  (char *)"flattened",  NULL 
+  };
+  emd::ValueVector *result = 0 ;
+  
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:PairwiseEMD_emds_vec", kwnames, &obj0, &obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMD_emds_vec" "', argument " "1"" of type '" "emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > * >(argp1);
+  if (obj1) {
+    ecode2 = SWIG_AsVal_bool(obj1, &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMD_emds_vec" "', argument " "2"" of type '" "bool""'");
+    } 
+    arg2 = static_cast< bool >(val2);
+  }
+  {
+    try {
+      result = (emd::ValueVector *) &(arg1)->emds(arg2); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< double,std::allocator< double > > >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_PairwiseEMD_emd(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *arg1 = (emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *) 0 ;
+  std::ptrdiff_t arg2 ;
+  std::ptrdiff_t arg3 ;
+  int arg4 = (int) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  ptrdiff_t val2 ;
+  int ecode2 = 0 ;
+  ptrdiff_t val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  char * kwnames[] = {
+    (char *)"self",  (char *)"i",  (char *)"j",  (char *)"thread",  NULL 
+  };
+  emd::Value result;
+  
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO|O:PairwiseEMD_emd", kwnames, &obj0, &obj1, &obj2, &obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMD_emd" "', argument " "1"" of type '" "emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > * >(argp1);
+  ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMD_emd" "', argument " "2"" of type '" "std::ptrdiff_t""'");
+  } 
+  arg2 = static_cast< std::ptrdiff_t >(val2);
+  ecode3 = SWIG_AsVal_ptrdiff_t(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "PairwiseEMD_emd" "', argument " "3"" of type '" "std::ptrdiff_t""'");
+  } 
+  arg3 = static_cast< std::ptrdiff_t >(val3);
+  if (obj3) {
+    ecode4 = SWIG_AsVal_int(obj3, &val4);
+    if (!SWIG_IsOK(ecode4)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "PairwiseEMD_emd" "', argument " "4"" of type '" "int""'");
+    } 
+    arg4 = static_cast< int >(val4);
+  }
+  {
+    try {
+      result = (emd::Value)(arg1)->emd(arg2,arg3,arg4); 
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -17985,7 +18032,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_PairwiseEMD_emds_flattened(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_PairwiseEMD_flat_emds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *arg1 = (emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *) 0 ;
   double **arg2 = (double **) 0 ;
@@ -18004,12 +18051,12 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_emds_flattened(PyObject *SWIGUNUSEDPARM(s
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMD_emds_flattened" "', argument " "1"" of type '" "emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMD_flat_emds" "', argument " "1"" of type '" "emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *""'"); 
   }
   arg1 = reinterpret_cast< emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > * >(argp1);
   {
     try {
-      emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg__emds_flattened(arg1,arg2,arg3); 
+      emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg__flat_emds(arg1,arg2,arg3); 
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -18368,8 +18415,8 @@ static PyMethodDef SwigMethods[] = {
 	 { "EMDBaseDouble_set_do_timing", (PyCFunction)(void(*)(void))_wrap_EMDBaseDouble_set_do_timing, METH_VARARGS|METH_KEYWORDS, "EMDBaseDouble_set_do_timing(EMDBaseDouble self, bool timing)"},
 	 { "EMDBaseDouble_external_dists", _wrap_EMDBaseDouble_external_dists, METH_O, "EMDBaseDouble_external_dists(EMDBaseDouble self) -> bool"},
 	 { "EMDBaseDouble_set_external_dists", (PyCFunction)(void(*)(void))_wrap_EMDBaseDouble_set_external_dists, METH_VARARGS|METH_KEYWORDS, "EMDBaseDouble_set_external_dists(EMDBaseDouble self, bool exdists)"},
-	 { "EMDBaseDouble_n0", _wrap_EMDBaseDouble_n0, METH_O, "EMDBaseDouble_n0(EMDBaseDouble self) -> std::size_t"},
-	 { "EMDBaseDouble_n1", _wrap_EMDBaseDouble_n1, METH_O, "EMDBaseDouble_n1(EMDBaseDouble self) -> std::size_t"},
+	 { "EMDBaseDouble_n0", _wrap_EMDBaseDouble_n0, METH_O, "EMDBaseDouble_n0(EMDBaseDouble self) -> std::ptrdiff_t"},
+	 { "EMDBaseDouble_n1", _wrap_EMDBaseDouble_n1, METH_O, "EMDBaseDouble_n1(EMDBaseDouble self) -> std::ptrdiff_t"},
 	 { "EMDBaseDouble_extra", _wrap_EMDBaseDouble_extra, METH_O, "EMDBaseDouble_extra(EMDBaseDouble self) -> emd::ExtraParticle"},
 	 { "EMDBaseDouble_emd", _wrap_EMDBaseDouble_emd, METH_O, "EMDBaseDouble_emd(EMDBaseDouble self) -> emd::Value"},
 	 { "EMDBaseDouble_status", _wrap_EMDBaseDouble_status, METH_O, "EMDBaseDouble_status(EMDBaseDouble self) -> emd::EMDStatus"},
@@ -18456,7 +18503,7 @@ static PyMethodDef SwigMethods[] = {
 		""},
 	 { "EMD_swigregister", EMD_swigregister, METH_O, NULL},
 	 { "EMD_swiginit", EMD_swiginit, METH_VARARGS, NULL},
-	 { "new_PairwiseEMD", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMD, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMD(emd::Value R=1, emd::Value beta=1, bool norm=False, int num_threads=-1, long print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMD"},
+	 { "new_PairwiseEMD", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMD, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMD(emd::Value R=1, emd::Value beta=1, bool norm=False, int num_threads=-1, std::ptrdiff_t print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMD"},
 	 { "delete_PairwiseEMD", _wrap_delete_PairwiseEMD, METH_O, "delete_PairwiseEMD(PairwiseEMD self)"},
 	 { "PairwiseEMD_R", _wrap_PairwiseEMD_R, METH_O, "PairwiseEMD_R(PairwiseEMD self) -> emd::Value"},
 	 { "PairwiseEMD_set_R", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_set_R, METH_VARARGS|METH_KEYWORDS, "PairwiseEMD_set_R(PairwiseEMD self, emd::Value R)"},
@@ -18468,20 +18515,21 @@ static PyMethodDef SwigMethods[] = {
 	 { "PairwiseEMD_set_omp_dynamic_chunksize", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_set_omp_dynamic_chunksize, METH_VARARGS|METH_KEYWORDS, "PairwiseEMD_set_omp_dynamic_chunksize(PairwiseEMD self, int chunksize)"},
 	 { "PairwiseEMD_omp_dynamic_chunksize", _wrap_PairwiseEMD_omp_dynamic_chunksize, METH_O, "PairwiseEMD_omp_dynamic_chunksize(PairwiseEMD self) -> int"},
 	 { "PairwiseEMD_set_external_emd_handler", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_set_external_emd_handler, METH_VARARGS|METH_KEYWORDS, "PairwiseEMD_set_external_emd_handler(PairwiseEMD self, ExternalEMDHandler handler)"},
-	 { "PairwiseEMD_external_handler", _wrap_PairwiseEMD_external_handler, METH_O, "PairwiseEMD_external_handler(PairwiseEMD self) -> bool"},
+	 { "PairwiseEMD_external_emd_handler", _wrap_PairwiseEMD_external_emd_handler, METH_O, "PairwiseEMD_external_emd_handler(PairwiseEMD self) -> ExternalEMDHandler"},
+	 { "PairwiseEMD_have_external_emd_handler", _wrap_PairwiseEMD_have_external_emd_handler, METH_O, "PairwiseEMD_have_external_emd_handler(PairwiseEMD self) -> bool"},
 	 { "PairwiseEMD_set_request_mode", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_set_request_mode, METH_VARARGS|METH_KEYWORDS, "PairwiseEMD_set_request_mode(PairwiseEMD self, bool mode)"},
 	 { "PairwiseEMD_request_mode", _wrap_PairwiseEMD_request_mode, METH_O, "PairwiseEMD_request_mode(PairwiseEMD self) -> bool"},
 	 { "PairwiseEMD_storage", _wrap_PairwiseEMD_storage, METH_O, "PairwiseEMD_storage(PairwiseEMD self) -> emd::EMDPairsStorage"},
 	 { "PairwiseEMD_description", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_description, METH_VARARGS|METH_KEYWORDS, "PairwiseEMD_description(PairwiseEMD self, bool write_preprocessors=True) -> std::string"},
 	 { "PairwiseEMD_clear", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_clear, METH_VARARGS|METH_KEYWORDS, "PairwiseEMD_clear(PairwiseEMD self, bool free_memory=True)"},
-	 { "PairwiseEMD_emds_vec", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_emds_vec, METH_VARARGS|METH_KEYWORDS, "PairwiseEMD_emds_vec(PairwiseEMD self, bool raw=False) -> vectorDouble"},
-	 { "PairwiseEMD_emd", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_emd, METH_VARARGS|METH_KEYWORDS, "PairwiseEMD_emd(PairwiseEMD self, std::ptrdiff_t i, std::ptrdiff_t j, int thread=0) -> emd::Value"},
-	 { "PairwiseEMD_errored", _wrap_PairwiseEMD_errored, METH_O, "PairwiseEMD_errored(PairwiseEMD self) -> bool"},
-	 { "PairwiseEMD_error_messages", _wrap_PairwiseEMD_error_messages, METH_O, "PairwiseEMD_error_messages(PairwiseEMD self) -> vectorString"},
-	 { "PairwiseEMD_num_emds", _wrap_PairwiseEMD_num_emds, METH_O, "PairwiseEMD_num_emds(PairwiseEMD self) -> std::ptrdiff_t"},
 	 { "PairwiseEMD_nevA", _wrap_PairwiseEMD_nevA, METH_O, "PairwiseEMD_nevA(PairwiseEMD self) -> std::ptrdiff_t"},
 	 { "PairwiseEMD_nevB", _wrap_PairwiseEMD_nevB, METH_O, "PairwiseEMD_nevB(PairwiseEMD self) -> std::ptrdiff_t"},
+	 { "PairwiseEMD_num_emds", _wrap_PairwiseEMD_num_emds, METH_O, "PairwiseEMD_num_emds(PairwiseEMD self) -> std::ptrdiff_t"},
+	 { "PairwiseEMD_errored", _wrap_PairwiseEMD_errored, METH_O, "PairwiseEMD_errored(PairwiseEMD self) -> bool"},
+	 { "PairwiseEMD_error_messages", _wrap_PairwiseEMD_error_messages, METH_O, "PairwiseEMD_error_messages(PairwiseEMD self) -> vectorString"},
 	 { "PairwiseEMD_duration", _wrap_PairwiseEMD_duration, METH_O, "PairwiseEMD_duration(PairwiseEMD self) -> double"},
+	 { "PairwiseEMD_emds_vec", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_emds_vec, METH_VARARGS|METH_KEYWORDS, "PairwiseEMD_emds_vec(PairwiseEMD self, bool flattened=False) -> vectorDouble"},
+	 { "PairwiseEMD_emd", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_emd, METH_VARARGS|METH_KEYWORDS, "PairwiseEMD_emd(PairwiseEMD self, std::ptrdiff_t i, std::ptrdiff_t j, int thread=0) -> emd::Value"},
 	 { "PairwiseEMD_preprocess_back_event", _wrap_PairwiseEMD_preprocess_back_event, METH_O, "PairwiseEMD_preprocess_back_event(PairwiseEMD self)"},
 	 { "PairwiseEMD_init", _wrap_PairwiseEMD_init, METH_VARARGS, "\n"
 		"PairwiseEMD_init(PairwiseEMD self, std::ptrdiff_t nev)\n"
@@ -18491,7 +18539,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "PairwiseEMD___str__", _wrap_PairwiseEMD___str__, METH_O, "PairwiseEMD___str__(PairwiseEMD self) -> std::string"},
 	 { "PairwiseEMD___repr__", _wrap_PairwiseEMD___repr__, METH_O, "PairwiseEMD___repr__(PairwiseEMD self) -> std::string"},
 	 { "PairwiseEMD_emds", _wrap_PairwiseEMD_emds, METH_O, "PairwiseEMD_emds(PairwiseEMD self)"},
-	 { "PairwiseEMD_emds_flattened", _wrap_PairwiseEMD_emds_flattened, METH_O, "PairwiseEMD_emds_flattened(PairwiseEMD self)"},
+	 { "PairwiseEMD_flat_emds", _wrap_PairwiseEMD_flat_emds, METH_O, "PairwiseEMD_flat_emds(PairwiseEMD self)"},
 	 { "PairwiseEMD__add_event", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD__add_event, METH_VARARGS|METH_KEYWORDS, "PairwiseEMD__add_event(PairwiseEMD self, double * weights, double * coords)"},
 	 { "PairwiseEMD__reset_B_events", _wrap_PairwiseEMD__reset_B_events, METH_O, "PairwiseEMD__reset_B_events(PairwiseEMD self)"},
 	 { "PairwiseEMD_swigregister", PairwiseEMD_swigregister, METH_O, NULL},
@@ -18674,8 +18722,8 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "EMDBaseDouble_set_do_timing", (PyCFunction)(void(*)(void))_wrap_EMDBaseDouble_set_do_timing, METH_VARARGS|METH_KEYWORDS, "set_do_timing(EMDBaseDouble self, bool timing)"},
 	 { "EMDBaseDouble_external_dists", _wrap_EMDBaseDouble_external_dists, METH_O, "external_dists(EMDBaseDouble self) -> bool"},
 	 { "EMDBaseDouble_set_external_dists", (PyCFunction)(void(*)(void))_wrap_EMDBaseDouble_set_external_dists, METH_VARARGS|METH_KEYWORDS, "set_external_dists(EMDBaseDouble self, bool exdists)"},
-	 { "EMDBaseDouble_n0", _wrap_EMDBaseDouble_n0, METH_O, "n0(EMDBaseDouble self) -> std::size_t"},
-	 { "EMDBaseDouble_n1", _wrap_EMDBaseDouble_n1, METH_O, "n1(EMDBaseDouble self) -> std::size_t"},
+	 { "EMDBaseDouble_n0", _wrap_EMDBaseDouble_n0, METH_O, "n0(EMDBaseDouble self) -> std::ptrdiff_t"},
+	 { "EMDBaseDouble_n1", _wrap_EMDBaseDouble_n1, METH_O, "n1(EMDBaseDouble self) -> std::ptrdiff_t"},
 	 { "EMDBaseDouble_extra", _wrap_EMDBaseDouble_extra, METH_O, "extra(EMDBaseDouble self) -> emd::ExtraParticle"},
 	 { "EMDBaseDouble_emd", _wrap_EMDBaseDouble_emd, METH_O, "emd(EMDBaseDouble self) -> emd::Value"},
 	 { "EMDBaseDouble_status", _wrap_EMDBaseDouble_status, METH_O, "status(EMDBaseDouble self) -> emd::EMDStatus"},
@@ -18762,7 +18810,7 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 		""},
 	 { "EMD_swigregister", EMD_swigregister, METH_O, NULL},
 	 { "EMD_swiginit", EMD_swiginit, METH_VARARGS, NULL},
-	 { "new_PairwiseEMD", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMD, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMD(emd::Value R=1, emd::Value beta=1, bool norm=False, int num_threads=-1, long print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMD"},
+	 { "new_PairwiseEMD", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMD, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMD(emd::Value R=1, emd::Value beta=1, bool norm=False, int num_threads=-1, std::ptrdiff_t print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMD"},
 	 { "delete_PairwiseEMD", _wrap_delete_PairwiseEMD, METH_O, "delete_PairwiseEMD(PairwiseEMD self)"},
 	 { "PairwiseEMD_R", _wrap_PairwiseEMD_R, METH_O, "R(PairwiseEMD self) -> emd::Value"},
 	 { "PairwiseEMD_set_R", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_set_R, METH_VARARGS|METH_KEYWORDS, "set_R(PairwiseEMD self, emd::Value R)"},
@@ -18774,20 +18822,21 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "PairwiseEMD_set_omp_dynamic_chunksize", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_set_omp_dynamic_chunksize, METH_VARARGS|METH_KEYWORDS, "set_omp_dynamic_chunksize(PairwiseEMD self, int chunksize)"},
 	 { "PairwiseEMD_omp_dynamic_chunksize", _wrap_PairwiseEMD_omp_dynamic_chunksize, METH_O, "omp_dynamic_chunksize(PairwiseEMD self) -> int"},
 	 { "PairwiseEMD_set_external_emd_handler", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_set_external_emd_handler, METH_VARARGS|METH_KEYWORDS, "set_external_emd_handler(PairwiseEMD self, ExternalEMDHandler handler)"},
-	 { "PairwiseEMD_external_handler", _wrap_PairwiseEMD_external_handler, METH_O, "external_handler(PairwiseEMD self) -> bool"},
+	 { "PairwiseEMD_external_emd_handler", _wrap_PairwiseEMD_external_emd_handler, METH_O, "external_emd_handler(PairwiseEMD self) -> ExternalEMDHandler"},
+	 { "PairwiseEMD_have_external_emd_handler", _wrap_PairwiseEMD_have_external_emd_handler, METH_O, "have_external_emd_handler(PairwiseEMD self) -> bool"},
 	 { "PairwiseEMD_set_request_mode", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_set_request_mode, METH_VARARGS|METH_KEYWORDS, "set_request_mode(PairwiseEMD self, bool mode)"},
 	 { "PairwiseEMD_request_mode", _wrap_PairwiseEMD_request_mode, METH_O, "request_mode(PairwiseEMD self) -> bool"},
 	 { "PairwiseEMD_storage", _wrap_PairwiseEMD_storage, METH_O, "storage(PairwiseEMD self) -> emd::EMDPairsStorage"},
 	 { "PairwiseEMD_description", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_description, METH_VARARGS|METH_KEYWORDS, "description(PairwiseEMD self, bool write_preprocessors=True) -> std::string"},
 	 { "PairwiseEMD_clear", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_clear, METH_VARARGS|METH_KEYWORDS, "clear(PairwiseEMD self, bool free_memory=True)"},
-	 { "PairwiseEMD_emds_vec", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_emds_vec, METH_VARARGS|METH_KEYWORDS, "emds_vec(PairwiseEMD self, bool raw=False) -> vectorDouble"},
-	 { "PairwiseEMD_emd", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_emd, METH_VARARGS|METH_KEYWORDS, "emd(PairwiseEMD self, std::ptrdiff_t i, std::ptrdiff_t j, int thread=0) -> emd::Value"},
-	 { "PairwiseEMD_errored", _wrap_PairwiseEMD_errored, METH_O, "errored(PairwiseEMD self) -> bool"},
-	 { "PairwiseEMD_error_messages", _wrap_PairwiseEMD_error_messages, METH_O, "error_messages(PairwiseEMD self) -> vectorString"},
-	 { "PairwiseEMD_num_emds", _wrap_PairwiseEMD_num_emds, METH_O, "num_emds(PairwiseEMD self) -> std::ptrdiff_t"},
 	 { "PairwiseEMD_nevA", _wrap_PairwiseEMD_nevA, METH_O, "nevA(PairwiseEMD self) -> std::ptrdiff_t"},
 	 { "PairwiseEMD_nevB", _wrap_PairwiseEMD_nevB, METH_O, "nevB(PairwiseEMD self) -> std::ptrdiff_t"},
+	 { "PairwiseEMD_num_emds", _wrap_PairwiseEMD_num_emds, METH_O, "num_emds(PairwiseEMD self) -> std::ptrdiff_t"},
+	 { "PairwiseEMD_errored", _wrap_PairwiseEMD_errored, METH_O, "errored(PairwiseEMD self) -> bool"},
+	 { "PairwiseEMD_error_messages", _wrap_PairwiseEMD_error_messages, METH_O, "error_messages(PairwiseEMD self) -> vectorString"},
 	 { "PairwiseEMD_duration", _wrap_PairwiseEMD_duration, METH_O, "duration(PairwiseEMD self) -> double"},
+	 { "PairwiseEMD_emds_vec", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_emds_vec, METH_VARARGS|METH_KEYWORDS, "emds_vec(PairwiseEMD self, bool flattened=False) -> vectorDouble"},
+	 { "PairwiseEMD_emd", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_emd, METH_VARARGS|METH_KEYWORDS, "emd(PairwiseEMD self, std::ptrdiff_t i, std::ptrdiff_t j, int thread=0) -> emd::Value"},
 	 { "PairwiseEMD_preprocess_back_event", _wrap_PairwiseEMD_preprocess_back_event, METH_O, "preprocess_back_event(PairwiseEMD self)"},
 	 { "PairwiseEMD_init", _wrap_PairwiseEMD_init, METH_VARARGS, "\n"
 		"init(PairwiseEMD self, std::ptrdiff_t nev)\n"
@@ -18797,7 +18846,7 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "PairwiseEMD___str__", _wrap_PairwiseEMD___str__, METH_O, "__str__(PairwiseEMD self) -> std::string"},
 	 { "PairwiseEMD___repr__", _wrap_PairwiseEMD___repr__, METH_O, "__repr__(PairwiseEMD self) -> std::string"},
 	 { "PairwiseEMD_emds", _wrap_PairwiseEMD_emds, METH_O, "emds(PairwiseEMD self)"},
-	 { "PairwiseEMD_emds_flattened", _wrap_PairwiseEMD_emds_flattened, METH_O, "emds_flattened(PairwiseEMD self)"},
+	 { "PairwiseEMD_flat_emds", _wrap_PairwiseEMD_flat_emds, METH_O, "flat_emds(PairwiseEMD self)"},
 	 { "PairwiseEMD__add_event", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD__add_event, METH_VARARGS|METH_KEYWORDS, "_add_event(PairwiseEMD self, double * weights, double * coords)"},
 	 { "PairwiseEMD__reset_B_events", _wrap_PairwiseEMD__reset_B_events, METH_O, "_reset_B_events(PairwiseEMD self)"},
 	 { "PairwiseEMD_swigregister", PairwiseEMD_swigregister, METH_O, NULL},

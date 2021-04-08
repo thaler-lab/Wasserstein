@@ -468,7 +468,7 @@ class PairwiseEMD(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
-        r"""__init__(PairwiseEMD self, emd::Value R=1, emd::Value beta=1, bool norm=False, int num_threads=-1, long print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMD"""
+        r"""__init__(PairwiseEMD self, emd::Value R=1, emd::Value beta=1, bool norm=False, int num_threads=-1, std::ptrdiff_t print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMD"""
         _wasserstein.PairwiseEMD_swiginit(self, _wasserstein.new_PairwiseEMD(*args, **kwargs))
     __swig_destroy__ = _wasserstein.delete_PairwiseEMD
     R = _swig_new_instance_method(_wasserstein.PairwiseEMD_R)
@@ -489,7 +489,8 @@ class PairwiseEMD(object):
         self.external_emd_handler = handler
 
 
-    external_handler = _swig_new_instance_method(_wasserstein.PairwiseEMD_external_handler)
+    external_emd_handler = _swig_new_instance_method(_wasserstein.PairwiseEMD_external_emd_handler)
+    have_external_emd_handler = _swig_new_instance_method(_wasserstein.PairwiseEMD_have_external_emd_handler)
     set_request_mode = _swig_new_instance_method(_wasserstein.PairwiseEMD_set_request_mode)
     request_mode = _swig_new_instance_method(_wasserstein.PairwiseEMD_request_mode)
     storage = _swig_new_instance_method(_wasserstein.PairwiseEMD_storage)
@@ -500,21 +501,21 @@ class PairwiseEMD(object):
         self.event_arrs = []
 
 
-    emds_vec = _swig_new_instance_method(_wasserstein.PairwiseEMD_emds_vec)
-    emd = _swig_new_instance_method(_wasserstein.PairwiseEMD_emd)
-    errored = _swig_new_instance_method(_wasserstein.PairwiseEMD_errored)
-    error_messages = _swig_new_instance_method(_wasserstein.PairwiseEMD_error_messages)
-    num_emds = _swig_new_instance_method(_wasserstein.PairwiseEMD_num_emds)
     nevA = _swig_new_instance_method(_wasserstein.PairwiseEMD_nevA)
     nevB = _swig_new_instance_method(_wasserstein.PairwiseEMD_nevB)
+    num_emds = _swig_new_instance_method(_wasserstein.PairwiseEMD_num_emds)
+    errored = _swig_new_instance_method(_wasserstein.PairwiseEMD_errored)
+    error_messages = _swig_new_instance_method(_wasserstein.PairwiseEMD_error_messages)
     duration = _swig_new_instance_method(_wasserstein.PairwiseEMD_duration)
+    emds_vec = _swig_new_instance_method(_wasserstein.PairwiseEMD_emds_vec)
+    emd = _swig_new_instance_method(_wasserstein.PairwiseEMD_emd)
     preprocess_back_event = _swig_new_instance_method(_wasserstein.PairwiseEMD_preprocess_back_event)
     init = _swig_new_instance_method(_wasserstein.PairwiseEMD_init)
     compute = _swig_new_instance_method(_wasserstein.PairwiseEMD_compute)
     __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMD___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.PairwiseEMD___repr__)
     emds = _swig_new_instance_method(_wasserstein.PairwiseEMD_emds)
-    emds_flattened = _swig_new_instance_method(_wasserstein.PairwiseEMD_emds_flattened)
+    flat_emds = _swig_new_instance_method(_wasserstein.PairwiseEMD_flat_emds)
 
 
         # ensure proper destruction of objects held by this instance
