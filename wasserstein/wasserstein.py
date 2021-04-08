@@ -522,7 +522,7 @@ class PairwiseEMD(object):
     def __del__(self):
         if hasattr(self, 'event_arrs'):
             del self.event_arrs
-        if hasattr(self, 'external_emd_handler'):
+        if hasattr(self, '_external_emd_handler'):
             self._external_emd_handler.thisown = 1
             del self._external_emd_handler
 
