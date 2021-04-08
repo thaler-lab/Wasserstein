@@ -237,8 +237,8 @@ void pyname(double** arr_out0, int* n0, double** arr_out1, int* n1) {
         if hasattr(self, 'event_arrs'):
             del self.event_arrs
         if hasattr(self, 'external_emd_handler'):
-            self.external_emd_handler.thisown = 1
-            del self.external_emd_handler
+            self._external_emd_handler.thisown = 1
+            del self._external_emd_handler
   %}
 }
 
@@ -249,7 +249,7 @@ void pyname(double** arr_out0, int* n0, double** arr_out1, int* n1) {
           raise RuntimeError('ExternalEMDHandler must own itself; perhaps it is already in use elsewhere')
       handler.thisown = 0
       $action(self, handler)
-      self.external_emd_handler = handler
+      self._external_emd_handler = handler
 %}
 
 // extend Histogram1DHandler

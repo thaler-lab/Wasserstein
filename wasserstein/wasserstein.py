@@ -486,7 +486,7 @@ class PairwiseEMD(object):
             raise RuntimeError('ExternalEMDHandler must own itself; perhaps it is already in use elsewhere')
         handler.thisown = 0
         _wasserstein.PairwiseEMD_set_external_emd_handler(self, handler)
-        self.external_emd_handler = handler
+        self._external_emd_handler = handler
 
 
     external_emd_handler = _swig_new_instance_method(_wasserstein.PairwiseEMD_external_emd_handler)
@@ -523,8 +523,8 @@ class PairwiseEMD(object):
         if hasattr(self, 'event_arrs'):
             del self.event_arrs
         if hasattr(self, 'external_emd_handler'):
-            self.external_emd_handler.thisown = 1
-            del self.external_emd_handler
+            self._external_emd_handler.thisown = 1
+            del self._external_emd_handler
 
     _add_event = _swig_new_instance_method(_wasserstein.PairwiseEMD__add_event)
     _reset_B_events = _swig_new_instance_method(_wasserstein.PairwiseEMD__reset_B_events)
