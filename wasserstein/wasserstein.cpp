@@ -2724,7 +2724,7 @@ SWIGINTERN PyObject *SWIG_PyStaticMethod_New(PyObject *SWIGUNUSEDPARM(self), PyO
 #define SWIGTYPE_p_std__invalid_argument swig_types[28]
 #define SWIGTYPE_p_std__ostream swig_types[29]
 #define SWIGTYPE_p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t swig_types[30]
-#define SWIGTYPE_p_std__ptrdiff_t swig_types[31]
+#define SWIGTYPE_p_std__size_t swig_types[31]
 #define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t swig_types[32]
 #define SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t swig_types[33]
 #define SWIGTYPE_p_swig__SwigPyIterator swig_types[34]
@@ -5273,54 +5273,46 @@ SWIG_AsVal_int (PyObject * obj, int *val)
 }
 
 
-SWIGINTERN int
-SWIG_AsVal_bool (PyObject *obj, bool *val)
-{
-  int r;
-  if (!PyBool_Check(obj))
-    return SWIG_ERROR;
-  r = PyObject_IsTrue(obj);
-  if (r == -1)
-    return SWIG_ERROR;
-  if (val) *val = r ? true : false;
-  return SWIG_OK;
-}
-
-
-SWIGINTERN int
-SWIG_AsVal_unsigned_SS_int (PyObject * obj, unsigned int *val)
-{
-  unsigned long v;
-  int res = SWIG_AsVal_unsigned_SS_long (obj, &v);
-  if (SWIG_IsOK(res)) {
-    if ((v > UINT_MAX)) {
-      return SWIG_OverflowError;
-    } else {
-      if (val) *val = static_cast< unsigned int >(v);
-    }
-  }  
-  return res;
-}
-
-
-SWIGINTERNINLINE PyObject*
-  SWIG_From_unsigned_SS_int  (unsigned int value)
-{
-  return PyInt_FromSize_t((size_t) value);
-}
-
-SWIGINTERN std::string emd_Histogram1DHandler_Sl__Sg____str__(emd::Histogram1DHandler< > const *self){
-  return self->description();
-}
-SWIGINTERN std::string emd_Histogram1DHandler_Sl__Sg____repr__(emd::Histogram1DHandler< > const *self){
-  return self->description();
-}
-
 #if NPY_API_VERSION < 0x00000007
 #define NPY_ARRAY_DEFAULT NPY_DEFAULT
 #define NPY_ARRAY_FARRAY  NPY_FARRAY
 #define NPY_FORTRANORDER  NPY_FORTRAN
 #endif
+
+
+/* Macros to extract array attributes.
+ */
+#if NPY_API_VERSION < 0x00000007
+#define is_array(a)            ((a) && PyArray_Check((PyArrayObject*)a))
+#define array_type(a)          (int)(PyArray_TYPE((PyArrayObject*)a))
+#define array_numdims(a)       (((PyArrayObject*)a)->nd)
+#define array_dimensions(a)    (((PyArrayObject*)a)->dimensions)
+#define array_size(a,i)        (((PyArrayObject*)a)->dimensions[i])
+#define array_strides(a)       (((PyArrayObject*)a)->strides)
+#define array_stride(a,i)      (((PyArrayObject*)a)->strides[i])
+#define array_data(a)          (((PyArrayObject*)a)->data)
+#define array_descr(a)         (((PyArrayObject*)a)->descr)
+#define array_flags(a)         (((PyArrayObject*)a)->flags)
+#define array_clearflags(a,f)  (((PyArrayObject*)a)->flags) &= ~f
+#define array_enableflags(a,f) (((PyArrayObject*)a)->flags) = f
+#define array_is_fortran(a)    (PyArray_ISFORTRAN((PyArrayObject*)a))
+#else
+#define is_array(a)            ((a) && PyArray_Check(a))
+#define array_type(a)          PyArray_TYPE((PyArrayObject*)a)
+#define array_numdims(a)       PyArray_NDIM((PyArrayObject*)a)
+#define array_dimensions(a)    PyArray_DIMS((PyArrayObject*)a)
+#define array_strides(a)       PyArray_STRIDES((PyArrayObject*)a)
+#define array_stride(a,i)      PyArray_STRIDE((PyArrayObject*)a,i)
+#define array_size(a,i)        PyArray_DIM((PyArrayObject*)a,i)
+#define array_data(a)          PyArray_DATA((PyArrayObject*)a)
+#define array_descr(a)         PyArray_DESCR((PyArrayObject*)a)
+#define array_flags(a)         PyArray_FLAGS((PyArrayObject*)a)
+#define array_enableflags(a,f) PyArray_ENABLEFLAGS((PyArrayObject*)a,f)
+#define array_clearflags(a,f)  PyArray_CLEARFLAGS((PyArrayObject*)a,f)
+#define array_is_fortran(a)    (PyArray_IS_F_CONTIGUOUS((PyArrayObject*)a))
+#endif
+#define array_is_contiguous(a) (PyArray_ISCONTIGUOUS((PyArrayObject*)a))
+#define array_is_native(a)     (PyArray_ISNOTSWAPPED((PyArrayObject*)a))
 
 
   /* Given a PyObject, return a string describing its type.
@@ -5390,250 +5382,6 @@ SWIGINTERN std::string emd_Histogram1DHandler_Sl__Sg____repr__(emd::Histogram1DH
 #endif
 
 
-
-SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_bin_centers(emd::Histogram1DHandler< > *self,double **arr_out0,int *n0){
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,152,MALLOC_1D_VALUE_ARRAY@*/
-  *n0 = self->nbins();
-  size_t nbytes = size_t(*n0)*sizeof(double);
-  *arr_out0 = (double *) malloc(nbytes);
-  if (*arr_out0 == NULL) {
-    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes) + " bytes");
-    return;
-  }
-/*@SWIG@*/
-  memcpy(*arr_out0, self->bin_centers().data(), nbytes);
-}
-SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_bin_edges(emd::Histogram1DHandler< > *self,double **arr_out0,int *n0){
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,152,MALLOC_1D_VALUE_ARRAY@*/
-  *n0 = self->nbins() + 1;
-  size_t nbytes = size_t(*n0)*sizeof(double);
-  *arr_out0 = (double *) malloc(nbytes);
-  if (*arr_out0 == NULL) {
-    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes) + " bytes");
-    return;
-  }
-/*@SWIG@*/
-  memcpy(*arr_out0, self->bin_edges().data(), nbytes);
-}
-SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_hist_vals_errs(emd::Histogram1DHandler< > *self,double **arr_out0,int *n0,double **arr_out1,int *n1,bool overflows=true){
-    unsigned int nbins = self->nbins() + (overflows ? 2 : 0);
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,169,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-/*@SWIG:wasserstein/swig/wasserstein_common.i,152,MALLOC_1D_VALUE_ARRAY@*/
-  *n0 = nbins;
-  size_t nbytes0 = size_t(*n0)*sizeof(double);
-  *arr_out0 = (double *) malloc(nbytes0);
-  if (*arr_out0 == NULL) {
-    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes0) + " bytes");
-    return;
-  }
-/*@SWIG@*/
-/*@SWIG:wasserstein/swig/wasserstein_common.i,152,MALLOC_1D_VALUE_ARRAY@*/
-  *n1 = nbins;
-  size_t nbytes1 = size_t(*n1)*sizeof(double);
-  *arr_out1 = (double *) malloc(nbytes1);
-  if (*arr_out1 == NULL) {
-    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes1) + " bytes");
-    return;
-  }
-/*@SWIG@*/
-std::pair<std::vector<double>, std::vector<double>> vecpair(self->hist_vals_errs(overflows));
-memcpy(*arr_out0, vecpair.first.data(), nbytes0);
-memcpy(*arr_out1, vecpair.second.data(), nbytes1);
-/*@SWIG@*/
-  }
-SWIGINTERN std::string emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg____str__(emd::Histogram1DHandler< boost::histogram::axis::transform::log > const *self){
-  return self->description();
-}
-SWIGINTERN std::string emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg____repr__(emd::Histogram1DHandler< boost::histogram::axis::transform::log > const *self){
-  return self->description();
-}
-SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg__npy_bin_centers(emd::Histogram1DHandler< boost::histogram::axis::transform::log > *self,double **arr_out0,int *n0){
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,152,MALLOC_1D_VALUE_ARRAY@*/
-  *n0 = self->nbins();
-  size_t nbytes = size_t(*n0)*sizeof(double);
-  *arr_out0 = (double *) malloc(nbytes);
-  if (*arr_out0 == NULL) {
-    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes) + " bytes");
-    return;
-  }
-/*@SWIG@*/
-  memcpy(*arr_out0, self->bin_centers().data(), nbytes);
-}
-SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg__npy_bin_edges(emd::Histogram1DHandler< boost::histogram::axis::transform::log > *self,double **arr_out0,int *n0){
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,152,MALLOC_1D_VALUE_ARRAY@*/
-  *n0 = self->nbins() + 1;
-  size_t nbytes = size_t(*n0)*sizeof(double);
-  *arr_out0 = (double *) malloc(nbytes);
-  if (*arr_out0 == NULL) {
-    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes) + " bytes");
-    return;
-  }
-/*@SWIG@*/
-  memcpy(*arr_out0, self->bin_edges().data(), nbytes);
-}
-SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg__npy_hist_vals_errs(emd::Histogram1DHandler< boost::histogram::axis::transform::log > *self,double **arr_out0,int *n0,double **arr_out1,int *n1,bool overflows=true){
-    unsigned int nbins = self->nbins() + (overflows ? 2 : 0);
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,169,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-/*@SWIG:wasserstein/swig/wasserstein_common.i,152,MALLOC_1D_VALUE_ARRAY@*/
-  *n0 = nbins;
-  size_t nbytes0 = size_t(*n0)*sizeof(double);
-  *arr_out0 = (double *) malloc(nbytes0);
-  if (*arr_out0 == NULL) {
-    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes0) + " bytes");
-    return;
-  }
-/*@SWIG@*/
-/*@SWIG:wasserstein/swig/wasserstein_common.i,152,MALLOC_1D_VALUE_ARRAY@*/
-  *n1 = nbins;
-  size_t nbytes1 = size_t(*n1)*sizeof(double);
-  *arr_out1 = (double *) malloc(nbytes1);
-  if (*arr_out1 == NULL) {
-    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes1) + " bytes");
-    return;
-  }
-/*@SWIG@*/
-std::pair<std::vector<double>, std::vector<double>> vecpair(self->hist_vals_errs(overflows));
-memcpy(*arr_out0, vecpair.first.data(), nbytes0);
-memcpy(*arr_out1, vecpair.second.data(), nbytes1);
-/*@SWIG@*/
-  }
-SWIGINTERN std::string emd_CorrelationDimension___str__(emd::CorrelationDimension const *self){
-  return self->description();
-}
-SWIGINTERN std::string emd_CorrelationDimension___repr__(emd::CorrelationDimension const *self){
-  return self->description();
-}
-SWIGINTERN void emd_CorrelationDimension_npy_corrdim_bins(emd::CorrelationDimension *self,double **arr_out0,int *n0){
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,152,MALLOC_1D_VALUE_ARRAY@*/
-  *n0 = self->nbins() - 1;
-  size_t nbytes = size_t(*n0)*sizeof(double);
-  *arr_out0 = (double *) malloc(nbytes);
-  if (*arr_out0 == NULL) {
-    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes) + " bytes");
-    return;
-  }
-/*@SWIG@*/
-  memcpy(*arr_out0, self->corrdim_bins().data(), nbytes);
-}
-SWIGINTERN void emd_CorrelationDimension_npy_corrdims(emd::CorrelationDimension *self,double **arr_out0,int *n0,double **arr_out1,int *n1){
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,169,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-/*@SWIG:wasserstein/swig/wasserstein_common.i,152,MALLOC_1D_VALUE_ARRAY@*/
-  *n0 = self->nbins() - 1;
-  size_t nbytes0 = size_t(*n0)*sizeof(double);
-  *arr_out0 = (double *) malloc(nbytes0);
-  if (*arr_out0 == NULL) {
-    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes0) + " bytes");
-    return;
-  }
-/*@SWIG@*/
-/*@SWIG:wasserstein/swig/wasserstein_common.i,152,MALLOC_1D_VALUE_ARRAY@*/
-  *n1 = self->nbins() - 1;
-  size_t nbytes1 = size_t(*n1)*sizeof(double);
-  *arr_out1 = (double *) malloc(nbytes1);
-  if (*arr_out1 == NULL) {
-    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes1) + " bytes");
-    return;
-  }
-/*@SWIG@*/
-std::pair<std::vector<double>, std::vector<double>> vecpair(self->corrdims());
-memcpy(*arr_out0, vecpair.first.data(), nbytes0);
-memcpy(*arr_out1, vecpair.second.data(), nbytes1);
-/*@SWIG@*/
-}
-SWIGINTERN void emd_CorrelationDimension_npy_cumulative_vals_vars(emd::CorrelationDimension *self,double **arr_out0,int *n0,double **arr_out1,int *n1){
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,169,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-/*@SWIG:wasserstein/swig/wasserstein_common.i,152,MALLOC_1D_VALUE_ARRAY@*/
-  *n0 = self->nbins();
-  size_t nbytes0 = size_t(*n0)*sizeof(double);
-  *arr_out0 = (double *) malloc(nbytes0);
-  if (*arr_out0 == NULL) {
-    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes0) + " bytes");
-    return;
-  }
-/*@SWIG@*/
-/*@SWIG:wasserstein/swig/wasserstein_common.i,152,MALLOC_1D_VALUE_ARRAY@*/
-  *n1 = self->nbins();
-  size_t nbytes1 = size_t(*n1)*sizeof(double);
-  *arr_out1 = (double *) malloc(nbytes1);
-  if (*arr_out1 == NULL) {
-    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes1) + " bytes");
-    return;
-  }
-/*@SWIG@*/
-std::pair<std::vector<double>, std::vector<double>> vecpair(self->cumulative_vals_vars());
-memcpy(*arr_out0, vecpair.first.data(), nbytes0);
-memcpy(*arr_out1, vecpair.second.data(), nbytes1);
-/*@SWIG@*/
-}
-SWIGINTERN std::string emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg____str__(emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > const *self){
-  return self->description();
-}
-SWIGINTERN std::string emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg____repr__(emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > const *self){
-  return self->description();
-}
-SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__npy_flows(emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *self,double **arr_out,int *n0,int *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,184,MALLOC_2D_VALUE_ARRAY@*/
-  *n0 = self->n0();
-  *n1 = self->n1();
-  size_t num_elements = size_t(*n0)*size_t(*n1);
-  size_t nbytes = num_elements*sizeof(double);
-  double * values = (double *) malloc(nbytes);
-  if (values == NULL)
-    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes) + " bytes");
-  *arr_out = values;
-/*@SWIG@*/
-    memcpy(*arr_out, self->network_simplex().flows().data(), nbytes);
-    
-    for (size_t i = 0; i < num_elements; i++)
-      values[i] *= self->scale();
-  }
-SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__npy_dists(emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *self,double **arr_out,int *n0,int *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,184,MALLOC_2D_VALUE_ARRAY@*/
-  *n0 = self->n0();
-  *n1 = self->n1();
-  size_t num_elements = size_t(*n0)*size_t(*n1);
-  size_t nbytes = num_elements*sizeof(double);
-  double * values = (double *) malloc(nbytes);
-  if (values == NULL)
-    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes) + " bytes");
-  *arr_out = values;
-/*@SWIG@*/
-    memcpy(*arr_out, self->ground_dists().data(), nbytes);
-  }
-
-/* Macros to extract array attributes.
- */
-#if NPY_API_VERSION < 0x00000007
-#define is_array(a)            ((a) && PyArray_Check((PyArrayObject*)a))
-#define array_type(a)          (int)(PyArray_TYPE((PyArrayObject*)a))
-#define array_numdims(a)       (((PyArrayObject*)a)->nd)
-#define array_dimensions(a)    (((PyArrayObject*)a)->dimensions)
-#define array_size(a,i)        (((PyArrayObject*)a)->dimensions[i])
-#define array_strides(a)       (((PyArrayObject*)a)->strides)
-#define array_stride(a,i)      (((PyArrayObject*)a)->strides[i])
-#define array_data(a)          (((PyArrayObject*)a)->data)
-#define array_descr(a)         (((PyArrayObject*)a)->descr)
-#define array_flags(a)         (((PyArrayObject*)a)->flags)
-#define array_clearflags(a,f)  (((PyArrayObject*)a)->flags) &= ~f
-#define array_enableflags(a,f) (((PyArrayObject*)a)->flags) = f
-#define array_is_fortran(a)    (PyArray_ISFORTRAN((PyArrayObject*)a))
-#else
-#define is_array(a)            ((a) && PyArray_Check(a))
-#define array_type(a)          PyArray_TYPE((PyArrayObject*)a)
-#define array_numdims(a)       PyArray_NDIM((PyArrayObject*)a)
-#define array_dimensions(a)    PyArray_DIMS((PyArrayObject*)a)
-#define array_strides(a)       PyArray_STRIDES((PyArrayObject*)a)
-#define array_stride(a,i)      PyArray_STRIDE((PyArrayObject*)a,i)
-#define array_size(a,i)        PyArray_DIM((PyArrayObject*)a,i)
-#define array_data(a)          PyArray_DATA((PyArrayObject*)a)
-#define array_descr(a)         PyArray_DESCR((PyArrayObject*)a)
-#define array_flags(a)         PyArray_FLAGS((PyArrayObject*)a)
-#define array_enableflags(a,f) PyArray_ENABLEFLAGS((PyArrayObject*)a,f)
-#define array_clearflags(a,f)  PyArray_CLEARFLAGS((PyArrayObject*)a,f)
-#define array_is_fortran(a)    (PyArray_IS_F_CONTIGUOUS((PyArrayObject*)a))
-#endif
-#define array_is_contiguous(a) (PyArray_ISCONTIGUOUS((PyArrayObject*)a))
-#define array_is_native(a)     (PyArray_ISNOTSWAPPED((PyArrayObject*)a))
 
 
   /* Given a PyObject pointer, cast it to a PyArrayObject pointer if
@@ -5997,6 +5745,267 @@ SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_
 
 
 
+SWIGINTERN void emd_ExternalEMDHandler_compute__SWIG_0(emd::ExternalEMDHandler *self,double *emds,std::ptrdiff_t n0){
+    (*self)(emds, n0);
+  }
+SWIGINTERN void emd_ExternalEMDHandler_compute__SWIG_1(emd::ExternalEMDHandler *self,double *emds,std::ptrdiff_t n0,double *event_weights,std::ptrdiff_t n1){
+    if (n0 != n1)
+      throw std::invalid_argument("length of `emds` should match lengh of `event_weights`");
+
+    (*self)(emds, n0, event_weights);
+  }
+
+SWIGINTERN int
+SWIG_AsVal_bool (PyObject *obj, bool *val)
+{
+  int r;
+  if (!PyBool_Check(obj))
+    return SWIG_ERROR;
+  r = PyObject_IsTrue(obj);
+  if (r == -1)
+    return SWIG_ERROR;
+  if (val) *val = r ? true : false;
+  return SWIG_OK;
+}
+
+
+SWIGINTERN int
+SWIG_AsVal_unsigned_SS_int (PyObject * obj, unsigned int *val)
+{
+  unsigned long v;
+  int res = SWIG_AsVal_unsigned_SS_long (obj, &v);
+  if (SWIG_IsOK(res)) {
+    if ((v > UINT_MAX)) {
+      return SWIG_OverflowError;
+    } else {
+      if (val) *val = static_cast< unsigned int >(v);
+    }
+  }  
+  return res;
+}
+
+
+SWIGINTERNINLINE PyObject*
+  SWIG_From_unsigned_SS_int  (unsigned int value)
+{
+  return PyInt_FromSize_t((size_t) value);
+}
+
+SWIGINTERN std::string emd_Histogram1DHandler_Sl__Sg____str__(emd::Histogram1DHandler< > const *self){
+  return self->description();
+}
+SWIGINTERN std::string emd_Histogram1DHandler_Sl__Sg____repr__(emd::Histogram1DHandler< > const *self){
+  return self->description();
+}
+SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_bin_centers(emd::Histogram1DHandler< > *self,double **arr_out0,int *n0){
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+  *n0 = self->nbins();
+  size_t nbytes = size_t(*n0)*sizeof(double);
+  *arr_out0 = (double *) malloc(nbytes);
+  if (*arr_out0 == NULL) {
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes) + " bytes");
+    return;
+  }
+/*@SWIG@*/
+  memcpy(*arr_out0, self->bin_centers().data(), nbytes);
+}
+SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_bin_edges(emd::Histogram1DHandler< > *self,double **arr_out0,int *n0){
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+  *n0 = self->nbins() + 1;
+  size_t nbytes = size_t(*n0)*sizeof(double);
+  *arr_out0 = (double *) malloc(nbytes);
+  if (*arr_out0 == NULL) {
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes) + " bytes");
+    return;
+  }
+/*@SWIG@*/
+  memcpy(*arr_out0, self->bin_edges().data(), nbytes);
+}
+SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_hist_vals_errs(emd::Histogram1DHandler< > *self,double **arr_out0,int *n0,double **arr_out1,int *n1,bool overflows=true){
+    unsigned int nbins = self->nbins() + (overflows ? 2 : 0);
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,170,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+  *n0 = nbins;
+  size_t nbytes0 = size_t(*n0)*sizeof(double);
+  *arr_out0 = (double *) malloc(nbytes0);
+  if (*arr_out0 == NULL) {
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes0) + " bytes");
+    return;
+  }
+/*@SWIG@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+  *n1 = nbins;
+  size_t nbytes1 = size_t(*n1)*sizeof(double);
+  *arr_out1 = (double *) malloc(nbytes1);
+  if (*arr_out1 == NULL) {
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes1) + " bytes");
+    return;
+  }
+/*@SWIG@*/
+std::pair<std::vector<double>, std::vector<double>> vecpair(self->hist_vals_errs(overflows));
+memcpy(*arr_out0, vecpair.first.data(), nbytes0);
+memcpy(*arr_out1, vecpair.second.data(), nbytes1);
+/*@SWIG@*/
+  }
+SWIGINTERN std::string emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg____str__(emd::Histogram1DHandler< boost::histogram::axis::transform::log > const *self){
+  return self->description();
+}
+SWIGINTERN std::string emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg____repr__(emd::Histogram1DHandler< boost::histogram::axis::transform::log > const *self){
+  return self->description();
+}
+SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg__npy_bin_centers(emd::Histogram1DHandler< boost::histogram::axis::transform::log > *self,double **arr_out0,int *n0){
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+  *n0 = self->nbins();
+  size_t nbytes = size_t(*n0)*sizeof(double);
+  *arr_out0 = (double *) malloc(nbytes);
+  if (*arr_out0 == NULL) {
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes) + " bytes");
+    return;
+  }
+/*@SWIG@*/
+  memcpy(*arr_out0, self->bin_centers().data(), nbytes);
+}
+SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg__npy_bin_edges(emd::Histogram1DHandler< boost::histogram::axis::transform::log > *self,double **arr_out0,int *n0){
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+  *n0 = self->nbins() + 1;
+  size_t nbytes = size_t(*n0)*sizeof(double);
+  *arr_out0 = (double *) malloc(nbytes);
+  if (*arr_out0 == NULL) {
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes) + " bytes");
+    return;
+  }
+/*@SWIG@*/
+  memcpy(*arr_out0, self->bin_edges().data(), nbytes);
+}
+SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg__npy_hist_vals_errs(emd::Histogram1DHandler< boost::histogram::axis::transform::log > *self,double **arr_out0,int *n0,double **arr_out1,int *n1,bool overflows=true){
+    unsigned int nbins = self->nbins() + (overflows ? 2 : 0);
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,170,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+  *n0 = nbins;
+  size_t nbytes0 = size_t(*n0)*sizeof(double);
+  *arr_out0 = (double *) malloc(nbytes0);
+  if (*arr_out0 == NULL) {
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes0) + " bytes");
+    return;
+  }
+/*@SWIG@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+  *n1 = nbins;
+  size_t nbytes1 = size_t(*n1)*sizeof(double);
+  *arr_out1 = (double *) malloc(nbytes1);
+  if (*arr_out1 == NULL) {
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes1) + " bytes");
+    return;
+  }
+/*@SWIG@*/
+std::pair<std::vector<double>, std::vector<double>> vecpair(self->hist_vals_errs(overflows));
+memcpy(*arr_out0, vecpair.first.data(), nbytes0);
+memcpy(*arr_out1, vecpair.second.data(), nbytes1);
+/*@SWIG@*/
+  }
+SWIGINTERN std::string emd_CorrelationDimension___str__(emd::CorrelationDimension const *self){
+  return self->description();
+}
+SWIGINTERN std::string emd_CorrelationDimension___repr__(emd::CorrelationDimension const *self){
+  return self->description();
+}
+SWIGINTERN void emd_CorrelationDimension_npy_corrdim_bins(emd::CorrelationDimension *self,double **arr_out0,int *n0){
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+  *n0 = self->nbins() - 1;
+  size_t nbytes = size_t(*n0)*sizeof(double);
+  *arr_out0 = (double *) malloc(nbytes);
+  if (*arr_out0 == NULL) {
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes) + " bytes");
+    return;
+  }
+/*@SWIG@*/
+  memcpy(*arr_out0, self->corrdim_bins().data(), nbytes);
+}
+SWIGINTERN void emd_CorrelationDimension_npy_corrdims(emd::CorrelationDimension *self,double **arr_out0,int *n0,double **arr_out1,int *n1){
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,170,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+  *n0 = self->nbins() - 1;
+  size_t nbytes0 = size_t(*n0)*sizeof(double);
+  *arr_out0 = (double *) malloc(nbytes0);
+  if (*arr_out0 == NULL) {
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes0) + " bytes");
+    return;
+  }
+/*@SWIG@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+  *n1 = self->nbins() - 1;
+  size_t nbytes1 = size_t(*n1)*sizeof(double);
+  *arr_out1 = (double *) malloc(nbytes1);
+  if (*arr_out1 == NULL) {
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes1) + " bytes");
+    return;
+  }
+/*@SWIG@*/
+std::pair<std::vector<double>, std::vector<double>> vecpair(self->corrdims());
+memcpy(*arr_out0, vecpair.first.data(), nbytes0);
+memcpy(*arr_out1, vecpair.second.data(), nbytes1);
+/*@SWIG@*/
+}
+SWIGINTERN void emd_CorrelationDimension_npy_cumulative_vals_vars(emd::CorrelationDimension *self,double **arr_out0,int *n0,double **arr_out1,int *n1){
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,170,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+  *n0 = self->nbins();
+  size_t nbytes0 = size_t(*n0)*sizeof(double);
+  *arr_out0 = (double *) malloc(nbytes0);
+  if (*arr_out0 == NULL) {
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes0) + " bytes");
+    return;
+  }
+/*@SWIG@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+  *n1 = self->nbins();
+  size_t nbytes1 = size_t(*n1)*sizeof(double);
+  *arr_out1 = (double *) malloc(nbytes1);
+  if (*arr_out1 == NULL) {
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes1) + " bytes");
+    return;
+  }
+/*@SWIG@*/
+std::pair<std::vector<double>, std::vector<double>> vecpair(self->cumulative_vals_vars());
+memcpy(*arr_out0, vecpair.first.data(), nbytes0);
+memcpy(*arr_out1, vecpair.second.data(), nbytes1);
+/*@SWIG@*/
+}
+SWIGINTERN std::string emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg____str__(emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > const *self){
+  return self->description();
+}
+SWIGINTERN std::string emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg____repr__(emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > const *self){
+  return self->description();
+}
+SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__npy_flows(emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *self,double **arr_out,int *n0,int *n1){
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,185,MALLOC_2D_VALUE_ARRAY@*/
+  *n0 = self->n0();
+  *n1 = self->n1();
+  size_t num_elements = size_t(*n0)*size_t(*n1);
+  size_t nbytes = num_elements*sizeof(double);
+  double * values = (double *) malloc(nbytes);
+  if (values == NULL)
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes) + " bytes");
+  *arr_out = values;
+/*@SWIG@*/
+    memcpy(*arr_out, self->network_simplex().flows().data(), nbytes);
+    
+    for (size_t i = 0; i < num_elements; i++)
+      values[i] *= self->scale();
+  }
+SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__npy_dists(emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *self,double **arr_out,int *n0,int *n1){
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,185,MALLOC_2D_VALUE_ARRAY@*/
+  *n0 = self->n0();
+  *n1 = self->n1();
+  size_t num_elements = size_t(*n0)*size_t(*n1);
+  size_t nbytes = num_elements*sizeof(double);
+  double * values = (double *) malloc(nbytes);
+  if (values == NULL)
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes) + " bytes");
+  *arr_out = values;
+/*@SWIG@*/
+    memcpy(*arr_out, self->ground_dists().data(), nbytes);
+  }
 SWIGINTERN double emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__operator_Sp__SP___SWIG_1(emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *self,double *weights0,int n0,double *coords0,int n00,int n01,double *weights1,int n1,double *coords1,int n10,int n11){
 
     if (n0 != n00 || n1 != n10)
@@ -6029,7 +6038,7 @@ SWIGINTERN std::string emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_e
   return self->description();
 }
 SWIGINTERN void emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg__npy_emds(emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *self,double **arr_out,int *n0,int *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,184,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,185,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->nevA();
   *n1 = self->nevB();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -6041,11 +6050,11 @@ SWIGINTERN void emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_Eucl
 /*@SWIG@*/
     memcpy(*arr_out, self->emds().data(), nbytes);
   }
-SWIGINTERN void emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg__flat_emds(emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *self,double **arr_out,std::ptrdiff_t *n){
+SWIGINTERN void emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg__flat_emds(emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *self,double **arr_out,std::size_t *n){
     if (self->storage() != emd::EMDPairsStorage::FlattenedSymmetric)
       throw std::runtime_error("flattened emds only available with flattened symmetric storage");
 
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,152,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
   *n = self->num_emds();
   size_t nbytes = size_t(*n)*sizeof(double);
   *arr_out = (double *) malloc(nbytes);
@@ -6056,8 +6065,8 @@ SWIGINTERN void emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_Eucl
 /*@SWIG@*/
     memcpy(*arr_out, self->emds(true).data(), nbytes);
   }
-SWIGINTERN void emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg___add_event(emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *self,double *weights,int n0,double *coords,int n1,int d){
-    self->events().emplace_back(coords, weights, n1, d);
+SWIGINTERN void emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg___add_event(emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *self,double *weights,int n0,double *coords,int n1,int d,double event_weight=1){
+    self->events().emplace_back(coords, weights, n1, d, event_weight);
     self->preprocess_back_event();
   }
 SWIGINTERN void emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg___reset_B_events(emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *self){
@@ -11068,6 +11077,53 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_ExternalEMDHandler_num_calls(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  emd::ExternalEMDHandler *arg1 = (emd::ExternalEMDHandler *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  std::size_t result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__ExternalEMDHandler, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandler_num_calls" "', argument " "1"" of type '" "emd::ExternalEMDHandler const *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::ExternalEMDHandler * >(argp1);
+  {
+    try {
+      result = ((emd::ExternalEMDHandler const *)arg1)->num_calls(); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_ExternalEMDHandler___call__(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   emd::ExternalEMDHandler *arg1 = (emd::ExternalEMDHandler *) 0 ;
@@ -11136,24 +11192,37 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_ExternalEMDHandler_num_calls(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_ExternalEMDHandler_compute__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   emd::ExternalEMDHandler *arg1 = (emd::ExternalEMDHandler *) 0 ;
+  double *arg2 = (double *) 0 ;
+  std::ptrdiff_t arg3 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  std::size_t result;
+  PyArrayObject *array2 = NULL ;
+  int is_new_object2 = 0 ;
   
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__ExternalEMDHandler, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandler_num_calls" "', argument " "1"" of type '" "emd::ExternalEMDHandler const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandler_compute" "', argument " "1"" of type '" "emd::ExternalEMDHandler *""'"); 
   }
   arg1 = reinterpret_cast< emd::ExternalEMDHandler * >(argp1);
   {
+    npy_intp size[1] = {
+      -1 
+    };
+    array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
+      NPY_DOUBLE,
+      &is_new_object2);
+    if (!array2 || !require_dimensions(array2, 1) ||
+      !require_size(array2, size, 1)) SWIG_fail;
+    arg2 = (double*) array_data(array2);
+    arg3 = (std::ptrdiff_t) array_size(array2,0);
+  }
+  {
     try {
-      result = ((emd::ExternalEMDHandler const *)arg1)->num_calls(); 
+      emd_ExternalEMDHandler_compute__SWIG_0(arg1,arg2,arg3); 
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -11176,10 +11245,179 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandler_num_calls(PyObject *SWIGUNUSEDPARM
       SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
     }
   }
-  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  resultobj = SWIG_Py_Void();
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
   return resultobj;
 fail:
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
   return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ExternalEMDHandler_compute__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  emd::ExternalEMDHandler *arg1 = (emd::ExternalEMDHandler *) 0 ;
+  double *arg2 = (double *) 0 ;
+  std::ptrdiff_t arg3 ;
+  double *arg4 = (double *) 0 ;
+  std::ptrdiff_t arg5 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyArrayObject *array2 = NULL ;
+  int is_new_object2 = 0 ;
+  PyArrayObject *array4 = NULL ;
+  int is_new_object4 = 0 ;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__ExternalEMDHandler, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandler_compute" "', argument " "1"" of type '" "emd::ExternalEMDHandler *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::ExternalEMDHandler * >(argp1);
+  {
+    npy_intp size[1] = {
+      -1 
+    };
+    array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
+      NPY_DOUBLE,
+      &is_new_object2);
+    if (!array2 || !require_dimensions(array2, 1) ||
+      !require_size(array2, size, 1)) SWIG_fail;
+    arg2 = (double*) array_data(array2);
+    arg3 = (std::ptrdiff_t) array_size(array2,0);
+  }
+  {
+    npy_intp size[1] = {
+      -1 
+    };
+    array4 = obj_to_array_contiguous_allow_conversion(swig_obj[2],
+      NPY_DOUBLE,
+      &is_new_object4);
+    if (!array4 || !require_dimensions(array4, 1) ||
+      !require_size(array4, size, 1)) SWIG_fail;
+    arg4 = (double*) array_data(array4);
+    arg5 = (std::ptrdiff_t) array_size(array4,0);
+  }
+  {
+    try {
+      emd_ExternalEMDHandler_compute__SWIG_1(arg1,arg2,arg3,arg4,arg5); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
+  {
+    if (is_new_object4 && array4)
+    {
+      Py_DECREF(array4); 
+    }
+  }
+  return resultobj;
+fail:
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
+  {
+    if (is_new_object4 && array4)
+    {
+      Py_DECREF(array4); 
+    }
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ExternalEMDHandler_compute(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[4] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "ExternalEMDHandler_compute", 0, 3, argv))) SWIG_fail;
+  --argc;
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_emd__ExternalEMDHandler, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        _v = is_array(argv[1]) || PySequence_Check(argv[1]);
+      }
+      if (_v) {
+        if (argc <= 2) {
+          return _wrap_ExternalEMDHandler_compute__SWIG_0(self, argc, argv);
+        }
+        return _wrap_ExternalEMDHandler_compute__SWIG_0(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_emd__ExternalEMDHandler, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        _v = is_array(argv[1]) || PySequence_Check(argv[1]);
+      }
+      if (_v) {
+        {
+          _v = is_array(argv[2]) || PySequence_Check(argv[2]);
+        }
+        if (_v) {
+          if (argc <= 3) {
+            return _wrap_ExternalEMDHandler_compute__SWIG_1(self, argc, argv);
+          }
+          return _wrap_ExternalEMDHandler_compute__SWIG_1(self, argc, argv);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'ExternalEMDHandler_compute'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    emd::ExternalEMDHandler::compute(double *,std::ptrdiff_t)\n"
+    "    emd::ExternalEMDHandler::compute(double *,std::ptrdiff_t,double *,std::ptrdiff_t)\n");
+  return 0;
 }
 
 
@@ -18032,28 +18270,40 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_PairwiseEMD_flat_emds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_PairwiseEMD_flat_emds(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *arg1 = (emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *) 0 ;
   double **arg2 = (double **) 0 ;
-  std::ptrdiff_t *arg3 = (std::ptrdiff_t *) 0 ;
+  std::size_t *arg3 = (std::size_t *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  double *data_temp2 = NULL ;
-  std::ptrdiff_t dim_temp2 ;
-  PyObject *swig_obj[1] ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  char * kwnames[] = {
+    (char *)"self",  (char *)"arr_out",  (char *)"n",  NULL 
+  };
   
-  {
-    arg2 = &data_temp2;
-    arg3 = &dim_temp2;
-  }
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t, 0 |  0 );
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:PairwiseEMD_flat_emds", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMD_flat_emds" "', argument " "1"" of type '" "emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *""'"); 
   }
   arg1 = reinterpret_cast< emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_p_double, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "PairwiseEMD_flat_emds" "', argument " "2"" of type '" "double **""'"); 
+  }
+  arg2 = reinterpret_cast< double ** >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3,SWIGTYPE_p_std__size_t, 0 |  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "PairwiseEMD_flat_emds" "', argument " "3"" of type '" "std::size_t *""'"); 
+  }
+  arg3 = reinterpret_cast< std::size_t * >(argp3);
   {
     try {
       emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg__flat_emds(arg1,arg2,arg3); 
@@ -18080,29 +18330,6 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_flat_emds(PyObject *SWIGUNUSEDPARM(self),
     }
   }
   resultobj = SWIG_Py_Void();
-  {
-    npy_intp dims[1] = {
-      *arg3 
-    };
-    PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg2));
-    PyArrayObject* array = (PyArrayObject*) obj;
-    
-    if (!array) SWIG_fail;
-    
-#ifdef SWIGPY_USE_CAPSULE
-    PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
-#else
-    PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
-#endif
-    
-#if NPY_API_VERSION < 0x00000007
-    PyArray_BASE(array) = cap;
-#else
-    PyArray_SetBaseObject(array,cap);
-#endif
-    
-    resultobj = SWIG_Python_AppendOutput(resultobj,obj);
-  }
   return resultobj;
 fail:
   return NULL;
@@ -18117,19 +18344,23 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD__add_event(PyObject *SWIGUNUSEDPARM(self)
   double *arg4 = (double *) 0 ;
   int arg5 ;
   int arg6 ;
+  double arg7 = (double) 1 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int i2 = 1 ;
   PyArrayObject *array4 = NULL ;
+  double val7 ;
+  int ecode7 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"weights",  (char *)"coords",  NULL 
+    (char *)"self",  (char *)"weights",  (char *)"coords",  (char *)"event_weight",  NULL 
   };
   
-  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:PairwiseEMD__add_event", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO|O:PairwiseEMD__add_event", kwnames, &obj0, &obj1, &obj2, &obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMD__add_event" "', argument " "1"" of type '" "emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *""'"); 
@@ -18151,9 +18382,16 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD__add_event(PyObject *SWIGUNUSEDPARM(self)
     arg5 = (int) array_size(array4,0);
     arg6 = (int) array_size(array4,1);
   }
+  if (obj3) {
+    ecode7 = SWIG_AsVal_double(obj3, &val7);
+    if (!SWIG_IsOK(ecode7)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "PairwiseEMD__add_event" "', argument " "7"" of type '" "double""'");
+    } 
+    arg7 = static_cast< double >(val7);
+  }
   {
     try {
-      emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg___add_event(arg1,arg2,arg3,arg4,arg5,arg6); 
+      emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg___add_event(arg1,arg2,arg3,arg4,arg5,arg6,arg7); 
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -18404,8 +18642,12 @@ static PyMethodDef SwigMethods[] = {
 	 { "check_emd_status", (PyCFunction)(void(*)(void))_wrap_check_emd_status, METH_VARARGS|METH_KEYWORDS, "check_emd_status(emd::EMDStatus status)"},
 	 { "delete_ExternalEMDHandler", _wrap_delete_ExternalEMDHandler, METH_O, "delete_ExternalEMDHandler(ExternalEMDHandler self)"},
 	 { "ExternalEMDHandler_description", _wrap_ExternalEMDHandler_description, METH_O, "ExternalEMDHandler_description(ExternalEMDHandler self) -> std::string"},
-	 { "ExternalEMDHandler___call__", (PyCFunction)(void(*)(void))_wrap_ExternalEMDHandler___call__, METH_VARARGS|METH_KEYWORDS, "ExternalEMDHandler___call__(ExternalEMDHandler self, double emd, double weight=1)"},
 	 { "ExternalEMDHandler_num_calls", _wrap_ExternalEMDHandler_num_calls, METH_O, "ExternalEMDHandler_num_calls(ExternalEMDHandler self) -> std::size_t"},
+	 { "ExternalEMDHandler___call__", (PyCFunction)(void(*)(void))_wrap_ExternalEMDHandler___call__, METH_VARARGS|METH_KEYWORDS, "ExternalEMDHandler___call__(ExternalEMDHandler self, double emd, double weight=1)"},
+	 { "ExternalEMDHandler_compute", _wrap_ExternalEMDHandler_compute, METH_VARARGS, "\n"
+		"ExternalEMDHandler_compute(ExternalEMDHandler self, double * emds)\n"
+		"ExternalEMDHandler_compute(ExternalEMDHandler self, double * emds, double * event_weights)\n"
+		""},
 	 { "ExternalEMDHandler_swigregister", ExternalEMDHandler_swigregister, METH_O, NULL},
 	 { "new_EMDBaseDouble", (PyCFunction)(void(*)(void))_wrap_new_EMDBaseDouble, METH_VARARGS|METH_KEYWORDS, "new_EMDBaseDouble(bool norm=False, bool do_timing=False, bool external_dists=False) -> EMDBaseDouble"},
 	 { "delete_EMDBaseDouble", _wrap_delete_EMDBaseDouble, METH_O, "delete_EMDBaseDouble(EMDBaseDouble self)"},
@@ -18539,8 +18781,8 @@ static PyMethodDef SwigMethods[] = {
 	 { "PairwiseEMD___str__", _wrap_PairwiseEMD___str__, METH_O, "PairwiseEMD___str__(PairwiseEMD self) -> std::string"},
 	 { "PairwiseEMD___repr__", _wrap_PairwiseEMD___repr__, METH_O, "PairwiseEMD___repr__(PairwiseEMD self) -> std::string"},
 	 { "PairwiseEMD_emds", _wrap_PairwiseEMD_emds, METH_O, "PairwiseEMD_emds(PairwiseEMD self)"},
-	 { "PairwiseEMD_flat_emds", _wrap_PairwiseEMD_flat_emds, METH_O, "PairwiseEMD_flat_emds(PairwiseEMD self)"},
-	 { "PairwiseEMD__add_event", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD__add_event, METH_VARARGS|METH_KEYWORDS, "PairwiseEMD__add_event(PairwiseEMD self, double * weights, double * coords)"},
+	 { "PairwiseEMD_flat_emds", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_flat_emds, METH_VARARGS|METH_KEYWORDS, "PairwiseEMD_flat_emds(PairwiseEMD self, double ** arr_out, std::size_t * n)"},
+	 { "PairwiseEMD__add_event", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD__add_event, METH_VARARGS|METH_KEYWORDS, "PairwiseEMD__add_event(PairwiseEMD self, double * weights, double * coords, double event_weight=1)"},
 	 { "PairwiseEMD__reset_B_events", _wrap_PairwiseEMD__reset_B_events, METH_O, "PairwiseEMD__reset_B_events(PairwiseEMD self)"},
 	 { "PairwiseEMD_swigregister", PairwiseEMD_swigregister, METH_O, NULL},
 	 { "PairwiseEMD_swiginit", PairwiseEMD_swiginit, METH_VARARGS, NULL},
@@ -18711,8 +18953,12 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "check_emd_status", (PyCFunction)(void(*)(void))_wrap_check_emd_status, METH_VARARGS|METH_KEYWORDS, "check_emd_status(emd::EMDStatus status)"},
 	 { "delete_ExternalEMDHandler", _wrap_delete_ExternalEMDHandler, METH_O, "delete_ExternalEMDHandler(ExternalEMDHandler self)"},
 	 { "ExternalEMDHandler_description", _wrap_ExternalEMDHandler_description, METH_O, "description(ExternalEMDHandler self) -> std::string"},
-	 { "ExternalEMDHandler___call__", (PyCFunction)(void(*)(void))_wrap_ExternalEMDHandler___call__, METH_VARARGS|METH_KEYWORDS, "__call__(ExternalEMDHandler self, double emd, double weight=1)"},
 	 { "ExternalEMDHandler_num_calls", _wrap_ExternalEMDHandler_num_calls, METH_O, "num_calls(ExternalEMDHandler self) -> std::size_t"},
+	 { "ExternalEMDHandler___call__", (PyCFunction)(void(*)(void))_wrap_ExternalEMDHandler___call__, METH_VARARGS|METH_KEYWORDS, "__call__(ExternalEMDHandler self, double emd, double weight=1)"},
+	 { "ExternalEMDHandler_compute", _wrap_ExternalEMDHandler_compute, METH_VARARGS, "\n"
+		"compute(ExternalEMDHandler self, double * emds)\n"
+		"compute(ExternalEMDHandler self, double * emds, double * event_weights)\n"
+		""},
 	 { "ExternalEMDHandler_swigregister", ExternalEMDHandler_swigregister, METH_O, NULL},
 	 { "new_EMDBaseDouble", (PyCFunction)(void(*)(void))_wrap_new_EMDBaseDouble, METH_VARARGS|METH_KEYWORDS, "new_EMDBaseDouble(bool norm=False, bool do_timing=False, bool external_dists=False) -> EMDBaseDouble"},
 	 { "delete_EMDBaseDouble", _wrap_delete_EMDBaseDouble, METH_O, "delete_EMDBaseDouble(EMDBaseDouble self)"},
@@ -18846,8 +19092,8 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "PairwiseEMD___str__", _wrap_PairwiseEMD___str__, METH_O, "__str__(PairwiseEMD self) -> std::string"},
 	 { "PairwiseEMD___repr__", _wrap_PairwiseEMD___repr__, METH_O, "__repr__(PairwiseEMD self) -> std::string"},
 	 { "PairwiseEMD_emds", _wrap_PairwiseEMD_emds, METH_O, "emds(PairwiseEMD self)"},
-	 { "PairwiseEMD_flat_emds", _wrap_PairwiseEMD_flat_emds, METH_O, "flat_emds(PairwiseEMD self)"},
-	 { "PairwiseEMD__add_event", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD__add_event, METH_VARARGS|METH_KEYWORDS, "_add_event(PairwiseEMD self, double * weights, double * coords)"},
+	 { "PairwiseEMD_flat_emds", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_flat_emds, METH_VARARGS|METH_KEYWORDS, "flat_emds(PairwiseEMD self, double ** arr_out, std::size_t * n)"},
+	 { "PairwiseEMD__add_event", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD__add_event, METH_VARARGS|METH_KEYWORDS, "_add_event(PairwiseEMD self, double * weights, double * coords, double event_weight=1)"},
 	 { "PairwiseEMD__reset_B_events", _wrap_PairwiseEMD__reset_B_events, METH_O, "_reset_B_events(PairwiseEMD self)"},
 	 { "PairwiseEMD_swigregister", PairwiseEMD_swigregister, METH_O, NULL},
 	 { "PairwiseEMD_swiginit", PairwiseEMD_swiginit, METH_VARARGS, NULL},
@@ -18903,7 +19149,7 @@ static swig_type_info _swigt__p_std__allocatorT_std__string_t = {"_p_std__alloca
 static swig_type_info _swigt__p_std__invalid_argument = {"_p_std__invalid_argument", "std::invalid_argument *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__ostream = {"_p_std__ostream", "std::ostream *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t = {"_p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t", "std::pair< std::vector< double >,std::vector< double > > *|std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__ptrdiff_t = {"_p_std__ptrdiff_t", "std::ptrdiff_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__size_t = {"_p_std__size_t", "std::size_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_double_std__allocatorT_double_t_t = {"_p_std__vectorT_double_std__allocatorT_double_t_t", "std::vector< double,std::allocator< double > > *|emd::ValueVector *|std::vector< double > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_std__string_std__allocatorT_std__string_t_t = {"_p_std__vectorT_std__string_std__allocatorT_std__string_t_t", "std::vector< std::string,std::allocator< std::string > > *|std::vector< std::string > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_swig__SwigPyIterator = {"_p_swig__SwigPyIterator", "swig::SwigPyIterator *", 0, 0, (void*)0, 0};
@@ -18941,7 +19187,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_std__invalid_argument,
   &_swigt__p_std__ostream,
   &_swigt__p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t,
-  &_swigt__p_std__ptrdiff_t,
+  &_swigt__p_std__size_t,
   &_swigt__p_std__vectorT_double_std__allocatorT_double_t_t,
   &_swigt__p_std__vectorT_std__string_std__allocatorT_std__string_t_t,
   &_swigt__p_swig__SwigPyIterator,
@@ -18979,7 +19225,7 @@ static swig_cast_info _swigc__p_std__allocatorT_std__string_t[] = {  {&_swigt__p
 static swig_cast_info _swigc__p_std__invalid_argument[] = {  {&_swigt__p_std__invalid_argument, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__ostream[] = {  {&_swigt__p_std__ostream, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t[] = {  {&_swigt__p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_std__ptrdiff_t[] = {  {&_swigt__p_std__ptrdiff_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__size_t[] = {  {&_swigt__p_std__size_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_double_std__allocatorT_double_t_t[] = {  {&_swigt__p_std__vectorT_double_std__allocatorT_double_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_std__string_std__allocatorT_std__string_t_t[] = {  {&_swigt__p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_swig__SwigPyIterator[] = {  {&_swigt__p_swig__SwigPyIterator, 0, 0, 0},{0, 0, 0, 0}};
@@ -19017,7 +19263,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_std__invalid_argument,
   _swigc__p_std__ostream,
   _swigc__p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t,
-  _swigc__p_std__ptrdiff_t,
+  _swigc__p_std__size_t,
   _swigc__p_std__vectorT_double_std__allocatorT_double_t_t,
   _swigc__p_std__vectorT_std__string_std__allocatorT_std__string_t_t,
   _swigc__p_swig__SwigPyIterator,

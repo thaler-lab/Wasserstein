@@ -225,13 +225,36 @@ class ExternalEMDHandler {
 public:
   ExternalEMDHandler() : num_calls_(0) {}
   virtual ~ExternalEMDHandler() {}
+
   virtual std::string description() const = 0;
+  std::size_t num_calls() const { return num_calls_; }
+
   void operator()(double emd, double weight = 1) {
     std::lock_guard<std::mutex> handler_guard(mutex_);
     handle(emd, weight);
     num_calls_++;
   }
-  std::size_t num_calls() const { return num_calls_; }
+
+  template<typename Value, typename Value2 = Value>
+  void operator()(const std::vector<Value> & emds, const std::vector<Value2> & weights = {}) {
+
+    if (emds.size() != weights.size()) {
+      if (weights.size() == 0)
+        operator()(emds.data(), emds.size());
+      else throw std::invalid_argument("length of weights must match that of emds or be 0");
+    }
+    else
+      operator()(emds.data(), emds.size(), weights.data());
+  }
+
+  template<typename Value, typename Value2 = Value>
+  void operator()(const Value * emds, std::size_t num_emds, const Value2 * weights = nullptr) {
+    std::lock_guard<std::mutex> handler_guard(mutex_);
+
+    for (std::size_t i = 0; i < num_emds; i++, num_calls_++)
+      handle(emds[i], weights == nullptr ? 1 : weights[i]);
+  }
+  
 
 protected:
   virtual void handle(double, double) = 0; 

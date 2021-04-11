@@ -578,19 +578,22 @@ public:
 
   // compute EMDs between all pairs of proto events, including preprocessing
   template<class ProtoEvent>
-  void operator()(const std::vector<ProtoEvent> & proto_events) {
+  void operator()(const std::vector<ProtoEvent> & proto_events,
+                  const ValueVector & event_weights = {}) {
     init(proto_events.size());
-    store_proto_events(proto_events);
+    store_proto_events(proto_events, event_weights);
     compute();
   }
 
   // compute EMDs between two sets of proto events, including preprocessing
   template<class ProtoEventA, class ProtoEventB>
   void operator()(const std::vector<ProtoEventA> & proto_eventsA,
-                  const std::vector<ProtoEventB> & proto_eventsB) {
+                  const std::vector<ProtoEventB> & proto_eventsB,
+                  const ValueVector & event_weightsA = {},
+                  const ValueVector & event_weightsB = {}) {
     init(proto_eventsA.size(), proto_eventsB.size());
-    store_proto_events(proto_eventsA);
-    store_proto_events(proto_eventsB);
+    store_proto_events(proto_eventsA, event_weightsA);
+    store_proto_events(proto_eventsB, event_weightsB);
     compute();
   }
 
@@ -678,8 +681,10 @@ public:
         throw std::out_of_range("invalid thread index");
 
       // run and check for failure
-      check_emd_status(emd_objs_[thread].compute(events_[i], events_[two_event_sets_ ? nevA() + j : j]));
-      if (handler_) (*handler_)(emd_objs_[thread].emd());
+      const Event & eventA(events_[i]), & eventB(events_[two_event_sets_ ? nevA() + j : j]);
+      check_emd_status(emd_objs_[thread].compute(eventA, eventB));
+      if (handler_)
+        (*handler_)(emd_objs_[thread].emd(), eventA.event_weight() * eventB.event_weight());
       return emd_objs_[thread].emd();
     }
 
@@ -797,12 +802,15 @@ private:
           if (two_event_sets_) {
 
             // run and check for failure
-            EMDStatus status(emd_obj.compute(events_[i], events_[nevA() + j]));
+            const Event & eventA(events_[i]), & eventB(events_[nevA() + j]);
+            EMDStatus status(emd_obj.compute(eventA, eventB));
             if (status != EMDStatus::Success) {
               std::lock_guard<std::mutex> failure_lock(failure_mutex);
               record_failure(status, i, j);
             }
-            if (handler_) (*handler_)(emd_obj.emd());
+
+            if (handler_)
+              (*handler_)(emd_obj.emd(), eventA.event_weight() * eventB.event_weight());
             else emds_[k] = emd_obj.emd(); 
           }
           else {
@@ -814,7 +822,8 @@ private:
             }
 
             // run and check for failure
-            EMDStatus status(emd_obj.compute(events_[i], events_[j]));
+            const Event & eventA(events_[i]), & eventB(events_[j]);
+            EMDStatus status(emd_obj.compute(eventA, eventB));
             if (status != EMDStatus::Success) {
               std::lock_guard<std::mutex> failure_lock(failure_mutex);
               record_failure(status, i, j);
@@ -823,10 +832,13 @@ private:
             // store emd value
             if (emd_storage_ == EMDPairsStorage::FlattenedSymmetric)
               emds_[index_symmetric(i, j)] = emd_obj.emd();
+
             else if (emd_storage_ == EMDPairsStorage::External)
-              (*handler_)(emd_obj.emd());
+              (*handler_)(emd_obj.emd(), eventA.event_weight() * eventB.event_weight());
+
             else if (emd_storage_ == EMDPairsStorage::FullSymmetric)
               emds_[i*nevB() + j] = emds_[j*nevB() + i] = emd_obj.emd();
+
             else std::cerr << "Should never get here\n";
           }
         }
@@ -888,11 +900,22 @@ private:
 
   // store events
   template<class ProtoEvent>
-  void store_proto_events(const std::vector<ProtoEvent> & proto_events) {
-    for (const ProtoEvent & proto_event : proto_events) {
-      events_.emplace_back(proto_event);
-      preprocess_back_event();
+  void store_proto_events(const std::vector<ProtoEvent> & proto_events,
+                          const ValueVector & event_weights) {
+
+    if (proto_events.size() != event_weights.size()) {
+      if (event_weights.size() == 0)
+        for (const ProtoEvent & proto_event : proto_events) {
+          events_.emplace_back(proto_event);
+          preprocess_back_event();
+        }
+      else throw std::invalid_argument("length of event_weights does not match proto_events");
     }
+    else
+      for (unsigned i = 0; i < proto_events.size(); i++) {
+        events_.emplace_back(proto_events[i], event_weights[i]);
+        preprocess_back_event();
+      }
   }
 
   void record_failure(EMDStatus status, std::ptrdiff_t i, std::ptrdiff_t j) {

@@ -56,17 +56,25 @@ struct EventBase {
   typedef typename WeightCollection::value_type Value;
 
   // constructor from particle collection only
-  EventBase(const ParticleCollection & particles) :
-    particles_(particles), total_weight_(0), has_weights_(false)
+  EventBase(const ParticleCollection & particles, Value event_weight = 1) :
+    particles_(particles), total_weight_(0), event_weight_(event_weight), has_weights_(false)
   {}
 
   // constructor from particle collection and weight collection
-  EventBase(const ParticleCollection & particles, const WeightCollection & weights) :
-    particles_(particles), weights_(weights), total_weight_(0), has_weights_(true)
-  {}
+  EventBase(const ParticleCollection & particles,
+            const WeightCollection & weights,
+            Value event_weight = 1) :
+    EventBase(particles, event_weight)
+  {
+    weights_ = weights;
+    has_weights_ = true;
+  }
 
   EventBase() {}
   virtual ~EventBase() {}
+
+  // access event_weight
+  Value event_weight() const { return event_weight_; }
 
   // access particles
   ParticleCollection & particles() { return particles_; }
@@ -98,7 +106,7 @@ protected:
 
   ParticleCollection particles_;
   WeightCollection weights_;
-  Value total_weight_;
+  Value total_weight_, event_weight_;
   bool has_weights_;
 
 }; // EventBase
@@ -114,8 +122,8 @@ struct GenericEvent : public EventBase<std::vector<P>, std::vector<typename P::V
   typedef std::vector<typename Particle::Value> WeightCollection;
 
   GenericEvent() {}
-  GenericEvent(const ParticleCollection & particles) :
-    EventBase<ParticleCollection, WeightCollection>(particles)
+  GenericEvent(const ParticleCollection & particles, Value event_weight = 1) :
+    EventBase<ParticleCollection, WeightCollection>(particles, event_weight)
   {
     // weights are assumed to be contained in the particles as public methods
     this->weights_.reserve(particles.size());
@@ -153,6 +161,7 @@ struct ArrayWeightCollection {
 
   // contructor, int is used for compatibility with SWIG's numpy.i
   ArrayWeightCollection(V * array, int size) : array_(array), size_(size), delete_(false) {}
+  ArrayWeightCollection() : ArrayWeightCollection(nullptr, 0) {}
 
   ~ArrayWeightCollection() {
     if (delete_)
@@ -176,7 +185,7 @@ struct ArrayWeightCollection {
     V * new_array(new V[size()]);
 
     // copy old array into new one
-    memcpy(new_array, array_, size_t(size())*sizeof(V));
+    memcpy(new_array, array_, std::size_t(size())*sizeof(V));
     array_ = new_array;
   }
 
@@ -217,6 +226,7 @@ struct ArrayParticleCollection {
   ArrayParticleCollection(V * array, int size, int stride) :
     array_(array), size_(size), stride_(stride)
   {}
+  ArrayParticleCollection() : ArrayParticleCollection(nullptr, 0, 0) {}
 
   int size() const { return size_; }
   int stride() const { return stride_; }
@@ -242,9 +252,10 @@ struct ArrayEvent : public EventBase<ArrayParticleCollection<V>, ArrayWeightColl
   static_assert(std::is_floating_point<V>::value, "ArrayEvent template parameter must be floating point.");
 
   // full constructor
-  ArrayEvent(V * particle_array, V * weight_array, int size, int stride) :
+  ArrayEvent(V * particle_array, V * weight_array, int size, int stride, Value event_weight = 1) :
     Base(ParticleCollection(particle_array, size, stride),
-         WeightCollection(weight_array, size))
+         WeightCollection(weight_array, size),
+         event_weight)
   {
     // set total weight
     for (int i = 0; i < size; i++)
@@ -252,8 +263,8 @@ struct ArrayEvent : public EventBase<ArrayParticleCollection<V>, ArrayWeightColl
   }
 
   // constructor from single argument (for use with Python)
-  ArrayEvent(const std::tuple<V*, V*, int, int> & tup) :
-    ArrayEvent(std::get<0>(tup), std::get<1>(tup), std::get<2>(tup), std::get<3>(tup))
+  ArrayEvent(const std::tuple<V*, V*, int, int> & tup, Value event_weight = 1) :
+    ArrayEvent(std::get<0>(tup), std::get<1>(tup), std::get<2>(tup), std::get<3>(tup), event_weight)
   {}
 
   // default constructor
@@ -286,13 +297,13 @@ struct VectorEvent : public EventBase<std::vector<V>, std::vector<V>> {
   static_assert(std::is_floating_point<V>::value, "VectorEvent template parameter must be floating point.");
 
   // constructor with a single argument
-  VectorEvent(const std::pair<ParticleCollection, WeightCollection> && proto_event) :
-    VectorEvent(proto_event.first, proto_event.second)
+  VectorEvent(const std::pair<ParticleCollection, WeightCollection> && proto_event, Value event_weight = 1) :
+    VectorEvent(proto_event.first, proto_event.second, event_weight)
   {}
 
   // constructor from vectors of particles and weights
-  VectorEvent(const ParticleCollection & particles, const WeightCollection & weights) :
-    Base(particles, weights)
+  VectorEvent(const ParticleCollection & particles, const WeightCollection & weights, Value event_weight = 1) :
+    Base(particles, weights, event_weight)
   {
     if (particles.size() % weights.size() != 0)
       throw std::invalid_argument("particles.size() must be cleanly divisible by weights.size()");

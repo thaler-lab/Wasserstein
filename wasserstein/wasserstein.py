@@ -277,8 +277,9 @@ class ExternalEMDHandler(object):
     __repr__ = _swig_repr
     __swig_destroy__ = _wasserstein.delete_ExternalEMDHandler
     description = _swig_new_instance_method(_wasserstein.ExternalEMDHandler_description)
-    __call__ = _swig_new_instance_method(_wasserstein.ExternalEMDHandler___call__)
     num_calls = _swig_new_instance_method(_wasserstein.ExternalEMDHandler_num_calls)
+    __call__ = _swig_new_instance_method(_wasserstein.ExternalEMDHandler___call__)
+    compute = _swig_new_instance_method(_wasserstein.ExternalEMDHandler_compute)
 
 # Register ExternalEMDHandler in _wasserstein:
 _wasserstein.ExternalEMDHandler_swigregister(ExternalEMDHandler)
@@ -400,12 +401,12 @@ _wasserstein.CorrelationDimension_swigregister(CorrelationDimension)
 
 
 # function for storing events in a pairwise_emd object
-def _store_events(pairwise_emd, events, gdim, mask):
+def _store_events(pairwise_emd, events, event_weights, gdim, mask):
 
     if mask:
         R2 = pairwise_emd.R()**2
 
-    for event in events:
+    for event, event_weight in zip(events, event_weights):
 
 # ensure event is 2d
         event = np.atleast_2d(event)
@@ -426,7 +427,7 @@ def _store_events(pairwise_emd, events, gdim, mask):
         pairwise_emd.event_arrs.append((weights, coords))
 
 # store individual event
-        pairwise_emd._add_event(weights, coords)
+        pairwise_emd._add_event(weights, coords, event_weight)
 
 class EMD(EMDBaseDouble):
     r"""
@@ -530,26 +531,44 @@ class PairwiseEMD(object):
     _reset_B_events = _swig_new_instance_method(_wasserstein.PairwiseEMD__reset_B_events)
 
 
-    def __call__(self, eventsA, eventsB=None, gdim=None, mask=False):
+    def __call__(self, eventsA, eventsB=None, gdim=None, mask=False,
+                       event_weightsA=None, event_weightsB=None):
 
         if eventsB is None:
             self.init(len(eventsA))
-            eventsB = []
+            eventsB = event_weightsB = []
         else:
             self.init(len(eventsA), len(eventsB))
 
+        if event_weightsA is None:
+            event_weightsA = np.ones(len(eventsA), dtype=np.double)
+        elif len(event_weightsA) != len(eventsA):
+            raise ValueError('length of `event_weightsA` does not match length of `eventsA`')
+
+        if event_weightsB is None:
+            event_weightsB = np.ones(len(eventsB), dtype=np.double)
+        elif len(event_weightsB) != len(eventsB):
+            raise ValueError('length of `event_weightsB` does not match length of `eventsB`')
+
         self.event_arrs = []
-        _store_events(self, itertools.chain(eventsA, eventsB), gdim, mask)
+        _store_events(self, itertools.chain(eventsA, eventsB),
+                            itertools.chain(event_weightsA, event_weightsB),
+                            gdim, mask)
 
     # run actual computation
         if not self.request_mode():
             self.compute()
 
-    def set_new_eventsB(self, eventsB, gdim=None, mask=False):
+    def set_new_eventsB(self, eventsB, gdim=None, mask=False, event_weightsB=None):
 
     # check that we have been initialized before
         if not hasattr(self, 'event_arrs'):
             raise RuntimeError('PairwiseEMD object must be called on some events before the B events can be reset')
+
+        if event_weightsB is None:
+            event_weightsB = np.ones(len(eventsB), dtype=np.double)
+        elif len(event_weightsB) != len(eventsB):
+            raise ValueError('length of `event_weightsB` does not match length of `eventsB`')
 
     # clear away old B events in underlying object
         self._reset_B_events()
@@ -559,7 +578,7 @@ class PairwiseEMD(object):
 
     # reinitialize
         self.init(self.nevA(), len(eventsB))
-        _store_events(self, eventsB, gdim, mask)
+        _store_events(self, eventsB, event_weightsB, gdim, mask)
 
 
 # Register PairwiseEMD in _wasserstein:

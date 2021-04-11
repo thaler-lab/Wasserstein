@@ -69,6 +69,7 @@ import_array();
 
 // numpy typemaps
 %apply (double* IN_ARRAY1, int DIM1) {(double* weights0, int n0), (double* weights1, int n1)}
+%apply (double* IN_ARRAY1, std::ptrdiff_t DIM1) {(double* emds, std::ptrdiff_t n0), (double* event_weights, std::ptrdiff_t n1)}
 %apply (double* IN_ARRAY2, int DIM1, int DIM2) {(double* coords0, int n00, int n01),
                                                 (double* coords1, int n10, int n11),
                                                 (double* external_dists, int d0, int d1)}
@@ -220,7 +221,7 @@ void pyname(double** arr_out0, int* n0, double** arr_out1, int* n1) {
     memcpy(*arr_out, $self->emds().data(), nbytes);
   }
 
-  void flat_emds(double** arr_out, std::ptrdiff_t* n) {
+  void flat_emds(double** arr_out, std::size_t* n) {
     if ($self->storage() != emd::EMDPairsStorage::FlattenedSymmetric)
       throw std::runtime_error("flattened emds only available with flattened symmetric storage");
 
@@ -251,6 +252,22 @@ void pyname(double** arr_out0, int* n0, double** arr_out1, int* n1) {
       $action(self, handler)
       self._external_emd_handler = handler
 %}
+
+// extend ExternalEMDHandler
+#ifdef SWIG_NUMPY
+%extend EMDNAMESPACE::ExternalEMDHandler {
+  void compute(double* emds, std::ptrdiff_t n0) {
+    (*$self)(emds, n0);
+  }
+
+  void compute(double* emds, std::ptrdiff_t n0, double* event_weights, std::ptrdiff_t n1) {
+    if (n0 != n1)
+      throw std::invalid_argument("length of `emds` should match lengh of `event_weights`");
+
+    (*$self)(emds, n0, event_weights);
+  }
+}
+#endif
 
 // extend Histogram1DHandler
 %extend EMDNAMESPACE::Histogram1DHandler {
