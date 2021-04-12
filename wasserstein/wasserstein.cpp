@@ -5745,14 +5745,23 @@ SWIG_AsVal_int (PyObject * obj, int *val)
 
 
 
-SWIGINTERN void emd_ExternalEMDHandler_compute__SWIG_0(emd::ExternalEMDHandler *self,double *emds,std::ptrdiff_t n0){
-    (*self)(emds, n0);
+SWIGINTERN void emd_ExternalEMDHandler_compute__SWIG_2(emd::ExternalEMDHandler *self,double *emds,std::ptrdiff_t n0){
+    self->compute(emds, n0);
   }
-SWIGINTERN void emd_ExternalEMDHandler_compute__SWIG_1(emd::ExternalEMDHandler *self,double *emds,std::ptrdiff_t n0,double *event_weights,std::ptrdiff_t n1){
+SWIGINTERN void emd_ExternalEMDHandler_compute__SWIG_3(emd::ExternalEMDHandler *self,double *emds,std::ptrdiff_t n0,double *event_weights,std::ptrdiff_t n1){
     if (n0 != n1)
       throw std::invalid_argument("length of `emds` should match lengh of `event_weights`");
 
-    (*self)(emds, n0, event_weights);
+    self->compute(emds, n0, event_weights);
+  }
+SWIGINTERN void emd_ExternalEMDHandler_compute_symmetric__SWIG_2(emd::ExternalEMDHandler *self,double *emds,std::ptrdiff_t n0){
+    self->compute_symmetric(emds, n0);
+  }
+SWIGINTERN void emd_ExternalEMDHandler_compute_symmetric__SWIG_3(emd::ExternalEMDHandler *self,double *emds,std::ptrdiff_t n0,double *event_weights,std::ptrdiff_t n1){
+    if (n0 != n1)
+      throw std::invalid_argument("length of `emds` should match lengh of `event_weights`");
+
+    self->compute_symmetric(emds, n0, event_weights);
   }
 
 SWIGINTERN int
@@ -11192,7 +11201,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_ExternalEMDHandler_compute__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_ExternalEMDHandler_compute__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   emd::ExternalEMDHandler *arg1 = (emd::ExternalEMDHandler *) 0 ;
   double *arg2 = (double *) 0 ;
@@ -11222,7 +11231,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandler_compute__SWIG_0(PyObject *SWIGUNUS
   }
   {
     try {
-      emd_ExternalEMDHandler_compute__SWIG_0(arg1,arg2,arg3); 
+      emd_ExternalEMDHandler_compute__SWIG_2(arg1,arg2,arg3); 
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -11264,7 +11273,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_ExternalEMDHandler_compute__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_ExternalEMDHandler_compute__SWIG_3(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
   PyObject *resultobj = 0;
   emd::ExternalEMDHandler *arg1 = (emd::ExternalEMDHandler *) 0 ;
   double *arg2 = (double *) 0 ;
@@ -11310,7 +11319,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandler_compute__SWIG_1(PyObject *SWIGUNUS
   }
   {
     try {
-      emd_ExternalEMDHandler_compute__SWIG_1(arg1,arg2,arg3,arg4,arg5); 
+      emd_ExternalEMDHandler_compute__SWIG_3(arg1,arg2,arg3,arg4,arg5); 
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -11383,9 +11392,9 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandler_compute(PyObject *self, PyObject *
       }
       if (_v) {
         if (argc <= 2) {
-          return _wrap_ExternalEMDHandler_compute__SWIG_0(self, argc, argv);
+          return _wrap_ExternalEMDHandler_compute__SWIG_2(self, argc, argv);
         }
-        return _wrap_ExternalEMDHandler_compute__SWIG_0(self, argc, argv);
+        return _wrap_ExternalEMDHandler_compute__SWIG_2(self, argc, argv);
       }
     }
   }
@@ -11404,9 +11413,9 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandler_compute(PyObject *self, PyObject *
         }
         if (_v) {
           if (argc <= 3) {
-            return _wrap_ExternalEMDHandler_compute__SWIG_1(self, argc, argv);
+            return _wrap_ExternalEMDHandler_compute__SWIG_3(self, argc, argv);
           }
-          return _wrap_ExternalEMDHandler_compute__SWIG_1(self, argc, argv);
+          return _wrap_ExternalEMDHandler_compute__SWIG_3(self, argc, argv);
         }
       }
     }
@@ -11417,6 +11426,235 @@ fail:
     "  Possible C/C++ prototypes are:\n"
     "    emd::ExternalEMDHandler::compute(double *,std::ptrdiff_t)\n"
     "    emd::ExternalEMDHandler::compute(double *,std::ptrdiff_t,double *,std::ptrdiff_t)\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_ExternalEMDHandler_compute_symmetric__SWIG_2(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  emd::ExternalEMDHandler *arg1 = (emd::ExternalEMDHandler *) 0 ;
+  double *arg2 = (double *) 0 ;
+  std::ptrdiff_t arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyArrayObject *array2 = NULL ;
+  int is_new_object2 = 0 ;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__ExternalEMDHandler, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandler_compute_symmetric" "', argument " "1"" of type '" "emd::ExternalEMDHandler *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::ExternalEMDHandler * >(argp1);
+  {
+    npy_intp size[1] = {
+      -1 
+    };
+    array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
+      NPY_DOUBLE,
+      &is_new_object2);
+    if (!array2 || !require_dimensions(array2, 1) ||
+      !require_size(array2, size, 1)) SWIG_fail;
+    arg2 = (double*) array_data(array2);
+    arg3 = (std::ptrdiff_t) array_size(array2,0);
+  }
+  {
+    try {
+      emd_ExternalEMDHandler_compute_symmetric__SWIG_2(arg1,arg2,arg3); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
+  return resultobj;
+fail:
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ExternalEMDHandler_compute_symmetric__SWIG_3(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  emd::ExternalEMDHandler *arg1 = (emd::ExternalEMDHandler *) 0 ;
+  double *arg2 = (double *) 0 ;
+  std::ptrdiff_t arg3 ;
+  double *arg4 = (double *) 0 ;
+  std::ptrdiff_t arg5 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyArrayObject *array2 = NULL ;
+  int is_new_object2 = 0 ;
+  PyArrayObject *array4 = NULL ;
+  int is_new_object4 = 0 ;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__ExternalEMDHandler, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandler_compute_symmetric" "', argument " "1"" of type '" "emd::ExternalEMDHandler *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::ExternalEMDHandler * >(argp1);
+  {
+    npy_intp size[1] = {
+      -1 
+    };
+    array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
+      NPY_DOUBLE,
+      &is_new_object2);
+    if (!array2 || !require_dimensions(array2, 1) ||
+      !require_size(array2, size, 1)) SWIG_fail;
+    arg2 = (double*) array_data(array2);
+    arg3 = (std::ptrdiff_t) array_size(array2,0);
+  }
+  {
+    npy_intp size[1] = {
+      -1 
+    };
+    array4 = obj_to_array_contiguous_allow_conversion(swig_obj[2],
+      NPY_DOUBLE,
+      &is_new_object4);
+    if (!array4 || !require_dimensions(array4, 1) ||
+      !require_size(array4, size, 1)) SWIG_fail;
+    arg4 = (double*) array_data(array4);
+    arg5 = (std::ptrdiff_t) array_size(array4,0);
+  }
+  {
+    try {
+      emd_ExternalEMDHandler_compute_symmetric__SWIG_3(arg1,arg2,arg3,arg4,arg5); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
+  {
+    if (is_new_object4 && array4)
+    {
+      Py_DECREF(array4); 
+    }
+  }
+  return resultobj;
+fail:
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
+  {
+    if (is_new_object4 && array4)
+    {
+      Py_DECREF(array4); 
+    }
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ExternalEMDHandler_compute_symmetric(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[4] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "ExternalEMDHandler_compute_symmetric", 0, 3, argv))) SWIG_fail;
+  --argc;
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_emd__ExternalEMDHandler, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        _v = is_array(argv[1]) || PySequence_Check(argv[1]);
+      }
+      if (_v) {
+        if (argc <= 2) {
+          return _wrap_ExternalEMDHandler_compute_symmetric__SWIG_2(self, argc, argv);
+        }
+        return _wrap_ExternalEMDHandler_compute_symmetric__SWIG_2(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_emd__ExternalEMDHandler, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        _v = is_array(argv[1]) || PySequence_Check(argv[1]);
+      }
+      if (_v) {
+        {
+          _v = is_array(argv[2]) || PySequence_Check(argv[2]);
+        }
+        if (_v) {
+          if (argc <= 3) {
+            return _wrap_ExternalEMDHandler_compute_symmetric__SWIG_3(self, argc, argv);
+          }
+          return _wrap_ExternalEMDHandler_compute_symmetric__SWIG_3(self, argc, argv);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'ExternalEMDHandler_compute_symmetric'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    emd::ExternalEMDHandler::compute_symmetric(double *,std::ptrdiff_t)\n"
+    "    emd::ExternalEMDHandler::compute_symmetric(double *,std::ptrdiff_t,double *,std::ptrdiff_t)\n");
   return 0;
 }
 
@@ -18648,6 +18886,10 @@ static PyMethodDef SwigMethods[] = {
 		"ExternalEMDHandler_compute(ExternalEMDHandler self, double * emds)\n"
 		"ExternalEMDHandler_compute(ExternalEMDHandler self, double * emds, double * event_weights)\n"
 		""},
+	 { "ExternalEMDHandler_compute_symmetric", _wrap_ExternalEMDHandler_compute_symmetric, METH_VARARGS, "\n"
+		"ExternalEMDHandler_compute_symmetric(ExternalEMDHandler self, double * emds)\n"
+		"ExternalEMDHandler_compute_symmetric(ExternalEMDHandler self, double * emds, double * event_weights)\n"
+		""},
 	 { "ExternalEMDHandler_swigregister", ExternalEMDHandler_swigregister, METH_O, NULL},
 	 { "new_EMDBaseDouble", (PyCFunction)(void(*)(void))_wrap_new_EMDBaseDouble, METH_VARARGS|METH_KEYWORDS, "new_EMDBaseDouble(bool norm=False, bool do_timing=False, bool external_dists=False) -> EMDBaseDouble"},
 	 { "delete_EMDBaseDouble", _wrap_delete_EMDBaseDouble, METH_O, "delete_EMDBaseDouble(EMDBaseDouble self)"},
@@ -18958,6 +19200,10 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "ExternalEMDHandler_compute", _wrap_ExternalEMDHandler_compute, METH_VARARGS, "\n"
 		"compute(ExternalEMDHandler self, double * emds)\n"
 		"compute(ExternalEMDHandler self, double * emds, double * event_weights)\n"
+		""},
+	 { "ExternalEMDHandler_compute_symmetric", _wrap_ExternalEMDHandler_compute_symmetric, METH_VARARGS, "\n"
+		"compute_symmetric(ExternalEMDHandler self, double * emds)\n"
+		"compute_symmetric(ExternalEMDHandler self, double * emds, double * event_weights)\n"
 		""},
 	 { "ExternalEMDHandler_swigregister", ExternalEMDHandler_swigregister, METH_O, NULL},
 	 { "new_EMDBaseDouble", (PyCFunction)(void(*)(void))_wrap_new_EMDBaseDouble, METH_VARARGS|METH_KEYWORDS, "new_EMDBaseDouble(bool norm=False, bool do_timing=False, bool external_dists=False) -> EMDBaseDouble"},

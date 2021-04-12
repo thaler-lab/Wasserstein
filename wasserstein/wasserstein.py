@@ -280,6 +280,7 @@ class ExternalEMDHandler(object):
     num_calls = _swig_new_instance_method(_wasserstein.ExternalEMDHandler_num_calls)
     __call__ = _swig_new_instance_method(_wasserstein.ExternalEMDHandler___call__)
     compute = _swig_new_instance_method(_wasserstein.ExternalEMDHandler_compute)
+    compute_symmetric = _swig_new_instance_method(_wasserstein.ExternalEMDHandler_compute_symmetric)
 
 # Register ExternalEMDHandler in _wasserstein:
 _wasserstein.ExternalEMDHandler_swigregister(ExternalEMDHandler)

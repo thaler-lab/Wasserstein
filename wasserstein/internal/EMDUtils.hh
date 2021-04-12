@@ -229,32 +229,66 @@ public:
   virtual std::string description() const = 0;
   std::size_t num_calls() const { return num_calls_; }
 
+  // call external handler on a single emd value
   void operator()(double emd, double weight = 1) {
     std::lock_guard<std::mutex> handler_guard(mutex_);
     handle(emd, weight);
     num_calls_++;
   }
 
+  // call emd handler on several emds at once (given as a vector)
   template<typename Value, typename Value2 = Value>
-  void operator()(const std::vector<Value> & emds, const std::vector<Value2> & weights = {}) {
+  void compute(const std::vector<Value> & emds, const std::vector<Value2> & weights = {}) {
 
     if (emds.size() != weights.size()) {
       if (weights.size() == 0)
-        operator()(emds.data(), emds.size());
+        compute(emds.data(), emds.size());
       else throw std::invalid_argument("length of weights must match that of emds or be 0");
     }
     else
-      operator()(emds.data(), emds.size(), weights.data());
+      compute(emds.data(), emds.size(), weights.data());
   }
 
+  // call emd handler on several emds at once (given as raw pointers)
   template<typename Value, typename Value2 = Value>
-  void operator()(const Value * emds, std::size_t num_emds, const Value2 * weights = nullptr) {
+  void compute(const Value * emds, std::size_t num_emds, const Value2 * weights = nullptr) {
     std::lock_guard<std::mutex> handler_guard(mutex_);
 
-    for (std::size_t i = 0; i < num_emds; i++, num_calls_++)
-      handle(emds[i], weights == nullptr ? 1 : weights[i]);
+    if (weights == nullptr)
+      for (std::size_t i = 0; i < num_emds; i++, num_calls_++)
+        handle(emds[i], 1);
+    else
+      for (std::size_t i = 0; i < num_emds; i++, num_calls_++)
+        handle(emds[i], weights[i]);
   }
-  
+
+  // here, weights are length n and emds are length n(n-1)/2, given as vectors
+  template<typename Value, typename Value2 = Value>
+  void compute_symmetric(const std::vector<Value> & emds, const std::vector<Value2> & weights = {}) {
+
+    if (emds.size() != weights.size()*(weights.size() - 1)/2) {
+      if (weights.size() == 0)
+        compute_symmetric(emds.data(), emds.size());
+      else throw std::invalid_argument("length of emds should be length of weights choose 2");
+    }
+    else
+      compute_symmetric(emds.data(), emds.size(), weights.data());
+  }
+
+  // here, weights are length n and emds are length n(n-1)/2, given as raw pointers
+  template<typename Value, typename Value2 = Value>
+  void compute_symmetric(const Value * emds, std::size_t num_emds, const Value2 * weights = nullptr) {
+    if (weights == nullptr)
+      compute(emds, num_emds);
+
+    std::lock_guard<std::mutex> handler_guard(mutex_);
+
+    for (std::size_t i = 0, k = 0; i < num_emds; i++) {
+      Value2 weight_i(weights[i]);
+      for (std::size_t j = i + 1; j < num_emds; j++, k++, num_calls_++)
+        handle(emds[k], weight_i * weights[j]);
+    }
+  }
 
 protected:
   virtual void handle(double, double) = 0; 
