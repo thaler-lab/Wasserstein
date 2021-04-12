@@ -272,20 +272,20 @@ public:
       else throw std::invalid_argument("length of emds should be length of weights choose 2");
     }
     else
-      compute_symmetric(emds.data(), emds.size(), weights.data());
+      compute_symmetric(emds.data(), weights.size(), weights.data());
   }
 
   // here, weights are length n and emds are length n(n-1)/2, given as raw pointers
   template<typename Value, typename Value2 = Value>
-  void compute_symmetric(const Value * emds, std::size_t num_emds, const Value2 * weights = nullptr) {
+  void compute_symmetric(const Value * emds, std::size_t nev, const Value2 * weights = nullptr) {
     if (weights == nullptr)
-      compute(emds, num_emds);
+      compute(emds, nev*(nev - 1)/2);
 
     std::lock_guard<std::mutex> handler_guard(mutex_);
 
-    for (std::size_t i = 0, k = 0; i < num_emds; i++) {
+    for (std::size_t i = 0, k = 0; i < nev; i++) {
       Value2 weight_i(weights[i]);
-      for (std::size_t j = i + 1; j < num_emds; j++, k++, num_calls_++)
+      for (std::size_t j = i + 1; j < nev; j++, k++, num_calls_++)
         handle(emds[k], weight_i * weights[j]);
     }
   }

@@ -268,14 +268,14 @@ void pyname(double** arr_out0, int* n0, double** arr_out1, int* n1) {
   }
 
   void compute_symmetric(double* emds, std::ptrdiff_t n0) {
-    $self->compute_symmetric(emds, n0);
+    $self->compute(emds, n0);
   }
 
   void compute_symmetric(double* emds, std::ptrdiff_t n0, double* event_weights, std::ptrdiff_t n1) {
     if (n0 != n1*(n1 - 1)/2)
       throw std::invalid_argument("length of `emds` should be lengh of `event_weights` choose 2");
 
-    $self->compute_symmetric(emds, n0, event_weights);
+    $self->compute_symmetric(emds, n1, event_weights);
   }  
 }
 #endif
