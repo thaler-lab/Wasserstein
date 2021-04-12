@@ -93,16 +93,15 @@ public:
   // obtains the cuulative histogram of EFM values and their variances
   std::pair<std::vector<double>, std::vector<double>> cumulative_vals_vars() const {
 
-    std::size_t size(axis_.size());
+    std::size_t size(axis().size());
     std::vector<double> hist_vals(size), hist_vars(size);
 
-    hist_vals[0] = hist_.at(0).value();
-    hist_vars[0] = hist_.at(0).variance();
+    hist_vals[0] = hist().at(0).value();
+    hist_vars[0] = hist().at(0).variance();
 
     for (std::size_t i = 1; i < size; i++) {
-      const auto & bin(hist_.at(i));
-      hist_vals[i] = bin.value() + hist_vals[i - 1];
-      hist_vars[i] = bin.variance() + hist_vars[i - 1];
+      hist_vals[i] = hist().at(i).value() + hist_vals[i - 1];
+      hist_vars[i] = hist().at(i).variance() + hist_vars[i - 1];
     }
 
     return std::make_pair(hist_vals, hist_vars);

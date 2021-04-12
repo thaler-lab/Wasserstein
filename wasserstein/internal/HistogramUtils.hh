@@ -97,18 +97,17 @@ std::pair<std::vector<double>, std::vector<double>>
 get_1d_hist(const Hist & hist, bool overflows) {
 
   // setup containers to hold histogram values
-  long long size(get_1d_hist_size(hist.template axis<0>(), overflows)),
-            nbins(hist.template axis<0>().size());
-  std::vector<double> hist_vals(size), hist_errs(size);
+  int size(get_1d_hist_size(hist.template axis<0>(), overflows)),
+      nbins(hist.template axis<0>().size());
+  std::vector<double> hist_vals(size), hist_vars(size);
 
-  for (long long i = (overflows ? -1 : 0), a = 0;
+  for (int i = (overflows ? -1 : 0), a = 0;
        i < nbins + (overflows ? 1 : 0); i++, a++) {
-    const auto & x(hist.at(i));
-    hist_vals[a] = x.value();
-    hist_errs[a] = std::sqrt(x.variance());
+    hist_vals[a] = hist.at(i).value();
+    hist_vars[a] = hist.at(i).variance();
   }
 
-  return std::make_pair(hist_vals, hist_errs);
+  return std::make_pair(hist_vals, hist_vars);
 }
 
 template<class Transform>
@@ -213,7 +212,7 @@ public:
   #endif
 
   // get histogram values and errors
-  std::pair<std::vector<double>, std::vector<double>> hist_vals_errs(bool overflows = true) const {
+  std::pair<std::vector<double>, std::vector<double>> hist_vals_vars(bool overflows = true) const {
     return hist::get_1d_hist(hist_, overflows);
   }
 

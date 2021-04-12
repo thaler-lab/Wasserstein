@@ -2724,7 +2724,7 @@ SWIGINTERN PyObject *SWIG_PyStaticMethod_New(PyObject *SWIGUNUSEDPARM(self), PyO
 #define SWIGTYPE_p_std__invalid_argument swig_types[28]
 #define SWIGTYPE_p_std__ostream swig_types[29]
 #define SWIGTYPE_p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t swig_types[30]
-#define SWIGTYPE_p_std__size_t swig_types[31]
+#define SWIGTYPE_p_std__ptrdiff_t swig_types[31]
 #define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t swig_types[32]
 #define SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t swig_types[33]
 #define SWIGTYPE_p_swig__SwigPyIterator swig_types[34]
@@ -5807,7 +5807,7 @@ SWIGINTERN std::string emd_Histogram1DHandler_Sl__Sg____repr__(emd::Histogram1DH
   return self->description();
 }
 SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_bin_centers(emd::Histogram1DHandler< > *self,double **arr_out0,int *n0){
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,158,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins();
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -5819,7 +5819,7 @@ SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_bin_centers(emd::Histogram1DH
   memcpy(*arr_out0, self->bin_centers().data(), nbytes);
 }
 SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_bin_edges(emd::Histogram1DHandler< > *self,double **arr_out0,int *n0){
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,158,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() + 1;
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -5830,10 +5830,10 @@ SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_bin_edges(emd::Histogram1DHan
 /*@SWIG@*/
   memcpy(*arr_out0, self->bin_edges().data(), nbytes);
 }
-SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_hist_vals_errs(emd::Histogram1DHandler< > *self,double **arr_out0,int *n0,double **arr_out1,int *n1,bool overflows=true){
+SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_hist_vals_vars(emd::Histogram1DHandler< > *self,double **arr_out0,int *n0,double **arr_out1,int *n1,bool overflows=true){
     unsigned int nbins = self->nbins() + (overflows ? 2 : 0);
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,170,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-/*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,175,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,158,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = nbins;
   size_t nbytes0 = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes0);
@@ -5842,7 +5842,7 @@ SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_hist_vals_errs(emd::Histogram
     return;
   }
 /*@SWIG@*/
-/*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,158,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = nbins;
   size_t nbytes1 = size_t(*n1)*sizeof(double);
   *arr_out1 = (double *) malloc(nbytes1);
@@ -5851,7 +5851,7 @@ SWIGINTERN void emd_Histogram1DHandler_Sl__Sg__npy_hist_vals_errs(emd::Histogram
     return;
   }
 /*@SWIG@*/
-std::pair<std::vector<double>, std::vector<double>> vecpair(self->hist_vals_errs(overflows));
+std::pair<std::vector<double>, std::vector<double>> vecpair(self->hist_vals_vars(overflows));
 memcpy(*arr_out0, vecpair.first.data(), nbytes0);
 memcpy(*arr_out1, vecpair.second.data(), nbytes1);
 /*@SWIG@*/
@@ -5863,7 +5863,7 @@ SWIGINTERN std::string emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_
   return self->description();
 }
 SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg__npy_bin_centers(emd::Histogram1DHandler< boost::histogram::axis::transform::log > *self,double **arr_out0,int *n0){
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,158,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins();
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -5875,7 +5875,7 @@ SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg_
   memcpy(*arr_out0, self->bin_centers().data(), nbytes);
 }
 SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg__npy_bin_edges(emd::Histogram1DHandler< boost::histogram::axis::transform::log > *self,double **arr_out0,int *n0){
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,158,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() + 1;
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -5886,10 +5886,10 @@ SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg_
 /*@SWIG@*/
   memcpy(*arr_out0, self->bin_edges().data(), nbytes);
 }
-SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg__npy_hist_vals_errs(emd::Histogram1DHandler< boost::histogram::axis::transform::log > *self,double **arr_out0,int *n0,double **arr_out1,int *n1,bool overflows=true){
+SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg__npy_hist_vals_vars(emd::Histogram1DHandler< boost::histogram::axis::transform::log > *self,double **arr_out0,int *n0,double **arr_out1,int *n1,bool overflows=true){
     unsigned int nbins = self->nbins() + (overflows ? 2 : 0);
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,170,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-/*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,175,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,158,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = nbins;
   size_t nbytes0 = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes0);
@@ -5898,7 +5898,7 @@ SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg_
     return;
   }
 /*@SWIG@*/
-/*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,158,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = nbins;
   size_t nbytes1 = size_t(*n1)*sizeof(double);
   *arr_out1 = (double *) malloc(nbytes1);
@@ -5907,7 +5907,7 @@ SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg_
     return;
   }
 /*@SWIG@*/
-std::pair<std::vector<double>, std::vector<double>> vecpair(self->hist_vals_errs(overflows));
+std::pair<std::vector<double>, std::vector<double>> vecpair(self->hist_vals_vars(overflows));
 memcpy(*arr_out0, vecpair.first.data(), nbytes0);
 memcpy(*arr_out1, vecpair.second.data(), nbytes1);
 /*@SWIG@*/
@@ -5919,7 +5919,7 @@ SWIGINTERN std::string emd_CorrelationDimension___repr__(emd::CorrelationDimensi
   return self->description();
 }
 SWIGINTERN void emd_CorrelationDimension_npy_corrdim_bins(emd::CorrelationDimension *self,double **arr_out0,int *n0){
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,158,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() - 1;
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -5931,8 +5931,8 @@ SWIGINTERN void emd_CorrelationDimension_npy_corrdim_bins(emd::CorrelationDimens
   memcpy(*arr_out0, self->corrdim_bins().data(), nbytes);
 }
 SWIGINTERN void emd_CorrelationDimension_npy_corrdims(emd::CorrelationDimension *self,double **arr_out0,int *n0,double **arr_out1,int *n1){
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,170,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-/*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,175,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,158,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() - 1;
   size_t nbytes0 = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes0);
@@ -5941,7 +5941,7 @@ SWIGINTERN void emd_CorrelationDimension_npy_corrdims(emd::CorrelationDimension 
     return;
   }
 /*@SWIG@*/
-/*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,158,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = self->nbins() - 1;
   size_t nbytes1 = size_t(*n1)*sizeof(double);
   *arr_out1 = (double *) malloc(nbytes1);
@@ -5956,8 +5956,8 @@ memcpy(*arr_out1, vecpair.second.data(), nbytes1);
 /*@SWIG@*/
 }
 SWIGINTERN void emd_CorrelationDimension_npy_cumulative_vals_vars(emd::CorrelationDimension *self,double **arr_out0,int *n0,double **arr_out1,int *n1){
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,170,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-/*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,175,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,158,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins();
   size_t nbytes0 = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes0);
@@ -5966,7 +5966,7 @@ SWIGINTERN void emd_CorrelationDimension_npy_cumulative_vals_vars(emd::Correlati
     return;
   }
 /*@SWIG@*/
-/*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+/*@SWIG:wasserstein/swig/wasserstein_common.i,158,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = self->nbins();
   size_t nbytes1 = size_t(*n1)*sizeof(double);
   *arr_out1 = (double *) malloc(nbytes1);
@@ -5987,7 +5987,7 @@ SWIGINTERN std::string emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDi
   return self->description();
 }
 SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__npy_flows(emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *self,double **arr_out,int *n0,int *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,185,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,190,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -6003,7 +6003,7 @@ SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_
       values[i] *= self->scale();
   }
 SWIGINTERN void emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__npy_dists(emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *self,double **arr_out,int *n0,int *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,185,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,190,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -6047,7 +6047,7 @@ SWIGINTERN std::string emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_e
   return self->description();
 }
 SWIGINTERN void emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg__npy_emds(emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *self,double **arr_out,int *n0,int *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,185,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,190,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->nevA();
   *n1 = self->nevB();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -6059,11 +6059,11 @@ SWIGINTERN void emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_Eucl
 /*@SWIG@*/
     memcpy(*arr_out, self->emds().data(), nbytes);
   }
-SWIGINTERN void emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg__flat_emds(emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *self,double **arr_out,std::size_t *n){
+SWIGINTERN void emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg__flat_emds(emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *self,double **arr_out,std::ptrdiff_t *n){
     if (self->storage() != emd::EMDPairsStorage::FlattenedSymmetric)
       throw std::runtime_error("flattened emds only available with flattened symmetric storage");
 
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,153,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,158,MALLOC_1D_VALUE_ARRAY@*/
   *n = self->num_emds();
   size_t nbytes = size_t(*n)*sizeof(double);
   *arr_out = (double *) malloc(nbytes);
@@ -12859,7 +12859,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Histogram1DHandler_hist_vals_errs_vec(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_Histogram1DHandler_hist_vals_vars_vec(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   emd::Histogram1DHandler< > *arg1 = (emd::Histogram1DHandler< > *) 0 ;
   bool arg2 = (bool) true ;
@@ -12874,22 +12874,22 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandler_hist_vals_errs_vec(PyObject *SWIGU
   };
   std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > result;
   
-  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:Histogram1DHandler_hist_vals_errs_vec", kwnames, &obj0, &obj1)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:Histogram1DHandler_hist_vals_vars_vec", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__id_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandler_hist_vals_errs_vec" "', argument " "1"" of type '" "emd::Histogram1DHandler< > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandler_hist_vals_vars_vec" "', argument " "1"" of type '" "emd::Histogram1DHandler< > const *""'"); 
   }
   arg1 = reinterpret_cast< emd::Histogram1DHandler< > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_bool(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Histogram1DHandler_hist_vals_errs_vec" "', argument " "2"" of type '" "bool""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Histogram1DHandler_hist_vals_vars_vec" "', argument " "2"" of type '" "bool""'");
     } 
     arg2 = static_cast< bool >(val2);
   }
   {
     try {
-      result = ((emd::Histogram1DHandler< > const *)arg1)->hist_vals_errs(arg2); 
+      result = ((emd::Histogram1DHandler< > const *)arg1)->hist_vals_vars(arg2); 
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -13261,7 +13261,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Histogram1DHandler_hist_vals_errs(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_Histogram1DHandler_hist_vals_vars(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   emd::Histogram1DHandler< > *arg1 = (emd::Histogram1DHandler< > *) 0 ;
   double **arg2 = (double **) 0 ;
@@ -13291,22 +13291,22 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandler_hist_vals_errs(PyObject *SWIGUNUSE
     arg4 = &data_temp4;
     arg5 = &dim_temp4;
   }
-  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:Histogram1DHandler_hist_vals_errs", kwnames, &obj0, &obj1)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:Histogram1DHandler_hist_vals_vars", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__id_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandler_hist_vals_errs" "', argument " "1"" of type '" "emd::Histogram1DHandler< > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandler_hist_vals_vars" "', argument " "1"" of type '" "emd::Histogram1DHandler< > *""'"); 
   }
   arg1 = reinterpret_cast< emd::Histogram1DHandler< > * >(argp1);
   if (obj1) {
     ecode6 = SWIG_AsVal_bool(obj1, &val6);
     if (!SWIG_IsOK(ecode6)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "Histogram1DHandler_hist_vals_errs" "', argument " "6"" of type '" "bool""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "Histogram1DHandler_hist_vals_vars" "', argument " "6"" of type '" "bool""'");
     } 
     arg6 = static_cast< bool >(val6);
   }
   {
     try {
-      emd_Histogram1DHandler_Sl__Sg__npy_hist_vals_errs(arg1,arg2,arg3,arg4,arg5,arg6); 
+      emd_Histogram1DHandler_Sl__Sg__npy_hist_vals_vars(arg1,arg2,arg3,arg4,arg5,arg6); 
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -13768,7 +13768,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Histogram1DHandlerLog_hist_vals_errs_vec(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_Histogram1DHandlerLog_hist_vals_vars_vec(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   emd::Histogram1DHandler< boost::histogram::axis::transform::log > *arg1 = (emd::Histogram1DHandler< boost::histogram::axis::transform::log > *) 0 ;
   bool arg2 = (bool) true ;
@@ -13783,22 +13783,22 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLog_hist_vals_errs_vec(PyObject *SW
   };
   std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > result;
   
-  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:Histogram1DHandlerLog_hist_vals_errs_vec", kwnames, &obj0, &obj1)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:Histogram1DHandlerLog_hist_vals_vars_vec", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLog_hist_vals_errs_vec" "', argument " "1"" of type '" "emd::Histogram1DHandler< boost::histogram::axis::transform::log > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLog_hist_vals_vars_vec" "', argument " "1"" of type '" "emd::Histogram1DHandler< boost::histogram::axis::transform::log > const *""'"); 
   }
   arg1 = reinterpret_cast< emd::Histogram1DHandler< boost::histogram::axis::transform::log > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_bool(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Histogram1DHandlerLog_hist_vals_errs_vec" "', argument " "2"" of type '" "bool""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Histogram1DHandlerLog_hist_vals_vars_vec" "', argument " "2"" of type '" "bool""'");
     } 
     arg2 = static_cast< bool >(val2);
   }
   {
     try {
-      result = ((emd::Histogram1DHandler< boost::histogram::axis::transform::log > const *)arg1)->hist_vals_errs(arg2); 
+      result = ((emd::Histogram1DHandler< boost::histogram::axis::transform::log > const *)arg1)->hist_vals_vars(arg2); 
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -14170,7 +14170,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Histogram1DHandlerLog_hist_vals_errs(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_Histogram1DHandlerLog_hist_vals_vars(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   emd::Histogram1DHandler< boost::histogram::axis::transform::log > *arg1 = (emd::Histogram1DHandler< boost::histogram::axis::transform::log > *) 0 ;
   double **arg2 = (double **) 0 ;
@@ -14200,22 +14200,22 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLog_hist_vals_errs(PyObject *SWIGUN
     arg4 = &data_temp4;
     arg5 = &dim_temp4;
   }
-  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:Histogram1DHandlerLog_hist_vals_errs", kwnames, &obj0, &obj1)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:Histogram1DHandlerLog_hist_vals_vars", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLog_hist_vals_errs" "', argument " "1"" of type '" "emd::Histogram1DHandler< boost::histogram::axis::transform::log > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLog_hist_vals_vars" "', argument " "1"" of type '" "emd::Histogram1DHandler< boost::histogram::axis::transform::log > *""'"); 
   }
   arg1 = reinterpret_cast< emd::Histogram1DHandler< boost::histogram::axis::transform::log > * >(argp1);
   if (obj1) {
     ecode6 = SWIG_AsVal_bool(obj1, &val6);
     if (!SWIG_IsOK(ecode6)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "Histogram1DHandlerLog_hist_vals_errs" "', argument " "6"" of type '" "bool""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "Histogram1DHandlerLog_hist_vals_vars" "', argument " "6"" of type '" "bool""'");
     } 
     arg6 = static_cast< bool >(val6);
   }
   {
     try {
-      emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg__npy_hist_vals_errs(arg1,arg2,arg3,arg4,arg5,arg6); 
+      emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sg__npy_hist_vals_vars(arg1,arg2,arg3,arg4,arg5,arg6); 
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -18508,40 +18508,28 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_PairwiseEMD_flat_emds(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_PairwiseEMD_flat_emds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *arg1 = (emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *) 0 ;
   double **arg2 = (double **) 0 ;
-  std::size_t *arg3 = (std::size_t *) 0 ;
+  std::ptrdiff_t *arg3 = (std::ptrdiff_t *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  char * kwnames[] = {
-    (char *)"self",  (char *)"arr_out",  (char *)"n",  NULL 
-  };
+  double *data_temp2 = NULL ;
+  std::ptrdiff_t dim_temp2 ;
+  PyObject *swig_obj[1] ;
   
-  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:PairwiseEMD_flat_emds", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t, 0 |  0 );
+  {
+    arg2 = &data_temp2;
+    arg3 = &dim_temp2;
+  }
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMD_flat_emds" "', argument " "1"" of type '" "emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > *""'"); 
   }
   arg1 = reinterpret_cast< emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_p_double, 0 |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "PairwiseEMD_flat_emds" "', argument " "2"" of type '" "double **""'"); 
-  }
-  arg2 = reinterpret_cast< double ** >(argp2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3,SWIGTYPE_p_std__size_t, 0 |  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "PairwiseEMD_flat_emds" "', argument " "3"" of type '" "std::size_t *""'"); 
-  }
-  arg3 = reinterpret_cast< std::size_t * >(argp3);
   {
     try {
       emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg__flat_emds(arg1,arg2,arg3); 
@@ -18568,6 +18556,29 @@ SWIGINTERN PyObject *_wrap_PairwiseEMD_flat_emds(PyObject *SWIGUNUSEDPARM(self),
     }
   }
   resultobj = SWIG_Py_Void();
+  {
+    npy_intp dims[1] = {
+      *arg3 
+    };
+    PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg2));
+    PyArrayObject* array = (PyArrayObject*) obj;
+    
+    if (!array) SWIG_fail;
+    
+#ifdef SWIGPY_USE_CAPSULE
+    PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
+#else
+    PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
+#endif
+    
+#if NPY_API_VERSION < 0x00000007
+    PyArray_BASE(array) = cap;
+#else
+    PyArray_SetBaseObject(array,cap);
+#endif
+    
+    resultobj = SWIG_Python_AppendOutput(resultobj,obj);
+  }
   return resultobj;
 fail:
   return NULL;
@@ -18918,14 +18929,14 @@ static PyMethodDef SwigMethods[] = {
 	 { "Histogram1DHandler_axis_min", _wrap_Histogram1DHandler_axis_min, METH_O, "Histogram1DHandler_axis_min(Histogram1DHandler self) -> double"},
 	 { "Histogram1DHandler_axis_max", _wrap_Histogram1DHandler_axis_max, METH_O, "Histogram1DHandler_axis_max(Histogram1DHandler self) -> double"},
 	 { "Histogram1DHandler_description", _wrap_Histogram1DHandler_description, METH_O, "Histogram1DHandler_description(Histogram1DHandler self) -> std::string"},
-	 { "Histogram1DHandler_hist_vals_errs_vec", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandler_hist_vals_errs_vec, METH_VARARGS|METH_KEYWORDS, "Histogram1DHandler_hist_vals_errs_vec(Histogram1DHandler self, bool overflows=True) -> pairVectorDouble"},
+	 { "Histogram1DHandler_hist_vals_vars_vec", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandler_hist_vals_vars_vec, METH_VARARGS|METH_KEYWORDS, "Histogram1DHandler_hist_vals_vars_vec(Histogram1DHandler self, bool overflows=True) -> pairVectorDouble"},
 	 { "Histogram1DHandler_bin_centers_vec", _wrap_Histogram1DHandler_bin_centers_vec, METH_O, "Histogram1DHandler_bin_centers_vec(Histogram1DHandler self) -> vectorDouble"},
 	 { "Histogram1DHandler_bin_edges_vec", _wrap_Histogram1DHandler_bin_edges_vec, METH_O, "Histogram1DHandler_bin_edges_vec(Histogram1DHandler self) -> vectorDouble"},
 	 { "Histogram1DHandler___str__", _wrap_Histogram1DHandler___str__, METH_O, "Histogram1DHandler___str__(Histogram1DHandler self) -> std::string"},
 	 { "Histogram1DHandler___repr__", _wrap_Histogram1DHandler___repr__, METH_O, "Histogram1DHandler___repr__(Histogram1DHandler self) -> std::string"},
 	 { "Histogram1DHandler_bin_centers", _wrap_Histogram1DHandler_bin_centers, METH_O, "Histogram1DHandler_bin_centers(Histogram1DHandler self)"},
 	 { "Histogram1DHandler_bin_edges", _wrap_Histogram1DHandler_bin_edges, METH_O, "Histogram1DHandler_bin_edges(Histogram1DHandler self)"},
-	 { "Histogram1DHandler_hist_vals_errs", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandler_hist_vals_errs, METH_VARARGS|METH_KEYWORDS, "Histogram1DHandler_hist_vals_errs(Histogram1DHandler self, bool overflows=True)"},
+	 { "Histogram1DHandler_hist_vals_vars", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandler_hist_vals_vars, METH_VARARGS|METH_KEYWORDS, "Histogram1DHandler_hist_vals_vars(Histogram1DHandler self, bool overflows=True)"},
 	 { "Histogram1DHandler_swigregister", Histogram1DHandler_swigregister, METH_O, NULL},
 	 { "Histogram1DHandler_swiginit", Histogram1DHandler_swiginit, METH_VARARGS, NULL},
 	 { "new_Histogram1DHandlerLog", _wrap_new_Histogram1DHandlerLog, METH_VARARGS, "\n"
@@ -18937,14 +18948,14 @@ static PyMethodDef SwigMethods[] = {
 	 { "Histogram1DHandlerLog_axis_min", _wrap_Histogram1DHandlerLog_axis_min, METH_O, "Histogram1DHandlerLog_axis_min(Histogram1DHandlerLog self) -> double"},
 	 { "Histogram1DHandlerLog_axis_max", _wrap_Histogram1DHandlerLog_axis_max, METH_O, "Histogram1DHandlerLog_axis_max(Histogram1DHandlerLog self) -> double"},
 	 { "Histogram1DHandlerLog_description", _wrap_Histogram1DHandlerLog_description, METH_O, "Histogram1DHandlerLog_description(Histogram1DHandlerLog self) -> std::string"},
-	 { "Histogram1DHandlerLog_hist_vals_errs_vec", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerLog_hist_vals_errs_vec, METH_VARARGS|METH_KEYWORDS, "Histogram1DHandlerLog_hist_vals_errs_vec(Histogram1DHandlerLog self, bool overflows=True) -> pairVectorDouble"},
+	 { "Histogram1DHandlerLog_hist_vals_vars_vec", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerLog_hist_vals_vars_vec, METH_VARARGS|METH_KEYWORDS, "Histogram1DHandlerLog_hist_vals_vars_vec(Histogram1DHandlerLog self, bool overflows=True) -> pairVectorDouble"},
 	 { "Histogram1DHandlerLog_bin_centers_vec", _wrap_Histogram1DHandlerLog_bin_centers_vec, METH_O, "Histogram1DHandlerLog_bin_centers_vec(Histogram1DHandlerLog self) -> vectorDouble"},
 	 { "Histogram1DHandlerLog_bin_edges_vec", _wrap_Histogram1DHandlerLog_bin_edges_vec, METH_O, "Histogram1DHandlerLog_bin_edges_vec(Histogram1DHandlerLog self) -> vectorDouble"},
 	 { "Histogram1DHandlerLog___str__", _wrap_Histogram1DHandlerLog___str__, METH_O, "Histogram1DHandlerLog___str__(Histogram1DHandlerLog self) -> std::string"},
 	 { "Histogram1DHandlerLog___repr__", _wrap_Histogram1DHandlerLog___repr__, METH_O, "Histogram1DHandlerLog___repr__(Histogram1DHandlerLog self) -> std::string"},
 	 { "Histogram1DHandlerLog_bin_centers", _wrap_Histogram1DHandlerLog_bin_centers, METH_O, "Histogram1DHandlerLog_bin_centers(Histogram1DHandlerLog self)"},
 	 { "Histogram1DHandlerLog_bin_edges", _wrap_Histogram1DHandlerLog_bin_edges, METH_O, "Histogram1DHandlerLog_bin_edges(Histogram1DHandlerLog self)"},
-	 { "Histogram1DHandlerLog_hist_vals_errs", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerLog_hist_vals_errs, METH_VARARGS|METH_KEYWORDS, "Histogram1DHandlerLog_hist_vals_errs(Histogram1DHandlerLog self, bool overflows=True)"},
+	 { "Histogram1DHandlerLog_hist_vals_vars", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerLog_hist_vals_vars, METH_VARARGS|METH_KEYWORDS, "Histogram1DHandlerLog_hist_vals_vars(Histogram1DHandlerLog self, bool overflows=True)"},
 	 { "Histogram1DHandlerLog_swigregister", Histogram1DHandlerLog_swigregister, METH_O, NULL},
 	 { "Histogram1DHandlerLog_swiginit", Histogram1DHandlerLog_swiginit, METH_VARARGS, NULL},
 	 { "new_CorrelationDimension", _wrap_new_CorrelationDimension, METH_VARARGS, "\n"
@@ -19023,7 +19034,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "PairwiseEMD___str__", _wrap_PairwiseEMD___str__, METH_O, "PairwiseEMD___str__(PairwiseEMD self) -> std::string"},
 	 { "PairwiseEMD___repr__", _wrap_PairwiseEMD___repr__, METH_O, "PairwiseEMD___repr__(PairwiseEMD self) -> std::string"},
 	 { "PairwiseEMD_emds", _wrap_PairwiseEMD_emds, METH_O, "PairwiseEMD_emds(PairwiseEMD self)"},
-	 { "PairwiseEMD_flat_emds", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_flat_emds, METH_VARARGS|METH_KEYWORDS, "PairwiseEMD_flat_emds(PairwiseEMD self, double ** arr_out, std::size_t * n)"},
+	 { "PairwiseEMD_flat_emds", _wrap_PairwiseEMD_flat_emds, METH_O, "PairwiseEMD_flat_emds(PairwiseEMD self)"},
 	 { "PairwiseEMD__add_event", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD__add_event, METH_VARARGS|METH_KEYWORDS, "PairwiseEMD__add_event(PairwiseEMD self, double * weights, double * coords, double event_weight=1)"},
 	 { "PairwiseEMD__reset_B_events", _wrap_PairwiseEMD__reset_B_events, METH_O, "PairwiseEMD__reset_B_events(PairwiseEMD self)"},
 	 { "PairwiseEMD_swigregister", PairwiseEMD_swigregister, METH_O, NULL},
@@ -19233,14 +19244,14 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "Histogram1DHandler_axis_min", _wrap_Histogram1DHandler_axis_min, METH_O, "axis_min(Histogram1DHandler self) -> double"},
 	 { "Histogram1DHandler_axis_max", _wrap_Histogram1DHandler_axis_max, METH_O, "axis_max(Histogram1DHandler self) -> double"},
 	 { "Histogram1DHandler_description", _wrap_Histogram1DHandler_description, METH_O, "description(Histogram1DHandler self) -> std::string"},
-	 { "Histogram1DHandler_hist_vals_errs_vec", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandler_hist_vals_errs_vec, METH_VARARGS|METH_KEYWORDS, "hist_vals_errs_vec(Histogram1DHandler self, bool overflows=True) -> pairVectorDouble"},
+	 { "Histogram1DHandler_hist_vals_vars_vec", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandler_hist_vals_vars_vec, METH_VARARGS|METH_KEYWORDS, "hist_vals_vars_vec(Histogram1DHandler self, bool overflows=True) -> pairVectorDouble"},
 	 { "Histogram1DHandler_bin_centers_vec", _wrap_Histogram1DHandler_bin_centers_vec, METH_O, "bin_centers_vec(Histogram1DHandler self) -> vectorDouble"},
 	 { "Histogram1DHandler_bin_edges_vec", _wrap_Histogram1DHandler_bin_edges_vec, METH_O, "bin_edges_vec(Histogram1DHandler self) -> vectorDouble"},
 	 { "Histogram1DHandler___str__", _wrap_Histogram1DHandler___str__, METH_O, "__str__(Histogram1DHandler self) -> std::string"},
 	 { "Histogram1DHandler___repr__", _wrap_Histogram1DHandler___repr__, METH_O, "__repr__(Histogram1DHandler self) -> std::string"},
 	 { "Histogram1DHandler_bin_centers", _wrap_Histogram1DHandler_bin_centers, METH_O, "bin_centers(Histogram1DHandler self)"},
 	 { "Histogram1DHandler_bin_edges", _wrap_Histogram1DHandler_bin_edges, METH_O, "bin_edges(Histogram1DHandler self)"},
-	 { "Histogram1DHandler_hist_vals_errs", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandler_hist_vals_errs, METH_VARARGS|METH_KEYWORDS, "hist_vals_errs(Histogram1DHandler self, bool overflows=True)"},
+	 { "Histogram1DHandler_hist_vals_vars", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandler_hist_vals_vars, METH_VARARGS|METH_KEYWORDS, "hist_vals_vars(Histogram1DHandler self, bool overflows=True)"},
 	 { "Histogram1DHandler_swigregister", Histogram1DHandler_swigregister, METH_O, NULL},
 	 { "Histogram1DHandler_swiginit", Histogram1DHandler_swiginit, METH_VARARGS, NULL},
 	 { "new_Histogram1DHandlerLog", _wrap_new_Histogram1DHandlerLog, METH_VARARGS, "\n"
@@ -19252,14 +19263,14 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "Histogram1DHandlerLog_axis_min", _wrap_Histogram1DHandlerLog_axis_min, METH_O, "axis_min(Histogram1DHandlerLog self) -> double"},
 	 { "Histogram1DHandlerLog_axis_max", _wrap_Histogram1DHandlerLog_axis_max, METH_O, "axis_max(Histogram1DHandlerLog self) -> double"},
 	 { "Histogram1DHandlerLog_description", _wrap_Histogram1DHandlerLog_description, METH_O, "description(Histogram1DHandlerLog self) -> std::string"},
-	 { "Histogram1DHandlerLog_hist_vals_errs_vec", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerLog_hist_vals_errs_vec, METH_VARARGS|METH_KEYWORDS, "hist_vals_errs_vec(Histogram1DHandlerLog self, bool overflows=True) -> pairVectorDouble"},
+	 { "Histogram1DHandlerLog_hist_vals_vars_vec", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerLog_hist_vals_vars_vec, METH_VARARGS|METH_KEYWORDS, "hist_vals_vars_vec(Histogram1DHandlerLog self, bool overflows=True) -> pairVectorDouble"},
 	 { "Histogram1DHandlerLog_bin_centers_vec", _wrap_Histogram1DHandlerLog_bin_centers_vec, METH_O, "bin_centers_vec(Histogram1DHandlerLog self) -> vectorDouble"},
 	 { "Histogram1DHandlerLog_bin_edges_vec", _wrap_Histogram1DHandlerLog_bin_edges_vec, METH_O, "bin_edges_vec(Histogram1DHandlerLog self) -> vectorDouble"},
 	 { "Histogram1DHandlerLog___str__", _wrap_Histogram1DHandlerLog___str__, METH_O, "__str__(Histogram1DHandlerLog self) -> std::string"},
 	 { "Histogram1DHandlerLog___repr__", _wrap_Histogram1DHandlerLog___repr__, METH_O, "__repr__(Histogram1DHandlerLog self) -> std::string"},
 	 { "Histogram1DHandlerLog_bin_centers", _wrap_Histogram1DHandlerLog_bin_centers, METH_O, "bin_centers(Histogram1DHandlerLog self)"},
 	 { "Histogram1DHandlerLog_bin_edges", _wrap_Histogram1DHandlerLog_bin_edges, METH_O, "bin_edges(Histogram1DHandlerLog self)"},
-	 { "Histogram1DHandlerLog_hist_vals_errs", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerLog_hist_vals_errs, METH_VARARGS|METH_KEYWORDS, "hist_vals_errs(Histogram1DHandlerLog self, bool overflows=True)"},
+	 { "Histogram1DHandlerLog_hist_vals_vars", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerLog_hist_vals_vars, METH_VARARGS|METH_KEYWORDS, "hist_vals_vars(Histogram1DHandlerLog self, bool overflows=True)"},
 	 { "Histogram1DHandlerLog_swigregister", Histogram1DHandlerLog_swigregister, METH_O, NULL},
 	 { "Histogram1DHandlerLog_swiginit", Histogram1DHandlerLog_swiginit, METH_VARARGS, NULL},
 	 { "new_CorrelationDimension", _wrap_new_CorrelationDimension, METH_VARARGS, "\n"
@@ -19338,7 +19349,7 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "PairwiseEMD___str__", _wrap_PairwiseEMD___str__, METH_O, "__str__(PairwiseEMD self) -> std::string"},
 	 { "PairwiseEMD___repr__", _wrap_PairwiseEMD___repr__, METH_O, "__repr__(PairwiseEMD self) -> std::string"},
 	 { "PairwiseEMD_emds", _wrap_PairwiseEMD_emds, METH_O, "emds(PairwiseEMD self)"},
-	 { "PairwiseEMD_flat_emds", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD_flat_emds, METH_VARARGS|METH_KEYWORDS, "flat_emds(PairwiseEMD self, double ** arr_out, std::size_t * n)"},
+	 { "PairwiseEMD_flat_emds", _wrap_PairwiseEMD_flat_emds, METH_O, "flat_emds(PairwiseEMD self)"},
 	 { "PairwiseEMD__add_event", (PyCFunction)(void(*)(void))_wrap_PairwiseEMD__add_event, METH_VARARGS|METH_KEYWORDS, "_add_event(PairwiseEMD self, double * weights, double * coords, double event_weight=1)"},
 	 { "PairwiseEMD__reset_B_events", _wrap_PairwiseEMD__reset_B_events, METH_O, "_reset_B_events(PairwiseEMD self)"},
 	 { "PairwiseEMD_swigregister", PairwiseEMD_swigregister, METH_O, NULL},
@@ -19395,7 +19406,7 @@ static swig_type_info _swigt__p_std__allocatorT_std__string_t = {"_p_std__alloca
 static swig_type_info _swigt__p_std__invalid_argument = {"_p_std__invalid_argument", "std::invalid_argument *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__ostream = {"_p_std__ostream", "std::ostream *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t = {"_p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t", "std::pair< std::vector< double >,std::vector< double > > *|std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__size_t = {"_p_std__size_t", "std::size_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__ptrdiff_t = {"_p_std__ptrdiff_t", "std::ptrdiff_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_double_std__allocatorT_double_t_t = {"_p_std__vectorT_double_std__allocatorT_double_t_t", "std::vector< double,std::allocator< double > > *|emd::ValueVector *|std::vector< double > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_std__string_std__allocatorT_std__string_t_t = {"_p_std__vectorT_std__string_std__allocatorT_std__string_t_t", "std::vector< std::string,std::allocator< std::string > > *|std::vector< std::string > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_swig__SwigPyIterator = {"_p_swig__SwigPyIterator", "swig::SwigPyIterator *", 0, 0, (void*)0, 0};
@@ -19433,7 +19444,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_std__invalid_argument,
   &_swigt__p_std__ostream,
   &_swigt__p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t,
-  &_swigt__p_std__size_t,
+  &_swigt__p_std__ptrdiff_t,
   &_swigt__p_std__vectorT_double_std__allocatorT_double_t_t,
   &_swigt__p_std__vectorT_std__string_std__allocatorT_std__string_t_t,
   &_swigt__p_swig__SwigPyIterator,
@@ -19471,7 +19482,7 @@ static swig_cast_info _swigc__p_std__allocatorT_std__string_t[] = {  {&_swigt__p
 static swig_cast_info _swigc__p_std__invalid_argument[] = {  {&_swigt__p_std__invalid_argument, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__ostream[] = {  {&_swigt__p_std__ostream, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t[] = {  {&_swigt__p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_std__size_t[] = {  {&_swigt__p_std__size_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__ptrdiff_t[] = {  {&_swigt__p_std__ptrdiff_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_double_std__allocatorT_double_t_t[] = {  {&_swigt__p_std__vectorT_double_std__allocatorT_double_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_std__string_std__allocatorT_std__string_t_t[] = {  {&_swigt__p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_swig__SwigPyIterator[] = {  {&_swigt__p_swig__SwigPyIterator, 0, 0, 0},{0, 0, 0, 0}};
@@ -19509,7 +19520,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_std__invalid_argument,
   _swigc__p_std__ostream,
   _swigc__p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t,
-  _swigc__p_std__size_t,
+  _swigc__p_std__ptrdiff_t,
   _swigc__p_std__vectorT_double_std__allocatorT_double_t_t,
   _swigc__p_std__vectorT_std__string_std__allocatorT_std__string_t_t,
   _swigc__p_swig__SwigPyIterator,

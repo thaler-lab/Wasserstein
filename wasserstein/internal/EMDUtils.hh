@@ -262,7 +262,7 @@ public:
         handle(emds[i], weights[i]);
   }
 
-  // here, weights are length n and emds are length n(n-1)/2, given as vectors
+  // here, weights are length nev and emds are length nev(nev-1)/2, given as vectors
   template<typename Value, typename Value2 = Value>
   void compute_symmetric(const std::vector<Value> & emds, const std::vector<Value2> & weights = {}) {
 
@@ -275,7 +275,7 @@ public:
       compute_symmetric(emds.data(), weights.size(), weights.data());
   }
 
-  // here, weights are length n and emds are length n(n-1)/2, given as raw pointers
+  // here, weights are length nev and emds are length nev(nev-1)/2, given as raw pointers
   template<typename Value, typename Value2 = Value>
   void compute_symmetric(const Value * emds, std::size_t nev, const Value2 * weights = nullptr) {
     if (weights == nullptr)

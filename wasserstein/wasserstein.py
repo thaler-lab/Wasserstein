@@ -6,6 +6,8 @@
 
 
 import itertools
+
+
 import numpy as np
 
 
@@ -335,14 +337,19 @@ class Histogram1DHandler(ExternalEMDHandler):
     axis_min = _swig_new_instance_method(_wasserstein.Histogram1DHandler_axis_min)
     axis_max = _swig_new_instance_method(_wasserstein.Histogram1DHandler_axis_max)
     description = _swig_new_instance_method(_wasserstein.Histogram1DHandler_description)
-    hist_vals_errs_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandler_hist_vals_errs_vec)
+    hist_vals_vars_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandler_hist_vals_vars_vec)
     bin_centers_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandler_bin_centers_vec)
     bin_edges_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandler_bin_edges_vec)
     __str__ = _swig_new_instance_method(_wasserstein.Histogram1DHandler___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.Histogram1DHandler___repr__)
     bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandler_bin_centers)
     bin_edges = _swig_new_instance_method(_wasserstein.Histogram1DHandler_bin_edges)
-    hist_vals_errs = _swig_new_instance_method(_wasserstein.Histogram1DHandler_hist_vals_errs)
+    hist_vals_vars = _swig_new_instance_method(_wasserstein.Histogram1DHandler_hist_vals_vars)
+
+    def hist_vals_errs(self, overflows=True):
+        vals, vars = self.hist_vals_vars(overflows)
+        return vals, np.sqrt(vars)
+
 
 # Register Histogram1DHandler in _wasserstein:
 _wasserstein.Histogram1DHandler_swigregister(Histogram1DHandler)
@@ -363,14 +370,19 @@ class Histogram1DHandlerLog(ExternalEMDHandler):
     axis_min = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_axis_min)
     axis_max = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_axis_max)
     description = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_description)
-    hist_vals_errs_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_hist_vals_errs_vec)
+    hist_vals_vars_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_hist_vals_vars_vec)
     bin_centers_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_bin_centers_vec)
     bin_edges_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_bin_edges_vec)
     __str__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog___repr__)
     bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_bin_centers)
     bin_edges = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_bin_edges)
-    hist_vals_errs = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_hist_vals_errs)
+    hist_vals_vars = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLog_hist_vals_vars)
+
+    def hist_vals_errs(self, overflows=True):
+        vals, vars = self.hist_vals_vars(overflows)
+        return vals, np.sqrt(vars)
+
 
 # Register Histogram1DHandlerLog in _wasserstein:
 _wasserstein.Histogram1DHandlerLog_swigregister(Histogram1DHandlerLog)

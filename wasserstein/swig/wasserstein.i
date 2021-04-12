@@ -49,7 +49,6 @@
 // Python imports at the top of the module
 %pythonbegin %{
 import itertools
-import numpy as np
 %}
 
 %feature("autodoc", "1");

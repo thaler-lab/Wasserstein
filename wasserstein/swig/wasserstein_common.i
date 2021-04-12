@@ -65,6 +65,11 @@
 import_array();
 %}
 
+// Python imports at the top of the module
+%pythonbegin %{
+import numpy as np
+%}
+
 %numpy_typemaps(double, NPY_DOUBLE, std::ptrdiff_t)
 
 // numpy typemaps
@@ -88,10 +93,10 @@ import_array();
 %rename(emds) EMDNAMESPACE::PairwiseEMD::npy_emds;
 %rename(bin_centers_vec) EMDNAMESPACE::Histogram1DHandler::bin_centers;
 %rename(bin_edges_vec) EMDNAMESPACE::Histogram1DHandler::bin_edges;
-%rename(hist_vals_errs_vec) EMDNAMESPACE::Histogram1DHandler::hist_vals_errs;
+%rename(hist_vals_vars_vec) EMDNAMESPACE::Histogram1DHandler::hist_vals_vars;
 %rename(bin_centers) EMDNAMESPACE::Histogram1DHandler::npy_bin_centers;
 %rename(bin_edges) EMDNAMESPACE::Histogram1DHandler::npy_bin_edges;
-%rename(hist_vals_errs) EMDNAMESPACE::Histogram1DHandler::npy_hist_vals_errs;
+%rename(hist_vals_vars) EMDNAMESPACE::Histogram1DHandler::npy_hist_vals_vars;
 %rename(cumulative_vals_vars_vec) EMDNAMESPACE::CorrelationDimension::cumulative_vals_vars;
 %rename(corrdim_bins_vec) EMDNAMESPACE::CorrelationDimension::corrdim_bins;
 %rename(corrdims_vec) EMDNAMESPACE::CorrelationDimension::corrdims;
@@ -221,7 +226,7 @@ void pyname(double** arr_out0, int* n0, double** arr_out1, int* n1) {
     memcpy(*arr_out, $self->emds().data(), nbytes);
   }
 
-  void flat_emds(double** arr_out, std::size_t* n) {
+  void flat_emds(double** arr_out, std::ptrdiff_t* n) {
     if ($self->storage() != emd::EMDPairsStorage::FlattenedSymmetric)
       throw std::runtime_error("flattened emds only available with flattened symmetric storage");
 
@@ -287,10 +292,16 @@ void pyname(double** arr_out0, int* n0, double** arr_out1, int* n1) {
   #ifdef SWIG_NUMPY
   RETURN_1DNUMPY_FROM_VECTOR(npy_bin_centers, bin_centers, $self->nbins())
   RETURN_1DNUMPY_FROM_VECTOR(npy_bin_edges, bin_edges, $self->nbins() + 1)
-  void npy_hist_vals_errs(double** arr_out0, int* n0, double** arr_out1, int* n1, bool overflows = true) {
+  void npy_hist_vals_vars(double** arr_out0, int* n0, double** arr_out1, int* n1, bool overflows = true) {
     unsigned int nbins = $self->nbins() + (overflows ? 2 : 0);
-    PAIRED_1DNUMPY_FROM_VECPAIR(hist_vals_errs(overflows), nbins)
+    PAIRED_1DNUMPY_FROM_VECPAIR(hist_vals_vars(overflows), nbins)
   }
+
+  %pythoncode %{
+      def hist_vals_errs(self, overflows=True):
+          vals, vars = self.hist_vals_vars(overflows)
+          return vals, np.sqrt(vars)
+  %}
   #endif // SWIG_NUMPY
 }
 
