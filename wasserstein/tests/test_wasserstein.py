@@ -332,7 +332,7 @@ def test_corrdim(low, high, nbins):
     # ensure numpy arrays match vectors
     assert np.all(corrdim.bin_centers() == corrdim.bin_centers_vec())
     assert np.all(corrdim.bin_edges() == corrdim.bin_edges_vec())
-    assert np.all(np.asarray(corrdim.hist_vals_errs(True)) == np.asarray(corrdim.hist_vals_errs_vec(True)))
-    assert np.all(np.asarray(corrdim.hist_vals_errs(False)) == np.asarray(corrdim.hist_vals_errs_vec(False)))
+    assert np.all(np.asarray(corrdim.hist_vals_vars(True)) == np.asarray(corrdim.hist_vals_vars_vec(True)))
+    assert np.all(np.asarray(corrdim.hist_vals_vars(False)) == np.asarray(corrdim.hist_vals_vars_vec(False)))
     assert np.all(np.asarray(corrdim.cumulative_vals_vars()) == np.asarray(corrdim.cumulative_vals_vars_vec()))
     assert np.all(np.asarray(corrdim.corrdims()) == np.asarray(corrdim.corrdims_vec()))
