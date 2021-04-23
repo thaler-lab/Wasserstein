@@ -44,14 +44,14 @@ jobs:
         - python3 -m pip install cython
 
     # test on Mac
-    - name: Test on Mac
-      stage: test
-      os: mac
-      osx_image: xcode11
-      language: shell
-      before_install:
-        - brew update > /dev/null
-        - brew install libomp
+    #- name: Test on Mac
+    #  stage: test
+    #  os: mac
+    #  osx_image: xcode11
+    #  language: shell
+    #  before_install:
+    #    - brew update > /dev/null
+    #    - brew install libomp
 
     # test on Windows
     - name: Test on Windows
@@ -114,11 +114,11 @@ jobs:
 env:
   global:
     - TWINE_USERNAME=__token__
-    - CIBW_BEFORE_TEST="pip install cython"
+    #- CIBW_BEFORE_TEST="pip install cython"
     - CIBW_SKIP="pp*"
-    - CIBW_TEST_COMMAND="pytest {package}"
-    - CIBW_TEST_REQUIRES="pytest numpy pot energyflow"
-    - CIBW_TEST_SKIP="*i686 *win32"
+    #- CIBW_TEST_COMMAND="pytest {package}"
+    #- CIBW_TEST_REQUIRES="pytest numpy pot energyflow"
+    #- CIBW_TEST_SKIP="*i686 *win32"
     - PYPI_TEST=true
 
 branches:

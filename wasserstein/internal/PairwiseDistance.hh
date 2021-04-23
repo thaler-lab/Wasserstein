@@ -179,22 +179,46 @@ struct EuclideanArrayDistance : public PairwiseDistanceBase<EuclideanArrayDistan
   typedef V Value;
 
   EuclideanArrayDistance(Value R, Value beta) :
-    PairwiseDistanceBase<EuclideanArrayDistance<V>, ArrayParticleCollection<V>, V>(R, beta)
+    PairwiseDistanceBase<EuclideanArrayDistance<V>, ParticleCollection, V>(R, beta)
   {}
 
   static std::string name() { return "EuclideanArrayDistance"; }
   static Value plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
-    Value d(0);
     if (p0.stride() == 2) {
       Value dx((*p0)[0] - (*p1)[0]), dy((*p0)[1] - (*p1)[1]);
-      d = dx*dx + dy*dy;
+      return dx*dx + dy*dy;
     }
-    else 
+    else {
+      Value d(0);
       for (int i = 0; i < p0.stride(); i++) {
         Value dx((*p0)[i] - (*p1)[i]);
         d += dx*dx;
       }
-    return d;
+      return d;
+    }
+  }
+}; // EuclideanArrayDistance
+
+////////////////////////////////////////////////////////////////////////////////
+// YPhiArrayDistance - euclidean distance in (y,phi) plane, accounting for periodicity
+////////////////////////////////////////////////////////////////////////////////
+
+template<typename V = double>
+struct YPhiArrayDistance : public PairwiseDistanceBase<YPhiArrayDistance<V>, YPhiArrayParticleCollection<V>, V> {
+  typedef YPhiArrayParticleCollection<V> ParticleCollection;
+  typedef typename ParticleCollection::value_type Particle;
+  typedef typename ParticleCollection::const_iterator ParticleIterator;
+  typedef V Value;
+
+  YPhiArrayDistance(Value R, Value beta) :
+    PairwiseDistanceBase<YPhiArrayDistance<V>, ParticleCollection, V>(R, beta)
+  {}
+
+  static std::string name() { return "YPhiArrayDistance"; }
+  static Value plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
+    Value dx((*p0)[0] - (*p1)[0]), dy(std::fabs((*p0)[1] - (*p1)[1]));
+    if (dy > PI) dy = TWOPI - dy;
+    return dx*dx + dy*dy;
   }
 }; // EuclideanArrayDistance
 

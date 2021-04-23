@@ -94,6 +94,26 @@ import itertools
   }
 }
 
+// add functionality to get flows and dists as numpy arrays
+%extend emd::EMD<emd::YPhiArrayEvent<>, emd::YPhiArrayDistance<>> {
+
+  // provide weights and particle coordinates as numpy arrays
+  double operator()(double* weights0, int n0,
+                    double* coords0, int n00, int n01,
+                    double* weights1, int n1,
+                    double* coords1, int n10, int n11) {
+
+    if (n0 != n00 || n1 != n10)
+      throw std::invalid_argument("Number of weights does not match number of coordinates");
+    if (n01 != 2 || n11 != 2)
+      throw std::invalid_argument("YPhi coordinates expected, coords should have 2 columns");
+
+    $self->set_external_dists(false);
+
+    return (*$self)(std::make_tuple(coords0, weights0, n0), std::make_tuple(coords1, weights1, n1));
+  }
+}
+
 %pythoncode %{
 
 # function for storing events in a pairwise_emd object
@@ -201,4 +221,5 @@ def _store_events(pairwise_emd, events, event_weights, gdim, mask):
 
 // instantiate specific (Pairwise)EMD templates
 %template(EMD) emd::EMD<emd::ArrayEvent<>, emd::EuclideanArrayDistance<>>;
+%template(EMDYPhi) emd::EMD<emd::YPhiArrayEvent<>, emd::YPhiArrayDistance<>>;
 %template(PairwiseEMD) emd::PairwiseEMD<emd::EMD<emd::ArrayEvent<>, emd::EuclideanArrayDistance<>>>;

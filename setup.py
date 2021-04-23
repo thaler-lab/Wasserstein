@@ -41,7 +41,7 @@ import numpy as np
 with open(os.path.join('wasserstein', '__init__.py'), 'r') as f:
     __version__ = re.search(r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read()).group(1)
 
-cxxflags = ['-fopenmp', '-std=c++14']
+cxxflags = ['-fopenmp', '-ffast-math', '-std=c++14']
 ldflags = []
 libs = []
 

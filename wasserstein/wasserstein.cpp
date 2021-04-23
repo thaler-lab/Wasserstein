@@ -2709,28 +2709,29 @@ SWIGINTERN PyObject *SWIG_PyStaticMethod_New(PyObject *SWIGUNUSEDPARM(self), PyO
 #define SWIGTYPE_p_emd__CorrelationDimension swig_types[13]
 #define SWIGTYPE_p_emd__EMDBaseT_double_t swig_types[14]
 #define SWIGTYPE_p_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t swig_types[15]
-#define SWIGTYPE_p_emd__ExternalEMDHandler swig_types[16]
-#define SWIGTYPE_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__id_t swig_types[17]
-#define SWIGTYPE_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_t swig_types[18]
-#define SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t swig_types[19]
-#define SWIGTYPE_p_first_type swig_types[20]
-#define SWIGTYPE_p_int swig_types[21]
-#define SWIGTYPE_p_p_PyObject swig_types[22]
-#define SWIGTYPE_p_p_double swig_types[23]
-#define SWIGTYPE_p_second_type swig_types[24]
-#define SWIGTYPE_p_size_type swig_types[25]
-#define SWIGTYPE_p_std__allocatorT_double_t swig_types[26]
-#define SWIGTYPE_p_std__allocatorT_std__string_t swig_types[27]
-#define SWIGTYPE_p_std__invalid_argument swig_types[28]
-#define SWIGTYPE_p_std__ostream swig_types[29]
-#define SWIGTYPE_p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t swig_types[30]
-#define SWIGTYPE_p_std__ptrdiff_t swig_types[31]
-#define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t swig_types[32]
-#define SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t swig_types[33]
-#define SWIGTYPE_p_swig__SwigPyIterator swig_types[34]
-#define SWIGTYPE_p_value_type swig_types[35]
-static swig_type_info *swig_types[37];
-static swig_module_info swig_module = {swig_types, 36, 0, 0, 0, 0};
+#define SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t swig_types[16]
+#define SWIGTYPE_p_emd__ExternalEMDHandler swig_types[17]
+#define SWIGTYPE_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__id_t swig_types[18]
+#define SWIGTYPE_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_t swig_types[19]
+#define SWIGTYPE_p_emd__PairwiseEMDT_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t_t swig_types[20]
+#define SWIGTYPE_p_first_type swig_types[21]
+#define SWIGTYPE_p_int swig_types[22]
+#define SWIGTYPE_p_p_PyObject swig_types[23]
+#define SWIGTYPE_p_p_double swig_types[24]
+#define SWIGTYPE_p_second_type swig_types[25]
+#define SWIGTYPE_p_size_type swig_types[26]
+#define SWIGTYPE_p_std__allocatorT_double_t swig_types[27]
+#define SWIGTYPE_p_std__allocatorT_std__string_t swig_types[28]
+#define SWIGTYPE_p_std__invalid_argument swig_types[29]
+#define SWIGTYPE_p_std__ostream swig_types[30]
+#define SWIGTYPE_p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t swig_types[31]
+#define SWIGTYPE_p_std__ptrdiff_t swig_types[32]
+#define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t swig_types[33]
+#define SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t swig_types[34]
+#define SWIGTYPE_p_swig__SwigPyIterator swig_types[35]
+#define SWIGTYPE_p_value_type swig_types[36]
+static swig_type_info *swig_types[38];
+static swig_module_info swig_module = {swig_types, 37, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -6039,6 +6040,52 @@ SWIGINTERN double emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistanc
     self->set_external_dists(true);
 
     return (*self)(std::make_tuple(nullptr, weights0, n0, -1), std::make_tuple(nullptr, weights1, n1, -1));
+  }
+SWIGINTERN std::string emd_EMD_Sl_emd_YPhiArrayEvent_Sl__Sg__Sc_emd_YPhiArrayDistance_Sl__Sg__Sg____str__(emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > const *self){
+  return self->description();
+}
+SWIGINTERN std::string emd_EMD_Sl_emd_YPhiArrayEvent_Sl__Sg__Sc_emd_YPhiArrayDistance_Sl__Sg__Sg____repr__(emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > const *self){
+  return self->description();
+}
+SWIGINTERN void emd_EMD_Sl_emd_YPhiArrayEvent_Sl__Sg__Sc_emd_YPhiArrayDistance_Sl__Sg__Sg__npy_flows(emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *self,double **arr_out,int *n0,int *n1){
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,190,MALLOC_2D_VALUE_ARRAY@*/
+  *n0 = self->n0();
+  *n1 = self->n1();
+  size_t num_elements = size_t(*n0)*size_t(*n1);
+  size_t nbytes = num_elements*sizeof(double);
+  double * values = (double *) malloc(nbytes);
+  if (values == NULL)
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes) + " bytes");
+  *arr_out = values;
+/*@SWIG@*/
+    memcpy(*arr_out, self->network_simplex().flows().data(), nbytes);
+    
+    for (size_t i = 0; i < num_elements; i++)
+      values[i] *= self->scale();
+  }
+SWIGINTERN void emd_EMD_Sl_emd_YPhiArrayEvent_Sl__Sg__Sc_emd_YPhiArrayDistance_Sl__Sg__Sg__npy_dists(emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *self,double **arr_out,int *n0,int *n1){
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,190,MALLOC_2D_VALUE_ARRAY@*/
+  *n0 = self->n0();
+  *n1 = self->n1();
+  size_t num_elements = size_t(*n0)*size_t(*n1);
+  size_t nbytes = num_elements*sizeof(double);
+  double * values = (double *) malloc(nbytes);
+  if (values == NULL)
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes) + " bytes");
+  *arr_out = values;
+/*@SWIG@*/
+    memcpy(*arr_out, self->ground_dists().data(), nbytes);
+  }
+SWIGINTERN double emd_EMD_Sl_emd_YPhiArrayEvent_Sl__Sg__Sc_emd_YPhiArrayDistance_Sl__Sg__Sg__operator_Sp__SP_(emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *self,double *weights0,int n0,double *coords0,int n00,int n01,double *weights1,int n1,double *coords1,int n10,int n11){
+
+    if (n0 != n00 || n1 != n10)
+      throw std::invalid_argument("Number of weights does not match number of coordinates");
+    if (n01 != 2 || n11 != 2)
+      throw std::invalid_argument("YPhi coordinates expected, coords should have 2 columns");
+
+    self->set_external_dists(false);
+
+    return (*self)(std::make_tuple(coords0, weights0, n0), std::make_tuple(coords1, weights1, n1));
   }
 SWIGINTERN std::string emd_PairwiseEMD_Sl_emd_EMD_Sl_emd_ArrayEvent_Sl__Sg__Sc_emd_EuclideanArrayDistance_Sl__Sg__Sg__Sg____str__(emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > const *self){
   return self->description();
@@ -16509,6 +16556,1269 @@ SWIGINTERN PyObject *EMD_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args
   return SWIG_Python_InitShadowInstance(args);
 }
 
+SWIGINTERN PyObject *_wrap_new_EMDYPhi(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  emd::Value arg1 = (emd::Value) 1 ;
+  emd::Value arg2 = (emd::Value) 1 ;
+  bool arg3 = (bool) false ;
+  bool arg4 = (bool) false ;
+  bool arg5 = (bool) false ;
+  unsigned int arg6 = (unsigned int) 100000 ;
+  emd::Value arg7 = (emd::Value) 10000 ;
+  emd::Value arg8 = (emd::Value) 1 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  unsigned int val6 ;
+  int ecode6 = 0 ;
+  double val7 ;
+  int ecode7 = 0 ;
+  double val8 ;
+  int ecode8 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
+  PyObject * obj7 = 0 ;
+  char * kwnames[] = {
+    (char *)"R",  (char *)"beta",  (char *)"norm",  (char *)"do_timing",  (char *)"external_dists",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  NULL 
+  };
+  emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *result = 0 ;
+  
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|OOOOOOOO:new_EMDYPhi", kwnames, &obj0, &obj1, &obj2, &obj3, &obj4, &obj5, &obj6, &obj7)) SWIG_fail;
+  if (obj0) {
+    ecode1 = SWIG_AsVal_double(obj0, &val1);
+    if (!SWIG_IsOK(ecode1)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_EMDYPhi" "', argument " "1"" of type '" "emd::Value""'");
+    } 
+    arg1 = static_cast< emd::Value >(val1);
+  }
+  if (obj1) {
+    ecode2 = SWIG_AsVal_double(obj1, &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_EMDYPhi" "', argument " "2"" of type '" "emd::Value""'");
+    } 
+    arg2 = static_cast< emd::Value >(val2);
+  }
+  if (obj2) {
+    ecode3 = SWIG_AsVal_bool(obj2, &val3);
+    if (!SWIG_IsOK(ecode3)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_EMDYPhi" "', argument " "3"" of type '" "bool""'");
+    } 
+    arg3 = static_cast< bool >(val3);
+  }
+  if (obj3) {
+    ecode4 = SWIG_AsVal_bool(obj3, &val4);
+    if (!SWIG_IsOK(ecode4)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_EMDYPhi" "', argument " "4"" of type '" "bool""'");
+    } 
+    arg4 = static_cast< bool >(val4);
+  }
+  if (obj4) {
+    ecode5 = SWIG_AsVal_bool(obj4, &val5);
+    if (!SWIG_IsOK(ecode5)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_EMDYPhi" "', argument " "5"" of type '" "bool""'");
+    } 
+    arg5 = static_cast< bool >(val5);
+  }
+  if (obj5) {
+    ecode6 = SWIG_AsVal_unsigned_SS_int(obj5, &val6);
+    if (!SWIG_IsOK(ecode6)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_EMDYPhi" "', argument " "6"" of type '" "unsigned int""'");
+    } 
+    arg6 = static_cast< unsigned int >(val6);
+  }
+  if (obj6) {
+    ecode7 = SWIG_AsVal_double(obj6, &val7);
+    if (!SWIG_IsOK(ecode7)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "new_EMDYPhi" "', argument " "7"" of type '" "emd::Value""'");
+    } 
+    arg7 = static_cast< emd::Value >(val7);
+  }
+  if (obj7) {
+    ecode8 = SWIG_AsVal_double(obj7, &val8);
+    if (!SWIG_IsOK(ecode8)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "new_EMDYPhi" "', argument " "8"" of type '" "emd::Value""'");
+    } 
+    arg8 = static_cast< emd::Value >(val8);
+  }
+  {
+    try {
+      result = (emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *)new emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > >(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_EMDYPhi(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *arg1 = (emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EMDYPhi" "', argument " "1"" of type '" "emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > * >(argp1);
+  {
+    try {
+      delete arg1; 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMDYPhi_R(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *arg1 = (emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  emd::Value result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhi_R" "', argument " "1"" of type '" "emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > const *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > * >(argp1);
+  {
+    try {
+      result = (emd::Value)((emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > const *)arg1)->R(); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMDYPhi_beta(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *arg1 = (emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  emd::Value result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhi_beta" "', argument " "1"" of type '" "emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > const *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > * >(argp1);
+  {
+    try {
+      result = (emd::Value)((emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > const *)arg1)->beta(); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMDYPhi_set_R(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *arg1 = (emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *) 0 ;
+  emd::Value arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char * kwnames[] = {
+    (char *)"self",  (char *)"R",  NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:EMDYPhi_set_R", kwnames, &obj0, &obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhi_set_R" "', argument " "1"" of type '" "emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDYPhi_set_R" "', argument " "2"" of type '" "emd::Value""'");
+  } 
+  arg2 = static_cast< emd::Value >(val2);
+  {
+    try {
+      (arg1)->set_R(arg2); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMDYPhi_set_beta(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *arg1 = (emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *) 0 ;
+  emd::Value arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char * kwnames[] = {
+    (char *)"self",  (char *)"beta",  NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:EMDYPhi_set_beta", kwnames, &obj0, &obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhi_set_beta" "', argument " "1"" of type '" "emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDYPhi_set_beta" "', argument " "2"" of type '" "emd::Value""'");
+  } 
+  arg2 = static_cast< emd::Value >(val2);
+  {
+    try {
+      (arg1)->set_beta(arg2); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMDYPhi_set_network_simplex_params(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *arg1 = (emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *) 0 ;
+  unsigned int arg2 = (unsigned int) 100000 ;
+  emd::Value arg3 = (emd::Value) 10000 ;
+  emd::Value arg4 = (emd::Value) 1 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  char * kwnames[] = {
+    (char *)"self",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|OOO:EMDYPhi_set_network_simplex_params", kwnames, &obj0, &obj1, &obj2, &obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhi_set_network_simplex_params" "', argument " "1"" of type '" "emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > * >(argp1);
+  if (obj1) {
+    ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDYPhi_set_network_simplex_params" "', argument " "2"" of type '" "unsigned int""'");
+    } 
+    arg2 = static_cast< unsigned int >(val2);
+  }
+  if (obj2) {
+    ecode3 = SWIG_AsVal_double(obj2, &val3);
+    if (!SWIG_IsOK(ecode3)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "EMDYPhi_set_network_simplex_params" "', argument " "3"" of type '" "emd::Value""'");
+    } 
+    arg3 = static_cast< emd::Value >(val3);
+  }
+  if (obj3) {
+    ecode4 = SWIG_AsVal_double(obj3, &val4);
+    if (!SWIG_IsOK(ecode4)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "EMDYPhi_set_network_simplex_params" "', argument " "4"" of type '" "emd::Value""'");
+    } 
+    arg4 = static_cast< emd::Value >(val4);
+  }
+  {
+    try {
+      (arg1)->set_network_simplex_params(arg2,arg3,arg4); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMDYPhi_description(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *arg1 = (emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *) 0 ;
+  bool arg2 = (bool) true ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char * kwnames[] = {
+    (char *)"self",  (char *)"write_preprocessors",  NULL 
+  };
+  std::string result;
+  
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:EMDYPhi_description", kwnames, &obj0, &obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhi_description" "', argument " "1"" of type '" "emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > const *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > * >(argp1);
+  if (obj1) {
+    ecode2 = SWIG_AsVal_bool(obj1, &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDYPhi_description" "', argument " "2"" of type '" "bool""'");
+    } 
+    arg2 = static_cast< bool >(val2);
+  }
+  {
+    try {
+      result = ((emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > const *)arg1)->description(arg2); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMDYPhi_clear(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *arg1 = (emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhi_clear" "', argument " "1"" of type '" "emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > * >(argp1);
+  {
+    try {
+      (arg1)->clear(); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMDYPhi_dists_vec(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *arg1 = (emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  emd::ValueVector result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhi_dists_vec" "', argument " "1"" of type '" "emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > const *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > * >(argp1);
+  {
+    try {
+      result = ((emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > const *)arg1)->dists(); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< double,std::allocator< double > > >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMDYPhi_flows_vec(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *arg1 = (emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  emd::ValueVector result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhi_flows_vec" "', argument " "1"" of type '" "emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > const *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > * >(argp1);
+  {
+    try {
+      result = ((emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > const *)arg1)->flows(); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< double,std::allocator< double > > >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMDYPhi_flow__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *arg1 = (emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *) 0 ;
+  std::ptrdiff_t arg2 ;
+  std::ptrdiff_t arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  ptrdiff_t val2 ;
+  int ecode2 = 0 ;
+  ptrdiff_t val3 ;
+  int ecode3 = 0 ;
+  emd::Value result;
+  
+  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhi_flow" "', argument " "1"" of type '" "emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > const *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > * >(argp1);
+  ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDYPhi_flow" "', argument " "2"" of type '" "std::ptrdiff_t""'");
+  } 
+  arg2 = static_cast< std::ptrdiff_t >(val2);
+  ecode3 = SWIG_AsVal_ptrdiff_t(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "EMDYPhi_flow" "', argument " "3"" of type '" "std::ptrdiff_t""'");
+  } 
+  arg3 = static_cast< std::ptrdiff_t >(val3);
+  {
+    try {
+      result = (emd::Value)((emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > const *)arg1)->flow(arg2,arg3); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMDYPhi_flow__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *arg1 = (emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *) 0 ;
+  std::size_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  emd::Value result;
+  
+  if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhi_flow" "', argument " "1"" of type '" "emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > const *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDYPhi_flow" "', argument " "2"" of type '" "std::size_t""'");
+  } 
+  arg2 = static_cast< std::size_t >(val2);
+  {
+    try {
+      result = (emd::Value)((emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > const *)arg1)->flow(arg2); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMDYPhi_flow(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[4] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "EMDYPhi_flow", 0, 3, argv))) SWIG_fail;
+  --argc;
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_size_t(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_EMDYPhi_flow__SWIG_1(self, argc, argv);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_ptrdiff_t(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_ptrdiff_t(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_EMDYPhi_flow__SWIG_0(self, argc, argv);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'EMDYPhi_flow'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > >::flow(std::ptrdiff_t,std::ptrdiff_t) const\n"
+    "    emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > >::flow(std::size_t) const\n");
+  return 0;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMDYPhi___str__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *arg1 = (emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  std::string result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhi___str__" "', argument " "1"" of type '" "emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > const *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > * >(argp1);
+  {
+    try {
+      result = emd_EMD_Sl_emd_YPhiArrayEvent_Sl__Sg__Sc_emd_YPhiArrayDistance_Sl__Sg__Sg____str__((emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > const *)arg1); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMDYPhi___repr__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *arg1 = (emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  std::string result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhi___repr__" "', argument " "1"" of type '" "emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > const *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > * >(argp1);
+  {
+    try {
+      result = emd_EMD_Sl_emd_YPhiArrayEvent_Sl__Sg__Sc_emd_YPhiArrayDistance_Sl__Sg__Sg____repr__((emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > const *)arg1); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMDYPhi_flows(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *arg1 = (emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *) 0 ;
+  double **arg2 = (double **) 0 ;
+  int *arg3 = (int *) 0 ;
+  int *arg4 = (int *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double *data_temp2 = NULL ;
+  int dim1_temp2 ;
+  int dim2_temp2 ;
+  PyObject *swig_obj[1] ;
+  
+  {
+    arg2 = &data_temp2;
+    arg3 = &dim1_temp2;
+    arg4 = &dim2_temp2;
+  }
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhi_flows" "', argument " "1"" of type '" "emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > * >(argp1);
+  {
+    try {
+      emd_EMD_Sl_emd_YPhiArrayEvent_Sl__Sg__Sc_emd_YPhiArrayDistance_Sl__Sg__Sg__npy_flows(arg1,arg2,arg3,arg4); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  {
+    npy_intp dims[2] = {
+      *arg3, *arg4 
+    };
+    PyObject* obj = PyArray_SimpleNewFromData(2, dims, NPY_DOUBLE, (void*)(*arg2));
+    PyArrayObject* array = (PyArrayObject*) obj;
+    
+    if (!array) SWIG_fail;
+    
+#ifdef SWIGPY_USE_CAPSULE
+    PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
+#else
+    PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
+#endif
+    
+#if NPY_API_VERSION < 0x00000007
+    PyArray_BASE(array) = cap;
+#else
+    PyArray_SetBaseObject(array,cap);
+#endif
+    
+    resultobj = SWIG_Python_AppendOutput(resultobj,obj);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMDYPhi_dists(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *arg1 = (emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *) 0 ;
+  double **arg2 = (double **) 0 ;
+  int *arg3 = (int *) 0 ;
+  int *arg4 = (int *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double *data_temp2 = NULL ;
+  int dim1_temp2 ;
+  int dim2_temp2 ;
+  PyObject *swig_obj[1] ;
+  
+  {
+    arg2 = &data_temp2;
+    arg3 = &dim1_temp2;
+    arg4 = &dim2_temp2;
+  }
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhi_dists" "', argument " "1"" of type '" "emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > * >(argp1);
+  {
+    try {
+      emd_EMD_Sl_emd_YPhiArrayEvent_Sl__Sg__Sc_emd_YPhiArrayDistance_Sl__Sg__Sg__npy_dists(arg1,arg2,arg3,arg4); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  {
+    npy_intp dims[2] = {
+      *arg3, *arg4 
+    };
+    PyObject* obj = PyArray_SimpleNewFromData(2, dims, NPY_DOUBLE, (void*)(*arg2));
+    PyArrayObject* array = (PyArrayObject*) obj;
+    
+    if (!array) SWIG_fail;
+    
+#ifdef SWIGPY_USE_CAPSULE
+    PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
+#else
+    PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
+#endif
+    
+#if NPY_API_VERSION < 0x00000007
+    PyArray_BASE(array) = cap;
+#else
+    PyArray_SetBaseObject(array,cap);
+#endif
+    
+    resultobj = SWIG_Python_AppendOutput(resultobj,obj);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EMDYPhi___call__(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *arg1 = (emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *) 0 ;
+  double *arg2 = (double *) 0 ;
+  int arg3 ;
+  double *arg4 = (double *) 0 ;
+  int arg5 ;
+  int arg6 ;
+  double *arg7 = (double *) 0 ;
+  int arg8 ;
+  double *arg9 = (double *) 0 ;
+  int arg10 ;
+  int arg11 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyArrayObject *array2 = NULL ;
+  int is_new_object2 = 0 ;
+  PyArrayObject *array4 = NULL ;
+  int is_new_object4 = 0 ;
+  PyArrayObject *array7 = NULL ;
+  int is_new_object7 = 0 ;
+  PyArrayObject *array9 = NULL ;
+  int is_new_object9 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  char * kwnames[] = {
+    (char *)"self",  (char *)"weights0",  (char *)"coords0",  (char *)"weights1",  (char *)"coords1",  NULL 
+  };
+  double result;
+  
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOOOO:EMDYPhi___call__", kwnames, &obj0, &obj1, &obj2, &obj3, &obj4)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhi___call__" "', argument " "1"" of type '" "emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *""'"); 
+  }
+  arg1 = reinterpret_cast< emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > * >(argp1);
+  {
+    npy_intp size[1] = {
+      -1 
+    };
+    array2 = obj_to_array_contiguous_allow_conversion(obj1,
+      NPY_DOUBLE,
+      &is_new_object2);
+    if (!array2 || !require_dimensions(array2, 1) ||
+      !require_size(array2, size, 1)) SWIG_fail;
+    arg2 = (double*) array_data(array2);
+    arg3 = (int) array_size(array2,0);
+  }
+  {
+    npy_intp size[2] = {
+      -1, -1 
+    };
+    array4 = obj_to_array_contiguous_allow_conversion(obj2, NPY_DOUBLE,
+      &is_new_object4);
+    if (!array4 || !require_dimensions(array4, 2) ||
+      !require_size(array4, size, 2)) SWIG_fail;
+    arg4 = (double*) array_data(array4);
+    arg5 = (int) array_size(array4,0);
+    arg6 = (int) array_size(array4,1);
+  }
+  {
+    npy_intp size[1] = {
+      -1 
+    };
+    array7 = obj_to_array_contiguous_allow_conversion(obj3,
+      NPY_DOUBLE,
+      &is_new_object7);
+    if (!array7 || !require_dimensions(array7, 1) ||
+      !require_size(array7, size, 1)) SWIG_fail;
+    arg7 = (double*) array_data(array7);
+    arg8 = (int) array_size(array7,0);
+  }
+  {
+    npy_intp size[2] = {
+      -1, -1 
+    };
+    array9 = obj_to_array_contiguous_allow_conversion(obj4, NPY_DOUBLE,
+      &is_new_object9);
+    if (!array9 || !require_dimensions(array9, 2) ||
+      !require_size(array9, size, 2)) SWIG_fail;
+    arg9 = (double*) array_data(array9);
+    arg10 = (int) array_size(array9,0);
+    arg11 = (int) array_size(array9,1);
+  }
+  {
+    try {
+      result = (double)emd_EMD_Sl_emd_YPhiArrayEvent_Sl__Sg__Sc_emd_YPhiArrayDistance_Sl__Sg__Sg__operator_Sp__SP_(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
+  {
+    if (is_new_object4 && array4)
+    {
+      Py_DECREF(array4); 
+    }
+  }
+  {
+    if (is_new_object7 && array7)
+    {
+      Py_DECREF(array7); 
+    }
+  }
+  {
+    if (is_new_object9 && array9)
+    {
+      Py_DECREF(array9); 
+    }
+  }
+  return resultobj;
+fail:
+  {
+    if (is_new_object2 && array2)
+    {
+      Py_DECREF(array2); 
+    }
+  }
+  {
+    if (is_new_object4 && array4)
+    {
+      Py_DECREF(array4); 
+    }
+  }
+  {
+    if (is_new_object7 && array7)
+    {
+      Py_DECREF(array7); 
+    }
+  }
+  {
+    if (is_new_object9 && array9)
+    {
+      Py_DECREF(array9); 
+    }
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *EMDYPhi_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *EMDYPhi_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
 SWIGINTERN PyObject *_wrap_new_PairwiseEMD(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   emd::Value arg1 = (emd::Value) 1 ;
@@ -18998,6 +20308,28 @@ static PyMethodDef SwigMethods[] = {
 		""},
 	 { "EMD_swigregister", EMD_swigregister, METH_O, NULL},
 	 { "EMD_swiginit", EMD_swiginit, METH_VARARGS, NULL},
+	 { "new_EMDYPhi", (PyCFunction)(void(*)(void))_wrap_new_EMDYPhi, METH_VARARGS|METH_KEYWORDS, "new_EMDYPhi(emd::Value R=1, emd::Value beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=1) -> EMDYPhi"},
+	 { "delete_EMDYPhi", _wrap_delete_EMDYPhi, METH_O, "delete_EMDYPhi(EMDYPhi self)"},
+	 { "EMDYPhi_R", _wrap_EMDYPhi_R, METH_O, "EMDYPhi_R(EMDYPhi self) -> emd::Value"},
+	 { "EMDYPhi_beta", _wrap_EMDYPhi_beta, METH_O, "EMDYPhi_beta(EMDYPhi self) -> emd::Value"},
+	 { "EMDYPhi_set_R", (PyCFunction)(void(*)(void))_wrap_EMDYPhi_set_R, METH_VARARGS|METH_KEYWORDS, "EMDYPhi_set_R(EMDYPhi self, emd::Value R)"},
+	 { "EMDYPhi_set_beta", (PyCFunction)(void(*)(void))_wrap_EMDYPhi_set_beta, METH_VARARGS|METH_KEYWORDS, "EMDYPhi_set_beta(EMDYPhi self, emd::Value beta)"},
+	 { "EMDYPhi_set_network_simplex_params", (PyCFunction)(void(*)(void))_wrap_EMDYPhi_set_network_simplex_params, METH_VARARGS|METH_KEYWORDS, "EMDYPhi_set_network_simplex_params(EMDYPhi self, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=1)"},
+	 { "EMDYPhi_description", (PyCFunction)(void(*)(void))_wrap_EMDYPhi_description, METH_VARARGS|METH_KEYWORDS, "EMDYPhi_description(EMDYPhi self, bool write_preprocessors=True) -> std::string"},
+	 { "EMDYPhi_clear", _wrap_EMDYPhi_clear, METH_O, "EMDYPhi_clear(EMDYPhi self)"},
+	 { "EMDYPhi_dists_vec", _wrap_EMDYPhi_dists_vec, METH_O, "EMDYPhi_dists_vec(EMDYPhi self) -> vectorDouble"},
+	 { "EMDYPhi_flows_vec", _wrap_EMDYPhi_flows_vec, METH_O, "EMDYPhi_flows_vec(EMDYPhi self) -> vectorDouble"},
+	 { "EMDYPhi_flow", _wrap_EMDYPhi_flow, METH_VARARGS, "\n"
+		"EMDYPhi_flow(EMDYPhi self, std::ptrdiff_t i, std::ptrdiff_t j) -> emd::Value\n"
+		"EMDYPhi_flow(EMDYPhi self, std::size_t ind) -> emd::Value\n"
+		""},
+	 { "EMDYPhi___str__", _wrap_EMDYPhi___str__, METH_O, "EMDYPhi___str__(EMDYPhi self) -> std::string"},
+	 { "EMDYPhi___repr__", _wrap_EMDYPhi___repr__, METH_O, "EMDYPhi___repr__(EMDYPhi self) -> std::string"},
+	 { "EMDYPhi_flows", _wrap_EMDYPhi_flows, METH_O, "EMDYPhi_flows(EMDYPhi self)"},
+	 { "EMDYPhi_dists", _wrap_EMDYPhi_dists, METH_O, "EMDYPhi_dists(EMDYPhi self)"},
+	 { "EMDYPhi___call__", (PyCFunction)(void(*)(void))_wrap_EMDYPhi___call__, METH_VARARGS|METH_KEYWORDS, "EMDYPhi___call__(EMDYPhi self, double * weights0, double * coords0, double * weights1, double * coords1) -> double"},
+	 { "EMDYPhi_swigregister", EMDYPhi_swigregister, METH_O, NULL},
+	 { "EMDYPhi_swiginit", EMDYPhi_swiginit, METH_VARARGS, NULL},
 	 { "new_PairwiseEMD", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMD, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMD(emd::Value R=1, emd::Value beta=1, bool norm=False, int num_threads=-1, std::ptrdiff_t print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMD"},
 	 { "delete_PairwiseEMD", _wrap_delete_PairwiseEMD, METH_O, "delete_PairwiseEMD(PairwiseEMD self)"},
 	 { "PairwiseEMD_R", _wrap_PairwiseEMD_R, METH_O, "PairwiseEMD_R(PairwiseEMD self) -> emd::Value"},
@@ -19313,6 +20645,28 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 		""},
 	 { "EMD_swigregister", EMD_swigregister, METH_O, NULL},
 	 { "EMD_swiginit", EMD_swiginit, METH_VARARGS, NULL},
+	 { "new_EMDYPhi", (PyCFunction)(void(*)(void))_wrap_new_EMDYPhi, METH_VARARGS|METH_KEYWORDS, "new_EMDYPhi(emd::Value R=1, emd::Value beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=1) -> EMDYPhi"},
+	 { "delete_EMDYPhi", _wrap_delete_EMDYPhi, METH_O, "delete_EMDYPhi(EMDYPhi self)"},
+	 { "EMDYPhi_R", _wrap_EMDYPhi_R, METH_O, "R(EMDYPhi self) -> emd::Value"},
+	 { "EMDYPhi_beta", _wrap_EMDYPhi_beta, METH_O, "beta(EMDYPhi self) -> emd::Value"},
+	 { "EMDYPhi_set_R", (PyCFunction)(void(*)(void))_wrap_EMDYPhi_set_R, METH_VARARGS|METH_KEYWORDS, "set_R(EMDYPhi self, emd::Value R)"},
+	 { "EMDYPhi_set_beta", (PyCFunction)(void(*)(void))_wrap_EMDYPhi_set_beta, METH_VARARGS|METH_KEYWORDS, "set_beta(EMDYPhi self, emd::Value beta)"},
+	 { "EMDYPhi_set_network_simplex_params", (PyCFunction)(void(*)(void))_wrap_EMDYPhi_set_network_simplex_params, METH_VARARGS|METH_KEYWORDS, "set_network_simplex_params(EMDYPhi self, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=1)"},
+	 { "EMDYPhi_description", (PyCFunction)(void(*)(void))_wrap_EMDYPhi_description, METH_VARARGS|METH_KEYWORDS, "description(EMDYPhi self, bool write_preprocessors=True) -> std::string"},
+	 { "EMDYPhi_clear", _wrap_EMDYPhi_clear, METH_O, "clear(EMDYPhi self)"},
+	 { "EMDYPhi_dists_vec", _wrap_EMDYPhi_dists_vec, METH_O, "dists_vec(EMDYPhi self) -> vectorDouble"},
+	 { "EMDYPhi_flows_vec", _wrap_EMDYPhi_flows_vec, METH_O, "flows_vec(EMDYPhi self) -> vectorDouble"},
+	 { "EMDYPhi_flow", _wrap_EMDYPhi_flow, METH_VARARGS, "\n"
+		"flow(EMDYPhi self, std::ptrdiff_t i, std::ptrdiff_t j) -> emd::Value\n"
+		"flow(EMDYPhi self, std::size_t ind) -> emd::Value\n"
+		""},
+	 { "EMDYPhi___str__", _wrap_EMDYPhi___str__, METH_O, "__str__(EMDYPhi self) -> std::string"},
+	 { "EMDYPhi___repr__", _wrap_EMDYPhi___repr__, METH_O, "__repr__(EMDYPhi self) -> std::string"},
+	 { "EMDYPhi_flows", _wrap_EMDYPhi_flows, METH_O, "flows(EMDYPhi self)"},
+	 { "EMDYPhi_dists", _wrap_EMDYPhi_dists, METH_O, "dists(EMDYPhi self)"},
+	 { "EMDYPhi___call__", (PyCFunction)(void(*)(void))_wrap_EMDYPhi___call__, METH_VARARGS|METH_KEYWORDS, "__call__(EMDYPhi self, double * weights0, double * coords0, double * weights1, double * coords1) -> double"},
+	 { "EMDYPhi_swigregister", EMDYPhi_swigregister, METH_O, NULL},
+	 { "EMDYPhi_swiginit", EMDYPhi_swiginit, METH_VARARGS, NULL},
 	 { "new_PairwiseEMD", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMD, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMD(emd::Value R=1, emd::Value beta=1, bool norm=False, int num_threads=-1, std::ptrdiff_t print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMD"},
 	 { "delete_PairwiseEMD", _wrap_delete_PairwiseEMD, METH_O, "delete_PairwiseEMD(PairwiseEMD self)"},
 	 { "PairwiseEMD_R", _wrap_PairwiseEMD_R, METH_O, "R(PairwiseEMD self) -> emd::Value"},
@@ -19363,6 +20717,9 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 static void *_p_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_tTo_p_emd__EMDBaseT_double_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((emd::EMDBase< double > *)  ((emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< >,lemon::NetworkSimplex< > > *) x));
 }
+static void *_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_tTo_p_emd__EMDBaseT_double_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((emd::EMDBase< double > *)  ((emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< >,lemon::NetworkSimplex< > > *) x));
+}
 static void *_p_emd__CorrelationDimensionTo_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((emd::Histogram1DHandler< boost::histogram::axis::transform::log > *)  ((emd::CorrelationDimension *) x));
 }
@@ -19391,6 +20748,7 @@ static swig_type_info _swigt__p_double = {"_p_double", "emd::Value *|double *", 
 static swig_type_info _swigt__p_emd__CorrelationDimension = {"_p_emd__CorrelationDimension", "emd::CorrelationDimension *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_emd__EMDBaseT_double_t = {"_p_emd__EMDBaseT_double_t", "emd::EMDBase< double > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t = {"_p_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t", "emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > *|emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< >,lemon::NetworkSimplex< > > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t = {"_p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t", "emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > *|emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< >,lemon::NetworkSimplex< > > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_emd__ExternalEMDHandler = {"_p_emd__ExternalEMDHandler", "emd::ExternalEMDHandler *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__id_t = {"_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__id_t", "emd::Histogram1DHandler< > *|emd::Histogram1DHandler< boost::histogram::axis::transform::id > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_t = {"_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_t", "emd::Histogram1DHandler< boost::histogram::axis::transform::log > *", 0, 0, (void*)0, 0};
@@ -19429,6 +20787,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_emd__CorrelationDimension,
   &_swigt__p_emd__EMDBaseT_double_t,
   &_swigt__p_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t,
+  &_swigt__p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t,
   &_swigt__p_emd__ExternalEMDHandler,
   &_swigt__p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__id_t,
   &_swigt__p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_t,
@@ -19465,8 +20824,9 @@ static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0,
 static swig_cast_info _swigc__p_difference_type[] = {  {&_swigt__p_difference_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_double[] = {  {&_swigt__p_double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_emd__CorrelationDimension[] = {  {&_swigt__p_emd__CorrelationDimension, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_emd__EMDBaseT_double_t[] = {  {&_swigt__p_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t, _p_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_tTo_p_emd__EMDBaseT_double_t, 0, 0},  {&_swigt__p_emd__EMDBaseT_double_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_emd__EMDBaseT_double_t[] = {  {&_swigt__p_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t, _p_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_tTo_p_emd__EMDBaseT_double_t, 0, 0},  {&_swigt__p_emd__EMDBaseT_double_t, 0, 0, 0},  {&_swigt__p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, _p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_tTo_p_emd__EMDBaseT_double_t, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t[] = {  {&_swigt__p_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t[] = {  {&_swigt__p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_emd__ExternalEMDHandler[] = {  {&_swigt__p_emd__ExternalEMDHandler, 0, 0, 0},  {&_swigt__p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__id_t, _p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__id_tTo_p_emd__ExternalEMDHandler, 0, 0},  {&_swigt__p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_t, _p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_tTo_p_emd__ExternalEMDHandler, 0, 0},  {&_swigt__p_emd__CorrelationDimension, _p_emd__CorrelationDimensionTo_p_emd__ExternalEMDHandler, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__id_t[] = {  {&_swigt__p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__id_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_t[] = {  {&_swigt__p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_t, 0, 0, 0},  {&_swigt__p_emd__CorrelationDimension, _p_emd__CorrelationDimensionTo_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_t, 0, 0},{0, 0, 0, 0}};
@@ -19505,6 +20865,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_emd__CorrelationDimension,
   _swigc__p_emd__EMDBaseT_double_t,
   _swigc__p_emd__EMDT_emd__ArrayEventT_t_emd__EuclideanArrayDistanceT_t_lemon__NetworkSimplexT_t_t,
+  _swigc__p_emd__EMDT_emd__YPhiArrayEventT_t_emd__YPhiArrayDistanceT_t_lemon__NetworkSimplexT_t_t,
   _swigc__p_emd__ExternalEMDHandler,
   _swigc__p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__id_t,
   _swigc__p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_t,

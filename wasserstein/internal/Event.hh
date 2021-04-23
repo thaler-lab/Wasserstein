@@ -240,6 +240,48 @@ private:
 }; // ArrayParticleCollection
 
 ////////////////////////////////////////////////////////////////////////////////
+// YPhiArrayParticleCollection - implements a "smart" 2D array from a plain array
+////////////////////////////////////////////////////////////////////////////////
+
+template<typename V>
+struct YPhiArrayParticleCollection {
+
+  template<typename T>
+  class templated_iterator {
+    T * ptr_;
+
+  public:
+    templated_iterator(T * ptr) : ptr_(ptr) {}
+    templated_iterator<T> & operator++() {
+      ptr_ += 2;
+      return *this;
+    }
+    T * operator*() const { return ptr_; }
+    bool operator!=(const templated_iterator & other) const { return ptr_ != other.ptr_; }
+    int stride() const { return 2; }
+  };
+
+  using const_iterator = templated_iterator<const V>;
+  using value_type = const_iterator;
+
+  // contructor, int is used for compatibility with SWIG's numpy.i
+  YPhiArrayParticleCollection(V * array, int size) :
+    array_(array), size_(size)
+  {}
+  YPhiArrayParticleCollection() : YPhiArrayParticleCollection(nullptr, 0) {}
+
+  int size() const { return size_; }
+  int stride() const { return 2; }
+  const_iterator begin() const { return const_iterator(array_); }
+  const_iterator end() const { return const_iterator(array_ + 2*size_); }
+
+private:
+  V * array_;
+  int size_;
+
+}; // ArrayParticleCollection
+
+////////////////////////////////////////////////////////////////////////////////
 // ArrayEvent - an event where the weights and particle are contiguous arrays
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -279,6 +321,51 @@ struct ArrayEvent : public EventBase<ArrayParticleCollection<V>, ArrayWeightColl
   static std::string name() {
     std::ostringstream oss;
     oss << "ArrayEvent<" << sizeof(V) << "-byte float>";
+    return oss.str();
+  }
+
+}; // ArrayEvent
+
+////////////////////////////////////////////////////////////////////////////////
+// YPhiArrayEvent - an event where the weights and particle are contiguous arrays
+////////////////////////////////////////////////////////////////////////////////
+
+template<typename V = double>
+struct YPhiArrayEvent : public EventBase<YPhiArrayParticleCollection<V>, ArrayWeightCollection<V>> {
+  typedef YPhiArrayParticleCollection<V> ParticleCollection;
+  typedef ArrayWeightCollection<V> WeightCollection;
+  typedef EventBase<ParticleCollection, WeightCollection> Base;
+
+  static_assert(std::is_floating_point<V>::value, "ArrayEvent template parameter must be floating point.");
+
+  // full constructor
+  YPhiArrayEvent(V * particle_array, V * weight_array, int size, Value event_weight = 1) :
+    Base(ParticleCollection(particle_array, size),
+         WeightCollection(weight_array, size),
+         event_weight)
+  {
+    // set total weight
+    for (int i = 0; i < size; i++)
+      this->total_weight_ += weight_array[i];
+  }
+
+  // constructor from single argument (for use with Python)
+  YPhiArrayEvent(const std::tuple<V*, V*, int> & tup, Value event_weight = 1) :
+    YPhiArrayEvent(std::get<0>(tup), std::get<1>(tup), std::get<2>(tup), event_weight)
+  {}
+
+  // default constructor
+  YPhiArrayEvent() : YPhiArrayEvent(nullptr, nullptr, 0) {}
+
+  // ensure that we don't modify original array
+  void normalize_weights() {
+    this->weights_.copy();
+    Base::normalize_weights();
+  }
+
+  static std::string name() {
+    std::ostringstream oss;
+    oss << "YPhiArrayEvent<" << sizeof(V) << "-byte float>";
     return oss.str();
   }
 

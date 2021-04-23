@@ -473,6 +473,34 @@ class EMD(EMDBaseDouble):
 # Register EMD in _wasserstein:
 _wasserstein.EMD_swigregister(EMD)
 
+class EMDYPhi(EMDBaseDouble):
+    r"""Proxy of C++ emd::EMD< emd::YPhiArrayEvent< >,emd::YPhiArrayDistance< > > class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=10000, epsilon_small_factor=1):
+        r"""__init__(EMDYPhi self, emd::Value R=1, emd::Value beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, unsigned int n_iter_max=100000, emd::Value epsilon_large_factor=10000, emd::Value epsilon_small_factor=1) -> EMDYPhi"""
+        _wasserstein.EMDYPhi_swiginit(self, _wasserstein.new_EMDYPhi(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
+    __swig_destroy__ = _wasserstein.delete_EMDYPhi
+    R = _swig_new_instance_method(_wasserstein.EMDYPhi_R)
+    beta = _swig_new_instance_method(_wasserstein.EMDYPhi_beta)
+    set_R = _swig_new_instance_method(_wasserstein.EMDYPhi_set_R)
+    set_beta = _swig_new_instance_method(_wasserstein.EMDYPhi_set_beta)
+    set_network_simplex_params = _swig_new_instance_method(_wasserstein.EMDYPhi_set_network_simplex_params)
+    description = _swig_new_instance_method(_wasserstein.EMDYPhi_description)
+    clear = _swig_new_instance_method(_wasserstein.EMDYPhi_clear)
+    dists_vec = _swig_new_instance_method(_wasserstein.EMDYPhi_dists_vec)
+    flows_vec = _swig_new_instance_method(_wasserstein.EMDYPhi_flows_vec)
+    flow = _swig_new_instance_method(_wasserstein.EMDYPhi_flow)
+    __str__ = _swig_new_instance_method(_wasserstein.EMDYPhi___str__)
+    __repr__ = _swig_new_instance_method(_wasserstein.EMDYPhi___repr__)
+    flows = _swig_new_instance_method(_wasserstein.EMDYPhi_flows)
+    dists = _swig_new_instance_method(_wasserstein.EMDYPhi_dists)
+    __call__ = _swig_new_instance_method(_wasserstein.EMDYPhi___call__)
+
+# Register EMDYPhi in _wasserstein:
+_wasserstein.EMDYPhi_swigregister(EMDYPhi)
+
 class PairwiseEMD(object):
     r"""
     Proxy of C++ emd::PairwiseEMD< emd::EMD< emd::ArrayEvent< >,emd::EuclideanArrayDistance< > > > class.
