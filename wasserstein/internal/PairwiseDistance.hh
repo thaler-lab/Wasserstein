@@ -51,22 +51,24 @@
 
 BEGIN_EMD_NAMESPACE
 
+
 ////////////////////////////////////////////////////////////////////////////////
 // PairwiseDistanceBase - implements (theta_ij/R)^beta between particles i and j
 ////////////////////////////////////////////////////////////////////////////////
 
-template <class PairwiseDistance, class ParticleCollection, class Value>
+template <class PairwiseDistance, class ParticleCollection, typename Value>
 struct PairwiseDistanceBase {
 
   typedef typename ParticleCollection::value_type Particle;
   typedef typename ParticleCollection::const_iterator ParticleIterator;
+  typedef Value value_type;
 
-  PairwiseDistanceBase(Value R, Value beta) {
+  PairwiseDistanceBase(value_type R, value_type beta) {
     set_R(R);
     set_beta(beta);
 
-    // check that we properly have passed a derived class
-    static_assert(std::is_base_of<PairwiseDistanceBase<PairwiseDistance, ParticleCollection, Value>,
+    // check that we properly have passed a derived class (must be here because derived class is incomplete)
+    static_assert(std::is_base_of<PairwiseDistanceBase<PairwiseDistance, ParticleCollection, value_type>,
                                   PairwiseDistance>::value, 
                   "Template parameter must be a derived class of PairwiseDistanceBase.");
   }
@@ -82,14 +84,14 @@ struct PairwiseDistanceBase {
   }
 
   // access/set parameters
-  Value R() const { return R_; }
-  Value beta() const { return beta_; }
-  void set_R(Value r) {
+  value_type R() const { return R_; }
+  value_type beta() const { return beta_; }
+  void set_R(value_type r) {
     if (r <= 0) throw std::invalid_argument("R must be positive.");
     R_ = r;
     R2_ = r*r;
   }
-  void set_beta(Value beta) {
+  void set_beta(value_type beta) {
     if (beta < 0) throw std::invalid_argument("beta must be non-negative.");
     beta_ = beta;
     halfbeta_ = beta/2;
@@ -97,7 +99,7 @@ struct PairwiseDistanceBase {
 
   // computes pairwise distances between two particle collections
   void fill_distances(const ParticleCollection & ps0, const ParticleCollection & ps1,
-                      std::vector<Value> & dists, ExtraParticle extra) {
+                      std::vector<value_type> & dists, ExtraParticle extra) {
 
     std::size_t k(0);
 
@@ -128,70 +130,79 @@ struct PairwiseDistanceBase {
   }
 
   // returns the distance divided by R, all to beta power
-  Value distance(const ParticleIterator & p0, const ParticleIterator & p1) const {
-    Value pd(PairwiseDistance::plain_distance_(p0, p1));
+  value_type distance(const ParticleIterator & p0, const ParticleIterator & p1) const {
+    value_type pd(PairwiseDistance::plain_distance_(p0, p1));
     return (beta_ == 1.0 ? std::sqrt(pd)/R_ : (beta_ == 2.0 ? pd/R2_ : std::pow(pd/R2_, halfbeta_)));
   }
 
   // return the plain distance, without the square root
-  static Value plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
+  static value_type plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
     return PairwiseDistance::plain_distance(*p0, *p1);
   }
 
   // ensure this method is overloaded
-  static Value plain_distance(const Particle & p0, const Particle & p1) {
+  static value_type plain_distance(const Particle & p0, const Particle & p1) {
     throw std::runtime_error("called pairwise distance without any particles");
     return -1;
   }
 
 private:
 
-  Value R_, R2_, beta_, halfbeta_;
+  value_type R_, R2_, beta_, halfbeta_;
 
 }; // PairwiseDistanceBase
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // DefaultPairwiseDistance - does nothing by default, for use with external dists
 ////////////////////////////////////////////////////////////////////////////////
 
-template<typename V = double, class PC = std::vector<V>>
-struct DefaultPairwiseDistance : public PairwiseDistanceBase<DefaultPairwiseDistance<V>, PC, V> {
-  typedef PC ParticleCollection;
-  typedef V Value;
+template<typename Value>
+struct DefaultPairwiseDistance : public PairwiseDistanceBase<DefaultPairwiseDistance<Value>,
+                                                             std::vector<Value>,
+                                                             Value> {
 
-  DefaultPairwiseDistance(Value R, Value beta) :
-    PairwiseDistanceBase<DefaultPairwiseDistance<V>, PC, V>(R, beta)
-  {}
+  typedef Value value_type;
+  typedef std::vector<value_type> ParticleCollection;
+  typedef typename ParticleCollection::const_iterator ParticleIterator;
+
+  using PairwiseDistanceBase<DefaultPairwiseDistance<value_type>, ParticleCollection, value_type>::PairwiseDistanceBase;
 
   static std::string name() { return "DefaultPairwiseDistance (none)"; }
+  static value_type plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
+    return -1;
+  }
+
 
 }; // DefaultPairwiseDistance
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // EuclideanArrayDistance - euclidean distance between two particle arrays
 ////////////////////////////////////////////////////////////////////////////////
 
-template<typename V = double>
-struct EuclideanArrayDistance : public PairwiseDistanceBase<EuclideanArrayDistance<V>, ArrayParticleCollection<V>, V> {
-  typedef ArrayParticleCollection<V> ParticleCollection;
+template<typename Value>
+struct EuclideanArrayDistance : public PairwiseDistanceBase<EuclideanArrayDistance<Value>,
+                                                            ArrayParticleCollection<Value>,
+                                                            Value> {
+
+  typedef Value value_type;
+  typedef ArrayParticleCollection<value_type> ParticleCollection;
   typedef typename ParticleCollection::value_type Particle;
   typedef typename ParticleCollection::const_iterator ParticleIterator;
-  typedef V Value;
 
-  EuclideanArrayDistance(Value R, Value beta) :
-    PairwiseDistanceBase<EuclideanArrayDistance<V>, ParticleCollection, V>(R, beta)
-  {}
+  using PairwiseDistanceBase<EuclideanArrayDistance<value_type>, ParticleCollection, value_type>::PairwiseDistanceBase;
 
   static std::string name() { return "EuclideanArrayDistance"; }
-  static Value plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
+  static value_type plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
     if (p0.stride() == 2) {
-      Value dx((*p0)[0] - (*p1)[0]), dy((*p0)[1] - (*p1)[1]);
+      value_type dx((*p0)[0] - (*p1)[0]), dy((*p0)[1] - (*p1)[1]);
       return dx*dx + dy*dy;
     }
     else {
-      Value d(0);
+      value_type d(0);
       for (int i = 0; i < p0.stride(); i++) {
-        Value dx((*p0)[i] - (*p1)[i]);
+        value_type dx((*p0)[i] - (*p1)[i]);
         d += dx*dx;
       }
       return d;
@@ -199,57 +210,65 @@ struct EuclideanArrayDistance : public PairwiseDistanceBase<EuclideanArrayDistan
   }
 }; // EuclideanArrayDistance
 
+
 ////////////////////////////////////////////////////////////////////////////////
 // YPhiArrayDistance - euclidean distance in (y,phi) plane, accounting for periodicity
 ////////////////////////////////////////////////////////////////////////////////
 
-template<typename V = double>
-struct YPhiArrayDistance : public PairwiseDistanceBase<YPhiArrayDistance<V>, YPhiArrayParticleCollection<V>, V> {
-  typedef YPhiArrayParticleCollection<V> ParticleCollection;
+template<typename Value>
+struct YPhiArrayDistance : public PairwiseDistanceBase<YPhiArrayDistance<Value>,
+                                                       Array2ParticleCollection<Value>,
+                                                       Value> {
+
+  typedef Value value_type;
+  typedef Array2ParticleCollection<value_type> ParticleCollection;
+
   typedef typename ParticleCollection::value_type Particle;
   typedef typename ParticleCollection::const_iterator ParticleIterator;
-  typedef V Value;
 
-  YPhiArrayDistance(Value R, Value beta) :
-    PairwiseDistanceBase<YPhiArrayDistance<V>, ParticleCollection, V>(R, beta)
-  {}
+  using PairwiseDistanceBase<YPhiArrayDistance<value_type>, ParticleCollection, value_type>::PairwiseDistanceBase;
 
   static std::string name() { return "YPhiArrayDistance"; }
-  static Value plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
-    Value dx((*p0)[0] - (*p1)[0]), dy(std::fabs((*p0)[1] - (*p1)[1]));
+  static value_type plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
+    value_type dx((*p0)[0] - (*p1)[0]), dy(std::fabs((*p0)[1] - (*p1)[1]));
     if (dy > PI) dy = TWOPI - dy;
     return dx*dx + dy*dy;
   }
 }; // EuclideanArrayDistance
 
+
 ////////////////////////////////////////////////////////////////////////////////
 // GenericDistance - base class for a pairwise distance between two "particles"
 ////////////////////////////////////////////////////////////////////////////////
 
-template<class P>
-struct GenericDistance : public PairwiseDistanceBase<GenericDistance<P>, std::vector<P>, typename P::Value> {
-  typedef P Particle;
-  typedef typename Particle::Value Value;
+template<class _Particle>
+struct GenericDistance : public PairwiseDistanceBase<GenericDistance<_Particle>,
+                                                     std::vector<_Particle>,
+                                                     typename _Particle::value_type> {
 
-  GenericDistance(Value R, Value beta) :
-    PairwiseDistanceBase<GenericDistance, std::vector<P>, Value>(R, beta)
-  {}
+  typedef _Particle Particle;
+  typedef typename Particle::value_type value_type;
+
+  using PairwiseDistanceBase<GenericDistance<Particle>,
+                             std::vector<Particle>,
+                             typename Particle::value_type>::PairwiseDistanceBase;
 
   static std::string name() { return Particle::distance_name(); }
-  static Value plain_distance(const Particle & p0, const Particle & p1) {
+  static value_type plain_distance(const Particle & p0, const Particle & p1) {
     return Particle::plain_distance(p0, p1);
   }
 }; // GenericDistance
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // EuclideanDistance - between double-precision euclidean particles
 ////////////////////////////////////////////////////////////////////////////////
 
 // euclidean distances with double-precision particles
-using EuclideanDistance2D = GenericDistance<EuclideanParticle2D<>>;
-using EuclideanDistance3D = GenericDistance<EuclideanParticle3D<>>;
+using EuclideanDistance2D = GenericDistance<EuclideanParticle2D<default_value_type>>;
+using EuclideanDistance3D = GenericDistance<EuclideanParticle3D<default_value_type>>;
 template<unsigned N>
-using EuclideanDistanceND = GenericDistance<EuclideanParticleND<N>>;
+using EuclideanDistanceND = GenericDistance<EuclideanParticleND<N, default_value_type>>;
 
 END_EMD_NAMESPACE
 

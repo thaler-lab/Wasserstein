@@ -130,8 +130,8 @@ SOFTWARE.
  * |_____/|_____|_|  |_|_|    |______|______/_/ \_\
  */
 
-#ifndef LEMON_NETWORK_SIMPLEX_HH
-#define LEMON_NETWORK_SIMPLEX_HH
+#ifndef WASSERSTEIN_NETWORK_SIMPLEX_HH
+#define WASSERSTEIN_NETWORK_SIMPLEX_HH
 
 // C++ standard library
 #include <cmath>
@@ -141,15 +141,13 @@ SOFTWARE.
 
 #include "EMDUtils.hh"
 
-namespace lemon {
-
-typedef EMDNAMESPACE::EMDStatus NetworkSimplexStatus;
-
-using EMDNAMESPACE::free_vector;
+BEGIN_EMD_NAMESPACE
 
 //-----------------------------------------------------------------------------
 // NetworkSimplex
 //-----------------------------------------------------------------------------
+
+namespace {
 
 // main parameters of block search pivot rule, consider changing these to check for speed
 const double BLOCK_SIZE_FACTOR = 1.0;
@@ -157,16 +155,21 @@ const int MIN_BLOCK_SIZE = 10;
 const int INVALID = -1;
 const double INVALID_COST_VALUE = -1.0;
 
+}
+
 // templated NetworkSimplex class
+// - Value: floating point type that is used for computations
 // - Node: signed integer type that indexes particles
 // - Arc: signed integer type that (roughly) can hold the product of two Nodes
-// - Value: floating point type that is used for computations
 // - Bool: boolean type (often not "bool" to avoid std::vector<bool> being slow)
-template<typename N = int, typename A = long long, typename V = double, typename B = char>
+template<typename V, typename A, typename N, typename B>
 class NetworkSimplex {
 public:
 
-  // datatype typedefs
+  // EMD-style typedefs
+  typedef V value_type;
+
+  // old-style typedefs
   typedef N Node;
   typedef A Arc;
   typedef V Value;
@@ -177,6 +180,7 @@ public:
                 "Node should be a signed integral type.");
   static_assert(std::is_integral<Arc>::value && std::is_signed<Arc>::value,
                 "Arc should be a signed integral type.");
+  static_assert(sizeof(Arc) >= sizeof(Node), "Arc type should be bigger-than-or-equal-to Node type");
   static_assert(std::is_floating_point<Value>::value, "Value should be a floating point type.");
   static_assert(std::is_integral<Bool>::value, "Bool should be an integral type.");
 
@@ -216,13 +220,13 @@ public:
   ValueVector & dists() { return _costs; }
 
   // run computation given init, weights, dists
-  NetworkSimplexStatus compute(std::size_t n0, std::size_t n1) {
+  EMDStatus compute(std::size_t n0, std::size_t n1) {
 
     construct_graph(n0, n1);
-    NetworkSimplexStatus status(run());
+    EMDStatus status(run());
 
     // store total cost if network simplex had success
-    if (status == NetworkSimplexStatus::Success) {
+    if (status == EMDStatus::Success) {
       total_cost_ = 0;
       for (Arc a = 0; a < arcNum(); a++)
         total_cost_ += _flows[a] * _costs[a];
@@ -372,7 +376,7 @@ private:
   // Initialization methods, called from `run`
   //---------------------------------------------------------------------------
 
-  NetworkSimplexStatus run() {
+  EMDStatus run() {
 
     // reset vectors that are sized according to number of nodes
     Node all_node_num(nodeNum() + 1); // includes extra 1 for root node
@@ -404,7 +408,7 @@ private:
     }
 
     // check for empty problem
-    if (nodeNum() == 0) return NetworkSimplexStatus::Empty;
+    if (nodeNum() == 0) return EMDStatus::Empty;
 
     // check supply total and make secondary supplies negative
     _sum_supplies = 0;
@@ -414,7 +418,7 @@ private:
       _sum_supplies += (_supplies[i] *= -1);
     if (std::fabs(_sum_supplies) > epsilon_large_) {
       std::cerr << "sum_supplies " << _sum_supplies << '\n';
-      return NetworkSimplexStatus::SupplyMismatch;
+      return EMDStatus::SupplyMismatch;
     }
     _sum_supplies = 0;
 
@@ -471,17 +475,17 @@ private:
     _block_size = std::max(Node(BLOCK_SIZE_FACTOR * std::sqrt(Value(arcNum()))), MIN_BLOCK_SIZE);
 
     // perform heuristic initial pivots
-    if (!initialPivots()) return NetworkSimplexStatus::Unbounded;
+    if (!initialPivots()) return EMDStatus::Unbounded;
 
     // Execute the Network Simplex algorithm
     iter_ = 0;
     while (findEnteringArc()) {
       if (iter_++ >= n_iter_max_)
-        return NetworkSimplexStatus::MaxIterReached;
+        return EMDStatus::MaxIterReached;
 
       findJoinNode();
       bool change(findLeavingArc());
-      if (delta >= MAX) return NetworkSimplexStatus::Unbounded;
+      if (delta >= MAX) return EMDStatus::Unbounded;
       changeFlow(change);
       if (change) {
         updateTreeStructure();
@@ -494,13 +498,13 @@ private:
       if (_flows[e] != 0) {
         if (std::fabs(_flows[e]) > epsilon_large_) {
           std::cerr << "Bad flow: " << _flows[e] << '\n';
-          return NetworkSimplexStatus::Infeasible;
+          return EMDStatus::Infeasible;
         }
         else _flows[e] = 0;
       }
     }
 
-    return NetworkSimplexStatus::Success;
+    return EMDStatus::Success;
   }
 
   //---------------------------------------------------------------------------
@@ -771,6 +775,9 @@ private:
 
 }; // NetworkSimplex
 
-} // namespace lemon
+template<typename V>
+using DefaultNetworkSimplex = NetworkSimplex<V, index_type, int, char>;
 
-#endif // LEMON_NETWORK_SIMPLEX_HH
+END_EMD_NAMESPACE
+
+#endif // WASSERSTEIN_NETWORK_SIMPLEX_HH

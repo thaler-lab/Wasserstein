@@ -47,23 +47,25 @@
 
 BEGIN_EMD_NAMESPACE
 
+
 ////////////////////////////////////////////////////////////////////////////////
 // EventBase - "events" constitute a weighted collection of "particles"
 ////////////////////////////////////////////////////////////////////////////////
 
 template<class ParticleCollection, class WeightCollection>
 struct EventBase {
-  typedef typename WeightCollection::value_type Value;
+
+  typedef typename WeightCollection::value_type value_type;
 
   // constructor from particle collection only
-  EventBase(const ParticleCollection & particles, Value event_weight = 1) :
+  EventBase(const ParticleCollection & particles, value_type event_weight = 1) :
     particles_(particles), total_weight_(0), event_weight_(event_weight), has_weights_(false)
   {}
 
   // constructor from particle collection and weight collection
   EventBase(const ParticleCollection & particles,
             const WeightCollection & weights,
-            Value event_weight = 1) :
+            value_type event_weight = 1) :
     EventBase(particles, event_weight)
   {
     weights_ = weights;
@@ -74,7 +76,7 @@ struct EventBase {
   virtual ~EventBase() {}
 
   // access event_weight
-  Value event_weight() const { return event_weight_; }
+  value_type event_weight() const { return event_weight_; }
 
   // access particles
   ParticleCollection & particles() { return particles_; }
@@ -83,8 +85,8 @@ struct EventBase {
   // access weights
   WeightCollection & weights() { return weights_; }
   const WeightCollection & weights() const { return weights_; }
-  Value & total_weight() { return total_weight_; }
-  const Value & total_weight() const { return total_weight_; }
+  value_type & total_weight() { return total_weight_; }
+  const value_type & total_weight() const { return total_weight_; }
   bool has_weights() const { return has_weights_; }
 
   // overloaded by FastJetEvent
@@ -96,8 +98,8 @@ struct EventBase {
       throw std::logic_error("Weights must be set prior to calling normalize_weights.");
 
     // normalize each weight
-    Value norm_total(0);
-    for (Value & w : weights_)
+    value_type norm_total(0);
+    for (value_type & w : weights_)
       norm_total += (w /= total_weight_);
     total_weight_ = norm_total;
   }
@@ -106,28 +108,32 @@ protected:
 
   ParticleCollection particles_;
   WeightCollection weights_;
-  Value total_weight_, event_weight_;
+  value_type total_weight_, event_weight_;
   bool has_weights_;
 
 }; // EventBase
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // GenericEvent - an event constructed from a vector of "particles"
 ////////////////////////////////////////////////////////////////////////////////
 
-template<class P>
-struct GenericEvent : public EventBase<std::vector<P>, std::vector<typename P::Value>> {
-  typedef P Particle;
+template<class _Particle>
+struct GenericEvent : public EventBase<std::vector<_Particle>,
+                                       std::vector<typename _Particle::value_type>> {
+
+  typedef _Particle Particle;
+  typedef typename Particle::value_type value_type;
   typedef std::vector<Particle> ParticleCollection;
-  typedef std::vector<typename Particle::Value> WeightCollection;
+  typedef std::vector<value_type> WeightCollection;
 
   GenericEvent() {}
-  GenericEvent(const ParticleCollection & particles, Value event_weight = 1) :
+  GenericEvent(const ParticleCollection & particles, value_type event_weight = 1) :
     EventBase<ParticleCollection, WeightCollection>(particles, event_weight)
   {
     // weights are assumed to be contained in the particles as public methods
     this->weights_.reserve(particles.size());
-    for (const P & particle : particles) {
+    for (const Particle & particle : particles) {
       this->total_weight_ += particle.weight();
       this->weights_.push_back(particle.weight());
     }
@@ -136,31 +142,34 @@ struct GenericEvent : public EventBase<std::vector<P>, std::vector<typename P::V
 
   static std::string name() {
     std::ostringstream oss;
-    oss << "GenericEvent<" << P::name() << '>';
+    oss << "GenericEvent<" << Particle::name() << '>';
     return oss.str();
   }
 
 }; // GenericEvent
 
+
 ////////////////////////////////////////////////////////////////////////////////
 // EuclideanEvent - consists of double-precision euclidean particles
 ////////////////////////////////////////////////////////////////////////////////
 
-using EuclideanEvent2D = GenericEvent<EuclideanParticle2D<>>;
-using EuclideanEvent3D = GenericEvent<EuclideanParticle3D<>>;
+using EuclideanEvent2D = GenericEvent<EuclideanParticle2D<default_value_type>>;
+using EuclideanEvent3D = GenericEvent<EuclideanParticle3D<default_value_type>>;
 template<unsigned N>
-using EuclideanEventND = GenericEvent<EuclideanParticleND<N>>;
+using EuclideanEventND = GenericEvent<EuclideanParticleND<N, default_value_type>>;
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // ArrayWeightCollection - implements a "smart" 1D array from a plain array
 ////////////////////////////////////////////////////////////////////////////////
 
-template<typename V>
+template<typename Value>
 struct ArrayWeightCollection {
-  typedef V value_type;
+
+  typedef Value value_type;
 
   // contructor, int is used for compatibility with SWIG's numpy.i
-  ArrayWeightCollection(V * array, int size) : array_(array), size_(size), delete_(false) {}
+  ArrayWeightCollection(value_type * array, index_type size) : array_(array), size_(size), delete_(false) {}
   ArrayWeightCollection() : ArrayWeightCollection(nullptr, 0) {}
 
   ~ArrayWeightCollection() {
@@ -168,11 +177,11 @@ struct ArrayWeightCollection {
       delete[] array_;
   }
 
-  int size() const { return size_; }
-  V * begin() { return array_; }
-  V * end() { return array_ + size_; }
-  const V * begin() const { return array_; }
-  const V * end() const { return array_ + size_; }
+  index_type size() const { return size_; }
+  value_type * begin() { return array_; }
+  value_type * end() { return array_ + size_; }
+  const value_type * begin() const { return array_; }
+  const value_type * end() const { return array_ + size_; }
 
   // copy internal memory
   void copy() {
@@ -182,130 +191,132 @@ struct ArrayWeightCollection {
 
     // get new chunk of memory
     //V * new_array((V*) malloc(nbytes));
-    V * new_array(new V[size()]);
+    value_type * new_array(new value_type[size()]);
 
     // copy old array into new one
-    memcpy(new_array, array_, std::size_t(size())*sizeof(V));
+    memcpy(new_array, array_, std::size_t(size())*sizeof(value_type));
     array_ = new_array;
   }
 
 private:
-  V * array_;
-  int size_;
+  value_type * array_;
+  index_type size_;
   bool delete_;
 
 }; // ArrayWeightCollection
 
+
 ////////////////////////////////////////////////////////////////////////////////
-// ArrayParticleCollection - implements a "smart" 2D array from a plain array
+// ArrayParticleCollectionBase - implements a "smart" 2D array from a plain array
 ////////////////////////////////////////////////////////////////////////////////
 
-template<typename V>
+template<typename Value>
 struct ArrayParticleCollection {
+protected:
+
+  Value * array_;
+  index_type size_, stride_;
+
+  Value * array() const { return array_; }
+  index_type stride() const { return stride_; }
 
   template<typename T>
   class templated_iterator {
+  protected:
     T * ptr_;
-    int stride_;
+    index_type stride_;
 
   public:
-    templated_iterator(T * ptr, int stride) : ptr_(ptr), stride_(stride) {}
+    templated_iterator(T * ptr, index_type stride) : ptr_(ptr), stride_(stride) {}
     templated_iterator<T> & operator++() {
       ptr_ += stride_;
       return *this;
     }
     T * operator*() const { return ptr_; }
     bool operator!=(const templated_iterator & other) const { return ptr_ != other.ptr_; }
-    int stride() const { return stride_; }
+    index_type stride() const { return stride_; }
   };
 
-  using const_iterator = templated_iterator<const V>;
-  using value_type = const_iterator;
+public:
 
-  // contructor, int is used for compatibility with SWIG's numpy.i
-  ArrayParticleCollection(V * array, int size, int stride) :
+  ArrayParticleCollection() : ArrayParticleCollection(nullptr, 0, 0) {}
+  ArrayParticleCollection(Value * array, index_type size, index_type stride) :
     array_(array), size_(size), stride_(stride)
   {}
-  ArrayParticleCollection() : ArrayParticleCollection(nullptr, 0, 0) {}
 
-  int size() const { return size_; }
-  int stride() const { return stride_; }
-  const_iterator begin() const { return const_iterator(array_, stride_); }
-  const_iterator end() const { return const_iterator(array_ + size_*stride_, stride_); }
+  index_type size() const { return size_; }
+  static index_type stride_static() { return -1; }
 
-private:
-  V * array_;
-  int size_, stride_;
+  using const_iterator = templated_iterator<const Value>;
+  typedef const_iterator value_type;
+
+  const_iterator begin() const { return const_iterator(array(), stride()); }
+  const_iterator end() const { return const_iterator(array() + size()*stride(), stride()); }
 
 }; // ArrayParticleCollection
 
+
 ////////////////////////////////////////////////////////////////////////////////
-// YPhiArrayParticleCollection - implements a "smart" 2D array from a plain array
+// Array2ParticleCollection - implements a "smart" 2D array from a plain array
 ////////////////////////////////////////////////////////////////////////////////
 
-template<typename V>
-struct YPhiArrayParticleCollection {
+template<typename Value>
+struct Array2ParticleCollection : public ArrayParticleCollection<Value> {
+private:
 
   template<typename T>
-  class templated_iterator {
-    T * ptr_;
-
+  class templated_iterator : public ArrayParticleCollection<Value>::template templated_iterator<T> {
   public:
-    templated_iterator(T * ptr) : ptr_(ptr) {}
+    templated_iterator(T * ptr) : ArrayParticleCollection<Value>::template templated_iterator<T>(ptr, 2) {}
     templated_iterator<T> & operator++() {
-      ptr_ += 2;
+      this->ptr_ += 2;
       return *this;
     }
-    T * operator*() const { return ptr_; }
-    bool operator!=(const templated_iterator & other) const { return ptr_ != other.ptr_; }
-    int stride() const { return 2; }
+    index_type stride() const { return 2; }
   };
 
-  using const_iterator = templated_iterator<const V>;
-  using value_type = const_iterator;
+public:
 
-  // contructor, int is used for compatibility with SWIG's numpy.i
-  YPhiArrayParticleCollection(V * array, int size) :
-    array_(array), size_(size)
-  {}
-  YPhiArrayParticleCollection() : YPhiArrayParticleCollection(nullptr, 0) {}
+  using ArrayParticleCollection<Value>::ArrayParticleCollection;
+  using const_iterator = templated_iterator<const Value>;
+  typedef const_iterator value_type;
 
-  int size() const { return size_; }
-  int stride() const { return 2; }
-  const_iterator begin() const { return const_iterator(array_); }
-  const_iterator end() const { return const_iterator(array_ + 2*size_); }
+  const_iterator begin() const { return const_iterator(this->array()); }
+  const_iterator end() const { return const_iterator(this->array() + 2*this->size()); }
+  static index_type stride_static() { return 2; }
 
-private:
-  V * array_;
-  int size_;
+}; // Array2ParticleCollection
 
-}; // ArrayParticleCollection
 
 ////////////////////////////////////////////////////////////////////////////////
 // ArrayEvent - an event where the weights and particle are contiguous arrays
 ////////////////////////////////////////////////////////////////////////////////
 
-template<typename V = double>
-struct ArrayEvent : public EventBase<ArrayParticleCollection<V>, ArrayWeightCollection<V>> {
-  typedef ArrayParticleCollection<V> ParticleCollection;
-  typedef ArrayWeightCollection<V> WeightCollection;
+template<typename Value, template<typename> class _ParticleCollection>
+struct ArrayEvent : public EventBase<_ParticleCollection<Value>, ArrayWeightCollection<Value>> {
+
+  typedef Value value_type;
+  typedef _ParticleCollection<Value> ParticleCollection;
+  
+  typedef ArrayWeightCollection<value_type> WeightCollection;
   typedef EventBase<ParticleCollection, WeightCollection> Base;
 
-  static_assert(std::is_floating_point<V>::value, "ArrayEvent template parameter must be floating point.");
-
   // full constructor
-  ArrayEvent(V * particle_array, V * weight_array, int size, int stride, Value event_weight = 1) :
+  ArrayEvent(value_type * particle_array, value_type * weight_array,
+             index_type size, index_type stride,
+             value_type event_weight = 1) :
     Base(ParticleCollection(particle_array, size, stride),
          WeightCollection(weight_array, size),
          event_weight)
   {
     // set total weight
-    for (int i = 0; i < size; i++)
+    for (index_type i = 0; i < size; i++)
       this->total_weight_ += weight_array[i];
   }
 
   // constructor from single argument (for use with Python)
-  ArrayEvent(const std::tuple<V*, V*, int, int> & tup, Value event_weight = 1) :
+  ArrayEvent(const std::tuple<value_type*, value_type*, index_type, index_type> & tup,
+             value_type event_weight = 1) :
     ArrayEvent(std::get<0>(tup), std::get<1>(tup), std::get<2>(tup), std::get<3>(tup), event_weight)
   {}
 
@@ -320,83 +331,50 @@ struct ArrayEvent : public EventBase<ArrayParticleCollection<V>, ArrayWeightColl
 
   static std::string name() {
     std::ostringstream oss;
-    oss << "ArrayEvent<" << sizeof(V) << "-byte float>";
+    oss << "ArrayEvent<" << sizeof(value_type) << "-byte float, stride ";
+    if (std::is_same<ParticleCollection, ArrayParticleCollection<value_type>>::value)
+      oss << "variable>";
+    else
+      oss << ParticleCollection::stride_static() << ">";
+
     return oss.str();
   }
 
 }; // ArrayEvent
 
-////////////////////////////////////////////////////////////////////////////////
-// YPhiArrayEvent - an event where the weights and particle are contiguous arrays
-////////////////////////////////////////////////////////////////////////////////
+template<typename V>
+using DefaultArrayEvent = ArrayEvent<V, ArrayParticleCollection>;
 
-template<typename V = double>
-struct YPhiArrayEvent : public EventBase<YPhiArrayParticleCollection<V>, ArrayWeightCollection<V>> {
-  typedef YPhiArrayParticleCollection<V> ParticleCollection;
-  typedef ArrayWeightCollection<V> WeightCollection;
-  typedef EventBase<ParticleCollection, WeightCollection> Base;
+template<typename V>
+using DefaultArray2Event = ArrayEvent<V, Array2ParticleCollection>;
 
-  static_assert(std::is_floating_point<V>::value, "ArrayEvent template parameter must be floating point.");
-
-  // full constructor
-  YPhiArrayEvent(V * particle_array, V * weight_array, int size, Value event_weight = 1) :
-    Base(ParticleCollection(particle_array, size),
-         WeightCollection(weight_array, size),
-         event_weight)
-  {
-    // set total weight
-    for (int i = 0; i < size; i++)
-      this->total_weight_ += weight_array[i];
-  }
-
-  // constructor from single argument (for use with Python)
-  YPhiArrayEvent(const std::tuple<V*, V*, int> & tup, Value event_weight = 1) :
-    YPhiArrayEvent(std::get<0>(tup), std::get<1>(tup), std::get<2>(tup), event_weight)
-  {}
-
-  // default constructor
-  YPhiArrayEvent() : YPhiArrayEvent(nullptr, nullptr, 0) {}
-
-  // ensure that we don't modify original array
-  void normalize_weights() {
-    this->weights_.copy();
-    Base::normalize_weights();
-  }
-
-  static std::string name() {
-    std::ostringstream oss;
-    oss << "YPhiArrayEvent<" << sizeof(V) << "-byte float>";
-    return oss.str();
-  }
-
-}; // ArrayEvent
 
 ////////////////////////////////////////////////////////////////////////////////
 // VectorEvent - an event where the weights and particle are vectors
 ////////////////////////////////////////////////////////////////////////////////
 
-template<typename V = double>
-struct VectorEvent : public EventBase<std::vector<V>, std::vector<V>> {
-  typedef std::vector<V> ParticleCollection;
-  typedef std::vector<V> WeightCollection;
+template<typename Value>
+struct VectorEvent : public EventBase<std::vector<Value>, std::vector<Value>> {
+
+  typedef Value value_type;
+  typedef std::vector<value_type> ParticleCollection;
+  typedef std::vector<value_type> WeightCollection;
   typedef EventBase<ParticleCollection, WeightCollection> Base;
 
-  static_assert(std::is_floating_point<V>::value, "VectorEvent template parameter must be floating point.");
-
   // constructor with a single argument
-  VectorEvent(const std::pair<ParticleCollection, WeightCollection> && proto_event, Value event_weight = 1) :
+  VectorEvent(const std::pair<ParticleCollection, WeightCollection> && proto_event, value_type event_weight = 1) :
     VectorEvent(proto_event.first, proto_event.second, event_weight)
   {}
 
   // constructor from vectors of particles and weights
-  VectorEvent(const ParticleCollection & particles, const WeightCollection & weights, Value event_weight = 1) :
+  VectorEvent(const ParticleCollection & particles, const WeightCollection & weights, value_type event_weight = 1) :
     Base(particles, weights, event_weight)
   {
     if (particles.size() % weights.size() != 0)
       throw std::invalid_argument("particles.size() must be cleanly divisible by weights.size()");
 
     // set total weight
-    for (V weight : this->weights_)
+    for (value_type weight : this->weights_)
       this->total_weight_ += weight;
   }
 
@@ -410,7 +388,7 @@ struct VectorEvent : public EventBase<std::vector<V>, std::vector<V>> {
 
   static std::string name() {
     std::ostringstream oss;
-    oss << "VectorEvent<" << sizeof(V) << "-byte float>";
+    oss << "VectorEvent<" << sizeof(value_type) << "-byte float>";
     return oss.str();
   }
 

@@ -64,13 +64,19 @@
 #define WASSERSTEIN_FASTJET
 #endif
 
-BEGIN_EMD_NAMESPACE
-
-// set these globally so SWIG knows how to parse them
-#ifdef SWIG
-typedef double Value;
-typedef std::vector<double> ValueVector;
+// parse default types
+#ifndef WASSERSTEIN_DEFAULT_VALUE_TYPE
+#define WASSERSTEIN_DEFAULT_VALUE_TYPE double
 #endif
+
+#ifndef WASSERSTEIN_INDEX_TYPE
+#define WASSERSTEIN_INDEX_TYPE std::ptrdiff_t
+#endif
+
+using default_value_type = WASSERSTEIN_DEFAULT_VALUE_TYPE;
+using index_type = WASSERSTEIN_INDEX_TYPE;
+
+BEGIN_EMD_NAMESPACE
 
 // enum with possible return statuses from the NetworkSimplex solver
 enum class EMDStatus { 
@@ -90,13 +96,6 @@ enum class EMDPairsStorage { Full, FullSymmetric, FlattenedSymmetric, External }
 
 const double PI = 3.14159265358979323846;
 const double TWOPI = 2*PI;
-
-inline double phi_fix(double phi, double ref_phi) {
-  double diff(phi - ref_phi);
-  if (diff > PI) phi -= TWOPI;
-  else if (diff < -PI) phi += TWOPI;
-  return phi; 
-}
 
 // function that raises appropriate error from a status code
 inline void check_emd_status(EMDStatus status) {
@@ -128,25 +127,20 @@ void free_vector(std::vector<T> & vec) {
   std::vector<T>().swap(vec);
 }
 
+
 ////////////////////////////////////////////////////////////////////////////////
 // EMDBase - base class to reduce wrapper code for simple EMD access functions
 ////////////////////////////////////////////////////////////////////////////////
 
-template<typename V>
+template<typename Value>
 class EMDBase {
 protected:
-
-  // these have been defined globally if in SWIG
-  #ifndef SWIG
-  typedef V Value;
-  typedef std::vector<Value> ValueVector;
-  #endif
 
   // boolean options
   bool norm_, do_timing_, external_dists_;
 
   // number of particles
-  std::ptrdiff_t n0_, n1_;
+  index_type n0_, n1_;
   ExtraParticle extra_;
 
   // emd value and status
@@ -158,9 +152,6 @@ protected:
   double duration_;
 
 public:
-
-  // always defined, so that external classes can access the value
-  typedef Value ValuePublic;
 
   // constructor from two boolean options
   EMDBase(bool norm = false, bool do_timing = false, bool external_dists = false) :
@@ -179,7 +170,7 @@ public:
 
   // the norm setting
   bool norm() const { return norm_; }
-  void set_norm(bool nrm) { norm_ = nrm; } 
+  void set_norm(bool norm) { norm_ = norm; } 
 
   // timing setting
   bool do_timing() const { return do_timing_; }
@@ -190,8 +181,8 @@ public:
   void set_external_dists(bool exdists) { external_dists_ = exdists; }
 
   // number of particles in each event (after possible addition of extra particles)
-  std::ptrdiff_t n0() const { return n0_; }
-  std::ptrdiff_t n1() const { return n1_; }
+  index_type n0() const { return n0_; }
+  index_type n1() const { return n1_; }
 
   // which event, 0 or 1, got an extra particle (-1 if no event got one)
   ExtraParticle extra() const { return extra_; }
@@ -217,12 +208,15 @@ protected:
 
 }; // EMDBase
 
+
 ////////////////////////////////////////////////////////////////////////////////
 // ExternalEMDHandler - base class for making an emd operation thread-safe
 ////////////////////////////////////////////////////////////////////////////////
 
+template<typename Value>
 class ExternalEMDHandler {
 public:
+
   ExternalEMDHandler() : num_calls_(0) {}
   virtual ~ExternalEMDHandler() {}
 
@@ -230,15 +224,14 @@ public:
   std::size_t num_calls() const { return num_calls_; }
 
   // call external handler on a single emd value
-  void operator()(double emd, double weight = 1) {
+  void operator()(Value emd, Value weight = 1) {
     std::lock_guard<std::mutex> handler_guard(mutex_);
     handle(emd, weight);
     num_calls_++;
   }
 
   // call emd handler on several emds at once (given as a vector)
-  template<typename Value, typename Value2 = Value>
-  void compute(const std::vector<Value> & emds, const std::vector<Value2> & weights = {}) {
+  void compute(const std::vector<Value> & emds, const std::vector<Value> & weights = {}) {
 
     if (emds.size() != weights.size()) {
       if (weights.size() == 0)
@@ -250,21 +243,21 @@ public:
   }
 
   // call emd handler on several emds at once (given as raw pointers)
-  template<typename Value, typename Value2 = Value>
-  void compute(const Value * emds, std::size_t num_emds, const Value2 * weights = nullptr) {
+  void compute(const Value * emds, std::size_t num_emds, const Value * weights = nullptr) {
     std::lock_guard<std::mutex> handler_guard(mutex_);
 
     if (weights == nullptr)
-      for (std::size_t i = 0; i < num_emds; i++, num_calls_++)
+      for (std::size_t i = 0; i < num_emds; i++)
         handle(emds[i], 1);
     else
-      for (std::size_t i = 0; i < num_emds; i++, num_calls_++)
+      for (std::size_t i = 0; i < num_emds; i++)
         handle(emds[i], weights[i]);
+
+    num_calls_ += num_emds;
   }
 
   // here, weights are length nev and emds are length nev(nev-1)/2, given as vectors
-  template<typename Value, typename Value2 = Value>
-  void compute_symmetric(const std::vector<Value> & emds, const std::vector<Value2> & weights = {}) {
+  void compute_symmetric(const std::vector<Value> & emds, const std::vector<Value> & weights = {}) {
 
     if (emds.size() != weights.size()*(weights.size() - 1)/2) {
       if (weights.size() == 0)
@@ -276,43 +269,46 @@ public:
   }
 
   // here, weights are length nev and emds are length nev(nev-1)/2, given as raw pointers
-  template<typename Value, typename Value2 = Value>
-  void compute_symmetric(const Value * emds, std::size_t nev, const Value2 * weights = nullptr) {
+  void compute_symmetric(const Value * emds, std::size_t nev, const Value * weights = nullptr) {
     if (weights == nullptr)
       compute(emds, nev*(nev - 1)/2);
 
-    std::lock_guard<std::mutex> handler_guard(mutex_);
-
-    for (std::size_t i = 0, k = 0; i < nev; i++) {
-      Value2 weight_i(weights[i]);
-      for (std::size_t j = i + 1; j < nev; j++, k++, num_calls_++)
-        handle(emds[k], weight_i * weights[j]);
+    else {
+      std::lock_guard<std::mutex> handler_guard(mutex_);
+      for (std::size_t i = 0, k = 0; i < nev; i++) {
+        Value weight_i(weights[i]);
+        for (std::size_t j = i + 1; j < nev; j++, k++)
+          handle(emds[k], weight_i * weights[j]);
+      }
+      num_calls_ += nev*(nev - 1)/2;
     }
   }
 
 protected:
-  virtual void handle(double, double) = 0; 
+
+  virtual void handle(Value, Value) = 0; 
 
 private:
+
   std::mutex mutex_;
   std::size_t num_calls_;
 
 }; // ExternalEMDHandler
 
+
 ////////////////////////////////////////////////////////////////////////////////
 // EuclideanParticles - structs that work with the euclidean pairwise distance
 ////////////////////////////////////////////////////////////////////////////////
 
-template<unsigned N, typename V = double>
+template<unsigned N, typename Value>
 struct EuclideanParticleND {
-  typedef V Value;
+
+  typedef Value value_type;
   typedef std::array<Value, N> Coords;
   typedef EuclideanParticleND<N, Value> Self;
 
-  static_assert(std::is_floating_point<V>::value, "Template parameter must be floating point.");
-
   // constructor from weight and coord array
-  EuclideanParticleND(Value weight, const std::array<Value, N> & xs) : weight_(weight), xs_(xs) {}
+  EuclideanParticleND(Value weight, const Coords & xs) : weight_(weight), xs_(xs) {}
 
   Value weight() const { return weight_; }
   Coords & coords() { return xs_; }
@@ -329,7 +325,7 @@ struct EuclideanParticleND {
 
   static std::string name() {
     std::ostringstream oss;
-    oss << "EuclideanParticle" << N << "D<" << sizeof(V) << "-byte float>";
+    oss << "EuclideanParticle" << N << "D<" << sizeof(Value) << "-byte float>";
     return oss.str();
   }
   static std::string distance_name() {
@@ -346,16 +342,19 @@ protected:
 
 }; // EuclideanParticleND
 
-template<typename V = double>
-struct EuclideanParticle2D : public EuclideanParticleND<2, V> {
-  typedef typename EuclideanParticleND<2, V>::Value Value;
+
+template<typename Value>
+struct EuclideanParticle2D : public EuclideanParticleND<2, Value> {
+
+  typedef Value value_type;
+  typedef EuclideanParticleND<2, Value> Base;
   typedef EuclideanParticle2D<Value> Self;
 
   // constructor from weight, x, y
   EuclideanParticle2D(Value weight, Value x, Value y) :
-    EuclideanParticleND<2>(weight, {x, y}) {}
+    Base(weight, {x, y}) {}
   EuclideanParticle2D(Value weight, const std::array<Value, 2> & xs) :
-    EuclideanParticleND<2>(weight, xs) {}
+    Base(weight, xs) {}
 
   // overload this to avoid for loop
   static Value plain_distance(const Self & p0, const Self & p1) {
@@ -365,16 +364,19 @@ struct EuclideanParticle2D : public EuclideanParticleND<2, V> {
 
 }; // EuclideanParticle2D
 
-template<typename V = double>
-struct EuclideanParticle3D : public EuclideanParticleND<3, V> {
-  typedef typename EuclideanParticleND<3, V>::Value Value;
+
+template<typename Value>
+struct EuclideanParticle3D : public EuclideanParticleND<3, Value> {
+
+  typedef Value value_type;
+  typedef EuclideanParticleND<3, Value> Base;
   typedef EuclideanParticle3D<Value> Self;
 
   // constructor from weight, x, y
   EuclideanParticle3D(Value weight, Value x, Value y, Value z) :
-    EuclideanParticleND<3>(weight, {x, y, z}) {}
+    Base(weight, {x, y, z}) {}
   EuclideanParticle3D(Value weight, const std::array<Value, 3> & xs) :
-    EuclideanParticleND<3>(weight, xs) {}
+    Base(weight, xs) {}
 
   // overload this to avoid for loop
   static Value plain_distance(const Self & p0, const Self & p1) {
@@ -384,6 +386,7 @@ struct EuclideanParticle3D : public EuclideanParticleND<3, V> {
 
 }; // EuclideanParticle3D
 
+
 ////////////////////////////////////////////////////////////////////////////////
 // Preprocessor - base class for preprocessing operations
 ////////////////////////////////////////////////////////////////////////////////
@@ -392,6 +395,7 @@ struct EuclideanParticle3D : public EuclideanParticleND<3, V> {
 template<class EMD>
 class Preprocessor {
 public:
+
   typedef typename EMD::Event Event;
 
   virtual ~Preprocessor() {}
@@ -404,20 +408,20 @@ public:
 
 }; // Preprocessor
 
-////////////////////////////////////////////////////////////////////////////////
-// Preprocessor - base class for preprocessing operations
-////////////////////////////////////////////////////////////////////////////////
 
-// forward declare fastjet event
+// forward declare fastjet classes
 class FastJetEventBase;
+class FastJetParticleWeight;
 template<class ParticleWeight> struct FastJetEvent;
+
 
 // center generic event according to weighted centroid
 template<class EMD>
 class CenterWeightedCentroid : public Preprocessor<typename EMD::Self> {
 public:
+
   typedef typename EMD::Event Event;
-  typedef typename EMD::ValuePublic Value;
+  typedef typename EMD::value_type value_type;
   typedef typename Event::ParticleCollection ParticleCollection;
   typedef typename Event::WeightCollection WeightCollection;
 

@@ -135,6 +135,8 @@ def test_emd_flows(num_particles, beta, R, norm):
 
         # check that numpy and vector agree for wasserstein
         wass_flows = wassEMD.flows()
+        print(wass_flows.shape)
+        print(wassEMD.flows_vec())
         wass_flows_vec = np.asarray(wassEMD.flows_vec()).reshape(wass_flows.shape)
         assert np.all(wass_flows == wass_flows_vec)
 

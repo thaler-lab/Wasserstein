@@ -60,13 +60,13 @@
 
 BEGIN_EMD_NAMESPACE
 
-namespace hist {
+namespace {
 
 // gets bin centers from an axis
-template<class Axis>
-inline std::vector<double> get_bin_centers(const Axis & axis) {
+template<typename V, class Axis>
+inline std::vector<V> get_bin_centers(const Axis & axis) {
 
-  std::vector<double> bin_centers_vec(axis.size());
+  std::vector<V> bin_centers_vec(axis.size());
   for (int i = 0; i < axis.size(); i++)
     bin_centers_vec[i] = axis.bin(i).center();
 
@@ -74,12 +74,12 @@ inline std::vector<double> get_bin_centers(const Axis & axis) {
 }
 
 // gets bin edges from an axis
-template<class Axis>
-inline std::vector<double> get_bin_edges(const Axis & axis) {
+template<typename V, class Axis>
+inline std::vector<V> get_bin_edges(const Axis & axis) {
 
-  if (axis.size() == 0) return std::vector<double>();
+  if (axis.size() == 0) return std::vector<V>();
 
-  std::vector<double> bins_vec(axis.size() + 1);
+  std::vector<V> bins_vec(axis.size() + 1);
   bins_vec[0] = axis.bin(0).lower();
   for (int i = 0; i < axis.size(); i++)
     bins_vec[i+1] = axis.bin(i).upper();
@@ -88,18 +88,18 @@ inline std::vector<double> get_bin_edges(const Axis & axis) {
 }
 
 template<class Axis>
-std::size_t get_1d_hist_size(const Axis & axis, bool overflows) {
+int get_1d_hist_size(const Axis & axis, bool overflows) {
   return axis.size() + (overflows ? 2 : 0);
 }
 
-template<class Hist>
-std::pair<std::vector<double>, std::vector<double>>
+template<typename V, class Hist>
+std::pair<std::vector<V>, std::vector<V>>
 get_1d_hist(const Hist & hist, bool overflows) {
 
   // setup containers to hold histogram values
   int size(get_1d_hist_size(hist.template axis<0>(), overflows)),
       nbins(hist.template axis<0>().size());
-  std::vector<double> hist_vals(size), hist_vars(size);
+  std::vector<V> hist_vals(size), hist_vars(size);
 
   for (int i = (overflows ? -1 : 0), a = 0;
        i < nbins + (overflows ? 1 : 0); i++, a++) {
@@ -152,28 +152,33 @@ inline std::string print_1d_hist(const Hist & hist) {
   return oss.str();
 }
 
-} // namespace hist
+} // namespace hist (anonymous)
 
 // use boost::histogram::axis::transform::id if no axis transform desired
-template<class T = boost::histogram::axis::transform::id>
-class Histogram1DHandler : public ExternalEMDHandler {
+template<class _Transform, typename Value>
+class Histogram1DHandler : public ExternalEMDHandler<Value> {
 public:
-  typedef T Transform;
-  typedef boost::histogram::axis::regular<double, Transform> Axis;
 
-protected:
+  typedef _Transform Transform;
+  typedef Value value_type;
+  typedef boost::histogram::axis::regular<Value, Transform> Axis;
 
 #ifndef SWIG_PREPROCESSOR
+
+protected:
   Axis axis_;
+
 public:
   typedef decltype(boost::histogram::make_weighted_histogram(axis_)) Hist;
+
 protected:
   Hist hist_;
+
 #endif
 
 public:
 
-  Histogram1DHandler(unsigned nbins, double axis_min, double axis_max) {
+  Histogram1DHandler(unsigned nbins, Value axis_min, Value axis_max) {
 
     if (nbins == 0)
       throw std::invalid_argument("Number of histogram bins should be a positive integer");
@@ -189,8 +194,8 @@ public:
 
   // access the constructor arguments
   unsigned nbins() const { return axis_.size(); }
-  double axis_min() const { return axis().value(0); }
-  double axis_max() const { return axis().value(axis().size()); }
+  Value axis_min() const { return axis().value(0); }
+  Value axis_max() const { return axis().value(axis().size()); }
 
   std::string description() const {
     std::ostringstream oss;
@@ -198,31 +203,31 @@ public:
         << "  ExternalEMDHandler - " << name() << '\n'
         << "    bins - " << nbins() << '\n'
         << "    range - [" << axis_min() << ", " << axis_max() << ")\n"
-        << "    axis_transform - " << hist::name_transform<Transform>() << '\n';
+        << "    axis_transform - " << name_transform<Transform>() << '\n';
 
     return oss.str();
   }
 
   // SWIG preprocessor complains about these, so hide them
   #ifndef SWIG_PREPROCESSOR
-  Hist & hist() { return hist_; }
-  Axis & axis() { return axis_; }
-  const Hist & hist() const { return hist_; }
-  const Axis & axis() const { return axis_; }
+    Hist & hist() { return hist_; }
+    Axis & axis() { return axis_; }
+    const Hist & hist() const { return hist_; }
+    const Axis & axis() const { return axis_; }
   #endif
 
   // get histogram values and errors
-  std::pair<std::vector<double>, std::vector<double>> hist_vals_vars(bool overflows = true) const {
-    return hist::get_1d_hist(hist_, overflows);
+  std::pair<std::vector<Value>, std::vector<Value>> hist_vals_vars(bool overflows = true) const {
+    return get_1d_hist<Value>(hist_, overflows);
   }
 
   // get bins
-  std::vector<double> bin_centers() const { return hist::get_bin_centers(axis_); }
-  std::vector<double> bin_edges() const { return hist::get_bin_edges(axis_); }
+  std::vector<Value> bin_centers() const { return get_bin_centers<Value>(axis_); }
+  std::vector<Value> bin_edges() const { return get_bin_edges<Value>(axis_); }
 
   // return textual representation of axs/hist
-  std::string print_axis() const { return hist::print_axis(axis_); }
-  std::string print_hist() const { return hist::print_1d_hist(hist_); }
+  std::string print_axis() const { return print_axis(axis_); }
+  std::string print_hist() const { return print_1d_hist(hist_); }
 
 #ifdef BOOST_HISTOGRAM_SERIALIZATION_HPP
   void load(std::istream & is) {
@@ -247,7 +252,7 @@ public:
 
 protected:
 
-  void handle(double emd, double weight) {
+  void handle(Value emd, Value weight) {
     hist_(boost::histogram::weight(weight), emd);
   }
 

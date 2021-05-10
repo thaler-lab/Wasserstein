@@ -62,42 +62,45 @@ BEGIN_EMD_NAMESPACE
 //       can be evaluated
 ////////////////////////////////////////////////////////////////////////////////
 
-template<class E, class PD = DefaultPairwiseDistance<>, class NetworkSimplex = lemon::NetworkSimplex<>>
-#ifdef SWIG
-class EMD : public EMDBase<Value> {
-#else
-class EMD : public EMDBase<typename NetworkSimplex::Value> {
-#endif
+template<typename Value,
+         template<typename> class _Event,
+         template<typename> class _PairwiseDistance = DefaultPairwiseDistance,
+         template<typename> class _NetworkSimplex = DefaultNetworkSimplex>
+class _EMD : public EMDBase<Value> {
 public:
 
-  // allow passing FastJetParticleWeight as first template parameter
+  // typedefs from template parameters
+  typedef Value value_type;
+  typedef _PairwiseDistance<Value> PairwiseDistance;
+  typedef _NetworkSimplex<Value> NetworkSimplex;
+  typedef typename std::conditional<std::is_base_of<FastJetParticleWeight, _Event<Value>>::value,
+                                    FastJetEvent<_Event<Value>>,
+                                    _Event<Value>>::type Event;
+
+  // this is used with fastjet and harmless otherwise
   #ifdef WASSERSTEIN_FASTJET
-  typedef E ParticleWeight;
-  typedef typename std::conditional<std::is_base_of<FastJetParticleWeight, E>::value, FastJetEvent<E>, E>::type Event;
-  #else
-  typedef E Event;
+  typedef typename std::conditional<std::is_base_of<FastJetEventBase, Event>::value,
+                                    typename Event::ParticleWeight,
+                                    E>::type ParticleWeight;
   #endif
 
-  // use Value from base class if not in swig
-  #ifndef SWIG
-  using Value = typename EMDBase<typename NetworkSimplex::Value>::Value;
-  using ValueVector = typename EMDBase<typename NetworkSimplex::Value>::ValueVector;
-  #endif
-
-  typedef PD PairwiseDistance;
+  // event-dependent typedefs
   typedef typename Event::ParticleCollection ParticleCollection;
   typedef typename Event::WeightCollection WeightCollection;
-  typedef EMD<E, PairwiseDistance, NetworkSimplex> Self;
+
+  // typedef base class and self
+  typedef EMDBase<Value> Base;
+  typedef _EMD<Value, _Event, _PairwiseDistance, _NetworkSimplex> Self;
   
   // gives PairwiseEMD access to private members
-  template<class T>
+  template<class T, typename V>
   friend class PairwiseEMD;
 
-  // check that Value has been consistently defined 
-  static_assert(std::is_same<Value, typename WeightCollection::value_type>::value,
-                "WeightCollection and NetworkSimplex should have the same Value type.");
-  static_assert(std::is_same<Value, typename PairwiseDistance::Value>::value,
-                "PairwiseDistance and NetworkSimplex should have the same Value type.");
+  // check that value_type has been consistently defined 
+  static_assert(std::is_same<value_type, typename Event::value_type>::value,
+                "WeightCollection and NetworkSimplex should have the same value_type.");
+  static_assert(std::is_same<value_type, typename PairwiseDistance::value_type>::value,
+                "PairwiseDistance and NetworkSimplex should have the same value_type.");
   static_assert(std::is_same<typename ParticleCollection::value_type,
                              typename PairwiseDistance::Particle>::value,
                 "ParticleCollection and PairwiseDistance should have the same Particle type.");
@@ -105,26 +108,25 @@ public:
   // check for consistent template arguments
   static_assert(std::is_base_of<EventBase<ParticleCollection, WeightCollection>, Event>::value,
                 "First  EMD template parameter should be derived from EventBase<...>.");
-  static_assert(std::is_base_of<PairwiseDistanceBase<PairwiseDistance, ParticleCollection, Value>,
+  static_assert(std::is_base_of<PairwiseDistanceBase<PairwiseDistance, ParticleCollection, value_type>,
                                 PairwiseDistance>::value,
                 "Second EMD template parameter should be derived from PairwiseDistanceBase<...>.");
-  static_assert(std::is_base_of<lemon::NetworkSimplex<typename NetworkSimplex::Node, 
-                                                      typename NetworkSimplex::Arc,
-                                                      Value, typename NetworkSimplex::Bool>,
+  static_assert(std::is_base_of<emd::NetworkSimplex<typename NetworkSimplex::Value,
+                                                    typename NetworkSimplex::Arc, 
+                                                    typename NetworkSimplex::Node,
+                                                    typename NetworkSimplex::Bool>,
                                 NetworkSimplex>::value,
-                "Second EMD template parameter should be derived from PairwiseDistanceBase<...>.");
-
-public:
+                "This EMD template parameter should be derived from NetworkSimplex<...>.");
 
   // constructor with entirely default arguments
-  EMD(Value R = 1, Value beta = 1, bool norm = false,
-      bool do_timing = false, bool external_dists = false,
-      unsigned n_iter_max = 100000,
-      Value epsilon_large_factor = 10000,
-      Value epsilon_small_factor = 1) :
+  _EMD(Value R = 1, Value beta = 1, bool norm = false,
+       bool do_timing = false, bool external_dists = false,
+       unsigned n_iter_max = 100000,
+       Value epsilon_large_factor = 10000,
+       Value epsilon_small_factor = 1) :
 
     // base class initialization
-    EMDBase<Value>(norm, do_timing, external_dists),
+    Base(norm, do_timing, external_dists),
 
     // initialize contained objects
     pairwise_distance_(R, beta),
@@ -138,7 +140,7 @@ public:
   }
 
   // virtual destructor
-  virtual ~EMD() {}
+  virtual ~_EMD() {}
 
   // access/set R and beta parameters
   Value R() const { return pairwise_distance_.R(); }
@@ -148,16 +150,16 @@ public:
 
   // these avoid needing this-> everywhere
   #ifndef SWIG_PREPROCESSOR
-    using EMDBase<Value>::norm;
-    using EMDBase<Value>::external_dists;
-    using EMDBase<Value>::n0;
-    using EMDBase<Value>::n1;
-    using EMDBase<Value>::extra;
-    using EMDBase<Value>::weightdiff;
-    using EMDBase<Value>::scale;
-    using EMDBase<Value>::emd;
-    using EMDBase<Value>::status;
-    using EMDBase<Value>::do_timing;
+    using Base::norm;
+    using Base::external_dists;
+    using Base::n0;
+    using Base::n1;
+    using Base::extra;
+    using Base::weightdiff;
+    using Base::scale;
+    using Base::emd;
+    using Base::status;
+    using Base::do_timing;
   #endif
 
   // set network simplex parameters
@@ -195,7 +197,7 @@ public:
 
   // add preprocessor to internal list
   template<template<class> class P, typename... Args>
-  EMD & preprocess(Args && ... args) {
+  Self & preprocess(Args && ... args) {
     preprocessors_.emplace_back(new P<Self>(std::forward<Args>(args)...));
     return *this;
   }
@@ -285,16 +287,16 @@ public:
   }
 
   // access dists
-  ValueVector dists() const {
-    return ValueVector(network_simplex_.dists().begin(),
+  std::vector<Value> dists() const {
+    return std::vector<Value>(network_simplex_.dists().begin(),
                        network_simplex_.dists().begin() + n0()*n1());
   }
 
   // returns all flows 
-  ValueVector flows() const {
+  std::vector<Value> flows() const {
 
     // copy flows in the valid range
-    ValueVector unscaled_flows(network_simplex_.flows().begin(), 
+    std::vector<Value> unscaled_flows(network_simplex_.flows().begin(), 
                                network_simplex_.flows().begin() + n0()*n1());
     // unscale all values
     for (Value & f: unscaled_flows)
@@ -304,7 +306,7 @@ public:
   }
 
   // emd flow values between particle i in event0 and particle j in event1
-  Value flow(std::ptrdiff_t i, std::ptrdiff_t j) const {
+  Value flow(index_type i, index_type j) const {
 
     // allow for negative indices
     if (i < 0) i += n0();
@@ -323,13 +325,13 @@ public:
   }
 
   // access ground dists in network simplex directly
-  ValueVector & ground_dists() { return network_simplex_.dists(); }
-  const ValueVector & ground_dists() const { return network_simplex_.dists(); }
+  std::vector<Value> & ground_dists() { return network_simplex_.dists(); }
+  const std::vector<Value> & ground_dists() const { return network_simplex_.dists(); }
 
 private:
 
   // set weights of network simplex
-  ValueVector & weights() { return network_simplex_.weights(); }
+  std::vector<Value> & weights() { return network_simplex_.weights(); }
 
   // applies preprocessors to an event
   Event & preprocess(Event & event) const {
@@ -370,19 +372,25 @@ private:
 
 }; // EMD
 
+// EMD is essentially _EMD<double>
+template<template<typename> class Event,
+         template<typename> class PairwiseDistance>
+using EMD = _EMD<double, Event, PairwiseDistance>;
+
+// EMDFloat is essentiall _EMD<float>
+template<template<typename> class Event,
+         template<typename> class PairwiseDistance>
+using EMDFloat32 = _EMD<float, Event, PairwiseDistance>;
+
 ////////////////////////////////////////////////////////////////////////////////
 // PairwiseEMD - Facilitates computing EMDs between all event-pairs in a set
 ////////////////////////////////////////////////////////////////////////////////
 
-template<class EMD>
+template<class EMD, typename Value = typename EMD::value_type>
 class PairwiseEMD {
 public:
 
-  #ifndef SWIG
-  typedef typename EMD::Value Value;
-  typedef std::vector<Value> ValueVector;
-  #endif
-
+  typedef Value value_type;
   typedef typename EMD::Event Event;
   typedef std::vector<Event> EventVector;
 
@@ -395,8 +403,8 @@ private:
   std::vector<EMD> emd_objs_;
 
   // variables local to this class
-  std::ptrdiff_t print_every_;
-  ExternalEMDHandler * handler_;
+  index_type print_every_;
+  ExternalEMDHandler<Value> * handler_;
   unsigned verbose_;
   bool store_sym_emds_flattened_, throw_on_error_, request_mode_;
   std::ostream * print_stream_;
@@ -404,11 +412,11 @@ private:
 
   // vectors of events and EnergyMoversDistances
   EventVector events_;
-  ValueVector emds_, full_emds_;
+  std::vector<Value> emds_, full_emds_;
   std::vector<std::string> error_messages_;
 
   // info about stored events
-  std::ptrdiff_t nevA_, nevB_, num_emds_, emd_counter_, num_emds_width_;
+  index_type nevA_, nevB_, num_emds_, emd_counter_, num_emds_width_;
   EMDPairsStorage emd_storage_;
   bool two_event_sets_;
 
@@ -417,7 +425,7 @@ public:
   // contructor that initializes the EMD object, uses the same default arguments
   PairwiseEMD(Value R = 1, Value beta = 1, bool norm = false,
               int num_threads = -1,
-              std::ptrdiff_t print_every = -10,
+              index_type print_every = -10,
               unsigned verbose = 1,
               bool store_sym_emds_flattened = true,
               bool throw_on_error = false,
@@ -438,7 +446,7 @@ public:
   // contructor uses existing EMD instance
   PairwiseEMD(const EMD & emd,
               int num_threads = -1,
-              std::ptrdiff_t print_every = -10,
+              index_type print_every = -10,
               unsigned verbose = 1,
               bool store_sym_emds_flattened = true,
               bool throw_on_error = false,
@@ -500,10 +508,10 @@ public:
   }
 
   // set a handler to process EMDs on the fly instead of storing them
-  void set_external_emd_handler(ExternalEMDHandler & handler) {
+  void set_external_emd_handler(ExternalEMDHandler<Value> & handler) {
     handler_ = &handler;
   }
-  ExternalEMDHandler * external_emd_handler() {
+  ExternalEMDHandler<Value> * external_emd_handler() {
     if (!have_external_emd_handler())
       throw std::logic_error("no external emd handler set");
 
@@ -579,7 +587,7 @@ public:
   // compute EMDs between all pairs of proto events, including preprocessing
   template<class ProtoEvent>
   void operator()(const std::vector<ProtoEvent> & proto_events,
-                  const ValueVector & event_weights = {}) {
+                  const std::vector<Value> & event_weights = {}) {
     init(proto_events.size());
     store_proto_events(proto_events, event_weights);
     compute();
@@ -589,8 +597,8 @@ public:
   template<class ProtoEventA, class ProtoEventB>
   void operator()(const std::vector<ProtoEventA> & proto_eventsA,
                   const std::vector<ProtoEventB> & proto_eventsB,
-                  const ValueVector & event_weightsA = {},
-                  const ValueVector & event_weightsB = {}) {
+                  const std::vector<Value> & event_weightsA = {},
+                  const std::vector<Value> & event_weightsB = {}) {
     init(proto_eventsA.size(), proto_eventsB.size());
     store_proto_events(proto_eventsA, event_weightsA);
     store_proto_events(proto_eventsB, event_weightsB);
@@ -614,12 +622,12 @@ public:
   }
 
   // access events
-  std::ptrdiff_t nevA() const { return nevA_; }
-  std::ptrdiff_t nevB() const { return nevB_; }
+  index_type nevA() const { return nevA_; }
+  index_type nevB() const { return nevB_; }
   const EventVector & events() const { return events_; }
 
   // number of unique EMDs computed
-  std::ptrdiff_t num_emds() const { return num_emds_; }
+  index_type num_emds() const { return num_emds_; }
 
   // error reporting
   bool errored() const { return error_messages_.size() > 0; }
@@ -629,39 +637,36 @@ public:
   double duration() const { return emd_objs_[0].duration(); }
 
   // access all emds as a matrix flattened into a vector
-  const ValueVector & emds(bool flattened = false) {
-
-    // return flattened emds if requested
-    if (flattened) return emds_;
+  const std::vector<Value> & emds(bool flattened = false) {
 
     // check for having no emds stored
     if (emd_storage_ == EMDPairsStorage::External)
       throw std::logic_error("No EMDs stored");
 
     // check if we need to construct a new full matrix from a flattened symmetric one
-    if (emd_storage_ == EMDPairsStorage::FlattenedSymmetric) {
+    if (emd_storage_ == EMDPairsStorage::FlattenedSymmetric && !flattened) {
 
       // allocate a new vector for holding the full emds
       full_emds_.resize(nevA()*nevB());
 
       // zeros on the diagonal
-      for (std::ptrdiff_t i = 0; i < nevA(); i++)
+      for (index_type i = 0; i < nevA(); i++)
         full_emds_[i*i] = 0;
 
       // fill out matrix (index into upper triangular part)
-      for (std::ptrdiff_t i = 0; i < nevA(); i++)
-        for (std::ptrdiff_t j = i + 1; j < nevB(); j++)
+      for (index_type i = 0; i < nevA(); i++)
+        for (index_type j = i + 1; j < nevB(); j++)
           full_emds_[i*nevB() + j] = full_emds_[j*nevB() + i] = emds_[index_symmetric(i, j)];
 
       return full_emds_;
     }
 
-    // full emds stored
-    else return emds_;
+    // return stored emds_
+    return emds_;
   }
 
   // access a specific emd
-  Value emd(std::ptrdiff_t i, std::ptrdiff_t j, int thread = 0) {
+  Value emd(index_type i, index_type j, int thread = 0) {
 
     // allow for negative indices
     if (i < 0) i += nevA();
@@ -669,8 +674,9 @@ public:
 
     // check for improper indexing
     if (i >= nevA() || j >= nevB() || i < 0 || j < 0) {
-      std::ostringstream message("PairwiseEMD::emd - Accessing emd value at (", std::ios_base::ate);
-      message << i << ", " << j << ") exceeds allowed range";
+      std::ostringstream message;
+      message << "PairwiseEMD::emd - Accessing emd value at ("
+              << i << ", " << j << ") exceeds allowed range";
       throw std::out_of_range(message.str());
     }
 
@@ -713,7 +719,7 @@ private:
   }
 
   // init self pairs
-  void init(std::ptrdiff_t nev) {
+  void init(index_type nev) {
 
     if (!request_mode())
       clear(false);
@@ -733,7 +739,7 @@ private:
   }
 
   // init pairs
-  void init(std::ptrdiff_t nevA, std::ptrdiff_t nevB) {
+  void init(index_type nevA, index_type nevB) {
 
     if (!request_mode())
       clear(false);
@@ -762,7 +768,7 @@ private:
     num_emds_width_ = std::to_string(num_emds()).size();
 
     // note that print_every == 0 is handled in setup()
-    std::ptrdiff_t print_every(print_every_);
+    index_type print_every(print_every_);
     if (print_every < 0) {
       print_every = num_emds()/std::abs(print_every_);
       if (print_every == 0 || num_emds() % std::abs(print_every_) != 0)
@@ -778,7 +784,7 @@ private:
 
     // iterate over emd pairs
     std::mutex failure_mutex;
-    std::ptrdiff_t begin(0);
+    index_type begin(0);
     while (emd_counter_ < num_emds() && !(throw_on_error_ && error_messages().size())) {
       emd_counter_ += print_every;
       if (emd_counter_ > num_emds()) emd_counter_ = num_emds();
@@ -796,9 +802,9 @@ private:
 
         // parallelize loop over EMDs
         #pragma omp for schedule(dynamic, omp_dynamic_chunksize())
-        for (std::ptrdiff_t k = begin; k < emd_counter_; k++) {
+        for (index_type k = begin; k < emd_counter_; k++) {
 
-          std::ptrdiff_t i(k/nevB()), j(k%nevB());
+          index_type i(k/nevB()), j(k%nevB());
           if (two_event_sets_) {
 
             // run and check for failure
@@ -867,7 +873,7 @@ private:
   }
 
   // init from constructor
-  void setup(std::ptrdiff_t print_every, unsigned verbose,
+  void setup(index_type print_every, unsigned verbose,
              bool store_sym_emds_flattened, bool throw_on_error,
              std::ostream * os) {
     
@@ -901,7 +907,7 @@ private:
   // store events
   template<class ProtoEvent>
   void store_proto_events(const std::vector<ProtoEvent> & proto_events,
-                          const ValueVector & event_weights) {
+                          const std::vector<Value> & event_weights) {
 
     if (proto_events.size() != event_weights.size()) {
       if (event_weights.size() == 0)
@@ -918,7 +924,7 @@ private:
       }
   }
 
-  void record_failure(EMDStatus status, std::ptrdiff_t i, std::ptrdiff_t j) {
+  void record_failure(EMDStatus status, index_type i, index_type j) {
     std::ostringstream message;
     message << "PairwiseEMD::compute - Issue with EMD between events ("
             << i << ", " << j << "), error code " << int(status);
@@ -936,7 +942,7 @@ private:
 
   // indexes upper triangle of symmetric matrix with zeros on diagonal that has been flattened into 1D
   // see scipy's squareform function
-  std::ptrdiff_t index_symmetric(std::ptrdiff_t i, std::ptrdiff_t j) {
+  index_type index_symmetric(index_type i, index_type j) {
 
     // treat i as the row and j as the column
     if (j > i)

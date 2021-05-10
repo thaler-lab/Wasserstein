@@ -56,14 +56,13 @@ import itertools
 // include common wasserstein wrappers
 %include "wasserstein_common.i"
 
-// add functionality to get flows and dists as numpy arrays
-%extend emd::EMD<emd::ArrayEvent<>, emd::EuclideanArrayDistance<>> {
+%define WASSERSTEIN_EMD_NUMPY_FUNCS(F)
 
   // provide weights and particle coordinates as numpy arrays
-  double operator()(double* weights0, int n0,
-                    double* coords0, int n00, int n01,
-                    double* weights1, int n1,
-                    double* coords1, int n10, int n11) {
+  F operator()(F* weights0, std::ptrdiff_t n0,
+                    F* coords0,  std::ptrdiff_t n00, std::ptrdiff_t n01,
+                    F* weights1, std::ptrdiff_t n1,
+                    F* coords1,  std::ptrdiff_t n10, std::ptrdiff_t n11) {
 
     if (n0 != n00 || n1 != n10)
       throw std::invalid_argument("Number of weights does not match number of coordinates");
@@ -76,9 +75,9 @@ import itertools
   }
 
   // provide weights and pairwise distances as numpy arrays
-  double operator()(double* weights0, int n0,
-                    double* weights1, int n1,
-                    double* external_dists, int d0, int d1) {
+  F operator()(F* weights0, std::ptrdiff_t n0,
+                    F* weights1, std::ptrdiff_t n1,
+                    F* external_dists, std::ptrdiff_t d0, std::ptrdiff_t d1) {
 
     if (n0 != d0 || n1 != d1)
       throw std::invalid_argument("Weights and distance matrix are incompatible");
@@ -92,27 +91,10 @@ import itertools
 
     return (*$self)(std::make_tuple(nullptr, weights0, n0, -1), std::make_tuple(nullptr, weights1, n1, -1));
   }
-}
 
-// add functionality to get flows and dists as numpy arrays
-%extend emd::EMD<emd::YPhiArrayEvent<>, emd::YPhiArrayDistance<>> {
+  EMD_NUMPY_FUNCS(F)
 
-  // provide weights and particle coordinates as numpy arrays
-  double operator()(double* weights0, int n0,
-                    double* coords0, int n00, int n01,
-                    double* weights1, int n1,
-                    double* coords1, int n10, int n11) {
-
-    if (n0 != n00 || n1 != n10)
-      throw std::invalid_argument("Number of weights does not match number of coordinates");
-    if (n01 != 2 || n11 != 2)
-      throw std::invalid_argument("YPhi coordinates expected, coords should have 2 columns");
-
-    $self->set_external_dists(false);
-
-    return (*$self)(std::make_tuple(coords0, weights0, n0), std::make_tuple(coords1, weights1, n1));
-  }
-}
+%enddef
 
 %pythoncode %{
 
@@ -146,80 +128,116 @@ def _store_events(pairwise_emd, events, event_weights, gdim, mask):
         pairwise_emd._add_event(weights, coords, event_weight)
 %}
 
-%extend emd::PairwiseEMD {
-
+%define WASSERSTEIN_PAIRWISE_EMD_NUMPY_FUNCS(F)
   // add a single event to the PairwiseEMD object
-  void _add_event(double* weights, int n0, double* coords, int n1, int d, double event_weight = 1) {
+  void _add_event(F* weights, std::ptrdiff_t n,
+                  F* coords, std::ptrdiff_t n1, std::ptrdiff_t d,
+                  F event_weight = 1) {
+
     $self->events().emplace_back(coords, weights, n1, d, event_weight);
     $self->preprocess_back_event();
   }
 
-  void _reset_B_events() {
-    $self->events().resize($self->nevA());
+  PAIRWISE_EMD_NUMPY_FUNCS(F)
+
+%enddef
+
+namespace emd {
+
+  %extend PairwiseEMD {
+
+    void _reset_B_events() {
+      $self->events().resize($self->nevA());
+    }
+
+    // python function to get events from container of 2d arrays, first column becomes the weights
+    %pythoncode %{
+
+      def __call__(self, eventsA, eventsB=None, gdim=None, mask=False,
+                         event_weightsA=None, event_weightsB=None):
+
+          if eventsB is None:
+              self.init(len(eventsA))
+              eventsB = event_weightsB = []
+          else:
+              self.init(len(eventsA), len(eventsB))
+
+          if event_weightsA is None:
+              event_weightsA = np.ones(len(eventsA), dtype=np.double)
+          elif len(event_weightsA) != len(eventsA):
+              raise ValueError('length of `event_weightsA` does not match length of `eventsA`')
+
+          if event_weightsB is None:
+              event_weightsB = np.ones(len(eventsB), dtype=np.double)
+          elif len(event_weightsB) != len(eventsB):
+              raise ValueError('length of `event_weightsB` does not match length of `eventsB`')
+
+          self.event_arrs = []
+          _store_events(self, itertools.chain(eventsA, eventsB),
+                              itertools.chain(event_weightsA, event_weightsB),
+                              gdim, mask)
+
+          # run actual computation
+          if not self.request_mode():
+              self.compute()
+
+      def set_new_eventsB(self, eventsB, gdim=None, mask=False, event_weightsB=None):
+
+          # check that we have been initialized before
+          if not hasattr(self, 'event_arrs'):
+              raise RuntimeError('PairwiseEMD object must be called on some events before the B events can be reset')
+
+          # check that we are in request mode
+          if not self.request_mode():
+              raise RuntimeError('PairwiseEMD object must be in request mode in order to set new eventsB')
+
+          if event_weightsB is None:
+              event_weightsB = np.ones(len(eventsB), dtype=np.double)
+          elif len(event_weightsB) != len(eventsB):
+              raise ValueError('length of `event_weightsB` does not match length of `eventsB`')
+
+          # clear away old B events in underlying object
+          self._reset_B_events()
+
+          # clear B events from python array
+          del self.event_arrs[self.nevA():]
+
+          # reinitialize
+          self.init(self.nevA(), len(eventsB))
+          _store_events(self, eventsB, event_weightsB, gdim, mask)
+    %}
+
+    // ensure that python array of events is deleted also
+    %feature("shadow") clear %{
+      def clear(self):
+          $action(self)
+          self.event_arrs = []
+    %}
   }
 
-  // python function to get events from container of 2d arrays, first column becomes the weights
-  %pythoncode %{
+  // extend/instantiate specific EMD classes
+  %extend _EMD<double, emd::DefaultArrayEvent,  emd::EuclideanArrayDistance> { WASSERSTEIN_EMD_NUMPY_FUNCS(double) }
+  %extend _EMD<float,  emd::DefaultArrayEvent,  emd::EuclideanArrayDistance> { WASSERSTEIN_EMD_NUMPY_FUNCS(float) }
+  %extend _EMD<double, emd::DefaultArray2Event, emd::YPhiArrayDistance> { WASSERSTEIN_EMD_NUMPY_FUNCS(double) }
+  %extend _EMD<float,  emd::DefaultArray2Event, emd::YPhiArrayDistance> { WASSERSTEIN_EMD_NUMPY_FUNCS(float) }
+  %template(EMDFloat64)     _EMD<double, emd::DefaultArrayEvent,  emd::EuclideanArrayDistance>;
+  %template(EMDFloat32)     _EMD<float,  emd::DefaultArrayEvent,  emd::EuclideanArrayDistance>;
+  %template(EMDYPhiFloat64) _EMD<double, emd::DefaultArray2Event, emd::YPhiArrayDistance>;
+  %template(EMDYPhiFloat32) _EMD<float,  emd::DefaultArray2Event, emd::YPhiArrayDistance>;
 
-    def __call__(self, eventsA, eventsB=None, gdim=None, mask=False,
-                       event_weightsA=None, event_weightsB=None):
+  // extend/instantiate specific PairwiseEMD classes
+  %extend PairwiseEMD<emd::_EMD<double, emd::DefaultArrayEvent,  emd::EuclideanArrayDistance>, double> { WASSERSTEIN_PAIRWISE_EMD_NUMPY_FUNCS(double) }
+  %extend PairwiseEMD<emd::_EMD<float,  emd::DefaultArrayEvent,  emd::EuclideanArrayDistance>, float> {  WASSERSTEIN_PAIRWISE_EMD_NUMPY_FUNCS(float) }
+  %extend PairwiseEMD<emd::_EMD<double, emd::DefaultArray2Event, emd::YPhiArrayDistance>, double> { WASSERSTEIN_PAIRWISE_EMD_NUMPY_FUNCS(double) }
+  %extend PairwiseEMD<emd::_EMD<float,  emd::DefaultArray2Event, emd::YPhiArrayDistance>, float> {  WASSERSTEIN_PAIRWISE_EMD_NUMPY_FUNCS(float) }
+  %template(PairwiseEMDFloat64)     PairwiseEMD<emd::_EMD<double, emd::DefaultArrayEvent,  emd::EuclideanArrayDistance>, double>;
+  %template(PairwiseEMDFloat32)     PairwiseEMD<emd::_EMD<float,  emd::DefaultArrayEvent,  emd::EuclideanArrayDistance>, float>;
+  %template(PairwiseEMDYPhiFloat64) PairwiseEMD<emd::_EMD<double, emd::DefaultArray2Event, emd::YPhiArrayDistance>, double>;
+  %template(PairwiseEMDYPhiFloat32) PairwiseEMD<emd::_EMD<float,  emd::DefaultArray2Event, emd::YPhiArrayDistance>, float>;
 
-        if eventsB is None:
-            self.init(len(eventsA))
-            eventsB = event_weightsB = []
-        else:
-            self.init(len(eventsA), len(eventsB))
+} // namespace emd
 
-        if event_weightsA is None:
-            event_weightsA = np.ones(len(eventsA), dtype=np.double)
-        elif len(event_weightsA) != len(eventsA):
-            raise ValueError('length of `event_weightsA` does not match length of `eventsA`')
-
-        if event_weightsB is None:
-            event_weightsB = np.ones(len(eventsB), dtype=np.double)
-        elif len(event_weightsB) != len(eventsB):
-            raise ValueError('length of `event_weightsB` does not match length of `eventsB`')
-
-        self.event_arrs = []
-        _store_events(self, itertools.chain(eventsA, eventsB),
-                            itertools.chain(event_weightsA, event_weightsB),
-                            gdim, mask)
-
-        # run actual computation
-        if not self.request_mode():
-            self.compute()
-
-    def set_new_eventsB(self, eventsB, gdim=None, mask=False, event_weightsB=None):
-
-        # check that we have been initialized before
-        if not hasattr(self, 'event_arrs'):
-            raise RuntimeError('PairwiseEMD object must be called on some events before the B events can be reset')
-
-        if event_weightsB is None:
-            event_weightsB = np.ones(len(eventsB), dtype=np.double)
-        elif len(event_weightsB) != len(eventsB):
-            raise ValueError('length of `event_weightsB` does not match length of `eventsB`')
-
-        # clear away old B events in underlying object
-        self._reset_B_events()
-
-        # clear B events from python array
-        del self.event_arrs[self.nevA():]
-
-        # reinitialize
-        self.init(self.nevA(), len(eventsB))
-        _store_events(self, eventsB, event_weightsB, gdim, mask)
-  %}
-}
-
-// ensure that python array of events is deleted also
-%feature("shadow") emd::PairwiseEMD::clear %{
-  def clear(self):
-      $action(self)
-      self.event_arrs = []
-%}
-
-// instantiate specific (Pairwise)EMD templates
-%template(EMD) emd::EMD<emd::ArrayEvent<>, emd::EuclideanArrayDistance<>>;
-%template(EMDYPhi) emd::EMD<emd::YPhiArrayEvent<>, emd::YPhiArrayDistance<>>;
-%template(PairwiseEMD) emd::PairwiseEMD<emd::EMD<emd::ArrayEvent<>, emd::EuclideanArrayDistance<>>>;
+DECLARE_PYTHON_FUNC_VARIABLE_FLOAT_TYPE(EMD)
+DECLARE_PYTHON_FUNC_VARIABLE_FLOAT_TYPE(EMDYPhi)
+DECLARE_PYTHON_FUNC_VARIABLE_FLOAT_TYPE(PairwiseEMD)
+DECLARE_PYTHON_FUNC_VARIABLE_FLOAT_TYPE(PairwiseEMDYPhi)

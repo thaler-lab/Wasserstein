@@ -44,32 +44,44 @@
 #ifndef WASSERSTEIN_EXTERNALHANDLERS_HH
 #define WASSERSTEIN_EXTERNALHANDLERS_HH
 
+#include <limits>
+
 #include "internal/HistogramUtils.hh"
 
 BEGIN_EMD_NAMESPACE
 
-class CorrelationDimension : public Histogram1DHandler<boost::histogram::axis::transform::log> {
+template<typename Value>
+class CorrelationDimension : public Histogram1DHandler<boost::histogram::axis::transform::log, Value> {
 public:
 
-  CorrelationDimension(unsigned nbins, double axis_min, double axis_max) :
-    Histogram1DHandler(nbins, axis_min, axis_max)
+  typedef Histogram1DHandler<boost::histogram::axis::transform::log, Value> Hist1DBase;
+
+  #ifndef SWIG_PREPROCESSOR
+    using Hist1DBase::bin_centers;
+    using Hist1DBase::axis;
+    using Hist1DBase::hist;
+  #endif
+
+  CorrelationDimension(unsigned nbins, Value axis_min, Value axis_max) :
+    Hist1DBase(nbins, axis_min, axis_max)
   {}
 
   CorrelationDimension() {}
   ~CorrelationDimension() {}
 
   // calculates the correlation dimensions
-  std::pair<std::vector<double>, std::vector<double>> corrdims(double eps = 1e-100) const {
+  std::pair<std::vector<Value>, std::vector<Value>>
+  corrdims(Value eps = std::numeric_limits<Value>::epsilon()) const {
 
     const auto cum_vals_vars(cumulative_vals_vars());
-    const std::vector<double> & cum_vals(cum_vals_vars.first), & cum_vars(cum_vals_vars.second);
+    const std::vector<Value> & cum_vals(cum_vals_vars.first), & cum_vars(cum_vals_vars.second);
 
     // containers for remaining computations
-    std::vector<double> midbins(bin_centers()), dims(midbins.size() - 1), dim_errs(dims.size());
+    std::vector<Value> midbins(bin_centers()), dims(midbins.size() - 1), dim_errs(dims.size());
 
     // compute dims and dim_errs
     for (std::size_t i = 0; i < dims.size(); i++) {
-      double dmidbin(std::log(midbins[i + 1]/midbins[i]));
+      Value dmidbin(std::log(midbins[i + 1]/midbins[i]));
 
       dims[i] = std::log(cum_vals[i + 1]/(cum_vals[i] + eps) + eps)/dmidbin;
       dim_errs[i] = std::sqrt(cum_vars[i + 1]/(cum_vals[i + 1]*cum_vals[i + 1] + eps) + 
@@ -80,8 +92,8 @@ public:
   }
 
   // using geometric mean here instead of arithmetic mean due to logarithmic axis
-  std::vector<double> corrdim_bins() const {
-    std::vector<double> midbins(bin_centers());
+  std::vector<Value> corrdim_bins() const {
+    std::vector<Value> midbins(bin_centers());
 
     for (std::size_t i = 0; i < midbins.size() - 1; i++)
       midbins[i] = std::sqrt(midbins[i] * midbins[i + 1]);
@@ -91,10 +103,10 @@ public:
   }
 
   // obtains the cuulative histogram of EFM values and their variances
-  std::pair<std::vector<double>, std::vector<double>> cumulative_vals_vars() const {
+  std::pair<std::vector<Value>, std::vector<Value>> cumulative_vals_vars() const {
 
     std::size_t size(axis().size());
-    std::vector<double> hist_vals(size), hist_vars(size);
+    std::vector<Value> hist_vals(size), hist_vars(size);
 
     hist_vals[0] = hist().at(0).value();
     hist_vars[0] = hist().at(0).variance();
