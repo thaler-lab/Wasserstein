@@ -80,16 +80,17 @@ using emd::DefaultNetworkSimplex;
   // numpy typemaps
   %define WASSERSTEIN_NUMPY_TYPEMAPS(F)
     %apply (F* IN_ARRAY1, std::ptrdiff_t DIM1) {(F* weights0, std::ptrdiff_t n0),
-                                                     (F* weights1, std::ptrdiff_t n1)}
-    %apply (F* IN_ARRAY1, std::ptrdiff_t DIM1) {(F* emds, std::ptrdiff_t n0),
-                                                     (F* event_weights, std::ptrdiff_t n1)}
+                                                (F* weights1, std::ptrdiff_t n1),
+                                                (F* emds, std::ptrdiff_t n0),
+                                                (F* event_weights, std::ptrdiff_t n1)}
     %apply (F* IN_ARRAY2, std::ptrdiff_t DIM1, std::ptrdiff_t DIM2) {(F* coords0, std::ptrdiff_t n00, std::ptrdiff_t n01),
-                                                                          (F* coords1, std::ptrdiff_t n10, std::ptrdiff_t n11),
-                                                                          (F* external_dists, std::ptrdiff_t d0, std::ptrdiff_t d1)}
+                                                                     (F* coords1, std::ptrdiff_t n10, std::ptrdiff_t n11),
+                                                                     (F* external_dists, std::ptrdiff_t d0, std::ptrdiff_t d1)}
+
     %apply (F* INPLACE_ARRAY1, std::ptrdiff_t DIM1) {(F* weights, std::ptrdiff_t n)}
     %apply (F* INPLACE_ARRAY2, std::ptrdiff_t DIM1, std::ptrdiff_t DIM2) {(F* coords, std::ptrdiff_t n1, std::ptrdiff_t d)}
-    %apply (F** ARGOUTVIEWM_ARRAY1, std::ptrdiff_t* DIM1) {(F** arr_out0, std::ptrdiff_t* n0),
-                                                                (F** arr_out1, std::ptrdiff_t* n1)}
+
+    %apply (F** ARGOUTVIEWM_ARRAY1, std::ptrdiff_t* DIM1) {(F** arr_out0, std::ptrdiff_t* n0), (F** arr_out1, std::ptrdiff_t* n1)}
     %apply (F** ARGOUTVIEWM_ARRAY2, std::ptrdiff_t* DIM1, std::ptrdiff_t* DIM2) {(F** arr_out, std::ptrdiff_t* n0, std::ptrdiff_t* n1)}
   %enddef
 

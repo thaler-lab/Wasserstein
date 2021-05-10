@@ -359,8 +359,8 @@ private:
   // index helpers
   Node firstNode() const { return maxNodeId(); }
   Arc firstArc() const { return maxArcId(); }
-  static void next(Node & node) { --node; }
-  static void next(Arc & arc) { --arc; }
+  template<typename I>
+  static void next(I & arc) { --arc; }
 
   // index helper for iterating over arcs entering a given target node
   void firstIn(Arc & arc, const Node t) const {

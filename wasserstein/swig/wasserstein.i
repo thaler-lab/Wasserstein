@@ -25,7 +25,7 @@
 // GNU General Public License for more details.
 // 
 // You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+// astd::ptrdiff_t with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
 %module("threads"=1) wasserstein
@@ -60,9 +60,9 @@ import itertools
 
   // provide weights and particle coordinates as numpy arrays
   F operator()(F* weights0, std::ptrdiff_t n0,
-                    F* coords0,  std::ptrdiff_t n00, std::ptrdiff_t n01,
-                    F* weights1, std::ptrdiff_t n1,
-                    F* coords1,  std::ptrdiff_t n10, std::ptrdiff_t n11) {
+               F* coords0,  std::ptrdiff_t n00, std::ptrdiff_t n01,
+               F* weights1, std::ptrdiff_t n1,
+               F* coords1,  std::ptrdiff_t n10, std::ptrdiff_t n11) {
 
     if (n0 != n00 || n1 != n10)
       throw std::invalid_argument("Number of weights does not match number of coordinates");
@@ -76,8 +76,8 @@ import itertools
 
   // provide weights and pairwise distances as numpy arrays
   F operator()(F* weights0, std::ptrdiff_t n0,
-                    F* weights1, std::ptrdiff_t n1,
-                    F* external_dists, std::ptrdiff_t d0, std::ptrdiff_t d1) {
+               F* weights1, std::ptrdiff_t n1,
+               F* external_dists, std::ptrdiff_t d0, std::ptrdiff_t d1) {
 
     if (n0 != d0 || n1 != d1)
       throw std::invalid_argument("Weights and distance matrix are incompatible");
