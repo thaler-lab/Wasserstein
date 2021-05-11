@@ -71,7 +71,7 @@ import itertools
 
     $self->set_external_dists(false);
 
-    return (*$self)(std::make_tuple(coords0, weights0, n0, n01), std::make_tuple(coords1, weights1, n1, n11));
+    return (*$self)(std::make_tuple(weights0, coords0, n0, n01), std::make_tuple(weights1, coords1, n1, n11));
   }
 
   // provide weights and pairwise distances as numpy arrays
@@ -89,7 +89,7 @@ import itertools
 
     $self->set_external_dists(true);
 
-    return (*$self)(std::make_tuple(nullptr, weights0, n0, -1), std::make_tuple(nullptr, weights1, n1, -1));
+    return (*$self)(std::make_tuple(weights0, nullptr, n0, -1), std::make_tuple(weights1, nullptr, n1, -1));
   }
 
   EMD_NUMPY_FUNCS(F)
@@ -134,7 +134,7 @@ def _store_events(pairwise_emd, events, event_weights, gdim, mask):
                   F* coords, std::ptrdiff_t n1, std::ptrdiff_t d,
                   F event_weight = 1) {
 
-    $self->events().emplace_back(coords, weights, n1, d, event_weight);
+    $self->events().emplace_back(weights, coords, n1, d, event_weight);
     $self->preprocess_back_event();
   }
 

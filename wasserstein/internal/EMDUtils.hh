@@ -314,6 +314,13 @@ struct EuclideanParticleND {
   Coords & coords() { return xs_; }
   const Coords & coords() const { return xs_; }
 
+  #ifndef SWIG_PREPROCESSOR
+  const Value & operator[](index_type i) const { return xs_[i]; }
+  Value & operator[](index_type i) { return xs_[i]; }
+  #endif
+
+  index_type dimension() const { return coords().size(); }
+
   static Value plain_distance(const Self & p0, const Self & p1) {
     Value d(0);
     for (unsigned i = 0; i < N; i++) {
@@ -414,16 +421,12 @@ class FastJetEventBase;
 class FastJetParticleWeight;
 template<class ParticleWeight> struct FastJetEvent;
 
-
 // center generic event according to weighted centroid
 template<class EMD>
 class CenterWeightedCentroid : public Preprocessor<typename EMD::Self> {
 public:
 
   typedef typename EMD::Event Event;
-  typedef typename EMD::value_type value_type;
-  typedef typename Event::ParticleCollection ParticleCollection;
-  typedef typename Event::WeightCollection WeightCollection;
 
   std::string description() const { return "Center according to weighted centroid"; }
   Event & operator()(Event & event) const {
@@ -432,26 +435,38 @@ public:
 
 private:
 
+  typedef typename Event::WeightCollection WeightCollection;
+  typedef typename Event::ParticleCollection ParticleCollection;
+  typedef typename ParticleCollection::const_iterator const_iterator;
+  typedef typename ParticleCollection::iterator iterator;
+
   // this version will be used for everything that's not FastJetEvent
   template<class E>
   typename std::enable_if<!std::is_base_of<FastJetEventBase, E>::value, E &>::type
   center(E & event) const {
     static_assert(std::is_same<E, Event>::value, "Event must match that of the EMD class");
+    event.ensure_weights();
 
     // determine weighted centroid
-    typename E::Particle::Coords coords;
-    coords.fill(0);
-    for (const auto & particle : event.particles())
-      for (unsigned i = 0; i < coords.size(); i++) 
-        coords[i] += particle.weight() * particle.coords()[i];
+    index_type dim(event.dimension());
+    std::vector<typename Event::value_type> coords(dim, 0);
 
-    for (unsigned i = 0; i < coords.size(); i++)
+    index_type k(0);
+    for (const_iterator particle = event.particles().cbegin(), end = event.particles().cend();
+         particle != end; ++particle) {
+      for (unsigned i = 0; i < dim; i++) 
+        coords[i] += event.weights()[k] * particle[i];
+      k++;
+    }
+
+    for (unsigned i = 0; i < dim; i++)
       coords[i] /= event.total_weight();
 
     // center the particles
-    for (auto & particle : event.particles())
-      for (unsigned i = 0; i < coords.size(); i++) {
-        particle.coords()[i] -= coords[i];
+    for (iterator particle = event.particles().begin(), end = event.particles().end();
+         particle != end; ++particle)
+      for (unsigned i = 0; i < dim; i++) {
+        particle[i] -= coords[i];
       }
 
     return event;

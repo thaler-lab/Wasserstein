@@ -85,8 +85,8 @@ public:
   #endif
 
   // event-dependent typedefs
-  typedef typename Event::ParticleCollection ParticleCollection;
   typedef typename Event::WeightCollection WeightCollection;
+  typedef typename Event::ParticleCollection ParticleCollection;
 
   // typedef base class and self
   typedef EMDBase<Value> Base;
@@ -106,7 +106,7 @@ public:
                 "ParticleCollection and PairwiseDistance should have the same Particle type.");
 
   // check for consistent template arguments
-  static_assert(std::is_base_of<EventBase<ParticleCollection, WeightCollection>, Event>::value,
+  static_assert(std::is_base_of<EventBase<WeightCollection, ParticleCollection>, Event>::value,
                 "First  EMD template parameter should be derived from EventBase<...>.");
   static_assert(std::is_base_of<PairwiseDistanceBase<PairwiseDistance, ParticleCollection, value_type>,
                                 PairwiseDistance>::value,
@@ -196,9 +196,9 @@ public:
   }
 
   // add preprocessor to internal list
-  template<template<class> class P, typename... Args>
+  template<template<class> class Preproc, typename... Args>
   Self & preprocess(Args && ... args) {
-    preprocessors_.emplace_back(new P<Self>(std::forward<Args>(args)...));
+    preprocessors_.emplace_back(new Preproc<Self>(std::forward<Args>(args)...));
     return *this;
   }
 
@@ -352,11 +352,9 @@ private:
 
   // output description of preprocessors contained in this object
   void output_preprocessors(std::ostream & oss) const {
-  #ifndef SWIG_WASSERSTEIN
     oss << "\n  Preprocessors:\n";
     for (const auto & preproc : preprocessors_)
       oss << "    - " << preproc->description() << '\n';
-  #endif
   }
 
   /////////////////////

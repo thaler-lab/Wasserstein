@@ -41,6 +41,9 @@
 %template(pairVectorDouble) std::pair<std::vector<double>, std::vector<double>>;
 %template(pairVectorFloat) std::pair<std::vector<float>, std::vector<float>>;
 
+// this helps to exclude some problematic code from swig
+#define SWIG_PREPROCESSOR
+
 %{
 // include this to avoid needing to define it at compile time 
 #ifndef SWIG
@@ -164,17 +167,16 @@ namespace EMDNAMESPACE {
 } // namespace EMDNAMESPACE
 
 // include main EMD code and histogram code
-#define SWIG_PREPROCESSOR
 %include "wasserstein/EMD.hh"
 %include "wasserstein/internal/HistogramUtils.hh"
 
 // makes python class printable from a description method
-%define ADD_STR_FROM_DESCRIPTION
+%define ADD_STR_FROM_DESCRIPTION(...)
   std::string __str__() const {
-    return $self->description();
+    return $self->description(__VA_ARGS__);
   }
   std::string __repr__() const {
-    return $self->description();
+    return $self->description(__VA_ARGS__);
   }
 %enddef
 
@@ -297,10 +299,19 @@ namespace EMDNAMESPACE {
   %#endif // SWIG_NUMPY
 %enddef
 
+%define ADD_EXPLICIT_PREPROCESSORS
+void preprocess_CenterWeightedCentroid() { $self->preprocess<emd::CenterWeightedCentroid>(); }
+%enddef
+
 namespace EMDNAMESPACE {
-  %extend _EMD { ADD_STR_FROM_DESCRIPTION }
+  %extend _EMD {
+    ADD_STR_FROM_DESCRIPTION(false)
+    ADD_EXPLICIT_PREPROCESSORS
+  }
+
   %extend PairwiseEMD {
-    ADD_STR_FROM_DESCRIPTION
+    ADD_STR_FROM_DESCRIPTION(false)
+    ADD_EXPLICIT_PREPROCESSORS
 
     // ensure proper destruction of objects held by this instance
     %pythoncode %{
@@ -323,15 +334,19 @@ namespace EMDNAMESPACE {
         self._external_emd_handler = handler
   %}
 
-  %extend Histogram1DHandler { ADD_STR_FROM_DESCRIPTION }
-  %extend CorrelationDimension { ADD_STR_FROM_DESCRIPTION }
+  %extend Histogram1DHandler { ADD_STR_FROM_DESCRIPTION() }
+  %extend CorrelationDimension { ADD_STR_FROM_DESCRIPTION() }
 
   // instantiate explicit ExternalEMDHandler and Histogram1DHandler classes
   %extend ExternalEMDHandler<double> { EXTERNAL_EMD_HANDLER_NUMPY_FUNCS(double) }
   %extend ExternalEMDHandler<float> { EXTERNAL_EMD_HANDLER_NUMPY_FUNCS(float) }
 
-  %extend Histogram1DHandler<boost::histogram::axis::transform::log, double> { HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(double) }
-  %extend Histogram1DHandler<boost::histogram::axis::transform::log, float> { HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(float) }
+  %extend Histogram1DHandler<boost::histogram::axis::transform::log, double> {
+    HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(double)
+  }
+  %extend Histogram1DHandler<boost::histogram::axis::transform::log, float> {
+    HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(float)
+  }
 
   %template(Histogram1DHandlerLogFloat64) Histogram1DHandler<boost::histogram::axis::transform::log, double>;
   %template(Histogram1DHandlerLogFloat32) Histogram1DHandler<boost::histogram::axis::transform::log, float>;

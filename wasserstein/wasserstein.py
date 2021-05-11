@@ -625,6 +625,7 @@ class EMDFloat64(EMDBaseFloat64):
     ground_dists = _swig_new_instance_method(_wasserstein.EMDFloat64_ground_dists)
     __str__ = _swig_new_instance_method(_wasserstein.EMDFloat64___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.EMDFloat64___repr__)
+    preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.EMDFloat64_preprocess_CenterWeightedCentroid)
     __call__ = _swig_new_instance_method(_wasserstein.EMDFloat64___call__)
     flows = _swig_new_instance_method(_wasserstein.EMDFloat64_flows)
     dists = _swig_new_instance_method(_wasserstein.EMDFloat64_dists)
@@ -657,6 +658,7 @@ class EMDFloat32(EMDBaseFloat32):
     ground_dists = _swig_new_instance_method(_wasserstein.EMDFloat32_ground_dists)
     __str__ = _swig_new_instance_method(_wasserstein.EMDFloat32___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.EMDFloat32___repr__)
+    preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.EMDFloat32_preprocess_CenterWeightedCentroid)
     __call__ = _swig_new_instance_method(_wasserstein.EMDFloat32___call__)
     flows = _swig_new_instance_method(_wasserstein.EMDFloat32_flows)
     dists = _swig_new_instance_method(_wasserstein.EMDFloat32_dists)
@@ -689,6 +691,7 @@ class EMDYPhiFloat64(EMDBaseFloat64):
     ground_dists = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_ground_dists)
     __str__ = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64___repr__)
+    preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_preprocess_CenterWeightedCentroid)
     __call__ = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64___call__)
     flows = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_flows)
     dists = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_dists)
@@ -721,6 +724,7 @@ class EMDYPhiFloat32(EMDBaseFloat32):
     ground_dists = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_ground_dists)
     __str__ = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32___repr__)
+    preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_preprocess_CenterWeightedCentroid)
     __call__ = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32___call__)
     flows = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_flows)
     dists = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_dists)
@@ -780,6 +784,7 @@ class PairwiseEMDFloat64(object):
     compute = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_compute)
     __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64___repr__)
+    preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_preprocess_CenterWeightedCentroid)
 
     def __del__(self):
         if hasattr(self, 'event_arrs'):
@@ -903,6 +908,7 @@ class PairwiseEMDFloat32(object):
     compute = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_compute)
     __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32___repr__)
+    preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_preprocess_CenterWeightedCentroid)
 
     def __del__(self):
         if hasattr(self, 'event_arrs'):
@@ -1026,6 +1032,7 @@ class PairwiseEMDYPhiFloat64(object):
     compute = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_compute)
     __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64___repr__)
+    preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_preprocess_CenterWeightedCentroid)
 
     def __del__(self):
         if hasattr(self, 'event_arrs'):
@@ -1149,6 +1156,7 @@ class PairwiseEMDYPhiFloat32(object):
     compute = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_compute)
     __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32___repr__)
+    preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_preprocess_CenterWeightedCentroid)
 
     def __del__(self):
         if hasattr(self, 'event_arrs'):
