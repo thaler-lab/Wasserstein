@@ -601,7 +601,7 @@ def _store_events(pairwise_emd, events, event_weights, gdim, mask):
         pairwise_emd._add_event(weights, coords, event_weight)
 
 class EMDFloat64(EMDBaseFloat64):
-    r"""Proxy of C++ emd::_EMD< double,emd::DefaultArrayEvent,emd::EuclideanArrayDistance > class."""
+    r"""Proxy of C++ emd::_EMD< double,DefaultArrayEvent,EuclideanArrayDistance > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
@@ -634,7 +634,7 @@ class EMDFloat64(EMDBaseFloat64):
 _wasserstein.EMDFloat64_swigregister(EMDFloat64)
 
 class EMDFloat32(EMDBaseFloat32):
-    r"""Proxy of C++ emd::_EMD< float,emd::DefaultArrayEvent,emd::EuclideanArrayDistance > class."""
+    r"""Proxy of C++ emd::_EMD< float,DefaultArrayEvent,EuclideanArrayDistance > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
@@ -667,7 +667,7 @@ class EMDFloat32(EMDBaseFloat32):
 _wasserstein.EMDFloat32_swigregister(EMDFloat32)
 
 class EMDYPhiFloat64(EMDBaseFloat64):
-    r"""Proxy of C++ emd::_EMD< double,emd::DefaultArray2Event,emd::YPhiArrayDistance > class."""
+    r"""Proxy of C++ emd::_EMD< double,DefaultArray2Event,YPhiArrayDistance > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
@@ -700,7 +700,7 @@ class EMDYPhiFloat64(EMDBaseFloat64):
 _wasserstein.EMDYPhiFloat64_swigregister(EMDYPhiFloat64)
 
 class EMDYPhiFloat32(EMDBaseFloat32):
-    r"""Proxy of C++ emd::_EMD< float,emd::DefaultArray2Event,emd::YPhiArrayDistance > class."""
+    r"""Proxy of C++ emd::_EMD< float,DefaultArray2Event,YPhiArrayDistance > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
@@ -733,7 +733,7 @@ class EMDYPhiFloat32(EMDBaseFloat32):
 _wasserstein.EMDYPhiFloat32_swigregister(EMDYPhiFloat32)
 
 class PairwiseEMDFloat64(object):
-    r"""Proxy of C++ emd::PairwiseEMD< emd::_EMD< double,emd::DefaultArrayEvent,emd::EuclideanArrayDistance >,double > class."""
+    r"""Proxy of C++ emd::PairwiseEMD< emd::_EMD< double,DefaultArrayEvent,EuclideanArrayDistance >,double > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
@@ -857,7 +857,7 @@ class PairwiseEMDFloat64(object):
 _wasserstein.PairwiseEMDFloat64_swigregister(PairwiseEMDFloat64)
 
 class PairwiseEMDFloat32(object):
-    r"""Proxy of C++ emd::PairwiseEMD< emd::_EMD< float,emd::DefaultArrayEvent,emd::EuclideanArrayDistance >,float > class."""
+    r"""Proxy of C++ emd::PairwiseEMD< emd::_EMD< float,DefaultArrayEvent,EuclideanArrayDistance >,float > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
@@ -981,7 +981,7 @@ class PairwiseEMDFloat32(object):
 _wasserstein.PairwiseEMDFloat32_swigregister(PairwiseEMDFloat32)
 
 class PairwiseEMDYPhiFloat64(object):
-    r"""Proxy of C++ emd::PairwiseEMD< emd::_EMD< double,emd::DefaultArray2Event,emd::YPhiArrayDistance >,double > class."""
+    r"""Proxy of C++ emd::PairwiseEMD< emd::_EMD< double,DefaultArray2Event,YPhiArrayDistance >,double > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
@@ -1105,7 +1105,7 @@ class PairwiseEMDYPhiFloat64(object):
 _wasserstein.PairwiseEMDYPhiFloat64_swigregister(PairwiseEMDYPhiFloat64)
 
 class PairwiseEMDYPhiFloat32(object):
-    r"""Proxy of C++ emd::PairwiseEMD< emd::_EMD< float,emd::DefaultArray2Event,emd::YPhiArrayDistance >,float > class."""
+    r"""Proxy of C++ emd::PairwiseEMD< emd::_EMD< float,DefaultArray2Event,YPhiArrayDistance >,float > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 

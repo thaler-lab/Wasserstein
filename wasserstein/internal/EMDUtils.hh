@@ -417,8 +417,8 @@ public:
 
 
 // forward declare fastjet classes
-class FastJetEventBase;
-class FastJetParticleWeight;
+struct FastJetEventBase;
+struct FastJetParticleWeight;
 template<class ParticleWeight> struct FastJetEvent;
 
 // center generic event according to weighted centroid

@@ -79,9 +79,7 @@ public:
 
   // this is used with fastjet and harmless otherwise
   #ifdef WASSERSTEIN_FASTJET
-  typedef typename std::conditional<std::is_base_of<FastJetEventBase, Event>::value,
-                                    typename Event::ParticleWeight,
-                                    E>::type ParticleWeight;
+  typedef typename Event::ParticleWeight ParticleWeight;
   #endif
 
   // event-dependent typedefs
