@@ -5456,7 +5456,7 @@ SWIGINTERN void std_vector_Sl_std_string_Sg__insert__SWIG_1(std::vector< std::st
 #include "wasserstein/EMD.hh"
 #include "wasserstein/CorrelationDimension.hh"
 
-using emd::DefaultNetworkSimplex;
+using EMDNAMESPACE::DefaultNetworkSimplex;
 
 
 #ifndef SWIG_FILE_WITH_INIT

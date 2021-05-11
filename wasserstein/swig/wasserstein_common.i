@@ -61,7 +61,7 @@
 #include "wasserstein/EMD.hh"
 #include "wasserstein/CorrelationDimension.hh"
 
-using emd::DefaultNetworkSimplex;
+using EMDNAMESPACE::DefaultNetworkSimplex;
 %}
 
 // numpy wrapping and initialization
@@ -245,7 +245,7 @@ namespace EMDNAMESPACE {
     memcpy(*arr_out, $self->emds().data(), nbytes);
   }
   void flat_emds(F** arr_out0, std::ptrdiff_t* n0) {
-    if ($self->storage() != emd::EMDPairsStorage::FlattenedSymmetric)
+    if ($self->storage() != EMDNAMESPACE::EMDPairsStorage::FlattenedSymmetric)
       throw std::runtime_error("flattened emds only available with flattened symmetric storage");
 
     MALLOC_1D_VALUE_ARRAY(arr_out0, n0, $self->num_emds(), nbytes, F)
@@ -300,7 +300,7 @@ namespace EMDNAMESPACE {
 %enddef
 
 %define ADD_EXPLICIT_PREPROCESSORS
-void preprocess_CenterWeightedCentroid() { $self->preprocess<emd::CenterWeightedCentroid>(); }
+void preprocess_CenterWeightedCentroid() { $self->preprocess<EMDNAMESPACE::CenterWeightedCentroid>(); }
 %enddef
 
 namespace EMDNAMESPACE {
