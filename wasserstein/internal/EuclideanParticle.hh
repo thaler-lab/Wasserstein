@@ -93,7 +93,7 @@ struct EuclideanParticleND {
   }
   static std::string distance_name() {
     std::ostringstream oss;
-    oss << "EuclideaDistance" << N << 'D';
+    oss << "EuclideanDistance" << N << 'D';
     return oss.str();
   }
 

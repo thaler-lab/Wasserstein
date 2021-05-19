@@ -151,6 +151,9 @@ class YPhiArrayDistance;
 template<class Particle>
 class EuclideanParticleDistance;
 
+template<typename Value>
+class YPhiParticleDistance;
+
 template<typename Value = default_value_type>
 using EuclideanDistance2D = EuclideanParticleDistance<EuclideanParticle2D<Value>>;
 

@@ -237,15 +237,15 @@ public:
 
   static std::string name() { return "YPhiArrayDistance"; }
   static value_type plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
-    value_type dx((*p0)[0] - (*p1)[0]), dy(std::fabs((*p0)[1] - (*p1)[1]));
-    if (dy > PI) dy = TWOPI - dy;
-    return dx*dx + dy*dy;
+    value_type dy((*p0)[0] - (*p1)[0]), dphi(std::fabs((*p0)[1] - (*p1)[1]));
+    if (dphi > PI) dphi = TWOPI - dphi;
+    return dy*dy + dphi*dphi;
   }
 }; // EuclideanArrayDistance
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// EuclideanParticleDistance - base class for a pairwise distance between two "particles"
+// EuclideanParticleDistance
 ////////////////////////////////////////////////////////////////////////////////
 
 template<class _Particle>
@@ -264,6 +264,31 @@ public:
   static std::string name() { return Particle::distance_name(); }
   static value_type plain_distance(const Particle & p0, const Particle & p1) {
     return Particle::plain_distance(p0, p1);
+  }
+}; // EuclideanParticleDistance
+
+////////////////////////////////////////////////////////////////////////////////
+// YPhiParticleDistance - handles periodicity in phi
+////////////////////////////////////////////////////////////////////////////////
+
+template<typename Value>
+class YPhiParticleDistance : public PairwiseDistanceBase<YPhiParticleDistance<Value>,
+                                                         std::vector<EuclideanParticle2D<Value>>,
+                                                         Value> {
+public:
+
+  typedef EuclideanParticle2D<Value> Particle;
+  typedef typename Particle::value_type value_type;
+
+  using PairwiseDistanceBase<YPhiParticleDistance<Value>,
+                             std::vector<Particle>,
+                             Value>::PairwiseDistanceBase;
+
+  static std::string name() { return "YPhiParticleDistance"; }
+  static value_type plain_distance(const Particle & p0, const Particle & p1) {
+    Value dy(p0[0] - p1[0]), dphi(p0[1] - p1[1]);
+    if (dphi > PI) dphi = TWOPI - dphi;
+    return dy*dy + dphi*dphi;
   }
 }; // EuclideanParticleDistance
 
