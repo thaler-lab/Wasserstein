@@ -169,6 +169,10 @@ struct ArrayWeightCollection {
   // contructor, int is used for compatibility with SWIG's numpy.i
   ArrayWeightCollection(value_type * array, index_type size) : array_(array), size_(size), delete_(false) {}
   ArrayWeightCollection() : ArrayWeightCollection(nullptr, 0) {}
+  ~ArrayWeightCollection() {
+    if (delete_)
+      delete[] array_;
+  }
 
   index_type size() const { return size_; }
   value_type * begin() { return array_; }
@@ -192,13 +196,6 @@ struct ArrayWeightCollection {
     // copy old array into new one
     memcpy(new_array, array_, std::size_t(size())*sizeof(value_type));
     array_ = new_array;
-  }
-
-protected:
-
-  ~ArrayWeightCollection() {
-    if (delete_)
-      delete[] array_;
   }
 
 private:
