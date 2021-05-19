@@ -47,7 +47,12 @@
 // C++ standard library
 #include <cmath>
 #include <iomanip>
+#include <sstream>
+#include <stdexcept>
+#include <string>
+#include <type_traits>
 #include <utility>
+#include <vector>
 
 // Boost histogram headers
 #include <boost/histogram.hpp>

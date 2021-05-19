@@ -58,7 +58,7 @@
 #include <cstring>
 
 // the main library headers
-#include "wasserstein/EMD.hh"
+#include "wasserstein/Wasserstein.hh"
 
 using EMDNAMESPACE::DefaultNetworkSimplex;
 %}
@@ -122,55 +122,6 @@ using EMDNAMESPACE::DefaultNetworkSimplex;
   }
 
 #endif // SWIG_NUMPY
-
-// basic exception handling for all functions
-%exception {
-  try { $action }
-  SWIG_CATCH_STDEXCEPT
-  catch (...) {
-    SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-  }
-}
-
-namespace EMDNAMESPACE {
-
-  // allow threads in PairwiseEMD computation
-  %threadallow PairwiseEMD::compute;
-
-  // ignore certain functions
-  %ignore EMD::compute;
-  %ignore EMD::network_simplex;
-  %ignore EMD::pairwise_distance;
-  %ignore EMD::ground_dists;
-  %ignore PairwiseEMD::compute(const EventVector & events);
-  %ignore PairwiseEMD::compute(const EventVector & eventsA, const EventVector & eventsB);
-  %ignore PairwiseEMD::events;
-  %ignore ExternalEMDHandler::compute;
-  %ignore ExternalEMDHandler::compute_symmetric;
-  %ignore Histogram1DHandler::print_axis;
-%ignore Histogram1DHandler::print_hist;
-
-} // namespace EMDNAMESPACE
-
-// include EMD utilities
-%include "wasserstein/internal/EMDUtils.hh"
-%include "wasserstein/internal/EMDBase.hh"
-%include "wasserstein/internal/ExternalEMDHandler.hh"
-
-namespace EMDNAMESPACE {
-
-  // handle templated base class
-  %template(EMDBaseFloat64) EMDBase<double>;
-  %template(EMDBaseFloat32) EMDBase<float>;
-  %template(ExternalEMDHandlerFloat64) ExternalEMDHandler<double>;
-  %template(ExternalEMDHandlerFloat32) ExternalEMDHandler<float>;
-
-} // namespace EMDNAMESPACE
-
-// include main EMD code and histogram code
-%include "wasserstein/EMD.hh"
-%include "wasserstein/internal/CenterWeightedCentroid.hh"
-%include "wasserstein/internal/HistogramUtils.hh"
 
 // makes python class printable from a description method
 %define ADD_STR_FROM_DESCRIPTION(...)
@@ -304,6 +255,56 @@ namespace EMDNAMESPACE {
 %define ADD_EXPLICIT_PREPROCESSORS
 void preprocess_CenterWeightedCentroid() { $self->preprocess<EMDNAMESPACE::CenterWeightedCentroid>(); }
 %enddef
+
+// basic exception handling for all functions
+%exception {
+  try { $action }
+  SWIG_CATCH_STDEXCEPT
+  catch (...) {
+    SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+  }
+}
+
+namespace EMDNAMESPACE {
+
+  // allow threads in PairwiseEMD computation
+  %threadallow PairwiseEMD::compute;
+
+  // ignore certain functions
+  %ignore EMD::compute;
+  %ignore EMD::network_simplex;
+  %ignore EMD::pairwise_distance;
+  %ignore EMD::ground_dists;
+  %ignore PairwiseEMD::compute(const EventVector & events);
+  %ignore PairwiseEMD::compute(const EventVector & eventsA, const EventVector & eventsB);
+  %ignore PairwiseEMD::events;
+  %ignore ExternalEMDHandler::compute;
+  %ignore ExternalEMDHandler::compute_symmetric;
+  %ignore Histogram1DHandler::print_axis;
+%ignore Histogram1DHandler::print_hist;
+
+} // namespace EMDNAMESPACE
+
+// include EMD utilities
+%include "wasserstein/internal/EMDUtils.hh"
+%include "wasserstein/internal/EMDBase.hh"
+%include "wasserstein/internal/ExternalEMDHandler.hh"
+
+namespace EMDNAMESPACE {
+
+  // handle templated base class
+  %template(EMDBaseFloat64) EMDBase<double>;
+  %template(EMDBaseFloat32) EMDBase<float>;
+  %template(ExternalEMDHandlerFloat64) ExternalEMDHandler<double>;
+  %template(ExternalEMDHandlerFloat32) ExternalEMDHandler<float>;
+
+} // namespace EMDNAMESPACE
+
+// include main EMD code and histogram code
+%include "wasserstein/internal/CenterWeightedCentroid.hh"
+%include "wasserstein/internal/EMD.hh"
+%include "wasserstein/internal/HistogramUtils.hh"
+%include "wasserstein/internal/PairwiseEMD.hh"
 
 namespace EMDNAMESPACE {
   %extend _EMD {

@@ -122,35 +122,6 @@ using DefaultNetworkSimplex = NetworkSimplex<Value, index_type, int, char>;
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// EMD classes
-////////////////////////////////////////////////////////////////////////////////
-
-template<typename Value,
-         template<typename> class Event,
-         template<typename> class PairwiseDistance,
-         template<typename> class NetworkSimplex>
-class _EMD;
-
-// _EMD using double precision
-template<template<typename> class Event,
-         template<typename> class PairwiseDistance>
-using EMDFloat64 = _EMD<double, Event, PairwiseDistance, DefaultNetworkSimplex>;
-
-// _EMD using single precision
-template<template<typename> class Event,
-         template<typename> class PairwiseDistance>
-using EMDFloat32 = _EMD<float, Event, PairwiseDistance, DefaultNetworkSimplex>;
-
-// EMD is alias for EMDFloat64
-template<template<typename> class Event,
-         template<typename> class PairwiseDistance>
-using EMD = EMDFloat64<Event, PairwiseDistance>;
-
-template<class EMD, typename Value>
-class PairwiseEMD;
-
-
-////////////////////////////////////////////////////////////////////////////////
 // EuclideanParticle classes
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -235,6 +206,35 @@ struct FastJetParticleWeight;
 
 template<class ParticleWeight>
 struct FastJetEvent;
+
+
+////////////////////////////////////////////////////////////////////////////////
+// EMD classes
+////////////////////////////////////////////////////////////////////////////////
+
+template<typename Value,
+         template<typename> class Event,
+         template<typename> class PairwiseDistance,
+         template<typename> class NetworkSimplex>
+class _EMD;
+
+// _EMD using double precision
+template<template<typename> class Event,
+         template<typename> class PairwiseDistance>
+using EMDFloat64 = _EMD<double, Event, PairwiseDistance, DefaultNetworkSimplex>;
+
+// _EMD using single precision
+template<template<typename> class Event,
+         template<typename> class PairwiseDistance>
+using EMDFloat32 = _EMD<float, Event, PairwiseDistance, DefaultNetworkSimplex>;
+
+// EMD is alias for EMDFloat64
+template<template<typename> class Event,
+         template<typename> class PairwiseDistance>
+using EMD = EMDFloat64<Event, PairwiseDistance>;
+
+template<class EMD, typename Value>
+class PairwiseEMD;
 
 
 ////////////////////////////////////////////////////////////////////////////////

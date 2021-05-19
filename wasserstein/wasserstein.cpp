@@ -5460,7 +5460,7 @@ SWIGINTERN void std_vector_Sl_std_string_Sg__insert__SWIG_1(std::vector< std::st
 #include <cstring>
 
 // the main library headers
-#include "wasserstein/EMD.hh"
+#include "wasserstein/Wasserstein.hh"
 
 using EMDNAMESPACE::DefaultNetworkSimplex;
 
@@ -5618,7 +5618,7 @@ SWIGINTERN std::string emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_
 
 
 SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_double_Sg__npy_bin_centers(emd::Histogram1DHandler< boost::histogram::axis::transform::log,double > *self,double **arr_out0,std::ptrdiff_t *n0){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins();
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -5630,7 +5630,7 @@ SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_
     memcpy(*arr_out0, self->bin_centers().data(), nbytes);
   }
 SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_double_Sg__npy_bin_edges(emd::Histogram1DHandler< boost::histogram::axis::transform::log,double > *self,double **arr_out0,std::ptrdiff_t *n0){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() + 1;
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -5643,8 +5643,8 @@ SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_
   }
 SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_double_Sg__npy_hist_vals_vars(emd::Histogram1DHandler< boost::histogram::axis::transform::log,double > *self,double **arr_out0,std::ptrdiff_t *n0,double **arr_out1,std::ptrdiff_t *n1,bool overflows=true){
       unsigned nbins = self->nbins() + (overflows ? 2 : 0);
-      /*@SWIG:wasserstein/swig/wasserstein_common.i,203,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+      /*@SWIG:wasserstein/swig/wasserstein_common.i,154,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = nbins;
   size_t nbytes0 = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes0);
@@ -5653,7 +5653,7 @@ SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_
     return;
   }
 /*@SWIG@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = nbins;
   size_t nbytes1 = size_t(*n1)*sizeof(double);
   *arr_out1 = (double *) malloc(nbytes1);
@@ -5674,7 +5674,7 @@ SWIGINTERN std::string emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_
     return self->description();
   }
 SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_float_Sg__npy_bin_centers(emd::Histogram1DHandler< boost::histogram::axis::transform::log,float > *self,float **arr_out0,std::ptrdiff_t *n0){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins();
   size_t nbytes = size_t(*n0)*sizeof(float);
   *arr_out0 = (float *) malloc(nbytes);
@@ -5686,7 +5686,7 @@ SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_
     memcpy(*arr_out0, self->bin_centers().data(), nbytes);
   }
 SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_float_Sg__npy_bin_edges(emd::Histogram1DHandler< boost::histogram::axis::transform::log,float > *self,float **arr_out0,std::ptrdiff_t *n0){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() + 1;
   size_t nbytes = size_t(*n0)*sizeof(float);
   *arr_out0 = (float *) malloc(nbytes);
@@ -5699,8 +5699,8 @@ SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_
   }
 SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_float_Sg__npy_hist_vals_vars(emd::Histogram1DHandler< boost::histogram::axis::transform::log,float > *self,float **arr_out0,std::ptrdiff_t *n0,float **arr_out1,std::ptrdiff_t *n1,bool overflows=true){
       unsigned nbins = self->nbins() + (overflows ? 2 : 0);
-      /*@SWIG:wasserstein/swig/wasserstein_common.i,203,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+      /*@SWIG:wasserstein/swig/wasserstein_common.i,154,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = nbins;
   size_t nbytes0 = size_t(*n0)*sizeof(float);
   *arr_out0 = (float *) malloc(nbytes0);
@@ -5709,7 +5709,7 @@ SWIGINTERN void emd_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_
     return;
   }
 /*@SWIG@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = nbins;
   size_t nbytes1 = size_t(*n1)*sizeof(float);
   *arr_out1 = (float *) malloc(nbytes1);
@@ -5730,7 +5730,7 @@ SWIGINTERN std::string emd_CorrelationDimension_Sl_double_Sg____repr__(emd::Corr
     return self->description();
   }
 SWIGINTERN void emd_CorrelationDimension_Sl_double_Sg__npy_corrdim_bins(emd::CorrelationDimension< double > *self,double **arr_out0,std::ptrdiff_t *n0){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() - 1;
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -5742,8 +5742,8 @@ SWIGINTERN void emd_CorrelationDimension_Sl_double_Sg__npy_corrdim_bins(emd::Cor
     memcpy(*arr_out0, self->corrdim_bins().data(), nbytes);
   }
 SWIGINTERN void emd_CorrelationDimension_Sl_double_Sg__npy_corrdims(emd::CorrelationDimension< double > *self,double **arr_out0,std::ptrdiff_t *n0,double **arr_out1,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,203,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,154,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() - 1;
   size_t nbytes0 = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes0);
@@ -5752,7 +5752,7 @@ SWIGINTERN void emd_CorrelationDimension_Sl_double_Sg__npy_corrdims(emd::Correla
     return;
   }
 /*@SWIG@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = self->nbins() - 1;
   size_t nbytes1 = size_t(*n1)*sizeof(double);
   *arr_out1 = (double *) malloc(nbytes1);
@@ -5767,8 +5767,8 @@ SWIGINTERN void emd_CorrelationDimension_Sl_double_Sg__npy_corrdims(emd::Correla
 /*@SWIG@*/
   }
 SWIGINTERN void emd_CorrelationDimension_Sl_double_Sg__npy_cumulative_vals_vars(emd::CorrelationDimension< double > *self,double **arr_out0,std::ptrdiff_t *n0,double **arr_out1,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,203,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,154,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins();
   size_t nbytes0 = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes0);
@@ -5777,7 +5777,7 @@ SWIGINTERN void emd_CorrelationDimension_Sl_double_Sg__npy_cumulative_vals_vars(
     return;
   }
 /*@SWIG@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = self->nbins();
   size_t nbytes1 = size_t(*n1)*sizeof(double);
   *arr_out1 = (double *) malloc(nbytes1);
@@ -5798,7 +5798,7 @@ SWIGINTERN std::string emd_CorrelationDimension_Sl_float_Sg____repr__(emd::Corre
     return self->description();
   }
 SWIGINTERN void emd_CorrelationDimension_Sl_float_Sg__npy_corrdim_bins(emd::CorrelationDimension< float > *self,float **arr_out0,std::ptrdiff_t *n0){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() - 1;
   size_t nbytes = size_t(*n0)*sizeof(float);
   *arr_out0 = (float *) malloc(nbytes);
@@ -5810,8 +5810,8 @@ SWIGINTERN void emd_CorrelationDimension_Sl_float_Sg__npy_corrdim_bins(emd::Corr
     memcpy(*arr_out0, self->corrdim_bins().data(), nbytes);
   }
 SWIGINTERN void emd_CorrelationDimension_Sl_float_Sg__npy_corrdims(emd::CorrelationDimension< float > *self,float **arr_out0,std::ptrdiff_t *n0,float **arr_out1,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,203,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,154,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() - 1;
   size_t nbytes0 = size_t(*n0)*sizeof(float);
   *arr_out0 = (float *) malloc(nbytes0);
@@ -5820,7 +5820,7 @@ SWIGINTERN void emd_CorrelationDimension_Sl_float_Sg__npy_corrdims(emd::Correlat
     return;
   }
 /*@SWIG@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = self->nbins() - 1;
   size_t nbytes1 = size_t(*n1)*sizeof(float);
   *arr_out1 = (float *) malloc(nbytes1);
@@ -5835,8 +5835,8 @@ SWIGINTERN void emd_CorrelationDimension_Sl_float_Sg__npy_corrdims(emd::Correlat
 /*@SWIG@*/
   }
 SWIGINTERN void emd_CorrelationDimension_Sl_float_Sg__npy_cumulative_vals_vars(emd::CorrelationDimension< float > *self,float **arr_out0,std::ptrdiff_t *n0,float **arr_out1,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,203,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,154,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins();
   size_t nbytes0 = size_t(*n0)*sizeof(float);
   *arr_out0 = (float *) malloc(nbytes0);
@@ -5845,7 +5845,7 @@ SWIGINTERN void emd_CorrelationDimension_Sl_float_Sg__npy_cumulative_vals_vars(e
     return;
   }
 /*@SWIG@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = self->nbins();
   size_t nbytes1 = size_t(*n1)*sizeof(float);
   *arr_out1 = (float *) malloc(nbytes1);
@@ -6289,7 +6289,7 @@ SWIGINTERN double emd__EMD_Sl_double_Sc_emd_DefaultArrayEvent_Sc_emd_EuclideanAr
     return (*self)(std::make_tuple(weights0, nullptr, n0, -1), std::make_tuple(weights1, nullptr, n1, -1));
   }
 SWIGINTERN void emd__EMD_Sl_double_Sc_emd_DefaultArrayEvent_Sc_emd_EuclideanArrayDistance_Sg__npy_flows(emd::_EMD< double,emd::DefaultArrayEvent,emd::EuclideanArrayDistance > *self,double **arr_out,std::ptrdiff_t *n0,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,218,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,169,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -6305,7 +6305,7 @@ SWIGINTERN void emd__EMD_Sl_double_Sc_emd_DefaultArrayEvent_Sc_emd_EuclideanArra
       values[i] *= self->scale();
   }
 SWIGINTERN void emd__EMD_Sl_double_Sc_emd_DefaultArrayEvent_Sc_emd_EuclideanArrayDistance_Sg__npy_dists(emd::_EMD< double,emd::DefaultArrayEvent,emd::EuclideanArrayDistance > *self,double **arr_out,std::ptrdiff_t *n0,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,218,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,169,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -6350,7 +6350,7 @@ SWIGINTERN float emd__EMD_Sl_float_Sc_emd_DefaultArrayEvent_Sc_emd_EuclideanArra
     return (*self)(std::make_tuple(weights0, nullptr, n0, -1), std::make_tuple(weights1, nullptr, n1, -1));
   }
 SWIGINTERN void emd__EMD_Sl_float_Sc_emd_DefaultArrayEvent_Sc_emd_EuclideanArrayDistance_Sg__npy_flows(emd::_EMD< float,emd::DefaultArrayEvent,emd::EuclideanArrayDistance > *self,float **arr_out,std::ptrdiff_t *n0,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,218,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,169,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -6366,7 +6366,7 @@ SWIGINTERN void emd__EMD_Sl_float_Sc_emd_DefaultArrayEvent_Sc_emd_EuclideanArray
       values[i] *= self->scale();
   }
 SWIGINTERN void emd__EMD_Sl_float_Sc_emd_DefaultArrayEvent_Sc_emd_EuclideanArrayDistance_Sg__npy_dists(emd::_EMD< float,emd::DefaultArrayEvent,emd::EuclideanArrayDistance > *self,float **arr_out,std::ptrdiff_t *n0,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,218,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,169,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -6411,7 +6411,7 @@ SWIGINTERN double emd__EMD_Sl_double_Sc_emd_DefaultArray2Event_Sc_emd_YPhiArrayD
     return (*self)(std::make_tuple(weights0, nullptr, n0, -1), std::make_tuple(weights1, nullptr, n1, -1));
   }
 SWIGINTERN void emd__EMD_Sl_double_Sc_emd_DefaultArray2Event_Sc_emd_YPhiArrayDistance_Sg__npy_flows(emd::_EMD< double,emd::DefaultArray2Event,emd::YPhiArrayDistance > *self,double **arr_out,std::ptrdiff_t *n0,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,218,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,169,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -6427,7 +6427,7 @@ SWIGINTERN void emd__EMD_Sl_double_Sc_emd_DefaultArray2Event_Sc_emd_YPhiArrayDis
       values[i] *= self->scale();
   }
 SWIGINTERN void emd__EMD_Sl_double_Sc_emd_DefaultArray2Event_Sc_emd_YPhiArrayDistance_Sg__npy_dists(emd::_EMD< double,emd::DefaultArray2Event,emd::YPhiArrayDistance > *self,double **arr_out,std::ptrdiff_t *n0,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,218,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,169,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -6472,7 +6472,7 @@ SWIGINTERN float emd__EMD_Sl_float_Sc_emd_DefaultArray2Event_Sc_emd_YPhiArrayDis
     return (*self)(std::make_tuple(weights0, nullptr, n0, -1), std::make_tuple(weights1, nullptr, n1, -1));
   }
 SWIGINTERN void emd__EMD_Sl_float_Sc_emd_DefaultArray2Event_Sc_emd_YPhiArrayDistance_Sg__npy_flows(emd::_EMD< float,emd::DefaultArray2Event,emd::YPhiArrayDistance > *self,float **arr_out,std::ptrdiff_t *n0,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,218,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,169,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -6488,7 +6488,7 @@ SWIGINTERN void emd__EMD_Sl_float_Sc_emd_DefaultArray2Event_Sc_emd_YPhiArrayDist
       values[i] *= self->scale();
   }
 SWIGINTERN void emd__EMD_Sl_float_Sc_emd_DefaultArray2Event_Sc_emd_YPhiArrayDistance_Sg__npy_dists(emd::_EMD< float,emd::DefaultArray2Event,emd::YPhiArrayDistance > *self,float **arr_out,std::ptrdiff_t *n0,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,218,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,169,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -6516,7 +6516,7 @@ SWIGINTERN void emd_PairwiseEMD_Sl_emd__EMD_Sl_double_Sc_emd_DefaultArrayEvent_S
     self->preprocess_back_event();
   }
 SWIGINTERN void emd_PairwiseEMD_Sl_emd__EMD_Sl_double_Sc_emd_DefaultArrayEvent_Sc_emd_EuclideanArrayDistance_Sg__Sc_double_Sg__npy_emds(emd::PairwiseEMD< emd::_EMD< double,emd::DefaultArrayEvent,emd::EuclideanArrayDistance >,double > *self,double **arr_out,std::ptrdiff_t *n0,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,218,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,169,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->nevA();
   *n1 = self->nevB();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -6532,7 +6532,7 @@ SWIGINTERN void emd_PairwiseEMD_Sl_emd__EMD_Sl_double_Sc_emd_DefaultArrayEvent_S
     if (self->storage() != emd::EMDPairsStorage::FlattenedSymmetric)
       throw std::runtime_error("flattened emds only available with flattened symmetric storage");
 
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->num_emds();
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -6559,7 +6559,7 @@ SWIGINTERN void emd_PairwiseEMD_Sl_emd__EMD_Sl_float_Sc_emd_DefaultArrayEvent_Sc
     self->preprocess_back_event();
   }
 SWIGINTERN void emd_PairwiseEMD_Sl_emd__EMD_Sl_float_Sc_emd_DefaultArrayEvent_Sc_emd_EuclideanArrayDistance_Sg__Sc_float_Sg__npy_emds(emd::PairwiseEMD< emd::_EMD< float,emd::DefaultArrayEvent,emd::EuclideanArrayDistance >,float > *self,float **arr_out,std::ptrdiff_t *n0,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,218,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,169,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->nevA();
   *n1 = self->nevB();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -6575,7 +6575,7 @@ SWIGINTERN void emd_PairwiseEMD_Sl_emd__EMD_Sl_float_Sc_emd_DefaultArrayEvent_Sc
     if (self->storage() != emd::EMDPairsStorage::FlattenedSymmetric)
       throw std::runtime_error("flattened emds only available with flattened symmetric storage");
 
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->num_emds();
   size_t nbytes = size_t(*n0)*sizeof(float);
   *arr_out0 = (float *) malloc(nbytes);
@@ -6602,7 +6602,7 @@ SWIGINTERN void emd_PairwiseEMD_Sl_emd__EMD_Sl_double_Sc_emd_DefaultArray2Event_
     self->preprocess_back_event();
   }
 SWIGINTERN void emd_PairwiseEMD_Sl_emd__EMD_Sl_double_Sc_emd_DefaultArray2Event_Sc_emd_YPhiArrayDistance_Sg__Sc_double_Sg__npy_emds(emd::PairwiseEMD< emd::_EMD< double,emd::DefaultArray2Event,emd::YPhiArrayDistance >,double > *self,double **arr_out,std::ptrdiff_t *n0,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,218,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,169,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->nevA();
   *n1 = self->nevB();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -6618,7 +6618,7 @@ SWIGINTERN void emd_PairwiseEMD_Sl_emd__EMD_Sl_double_Sc_emd_DefaultArray2Event_
     if (self->storage() != emd::EMDPairsStorage::FlattenedSymmetric)
       throw std::runtime_error("flattened emds only available with flattened symmetric storage");
 
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->num_emds();
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -6645,7 +6645,7 @@ SWIGINTERN void emd_PairwiseEMD_Sl_emd__EMD_Sl_float_Sc_emd_DefaultArray2Event_S
     self->preprocess_back_event();
   }
 SWIGINTERN void emd_PairwiseEMD_Sl_emd__EMD_Sl_float_Sc_emd_DefaultArray2Event_Sc_emd_YPhiArrayDistance_Sg__Sc_float_Sg__npy_emds(emd::PairwiseEMD< emd::_EMD< float,emd::DefaultArray2Event,emd::YPhiArrayDistance >,float > *self,float **arr_out,std::ptrdiff_t *n0,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,218,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,169,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->nevA();
   *n1 = self->nevB();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -6661,7 +6661,7 @@ SWIGINTERN void emd_PairwiseEMD_Sl_emd__EMD_Sl_float_Sc_emd_DefaultArray2Event_S
     if (self->storage() != emd::EMDPairsStorage::FlattenedSymmetric)
       throw std::runtime_error("flattened emds only available with flattened symmetric storage");
 
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,186,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,137,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->num_emds();
   size_t nbytes = size_t(*n0)*sizeof(float);
   *arr_out0 = (float *) malloc(nbytes);
