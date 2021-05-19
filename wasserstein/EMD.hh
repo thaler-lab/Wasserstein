@@ -49,10 +49,17 @@
 #include <omp.h>
 #endif
 
-// Wasserstein headers
+// Wasserstein headers (required for EMD functionality)
+#include "internal/EMDBase.hh"
 #include "internal/Event.hh"
+#include "internal/ExternalEMDHandler.hh"
 #include "internal/NetworkSimplex.hh"
 #include "internal/PairwiseDistance.hh"
+
+// Wasserstein headers (included for completeness)
+#include "internal/CenterWeightedCentroid.hh"
+#include "internal/CorrelationDimension.hh"
+
 
 BEGIN_EMD_NAMESPACE
 
@@ -63,7 +70,7 @@ BEGIN_EMD_NAMESPACE
 ////////////////////////////////////////////////////////////////////////////////
 
 template<typename Value,
-         template<typename> class _Event,
+         template<typename> class _Event = DefaultEvent,
          template<typename> class _PairwiseDistance = DefaultPairwiseDistance,
          template<typename> class _NetworkSimplex = DefaultNetworkSimplex>
 class _EMD : public EMDBase<Value> {
@@ -120,7 +127,7 @@ public:
   _EMD(Value R = 1, Value beta = 1, bool norm = false,
        bool do_timing = false, bool external_dists = false,
        unsigned n_iter_max = 100000,
-       Value epsilon_large_factor = 10000,
+       Value epsilon_large_factor = 1000,
        Value epsilon_small_factor = 1) :
 
     // base class initialization
@@ -368,15 +375,6 @@ private:
 
 }; // EMD
 
-// EMD is essentially _EMD<double>
-template<template<typename> class Event,
-         template<typename> class PairwiseDistance>
-using EMD = _EMD<double, Event, PairwiseDistance>;
-
-// EMDFloat is essentiall _EMD<float>
-template<template<typename> class Event,
-         template<typename> class PairwiseDistance>
-using EMDFloat32 = _EMD<float, Event, PairwiseDistance>;
 
 ////////////////////////////////////////////////////////////////////////////////
 // PairwiseEMD - Facilitates computing EMDs between all event-pairs in a set

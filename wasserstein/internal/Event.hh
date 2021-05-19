@@ -44,6 +44,7 @@
 #include <tuple>
 
 #include "EMDUtils.hh"
+#include "EuclideanParticle.hh"
 
 BEGIN_EMD_NAMESPACE
 
@@ -116,11 +117,11 @@ protected:
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// GenericEvent - an event constructed from a vector of "particles"
+// EuclideanParticleEvent - an event constructed from a vector of "particles"
 ////////////////////////////////////////////////////////////////////////////////
 
 template<class _Particle>
-struct GenericEvent : public EventBase<std::vector<typename _Particle::value_type>,
+struct EuclideanParticleEvent : public EventBase<std::vector<typename _Particle::value_type>,
                                        std::vector<_Particle>> {
 
   typedef _Particle Particle;
@@ -128,8 +129,8 @@ struct GenericEvent : public EventBase<std::vector<typename _Particle::value_typ
   typedef std::vector<Particle> ParticleCollection;
   typedef std::vector<value_type> WeightCollection;
 
-  GenericEvent() {}
-  GenericEvent(const ParticleCollection & particles, value_type event_weight = 1) :
+  EuclideanParticleEvent() {}
+  EuclideanParticleEvent(const ParticleCollection & particles, value_type event_weight = 1) :
     EventBase<WeightCollection, ParticleCollection>(particles, event_weight)
   {
     // weights are assumed to be contained in the particles as public methods
@@ -147,21 +148,11 @@ struct GenericEvent : public EventBase<std::vector<typename _Particle::value_typ
 
   static std::string name() {
     std::ostringstream oss;
-    oss << "GenericEvent<" << Particle::name() << '>';
+    oss << "EuclideanParticleEvent<" << Particle::name() << '>';
     return oss.str();
   }
 
-}; // GenericEvent
-
-
-////////////////////////////////////////////////////////////////////////////////
-// EuclideanEvent - consists of double-precision euclidean particles
-////////////////////////////////////////////////////////////////////////////////
-
-using EuclideanEvent2D = GenericEvent<EuclideanParticle2D<default_value_type>>;
-using EuclideanEvent3D = GenericEvent<EuclideanParticle3D<default_value_type>>;
-template<unsigned N>
-using EuclideanEventND = GenericEvent<EuclideanParticleND<N, default_value_type>>;
+}; // EuclideanParticleEvent
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -216,7 +207,7 @@ private:
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// ArrayParticleCollectionBase - implements a "smart" 2D array from a plain array
+// ArrayParticleCollection - implements a "smart" 2D array from a plain array
 ////////////////////////////////////////////////////////////////////////////////
 
 template<typename Value>
@@ -340,7 +331,7 @@ struct ArrayEvent : public EventBase<ArrayWeightCollection<Value>, _ParticleColl
   {
     // set total weight
     for (index_type i = 0; i < size; i++)
-      this->total_weight_ += weight_array[i];
+      this->total_weight() += weight_array[i];
   }
 
   // constructor from single argument (for use with Python)
@@ -354,7 +345,7 @@ struct ArrayEvent : public EventBase<ArrayWeightCollection<Value>, _ParticleColl
 
   // ensure that we don't modify original array
   void normalize_weights() {
-    this->weights_.copy();
+    this->weights().copy();
     Base::normalize_weights();
   }
 
@@ -376,12 +367,6 @@ struct ArrayEvent : public EventBase<ArrayWeightCollection<Value>, _ParticleColl
   }
 
 }; // ArrayEvent
-
-template<typename V>
-using DefaultArrayEvent = ArrayEvent<V, ArrayParticleCollection>;
-
-template<typename V>
-using DefaultArray2Event = ArrayEvent<V, Array2ParticleCollection>;
 
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -39,17 +39,9 @@
 #define WASSERSTEIN_EMDUTILS_HH
 
 // C++ standard library
-#include <algorithm>
-#include <array>
-#include <chrono>
 #include <cstddef>
-#include <cstdlib>
-#include <cstring>
-#include <mutex>
-#include <sstream>
 #include <stdexcept>
 #include <string>
-#include <type_traits>
 #include <vector>
 
 // namespace macros
@@ -73,12 +65,25 @@
 #define WASSERSTEIN_INDEX_TYPE std::ptrdiff_t
 #endif
 
-using default_value_type = WASSERSTEIN_DEFAULT_VALUE_TYPE;
-using index_type = WASSERSTEIN_INDEX_TYPE;
 
 BEGIN_EMD_NAMESPACE
 
-// enum with possible return statuses from the NetworkSimplex solver
+using default_value_type = WASSERSTEIN_DEFAULT_VALUE_TYPE;
+using index_type = WASSERSTEIN_INDEX_TYPE;
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Constants
+////////////////////////////////////////////////////////////////////////////////
+
+const double PI = 3.14159265358979323846;
+const double TWOPI = 2*PI;
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Enums
+////////////////////////////////////////////////////////////////////////////////
+
 enum class EMDStatus { 
   Success = 0,
   Empty = 1,
@@ -87,15 +92,179 @@ enum class EMDStatus {
   MaxIterReached = 4,
   Infeasible = 5
 };
-
-// enum for which event got an extra particle
 enum class ExtraParticle { Neither = -1, Zero = 0, One = 1 };
-
-// records how the emd pairs are being stored
 enum class EMDPairsStorage { Full, FullSymmetric, FlattenedSymmetric, External };
 
-const double PI = 3.14159265358979323846;
-const double TWOPI = 2*PI;
+
+////////////////////////////////////////////////////////////////////////////////
+// Base classes
+////////////////////////////////////////////////////////////////////////////////
+
+template<typename Value>
+class EMDBase;
+
+template<class WeightCollection, class ParticleCollection>
+struct EventBase;
+
+template <class PairwiseDistance, class ParticleCollection, typename Value>
+class PairwiseDistanceBase;
+
+
+////////////////////////////////////////////////////////////////////////////////
+// NetworkSimplex
+////////////////////////////////////////////////////////////////////////////////
+
+template<typename Value, typename Arc, typename Node, typename Bool>
+class NetworkSimplex;
+
+template<typename Value>
+using DefaultNetworkSimplex = NetworkSimplex<Value, index_type, int, char>;
+
+
+////////////////////////////////////////////////////////////////////////////////
+// EMD classes
+////////////////////////////////////////////////////////////////////////////////
+
+template<typename Value,
+         template<typename> class Event,
+         template<typename> class PairwiseDistance,
+         template<typename> class NetworkSimplex>
+class _EMD;
+
+// _EMD using double precision
+template<template<typename> class Event,
+         template<typename> class PairwiseDistance>
+using EMDFloat64 = _EMD<double, Event, PairwiseDistance, DefaultNetworkSimplex>;
+
+// _EMD using single precision
+template<template<typename> class Event,
+         template<typename> class PairwiseDistance>
+using EMDFloat32 = _EMD<float, Event, PairwiseDistance, DefaultNetworkSimplex>;
+
+// EMD is alias for EMDFloat64
+template<template<typename> class Event,
+         template<typename> class PairwiseDistance>
+using EMD = EMDFloat64<Event, PairwiseDistance>;
+
+template<class EMD, typename Value>
+class PairwiseEMD;
+
+
+////////////////////////////////////////////////////////////////////////////////
+// EuclideanParticle classes
+////////////////////////////////////////////////////////////////////////////////
+
+template<unsigned N, typename Value>
+struct EuclideanParticleND;
+
+template<typename Value>
+struct EuclideanParticle2D;
+
+template<typename Value>
+struct EuclideanParticle3D;
+
+
+////////////////////////////////////////////////////////////////////////////////
+// PairwiseDistance classes
+////////////////////////////////////////////////////////////////////////////////
+
+template<typename Value>
+class DefaultPairwiseDistance;
+
+template<typename Value>
+class EuclideanArrayDistance;
+
+template<typename Value>
+class YPhiArrayDistance;
+
+template<class _Particle>
+class EuclideanParticleDistance;
+
+using EuclideanDistance2D = EuclideanParticleDistance<EuclideanParticle2D<default_value_type>>;
+using EuclideanDistance3D = EuclideanParticleDistance<EuclideanParticle3D<default_value_type>>;
+template<unsigned N>
+using EuclideanDistanceND = EuclideanParticleDistance<EuclideanParticleND<N, default_value_type>>;
+
+
+////////////////////////////////////////////////////////////////////////////////
+// [Weight/Particle]Collection classes
+////////////////////////////////////////////////////////////////////////////////
+
+template<typename Value>
+struct ArrayWeightCollection;
+
+template<typename Value>
+struct ArrayParticleCollection;
+
+template<typename Value>
+struct Array2ParticleCollection;
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Event classes
+////////////////////////////////////////////////////////////////////////////////
+
+// Event using Value vectors to hold weights and particles
+template<typename Value>
+struct VectorEvent;
+
+template<typename Value>
+using DefaultEvent = VectorEvent<Value>;
+
+// Event containing weights and particles as smart contiguous arrays
+template<typename Value, template<typename> class ParticleCollection>
+struct ArrayEvent;
+
+template<typename Value>
+using DefaultArrayEvent = ArrayEvent<Value, ArrayParticleCollection>;
+
+template<typename Value>
+using DefaultArray2Event = ArrayEvent<Value, Array2ParticleCollection>;
+
+// Event composed of EuclideanParticle
+template<class Particle>
+struct EuclideanParticleEvent;
+
+using EuclideanEvent2D = EuclideanParticleEvent<EuclideanParticle2D<default_value_type>>;
+using EuclideanEvent3D = EuclideanParticleEvent<EuclideanParticle3D<default_value_type>>;
+template<unsigned N>
+using EuclideanEventND = EuclideanParticleEvent<EuclideanParticleND<N, default_value_type>>;
+
+struct FastJetEventBase;
+struct FastJetParticleWeight;
+
+template<class ParticleWeight>
+struct FastJetEvent;
+
+
+////////////////////////////////////////////////////////////////////////////////
+// ExternalEMDHandler classes
+////////////////////////////////////////////////////////////////////////////////
+
+template<typename Value>
+class ExternalEMDHandler;
+
+template<class Transform, typename Value>
+class Histogram1DHandler;
+
+template<typename Value>
+class CorrelationDimension;
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Preprocessor classes
+////////////////////////////////////////////////////////////////////////////////
+
+template<class EMD>
+class Preprocessor;
+
+template<class EMD>
+class CenterWeightedCentroid;
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Utility functions
+////////////////////////////////////////////////////////////////////////////////
 
 // function that raises appropriate error from a status code
 inline void check_emd_status(EMDStatus status) {
@@ -129,272 +298,6 @@ void free_vector(std::vector<T> & vec) {
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// EMDBase - base class to reduce wrapper code for simple EMD access functions
-////////////////////////////////////////////////////////////////////////////////
-
-template<typename Value>
-class EMDBase {
-protected:
-
-  // boolean options
-  bool norm_, do_timing_, external_dists_;
-
-  // number of particles
-  index_type n0_, n1_;
-  ExtraParticle extra_;
-
-  // emd value and status
-  Value weightdiff_, scale_, emd_;
-  EMDStatus status_;
-
-  // timing
-  std::chrono::steady_clock::time_point start_;
-  double duration_;
-
-public:
-
-  // constructor from two boolean options
-  EMDBase(bool norm = false, bool do_timing = false, bool external_dists = false) :
-    norm_(norm),
-    do_timing_(do_timing),
-    external_dists_(external_dists),
-    n0_(0), n1_(0),
-    extra_(ExtraParticle::Neither),
-    emd_(0),
-    status_(EMDStatus::Empty),
-    duration_(0)
-  {}
-
-  // virtual desctructor
-  virtual ~EMDBase() {}
-
-  // the norm setting
-  bool norm() const { return norm_; }
-  void set_norm(bool norm) { norm_ = norm; } 
-
-  // timing setting
-  bool do_timing() const { return do_timing_; }
-  void set_do_timing(bool timing) { do_timing_ = timing; }
-
-  // get/set whether we're currently setup to use external distances
-  bool external_dists() const { return external_dists_; }
-  void set_external_dists(bool exdists) { external_dists_ = exdists; }
-
-  // number of particles in each event (after possible addition of extra particles)
-  index_type n0() const { return n0_; }
-  index_type n1() const { return n1_; }
-
-  // which event, 0 or 1, got an extra particle (-1 if no event got one)
-  ExtraParticle extra() const { return extra_; }
-
-  // returns emd scale, value and status
-  Value emd() const { return emd_; }
-  EMDStatus status() const { return status_; }
-  Value weightdiff() const { return weightdiff_; }
-  Value scale() const { return scale_; }
-
-  // return timing info
-  double duration() const { return duration_; }
-
-protected:
-
-  // duration of emd computation in seconds
-  void start_timing() { start_ = std::chrono::steady_clock::now(); }
-  double store_duration() {
-    auto diff(std::chrono::steady_clock::now() - start_);
-    duration_ = std::chrono::duration_cast<std::chrono::duration<double>>(diff).count();
-    return duration_;
-  }
-
-}; // EMDBase
-
-
-////////////////////////////////////////////////////////////////////////////////
-// ExternalEMDHandler - base class for making an emd operation thread-safe
-////////////////////////////////////////////////////////////////////////////////
-
-template<typename Value>
-class ExternalEMDHandler {
-public:
-
-  ExternalEMDHandler() : num_calls_(0) {}
-  virtual ~ExternalEMDHandler() {}
-
-  virtual std::string description() const = 0;
-  std::size_t num_calls() const { return num_calls_; }
-
-  // call external handler on a single emd value
-  void operator()(Value emd, Value weight = 1) {
-    std::lock_guard<std::mutex> handler_guard(mutex_);
-    handle(emd, weight);
-    num_calls_++;
-  }
-
-  // call emd handler on several emds at once (given as a vector)
-  void compute(const std::vector<Value> & emds, const std::vector<Value> & weights = {}) {
-
-    if (emds.size() != weights.size()) {
-      if (weights.size() == 0)
-        compute(emds.data(), emds.size());
-      else throw std::invalid_argument("length of weights must match that of emds or be 0");
-    }
-    else
-      compute(emds.data(), emds.size(), weights.data());
-  }
-
-  // call emd handler on several emds at once (given as raw pointers)
-  void compute(const Value * emds, std::size_t num_emds, const Value * weights = nullptr) {
-    std::lock_guard<std::mutex> handler_guard(mutex_);
-
-    if (weights == nullptr)
-      for (std::size_t i = 0; i < num_emds; i++)
-        handle(emds[i], 1);
-    else
-      for (std::size_t i = 0; i < num_emds; i++)
-        handle(emds[i], weights[i]);
-
-    num_calls_ += num_emds;
-  }
-
-  // here, weights are length nev and emds are length nev(nev-1)/2, given as vectors
-  void compute_symmetric(const std::vector<Value> & emds, const std::vector<Value> & weights = {}) {
-
-    if (emds.size() != weights.size()*(weights.size() - 1)/2) {
-      if (weights.size() == 0)
-        compute_symmetric(emds.data(), emds.size());
-      else throw std::invalid_argument("length of emds should be length of weights choose 2");
-    }
-    else
-      compute_symmetric(emds.data(), weights.size(), weights.data());
-  }
-
-  // here, weights are length nev and emds are length nev(nev-1)/2, given as raw pointers
-  void compute_symmetric(const Value * emds, std::size_t nev, const Value * weights = nullptr) {
-    if (weights == nullptr)
-      compute(emds, nev*(nev - 1)/2);
-
-    else {
-      std::lock_guard<std::mutex> handler_guard(mutex_);
-      for (std::size_t i = 0, k = 0; i < nev; i++) {
-        Value weight_i(weights[i]);
-        for (std::size_t j = i + 1; j < nev; j++, k++)
-          handle(emds[k], weight_i * weights[j]);
-      }
-      num_calls_ += nev*(nev - 1)/2;
-    }
-  }
-
-protected:
-
-  virtual void handle(Value, Value) = 0; 
-
-private:
-
-  std::mutex mutex_;
-  std::size_t num_calls_;
-
-}; // ExternalEMDHandler
-
-
-////////////////////////////////////////////////////////////////////////////////
-// EuclideanParticles - structs that work with the euclidean pairwise distance
-////////////////////////////////////////////////////////////////////////////////
-
-template<unsigned N, typename Value>
-struct EuclideanParticleND {
-
-  typedef Value value_type;
-  typedef std::array<Value, N> Coords;
-  typedef EuclideanParticleND<N, Value> Self;
-
-  // constructor from weight and coord array
-  EuclideanParticleND(Value weight, const Coords & xs) : weight_(weight), xs_(xs) {}
-
-  Value weight() const { return weight_; }
-  Coords & coords() { return xs_; }
-  const Coords & coords() const { return xs_; }
-
-  #ifndef SWIG_PREPROCESSOR
-  const Value & operator[](index_type i) const { return xs_[i]; }
-  Value & operator[](index_type i) { return xs_[i]; }
-  #endif
-
-  index_type dimension() const { return coords().size(); }
-
-  static Value plain_distance(const Self & p0, const Self & p1) {
-    Value d(0);
-    for (unsigned i = 0; i < N; i++) {
-      Value dx(p0.xs_[i] - p1.xs_[i]);
-      d += dx*dx;
-    }
-    return d;
-  }
-
-  static std::string name() {
-    std::ostringstream oss;
-    oss << "EuclideanParticle" << N << "D<" << sizeof(Value) << "-byte float>";
-    return oss.str();
-  }
-  static std::string distance_name() {
-    std::ostringstream oss;
-    oss << "EuclideaDistance" << N << 'D';
-    return oss.str();
-  }
-
-protected:
-
-  // store particle info
-  Value weight_;
-  Coords xs_;
-
-}; // EuclideanParticleND
-
-
-template<typename Value>
-struct EuclideanParticle2D : public EuclideanParticleND<2, Value> {
-
-  typedef Value value_type;
-  typedef EuclideanParticleND<2, Value> Base;
-  typedef EuclideanParticle2D<Value> Self;
-
-  // constructor from weight, x, y
-  EuclideanParticle2D(Value weight, Value x, Value y) :
-    Base(weight, {x, y}) {}
-  EuclideanParticle2D(Value weight, const std::array<Value, 2> & xs) :
-    Base(weight, xs) {}
-
-  // overload this to avoid for loop
-  static Value plain_distance(const Self & p0, const Self & p1) {
-    Value dx(p0.xs_[0] - p1.xs_[0]), dy(p0.xs_[1] - p1.xs_[1]);
-    return dx*dx + dy*dy;
-  }
-
-}; // EuclideanParticle2D
-
-
-template<typename Value>
-struct EuclideanParticle3D : public EuclideanParticleND<3, Value> {
-
-  typedef Value value_type;
-  typedef EuclideanParticleND<3, Value> Base;
-  typedef EuclideanParticle3D<Value> Self;
-
-  // constructor from weight, x, y
-  EuclideanParticle3D(Value weight, Value x, Value y, Value z) :
-    Base(weight, {x, y, z}) {}
-  EuclideanParticle3D(Value weight, const std::array<Value, 3> & xs) :
-    Base(weight, xs) {}
-
-  // overload this to avoid for loop
-  static Value plain_distance(const Self & p0, const Self & p1) {
-    Value dx(p0.xs_[0] - p1.xs_[0]), dy(p0.xs_[1] - p1.xs_[1]), dz(p0.xs_[2] - p1.xs_[2]);
-    return dx*dx + dy*dy + dz*dz;
-  }
-
-}; // EuclideanParticle3D
-
-
-////////////////////////////////////////////////////////////////////////////////
 // Preprocessor - base class for preprocessing operations
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -414,70 +317,6 @@ public:
   virtual Event & operator()(Event & event) const { return event; };
 
 }; // Preprocessor
-
-
-// forward declare fastjet classes
-struct FastJetEventBase;
-struct FastJetParticleWeight;
-template<class ParticleWeight> struct FastJetEvent;
-
-// center generic event according to weighted centroid
-template<class EMD>
-class CenterWeightedCentroid : public Preprocessor<typename EMD::Self> {
-public:
-
-  typedef typename EMD::Event Event;
-
-  std::string description() const { return "Center according to weighted centroid"; }
-  Event & operator()(Event & event) const {
-    return center(event);
-  }
-
-private:
-
-  typedef typename Event::WeightCollection WeightCollection;
-  typedef typename Event::ParticleCollection ParticleCollection;
-  typedef typename ParticleCollection::const_iterator const_iterator;
-  typedef typename ParticleCollection::iterator iterator;
-
-  // this version will be used for everything that's not FastJetEvent
-  template<class E>
-  typename std::enable_if<!std::is_base_of<FastJetEventBase, E>::value, E &>::type
-  center(E & event) const {
-    static_assert(std::is_same<E, Event>::value, "Event must match that of the EMD class");
-    event.ensure_weights();
-
-    // determine weighted centroid
-    index_type dim(event.dimension());
-    std::vector<typename Event::value_type> coords(dim, 0);
-
-    index_type k(0);
-    for (const_iterator particle = event.particles().cbegin(), end = event.particles().cend();
-         particle != end; ++particle) {
-      for (unsigned i = 0; i < dim; i++) 
-        coords[i] += event.weights()[k] * particle[i];
-      k++;
-    }
-
-    for (unsigned i = 0; i < dim; i++)
-      coords[i] /= event.total_weight();
-
-    // center the particles
-    for (iterator particle = event.particles().begin(), end = event.particles().end();
-         particle != end; ++particle)
-      for (unsigned i = 0; i < dim; i++) {
-        particle[i] -= coords[i];
-      }
-
-    return event;
-  }
-
-  // enable overloaded operator for FastJetEvent
-#ifdef WASSERSTEIN_FASTJET
-  FastJetEvent<typename EMD::ParticleWeight> & center(FastJetEvent<typename EMD::ParticleWeight> & event) const;
-#endif
-
-}; // CenterWeightedCentroid
 
 END_EMD_NAMESPACE
 

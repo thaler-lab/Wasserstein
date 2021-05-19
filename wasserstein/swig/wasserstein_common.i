@@ -59,7 +59,6 @@
 
 // the main library headers
 #include "wasserstein/EMD.hh"
-#include "wasserstein/CorrelationDimension.hh"
 
 using EMDNAMESPACE::DefaultNetworkSimplex;
 %}
@@ -155,6 +154,8 @@ namespace EMDNAMESPACE {
 
 // include EMD utilities
 %include "wasserstein/internal/EMDUtils.hh"
+%include "wasserstein/internal/EMDBase.hh"
+%include "wasserstein/internal/ExternalEMDHandler.hh"
 
 namespace EMDNAMESPACE {
 
@@ -168,6 +169,7 @@ namespace EMDNAMESPACE {
 
 // include main EMD code and histogram code
 %include "wasserstein/EMD.hh"
+%include "wasserstein/internal/CenterWeightedCentroid.hh"
 %include "wasserstein/internal/HistogramUtils.hh"
 
 // makes python class printable from a description method
@@ -353,7 +355,7 @@ namespace EMDNAMESPACE {
 }
 
 // include correlation dimension
-%include "wasserstein/CorrelationDimension.hh"
+%include "wasserstein/internal/CorrelationDimension.hh"
 
 namespace EMDNAMESPACE {
   %extend CorrelationDimension<double> { CORRELATION_DIMENSION_NUMPY_FUNCS(double) }

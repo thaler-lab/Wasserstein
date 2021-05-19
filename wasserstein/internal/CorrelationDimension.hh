@@ -46,7 +46,7 @@
 
 #include <limits>
 
-#include "internal/HistogramUtils.hh"
+#include "HistogramUtils.hh"
 
 BEGIN_EMD_NAMESPACE
 

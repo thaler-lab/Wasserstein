@@ -137,7 +137,11 @@ SOFTWARE.
 #include <cmath>
 #include <iostream>
 #include <limits>
+#include <sstream>
+#include <stdexcept>
+#include <string>
 #include <utility>
+#include <vector>
 
 #include "EMDUtils.hh"
 
@@ -774,9 +778,6 @@ private:
   }
 
 }; // NetworkSimplex
-
-template<typename V>
-using DefaultNetworkSimplex = NetworkSimplex<V, index_type, int, char>;
 
 END_EMD_NAMESPACE
 

@@ -56,7 +56,7 @@
 #include <boost/archive/text_oarchive.hpp>
 #endif
 
-#include "EMDUtils.hh"
+#include "ExternalEMDHandler.hh"
 
 BEGIN_EMD_NAMESPACE
 

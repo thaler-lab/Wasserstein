@@ -601,12 +601,12 @@ def _store_events(pairwise_emd, events, event_weights, gdim, mask):
         pairwise_emd._add_event(weights, coords, event_weight)
 
 class EMDFloat64(EMDBaseFloat64):
-    r"""Proxy of C++ emd::_EMD< double,DefaultArrayEvent,EuclideanArrayDistance > class."""
+    r"""Proxy of C++ emd::_EMD< double,emd::DefaultArrayEvent,emd::EuclideanArrayDistance > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
-    def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=10000, epsilon_small_factor=1):
-        r"""__init__(EMDFloat64 self, double R=1, double beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, unsigned int n_iter_max=100000, double epsilon_large_factor=10000, double epsilon_small_factor=1) -> EMDFloat64"""
+    def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=1000, epsilon_small_factor=1):
+        r"""__init__(EMDFloat64 self, double R=1, double beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, unsigned int n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1) -> EMDFloat64"""
         _wasserstein.EMDFloat64_swiginit(self, _wasserstein.new_EMDFloat64(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
     __swig_destroy__ = _wasserstein.delete_EMDFloat64
     R = _swig_new_instance_method(_wasserstein.EMDFloat64_R)
@@ -634,12 +634,12 @@ class EMDFloat64(EMDBaseFloat64):
 _wasserstein.EMDFloat64_swigregister(EMDFloat64)
 
 class EMDFloat32(EMDBaseFloat32):
-    r"""Proxy of C++ emd::_EMD< float,DefaultArrayEvent,EuclideanArrayDistance > class."""
+    r"""Proxy of C++ emd::_EMD< float,emd::DefaultArrayEvent,emd::EuclideanArrayDistance > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
-    def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=10000, epsilon_small_factor=1):
-        r"""__init__(EMDFloat32 self, float R=1, float beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, unsigned int n_iter_max=100000, float epsilon_large_factor=10000, float epsilon_small_factor=1) -> EMDFloat32"""
+    def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=1000, epsilon_small_factor=1):
+        r"""__init__(EMDFloat32 self, float R=1, float beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, unsigned int n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1) -> EMDFloat32"""
         _wasserstein.EMDFloat32_swiginit(self, _wasserstein.new_EMDFloat32(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
     __swig_destroy__ = _wasserstein.delete_EMDFloat32
     R = _swig_new_instance_method(_wasserstein.EMDFloat32_R)
@@ -667,12 +667,12 @@ class EMDFloat32(EMDBaseFloat32):
 _wasserstein.EMDFloat32_swigregister(EMDFloat32)
 
 class EMDYPhiFloat64(EMDBaseFloat64):
-    r"""Proxy of C++ emd::_EMD< double,DefaultArray2Event,YPhiArrayDistance > class."""
+    r"""Proxy of C++ emd::_EMD< double,emd::DefaultArray2Event,emd::YPhiArrayDistance > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
-    def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=10000, epsilon_small_factor=1):
-        r"""__init__(EMDYPhiFloat64 self, double R=1, double beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, unsigned int n_iter_max=100000, double epsilon_large_factor=10000, double epsilon_small_factor=1) -> EMDYPhiFloat64"""
+    def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=1000, epsilon_small_factor=1):
+        r"""__init__(EMDYPhiFloat64 self, double R=1, double beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, unsigned int n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1) -> EMDYPhiFloat64"""
         _wasserstein.EMDYPhiFloat64_swiginit(self, _wasserstein.new_EMDYPhiFloat64(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
     __swig_destroy__ = _wasserstein.delete_EMDYPhiFloat64
     R = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_R)
@@ -700,12 +700,12 @@ class EMDYPhiFloat64(EMDBaseFloat64):
 _wasserstein.EMDYPhiFloat64_swigregister(EMDYPhiFloat64)
 
 class EMDYPhiFloat32(EMDBaseFloat32):
-    r"""Proxy of C++ emd::_EMD< float,DefaultArray2Event,YPhiArrayDistance > class."""
+    r"""Proxy of C++ emd::_EMD< float,emd::DefaultArray2Event,emd::YPhiArrayDistance > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
-    def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=10000, epsilon_small_factor=1):
-        r"""__init__(EMDYPhiFloat32 self, float R=1, float beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, unsigned int n_iter_max=100000, float epsilon_large_factor=10000, float epsilon_small_factor=1) -> EMDYPhiFloat32"""
+    def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=1000, epsilon_small_factor=1):
+        r"""__init__(EMDYPhiFloat32 self, float R=1, float beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, unsigned int n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1) -> EMDYPhiFloat32"""
         _wasserstein.EMDYPhiFloat32_swiginit(self, _wasserstein.new_EMDYPhiFloat32(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
     __swig_destroy__ = _wasserstein.delete_EMDYPhiFloat32
     R = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_R)
@@ -733,12 +733,12 @@ class EMDYPhiFloat32(EMDBaseFloat32):
 _wasserstein.EMDYPhiFloat32_swigregister(EMDYPhiFloat32)
 
 class PairwiseEMDFloat64(object):
-    r"""Proxy of C++ emd::PairwiseEMD< emd::_EMD< double,DefaultArrayEvent,EuclideanArrayDistance >,double > class."""
+    r"""Proxy of C++ emd::PairwiseEMD< emd::_EMD< double,emd::DefaultArrayEvent,emd::EuclideanArrayDistance >,double > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
-        r"""__init__(PairwiseEMDFloat64 self, double R=1, double beta=1, bool norm=False, int num_threads=-1, index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, double epsilon_large_factor=10000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat64"""
+        r"""__init__(PairwiseEMDFloat64 self, double R=1, double beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, double epsilon_large_factor=10000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat64"""
         _wasserstein.PairwiseEMDFloat64_swiginit(self, _wasserstein.new_PairwiseEMDFloat64(*args, **kwargs))
     __swig_destroy__ = _wasserstein.delete_PairwiseEMDFloat64
     R = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_R)
@@ -857,12 +857,12 @@ class PairwiseEMDFloat64(object):
 _wasserstein.PairwiseEMDFloat64_swigregister(PairwiseEMDFloat64)
 
 class PairwiseEMDFloat32(object):
-    r"""Proxy of C++ emd::PairwiseEMD< emd::_EMD< float,DefaultArrayEvent,EuclideanArrayDistance >,float > class."""
+    r"""Proxy of C++ emd::PairwiseEMD< emd::_EMD< float,emd::DefaultArrayEvent,emd::EuclideanArrayDistance >,float > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
-        r"""__init__(PairwiseEMDFloat32 self, float R=1, float beta=1, bool norm=False, int num_threads=-1, index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, float epsilon_large_factor=10000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat32"""
+        r"""__init__(PairwiseEMDFloat32 self, float R=1, float beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, float epsilon_large_factor=10000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat32"""
         _wasserstein.PairwiseEMDFloat32_swiginit(self, _wasserstein.new_PairwiseEMDFloat32(*args, **kwargs))
     __swig_destroy__ = _wasserstein.delete_PairwiseEMDFloat32
     R = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_R)
@@ -981,12 +981,12 @@ class PairwiseEMDFloat32(object):
 _wasserstein.PairwiseEMDFloat32_swigregister(PairwiseEMDFloat32)
 
 class PairwiseEMDYPhiFloat64(object):
-    r"""Proxy of C++ emd::PairwiseEMD< emd::_EMD< double,DefaultArray2Event,YPhiArrayDistance >,double > class."""
+    r"""Proxy of C++ emd::PairwiseEMD< emd::_EMD< double,emd::DefaultArray2Event,emd::YPhiArrayDistance >,double > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
-        r"""__init__(PairwiseEMDYPhiFloat64 self, double R=1, double beta=1, bool norm=False, int num_threads=-1, index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, double epsilon_large_factor=10000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat64"""
+        r"""__init__(PairwiseEMDYPhiFloat64 self, double R=1, double beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, double epsilon_large_factor=10000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat64"""
         _wasserstein.PairwiseEMDYPhiFloat64_swiginit(self, _wasserstein.new_PairwiseEMDYPhiFloat64(*args, **kwargs))
     __swig_destroy__ = _wasserstein.delete_PairwiseEMDYPhiFloat64
     R = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_R)
@@ -1105,12 +1105,12 @@ class PairwiseEMDYPhiFloat64(object):
 _wasserstein.PairwiseEMDYPhiFloat64_swigregister(PairwiseEMDYPhiFloat64)
 
 class PairwiseEMDYPhiFloat32(object):
-    r"""Proxy of C++ emd::PairwiseEMD< emd::_EMD< float,DefaultArray2Event,YPhiArrayDistance >,float > class."""
+    r"""Proxy of C++ emd::PairwiseEMD< emd::_EMD< float,emd::DefaultArray2Event,emd::YPhiArrayDistance >,float > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
-        r"""__init__(PairwiseEMDYPhiFloat32 self, float R=1, float beta=1, bool norm=False, int num_threads=-1, index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, float epsilon_large_factor=10000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat32"""
+        r"""__init__(PairwiseEMDYPhiFloat32 self, float R=1, float beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, float epsilon_large_factor=10000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat32"""
         _wasserstein.PairwiseEMDYPhiFloat32_swiginit(self, _wasserstein.new_PairwiseEMDYPhiFloat32(*args, **kwargs))
     __swig_destroy__ = _wasserstein.delete_PairwiseEMDYPhiFloat32
     R = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_R)

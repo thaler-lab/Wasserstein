@@ -57,7 +57,8 @@ BEGIN_EMD_NAMESPACE
 ////////////////////////////////////////////////////////////////////////////////
 
 template <class PairwiseDistance, class ParticleCollection, typename Value>
-struct PairwiseDistanceBase {
+class PairwiseDistanceBase {
+public:
 
   typedef typename ParticleCollection::value_type Particle;
   typedef typename ParticleCollection::const_iterator ParticleIterator;
@@ -158,9 +159,10 @@ private:
 ////////////////////////////////////////////////////////////////////////////////
 
 template<typename Value>
-struct DefaultPairwiseDistance : public PairwiseDistanceBase<DefaultPairwiseDistance<Value>,
+class DefaultPairwiseDistance : public PairwiseDistanceBase<DefaultPairwiseDistance<Value>,
                                                              std::vector<Value>,
                                                              Value> {
+public:
 
   typedef Value value_type;
   typedef std::vector<value_type> ParticleCollection;
@@ -173,7 +175,6 @@ struct DefaultPairwiseDistance : public PairwiseDistanceBase<DefaultPairwiseDist
     return -1;
   }
 
-
 }; // DefaultPairwiseDistance
 
 
@@ -182,9 +183,10 @@ struct DefaultPairwiseDistance : public PairwiseDistanceBase<DefaultPairwiseDist
 ////////////////////////////////////////////////////////////////////////////////
 
 template<typename Value>
-struct EuclideanArrayDistance : public PairwiseDistanceBase<EuclideanArrayDistance<Value>,
+class EuclideanArrayDistance : public PairwiseDistanceBase<EuclideanArrayDistance<Value>,
                                                             ArrayParticleCollection<Value>,
                                                             Value> {
+public:
 
   typedef Value value_type;
   typedef ArrayParticleCollection<value_type> ParticleCollection;
@@ -216,9 +218,10 @@ struct EuclideanArrayDistance : public PairwiseDistanceBase<EuclideanArrayDistan
 ////////////////////////////////////////////////////////////////////////////////
 
 template<typename Value>
-struct YPhiArrayDistance : public PairwiseDistanceBase<YPhiArrayDistance<Value>,
+class YPhiArrayDistance : public PairwiseDistanceBase<YPhiArrayDistance<Value>,
                                                        Array2ParticleCollection<Value>,
                                                        Value> {
+public:
 
   typedef Value value_type;
   typedef Array2ParticleCollection<value_type> ParticleCollection;
@@ -238,18 +241,19 @@ struct YPhiArrayDistance : public PairwiseDistanceBase<YPhiArrayDistance<Value>,
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// GenericDistance - base class for a pairwise distance between two "particles"
+// EuclideanParticleDistance - base class for a pairwise distance between two "particles"
 ////////////////////////////////////////////////////////////////////////////////
 
 template<class _Particle>
-struct GenericDistance : public PairwiseDistanceBase<GenericDistance<_Particle>,
+class EuclideanParticleDistance : public PairwiseDistanceBase<EuclideanParticleDistance<_Particle>,
                                                      std::vector<_Particle>,
                                                      typename _Particle::value_type> {
+public:
 
   typedef _Particle Particle;
   typedef typename Particle::value_type value_type;
 
-  using PairwiseDistanceBase<GenericDistance<Particle>,
+  using PairwiseDistanceBase<EuclideanParticleDistance<Particle>,
                              std::vector<Particle>,
                              typename Particle::value_type>::PairwiseDistanceBase;
 
@@ -257,18 +261,7 @@ struct GenericDistance : public PairwiseDistanceBase<GenericDistance<_Particle>,
   static value_type plain_distance(const Particle & p0, const Particle & p1) {
     return Particle::plain_distance(p0, p1);
   }
-}; // GenericDistance
-
-
-////////////////////////////////////////////////////////////////////////////////
-// EuclideanDistance - between double-precision euclidean particles
-////////////////////////////////////////////////////////////////////////////////
-
-// euclidean distances with double-precision particles
-using EuclideanDistance2D = GenericDistance<EuclideanParticle2D<default_value_type>>;
-using EuclideanDistance3D = GenericDistance<EuclideanParticle3D<default_value_type>>;
-template<unsigned N>
-using EuclideanDistanceND = GenericDistance<EuclideanParticleND<N, default_value_type>>;
+}; // EuclideanParticleDistance
 
 END_EMD_NAMESPACE
 
