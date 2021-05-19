@@ -47,6 +47,7 @@
 // C++ standard library
 #include <iomanip>
 #include <iostream>
+#include <iterator>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -110,7 +111,7 @@ public:
               bool store_sym_emds_flattened = true,
               bool throw_on_error = false,
               unsigned n_iter_max = 100000,
-              Value epsilon_large_factor = 10000,
+              Value epsilon_large_factor = 1000,
               Value epsilon_small_factor = 1,
               std::ostream & os = std::cout) :
     num_threads_(determine_num_threads(num_threads)),
@@ -141,9 +142,6 @@ public:
   }
 
 #endif // SWIG
-
-  // virtual destructor
-  virtual ~PairwiseEMD() {}
 
   // add preprocessor to internal list
   template<template<class> class P, typename... Args>
@@ -218,6 +216,7 @@ public:
   // return a description of this object as a string
   std::string description(bool write_preprocessors = true) const {
     std::ostringstream oss;
+    oss << std::boolalpha;
     oss << "Pairwise" << emd_objs_[0].description(false) << '\n'
         << "  num_threads - " << num_threads_ << '\n'
         << "  print_every - ";
@@ -228,8 +227,8 @@ public:
       oss << "auto, " << std::abs(print_every_) << " total chunks";
 
     oss << '\n'
-        << "  store_sym_emds_flattened - " << (store_sym_emds_flattened_ ? "true\n" : "false\n")
-        << "  throw_on_error - " << (throw_on_error_ ? "true\n" : "false\n")
+        << "  store_sym_emds_flattened - " << store_sym_emds_flattened_ << '\n'
+        << "  throw_on_error - " << throw_on_error_ << '\n'
         << '\n'
         << (handler_ ? handler_->description() : "  Pairwise EMD distance matrix stored internally\n");
         
@@ -268,8 +267,16 @@ public:
   template<class ProtoEvent>
   void operator()(const std::vector<ProtoEvent> & proto_events,
                   const std::vector<Value> & event_weights = {}) {
-    init(proto_events.size());
-    store_proto_events(proto_events, event_weights);
+    assert(std::distance(proto_events.begin(), proto_events.end()) == proto_events.size());
+    operator()(proto_events.begin(), proto_events.end(), event_weights);
+  }
+
+  // version taking iterators
+  template<class ProtoEventIt>
+  void operator()(ProtoEventIt proto_events_first, ProtoEventIt proto_events_last,
+                  const std::vector<Value> & event_weights = {}) {
+    init(std::distance(proto_events_first, proto_events_last));
+    store_proto_events(proto_events_first, proto_events_last, event_weights);
     compute();
   }
 
@@ -279,11 +286,24 @@ public:
                   const std::vector<ProtoEventB> & proto_eventsB,
                   const std::vector<Value> & event_weightsA = {},
                   const std::vector<Value> & event_weightsB = {}) {
-    init(proto_eventsA.size(), proto_eventsB.size());
-    store_proto_events(proto_eventsA, event_weightsA);
-    store_proto_events(proto_eventsB, event_weightsB);
+    operator()(proto_eventsA.begin(), proto_eventsA.end(),
+               proto_eventsB.begin(), proto_eventsB.end(),
+               event_weightsA, event_weightsB);
+  }
+
+  // version taking iterators
+  template<class ProtoEventAIt, class ProtoEventBIt>
+  void operator()(ProtoEventAIt proto_eventsA_first, ProtoEventAIt proto_eventsA_last,
+                  ProtoEventBIt proto_eventsB_first, ProtoEventBIt proto_eventsB_last,
+                  const std::vector<Value> & event_weightsA = {},
+                  const std::vector<Value> & event_weightsB = {}) {
+    init(std::distance(proto_eventsA_first, proto_eventsA_last),
+         std::distance(proto_eventsB_first, proto_eventsB_last));
+    store_proto_events(proto_eventsA_first, proto_eventsA_last, event_weightsA);
+    store_proto_events(proto_eventsB_first, proto_eventsB_last, event_weightsB);
     compute();
   }
+
 
   // compute pairs among same set of events (no preprocessing)
   void compute(const EventVector & events) {
@@ -317,14 +337,14 @@ public:
   double duration() const { return emd_objs_[0].duration(); }
 
   // access all emds as a matrix flattened into a vector
-  const std::vector<Value> & emds(bool flattened = false) {
+  const std::vector<Value> & emds(bool raw = false) {
 
     // check for having no emds stored
     if (emd_storage_ == EMDPairsStorage::External)
       throw std::logic_error("No EMDs stored");
 
     // check if we need to construct a new full matrix from a flattened symmetric one
-    if (emd_storage_ == EMDPairsStorage::FlattenedSymmetric && !flattened) {
+    if (emd_storage_ == EMDPairsStorage::FlattenedSymmetric && !raw) {
 
       // allocate a new vector for holding the full emds
       full_emds_.resize(nevA()*nevB());
@@ -588,23 +608,30 @@ private:
   }
 
   // store events
-  template<class ProtoEvent>
-  void store_proto_events(const std::vector<ProtoEvent> & proto_events,
+  template<class ProtoEventIt>
+  void store_proto_events(ProtoEventIt proto_events_first,
+                          ProtoEventIt proto_events_last,
                           const std::vector<Value> & event_weights) {
 
-    if (proto_events.size() != event_weights.size()) {
+    index_type nev(std::distance(proto_events_first, proto_events_last));
+    ProtoEventIt p(proto_events_first);
+
+    if (nev != event_weights.size()) {
       if (event_weights.size() == 0)
-        for (const ProtoEvent & proto_event : proto_events) {
-          events_.emplace_back(proto_event);
+        do {
+          events_.emplace_back(*p);
           preprocess_back_event();
-        }
+        } while (++p != proto_events_last);
+
       else throw std::invalid_argument("length of event_weights does not match proto_events");
     }
-    else
-      for (unsigned i = 0; i < proto_events.size(); i++) {
-        events_.emplace_back(proto_events[i], event_weights[i]);
+
+    else {
+      for (index_type i = 0; p != proto_events_last; i++, ++p) {
+        events_.emplace_back(*p, event_weights[i++]);
         preprocess_back_event();
       }
+    }
   }
 
   void record_failure(EMDStatus status, index_type i, index_type j) {

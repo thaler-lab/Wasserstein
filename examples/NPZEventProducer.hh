@@ -22,7 +22,7 @@ class NPZEventProducer : public EventProducer {
   // npyarray object
   cnpy::NpyArray X_, y_;
   double * X_data_, * y_data_;
-  size_t num_particles_in_event_, particle_size_, event_size_;
+  std::size_t num_particles_in_event_, particle_size_, event_size_;
 
 public:
 
@@ -76,7 +76,7 @@ public:
         break;
       }
 
-      size_t event_start(iEvent_ * event_size_);
+      std::size_t event_start(iEvent_ * event_size_);
 
       // make sure to increment iEvent_ before we could possibly continue
       iEvent_++;
@@ -87,22 +87,20 @@ public:
       if ((event_type_ == Gluon && flavor != 21) || (event_type_ == Quark && (flavor == 21 || flavor == 0)))
         good_event = false;
 
-      // check for good event
-      if (good_event) {
-        iAccept_++;
-        if (iEvent_ % print_every_ == 0)
-          print_progress(true);  
-      }
-      else {
-        if (iEvent_ % print_every_ == 0)
+      // print update
+      if (iEvent_ % print_every_ == 0)
           print_progress(true);
-        continue;
-      }
+
+      // check for bad event
+      if (!good_event) continue;
+
+      // update number of accepted events
+      iAccept_++;
 
       // fill up vector of particles
       particles_.clear();
       for (unsigned i = 0; i < num_particles_in_event_; i++) {
-        size_t particle_start(event_start + i * particle_size_);
+        std::size_t particle_start(event_start + i * particle_size_);
         double pt(X_data_[particle_start]);
 
         // append non-zero particles
@@ -115,6 +113,7 @@ public:
 
     return false;
   }
+
 }; // NPZEventProducer
 
 #endif // NPZ_EVENT_PRODUCER_HH

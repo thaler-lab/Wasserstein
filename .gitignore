@@ -12,4 +12,5 @@ dist/
 .eggs/
 mkdocs/
 basic_example
+theory_space_example
 **/.deps

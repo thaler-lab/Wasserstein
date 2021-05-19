@@ -738,7 +738,7 @@ class PairwiseEMDFloat64(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
-        r"""__init__(PairwiseEMDFloat64 self, double R=1, double beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, double epsilon_large_factor=10000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat64"""
+        r"""__init__(PairwiseEMDFloat64 self, double R=1, double beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat64"""
         _wasserstein.PairwiseEMDFloat64_swiginit(self, _wasserstein.new_PairwiseEMDFloat64(*args, **kwargs))
     __swig_destroy__ = _wasserstein.delete_PairwiseEMDFloat64
     R = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_R)
@@ -862,7 +862,7 @@ class PairwiseEMDFloat32(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
-        r"""__init__(PairwiseEMDFloat32 self, float R=1, float beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, float epsilon_large_factor=10000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat32"""
+        r"""__init__(PairwiseEMDFloat32 self, float R=1, float beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat32"""
         _wasserstein.PairwiseEMDFloat32_swiginit(self, _wasserstein.new_PairwiseEMDFloat32(*args, **kwargs))
     __swig_destroy__ = _wasserstein.delete_PairwiseEMDFloat32
     R = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_R)
@@ -986,7 +986,7 @@ class PairwiseEMDYPhiFloat64(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
-        r"""__init__(PairwiseEMDYPhiFloat64 self, double R=1, double beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, double epsilon_large_factor=10000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat64"""
+        r"""__init__(PairwiseEMDYPhiFloat64 self, double R=1, double beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat64"""
         _wasserstein.PairwiseEMDYPhiFloat64_swiginit(self, _wasserstein.new_PairwiseEMDYPhiFloat64(*args, **kwargs))
     __swig_destroy__ = _wasserstein.delete_PairwiseEMDYPhiFloat64
     R = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_R)
@@ -1110,7 +1110,7 @@ class PairwiseEMDYPhiFloat32(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
-        r"""__init__(PairwiseEMDYPhiFloat32 self, float R=1, float beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, float epsilon_large_factor=10000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat32"""
+        r"""__init__(PairwiseEMDYPhiFloat32 self, float R=1, float beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat32"""
         _wasserstein.PairwiseEMDYPhiFloat32_swiginit(self, _wasserstein.new_PairwiseEMDYPhiFloat32(*args, **kwargs))
     __swig_destroy__ = _wasserstein.delete_PairwiseEMDYPhiFloat32
     R = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_R)

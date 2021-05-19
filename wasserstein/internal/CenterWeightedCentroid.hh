@@ -92,7 +92,7 @@ private:
     for (const_iterator particle = event.particles().cbegin(), end = event.particles().cend();
          particle != end; ++particle) {
       for (unsigned i = 0; i < dim; i++) 
-        coords[i] += event.weights()[k] * particle[i];
+        coords[i] += event.weights()[k] * (*particle)[i];
       k++;
     }
 
@@ -103,7 +103,7 @@ private:
     for (iterator particle = event.particles().begin(), end = event.particles().end();
          particle != end; ++particle)
       for (unsigned i = 0; i < dim; i++) {
-        particle[i] -= coords[i];
+        (*particle)[i] -= coords[i];
       }
 
     return event;

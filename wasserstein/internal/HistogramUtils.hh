@@ -194,7 +194,6 @@ public:
     hist_ = boost::histogram::make_weighted_histogram(axis_);
   }
 
-  Histogram1DHandler() {}
   virtual ~Histogram1DHandler() {}
 
   // access the constructor arguments

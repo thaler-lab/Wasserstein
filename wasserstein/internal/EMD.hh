@@ -59,8 +59,8 @@ BEGIN_EMD_NAMESPACE
 ////////////////////////////////////////////////////////////////////////////////
 
 template<typename Value,
-         template<typename> class _Event = DefaultEvent,
-         template<typename> class _PairwiseDistance = DefaultPairwiseDistance,
+         template<typename> class _Event,
+         template<typename> class _PairwiseDistance,
          template<typename> class _NetworkSimplex = DefaultNetworkSimplex>
 class _EMD : public EMDBase<Value> {
 public:
@@ -133,9 +133,6 @@ public:
     this->set_external_dists(std::is_same<PairwiseDistance, DefaultPairwiseDistance<Value>>::value);
   }
 
-  // virtual destructor
-  virtual ~_EMD() {}
-
   // access/set R and beta parameters
   Value R() const { return pairwise_distance_.R(); }
   Value beta() const { return pairwise_distance_.beta(); }
@@ -170,12 +167,14 @@ public:
   // return a description of this object
   std::string description(bool write_preprocessors = true) const {
     std::ostringstream oss;
+    oss << std::boolalpha;
     oss << "EMD" << '\n'
         << "  " << Event::name() << '\n'
-        << "    norm - " << (norm() ? "true" : "false") << '\n'
+        << "    norm - " << norm() << '\n'
+        << "    external_dists - " << external_dists() << '\n'
         << '\n'
-        << pairwise_distance_.description()
-        << network_simplex_.description();
+        << pairwise_distance().description()
+        << network_simplex().description();
 
     if (write_preprocessors)
       output_preprocessors(oss);

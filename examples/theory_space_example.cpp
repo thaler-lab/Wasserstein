@@ -27,7 +27,6 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
-#include <algorithm>
 #include <cstdlib>
 
 // Helps with reading in events from NumPy .npz files
@@ -40,61 +39,21 @@ using EMDParticle = emd::EuclideanParticle2D<>;
 using EMD = emd::EMD<emd::EuclideanEvent2D, emd::EuclideanDistance2D>;
 using PairwiseEMD = emd::PairwiseEMD<EMD>;
 
-// helper function for converting to EMD Events
 template<class P>
 std::vector<P> convert2event(const std::vector<Particle> & particles) {
   std::vector<P> euclidean_particles;
   euclidean_particles.reserve(particles.size());
-
   for (const Particle & particle : particles)
     euclidean_particles.push_back(P(particle.pt, {particle.y, particle.phi}));
-
   return euclidean_particles;
 }
 
-// computes the emds of successive events
-void single_emds(EventProducer * evp) {
+void SigmaMD_single(EventProducer * evp) {
 
-  // get EMD object with R = 0.4, beta = 1.0, norm = true
-  EMD emd_obj(0.4, 1.0, true);
-
-  // preprocess events to center
-  emd_obj.preprocess<emd::CenterWeightedCentroid>();
-
-  // print description
-  std::cout << emd_obj.description() << std::endl;
-
-  // container to hold emd values
-  std::vector<double> emds;
-
-  // loop over events and compute the EMD between each successive pair
-  evp->reset();
-  while (true) {
-
-    // get first event
-    if (!evp->next()) break;
-    auto event0(convert2event<EMDParticle>(evp->particles()));
-
-    // get second event
-    if (!evp->next()) break;
-    auto event1(convert2event<EMDParticle>(evp->particles()));
-
-    // compute emd and add it to vector
-    emds.push_back(emd_obj(event0, event1));
-  }
-
-  // get max and min EMD value
-  std::cout << '\n'
-            << emds.size() << " EMDs computed\n"
-            << "Min. EMD - " << *std::min_element(emds.begin(), emds.end()) << '\n'
-            << "Max. EMD - " << *std::max_element(emds.begin(), emds.end()) << '\n'
-            << '\n';
-}
-
-void pairwise_emds(EventProducer * evp) {
-
-  // get EMD object with R = 0.4, beta = 1.0, norm = false
-  PairwiseEMD pairwise_emd_obj(0.4, 1.0, false);
+  double EMD_R = 0.4;
+  double EMD_beta = 1;
+  bool EMD_norm = true;
+  PairwiseEMD pairwise_emd_obj(EMD_R, EMD_beta, EMD_norm);
 
   // preprocess events to center
   pairwise_emd_obj.preprocess<emd::CenterWeightedCentroid>();
@@ -107,34 +66,46 @@ void pairwise_emds(EventProducer * evp) {
 
   // loop over events and compute the EMD between each successive pair
   evp->reset();
-  for (int i = 0; i < 1000 && evp->next(); i++)
+  while (evp->next())
     events.push_back(convert2event<EMDParticle>(evp->particles()));
 
   // run computation
-  pairwise_emd_obj(events);  
+  pairwise_emd_obj(events.begin(), events.begin() + evp->num_accepted()/2,
+                   events.begin() + evp->num_accepted()/2, events.end());
 
   // get max and min EMD value
-  const std::vector<double> & emds(pairwise_emd_obj.emds(true));
-  std::cout << "Min. EMD - " << *std::min_element(emds.begin(), emds.end()) << '\n'
-            << "Max. EMD - " << *std::max_element(emds.begin(), emds.end()) << '\n'
+  const std::vector<double> & emds_raw(pairwise_emd_obj.emds());
+  std::cout << "Min. EMD - " << *std::min_element(emds_raw.begin(), emds_raw.end()) << '\n'
+            << "Max. EMD - " << *std::max_element(emds_raw.begin(), emds_raw.end()) << '\n'
+            << emds_raw.size() << " emds\n"
             << '\n';
 
-  // setup correlation dimension
-  emd::CorrelationDimension<> corrdim(50, 10, 250);
-  pairwise_emd_obj.set_external_emd_handler(corrdim);
+  // setup EMD object to compute cross section mover's distance
+  double SigmaMD_R = 1;
+  double SigmaMD_beta = 1;
+  bool SigmaMD_norm = true;
+  bool SigmaMD_do_timing = true;
 
-  // rerun computation
-  pairwise_emd_obj(events);
+  // external dists are used by the default configuration
+  emd::EMD<> sigmamd_obj(SigmaMD_R, SigmaMD_beta, SigmaMD_norm, SigmaMD_do_timing);
 
-  // print out correlation dimensions
-  auto corrdims(corrdim.corrdims());
-  auto corrdim_bins(corrdim.corrdim_bins());
-  std::cout << "\nEMD         Corr. Dim.  Error\n" << std::left;
-  for (unsigned i = 0; i < corrdims.first.size(); i++)
-    std::cout << std::setw(12) << corrdim_bins[i]
-              << std::setw(12) << corrdims.first[i]
-              << std::setw(12) << corrdims.second[i]
-              << '\n';
+  std::cout << sigmamd_obj.description() << '\n';
+
+  // set distances
+  auto emds(pairwise_emd_obj.emds());
+  sigmamd_obj.ground_dists().resize(emds.size());
+  for (std::size_t i = 0; i < emds.size(); i++)
+    sigmamd_obj.ground_dists()[i] = emds[i];
+
+  // form datasets
+  std::vector<double> weights0(pairwise_emd_obj.nevA(), 1),
+                      weights1(pairwise_emd_obj.nevB(), 1);
+
+  std::cout << "Running computation ..." << std::endl;
+
+  // run computation
+  std::cout << "Cross-section Mover's Distance : " << sigmamd_obj(weights0, weights1) << '\n'
+            << "Done in " << sigmamd_obj.duration() << "s\n";
 }
 
 EventProducer * load_events(int argc, char** argv) {
@@ -178,11 +149,8 @@ int main(int argc, char** argv) {
   if (evp == nullptr)
     return 1;
 
-  // demonstrate calculating single EMDs
-  single_emds(evp);
-
-  // demonstrate calculating pairwise EMDs
-  pairwise_emds(evp);
+  // demonstrate some EMD usage
+  SigmaMD_single(evp);
 
   return 0;
 }

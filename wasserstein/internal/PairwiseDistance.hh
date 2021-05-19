@@ -147,6 +147,10 @@ public:
     return -1;
   }
 
+protected:
+
+  ~PairwiseDistanceBase() = default;
+
 private:
 
   value_type R_, R2_, beta_, halfbeta_;

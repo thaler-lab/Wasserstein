@@ -66,9 +66,6 @@ public:
     Hist1DBase(nbins, axis_min, axis_max)
   {}
 
-  CorrelationDimension() {}
-  ~CorrelationDimension() {}
-
   // calculates the correlation dimensions
   std::pair<std::vector<Value>, std::vector<Value>>
   corrdims(Value eps = std::numeric_limits<Value>::epsilon()) const {

@@ -69,7 +69,6 @@ protected:
 
 public:
 
-  // constructor from two boolean options
   EMDBase(bool norm = false, bool do_timing = false, bool external_dists = false) :
     norm_(norm),
     do_timing_(do_timing),
@@ -81,18 +80,12 @@ public:
     duration_(0)
   {}
 
-  // virtual desctructor
-  virtual ~EMDBase() {}
-
-  // the norm setting
   bool norm() const { return norm_; }
   void set_norm(bool norm) { norm_ = norm; } 
 
-  // timing setting
   bool do_timing() const { return do_timing_; }
   void set_do_timing(bool timing) { do_timing_ = timing; }
 
-  // get/set whether we're currently setup to use external distances
   bool external_dists() const { return external_dists_; }
   void set_external_dists(bool exdists) { external_dists_ = exdists; }
 
@@ -113,6 +106,8 @@ public:
   double duration() const { return duration_; }
 
 protected:
+
+  ~EMDBase() = default;
 
   // duration of emd computation in seconds
   void start_timing() { start_ = std::chrono::steady_clock::now(); }

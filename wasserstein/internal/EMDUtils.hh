@@ -125,13 +125,13 @@ using DefaultNetworkSimplex = NetworkSimplex<Value, index_type, int, char>;
 // EuclideanParticle classes
 ////////////////////////////////////////////////////////////////////////////////
 
-template<unsigned N, typename Value>
+template<unsigned N, typename Value = default_value_type>
 struct EuclideanParticleND;
 
-template<typename Value>
+template<typename Value = default_value_type>
 struct EuclideanParticle2D;
 
-template<typename Value>
+template<typename Value = default_value_type>
 struct EuclideanParticle3D;
 
 
@@ -148,13 +148,14 @@ class EuclideanArrayDistance;
 template<typename Value>
 class YPhiArrayDistance;
 
-template<class _Particle>
+template<class Particle>
 class EuclideanParticleDistance;
 
-using EuclideanDistance2D = EuclideanParticleDistance<EuclideanParticle2D<default_value_type>>;
-using EuclideanDistance3D = EuclideanParticleDistance<EuclideanParticle3D<default_value_type>>;
-template<unsigned N>
-using EuclideanDistanceND = EuclideanParticleDistance<EuclideanParticleND<N, default_value_type>>;
+template<typename Value = default_value_type>
+using EuclideanDistance2D = EuclideanParticleDistance<EuclideanParticle2D<Value>>;
+
+template<typename Value = default_value_type>
+using EuclideanDistance3D = EuclideanParticleDistance<EuclideanParticle3D<Value>>;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -176,7 +177,7 @@ struct Array2ParticleCollection;
 ////////////////////////////////////////////////////////////////////////////////
 
 // Event using Value vectors to hold weights and particles
-template<typename Value>
+template<typename Value = default_value_type>
 struct VectorEvent;
 
 template<typename Value>
@@ -196,45 +197,17 @@ using DefaultArray2Event = ArrayEvent<Value, Array2ParticleCollection>;
 template<class Particle>
 struct EuclideanParticleEvent;
 
-using EuclideanEvent2D = EuclideanParticleEvent<EuclideanParticle2D<default_value_type>>;
-using EuclideanEvent3D = EuclideanParticleEvent<EuclideanParticle3D<default_value_type>>;
-template<unsigned N>
-using EuclideanEventND = EuclideanParticleEvent<EuclideanParticleND<N, default_value_type>>;
+template<typename Value = default_value_type>
+using EuclideanEvent2D = EuclideanParticleEvent<EuclideanParticle2D<Value>>;
+
+template<typename Value = default_value_type>
+using EuclideanEvent3D = EuclideanParticleEvent<EuclideanParticle3D<Value>>;
 
 struct FastJetEventBase;
 struct FastJetParticleWeight;
 
 template<class ParticleWeight>
 struct FastJetEvent;
-
-
-////////////////////////////////////////////////////////////////////////////////
-// EMD classes
-////////////////////////////////////////////////////////////////////////////////
-
-template<typename Value,
-         template<typename> class Event,
-         template<typename> class PairwiseDistance,
-         template<typename> class NetworkSimplex>
-class _EMD;
-
-// _EMD using double precision
-template<template<typename> class Event,
-         template<typename> class PairwiseDistance>
-using EMDFloat64 = _EMD<double, Event, PairwiseDistance, DefaultNetworkSimplex>;
-
-// _EMD using single precision
-template<template<typename> class Event,
-         template<typename> class PairwiseDistance>
-using EMDFloat32 = _EMD<float, Event, PairwiseDistance, DefaultNetworkSimplex>;
-
-// EMD is alias for EMDFloat64
-template<template<typename> class Event,
-         template<typename> class PairwiseDistance>
-using EMD = EMDFloat64<Event, PairwiseDistance>;
-
-template<class EMD, typename Value>
-class PairwiseEMD;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -247,7 +220,7 @@ class ExternalEMDHandler;
 template<class Transform, typename Value>
 class Histogram1DHandler;
 
-template<typename Value>
+template<typename Value = default_value_type>
 class CorrelationDimension;
 
 

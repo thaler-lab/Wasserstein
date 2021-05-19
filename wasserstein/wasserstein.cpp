@@ -2716,45 +2716,41 @@ SWIGINTERN PyObject *SWIG_PyStaticMethod_New(PyObject *SWIGUNUSEDPARM(self), PyO
 #define SWIGTYPE_p_emd__CorrelationDimensionT_float_t swig_types[20]
 #define SWIGTYPE_p_emd__EMDBaseT_double_t swig_types[21]
 #define SWIGTYPE_p_emd__EMDBaseT_float_t swig_types[22]
-#define SWIGTYPE_p_emd__EuclideanParticleDistanceT_emd__EuclideanParticle2DT_double_t_t swig_types[23]
-#define SWIGTYPE_p_emd__EuclideanParticleDistanceT_emd__EuclideanParticle3DT_double_t_t swig_types[24]
-#define SWIGTYPE_p_emd__EuclideanParticleEventT_emd__EuclideanParticle2DT_double_t_t swig_types[25]
-#define SWIGTYPE_p_emd__EuclideanParticleEventT_emd__EuclideanParticle3DT_double_t_t swig_types[26]
-#define SWIGTYPE_p_emd__ExternalEMDHandlerT_double_t swig_types[27]
-#define SWIGTYPE_p_emd__ExternalEMDHandlerT_float_t swig_types[28]
-#define SWIGTYPE_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t swig_types[29]
-#define SWIGTYPE_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_float_t swig_types[30]
-#define SWIGTYPE_p_emd__PairwiseEMDT_emd___EMDT_double_emd__DefaultArray2Event_emd__YPhiArrayDistance_emd__DefaultNetworkSimplex_t_double_t swig_types[31]
-#define SWIGTYPE_p_emd__PairwiseEMDT_emd___EMDT_double_emd__DefaultArrayEvent_emd__EuclideanArrayDistance_emd__DefaultNetworkSimplex_t_double_t swig_types[32]
-#define SWIGTYPE_p_emd__PairwiseEMDT_emd___EMDT_float_emd__DefaultArray2Event_emd__YPhiArrayDistance_emd__DefaultNetworkSimplex_t_float_t swig_types[33]
-#define SWIGTYPE_p_emd__PairwiseEMDT_emd___EMDT_float_emd__DefaultArrayEvent_emd__EuclideanArrayDistance_emd__DefaultNetworkSimplex_t_float_t swig_types[34]
-#define SWIGTYPE_p_emd___EMDT_double_emd__DefaultArray2Event_emd__YPhiArrayDistance_emd__DefaultNetworkSimplex_t swig_types[35]
-#define SWIGTYPE_p_emd___EMDT_double_emd__DefaultArrayEvent_emd__EuclideanArrayDistance_emd__DefaultNetworkSimplex_t swig_types[36]
-#define SWIGTYPE_p_emd___EMDT_float_emd__DefaultArray2Event_emd__YPhiArrayDistance_emd__DefaultNetworkSimplex_t swig_types[37]
-#define SWIGTYPE_p_emd___EMDT_float_emd__DefaultArrayEvent_emd__EuclideanArrayDistance_emd__DefaultNetworkSimplex_t swig_types[38]
-#define SWIGTYPE_p_first_type swig_types[39]
-#define SWIGTYPE_p_p_PyObject swig_types[40]
-#define SWIGTYPE_p_p_double swig_types[41]
-#define SWIGTYPE_p_p_float swig_types[42]
-#define SWIGTYPE_p_second_type swig_types[43]
-#define SWIGTYPE_p_size_type swig_types[44]
-#define SWIGTYPE_p_std__allocatorT_double_t swig_types[45]
-#define SWIGTYPE_p_std__allocatorT_float_t swig_types[46]
-#define SWIGTYPE_p_std__allocatorT_std__string_t swig_types[47]
-#define SWIGTYPE_p_std__conditionalT_std__is_base_ofT_emd__FastJetParticleWeight__EventT_double_t_t__value_emd__FastJetEventT__EventT_double_t_t__EventT_double_t_t__type swig_types[48]
-#define SWIGTYPE_p_std__conditionalT_std__is_base_ofT_emd__FastJetParticleWeight__EventT_float_t_t__value_emd__FastJetEventT__EventT_float_t_t__EventT_float_t_t__type swig_types[49]
-#define SWIGTYPE_p_std__invalid_argument swig_types[50]
-#define SWIGTYPE_p_std__ostream swig_types[51]
-#define SWIGTYPE_p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t swig_types[52]
-#define SWIGTYPE_p_std__pairT_std__vectorT_float_std__allocatorT_float_t_t_std__vectorT_float_std__allocatorT_float_t_t_t swig_types[53]
-#define SWIGTYPE_p_std__ptrdiff_t swig_types[54]
-#define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t swig_types[55]
-#define SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t swig_types[56]
-#define SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t swig_types[57]
-#define SWIGTYPE_p_swig__SwigPyIterator swig_types[58]
-#define SWIGTYPE_p_value_type swig_types[59]
-static swig_type_info *swig_types[61];
-static swig_module_info swig_module = {swig_types, 60, 0, 0, 0, 0};
+#define SWIGTYPE_p_emd__ExternalEMDHandlerT_double_t swig_types[23]
+#define SWIGTYPE_p_emd__ExternalEMDHandlerT_float_t swig_types[24]
+#define SWIGTYPE_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t swig_types[25]
+#define SWIGTYPE_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_float_t swig_types[26]
+#define SWIGTYPE_p_emd__PairwiseEMDT_emd___EMDT_double_emd__DefaultArray2Event_emd__YPhiArrayDistance_emd__DefaultNetworkSimplex_t_double_t swig_types[27]
+#define SWIGTYPE_p_emd__PairwiseEMDT_emd___EMDT_double_emd__DefaultArrayEvent_emd__EuclideanArrayDistance_emd__DefaultNetworkSimplex_t_double_t swig_types[28]
+#define SWIGTYPE_p_emd__PairwiseEMDT_emd___EMDT_float_emd__DefaultArray2Event_emd__YPhiArrayDistance_emd__DefaultNetworkSimplex_t_float_t swig_types[29]
+#define SWIGTYPE_p_emd__PairwiseEMDT_emd___EMDT_float_emd__DefaultArrayEvent_emd__EuclideanArrayDistance_emd__DefaultNetworkSimplex_t_float_t swig_types[30]
+#define SWIGTYPE_p_emd___EMDT_double_emd__DefaultArray2Event_emd__YPhiArrayDistance_emd__DefaultNetworkSimplex_t swig_types[31]
+#define SWIGTYPE_p_emd___EMDT_double_emd__DefaultArrayEvent_emd__EuclideanArrayDistance_emd__DefaultNetworkSimplex_t swig_types[32]
+#define SWIGTYPE_p_emd___EMDT_float_emd__DefaultArray2Event_emd__YPhiArrayDistance_emd__DefaultNetworkSimplex_t swig_types[33]
+#define SWIGTYPE_p_emd___EMDT_float_emd__DefaultArrayEvent_emd__EuclideanArrayDistance_emd__DefaultNetworkSimplex_t swig_types[34]
+#define SWIGTYPE_p_first_type swig_types[35]
+#define SWIGTYPE_p_p_PyObject swig_types[36]
+#define SWIGTYPE_p_p_double swig_types[37]
+#define SWIGTYPE_p_p_float swig_types[38]
+#define SWIGTYPE_p_second_type swig_types[39]
+#define SWIGTYPE_p_size_type swig_types[40]
+#define SWIGTYPE_p_std__allocatorT_double_t swig_types[41]
+#define SWIGTYPE_p_std__allocatorT_float_t swig_types[42]
+#define SWIGTYPE_p_std__allocatorT_std__string_t swig_types[43]
+#define SWIGTYPE_p_std__conditionalT_std__is_base_ofT_emd__FastJetParticleWeight__EventT_double_t_t__value_emd__FastJetEventT__EventT_double_t_t__EventT_double_t_t__type swig_types[44]
+#define SWIGTYPE_p_std__conditionalT_std__is_base_ofT_emd__FastJetParticleWeight__EventT_float_t_t__value_emd__FastJetEventT__EventT_float_t_t__EventT_float_t_t__type swig_types[45]
+#define SWIGTYPE_p_std__invalid_argument swig_types[46]
+#define SWIGTYPE_p_std__ostream swig_types[47]
+#define SWIGTYPE_p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t swig_types[48]
+#define SWIGTYPE_p_std__pairT_std__vectorT_float_std__allocatorT_float_t_t_std__vectorT_float_std__allocatorT_float_t_t_t swig_types[49]
+#define SWIGTYPE_p_std__ptrdiff_t swig_types[50]
+#define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t swig_types[51]
+#define SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t swig_types[52]
+#define SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t swig_types[53]
+#define SWIGTYPE_p_swig__SwigPyIterator swig_types[54]
+#define SWIGTYPE_p_value_type swig_types[55]
+static swig_type_info *swig_types[57];
+static swig_module_info swig_module = {swig_types, 56, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -26283,7 +26279,7 @@ SWIGINTERN PyObject *_wrap_new_PairwiseEMDFloat64(PyObject *SWIGUNUSEDPARM(self)
   bool arg7 = (bool) true ;
   bool arg8 = (bool) false ;
   unsigned int arg9 = (unsigned int) 100000 ;
-  double arg10 = (double) 10000 ;
+  double arg10 = (double) 1000 ;
   double arg11 = (double) 1 ;
   std::ostream &arg12_defvalue = std::cout ;
   std::ostream *arg12 = (std::ostream *) &arg12_defvalue ;
@@ -28547,7 +28543,7 @@ SWIGINTERN PyObject *_wrap_new_PairwiseEMDFloat32(PyObject *SWIGUNUSEDPARM(self)
   bool arg7 = (bool) true ;
   bool arg8 = (bool) false ;
   unsigned int arg9 = (unsigned int) 100000 ;
-  float arg10 = (float) 10000 ;
+  float arg10 = (float) 1000 ;
   float arg11 = (float) 1 ;
   std::ostream &arg12_defvalue = std::cout ;
   std::ostream *arg12 = (std::ostream *) &arg12_defvalue ;
@@ -30811,7 +30807,7 @@ SWIGINTERN PyObject *_wrap_new_PairwiseEMDYPhiFloat64(PyObject *SWIGUNUSEDPARM(s
   bool arg7 = (bool) true ;
   bool arg8 = (bool) false ;
   unsigned int arg9 = (unsigned int) 100000 ;
-  double arg10 = (double) 10000 ;
+  double arg10 = (double) 1000 ;
   double arg11 = (double) 1 ;
   std::ostream &arg12_defvalue = std::cout ;
   std::ostream *arg12 = (std::ostream *) &arg12_defvalue ;
@@ -33075,7 +33071,7 @@ SWIGINTERN PyObject *_wrap_new_PairwiseEMDYPhiFloat32(PyObject *SWIGUNUSEDPARM(s
   bool arg7 = (bool) true ;
   bool arg8 = (bool) false ;
   unsigned int arg9 = (unsigned int) 100000 ;
-  float arg10 = (float) 10000 ;
+  float arg10 = (float) 1000 ;
   float arg11 = (float) 1 ;
   std::ostream &arg12_defvalue = std::cout ;
   std::ostream *arg12 = (std::ostream *) &arg12_defvalue ;
@@ -35809,7 +35805,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "EMDYPhiFloat32_dists", _wrap_EMDYPhiFloat32_dists, METH_O, "EMDYPhiFloat32_dists(EMDYPhiFloat32 self)"},
 	 { "EMDYPhiFloat32_swigregister", EMDYPhiFloat32_swigregister, METH_O, NULL},
 	 { "EMDYPhiFloat32_swiginit", EMDYPhiFloat32_swiginit, METH_VARARGS, NULL},
-	 { "new_PairwiseEMDFloat64", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMDFloat64, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMDFloat64(double R=1, double beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, double epsilon_large_factor=10000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat64"},
+	 { "new_PairwiseEMDFloat64", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMDFloat64, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMDFloat64(double R=1, double beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat64"},
 	 { "delete_PairwiseEMDFloat64", _wrap_delete_PairwiseEMDFloat64, METH_O, "delete_PairwiseEMDFloat64(PairwiseEMDFloat64 self)"},
 	 { "PairwiseEMDFloat64_R", _wrap_PairwiseEMDFloat64_R, METH_O, "PairwiseEMDFloat64_R(PairwiseEMDFloat64 self) -> double"},
 	 { "PairwiseEMDFloat64_set_R", (PyCFunction)(void(*)(void))_wrap_PairwiseEMDFloat64_set_R, METH_VARARGS|METH_KEYWORDS, "PairwiseEMDFloat64_set_R(PairwiseEMDFloat64 self, double R)"},
@@ -35851,7 +35847,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "PairwiseEMDFloat64_flat_emds", _wrap_PairwiseEMDFloat64_flat_emds, METH_O, "PairwiseEMDFloat64_flat_emds(PairwiseEMDFloat64 self)"},
 	 { "PairwiseEMDFloat64_swigregister", PairwiseEMDFloat64_swigregister, METH_O, NULL},
 	 { "PairwiseEMDFloat64_swiginit", PairwiseEMDFloat64_swiginit, METH_VARARGS, NULL},
-	 { "new_PairwiseEMDFloat32", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMDFloat32, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMDFloat32(float R=1, float beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, float epsilon_large_factor=10000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat32"},
+	 { "new_PairwiseEMDFloat32", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMDFloat32, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMDFloat32(float R=1, float beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat32"},
 	 { "delete_PairwiseEMDFloat32", _wrap_delete_PairwiseEMDFloat32, METH_O, "delete_PairwiseEMDFloat32(PairwiseEMDFloat32 self)"},
 	 { "PairwiseEMDFloat32_R", _wrap_PairwiseEMDFloat32_R, METH_O, "PairwiseEMDFloat32_R(PairwiseEMDFloat32 self) -> float"},
 	 { "PairwiseEMDFloat32_set_R", (PyCFunction)(void(*)(void))_wrap_PairwiseEMDFloat32_set_R, METH_VARARGS|METH_KEYWORDS, "PairwiseEMDFloat32_set_R(PairwiseEMDFloat32 self, float R)"},
@@ -35893,7 +35889,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "PairwiseEMDFloat32_flat_emds", _wrap_PairwiseEMDFloat32_flat_emds, METH_O, "PairwiseEMDFloat32_flat_emds(PairwiseEMDFloat32 self)"},
 	 { "PairwiseEMDFloat32_swigregister", PairwiseEMDFloat32_swigregister, METH_O, NULL},
 	 { "PairwiseEMDFloat32_swiginit", PairwiseEMDFloat32_swiginit, METH_VARARGS, NULL},
-	 { "new_PairwiseEMDYPhiFloat64", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMDYPhiFloat64, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMDYPhiFloat64(double R=1, double beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, double epsilon_large_factor=10000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat64"},
+	 { "new_PairwiseEMDYPhiFloat64", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMDYPhiFloat64, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMDYPhiFloat64(double R=1, double beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat64"},
 	 { "delete_PairwiseEMDYPhiFloat64", _wrap_delete_PairwiseEMDYPhiFloat64, METH_O, "delete_PairwiseEMDYPhiFloat64(PairwiseEMDYPhiFloat64 self)"},
 	 { "PairwiseEMDYPhiFloat64_R", _wrap_PairwiseEMDYPhiFloat64_R, METH_O, "PairwiseEMDYPhiFloat64_R(PairwiseEMDYPhiFloat64 self) -> double"},
 	 { "PairwiseEMDYPhiFloat64_set_R", (PyCFunction)(void(*)(void))_wrap_PairwiseEMDYPhiFloat64_set_R, METH_VARARGS|METH_KEYWORDS, "PairwiseEMDYPhiFloat64_set_R(PairwiseEMDYPhiFloat64 self, double R)"},
@@ -35935,7 +35931,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "PairwiseEMDYPhiFloat64_flat_emds", _wrap_PairwiseEMDYPhiFloat64_flat_emds, METH_O, "PairwiseEMDYPhiFloat64_flat_emds(PairwiseEMDYPhiFloat64 self)"},
 	 { "PairwiseEMDYPhiFloat64_swigregister", PairwiseEMDYPhiFloat64_swigregister, METH_O, NULL},
 	 { "PairwiseEMDYPhiFloat64_swiginit", PairwiseEMDYPhiFloat64_swiginit, METH_VARARGS, NULL},
-	 { "new_PairwiseEMDYPhiFloat32", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMDYPhiFloat32, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMDYPhiFloat32(float R=1, float beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, float epsilon_large_factor=10000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat32"},
+	 { "new_PairwiseEMDYPhiFloat32", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMDYPhiFloat32, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMDYPhiFloat32(float R=1, float beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat32"},
 	 { "delete_PairwiseEMDYPhiFloat32", _wrap_delete_PairwiseEMDYPhiFloat32, METH_O, "delete_PairwiseEMDYPhiFloat32(PairwiseEMDYPhiFloat32 self)"},
 	 { "PairwiseEMDYPhiFloat32_R", _wrap_PairwiseEMDYPhiFloat32_R, METH_O, "PairwiseEMDYPhiFloat32_R(PairwiseEMDYPhiFloat32 self) -> float"},
 	 { "PairwiseEMDYPhiFloat32_set_R", (PyCFunction)(void(*)(void))_wrap_PairwiseEMDYPhiFloat32_set_R, METH_VARARGS|METH_KEYWORDS, "PairwiseEMDYPhiFloat32_set_R(PairwiseEMDYPhiFloat32 self, float R)"},
@@ -36461,7 +36457,7 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "EMDYPhiFloat32_dists", _wrap_EMDYPhiFloat32_dists, METH_O, "dists(EMDYPhiFloat32 self)"},
 	 { "EMDYPhiFloat32_swigregister", EMDYPhiFloat32_swigregister, METH_O, NULL},
 	 { "EMDYPhiFloat32_swiginit", EMDYPhiFloat32_swiginit, METH_VARARGS, NULL},
-	 { "new_PairwiseEMDFloat64", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMDFloat64, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMDFloat64(double R=1, double beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, double epsilon_large_factor=10000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat64"},
+	 { "new_PairwiseEMDFloat64", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMDFloat64, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMDFloat64(double R=1, double beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat64"},
 	 { "delete_PairwiseEMDFloat64", _wrap_delete_PairwiseEMDFloat64, METH_O, "delete_PairwiseEMDFloat64(PairwiseEMDFloat64 self)"},
 	 { "PairwiseEMDFloat64_R", _wrap_PairwiseEMDFloat64_R, METH_O, "R(PairwiseEMDFloat64 self) -> double"},
 	 { "PairwiseEMDFloat64_set_R", (PyCFunction)(void(*)(void))_wrap_PairwiseEMDFloat64_set_R, METH_VARARGS|METH_KEYWORDS, "set_R(PairwiseEMDFloat64 self, double R)"},
@@ -36503,7 +36499,7 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "PairwiseEMDFloat64_flat_emds", _wrap_PairwiseEMDFloat64_flat_emds, METH_O, "flat_emds(PairwiseEMDFloat64 self)"},
 	 { "PairwiseEMDFloat64_swigregister", PairwiseEMDFloat64_swigregister, METH_O, NULL},
 	 { "PairwiseEMDFloat64_swiginit", PairwiseEMDFloat64_swiginit, METH_VARARGS, NULL},
-	 { "new_PairwiseEMDFloat32", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMDFloat32, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMDFloat32(float R=1, float beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, float epsilon_large_factor=10000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat32"},
+	 { "new_PairwiseEMDFloat32", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMDFloat32, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMDFloat32(float R=1, float beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat32"},
 	 { "delete_PairwiseEMDFloat32", _wrap_delete_PairwiseEMDFloat32, METH_O, "delete_PairwiseEMDFloat32(PairwiseEMDFloat32 self)"},
 	 { "PairwiseEMDFloat32_R", _wrap_PairwiseEMDFloat32_R, METH_O, "R(PairwiseEMDFloat32 self) -> float"},
 	 { "PairwiseEMDFloat32_set_R", (PyCFunction)(void(*)(void))_wrap_PairwiseEMDFloat32_set_R, METH_VARARGS|METH_KEYWORDS, "set_R(PairwiseEMDFloat32 self, float R)"},
@@ -36545,7 +36541,7 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "PairwiseEMDFloat32_flat_emds", _wrap_PairwiseEMDFloat32_flat_emds, METH_O, "flat_emds(PairwiseEMDFloat32 self)"},
 	 { "PairwiseEMDFloat32_swigregister", PairwiseEMDFloat32_swigregister, METH_O, NULL},
 	 { "PairwiseEMDFloat32_swiginit", PairwiseEMDFloat32_swiginit, METH_VARARGS, NULL},
-	 { "new_PairwiseEMDYPhiFloat64", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMDYPhiFloat64, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMDYPhiFloat64(double R=1, double beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, double epsilon_large_factor=10000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat64"},
+	 { "new_PairwiseEMDYPhiFloat64", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMDYPhiFloat64, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMDYPhiFloat64(double R=1, double beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat64"},
 	 { "delete_PairwiseEMDYPhiFloat64", _wrap_delete_PairwiseEMDYPhiFloat64, METH_O, "delete_PairwiseEMDYPhiFloat64(PairwiseEMDYPhiFloat64 self)"},
 	 { "PairwiseEMDYPhiFloat64_R", _wrap_PairwiseEMDYPhiFloat64_R, METH_O, "R(PairwiseEMDYPhiFloat64 self) -> double"},
 	 { "PairwiseEMDYPhiFloat64_set_R", (PyCFunction)(void(*)(void))_wrap_PairwiseEMDYPhiFloat64_set_R, METH_VARARGS|METH_KEYWORDS, "set_R(PairwiseEMDYPhiFloat64 self, double R)"},
@@ -36587,7 +36583,7 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "PairwiseEMDYPhiFloat64_flat_emds", _wrap_PairwiseEMDYPhiFloat64_flat_emds, METH_O, "flat_emds(PairwiseEMDYPhiFloat64 self)"},
 	 { "PairwiseEMDYPhiFloat64_swigregister", PairwiseEMDYPhiFloat64_swigregister, METH_O, NULL},
 	 { "PairwiseEMDYPhiFloat64_swiginit", PairwiseEMDYPhiFloat64_swiginit, METH_VARARGS, NULL},
-	 { "new_PairwiseEMDYPhiFloat32", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMDYPhiFloat32, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMDYPhiFloat32(float R=1, float beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, float epsilon_large_factor=10000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat32"},
+	 { "new_PairwiseEMDYPhiFloat32", (PyCFunction)(void(*)(void))_wrap_new_PairwiseEMDYPhiFloat32, METH_VARARGS|METH_KEYWORDS, "new_PairwiseEMDYPhiFloat32(float R=1, float beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool store_sym_emds_flattened=True, bool throw_on_error=False, unsigned int n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat32"},
 	 { "delete_PairwiseEMDYPhiFloat32", _wrap_delete_PairwiseEMDYPhiFloat32, METH_O, "delete_PairwiseEMDYPhiFloat32(PairwiseEMDYPhiFloat32 self)"},
 	 { "PairwiseEMDYPhiFloat32_R", _wrap_PairwiseEMDYPhiFloat32_R, METH_O, "R(PairwiseEMDYPhiFloat32 self) -> float"},
 	 { "PairwiseEMDYPhiFloat32_set_R", (PyCFunction)(void(*)(void))_wrap_PairwiseEMDYPhiFloat32_set_R, METH_VARARGS|METH_KEYWORDS, "set_R(PairwiseEMDYPhiFloat32 self, float R)"},
@@ -36688,10 +36684,6 @@ static swig_type_info _swigt__p_emd__CorrelationDimensionT_double_t = {"_p_emd__
 static swig_type_info _swigt__p_emd__CorrelationDimensionT_float_t = {"_p_emd__CorrelationDimensionT_float_t", "emd::CorrelationDimension< float > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_emd__EMDBaseT_double_t = {"_p_emd__EMDBaseT_double_t", "emd::EMDBase< double > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_emd__EMDBaseT_float_t = {"_p_emd__EMDBaseT_float_t", "emd::EMDBase< float > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_emd__EuclideanParticleDistanceT_emd__EuclideanParticle2DT_double_t_t = {"_p_emd__EuclideanParticleDistanceT_emd__EuclideanParticle2DT_double_t_t", "emd::EuclideanParticleDistance< emd::EuclideanParticle2D< double > > *|emd::EuclideanDistance2D *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_emd__EuclideanParticleDistanceT_emd__EuclideanParticle3DT_double_t_t = {"_p_emd__EuclideanParticleDistanceT_emd__EuclideanParticle3DT_double_t_t", "emd::EuclideanParticleDistance< emd::EuclideanParticle3D< double > > *|emd::EuclideanDistance3D *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_emd__EuclideanParticleEventT_emd__EuclideanParticle2DT_double_t_t = {"_p_emd__EuclideanParticleEventT_emd__EuclideanParticle2DT_double_t_t", "emd::EuclideanParticleEvent< emd::EuclideanParticle2D< double > > *|emd::EuclideanEvent2D *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_emd__EuclideanParticleEventT_emd__EuclideanParticle3DT_double_t_t = {"_p_emd__EuclideanParticleEventT_emd__EuclideanParticle3DT_double_t_t", "emd::EuclideanParticleEvent< emd::EuclideanParticle3D< double > > *|emd::EuclideanEvent3D *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_emd__ExternalEMDHandlerT_double_t = {"_p_emd__ExternalEMDHandlerT_double_t", "emd::ExternalEMDHandler< double > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_emd__ExternalEMDHandlerT_float_t = {"_p_emd__ExternalEMDHandlerT_float_t", "emd::ExternalEMDHandler< float > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t = {"_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t", "emd::Histogram1DHandler< boost::histogram::axis::transform::log,double > *", 0, 0, (void*)0, 0};
@@ -36750,10 +36742,6 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_emd__CorrelationDimensionT_float_t,
   &_swigt__p_emd__EMDBaseT_double_t,
   &_swigt__p_emd__EMDBaseT_float_t,
-  &_swigt__p_emd__EuclideanParticleDistanceT_emd__EuclideanParticle2DT_double_t_t,
-  &_swigt__p_emd__EuclideanParticleDistanceT_emd__EuclideanParticle3DT_double_t_t,
-  &_swigt__p_emd__EuclideanParticleEventT_emd__EuclideanParticle2DT_double_t_t,
-  &_swigt__p_emd__EuclideanParticleEventT_emd__EuclideanParticle3DT_double_t_t,
   &_swigt__p_emd__ExternalEMDHandlerT_double_t,
   &_swigt__p_emd__ExternalEMDHandlerT_float_t,
   &_swigt__p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t,
@@ -36812,10 +36800,6 @@ static swig_cast_info _swigc__p_emd__CorrelationDimensionT_double_t[] = {  {&_sw
 static swig_cast_info _swigc__p_emd__CorrelationDimensionT_float_t[] = {  {&_swigt__p_emd__CorrelationDimensionT_float_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_emd__EMDBaseT_double_t[] = {  {&_swigt__p_emd__EMDBaseT_double_t, 0, 0, 0},  {&_swigt__p_emd___EMDT_double_emd__DefaultArrayEvent_emd__EuclideanArrayDistance_emd__DefaultNetworkSimplex_t, _p_emd___EMDT_double_emd__DefaultArrayEvent_emd__EuclideanArrayDistance_emd__DefaultNetworkSimplex_tTo_p_emd__EMDBaseT_double_t, 0, 0},  {&_swigt__p_emd___EMDT_double_emd__DefaultArray2Event_emd__YPhiArrayDistance_emd__DefaultNetworkSimplex_t, _p_emd___EMDT_double_emd__DefaultArray2Event_emd__YPhiArrayDistance_emd__DefaultNetworkSimplex_tTo_p_emd__EMDBaseT_double_t, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_emd__EMDBaseT_float_t[] = {  {&_swigt__p_emd___EMDT_float_emd__DefaultArray2Event_emd__YPhiArrayDistance_emd__DefaultNetworkSimplex_t, _p_emd___EMDT_float_emd__DefaultArray2Event_emd__YPhiArrayDistance_emd__DefaultNetworkSimplex_tTo_p_emd__EMDBaseT_float_t, 0, 0},  {&_swigt__p_emd___EMDT_float_emd__DefaultArrayEvent_emd__EuclideanArrayDistance_emd__DefaultNetworkSimplex_t, _p_emd___EMDT_float_emd__DefaultArrayEvent_emd__EuclideanArrayDistance_emd__DefaultNetworkSimplex_tTo_p_emd__EMDBaseT_float_t, 0, 0},  {&_swigt__p_emd__EMDBaseT_float_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_emd__EuclideanParticleDistanceT_emd__EuclideanParticle2DT_double_t_t[] = {  {&_swigt__p_emd__EuclideanParticleDistanceT_emd__EuclideanParticle2DT_double_t_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_emd__EuclideanParticleDistanceT_emd__EuclideanParticle3DT_double_t_t[] = {  {&_swigt__p_emd__EuclideanParticleDistanceT_emd__EuclideanParticle3DT_double_t_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_emd__EuclideanParticleEventT_emd__EuclideanParticle2DT_double_t_t[] = {  {&_swigt__p_emd__EuclideanParticleEventT_emd__EuclideanParticle2DT_double_t_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_emd__EuclideanParticleEventT_emd__EuclideanParticle3DT_double_t_t[] = {  {&_swigt__p_emd__EuclideanParticleEventT_emd__EuclideanParticle3DT_double_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_emd__ExternalEMDHandlerT_double_t[] = {  {&_swigt__p_emd__ExternalEMDHandlerT_double_t, 0, 0, 0},  {&_swigt__p_emd__CorrelationDimensionT_double_t, _p_emd__CorrelationDimensionT_double_tTo_p_emd__ExternalEMDHandlerT_double_t, 0, 0},  {&_swigt__p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t, _p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_tTo_p_emd__ExternalEMDHandlerT_double_t, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_emd__ExternalEMDHandlerT_float_t[] = {  {&_swigt__p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_float_t, _p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_float_tTo_p_emd__ExternalEMDHandlerT_float_t, 0, 0},  {&_swigt__p_emd__ExternalEMDHandlerT_float_t, 0, 0, 0},  {&_swigt__p_emd__CorrelationDimensionT_float_t, _p_emd__CorrelationDimensionT_float_tTo_p_emd__ExternalEMDHandlerT_float_t, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t[] = {  {&_swigt__p_emd__CorrelationDimensionT_double_t, _p_emd__CorrelationDimensionT_double_tTo_p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t, 0, 0},  {&_swigt__p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -36874,10 +36858,6 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_emd__CorrelationDimensionT_float_t,
   _swigc__p_emd__EMDBaseT_double_t,
   _swigc__p_emd__EMDBaseT_float_t,
-  _swigc__p_emd__EuclideanParticleDistanceT_emd__EuclideanParticle2DT_double_t_t,
-  _swigc__p_emd__EuclideanParticleDistanceT_emd__EuclideanParticle3DT_double_t_t,
-  _swigc__p_emd__EuclideanParticleEventT_emd__EuclideanParticle2DT_double_t_t,
-  _swigc__p_emd__EuclideanParticleEventT_emd__EuclideanParticle3DT_double_t_t,
   _swigc__p_emd__ExternalEMDHandlerT_double_t,
   _swigc__p_emd__ExternalEMDHandlerT_float_t,
   _swigc__p_emd__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t,

@@ -11,9 +11,13 @@
 // enum for selecting which events to include
 enum EventType { Gluon, Quark, All };
 
+// holds the kinematic info of one particle
 struct Particle {
-  Particle(double pt_, double y_, double phi_) : pt(pt_), y(y_), phi(phi_) {}
   double pt, y, phi;
+
+  Particle(double pt_, double y_, double phi_) :
+    pt(pt_), y(y_), phi(phi_)
+  {}
 };
 
 // base class for producing events
@@ -59,11 +63,13 @@ public:
 
   // advances the internals to the next event
   virtual bool next() = 0;
-  void reset() { iEvent_ = 0; }
+  void reset() { iEvent_ = 0; iAccept_ = 0; }
   
   // accessor functions
   const std::vector<Particle> & particles() const { return particles_; }
   double weight() const { return weight_; }
+  long num_events() const { return num_events_; }
+  unsigned num_accepted() const { return iAccept_; }
 
 private:
 

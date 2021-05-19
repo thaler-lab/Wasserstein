@@ -35,6 +35,9 @@
  *     \/  \/_/    \_\_____/_____/|______|_|  \_\_____/   |_|  |______|_____|_| \_|
  */
 
+#ifndef WASSERSTEIN_HH
+#define WASSERSTEIN_HH
+
 #include "internal/CenterWeightedCentroid.hh"
 #include "internal/CorrelationDimension.hh"
 #include "internal/EMD.hh"
@@ -42,3 +45,24 @@
 #include "internal/NetworkSimplex.hh"
 #include "internal/PairwiseDistance.hh"
 #include "internal/PairwiseEMD.hh"
+
+BEGIN_EMD_NAMESPACE
+
+// _EMD using double precision
+template<template<typename> class Event = DefaultEvent,
+         template<typename> class PairwiseDistance = DefaultPairwiseDistance>
+using EMDFloat64 = _EMD<double, Event, PairwiseDistance, DefaultNetworkSimplex>;
+
+// _EMD using single precision
+template<template<typename> class Event = DefaultEvent,
+         template<typename> class PairwiseDistance = DefaultPairwiseDistance>
+using EMDFloat32 = _EMD<float, Event, PairwiseDistance, DefaultNetworkSimplex>;
+
+// EMD is alias for EMDFloat64
+template<template<typename> class Event = DefaultEvent,
+         template<typename> class PairwiseDistance = DefaultPairwiseDistance>
+using EMD = EMDFloat64<Event, PairwiseDistance>;
+
+END_EMD_NAMESPACE
+
+#endif // WASSERSTEIN_HH

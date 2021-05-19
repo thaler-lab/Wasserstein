@@ -73,8 +73,8 @@ struct EventBase {
     has_weights_ = true;
   }
 
+  // default constructor
   EventBase() {}
-  virtual ~EventBase() {}
 
   // access event_weight
   value_type event_weight() const { return event_weight_; }
@@ -107,6 +107,8 @@ struct EventBase {
   }
 
 protected:
+
+  ~EventBase() = default;
 
   ParticleCollection particles_;
   WeightCollection weights_;
@@ -168,11 +170,6 @@ struct ArrayWeightCollection {
   ArrayWeightCollection(value_type * array, index_type size) : array_(array), size_(size), delete_(false) {}
   ArrayWeightCollection() : ArrayWeightCollection(nullptr, 0) {}
 
-  ~ArrayWeightCollection() {
-    if (delete_)
-      delete[] array_;
-  }
-
   index_type size() const { return size_; }
   value_type * begin() { return array_; }
   value_type * end() { return array_ + size_; }
@@ -195,6 +192,13 @@ struct ArrayWeightCollection {
     // copy old array into new one
     memcpy(new_array, array_, std::size_t(size())*sizeof(value_type));
     array_ = new_array;
+  }
+
+protected:
+
+  ~ArrayWeightCollection() {
+    if (delete_)
+      delete[] array_;
   }
 
 private:
@@ -232,8 +236,8 @@ protected:
       return *this;
     }
     T * operator*() const { return ptr_; }
-    const T & operator[](index_type i) const { return ptr_[i]; }
-    T & operator[](index_type i) { return ptr_[i]; }
+    //const T & operator[](index_type i) const { return ptr_[i]; }
+    //T & operator[](index_type i) { return ptr_[i]; }
     bool operator!=(const templated_iterator & other) const { return ptr_ != other.ptr_; }
     index_type stride() const { return stride_; }
   };
