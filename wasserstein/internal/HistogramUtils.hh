@@ -214,10 +214,10 @@ public:
 
   // SWIG preprocessor complains about these, so hide them
   #ifndef SWIG_PREPROCESSOR
-    Hist & hist() { return hist_; }
-    Axis & axis() { return axis_; }
-    const Hist & hist() const { return hist_; }
-    const Axis & axis() const { return axis_; }
+    auto & hist() { return hist_; }
+    auto & axis() { return axis_; }
+    const auto & hist() const { return hist_; }
+    const auto & axis() const { return axis_; }
   #endif
 
   // get histogram values and errors
@@ -229,7 +229,7 @@ public:
   std::vector<Value> bin_centers() const { return get_bin_centers<Value>(axis_); }
   std::vector<Value> bin_edges() const { return get_bin_edges<Value>(axis_); }
 
-  // return textual representation of axs/hist
+  // return textual representation of axis/hist
   std::string print_axis() const { return print_axis(axis_); }
   std::string print_hist() const { return print_1d_hist(hist_); }
 

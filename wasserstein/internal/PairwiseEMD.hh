@@ -73,7 +73,6 @@ public:
 
   typedef Value value_type;
   typedef typename EMD::Event Event;
-  typedef std::vector<Event> EventVector;
 
 private:
 
@@ -87,17 +86,17 @@ private:
   index_type print_every_;
   ExternalEMDHandler<Value> * handler_;
   unsigned verbose_;
-  bool store_sym_emds_flattened_, throw_on_error_, request_mode_;
+  bool request_mode_, store_sym_emds_raw_, throw_on_error_;
   std::ostream * print_stream_;
   std::ostringstream oss_;
 
   // vectors of events and EnergyMoversDistances
-  EventVector events_;
+  std::vector<Event> events_;
   std::vector<Value> emds_, full_emds_;
   std::vector<std::string> error_messages_;
 
   // info about stored events
-  index_type nevA_, nevB_, num_emds_, emd_counter_, num_emds_width_;
+  index_type nevA_, nevB_, num_emds_, emd_counter_;
   EMDPairsStorage emd_storage_;
   bool two_event_sets_;
 
@@ -108,8 +107,10 @@ public:
               int num_threads = -1,
               index_type print_every = -10,
               unsigned verbose = 1,
-              bool store_sym_emds_flattened = true,
+              bool request_mode = false,
+              bool store_sym_emds_raw = true,
               bool throw_on_error = false,
+              int omp_dynamic_chunksize = 10,
               unsigned n_iter_max = 100000,
               Value epsilon_large_factor = 1000,
               Value epsilon_small_factor = 1,
@@ -118,7 +119,9 @@ public:
     emd_objs_(num_threads_, EMD(R, beta, norm, false, false,
                                 n_iter_max, epsilon_large_factor, epsilon_small_factor))
   {
-    setup(print_every, verbose, store_sym_emds_flattened, throw_on_error, &os);
+    setup(print_every, verbose,
+          request_mode, store_sym_emds_raw, throw_on_error,
+          omp_dynamic_chunksize, &os);
   }
 
 // avoid overloading constructor so swig can handle keyword arguments
@@ -129,8 +132,10 @@ public:
               int num_threads = -1,
               index_type print_every = -10,
               unsigned verbose = 1,
-              bool store_sym_emds_flattened = true,
+              bool request_mode = false,
+              bool store_sym_emds_raw = true,
               bool throw_on_error = false,
+              int omp_dynamic_chunksize = 10,
               std::ostream & os = std::cout) :
     num_threads_(determine_num_threads(num_threads)),
     emd_objs_(num_threads_, emd)
@@ -138,7 +143,9 @@ public:
     if (emd.external_dists())
       throw std::invalid_argument("Cannot use PairwiseEMD with external distances");
 
-    setup(print_every, verbose, store_sym_emds_flattened, throw_on_error, &os);
+    setup(print_every, verbose,
+          request_mode, store_sym_emds_raw, throw_on_error,
+          omp_dynamic_chunksize, &os);
   }
 
 #endif // SWIG
@@ -149,6 +156,31 @@ public:
     for (EMD & emd_obj : emd_objs_)
       emd_obj.template preprocess<P>(std::forward<Args>(args)...);
     return *this;
+  }
+
+  // return a description of this object as a string
+  std::string description(bool write_preprocessors = true) const {
+    std::ostringstream oss;
+    oss << std::boolalpha;
+    oss << "Pairwise" << emd_objs_[0].description(false) << '\n'
+        << "  num_threads - " << num_threads_ << '\n'
+        << "  print_every - ";
+
+    // handle print_every logic
+    if (print_every_ > 0) oss << print_every_;
+    else
+      oss << "auto, " << std::abs(print_every_) << " total chunks";
+
+    oss << '\n'
+        << "  store_sym_emds_raw - " << store_sym_emds_raw_ << '\n'
+        << "  throw_on_error - " << throw_on_error_ << '\n'
+        << '\n'
+        << (handler_ ? handler_->description() : "  Pairwise EMD distance matrix stored internally\n");
+        
+    if (write_preprocessors)
+      emd_objs_[0].output_preprocessors(oss);
+
+    return oss.str();
   }
 
   // get/set R
@@ -171,7 +203,7 @@ public:
 
   // set network simplex parameters
   void set_network_simplex_params(unsigned n_iter_max=100000,
-                                  Value epsilon_large_factor=10000,
+                                  Value epsilon_large_factor=1000,
                                   Value epsilon_small_factor=1) {
     for (EMD & emd_obj : emd_objs_)
       emd_obj.set_network_simplex_params(n_iter_max, epsilon_large_factor, epsilon_small_factor);
@@ -189,54 +221,21 @@ public:
   void set_external_emd_handler(ExternalEMDHandler<Value> & handler) {
     handler_ = &handler;
   }
-  ExternalEMDHandler<Value> * external_emd_handler() {
+  bool have_external_emd_handler() const {
+    return handler_ != nullptr;
+  }
+  template<class EMDHandler>
+  EMDHandler * external_emd_handler() {
     if (!have_external_emd_handler())
       throw std::logic_error("no external emd handler set");
 
-    return handler_;
-  }
-  bool have_external_emd_handler() const {
-    return handler_ != nullptr;
+    return dynamic_cast<EMDHandler>(handler_);
   }
 
   // turn on or off request mode, where nothing is stored or handled but
   // EMD distances can be queried and computed on the fly
-  void set_request_mode(bool mode) {
-    request_mode_ = mode;
-  }
-  bool request_mode() const {
-    return request_mode_;
-  }
-
-  // query storage mode
-  EMDPairsStorage storage() const {
-    return emd_storage_;
-  }
-
-  // return a description of this object as a string
-  std::string description(bool write_preprocessors = true) const {
-    std::ostringstream oss;
-    oss << std::boolalpha;
-    oss << "Pairwise" << emd_objs_[0].description(false) << '\n'
-        << "  num_threads - " << num_threads_ << '\n'
-        << "  print_every - ";
-
-    // handle print_every logic
-    if (print_every_ > 0) oss << print_every_;
-    else
-      oss << "auto, " << std::abs(print_every_) << " total chunks";
-
-    oss << '\n'
-        << "  store_sym_emds_flattened - " << store_sym_emds_flattened_ << '\n'
-        << "  throw_on_error - " << throw_on_error_ << '\n'
-        << '\n'
-        << (handler_ ? handler_->description() : "  Pairwise EMD distance matrix stored internally\n");
-        
-    if (write_preprocessors)
-      emd_objs_[0].output_preprocessors(oss);
-
-    return oss.str();
-  }
+  void set_request_mode(bool mode) { request_mode_ = mode; }
+  bool request_mode() const { return request_mode_; }
 
   // clears internal storage
   void clear(bool free_memory = true) {
@@ -267,6 +266,7 @@ public:
   template<class ProtoEvent>
   void operator()(const std::vector<ProtoEvent> & proto_events,
                   const std::vector<Value> & event_weights = {}) {
+
     assert(std::distance(proto_events.begin(), proto_events.end()) == proto_events.size());
     operator()(proto_events.begin(), proto_events.end(), event_weights);
   }
@@ -275,6 +275,7 @@ public:
   template<class ProtoEventIt>
   void operator()(ProtoEventIt proto_events_first, ProtoEventIt proto_events_last,
                   const std::vector<Value> & event_weights = {}) {
+
     init(std::distance(proto_events_first, proto_events_last));
     store_proto_events(proto_events_first, proto_events_last, event_weights);
     compute();
@@ -286,6 +287,7 @@ public:
                   const std::vector<ProtoEventB> & proto_eventsB,
                   const std::vector<Value> & event_weightsA = {},
                   const std::vector<Value> & event_weightsB = {}) {
+
     operator()(proto_eventsA.begin(), proto_eventsA.end(),
                proto_eventsB.begin(), proto_eventsB.end(),
                event_weightsA, event_weightsB);
@@ -297,6 +299,7 @@ public:
                   ProtoEventBIt proto_eventsB_first, ProtoEventBIt proto_eventsB_last,
                   const std::vector<Value> & event_weightsA = {},
                   const std::vector<Value> & event_weightsB = {}) {
+
     init(std::distance(proto_eventsA_first, proto_eventsA_last),
          std::distance(proto_eventsB_first, proto_eventsB_last));
     store_proto_events(proto_eventsA_first, proto_eventsA_last, event_weightsA);
@@ -306,14 +309,14 @@ public:
 
 
   // compute pairs among same set of events (no preprocessing)
-  void compute(const EventVector & events) {
+  void compute(const std::vector<Event> & events) {
     init(events.size());
     events_ = events;
     compute();
   }
 
   // compute pairs between different sets of events
-  void compute(const EventVector & eventsA, const EventVector & eventsB) {
+  void compute(const std::vector<Event> & eventsA, const std::vector<Event> & eventsB) {
     init(eventsA.size(), eventsB.size());
     events_.reserve(nevA() + nevB());
     events_.insert(events_.end(), eventsA.begin(), eventsA.end());
@@ -324,26 +327,29 @@ public:
   // access events
   index_type nevA() const { return nevA_; }
   index_type nevB() const { return nevB_; }
-  const EventVector & events() const { return events_; }
+  const std::vector<Event> & events() const { return events_; }
 
   // number of unique EMDs computed
   index_type num_emds() const { return num_emds_; }
+
+  // query storage mode
+  EMDPairsStorage storage() const { return emd_storage_; }
+
+  // access timing information
+  double duration() const { return emd_objs_[0].duration(); }
 
   // error reporting
   bool errored() const { return error_messages_.size() > 0; }
   const std::vector<std::string> & error_messages() const { return error_messages_; }
 
-  // access timing information
-  double duration() const { return emd_objs_[0].duration(); }
-
-  // access all emds as a matrix flattened into a vector
+  // access all emds as a matrix raw into a vector
   const std::vector<Value> & emds(bool raw = false) {
 
     // check for having no emds stored
     if (emd_storage_ == EMDPairsStorage::External)
       throw std::logic_error("No EMDs stored");
 
-    // check if we need to construct a new full matrix from a flattened symmetric one
+    // check if we need to construct a new full matrix from a raw symmetric one
     if (emd_storage_ == EMDPairsStorage::FlattenedSymmetric && !raw) {
 
       // allocate a new vector for holding the full emds
@@ -405,13 +411,13 @@ public:
     else return emds_[i*nevB() + j];
   }
 
-// wasserstein needs access to these functions in order to use CustomArrayDistance
+// wasserstein needs access to these functions in the SWIG Python wrapper
 #ifndef SWIG_WASSERSTEIN
 private:
 #endif
 
   // access modifiable events
-  EventVector & events() { return events_; }
+  std::vector<Event> & events() { return events_; }
 
   // preprocesses the last event added
   void preprocess_back_event() {
@@ -430,7 +436,7 @@ private:
     // resize emds
     num_emds_ = nev*(nev - 1)/2;
     if (!have_external_emd_handler() && !request_mode()) {
-      emd_storage_ = (store_sym_emds_flattened_ ? EMDPairsStorage::FlattenedSymmetric : EMDPairsStorage::FullSymmetric);
+      emd_storage_ = (store_sym_emds_raw_ ? EMDPairsStorage::FlattenedSymmetric : EMDPairsStorage::FullSymmetric);
       emds_.resize(emd_storage_ == EMDPairsStorage::FullSymmetric ? nevA()*nevB() : num_emds());
     }
 
@@ -465,8 +471,6 @@ private:
     if (request_mode())
       throw std::runtime_error("cannot compute pairwise EMDs in request mode");
 
-    num_emds_width_ = std::to_string(num_emds()).size();
-
     // note that print_every == 0 is handled in setup()
     index_type print_every(print_every_);
     if (print_every < 0) {
@@ -486,8 +490,10 @@ private:
     std::mutex failure_mutex;
     index_type begin(0);
     while (emd_counter_ < num_emds() && !(throw_on_error_ && error_messages().size())) {
+
       emd_counter_ += print_every;
-      if (emd_counter_ > num_emds()) emd_counter_ = num_emds();
+      if (emd_counter_ > num_emds())
+        emd_counter_ = num_emds();
 
       #pragma omp parallel num_threads(num_threads_) default(shared)
       {
@@ -504,10 +510,8 @@ private:
             // run and check for failure
             const Event & eventA(events_[i]), & eventB(events_[nevA() + j]);
             EMDStatus status(emd_obj.compute(eventA, eventB));
-            if (status != EMDStatus::Success) {
-              std::lock_guard<std::mutex> failure_lock(failure_mutex);
-              record_failure(status, i, j);
-            }
+            if (status != EMDStatus::Success)
+              record_failure(failure_mutex, status, i, j);
 
             if (handler_)
               (*handler_)(emd_obj.emd(), eventA.event_weight() * eventB.event_weight());
@@ -524,10 +528,8 @@ private:
             // run and check for failure
             const Event & eventA(events_[i]), & eventB(events_[j]);
             EMDStatus status(emd_obj.compute(eventA, eventB));
-            if (status != EMDStatus::Success) {
-              std::lock_guard<std::mutex> failure_lock(failure_mutex);
-              record_failure(status, i, j);
-            }
+            if (status != EMDStatus::Success)
+              record_failure(failure_mutex, status, i, j);
 
             // store emd value
             if (emd_storage_ == EMDPairsStorage::FlattenedSymmetric)
@@ -576,21 +578,24 @@ private:
   }
 
   // init from constructor
-  void setup(index_type print_every, unsigned verbose,
-             bool store_sym_emds_flattened, bool throw_on_error,
+  void setup(index_type print_every,
+             unsigned verbose,
+             bool request_mode,
+             bool store_sym_emds_raw,
+             bool throw_on_error,
+             int omp_chunksize,
              std::ostream * os) {
     
     // store arguments, from constructor
     print_every_ = print_every;
     verbose_ = verbose;
-    store_sym_emds_flattened_ = store_sym_emds_flattened;
+    store_sym_emds_raw_ = store_sym_emds_raw;
     throw_on_error_ = throw_on_error;
     print_stream_ = os;
     handler_ = nullptr;
 
-    // turn off request mode by default
-    request_mode_ = false;
-    set_omp_dynamic_chunksize(10);
+    set_request_mode(request_mode);
+    set_omp_dynamic_chunksize(omp_chunksize);
 
     // print_every of 0 is equivalent to -1
     if (print_every_ == 0)
@@ -601,7 +606,8 @@ private:
     oss_.setf(std::ios_base::fixed, std::ios_base::floatfield);
 
     // turn off timing in EMD objects
-    for (EMD & emd_obj : emd_objs_) emd_obj.do_timing_ = false;
+    for (EMD & emd_obj : emd_objs_)
+      emd_obj.do_timing_ = false;
 
     // clear is meant to be used between computations, call it here for consistency
     clear(false);
@@ -634,7 +640,9 @@ private:
     }
   }
 
-  void record_failure(EMDStatus status, index_type i, index_type j) {
+  void record_failure(std::mutex & failure_mutex, EMDStatus status, index_type i, index_type j) {
+    std::lock_guard<std::mutex> failure_lock(failure_mutex);
+
     std::ostringstream message;
     message << "PairwiseEMD::compute - Issue with EMD between events ("
             << i << ", " << j << "), error code " << int(status);
@@ -650,7 +658,7 @@ private:
     #endif
   }
 
-  // indexes upper triangle of symmetric matrix with zeros on diagonal that has been flattened into 1D
+  // indexes upper triangle of symmetric matrix with zeros on diagonal that has been raw into 1D
   // see scipy's squareform function
   index_type index_symmetric(index_type i, index_type j) {
 
@@ -669,9 +677,10 @@ private:
 
     // prepare message
     if (verbose_) {
+      unsigned num_emds_width(std::to_string(num_emds()).size());
       oss_.str("  ");
-      oss_ << std::setw(num_emds_width_) << emd_counter_ << " / "
-           << std::setw(num_emds_width_) << num_emds() << "  EMDs computed  - "
+      oss_ << std::setw(num_emds_width) << emd_counter_ << " / "
+           << std::setw(num_emds_width) << num_emds() << "  EMDs computed  - "
            << std::setprecision(2) << std::setw(6) << double(emd_counter_)/num_emds()*100
            << "% completed - "
            << std::setprecision(3) << emd_objs_[0].store_duration() << 's';  

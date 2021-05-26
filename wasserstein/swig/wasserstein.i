@@ -219,24 +219,24 @@ namespace emd {
   }
 
   // extend/instantiate specific EMD classes
-  %extend _EMD<double, DefaultArrayEvent,  EuclideanArrayDistance> { WASSERSTEIN_EMD_NUMPY_FUNCS(double) }
-  %extend _EMD<float,  DefaultArrayEvent,  EuclideanArrayDistance> { WASSERSTEIN_EMD_NUMPY_FUNCS(float) }
-  %extend _EMD<double, DefaultArray2Event, YPhiArrayDistance> { WASSERSTEIN_EMD_NUMPY_FUNCS(double) }
-  %extend _EMD<float,  DefaultArray2Event, YPhiArrayDistance> { WASSERSTEIN_EMD_NUMPY_FUNCS(float) }
-  %template(EMDFloat64)     _EMD<double, DefaultArrayEvent,  EuclideanArrayDistance>;
-  %template(EMDFloat32)     _EMD<float,  DefaultArrayEvent,  EuclideanArrayDistance>;
-  %template(EMDYPhiFloat64) _EMD<double, DefaultArray2Event, YPhiArrayDistance>;
-  %template(EMDYPhiFloat32) _EMD<float,  DefaultArray2Event, YPhiArrayDistance>;
+  %extend EMD<double, DefaultArrayEvent,  EuclideanArrayDistance> { WASSERSTEIN_EMD_NUMPY_FUNCS(double) }
+  %extend EMD<float,  DefaultArrayEvent,  EuclideanArrayDistance> { WASSERSTEIN_EMD_NUMPY_FUNCS(float) }
+  %extend EMD<double, DefaultArray2Event, YPhiArrayDistance> { WASSERSTEIN_EMD_NUMPY_FUNCS(double) }
+  %extend EMD<float,  DefaultArray2Event, YPhiArrayDistance> { WASSERSTEIN_EMD_NUMPY_FUNCS(float) }
+  %template(EMDFloat64)     EMD<double, DefaultArrayEvent,  EuclideanArrayDistance>;
+  %template(EMDFloat32)     EMD<float,  DefaultArrayEvent,  EuclideanArrayDistance>;
+  %template(EMDYPhiFloat64) EMD<double, DefaultArray2Event, YPhiArrayDistance>;
+  %template(EMDYPhiFloat32) EMD<float,  DefaultArray2Event, YPhiArrayDistance>;
 
   // extend/instantiate specific PairwiseEMD classes
-  %extend PairwiseEMD<_EMD<double, DefaultArrayEvent,  EuclideanArrayDistance>, double> { WASSERSTEIN_PAIRWISE_EMD_NUMPY_FUNCS(double) }
-  %extend PairwiseEMD<_EMD<float,  DefaultArrayEvent,  EuclideanArrayDistance>, float> {  WASSERSTEIN_PAIRWISE_EMD_NUMPY_FUNCS(float) }
-  %extend PairwiseEMD<_EMD<double, DefaultArray2Event, YPhiArrayDistance>, double> { WASSERSTEIN_PAIRWISE_EMD_NUMPY_FUNCS(double) }
-  %extend PairwiseEMD<_EMD<float,  DefaultArray2Event, YPhiArrayDistance>, float> {  WASSERSTEIN_PAIRWISE_EMD_NUMPY_FUNCS(float) }
-  %template(PairwiseEMDFloat64)     PairwiseEMD<_EMD<double, DefaultArrayEvent,  EuclideanArrayDistance>, double>;
-  %template(PairwiseEMDFloat32)     PairwiseEMD<_EMD<float,  DefaultArrayEvent,  EuclideanArrayDistance>, float>;
-  %template(PairwiseEMDYPhiFloat64) PairwiseEMD<_EMD<double, DefaultArray2Event, YPhiArrayDistance>, double>;
-  %template(PairwiseEMDYPhiFloat32) PairwiseEMD<_EMD<float,  DefaultArray2Event, YPhiArrayDistance>, float>;
+  %extend PairwiseEMD<EMD<double, DefaultArrayEvent,  EuclideanArrayDistance>, double> { WASSERSTEIN_PAIRWISE_EMD_NUMPY_FUNCS(double) }
+  %extend PairwiseEMD<EMD<float,  DefaultArrayEvent,  EuclideanArrayDistance>, float> {  WASSERSTEIN_PAIRWISE_EMD_NUMPY_FUNCS(float) }
+  %extend PairwiseEMD<EMD<double, DefaultArray2Event, YPhiArrayDistance>, double> { WASSERSTEIN_PAIRWISE_EMD_NUMPY_FUNCS(double) }
+  %extend PairwiseEMD<EMD<float,  DefaultArray2Event, YPhiArrayDistance>, float> {  WASSERSTEIN_PAIRWISE_EMD_NUMPY_FUNCS(float) }
+  %template(PairwiseEMDFloat64)     PairwiseEMD<EMD<double, DefaultArrayEvent,  EuclideanArrayDistance>, double>;
+  %template(PairwiseEMDFloat32)     PairwiseEMD<EMD<float,  DefaultArrayEvent,  EuclideanArrayDistance>, float>;
+  %template(PairwiseEMDYPhiFloat64) PairwiseEMD<EMD<double, DefaultArray2Event, YPhiArrayDistance>, double>;
+  %template(PairwiseEMDYPhiFloat32) PairwiseEMD<EMD<float,  DefaultArray2Event, YPhiArrayDistance>, float>;
 
 } // namespace emd
 

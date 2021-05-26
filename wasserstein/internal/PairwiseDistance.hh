@@ -64,12 +64,12 @@ public:
   typedef typename ParticleCollection::const_iterator ParticleIterator;
   typedef Value value_type;
 
-  PairwiseDistanceBase(value_type R, value_type beta) {
+  PairwiseDistanceBase(Value R, Value beta) {
     set_R(R);
     set_beta(beta);
 
     // check that we properly have passed a derived class (must be here because derived class is incomplete)
-    static_assert(std::is_base_of<PairwiseDistanceBase<PairwiseDistance, ParticleCollection, value_type>,
+    static_assert(std::is_base_of<PairwiseDistanceBase<PairwiseDistance, ParticleCollection, Value>,
                                   PairwiseDistance>::value, 
                   "Template parameter must be a derived class of PairwiseDistanceBase.");
   }
@@ -85,14 +85,14 @@ public:
   }
 
   // access/set parameters
-  value_type R() const { return R_; }
-  value_type beta() const { return beta_; }
-  void set_R(value_type r) {
+  Value R() const { return R_; }
+  Value beta() const { return beta_; }
+  void set_R(Value r) {
     if (r <= 0) throw std::invalid_argument("R must be positive.");
     R_ = r;
     R2_ = r*r;
   }
-  void set_beta(value_type beta) {
+  void set_beta(Value beta) {
     if (beta < 0) throw std::invalid_argument("beta must be non-negative.");
     beta_ = beta;
     halfbeta_ = beta/2;
@@ -100,7 +100,7 @@ public:
 
   // computes pairwise distances between two particle collections
   void fill_distances(const ParticleCollection & ps0, const ParticleCollection & ps1,
-                      std::vector<value_type> & dists, ExtraParticle extra) {
+                      std::vector<Value> & dists, ExtraParticle extra) {
 
     std::size_t k(0);
 
@@ -131,18 +131,18 @@ public:
   }
 
   // returns the distance divided by R, all to beta power
-  value_type distance(const ParticleIterator & p0, const ParticleIterator & p1) const {
-    value_type pd(PairwiseDistance::plain_distance_(p0, p1));
+  Value distance(const ParticleIterator & p0, const ParticleIterator & p1) const {
+    Value pd(PairwiseDistance::plain_distance_(p0, p1));
     return (beta_ == 1.0 ? std::sqrt(pd)/R_ : (beta_ == 2.0 ? pd/R2_ : std::pow(pd/R2_, halfbeta_)));
   }
 
   // return the plain distance, without the square root
-  static value_type plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
+  static Value plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
     return PairwiseDistance::plain_distance(*p0, *p1);
   }
 
   // ensure this method is overloaded
-  static value_type plain_distance(const Particle & p0, const Particle & p1) {
+  static Value plain_distance(const Particle & p0, const Particle & p1) {
     throw std::runtime_error("called pairwise distance without any particles");
     return -1;
   }
@@ -153,7 +153,7 @@ protected:
 
 private:
 
-  value_type R_, R2_, beta_, halfbeta_;
+  Value R_, R2_, beta_, halfbeta_;
 
 }; // PairwiseDistanceBase
 
@@ -169,13 +169,13 @@ class DefaultPairwiseDistance : public PairwiseDistanceBase<DefaultPairwiseDista
 public:
 
   typedef Value value_type;
-  typedef std::vector<value_type> ParticleCollection;
+  typedef std::vector<Value> ParticleCollection;
   typedef typename ParticleCollection::const_iterator ParticleIterator;
 
-  using PairwiseDistanceBase<DefaultPairwiseDistance<value_type>, ParticleCollection, value_type>::PairwiseDistanceBase;
+  using PairwiseDistanceBase<DefaultPairwiseDistance<Value>, ParticleCollection, Value>::PairwiseDistanceBase;
 
   static std::string name() { return "DefaultPairwiseDistance (none)"; }
-  static value_type plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
+  static Value plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
     return -1;
   }
 
@@ -193,22 +193,22 @@ class EuclideanArrayDistance : public PairwiseDistanceBase<EuclideanArrayDistanc
 public:
 
   typedef Value value_type;
-  typedef ArrayParticleCollection<value_type> ParticleCollection;
+  typedef ArrayParticleCollection<Value> ParticleCollection;
   typedef typename ParticleCollection::value_type Particle;
   typedef typename ParticleCollection::const_iterator ParticleIterator;
 
-  using PairwiseDistanceBase<EuclideanArrayDistance<value_type>, ParticleCollection, value_type>::PairwiseDistanceBase;
+  using PairwiseDistanceBase<EuclideanArrayDistance<Value>, ParticleCollection, Value>::PairwiseDistanceBase;
 
   static std::string name() { return "EuclideanArrayDistance"; }
-  static value_type plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
+  static Value plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
     if (p0.stride() == 2) {
-      value_type dx((*p0)[0] - (*p1)[0]), dy((*p0)[1] - (*p1)[1]);
+      Value dx((*p0)[0] - (*p1)[0]), dy((*p0)[1] - (*p1)[1]);
       return dx*dx + dy*dy;
     }
     else {
-      value_type d(0);
+      Value d(0);
       for (int i = 0; i < p0.stride(); i++) {
-        value_type dx((*p0)[i] - (*p1)[i]);
+        Value dx((*p0)[i] - (*p1)[i]);
         d += dx*dx;
       }
       return d;
@@ -228,16 +228,16 @@ class YPhiArrayDistance : public PairwiseDistanceBase<YPhiArrayDistance<Value>,
 public:
 
   typedef Value value_type;
-  typedef Array2ParticleCollection<value_type> ParticleCollection;
+  typedef Array2ParticleCollection<Value> ParticleCollection;
 
   typedef typename ParticleCollection::value_type Particle;
   typedef typename ParticleCollection::const_iterator ParticleIterator;
 
-  using PairwiseDistanceBase<YPhiArrayDistance<value_type>, ParticleCollection, value_type>::PairwiseDistanceBase;
+  using PairwiseDistanceBase<YPhiArrayDistance<Value>, ParticleCollection, Value>::PairwiseDistanceBase;
 
   static std::string name() { return "YPhiArrayDistance"; }
-  static value_type plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
-    value_type dy((*p0)[0] - (*p1)[0]), dphi(std::fabs((*p0)[1] - (*p1)[1]));
+  static Value plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
+    Value dy((*p0)[0] - (*p1)[0]), dphi(std::fabs((*p0)[1] - (*p1)[1]));
     if (dphi > PI) dphi = TWOPI - dphi;
     return dy*dy + dphi*dphi;
   }
@@ -285,7 +285,7 @@ public:
                              Value>::PairwiseDistanceBase;
 
   static std::string name() { return "YPhiParticleDistance"; }
-  static value_type plain_distance(const Particle & p0, const Particle & p1) {
+  static Value plain_distance(const Particle & p0, const Particle & p1) {
     Value dy(p0[0] - p1[0]), dphi(p0[1] - p1[1]);
     if (dphi > PI) dphi = TWOPI - dphi;
     return dy*dy + dphi*dphi;

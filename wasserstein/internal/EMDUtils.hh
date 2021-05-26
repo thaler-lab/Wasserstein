@@ -84,7 +84,7 @@ const double TWOPI = 2*PI;
 // Enums
 ////////////////////////////////////////////////////////////////////////////////
 
-enum class EMDStatus { 
+enum class EMDStatus : char { 
   Success = 0,
   Empty = 1,
   SupplyMismatch = 2,
@@ -92,8 +92,8 @@ enum class EMDStatus {
   MaxIterReached = 4,
   Infeasible = 5
 };
-enum class ExtraParticle { Neither = -1, Zero = 0, One = 1 };
-enum class EMDPairsStorage { Full, FullSymmetric, FlattenedSymmetric, External };
+enum class ExtraParticle : char { Neither = -1, Zero = 0, One = 1 };
+enum class EMDPairsStorage : char { Full = 0, FullSymmetric = 1, FlattenedSymmetric = 2, External = 3 };
 
 
 ////////////////////////////////////////////////////////////////////////////////

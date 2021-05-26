@@ -51,17 +51,12 @@ BEGIN_EMD_NAMESPACE
 // _EMD using double precision
 template<template<typename> class Event = DefaultEvent,
          template<typename> class PairwiseDistance = DefaultPairwiseDistance>
-using EMDFloat64 = _EMD<double, Event, PairwiseDistance, DefaultNetworkSimplex>;
+using EMDFloat64 = EMD<double, Event, PairwiseDistance>;
 
 // _EMD using single precision
 template<template<typename> class Event = DefaultEvent,
          template<typename> class PairwiseDistance = DefaultPairwiseDistance>
-using EMDFloat32 = _EMD<float, Event, PairwiseDistance, DefaultNetworkSimplex>;
-
-// EMD is alias for EMDFloat64
-template<template<typename> class Event = DefaultEvent,
-         template<typename> class PairwiseDistance = DefaultPairwiseDistance>
-using EMD = EMDFloat64<Event, PairwiseDistance>;
+using EMDFloat32 = EMD<float, Event, PairwiseDistance>;
 
 END_EMD_NAMESPACE
 

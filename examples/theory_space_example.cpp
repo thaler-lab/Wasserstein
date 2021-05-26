@@ -36,7 +36,7 @@
 #include "Wasserstein.hh"
 
 using EMDParticle = emd::EuclideanParticle2D<>;
-using EMD = emd::EMD<emd::EuclideanEvent2D, emd::EuclideanDistance2D>;
+using EMD = emd::EMDFloat64<emd::EuclideanEvent2D, emd::EuclideanDistance2D>;
 using PairwiseEMD = emd::PairwiseEMD<EMD>;
 
 template<class P>
@@ -87,7 +87,7 @@ void SigmaMD_single(EventProducer * evp) {
   bool SigmaMD_do_timing = true;
 
   // external dists are used by the default configuration
-  emd::EMD<> sigmamd_obj(SigmaMD_R, SigmaMD_beta, SigmaMD_norm, SigmaMD_do_timing);
+  emd::EMDFloat64<> sigmamd_obj(SigmaMD_R, SigmaMD_beta, SigmaMD_norm, SigmaMD_do_timing);
 
   std::cout << sigmamd_obj.description() << '\n';
 

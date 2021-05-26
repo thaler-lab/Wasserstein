@@ -59,10 +59,10 @@ BEGIN_EMD_NAMESPACE
 ////////////////////////////////////////////////////////////////////////////////
 
 template<typename Value,
-         template<typename> class _Event,
-         template<typename> class _PairwiseDistance,
+         template<typename> class _Event = DefaultEvent,
+         template<typename> class _PairwiseDistance = DefaultPairwiseDistance,
          template<typename> class _NetworkSimplex = DefaultNetworkSimplex>
-class _EMD : public EMDBase<Value> {
+class EMD : public EMDBase<Value> {
 public:
 
   // typedefs from template parameters
@@ -84,7 +84,7 @@ public:
 
   // typedef base class and self
   typedef EMDBase<Value> Base;
-  typedef _EMD<Value, _Event, _PairwiseDistance, _NetworkSimplex> Self;
+  typedef EMD<Value, _Event, _PairwiseDistance, _NetworkSimplex> Self;
   
   // gives PairwiseEMD access to private members
   template<class T, typename V>
@@ -113,7 +113,7 @@ public:
                 "This EMD template parameter should be derived from NetworkSimplex<...>.");
 
   // constructor with entirely default arguments
-  _EMD(Value R = 1, Value beta = 1, bool norm = false,
+  EMD(Value R = 1, Value beta = 1, bool norm = false,
        bool do_timing = false, bool external_dists = false,
        unsigned n_iter_max = 100000,
        Value epsilon_large_factor = 1000,
@@ -155,7 +155,7 @@ public:
 
   // set network simplex parameters
   void set_network_simplex_params(unsigned n_iter_max=100000,
-                                  Value epsilon_large_factor=10000,
+                                  Value epsilon_large_factor=1000,
                                   Value epsilon_small_factor=1) {
     network_simplex_.set_params(n_iter_max, epsilon_large_factor, epsilon_small_factor);
   }
@@ -281,16 +281,16 @@ public:
 
   // access dists
   std::vector<Value> dists() const {
-    return std::vector<Value>(network_simplex_.dists().begin(),
-                       network_simplex_.dists().begin() + n0()*n1());
+    return std::vector<Value>(network_simplex().dists().begin(),
+                              network_simplex().dists().begin() + n0()*n1());
   }
 
   // returns all flows 
   std::vector<Value> flows() const {
 
     // copy flows in the valid range
-    std::vector<Value> unscaled_flows(network_simplex_.flows().begin(), 
-                               network_simplex_.flows().begin() + n0()*n1());
+    std::vector<Value> unscaled_flows(network_simplex().flows().begin(), 
+                                      network_simplex().flows().begin() + n0()*n1());
     // unscale all values
     for (Value & f: unscaled_flows)
       f *= scale();
@@ -319,7 +319,7 @@ public:
 
   // access ground dists in network simplex directly
   std::vector<Value> & ground_dists() { return network_simplex_.dists(); }
-  const std::vector<Value> & ground_dists() const { return network_simplex_.dists(); }
+  //const std::vector<Value> & ground_dists() const { return network_simplex_.dists(); }
 
 private:
 

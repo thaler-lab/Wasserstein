@@ -37,7 +37,7 @@
 #include "Wasserstein.hh"
 
 using EMDParticle = emd::EuclideanParticle2D<>;
-using EMD = emd::EMD<emd::EuclideanEvent2D, emd::YPhiParticleDistance>;
+using EMD = emd::EMDFloat64<emd::EuclideanEvent2D, emd::YPhiParticleDistance>;
 using PairwiseEMD = emd::PairwiseEMD<EMD>;
 
 // helper function for converting to EMD Events

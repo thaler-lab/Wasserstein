@@ -44,7 +44,12 @@
 #ifndef WASSERSTEIN_EXTERNALHANDLERS_HH
 #define WASSERSTEIN_EXTERNALHANDLERS_HH
 
+// C++ standard library
+#include <cmath>
 #include <limits>
+#include <string>
+#include <utility>
+#include <vector>
 
 #include "HistogramUtils.hh"
 
@@ -94,12 +99,13 @@ public:
 
     for (std::size_t i = 0; i < midbins.size() - 1; i++)
       midbins[i] = std::sqrt(midbins[i] * midbins[i + 1]);
+
     midbins.resize(midbins.size() - 1);
 
     return midbins;
   }
 
-  // obtains the cuulative histogram of EFM values and their variances
+  // obtains the cumulative histogram of EFM values and their variances
   std::pair<std::vector<Value>, std::vector<Value>> cumulative_vals_vars() const {
 
     std::size_t size(axis().size());

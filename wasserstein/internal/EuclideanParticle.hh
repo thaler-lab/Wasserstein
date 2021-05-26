@@ -67,20 +67,16 @@ struct EuclideanParticleND {
   EuclideanParticleND(Value weight, const Coords & xs) : weight_(weight), xs_(xs) {}
 
   Value weight() const { return weight_; }
-  Coords & coords() { return xs_; }
-  const Coords & coords() const { return xs_; }
 
-  #ifndef SWIG_PREPROCESSOR
   const Value & operator[](index_type i) const { return xs_[i]; }
   Value & operator[](index_type i) { return xs_[i]; }
-  #endif
 
-  index_type dimension() const { return coords().size(); }
+  static index_type dimension() { return N; }
 
   static Value plain_distance(const Self & p0, const Self & p1) {
     Value d(0);
     for (unsigned i = 0; i < N; i++) {
-      Value dx(p0.xs_[i] - p1.xs_[i]);
+      Value dx(p0[i] - p1[i]);
       d += dx*dx;
     }
     return d;
@@ -91,6 +87,7 @@ struct EuclideanParticleND {
     oss << "EuclideanParticle" << N << "D<" << sizeof(Value) << "-byte float>";
     return oss.str();
   }
+
   static std::string distance_name() {
     std::ostringstream oss;
     oss << "EuclideanDistance" << N << 'D';
@@ -119,9 +116,9 @@ struct EuclideanParticle2D : public EuclideanParticleND<2, Value> {
   EuclideanParticle2D(Value weight, const std::array<Value, 2> & xs) :
     Base(weight, xs) {}
 
-  // overload this to avoid for loop
+  // overloaded to avoid for loop
   static Value plain_distance(const Self & p0, const Self & p1) {
-    Value dx(p0.xs_[0] - p1.xs_[0]), dy(p0.xs_[1] - p1.xs_[1]);
+    Value dx(p0[0] - p1[0]), dy(p0[1] - p1[1]);
     return dx*dx + dy*dy;
   }
 
@@ -141,9 +138,9 @@ struct EuclideanParticle3D : public EuclideanParticleND<3, Value> {
   EuclideanParticle3D(Value weight, const std::array<Value, 3> & xs) :
     Base(weight, xs) {}
 
-  // overload this to avoid for loop
+  // overloaded to avoid for loop
   static Value plain_distance(const Self & p0, const Self & p1) {
-    Value dx(p0.xs_[0] - p1.xs_[0]), dy(p0.xs_[1] - p1.xs_[1]), dz(p0.xs_[2] - p1.xs_[2]);
+    Value dx(p0[0] - p1[0]), dy(p0[1] - p1[1]), dz(p0[2] - p1[2]);
     return dx*dx + dy*dy + dz*dz;
   }
 

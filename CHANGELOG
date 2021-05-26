@@ -1,3 +1,7 @@
+## 1.0.0
+
+- Many small tweaks to public API; see documentation.
+
 ## 0.3.x
 
 - Changed symmetric EMD storage from lower triangular to upper triangular to match SciPy's `squareform` function.

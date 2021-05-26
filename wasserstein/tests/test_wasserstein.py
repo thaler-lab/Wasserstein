@@ -206,19 +206,19 @@ def test_emd_attributes(beta, R, norm):
         assert abs(wassEMD.scale() - max(np.sum(ws0), np.sum(ws1))) < 5e-14
 
 @pytest.mark.pairwise_emd
-@pytest.mark.parametrize('store_sym_flattened', [True, False])
+@pytest.mark.parametrize('store_sym_raw', [True, False])
 @pytest.mark.parametrize('norm', [True, False])
 @pytest.mark.parametrize('print_every', [-2, -1, 0, 1, 2, 1000000000])
 @pytest.mark.parametrize('num_threads', [1, 2, -1])
 @pytest.mark.parametrize('num_events', [1, 2, 16, 64])
-def test_pairwise_emd(num_events, num_threads, print_every, norm, store_sym_flattened):
+def test_pairwise_emd(num_events, num_threads, print_every, norm, store_sym_raw):
 
     beta, R = 1.0, 1.0
     eventsA, eventsB = np.random.rand(2, num_events, 10, 3)
 
     wassEMD = wasserstein.EMD(beta=beta, R=R, norm=norm)
     wassPairwiseEMD = wasserstein.PairwiseEMD(beta=beta, R=R, norm=norm, print_every=print_every,
-                        num_threads=num_threads, store_sym_emds_flattened=store_sym_flattened, verbose=False)
+                        num_threads=num_threads, store_sym_emds_raw=store_sym_raw, verbose=False)
 
     # symmetric computation
     wassPairwiseEMD(eventsA)

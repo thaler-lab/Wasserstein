@@ -83,7 +83,7 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#python">Python</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#compute-distance">Compute Distance</a>
+    <li class="toctree-l3"><a class="reference internal" href="#run-computation">Run Computation</a>
         <ul>
     <li class="toctree-l4"><a class="reference internal" href="#__call__">__call__</a>
     </li>
@@ -119,6 +119,8 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#other-methods">Other Methods</a>
         <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#preprocess_centerweightedcentroid">preprocess_CenterWeightedCentroid</a>
+    </li>
     <li class="toctree-l4"><a class="reference internal" href="#description">description</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#clear">clear</a>
@@ -129,7 +131,7 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#c">C++</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#compute-distances">Compute Distances</a>
+    <li class="toctree-l3"><a class="reference internal" href="#run-computation_1">Run Computation</a>
         <ul>
     <li class="toctree-l4"><a class="reference internal" href="#operator">operator()</a>
     </li>
@@ -158,6 +160,10 @@
                     <li class="toctree-l1"><a class="reference internal" href="../emds/">PairwiseEMD</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../externalemdhandler/">External EMD Handlers</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/">Events</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../pairwisedistance/">Pairwise Distance</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../utils/">Utils</a>
                     </li>
@@ -211,15 +217,21 @@
 </div>
 <div>
 <div class="MathJax_Preview">\sum_{j=1}^{M'}f_{ij}\le E_i, \quad \sum_{i=1}^Mf_{ij}\le E^\prime_j,
-\quad\sum_{i=1}^M\sum_{j=1}^{M'}f_{ij}=E_\text{min}.</div>
+\quad\sum_{i=1}^M\sum_{j=1}^{M'}f_{ij}=\min\left(\sum_{i=1}^ME_i,\sum_{j=1}^{M'}E^\prime_j\right),</div>
 <script type="math/tex; mode=display">\sum_{j=1}^{M'}f_{ij}\le E_i, \quad \sum_{i=1}^Mf_{ij}\le E^\prime_j,
-\quad\sum_{i=1}^M\sum_{j=1}^{M'}f_{ij}=E_\text{min}.</script>
+\quad\sum_{i=1}^M\sum_{j=1}^{M'}f_{ij}=\min\left(\sum_{i=1}^ME_i,\sum_{j=1}^{M'}E^\prime_j\right),</script>
 </div>
+<p>where <span><span class="MathJax_Preview">\mathcal E</span><script type="math/tex">\mathcal E</script></span> and <span><span class="MathJax_Preview">\mathcal E'</span><script type="math/tex">\mathcal E'</script></span> are events with <span><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span> and <span><span class="MathJax_Preview">M'</span><script type="math/tex">M'</script></span> particles, energies <span><span class="MathJax_Preview">\{E_i\}</span><script type="math/tex">\{E_i\}</script></span> and <span><span class="MathJax_Preview">\{E'_j\}</span><script type="math/tex">\{E'_j\}</script></span>, respectively, and pairwise distance matrix <span><span class="MathJax_Preview">\theta_{ij}</span><script type="math/tex">\theta_{ij}</script></span>. <span><span class="MathJax_Preview">R&gt;0</span><script type="math/tex">R>0</script></span> is a parameter controlling the tradeoff between transporting and creating/destroying energy (<span><span class="MathJax_Preview">R</span><script type="math/tex">R</script></span> should be large than half the maximum distance in the ground space in order to ensure the EMD defines a proper metric). <span><span class="MathJax_Preview">\beta&gt;0</span><script type="math/tex">\beta>0</script></span> is an angular exponent, and the EMD only satisfies the triangle inequality for <span><span class="MathJax_Preview">\beta&gt;1</span><script type="math/tex">\beta>1</script></span> if it is raised to the <span><span class="MathJax_Preview">1/\beta</span><script type="math/tex">1/\beta</script></span> power.</p>
 <hr />
 <h2 id="python">Python</h2>
-<p>The Python <code>EMD</code> class wraps the templated C++ class of the same name. It is designed to work with numpy arrays efficiently.</p>
+<p>The Python <code>EMD</code> function returns an object (either <code>wasserstein.EMDFloat64</code> or <code>wasserstein.EMDFloat32</code>, each of which are instantiations of the C++ template <code>EMD</code>) that can be used to compute EMD distances. It is designed to work with numpy arrays efficiently. The <code>EMDYPhi</code> function behaves similarly but implements <span><span class="MathJax_Preview">2\pi</span><script type="math/tex">2\pi</script></span> periodicity in the second coordinate dimension, and so is suited for using the rapidity-azimuth plane as a ground space.</p>
 <div class="codehilite"><pre><span></span><code><span class="n">wasserstein</span><span class="o">.</span><span class="n">EMD</span><span class="p">(</span><span class="n">R</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">do_timing</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                <span class="n">n_iter_max</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span> <span class="n">epsilon_large_factor</span><span class="o">=</span><span class="mf">10000.0</span><span class="p">,</span> <span class="n">epsilon_small_factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+                <span class="n">n_iter_max</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span> <span class="n">epsilon_large_factor</span><span class="o">=</span><span class="mf">1000.0</span><span class="p">,</span> <span class="n">epsilon_small_factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span>
+
+<span class="n">wasserstein</span><span class="o">.</span><span class="n">EMDYPhi</span><span class="p">(</span><span class="n">R</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">do_timing</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">n_iter_max</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span> <span class="n">epsilon_large_factor</span><span class="o">=</span><span class="mf">1000.0</span><span class="p">,</span> <span class="n">epsilon_small_factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                    <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span>
 </code></pre></div>
 
 <p><strong>Arguments</strong></p>
@@ -262,8 +274,13 @@ value is multiplied by the floating points epsilon (around 1e-16 for
 tolerance can be stricter.</li>
 </ul>
 </li>
+<li><strong>dtype</strong> : one of <code>{'float64', 'float32', numpy.float32, numpy.float64}</code><ul>
+<li>Controls the floating point precision used in the EMD computation.</li>
 </ul>
-<h3 id="compute-distance">Compute Distance</h3>
+</li>
+</ul>
+<hr />
+<h3 id="run-computation">Run Computation</h3>
 <h4 id="__call__"><strong><em>_</em>_call</strong>__</h4>
 <div class="codehilite"><pre><span></span><code><span class="fm">__call__</span><span class="p">(</span><span class="n">weights0</span><span class="p">,</span> <span class="n">coords0</span><span class="p">,</span> <span class="n">weights1</span><span class="p">,</span> <span class="n">coords1</span><span class="p">)</span>
 </code></pre></div>
@@ -350,9 +367,13 @@ tolerance can be stricter.</li>
 </ul>
 <h4 id="flow">flow</h4>
 <div class="codehilite"><pre><span></span><code><span class="n">flow</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+<span class="n">flow</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span>
 </code></pre></div>
 
-<p>Access the flow between particle <code>i</code> in <code>event0</code> and <code>j</code> in <code>event1</code>. Note that negative indices are accepted and count from the end, as usual in Python.</p>
+<ul>
+<li>First version: Access the flow between particle <code>i</code> in <code>event0</code> and <code>j</code> in <code>event1</code>. Note that negative indices are accepted and count from the end, as usual in Python.</li>
+<li>Second version: Access the flow using a 1D index such that <code>ind = i*n1() + j</code>.</li>
+</ul>
 <p><strong>Arguments</strong></p>
 <ul>
 <li><strong>i</strong> : <em>int</em><ul>
@@ -361,6 +382,10 @@ tolerance can be stricter.</li>
 </li>
 <li><strong>j</strong> : <em>int</em><ul>
 <li>Index of particle in <code>event1</code>. An <code>IndexError</code> is raised if out of range.</li>
+</ul>
+</li>
+<li><strong>ind</strong> : <em>int</em><ul>
+<li>Raw flow index, equal to <code>i*n1() + j</code>.</li>
 </ul>
 </li>
 </ul>
@@ -470,13 +495,18 @@ tolerance can be stricter.</li>
 <li><code>set_beta(new_beta)</code> : accepts <em>float</em></li>
 <li><code>set_norm(new_norm)</code> : accepts <em>bool</em></li>
 <li><code>set_do_timing(new_do_timing)</code> : accepts <em>bool</em></li>
-<li><code>set_network_simplex_params(n_iter_max=100000, epsilon_large_factor=10000.0, epsilon_small_factor=1.0)</code><ul>
+<li><code>set_network_simplex_params(n_iter_max=100000, epsilon_large_factor=1000.0, epsilon_small_factor=1.0)</code><ul>
 <li>This method resets all of the underlying network simplex solver's parameters at once.</li>
 </ul>
 </li>
 </ul>
 <hr />
 <h3 id="other-methods">Other Methods</h3>
+<h4 id="preprocess_centerweightedcentroid">preprocess_CenterWeightedCentroid</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">preprocess_CenterWeightedCentroid</span><span class="p">()</span>
+</code></pre></div>
+
+<p>This method adds a <code>CenterWeightedCentroid</code> preprocessor to the internal list. The particles of each event will be adjusted so that the origin of the ground space corresponds to their weighted centroid.</p>
 <h4 id="description">description</h4>
 <div class="codehilite"><pre><span></span><code><span class="n">description</span><span class="p">(</span><span class="n">write_preprocessors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
@@ -503,8 +533,11 @@ tolerance can be stricter.</li>
 <p>Frees some memory in use by the <code>EMD</code> object. This should not normally need to be called by the user.</p>
 <hr />
 <h2 id="c">C++</h2>
-<p>The <code>EMD</code> C++ class is a template class that accepts three parameters: an <code>Event</code> class, a <code>PairwiseDistance</code> class, and a <code>NetworkSimplex</code> class. Each of these should have the same floating-point type (<code>double</code>, by default) typedef'd to <code>Value</code>, which will be used throughout.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">Event</span><span class="p">,</span> <span class="k">class</span> <span class="nc">PairwiseDistance</span><span class="p">,</span> <span class="k">class</span> <span class="nc">NetworkSimplex</span> <span class="o">=</span> <span class="n">lemon</span><span class="o">::</span><span class="n">NetworkSimplex</span><span class="o">&lt;&gt;&gt;</span>
+<p>The Wasserstein C++ interface makes heavy use of templates in order to give the user full control over the EMD computation. Most classes are templated to accept a floating point type (either <code>float</code> or <code>double</code>), though some aliases are provided to make things easier. The <code>EMD</code> class provides the implementation of the EMD as defined above. It accepts four template parameters: a floating point <code>Value</code> type, an <code>Event</code> class, a <code>PairwiseDistance</code> class, and a <code>NetworkSimplex</code> class.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">Value</span><span class="p">,</span>
+         <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">Event</span> <span class="o">=</span> <span class="n">DefaultEvent</span><span class="p">,</span>
+         <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">PairwiseDistance</span> <span class="o">=</span> <span class="n">DefaultPairwiseDistance</span><span class="p">,</span>
+         <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">NetworkSimplex</span> <span class="o">=</span> <span class="n">DefaultNetworkSimplex</span><span class="o">&gt;</span>
 <span class="n">emd</span><span class="o">::</span><span class="n">EMD</span><span class="p">(</span><span class="n">Value</span> <span class="n">R</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Value</span> <span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">norm</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
          <span class="kt">bool</span> <span class="n">do_timing</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">external_dists</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
          <span class="kt">unsigned</span> <span class="n">n_iter_max</span> <span class="o">=</span> <span class="mi">100000</span><span class="p">,</span>
@@ -513,8 +546,21 @@ tolerance can be stricter.</li>
 </code></pre></div>
 
 <p>See the <a href="#python">Python class</a> of the same name for the meaning of these arguments. <code>external_dists</code> is a new flag indicating whether or not the internal <code>PairwiseDistance</code> object should be used to obtain ground distances or whether the ground distances will be externally provided (see the <code>ground_dists()</code> method below).</p>
+<p>Ordinarily, users will make use of one of the template specializations of <code>EMD</code>, which only require one to specify an <code>Event</code> and a <code>PairwiseDistance</code> class. These are:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// double precision, default NetworkSimplex</span>
+<span class="k">template</span><span class="o">&lt;</span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">Event</span> <span class="o">=</span> <span class="n">DefaultEvent</span><span class="p">,</span>
+         <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">PairwiseDistance</span> <span class="o">=</span> <span class="n">DefaultPairwiseDistance</span><span class="o">&gt;</span>
+<span class="k">using</span> <span class="n">EMDFloat64</span> <span class="o">=</span> <span class="n">EMD</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="n">Event</span><span class="p">,</span> <span class="n">PairwiseDistance</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="c1">// single precision, default NetworkSimplex</span>
+<span class="k">template</span><span class="o">&lt;</span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">Event</span> <span class="o">=</span> <span class="n">DefaultEvent</span><span class="p">,</span>
+         <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">PairwiseDistance</span> <span class="o">=</span> <span class="n">DefaultPairwiseDistance</span><span class="o">&gt;</span>
+<span class="k">using</span> <span class="n">EMDFloat32</span> <span class="o">=</span> <span class="n">EMD</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span> <span class="n">Event</span><span class="p">,</span> <span class="n">PairwiseDistance</span><span class="o">&gt;</span><span class="p">;</span>
+</code></pre></div>
+
+<p>See the <a href="../event">Event</a> and <a href="../pairwisedistance">PairwiseDistance</a> docs for more on what classes are provided to fill these roles.</p>
 <hr />
-<h3 id="compute-distances">Compute Distances</h3>
+<h3 id="run-computation_1">Run Computation</h3>
 <p>There are two methods that can be used to compute an EMD distance between two events, <code>operator()</code> and <code>compute</code>. The difference is that the first is templated to accept "proto events" (which may be of type <code>Event</code>, or are something that <code>Event</code> can be constructed from) and also preprocesses the events. The second accepts two already constructed events, does not preprocess them, and does not check that their weights have been setup properly.</p>
 <h4 id="operator">operator()</h4>
 <div class="codehilite"><pre><span></span><code><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">ProtoEvent0</span><span class="p">,</span> <span class="k">class</span> <span class="nc">ProtoEvent1</span><span class="o">&gt;</span>
@@ -557,22 +603,25 @@ tolerance can be stricter.</li>
 <ul>
 <li>The Wasserstein distance between the two events.</li>
 </ul>
-<p>In case external ground distances are to be used, the following methods provide a reference to the vector of distances used by the network simplex object. Note that if <code>norm=false</code>, then  one of the events will generically get an extra particle to account for the difference in weights, and the external dists should account for this. The distances are expected to be provided in row-major (C-style) order.</p>
+<p>To provide external ground distances, one should use the following method to access the vector of distances used by the <code>NetworkSimplex</code> object. Note that if <code>norm=false</code>, then  one of the events will generically get an extra particle to account for the difference in weights, and the external dists should account for this. The distances are expected to be provided in row-major (C-style) order.</p>
 <div class="codehilite"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">ground_dists</span><span class="p">();</span>
-<span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">ground_dists</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 </code></pre></div>
 
 <hr />
 <h3 id="access-results_1">Access Results</h3>
 <p>Many of the methods share the same names as the <a href="#access-results">Python ones</a>. These are:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">Value</span> <span class="nf">emd</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="n">emd</span><span class="o">::</span><span class="n">EMDStatus</span> <span class="nf">status</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span> <span class="n">dists</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span> <span class="n">flows</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<span class="n">Value</span> <span class="nf">flow</span><span class="p">(</span><span class="kt">long</span> <span class="kt">long</span> <span class="n">i</span><span class="p">,</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">j</span><span class="p">);</span>
-<span class="n">emd</span><span class="o">::</span><span class="n">EMDStatus</span> <span class="n">status</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<span class="kt">size_t</span> <span class="nf">n0</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<span class="kt">size_t</span> <span class="nf">n1</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<span class="n">emd</span><span class="o">::</span><span class="n">ExtraParticle</span> <span class="n">extra</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="n">Value</span> <span class="nf">flow</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="n">i</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="n">j</span><span class="p">);</span>
+<span class="n">Value</span> <span class="nf">flow</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">ind</span><span class="p">);</span>
+
+<span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="nf">n0</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="nf">n1</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="n">emd</span><span class="o">::</span><span class="n">ExtraParticle</span> <span class="nf">extra</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
 <span class="n">Value</span> <span class="nf">weightdiff</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="n">Value</span> <span class="nf">scale</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="kt">double</span> <span class="nf">duration</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
@@ -587,8 +636,8 @@ tolerance can be stricter.</li>
 <span class="kt">bool</span> <span class="nf">norm</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="kt">bool</span> <span class="nf">do_timing</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="kt">bool</span> <span class="nf">external_dists</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<span class="k">const</span> <span class="n">NetworkSimplex</span> <span class="o">&amp;</span> <span class="n">network_simplex</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<span class="k">const</span> <span class="n">PairwiseDistance</span> <span class="o">&amp;</span> <span class="n">pairwise_distance</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="k">const</span> <span class="n">NetworkSimplex</span> <span class="o">&amp;</span> <span class="nf">network_simplex</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="k">const</span> <span class="n">PairwiseDistance</span> <span class="o">&amp;</span> <span class="nf">pairwise_distance</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 </code></pre></div>
 
 <p><code>external_dists()</code> indicates whether or not to use the internal <code>PairwiseDistance</code> object or to assume that the ground distances have been externally set. <code>network_simplex()</code> and <code>pairwise_distance()</code> access the underlying objects used to do the heavy lifting of the computation.</p>

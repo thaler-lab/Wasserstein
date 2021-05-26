@@ -101,12 +101,14 @@ using EMDNAMESPACE::DefaultNetworkSimplex;
 
   // prepare to extend classes by renaming some methods
   namespace EMDNAMESPACE {
-    %rename(flows_vec) _EMD::flows;
-    %rename(dists_vec) _EMD::dists;
-    %rename(flows) _EMD::npy_flows;
-    %rename(dists) _EMD::npy_dists;
+    %rename(flows_vec) EMD::flows;
+    %rename(dists_vec) EMD::dists;
+    %rename(flows) EMD::npy_flows;
+    %rename(dists) EMD::npy_dists;
     %rename(emds_vec) PairwiseEMD::emds;
     %rename(emds) PairwiseEMD::npy_emds;
+    %rename(evaluate) ExternalEMDHandler::npy_evaluate;
+    %rename(evaluate_symmetric) ExternalEMDHandler::npy_evaluate_symmetric;
     %rename(bin_centers_vec) Histogram1DHandler::bin_centers;
     %rename(bin_edges_vec) Histogram1DHandler::bin_edges;
     %rename(hist_vals_vars_vec) Histogram1DHandler::hist_vals_vars;
@@ -195,11 +197,11 @@ using EMDNAMESPACE::DefaultNetworkSimplex;
 %define PAIRWISE_EMD_NUMPY_FUNCS(F)
   void npy_emds(F** arr_out, std::ptrdiff_t* n0, std::ptrdiff_t* n1) {
     MALLOC_2D_VALUE_ARRAY($self->nevA(), $self->nevB(), F)
-    memcpy(*arr_out, $self->emds().data(), nbytes);
+    memcpy(*arr_out, $self->emds(false).data(), nbytes);
   }
-  void flat_emds(F** arr_out0, std::ptrdiff_t* n0) {
+  void raw_emds(F** arr_out0, std::ptrdiff_t* n0) {
     if ($self->storage() != EMDNAMESPACE::EMDPairsStorage::FlattenedSymmetric)
-      throw std::runtime_error("flattened emds only available with flattened symmetric storage");
+      throw std::runtime_error("raw emds only available with raw symmetric storage");
 
     MALLOC_1D_VALUE_ARRAY(arr_out0, n0, $self->num_emds(), nbytes, F)
     memcpy(*arr_out0, $self->emds(true).data(), nbytes);
@@ -208,21 +210,18 @@ using EMDNAMESPACE::DefaultNetworkSimplex;
 
 %define EXTERNAL_EMD_HANDLER_NUMPY_FUNCS(F)
   %#ifdef SWIG_NUMPY
-    void compute(F* emds, std::ptrdiff_t n0) {
-      $self->compute(emds, n0);
+    void npy_evaluate(F* emds, std::ptrdiff_t n0) {
+      $self->evaluate(emds, n0);
     }
-    void compute(F* emds, std::ptrdiff_t n0, F* event_weights, std::ptrdiff_t n1) {
+    void npy_evaluate(F* emds, std::ptrdiff_t n0, F* event_weights, std::ptrdiff_t n1) {
       if (n0 != n1)
         throw std::invalid_argument("length of `emds` should match lengh of `event_weights`");
-      $self->compute(emds, n0, event_weights);
+      $self->evaluate(emds, n0, event_weights);
     }
-    void compute_symmetric(F* emds, std::ptrdiff_t n0) {
-      $self->compute(emds, n0);
-    }
-    void compute_symmetric(F* emds, std::ptrdiff_t n0, F* event_weights, std::ptrdiff_t n1) {
+    void npy_evaluate_symmetric(F* emds, std::ptrdiff_t n0, F* event_weights, std::ptrdiff_t n1) {
       if (n0 != n1*(n1 - 1)/2)
         throw std::invalid_argument("length of `emds` should be lengh of `event_weights` choose 2");
-      $self->compute_symmetric(emds, n1, event_weights);
+      $self->evaluate_symmetric(emds, n1, event_weights);
     }
   %#endif // SWIG_NUMPY
 %enddef
@@ -275,13 +274,13 @@ namespace EMDNAMESPACE {
   %ignore EMD::network_simplex;
   %ignore EMD::pairwise_distance;
   %ignore EMD::ground_dists;
-  %ignore PairwiseEMD::compute(const EventVector & events);
-  %ignore PairwiseEMD::compute(const EventVector & eventsA, const EventVector & eventsB);
+  %ignore PairwiseEMD::compute(const std::vector<Event> & events);
+  %ignore PairwiseEMD::compute(const std::vector<Event> & eventsA, const std::vector<Event> & eventsB);
   %ignore PairwiseEMD::events;
-  %ignore ExternalEMDHandler::compute;
-  %ignore ExternalEMDHandler::compute_symmetric;
+  %ignore ExternalEMDHandler::evaluate;
+  %ignore ExternalEMDHandler::evaluate_symmetric;
   %ignore Histogram1DHandler::print_axis;
-%ignore Histogram1DHandler::print_hist;
+  %ignore Histogram1DHandler::print_hist;
 
 } // namespace EMDNAMESPACE
 
@@ -307,7 +306,7 @@ namespace EMDNAMESPACE {
 %include "wasserstein/internal/PairwiseEMD.hh"
 
 namespace EMDNAMESPACE {
-  %extend _EMD {
+  %extend EMD {
     ADD_STR_FROM_DESCRIPTION(false)
     ADD_EXPLICIT_PREPROCESSORS
   }
@@ -350,9 +349,17 @@ namespace EMDNAMESPACE {
   %extend Histogram1DHandler<boost::histogram::axis::transform::log, float> {
     HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(float)
   }
+  %extend Histogram1DHandler<boost::histogram::axis::transform::id, double> {
+    HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(double)
+  }
+  %extend Histogram1DHandler<boost::histogram::axis::transform::id, float> {
+    HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(float)
+  }
 
   %template(Histogram1DHandlerLogFloat64) Histogram1DHandler<boost::histogram::axis::transform::log, double>;
   %template(Histogram1DHandlerLogFloat32) Histogram1DHandler<boost::histogram::axis::transform::log, float>;
+  %template(Histogram1DHandlerFloat64) Histogram1DHandler<boost::histogram::axis::transform::id, double>;
+  %template(Histogram1DHandlerFloat32) Histogram1DHandler<boost::histogram::axis::transform::id, float>;
 }
 
 // include correlation dimension

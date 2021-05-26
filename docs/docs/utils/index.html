@@ -85,18 +85,28 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../externalemdhandler/">External EMD Handlers</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/">Events</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../pairwisedistance/">Pairwise Distance</a>
+                    </li>
                     <li class="toctree-l1 current"><a class="reference internal current" href="./">Utils</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#python">Python</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#check_emd_status">check_emd_status</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#phi_fix">phi_fix</a>
-    </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#c">C++</a>
         <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#check_emd_status_1">check_emd_status</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#emdstatus">EMDStatus</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#extraparticle">ExtraParticle</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#emdpairsstorage">EMDPairsStorage</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#centerweightedcentroid">CenterWeightedCentroid</a>
     </li>
         </ul>
@@ -147,7 +157,7 @@
 <div class="codehilite"><pre><span></span><code><span class="n">wasserstein</span><span class="o">.</span><span class="n">check_emd_status</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
 </code></pre></div>
 
-<p>Examines the return status of an EMD computation and raises an appropriate <code>RuntimeError</code> if it is not <code>0</code>.</p>
+<p>Examines the return status of an EMD computation and raises an appropriate <code>RuntimeError</code> if it is not <code>0</code>. See <a href="#emdstatus"><code>EMDStatus</code></a> for details acceptable values.</p>
 <p><strong>Arguments</strong></p>
 <ul>
 <li><strong>status</strong> : <em>int</em><ul>
@@ -155,25 +165,37 @@
 </ul>
 </li>
 </ul>
-<h3 id="phi_fix">phi_fix</h3>
-<div class="codehilite"><pre><span></span><code><span class="n">wasserstein</span><span class="o">.</span><span class="n">phi_fix</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">ref_phi</span><span class="p">)</span>
-</code></pre></div>
-
-<p>Ensures that <code>phi</code> is within <span><span class="MathJax_Preview">\pi</span><script type="math/tex">\pi</script></span> of <code>ref_phi</code>.</p>
-<p><strong>Arguments</strong></p>
-<ul>
-<li><strong>phi</strong> : <em>float</em><ul>
-<li>An azimuthal angle.</li>
-</ul>
-</li>
-<li><strong>ref_phi</strong> : <em>float</em><ul>
-<li>A reference azimuthal angle that should be numerically within <span><span class="MathJax_Preview">2\pi</span><script type="math/tex">2\pi</script></span> of <code>phi</code>, which is always satisfied if both <code>phi</code> and <code>ref_phi</code> are in a standard range like <span><span class="MathJax_Preview">[0,2\pi)</span><script type="math/tex">[0,2\pi)</script></span>.</li>
-</ul>
-</li>
-</ul>
 <hr />
 <h2 id="c">C++</h2>
+<h3 id="check_emd_status_1">check_emd_status</h3>
+<div class="codehilite"><pre><span></span><code><span class="kr">inline</span> <span class="kt">void</span> <span class="nf">check_emd_status</span><span class="p">(</span><span class="n">EMDStatus</span> <span class="n">status</span><span class="p">);</span>
+</code></pre></div>
+
+<p>Throws a <code>std::runtime_error</code> with a descriptive message if <code>status</code> is not <code>EMDStatus::Success</code>.</p>
+<h3 id="emdstatus">EMDStatus</h3>
+<p>Used to indicate the result of running the network simplex algorithm.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">enum</span> <span class="k">class</span> <span class="nc">EMDStatus</span> <span class="o">:</span> <span class="kt">char</span> <span class="p">{</span> 
+  <span class="n">Success</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="n">Empty</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="n">SupplyMismatch</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="n">Unbounded</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="n">MaxIterReached</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+  <span class="n">Infeasible</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="p">};</span>
+</code></pre></div>
+
+<h3 id="extraparticle">ExtraParticle</h3>
+<p>Used to indicate which event, if any, got an artificial extra particle during an EMD computation.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">enum</span> <span class="k">class</span> <span class="nc">ExtraParticle</span> <span class="o">:</span> <span class="kt">char</span> <span class="p">{</span> <span class="n">Neither</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">,</span> <span class="n">Zero</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">One</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">};</span>
+</code></pre></div>
+
+<h3 id="emdpairsstorage">EMDPairsStorage</h3>
+<p>Used to indicate the type of storage for EMDs in a <code>PairwiseEMD</code></p>
+<div class="codehilite"><pre><span></span><code><span class="k">enum</span> <span class="k">class</span> <span class="nc">EMDPairsStorage</span> <span class="o">:</span> <span class="kt">char</span> <span class="p">{</span> <span class="n">Full</span><span class="p">,</span> <span class="n">FullSymmetric</span><span class="p">,</span> <span class="n">FlattenedSymmetric</span><span class="p">,</span> <span class="n">External</span> <span class="p">};</span>
+</code></pre></div>
+
 <h3 id="centerweightedcentroid">CenterWeightedCentroid</h3>
+<p>Not normally instantiated directly. Used with the templated <code>preprocess</code> method of the <code>_EMD</code> and <code>PairwiseEMD</code> classes to adjust all particles so that the weighted centroid is located at the origin.</p>
               
             </div>
           </div>
@@ -182,7 +204,7 @@
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="../externalemdhandler/" class="btn btn-neutral" title="External EMD Handlers"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../pairwisedistance/" class="btn btn-neutral" title="Pairwise Distance"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -212,7 +234,7 @@
           <a href="https://github.com/pkomiske/Wasserstein/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../externalemdhandler/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../pairwisedistance/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
     </span>

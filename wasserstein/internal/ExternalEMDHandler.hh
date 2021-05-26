@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------
 // This file is part of Wasserstein, a C++ library with a Python wrapper
-// that computes the Wasserstein/EMD distance. If you use it for academic
+// that evaluates the Wasserstein/EMD distance. If you use it for academic
 // research, please cite or acknowledge the following works:
 //
 //   - Komiske, Metodiev, Thaler (2019) arXiv:1902.02346
@@ -47,6 +47,7 @@
 #include <cstddef>
 #include <mutex>
 #include <stdexcept>
+#include <string>
 #include <vector>
 
 #include "EMDUtils.hh"
@@ -75,21 +76,21 @@ public:
   }
 
   // call emd handler on several emds at once (given as a vector)
-  void compute(const std::vector<Value> & emds, const std::vector<Value> & weights = {}) {
+  void evaluate(const std::vector<Value> & emds, const std::vector<Value> & weights = {}) {
 
     if (emds.size() != weights.size()) {
       if (weights.size() == 0)
-        compute(emds.data(), emds.size());
+        evaluate(emds.data(), emds.size());
       else throw std::invalid_argument("length of weights must match that of emds or be 0");
     }
     else
-      compute(emds.data(), emds.size(), weights.data());
+      evaluate(emds.data(), emds.size(), weights.data());
   }
 
   // call emd handler on several emds at once (given as raw pointers)
-  void compute(const Value * emds, std::size_t num_emds, const Value * weights = nullptr) {
+  void evaluate(const Value * emds, std::size_t num_emds, const Value * weights = nullptr) {
+    
     std::lock_guard<std::mutex> handler_guard(mutex_);
-
     if (weights == nullptr)
       for (std::size_t i = 0; i < num_emds; i++)
         handle(emds[i], 1);
@@ -101,36 +102,31 @@ public:
   }
 
   // here, weights are length nev and emds are length nev(nev-1)/2, given as vectors
-  void compute_symmetric(const std::vector<Value> & emds, const std::vector<Value> & weights = {}) {
+  void evaluate_symmetric(const std::vector<Value> & emds, const std::vector<Value> & weights) {
 
-    if (emds.size() != weights.size()*(weights.size() - 1)/2) {
-      if (weights.size() == 0)
-        compute_symmetric(emds.data(), emds.size());
-      else throw std::invalid_argument("length of emds should be length of weights choose 2");
-    }
-    else
-      compute_symmetric(emds.data(), weights.size(), weights.data());
+    if (emds.size() != weights.size()*(weights.size() - 1)/2)
+      throw std::invalid_argument("length of emds should be length of weights choose 2");
+
+    evaluate_symmetric(emds.data(), weights.size(), weights.data());
   }
 
   // here, weights are length nev and emds are length nev(nev-1)/2, given as raw pointers
-  void compute_symmetric(const Value * emds, std::size_t nev, const Value * weights = nullptr) {
-    if (weights == nullptr)
-      compute(emds, nev*(nev - 1)/2);
+  void evaluate_symmetric(const Value * emds, std::size_t nev, const Value * weights) {
+    
+    std::lock_guard<std::mutex> handler_guard(mutex_);
+    for (std::size_t i = 0, k = 0; i < nev; i++) {
+      Value weight_i(weights[i]);
 
-    else {
-      std::lock_guard<std::mutex> handler_guard(mutex_);
-      for (std::size_t i = 0, k = 0; i < nev; i++) {
-        Value weight_i(weights[i]);
-        for (std::size_t j = i + 1; j < nev; j++, k++)
-          handle(emds[k], weight_i * weights[j]);
-      }
-      num_calls_ += nev*(nev - 1)/2;
+      for (std::size_t j = i + 1; j < nev; j++, k++)
+        handle(emds[k], weight_i * weights[j]);
     }
+
+    num_calls_ += nev*(nev - 1)/2;
   }
 
 protected:
 
-  virtual void handle(Value, Value) = 0; 
+  virtual void handle(Value emd, Value weight) = 0; 
 
 private:
 

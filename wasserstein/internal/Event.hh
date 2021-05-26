@@ -124,7 +124,7 @@ protected:
 
 template<class _Particle>
 struct EuclideanParticleEvent : public EventBase<std::vector<typename _Particle::value_type>,
-                                       std::vector<_Particle>> {
+                                                 std::vector<_Particle>> {
 
   typedef _Particle Particle;
   typedef typename Particle::value_type value_type;

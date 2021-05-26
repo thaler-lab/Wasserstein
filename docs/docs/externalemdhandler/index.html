@@ -89,6 +89,12 @@
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#externalemdhandler">ExternalEMDHandler</a>
         <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#evaluate">evaluate</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#evaluate_symmetric">evaluate_symmetric</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#call">call</a>
+    </li>
     <li class="toctree-l4"><a class="reference internal" href="#num_calls">num_calls</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#description">description</a>
@@ -99,6 +105,8 @@
         <ul>
     <li class="toctree-l4"><a class="reference internal" href="#hist_vals_errs">hist_vals_errs</a>
     </li>
+    <li class="toctree-l4"><a class="reference internal" href="#hist_vals_vars">hist_vals_vars</a>
+    </li>
     <li class="toctree-l4"><a class="reference internal" href="#bin_centers">bin_centers</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#bin_edges">bin_edges</a>
@@ -107,11 +115,11 @@
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#print_hist">print_hist</a>
     </li>
+    <li class="toctree-l4"><a class="reference internal" href="#nbins">nbins</a>
+    </li>
     <li class="toctree-l4"><a class="reference internal" href="#axis_min">axis_min</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#axis_max">axis_max</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#nbins">nbins</a>
     </li>
         </ul>
     </li>
@@ -128,8 +136,20 @@
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#c">C++</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#externalemdhandler_1">ExternalEMDHandler</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#histogram1dhandler_1">Histogram1DHandler</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#correlationdimension_1">CorrelationDimension</a>
+    </li>
+        </ul>
     </li>
     </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../event/">Events</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../pairwisedistance/">Pairwise Distance</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../utils/">Utils</a>
                     </li>
@@ -174,7 +194,51 @@
 <hr />
 <h2 id="python">Python</h2>
 <h3 id="externalemdhandler">ExternalEMDHandler</h3>
-<p>Base class for all external EMD handlers. Should never be directly instantiated. This takes care of thread safety and tracks the number of calls to the handler.</p>
+<p>Base class for all external EMD handlers. Cannot be directly instantiated. This takes care of thread safety (when used with <code>PairwiseEMD</code>) and tracks the number of calls to the handler. In Python, the floating point type is selected by using one of <code>ExternalEMDHandlerFloat64</code> or <code>ExternalEMDHandlerFloat32</code>.</p>
+<h4 id="evaluate">evaluate</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">evaluate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Evaluates the <code>ExternalEMDHandler</code> on a collection of (weighted) EMD values.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>*args</strong> : one or two <em>numpy.ndarray</em><ul>
+<li><code>args[0]</code> should be an array of EMD values. <code>args[1]</code> is optional, but if present it should be the same length as <code>args[0]</code> and is the weight associated with that EMD value (typically the product of the event weights corresponding to that EMD).</li>
+</ul>
+</li>
+</ul>
+<h4 id="evaluate_symmetric">evaluate_symmetric</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">evaluate_symmetric</span><span class="p">(</span><span class="n">emds</span><span class="p">,</span> <span class="n">event_weights</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Evaluates the <code>ExternalEMDHandler</code> on a collection of weighted EMD values, where the weights are provided as event weights and the EMDs are provided as the upper-triangular part of a symmetric distance matrix for the events.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>emds</strong> : <em>numpy.ndarray</em><ul>
+<li>EMD values between all pairs of events, such as those returned by <a href="../emds/#raw_emds"><code>raw_emds</code></a> after calling the <code>PairwiseEMD</code> object on a single set of events. Should have length <code>n*(n-1)/2</code> where <code>n</code> is the number of events.</li>
+</ul>
+</li>
+<li><strong>event_weights</strong> : <em>numpy.ndarray</em><ul>
+<li>Event weights for the events the EMDs were computed between. Should be length <code>n</code>. The weight associated to the EMD between events <code>i</code> and <code>j</code> is <code>event_weights[i] * event_weights[j]</code>.</li>
+</ul>
+</li>
+</ul>
+<h4 id="call"><strong>call</strong></h4>
+<div class="codehilite"><pre><span></span><code><span class="fm">__call__</span><span class="p">(</span><span class="n">emd</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Evaluates the <code>ExternalEMDHandler</code> on a single EMD value, optionally weighted.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>emd</strong> : <em>float</em><ul>
+<li>The EMD value to process.</li>
+</ul>
+</li>
+<li><strong>weight</strong> : <em>float</em><ul>
+<li>The (optional) weight associated to the EMD value.</li>
+</ul>
+</li>
+</ul>
 <h4 id="num_calls">num_calls</h4>
 <div class="codehilite"><pre><span></span><code><span class="n">num_calls</span><span class="p">()</span>
 </code></pre></div>
@@ -196,12 +260,16 @@
 </ul>
 </li>
 </ul>
+<hr />
 <h3 id="histogram1dhandler">Histogram1DHandler</h3>
-<p>Histograms the EMD values into a pre-determined histogram. <code>Histogram1DHandler</code> uses a linearly-spaced axis whereas <code>Histogram1DHandlerLog</code> uses a log-spaced axis. This wraps the C++ class, which itself uses the <a href="https://www.boost.org/doc/libs/1_74_0/libs/histogram/doc/html/index.html">Boost Histogram Package</a>.</p>
-<div class="codehilite"><pre><span></span><code><span class="n">wasserstein</span><span class="o">.</span><span class="n">Histogram1DHandler</span><span class="p">(</span><span class="n">nbins</span><span class="p">,</span> <span class="n">axis_min</span><span class="p">,</span> <span class="n">axis_max</span><span class="p">)</span>
-<span class="n">wasserstein</span><span class="o">.</span><span class="n">Histogram1DHandlerLog</span><span class="p">(</span><span class="n">nbins</span><span class="p">,</span> <span class="n">axis_min</span><span class="p">,</span> <span class="n">axis_max</span><span class="p">)</span>
+<p>Histograms the EMD values into a pre-determined histogram. <code>Histogram1DHandler</code> uses a linearly-spaced axis whereas <code>Histogram1DHandlerLog</code> uses a log-spaced axis. The underlying C++ class uses the <a href="https://www.boost.org/doc/libs/1_76_0/libs/histogram/doc/html/index.html">Boost Histogram Package</a>.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">wasserstein</span><span class="o">.</span><span class="n">Histogram1DHandlerFloat64</span><span class="p">(</span><span class="n">nbins</span><span class="p">,</span> <span class="n">axis_min</span><span class="p">,</span> <span class="n">axis_max</span><span class="p">)</span>
+<span class="n">wasserstein</span><span class="o">.</span><span class="n">Histogram1DHandlerFloat32</span><span class="p">(</span><span class="n">nbins</span><span class="p">,</span> <span class="n">axis_min</span><span class="p">,</span> <span class="n">axis_max</span><span class="p">)</span>
+<span class="n">wasserstein</span><span class="o">.</span><span class="n">Histogram1DHandlerLogFloat64</span><span class="p">(</span><span class="n">nbins</span><span class="p">,</span> <span class="n">axis_min</span><span class="p">,</span> <span class="n">axis_max</span><span class="p">)</span>
+<span class="n">wasserstein</span><span class="o">.</span><span class="n">Histogram1DHandlerLogFloat32</span><span class="p">(</span><span class="n">nbins</span><span class="p">,</span> <span class="n">axis_min</span><span class="p">,</span> <span class="n">axis_max</span><span class="p">)</span>
 </code></pre></div>
 
+<p>The <code>Float64</code> versions use double-precision and the <code>Float32</code> versions use single-precision.</p>
 <p><strong>Arguments</strong></p>
 <ul>
 <li><strong>nbins</strong> : <em>int</em><ul>
@@ -221,11 +289,11 @@
 <div class="codehilite"><pre><span></span><code><span class="n">hist_vals_errs</span><span class="p">(</span><span class="n">overflows</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
 
-<p>This accesses the histogram values and errors (which are the squqare root of the sum of the squared weights).</p>
+<p>This accesses the histogram values and errors (which are the square root of the sum of the squared weights).</p>
 <p><strong>Arguments</strong></p>
 <ul>
 <li><strong>overflows</strong> : <em>bool</em><ul>
-<li>Wether or not to include the overflow bins as the first and last entry of the histogram contents and errors.</li>
+<li>Whether or not to include the overflow bins as the first and last entry of the histogram contents and errors.</li>
 </ul>
 </li>
 </ul>
@@ -233,6 +301,25 @@
 <ul>
 <li>(<em>numpy.ndarray</em>, <em>numpy.ndarray</em>)<ul>
 <li>A pair of numpy arrays, the first is the values of the histogram and the second is the errors. If <code>overflows</code> is <code>True</code> then each will have length <code>nbins+2</code>, otherwise they will have length <code>nbins</code>.</li>
+</ul>
+</li>
+</ul>
+<h4 id="hist_vals_vars">hist_vals_vars</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">hist_vals_vars</span><span class="p">(</span><span class="n">overflows</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+
+<p>This accesses the histogram values and variances (the sum of the squared weights).</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>overflows</strong> : <em>bool</em><ul>
+<li>Whether or not to include the overflow bins as the first and last entry of the histogram contents and errors.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>(<em>numpy.ndarray</em>, <em>numpy.ndarray</em>)<ul>
+<li>A pair of numpy arrays, the first is the values of the histogram and the second is the variances. If <code>overflows</code> is <code>True</code> then each will have length <code>nbins+2</code>, otherwise they will have length <code>nbins</code>.</li>
 </ul>
 </li>
 </ul>
@@ -280,6 +367,17 @@
 </ul>
 </li>
 </ul>
+<h4 id="nbins">nbins</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">nbins</span><span class="p">()</span>
+</code></pre></div>
+
+<p><strong>Returns</strong></p>
+<ul>
+<li><em>int</em><ul>
+<li>The number of bins of the histogram axis.</li>
+</ul>
+</li>
+</ul>
 <h4 id="axis_min">axis_min</h4>
 <div class="codehilite"><pre><span></span><code><span class="n">axis_min</span><span class="p">()</span>
 </code></pre></div>
@@ -302,24 +400,14 @@
 </ul>
 </li>
 </ul>
-<h4 id="nbins">nbins</h4>
-<div class="codehilite"><pre><span></span><code><span class="n">nbins</span><span class="p">()</span>
-</code></pre></div>
-
-<p><strong>Returns</strong></p>
-<ul>
-<li><em>int</em><ul>
-<li>The number of bins of the histogram axis.</li>
-</ul>
-</li>
-</ul>
+<hr />
 <h3 id="correlationdimension">CorrelationDimension</h3>
 <p>This class inherits from <code>Histogram1DHandlerLog</code> and can be used to compute the correlation dimension of the collection of EMDs.</p>
-<div class="codehilite"><pre><span></span><code><span class="n">wasserstein</span><span class="o">.</span><span class="n">CorrelationDimension</span><span class="p">(</span><span class="n">nbins</span><span class="p">,</span> <span class="n">axis_min</span><span class="p">,</span> <span class="n">axis_max</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="n">wasserstein</span><span class="o">.</span><span class="n">CorrelationDimension</span><span class="p">(</span><span class="n">nbins</span><span class="p">,</span> <span class="n">axis_min</span><span class="p">,</span> <span class="n">axis_max</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span>
 </code></pre></div>
 
 <p><strong>Arguments</strong></p>
-<p>Same as those of <a href="#histogram1dhandler"><code>Histogram1DHandlerLog</code></a></p>
+<p>The first threearguments are the same as those of <a href="#histogram1dhandler"><code>Histogram1DHandlerLog</code></a>. The <code>dtype</code> argument should be either <code>'float64'</code> or <code>'float32'</code> and selects the floating-point precision.</p>
 <h4 id="corrdims">corrdims</h4>
 <div class="codehilite"><pre><span></span><code><span class="n">corrdims</span><span class="p">(</span><span class="n">eps</span><span class="o">=</span><span class="mf">1e-100</span><span class="p">)</span>
 </code></pre></div>
@@ -364,6 +452,60 @@
 </ul>
 <hr />
 <h2 id="c">C++</h2>
+<h3 id="externalemdhandler_1">ExternalEMDHandler</h3>
+<p>The functionality mirrors that of the Python wrapper. We list here the declarations of the methods of this class:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">Value</span><span class="o">&gt;</span>
+<span class="n">emd</span><span class="o">::</span><span class="n">ExternalEMDHandler</span><span class="p">();</span>
+
+<span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="nf">description</span><span class="p">()</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="nf">num_calls</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="kt">void</span> <span class="nf">operator</span><span class="p">()(</span><span class="n">Value</span> <span class="n">emd</span><span class="p">,</span> <span class="n">Value</span> <span class="n">weight</span> <span class="o">=</span> <span class="mi">1</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">evaluate</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">emds</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">weights</span> <span class="o">=</span> <span class="p">{});</span>
+<span class="kt">void</span> <span class="nf">evaluate</span><span class="p">(</span><span class="k">const</span> <span class="n">Value</span> <span class="o">*</span> <span class="n">emds</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">num_emds</span><span class="p">,</span> <span class="k">const</span> <span class="n">Value</span> <span class="o">*</span> <span class="n">weights</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">evaluate_symmetric</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">emds</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">weights</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">evaluate_symmetric</span><span class="p">(</span><span class="k">const</span> <span class="n">Value</span> <span class="o">*</span> <span class="n">emds</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">nev</span><span class="p">,</span> <span class="k">const</span> <span class="n">Value</span> <span class="o">*</span> <span class="n">weights</span><span class="p">);</span>
+
+<span class="k">protected</span><span class="o">:</span>
+  <span class="k">virtual</span> <span class="kt">void</span> <span class="n">handle</span><span class="p">(</span><span class="n">Value</span> <span class="n">emd</span><span class="p">,</span> <span class="n">Value</span> <span class="n">weight</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> 
+</code></pre></div>
+
+<p>Base classes should implement the <code>description</code> and <code>handle</code> methods.</p>
+<h3 id="histogram1dhandler_1">Histogram1DHandler</h3>
+<p>The functionality mirrors that of the Python wrapper. We list here the declarations of the methods of this class:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">Transform</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">Value</span><span class="o">&gt;</span>
+<span class="n">emd</span><span class="o">::</span><span class="n">Histogram1DHandler</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">nbins</span><span class="p">,</span> <span class="n">Value</span> <span class="n">axis_min</span><span class="p">,</span> <span class="n">Value</span> <span class="n">axis_max</span><span class="p">)</span>
+
+<span class="kt">unsigned</span> <span class="n">nbins</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="n">Value</span> <span class="nf">axis_min</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="n">Value</span> <span class="nf">axis_max</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="nf">description</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span> <span class="n">bin_centers</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span> <span class="n">bin_edges</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;&gt;</span> <span class="n">hist_vals_vars</span><span class="p">(</span><span class="kt">bool</span> <span class="n">overflows</span> <span class="o">=</span> <span class="nb">true</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+<span class="c1">// return textual representations of axis/hist</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="nf">print_axis</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="nf">print_hist</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+<span class="c1">// access underlying boost histogram</span>
+<span class="k">auto</span> <span class="o">&amp;</span> <span class="n">hist</span><span class="p">();</span>
+<span class="k">auto</span> <span class="o">&amp;</span> <span class="n">axis</span><span class="p">();</span>
+<span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">hist</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">axis</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+</code></pre></div>
+
+<h3 id="correlationdimension_1">CorrelationDimension</h3>
+<p>The functionality mirrors that of the Python wrapper. This class inherits from <code>Histogram1DHandler&lt;boost::histogram::axis::transform::log, Value&gt;</code>. We list here the declarations of the methods of this class:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">Value</span><span class="o">&gt;</span>
+<span class="n">emd</span><span class="o">::</span><span class="n">CorrelationDimension</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">nbins</span><span class="p">,</span> <span class="n">Value</span> <span class="n">axis_min</span><span class="p">,</span> <span class="n">Value</span> <span class="n">axis_max</span><span class="p">);</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;&gt;</span>
+<span class="n">corrdims</span><span class="p">(</span><span class="n">Value</span> <span class="n">eps</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;::</span><span class="n">epsilon</span><span class="p">())</span> <span class="k">const</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span> <span class="n">corrdim_bins</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;&gt;</span> <span class="n">cumulative_vals_vars</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+</code></pre></div>
               
             </div>
           </div>
@@ -371,7 +513,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../utils/" class="btn btn-neutral float-right" title="Utils">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../event/" class="btn btn-neutral float-right" title="Events">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../emds/" class="btn btn-neutral" title="PairwiseEMD"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -407,7 +549,7 @@
         <span><a href="../emds/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../utils/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../event/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
