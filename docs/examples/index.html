@@ -72,7 +72,9 @@
                     </li>
                     <li class="toctree-l1 current"><a class="reference internal current" href="./">C++ Examples</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#basic_examplecpp">basic_example.cpp</a>
+    <li class="toctree-l2"><a class="reference internal" href="#emd_examplecpp">emd_example.cpp</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#pairwise_emds_examplecpp">pairwise_emds_example.cpp</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#theory_space_examplecpp">theory_space_example.cpp</a>
     </li>
@@ -135,8 +137,8 @@
             <div class="section">
               
                 <h1 id="examples">Examples</h1>
-<p>There are 2 C++ examples provided for the Wasserstein package. They can be <a href="https://github.com/pkomiske/Wasserstein/tree/master/examples">downloaded from GitHub</a> with associated files and a Makefile.</p>
-<h3 id="basic_examplecpp">basic_example.cpp</h3>
+<p>There are 3 C++ examples provided for the Wasserstein package. They can be <a href="https://github.com/pkomiske/Wasserstein/tree/master/examples">downloaded from GitHub</a> with associated files and a Makefile.</p>
+<h3 id="emd_examplecpp">emd_example.cpp</h3>
 <div class="codehilite"><pre><span></span><code><span class="c1">//------------------------------------------------------------------------</span>
 <span class="c1">// This file is part of Wasserstein, a C++ library with a Python wrapper</span>
 <span class="c1">// that computes the Wasserstein/EMD distance. If you use it for academic</span>
@@ -166,36 +168,24 @@
 <span class="c1">// along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</span>
 <span class="c1">//------------------------------------------------------------------------</span>
 
-<span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;cstdlib&gt;</span><span class="cp"></span>
-
-<span class="c1">// Helps with reading in events from NumPy .npz files</span>
-<span class="cp">#include</span> <span class="cpf">&quot;NPZEventProducer.hh&quot;</span><span class="cp"></span>
-
-<span class="c1">// The Wasserstein library</span>
+<span class="c1">// Wasserstein library</span>
 <span class="cp">#include</span> <span class="cpf">&quot;Wasserstein.hh&quot;</span><span class="cp"></span>
+
+<span class="c1">// classes and functions for reading/preparing events</span>
+<span class="cp">#include</span> <span class="cpf">&quot;ExampleUtils.hh&quot;</span><span class="cp"></span>
 
 <span class="k">using</span> <span class="n">EMDParticle</span> <span class="o">=</span> <span class="n">emd</span><span class="o">::</span><span class="n">EuclideanParticle2D</span><span class="o">&lt;&gt;</span><span class="p">;</span>
 <span class="k">using</span> <span class="n">EMD</span> <span class="o">=</span> <span class="n">emd</span><span class="o">::</span><span class="n">EMDFloat64</span><span class="o">&lt;</span><span class="n">emd</span><span class="o">::</span><span class="n">EuclideanEvent2D</span><span class="p">,</span> <span class="n">emd</span><span class="o">::</span><span class="n">YPhiParticleDistance</span><span class="o">&gt;</span><span class="p">;</span>
-<span class="k">using</span> <span class="n">PairwiseEMD</span> <span class="o">=</span> <span class="n">emd</span><span class="o">::</span><span class="n">PairwiseEMD</span><span class="o">&lt;</span><span class="n">EMD</span><span class="o">&gt;</span><span class="p">;</span>
 
-<span class="c1">// helper function for converting to EMD Events</span>
-<span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">P</span><span class="o">&gt;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span> <span class="n">convert2event</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Particle</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">particles</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span> <span class="n">euclidean_particles</span><span class="p">;</span>
-  <span class="n">euclidean_particles</span><span class="p">.</span><span class="n">reserve</span><span class="p">(</span><span class="n">particles</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
 
-  <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="n">Particle</span> <span class="o">&amp;</span> <span class="nl">particle</span> <span class="p">:</span> <span class="n">particles</span><span class="p">)</span>
-    <span class="n">euclidean_particles</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">particle</span><span class="p">.</span><span class="n">pt</span><span class="p">,</span> <span class="p">{</span><span class="n">particle</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">particle</span><span class="p">.</span><span class="n">phi</span><span class="p">}));</span>
+  <span class="c1">// load events</span>
+  <span class="n">EventProducer</span> <span class="o">*</span> <span class="n">evp</span><span class="p">(</span><span class="n">load_events</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">));</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">evp</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
 
-  <span class="k">return</span> <span class="n">euclidean_particles</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="c1">// computes the emds of successive events</span>
-<span class="kt">void</span> <span class="n">single_emds</span><span class="p">(</span><span class="n">EventProducer</span> <span class="o">*</span> <span class="n">evp</span><span class="p">)</span> <span class="p">{</span>
-
-  <span class="c1">// get EMD object with R = 0.4, beta = 1.0, norm = true</span>
-  <span class="n">EMD</span> <span class="nf">emd_obj</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+  <span class="c1">// demonstrate calculating single EMDs</span>
+  <span class="n">EMD</span> <span class="n">emd_obj</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
 
   <span class="c1">// preprocess events to center</span>
   <span class="n">emd_obj</span><span class="p">.</span><span class="n">preprocess</span><span class="o">&lt;</span><span class="n">emd</span><span class="o">::</span><span class="n">CenterWeightedCentroid</span><span class="o">&gt;</span><span class="p">();</span>
@@ -228,12 +218,60 @@
             <span class="o">&lt;&lt;</span> <span class="s">&quot;Min. EMD - &quot;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">std</span><span class="o">::</span><span class="n">min_element</span><span class="p">(</span><span class="n">emds</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">emds</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span>
             <span class="o">&lt;&lt;</span> <span class="s">&quot;Max. EMD - &quot;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">std</span><span class="o">::</span><span class="n">max_element</span><span class="p">(</span><span class="n">emds</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">emds</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span>
             <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
+</code></pre></div>
 
-<span class="kt">void</span> <span class="n">pairwise_emds</span><span class="p">(</span><span class="n">EventProducer</span> <span class="o">*</span> <span class="n">evp</span><span class="p">)</span> <span class="p">{</span>
+<h3 id="pairwise_emds_examplecpp">pairwise_emds_example.cpp</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1">//------------------------------------------------------------------------</span>
+<span class="c1">// This file is part of Wasserstein, a C++ library with a Python wrapper</span>
+<span class="c1">// that computes the Wasserstein/EMD distance. If you use it for academic</span>
+<span class="c1">// research, please cite or acknowledge the following works:</span>
+<span class="c1">//</span>
+<span class="c1">//   - Komiske, Metodiev, Thaler (2019) arXiv:1902.02346</span>
+<span class="c1">//       https://doi.org/10.1103/PhysRevLett.123.041801</span>
+<span class="c1">//   - Komiske, Metodiev, Thaler (2020) arXiv:2004.04159</span>
+<span class="c1">//       https://doi.org/10.1007/JHEP07%282020%29006</span>
+<span class="c1">//   - Boneel, van de Panne, Paris, Heidrich (2011)</span>
+<span class="c1">//       https://doi.org/10.1145/2070781.2024192</span>
+<span class="c1">//   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon</span>
+<span class="c1">//</span>
+<span class="c1">// Copyright (C) 2019-2021 Patrick T. Komiske III</span>
+<span class="c1">// </span>
+<span class="c1">// This program is free software: you can redistribute it and/or modify</span>
+<span class="c1">// it under the terms of the GNU General Public License as published by</span>
+<span class="c1">// the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1">// (at your option) any later version.</span>
+<span class="c1">// </span>
+<span class="c1">// This program is distributed in the hope that it will be useful,</span>
+<span class="c1">// but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1">// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1">// GNU General Public License for more details.</span>
+<span class="c1">// </span>
+<span class="c1">// You should have received a copy of the GNU General Public License</span>
+<span class="c1">// along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">//------------------------------------------------------------------------</span>
 
-  <span class="c1">// get EMD object with R = 0.4, beta = 1.0, norm = false</span>
-  <span class="n">PairwiseEMD</span> <span class="nf">pairwise_emd_obj</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+<span class="c1">// Wasserstein library</span>
+<span class="cp">#include</span> <span class="cpf">&quot;Wasserstein.hh&quot;</span><span class="cp"></span>
+
+<span class="c1">// classes and functions for reading/preparing events</span>
+<span class="cp">#include</span> <span class="cpf">&quot;ExampleUtils.hh&quot;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="n">EMDParticle</span> <span class="o">=</span> <span class="n">emd</span><span class="o">::</span><span class="n">EuclideanParticle2D</span><span class="o">&lt;&gt;</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">EMD</span> <span class="o">=</span> <span class="n">emd</span><span class="o">::</span><span class="n">EMDFloat64</span><span class="o">&lt;</span><span class="n">emd</span><span class="o">::</span><span class="n">EuclideanEvent2D</span><span class="p">,</span> <span class="n">emd</span><span class="o">::</span><span class="n">YPhiParticleDistance</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">PairwiseEMD</span> <span class="o">=</span> <span class="n">emd</span><span class="o">::</span><span class="n">PairwiseEMD</span><span class="o">&lt;</span><span class="n">EMD</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="c1">// load events</span>
+  <span class="n">EventProducer</span> <span class="o">*</span> <span class="n">evp</span><span class="p">(</span><span class="n">load_events</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">));</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">evp</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="c1">// demonstrate calculating pairwise EMDs</span>
+  <span class="n">PairwiseEMD</span> <span class="n">pairwise_emd_obj</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
 
   <span class="c1">// preprocess events to center</span>
   <span class="n">pairwise_emd_obj</span><span class="p">.</span><span class="n">preprocess</span><span class="o">&lt;</span><span class="n">emd</span><span class="o">::</span><span class="n">CenterWeightedCentroid</span><span class="o">&gt;</span><span class="p">();</span>
@@ -259,7 +297,7 @@
             <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
 
   <span class="c1">// setup correlation dimension</span>
-  <span class="n">emd</span><span class="o">::</span><span class="n">CorrelationDimension</span><span class="o">&lt;&gt;</span> <span class="n">corrdim</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">250</span><span class="p">);</span>
+  <span class="n">emd</span><span class="o">::</span><span class="n">CorrelationDimension</span><span class="o">&lt;&gt;</span> <span class="n">corrdim</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mf">250.</span><span class="p">);</span>
   <span class="n">pairwise_emd_obj</span><span class="p">.</span><span class="n">set_external_emd_handler</span><span class="p">(</span><span class="n">corrdim</span><span class="p">);</span>
 
   <span class="c1">// rerun computation</span>
@@ -274,54 +312,6 @@
               <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setw</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">corrdims</span><span class="p">.</span><span class="n">first</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
               <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setw</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">corrdims</span><span class="p">.</span><span class="n">second</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
               <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="n">EventProducer</span> <span class="o">*</span> <span class="n">load_events</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
-
-  <span class="c1">// get number of events from command line</span>
-  <span class="kt">long</span> <span class="nf">num_events</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
-  <span class="n">EventType</span> <span class="nf">evtype</span><span class="p">(</span><span class="n">All</span><span class="p">);</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">num_events</span> <span class="o">=</span> <span class="n">atol</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">)</span>
-    <span class="n">evtype</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">?</span> <span class="nl">Quark</span> <span class="p">:</span> <span class="n">Gluon</span><span class="p">;</span>
-
-  <span class="c1">// get energyflow samples</span>
-  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="nf">home</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">getenv</span><span class="p">(</span><span class="s">&quot;HOME&quot;</span><span class="p">));</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">home</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-    <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">invalid_argument</span><span class="p">(</span><span class="s">&quot;Error: cannot get HOME environment variable&quot;</span><span class="p">);</span>
-
-  <span class="c1">// form path</span>
-  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="nf">filepath</span><span class="p">(</span><span class="n">home</span><span class="p">);</span>
-  <span class="n">filepath</span> <span class="o">+=</span> <span class="s">&quot;/.energyflow/datasets/QG_jets.npz&quot;</span><span class="p">;</span>
-  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Filepath: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">filepath</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
-
-  <span class="c1">// open file</span>
-  <span class="n">NPZEventProducer</span> <span class="o">*</span> <span class="nf">npz</span><span class="p">(</span><span class="k">nullptr</span><span class="p">);</span>
-  <span class="k">try</span> <span class="p">{</span>
-    <span class="n">npz</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NPZEventProducer</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">num_events</span><span class="p">,</span> <span class="n">evtype</span><span class="p">);</span>
-  <span class="p">}</span>
-  <span class="k">catch</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">exception</span> <span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Error: cannot open file &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">filepath</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, try running &quot;</span>
-              <span class="o">&lt;&lt;</span> <span class="s">&quot;`python3 -c </span><span class="se">\&quot;</span><span class="s">import energyflow as ef; ef.qg_jets.load()</span><span class="se">\&quot;</span><span class="s">`</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-    <span class="k">return</span> <span class="k">nullptr</span><span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="k">return</span> <span class="n">npz</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
-
-  <span class="c1">// load events</span>
-  <span class="n">EventProducer</span> <span class="o">*</span> <span class="nf">evp</span><span class="p">(</span><span class="n">load_events</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">));</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">evp</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span>
-    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-
-  <span class="c1">// demonstrate calculating single EMDs</span>
-  <span class="n">single_emds</span><span class="p">(</span><span class="n">evp</span><span class="p">);</span>
-
-  <span class="c1">// demonstrate calculating pairwise EMDs</span>
-  <span class="n">pairwise_emds</span><span class="p">(</span><span class="n">evp</span><span class="p">);</span>
 
   <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
@@ -357,33 +347,28 @@
 <span class="c1">// along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</span>
 <span class="c1">//------------------------------------------------------------------------</span>
 
-<span class="cp">#include</span> <span class="cpf">&lt;cstdlib&gt;</span><span class="cp"></span>
-
-<span class="c1">// Helps with reading in events from NumPy .npz files</span>
-<span class="cp">#include</span> <span class="cpf">&quot;NPZEventProducer.hh&quot;</span><span class="cp"></span>
-
-<span class="c1">// The Wasserstein library</span>
+<span class="c1">// Wasserstein library</span>
 <span class="cp">#include</span> <span class="cpf">&quot;Wasserstein.hh&quot;</span><span class="cp"></span>
+
+<span class="c1">// classes and functions for reading/preparing events</span>
+<span class="cp">#include</span> <span class="cpf">&quot;ExampleUtils.hh&quot;</span><span class="cp"></span>
 
 <span class="k">using</span> <span class="n">EMDParticle</span> <span class="o">=</span> <span class="n">emd</span><span class="o">::</span><span class="n">EuclideanParticle2D</span><span class="o">&lt;&gt;</span><span class="p">;</span>
 <span class="k">using</span> <span class="n">EMD</span> <span class="o">=</span> <span class="n">emd</span><span class="o">::</span><span class="n">EMDFloat64</span><span class="o">&lt;</span><span class="n">emd</span><span class="o">::</span><span class="n">EuclideanEvent2D</span><span class="p">,</span> <span class="n">emd</span><span class="o">::</span><span class="n">EuclideanDistance2D</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="k">using</span> <span class="n">PairwiseEMD</span> <span class="o">=</span> <span class="n">emd</span><span class="o">::</span><span class="n">PairwiseEMD</span><span class="o">&lt;</span><span class="n">EMD</span><span class="o">&gt;</span><span class="p">;</span>
 
-<span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">P</span><span class="o">&gt;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span> <span class="n">convert2event</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Particle</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">particles</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span> <span class="n">euclidean_particles</span><span class="p">;</span>
-  <span class="n">euclidean_particles</span><span class="p">.</span><span class="n">reserve</span><span class="p">(</span><span class="n">particles</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
-  <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="n">Particle</span> <span class="o">&amp;</span> <span class="nl">particle</span> <span class="p">:</span> <span class="n">particles</span><span class="p">)</span>
-    <span class="n">euclidean_particles</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">particle</span><span class="p">.</span><span class="n">pt</span><span class="p">,</span> <span class="p">{</span><span class="n">particle</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">particle</span><span class="p">.</span><span class="n">phi</span><span class="p">}));</span>
-  <span class="k">return</span> <span class="n">euclidean_particles</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
 
-<span class="kt">void</span> <span class="n">SigmaMD_single</span><span class="p">(</span><span class="n">EventProducer</span> <span class="o">*</span> <span class="n">evp</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// load events</span>
+  <span class="n">EventProducer</span> <span class="o">*</span> <span class="n">evp</span><span class="p">(</span><span class="n">load_events</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">));</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">evp</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
 
+  <span class="c1">// demonstrate some EMD usage</span>
   <span class="kt">double</span> <span class="n">EMD_R</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">;</span>
   <span class="kt">double</span> <span class="n">EMD_beta</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="kt">bool</span> <span class="n">EMD_norm</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-  <span class="n">PairwiseEMD</span> <span class="nf">pairwise_emd_obj</span><span class="p">(</span><span class="n">EMD_R</span><span class="p">,</span> <span class="n">EMD_beta</span><span class="p">,</span> <span class="n">EMD_norm</span><span class="p">);</span>
+  <span class="n">PairwiseEMD</span> <span class="n">pairwise_emd_obj</span><span class="p">(</span><span class="n">EMD_R</span><span class="p">,</span> <span class="n">EMD_beta</span><span class="p">,</span> <span class="n">EMD_norm</span><span class="p">);</span>
 
   <span class="c1">// preprocess events to center</span>
   <span class="n">pairwise_emd_obj</span><span class="p">.</span><span class="n">preprocess</span><span class="o">&lt;</span><span class="n">emd</span><span class="o">::</span><span class="n">CenterWeightedCentroid</span><span class="o">&gt;</span><span class="p">();</span>
@@ -436,51 +421,6 @@
   <span class="c1">// run computation</span>
   <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Cross-section Mover&#39;s Distance : &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">sigmamd_obj</span><span class="p">(</span><span class="n">weights0</span><span class="p">,</span> <span class="n">weights1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span>
             <span class="o">&lt;&lt;</span> <span class="s">&quot;Done in &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">sigmamd_obj</span><span class="p">.</span><span class="n">duration</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="n">EventProducer</span> <span class="o">*</span> <span class="n">load_events</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
-
-  <span class="c1">// get number of events from command line</span>
-  <span class="kt">long</span> <span class="nf">num_events</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
-  <span class="n">EventType</span> <span class="nf">evtype</span><span class="p">(</span><span class="n">All</span><span class="p">);</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">num_events</span> <span class="o">=</span> <span class="n">atol</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">)</span>
-    <span class="n">evtype</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">?</span> <span class="nl">Quark</span> <span class="p">:</span> <span class="n">Gluon</span><span class="p">;</span>
-
-  <span class="c1">// get energyflow samples</span>
-  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="nf">home</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">getenv</span><span class="p">(</span><span class="s">&quot;HOME&quot;</span><span class="p">));</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">home</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-    <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">invalid_argument</span><span class="p">(</span><span class="s">&quot;Error: cannot get HOME environment variable&quot;</span><span class="p">);</span>
-
-  <span class="c1">// form path</span>
-  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="nf">filepath</span><span class="p">(</span><span class="n">home</span><span class="p">);</span>
-  <span class="n">filepath</span> <span class="o">+=</span> <span class="s">&quot;/.energyflow/datasets/QG_jets.npz&quot;</span><span class="p">;</span>
-  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Filepath: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">filepath</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
-
-  <span class="c1">// open file</span>
-  <span class="n">NPZEventProducer</span> <span class="o">*</span> <span class="nf">npz</span><span class="p">(</span><span class="k">nullptr</span><span class="p">);</span>
-  <span class="k">try</span> <span class="p">{</span>
-    <span class="n">npz</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NPZEventProducer</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">num_events</span><span class="p">,</span> <span class="n">evtype</span><span class="p">);</span>
-  <span class="p">}</span>
-  <span class="k">catch</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">exception</span> <span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Error: cannot open file &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">filepath</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, try running &quot;</span>
-              <span class="o">&lt;&lt;</span> <span class="s">&quot;`python3 -c </span><span class="se">\&quot;</span><span class="s">import energyflow as ef; ef.qg_jets.load()</span><span class="se">\&quot;</span><span class="s">`</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-    <span class="k">return</span> <span class="k">nullptr</span><span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="k">return</span> <span class="n">npz</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
-
-  <span class="c1">// load events</span>
-  <span class="n">EventProducer</span> <span class="o">*</span> <span class="nf">evp</span><span class="p">(</span><span class="n">load_events</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">));</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">evp</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span>
-    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-
-  <span class="c1">// demonstrate some EMD usage</span>
-  <span class="n">SigmaMD_single</span><span class="p">(</span><span class="n">evp</span><span class="p">);</span>
 
   <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
