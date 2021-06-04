@@ -36,10 +36,13 @@
 
 // vector templates
 %template(vectorDouble) std::vector<double>;
-%template(vectorFloat) std::vector<float>;
 %template(vectorString) std::vector<std::string>;
 %template(pairVectorDouble) std::pair<std::vector<double>, std::vector<double>>;
+
+#ifndef WASSERSTEIN_NO_FLOAT32
+%template(vectorFloat) std::vector<float>;
 %template(pairVectorFloat) std::pair<std::vector<float>, std::vector<float>>;
+#endif
 
 // this helps to exclude some problematic code from swig
 #define SWIG_PREPROCESSOR
@@ -76,9 +79,6 @@ using EMDNAMESPACE::DefaultNetworkSimplex;
   import numpy as np
   %}
 
-  %numpy_typemaps(double, NPY_DOUBLE, std::ptrdiff_t)
-  %numpy_typemaps(float,  NPY_FLOAT,  std::ptrdiff_t)
-
   // numpy typemaps
   %define WASSERSTEIN_NUMPY_TYPEMAPS(F)
     %apply (F* IN_ARRAY1, std::ptrdiff_t DIM1) {(F* weights0, std::ptrdiff_t n0),
@@ -96,8 +96,13 @@ using EMDNAMESPACE::DefaultNetworkSimplex;
     %apply (F** ARGOUTVIEWM_ARRAY2, std::ptrdiff_t* DIM1, std::ptrdiff_t* DIM2) {(F** arr_out, std::ptrdiff_t* n0, std::ptrdiff_t* n1)}
   %enddef
 
+  %numpy_typemaps(double, NPY_DOUBLE, std::ptrdiff_t)
   WASSERSTEIN_NUMPY_TYPEMAPS(double)
+
+  #ifndef WASSERSTEIN_NO_FLOAT32
+  %numpy_typemaps(float,  NPY_FLOAT,  std::ptrdiff_t)
   WASSERSTEIN_NUMPY_TYPEMAPS(float)
+  #endif
 
   // prepare to extend classes by renaming some methods
   namespace EMDNAMESPACE {
@@ -296,9 +301,12 @@ namespace EMDNAMESPACE {
 
   // handle templated base class
   %template(EMDBaseFloat64) EMDBase<double>;
-  %template(EMDBaseFloat32) EMDBase<float>;
   %template(ExternalEMDHandlerFloat64) ExternalEMDHandler<double>;
+
+  #ifndef WASSERSTEIN_NO_FLOAT32
+  %template(EMDBaseFloat32) EMDBase<float>;
   %template(ExternalEMDHandlerFloat32) ExternalEMDHandler<float>;
+  #endif
 
 } // namespace EMDNAMESPACE
 
@@ -344,25 +352,26 @@ namespace EMDNAMESPACE {
 
   // instantiate explicit ExternalEMDHandler and Histogram1DHandler classes
   %extend ExternalEMDHandler<double> { EXTERNAL_EMD_HANDLER_NUMPY_FUNCS(double) }
-  %extend ExternalEMDHandler<float> { EXTERNAL_EMD_HANDLER_NUMPY_FUNCS(float) }
-
   %extend Histogram1DHandler<boost::histogram::axis::transform::log, double> {
     HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(double)
-  }
-  %extend Histogram1DHandler<boost::histogram::axis::transform::log, float> {
-    HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(float)
   }
   %extend Histogram1DHandler<boost::histogram::axis::transform::id, double> {
     HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(double)
   }
+  %template(Histogram1DHandlerLogFloat64) Histogram1DHandler<boost::histogram::axis::transform::log, double>;
+  %template(Histogram1DHandlerFloat64) Histogram1DHandler<boost::histogram::axis::transform::id, double>;
+
+  #ifndef WASSERSTEIN_NO_FLOAT32
+  %extend ExternalEMDHandler<float> { EXTERNAL_EMD_HANDLER_NUMPY_FUNCS(float) }
+  %extend Histogram1DHandler<boost::histogram::axis::transform::log, float> {
+    HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(float)
+  }
   %extend Histogram1DHandler<boost::histogram::axis::transform::id, float> {
     HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(float)
   }
-
-  %template(Histogram1DHandlerLogFloat64) Histogram1DHandler<boost::histogram::axis::transform::log, double>;
   %template(Histogram1DHandlerLogFloat32) Histogram1DHandler<boost::histogram::axis::transform::log, float>;
-  %template(Histogram1DHandlerFloat64) Histogram1DHandler<boost::histogram::axis::transform::id, double>;
   %template(Histogram1DHandlerFloat32) Histogram1DHandler<boost::histogram::axis::transform::id, float>;
+  #endif
 }
 
 // include correlation dimension
@@ -370,10 +379,14 @@ namespace EMDNAMESPACE {
 
 namespace EMDNAMESPACE {
   %extend CorrelationDimension<double> { CORRELATION_DIMENSION_NUMPY_FUNCS(double) }
-  %extend CorrelationDimension<float> { CORRELATION_DIMENSION_NUMPY_FUNCS(float) }
 
-  %template(CorrelationDimensionFloat64) CorrelationDimension<double>;
+  #ifndef WASSERSTEIN_NO_FLOAT32
+  %template(CorrelationDimension) CorrelationDimension<double>;
+  %extend CorrelationDimension<float> { CORRELATION_DIMENSION_NUMPY_FUNCS(float) }
   %template(CorrelationDimensionFloat32) CorrelationDimension<float>;
+  #else
+  %template(CorrelationDimensionFloat64) CorrelationDimension<double>;
+  #endif
 }
 
 %define DECLARE_PYTHON_FUNC_VARIABLE_FLOAT_TYPE(func)
@@ -389,4 +402,6 @@ def func(*args, **kwargs):
 %}
 %enddef
 
+#ifndef WASSERSTEIN_NO_FLOAT32
 DECLARE_PYTHON_FUNC_VARIABLE_FLOAT_TYPE(CorrelationDimension)
+#endif

@@ -54,7 +54,7 @@ mkdir -pv "$WASSERSTEIN_INCLUDE_PATH"
 mkdir -pv "$WASSERSTEIN_SHARE_PATH"
 
 # copy main headers
-WASSERSTEIN_HEADERS="EMD.hh CorrelationDimension.hh"
+WASSERSTEIN_HEADERS="Wasserstein.hh"
 echo "Installing Wasserstein headers"
 for header in $WASSERSTEIN_HEADERS; do
     cp -av "./wasserstein/$header" "$WASSERSTEIN_INCLUDE_PATH"
@@ -63,13 +63,9 @@ done
 # copy internal headers
 echo "Installing Wasserstein internal headers"
 cp -aRv ./wasserstein/internal $WASSERSTEIN_INCLUDE_PATH
-#WASSERSTEIN_INTERNAL_HEADERS="EMDUtils.hh Event.hh HistogramUtils.hh NetworkSimplex.hh PairwiseDistance.hh"
-#for header in $WASSERSTEIN_INTERNAL_HEADERS; do
-#    cp -av "./wasserstein/internal/$header" "$WASSERSTEIN_INCLUDE_PATH/internal"
-#done
 
 # copy swig files
-WASSERSTEIN_SWIG_INTERFACES="wasserstein.i wasserstein_common.i"
+WASSERSTEIN_SWIG_INTERFACES="wasserstein.i wasserstein_common.i numpy.i"
 echo "Installing Wasserstein SWIG interfaces"
 for header in $WASSERSTEIN_SWIG_INTERFACES; do
     cp -av "./wasserstein/swig/$header" "$WASSERSTEIN_SHARE_PATH"
