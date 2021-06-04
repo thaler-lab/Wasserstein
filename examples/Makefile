@@ -1,4 +1,4 @@
-SRCS = $(shell ls *.cpp)
+SRCS = $(shell ls *.cpp) cnpy.cpp
 CXXFLAGS = -O3 -Wall -std=c++14 -g -ffast-math
 
 ifeq ($(shell uname), Darwin)
@@ -15,26 +15,27 @@ LIBRARIES += -lz
 
 # http://make.mad-scientist.net/papers/advanced-auto-dependency-generation/#combine
 DEPDIR = .deps
-DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$*.d
-COMPILE.cpp = $(CXX) $(DEPFLAGS) $(CXXFLAGS) $(INCLUDES) -c
+COMPILE.cpp = $(CXX) $(CXXFLAGS) $(INCLUDES) -c $(<) -o $(@) -MT $(@) -MMD -MP -MF $(DEPDIR)/$*.d
 %.o : %.cpp
-%.o : %.cpp $(DEPDIR)/%.d | $(DEPDIR)
-	$(COMPILE.cpp) $(OUTPUT_OPTION) $<
+src/%.o : %.cpp $(DEPDIR)/%.d | $(DEPDIR)
+	$(COMPILE.cpp)
+src/%.o : src/%.cpp $(DEPDIR)/%.d | $(DEPDIR)
+	$(COMPILE.cpp)
 
 .PHONY: all clean
-all: $(SRCS:.cpp=.o) emd_example pairwise_emds_example theory_space_example
+all: emd_example pairwise_emds_example theory_space_example
 
-emd_example: emd_example.o cnpy.o
+emd_example: src/emd_example.o src/cnpy.o
 	$(CXX) -o $@ $^ $(LIBRARIES) $(LDFLAGS)
 
-pairwise_emds_example: pairwise_emds_example.o cnpy.o
+pairwise_emds_example: src/pairwise_emds_example.o src/cnpy.o
 	$(CXX) -o $@ $^ $(LIBRARIES) $(LDFLAGS)
 
-theory_space_example: theory_space_example.o cnpy.o
+theory_space_example: src/theory_space_example.o src/cnpy.o
 	$(CXX) -o $@ $^ $(LIBRARIES) $(LDFLAGS)
 
 clean:
-	rm -fv *.o
+	rm -rfv *.o *_examples src/*.o $(DEPDIR)
 
 $(DEPDIR): ; @mkdir -p $@
 DEPFILES := $(SRCS:%.cpp=$(DEPDIR)/%.d)
