@@ -111,7 +111,7 @@ public:
               bool store_sym_emds_raw = true,
               bool throw_on_error = false,
               int omp_dynamic_chunksize = 10,
-              unsigned n_iter_max = 100000,
+              std::size_t n_iter_max = 100000,
               Value epsilon_large_factor = 1000,
               Value epsilon_small_factor = 1,
               std::ostream & os = std::cout) :
@@ -119,9 +119,9 @@ public:
     emd_objs_(num_threads_, EMD(R, beta, norm, false, false,
                                 n_iter_max, epsilon_large_factor, epsilon_small_factor))
   {
-    setup(print_every, verbose,
-          request_mode, store_sym_emds_raw, throw_on_error,
-          omp_dynamic_chunksize, &os);
+    finish_setup(print_every, verbose,
+                 request_mode, store_sym_emds_raw, throw_on_error,
+                 omp_dynamic_chunksize, &os);
   }
 
 // avoid overloading constructor so swig can handle keyword arguments
@@ -143,9 +143,9 @@ public:
     if (emd.external_dists())
       throw std::invalid_argument("Cannot use PairwiseEMD with external distances");
 
-    setup(print_every, verbose,
-          request_mode, store_sym_emds_raw, throw_on_error,
-          omp_dynamic_chunksize, &os);
+    finish_setup(print_every, verbose,
+                 request_mode, store_sym_emds_raw, throw_on_error,
+                 omp_dynamic_chunksize, &os);
   }
 
 #endif // SWIG
@@ -202,7 +202,7 @@ public:
   }
 
   // set network simplex parameters
-  void set_network_simplex_params(unsigned n_iter_max=100000,
+  void set_network_simplex_params(std::size_t n_iter_max=100000,
                                   Value epsilon_large_factor=1000,
                                   Value epsilon_small_factor=1) {
     for (EMD & emd_obj : emd_objs_)
@@ -471,7 +471,7 @@ private:
     if (request_mode())
       throw std::runtime_error("cannot compute pairwise EMDs in request mode");
 
-    // note that print_every == 0 is handled in setup()
+    // note that print_every == 0 is handled in finish_setup()
     index_type print_every(print_every_);
     if (print_every < 0) {
       print_every = num_emds()/std::abs(print_every_);
@@ -577,14 +577,14 @@ private:
     #endif
   }
 
-  // init from constructor
-  void setup(index_type print_every,
-             unsigned verbose,
-             bool request_mode,
-             bool store_sym_emds_raw,
-             bool throw_on_error,
-             int omp_chunksize,
-             std::ostream * os) {
+  // remaining initialization in constructor
+  void finish_setup(index_type print_every,
+                    unsigned verbose,
+                    bool request_mode,
+                    bool store_sym_emds_raw,
+                    bool throw_on_error,
+                    int omp_chunksize,
+                    std::ostream * os) {
     
     // store arguments, from constructor
     print_every_ = print_every;

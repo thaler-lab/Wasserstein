@@ -51,13 +51,12 @@ public:
 
   void print_progress(bool exact = false) const {
     if (exact)
-      std::cout << boost::format("%i / %i / %i - %4.2fs\n") 
-                                 % iAccept_ % iEvent_ % tot_num_events_
-                                 % duration();
+      std::cout << iAccept_ << " / " << iEvent_ << " / " << tot_num_events_
+                << " - " << duration() << "s\n";
     else
-      std::cout << boost::format("%ik / %ik / %ik - %4.2fs\n") 
-                                 % (iAccept_/1000) % (iEvent_/1000) % (tot_num_events_/1000)
-                                 % duration();
+      std::cout << iAccept_/1000 << "k / " << iEvent_/1000 << "k / " << tot_num_events_/1000
+                << "k - " << duration() << "s\n";
+
     std::cout << std::flush;
   }
 

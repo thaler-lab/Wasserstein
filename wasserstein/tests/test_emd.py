@@ -1,6 +1,3 @@
-import platform
-
-import energyflow as ef
 import numpy as np
 import ot
 import pytest
@@ -89,7 +86,7 @@ def test_emd_custom(num_particles, dim, beta, R, norm):
             pytest.skip()
 
         # wasserstein computation
-        wassEMD = wasserstein.EMD(norm=(norm is True), external_dists=True)
+        wassEMD = wasserstein.EMD(norm=(norm is True))
         wass_emd = wassEMD(ws0, ws1, dists)
 
         emd_diff = abs(pot_emd - wass_emd)
@@ -97,16 +94,111 @@ def test_emd_custom(num_particles, dim, beta, R, norm):
         assert emd_percent_diff < 1e-13 or emd_diff < 1e-13, 'emds do not match'
 
 @pytest.mark.emd
+@pytest.mark.emdcustom
+@pytest.mark.emdyphi
+@pytest.mark.parametrize('norm', [True, False, 'extra'])
+@pytest.mark.parametrize('R', np.arange(0.2, 2.1, 0.2).tolist() + [4, 6, 8, 10])
+@pytest.mark.parametrize('beta', [0.5, 1.0, 1.5, 2.0, 3.0])
+@pytest.mark.parametrize('dim', [2, pytest.param(3, marks=pytest.mark.xfail(strict=True))])
+@pytest.mark.parametrize('num_particles', [2, 4, 8, 16, 32])
+def test_emd_yphi(num_particles, dim, beta, R, norm):
+
+    for i in range(5):
+        ws0, ws1 = np.random.rand(2, num_particles)
+        coords0, coords1 = 2*np.random.rand(2, num_particles, dim) - 1
+        coords0[:,1] = (coords0[:,1] + 1)/2*np.pi
+        coords1[:,1] = (coords1[:,1] + 1)/2*np.pi
+
+        # by hand computation with pot
+        dists = np.sqrt([[(coords0[i,0]-coords1[j,0])**2 +
+                          (np.pi - abs(np.pi - abs(coords0[i,1]-coords1[j,1])))**2
+                          for j in range(num_particles)] for i in range(num_particles)])/R
+        dists **= beta
+
+        if norm is True:
+            ws0 /= np.sum(ws0)
+            ws1 /= np.sum(ws1)
+        elif norm == 'extra':
+            diff = np.sum(ws0) - np.sum(ws1)
+            if diff > 0:
+                ws1 = np.append(ws1, diff)
+                dists = np.hstack((dists, np.ones((num_particles, 1))))
+            elif diff < 0:
+                ws0 = np.append(ws0, abs(diff))
+                dists = np.vstack((dists, np.ones(num_particles)))
+        else:
+            ws0 /= np.sum(ws0)
+            ws0 *= np.sum(ws1)
+            ws0[0] += np.sum(ws1) - np.sum(ws0)
+
+        # wasserstein computation
+        wassEMD = wasserstein.EMD(norm=(norm is True))
+        wassEMDyphi = wasserstein.EMDYPhi(R=R, beta=beta, norm=(norm is True))
+        wass_emd = wassEMD(ws0, ws1, dists)
+        wass_emdyphi = wassEMDyphi(ws0[:num_particles], coords0, ws1[:num_particles], coords1)
+
+        emd_diff = abs(wass_emdyphi - wass_emd)
+        emd_percent_diff = 2*emd_diff/(wass_emdyphi + wass_emd)
+        assert emd_percent_diff < 1e-13 or emd_diff < 1e-13, 'emds do not match'
+
+@pytest.mark.emd
+@pytest.mark.dtype
+@pytest.mark.parametrize('norm', [True, False, 'extra'])
+@pytest.mark.parametrize('R', np.arange(0.2, 2.1, 0.2).tolist() + [4, 6, 8])
+@pytest.mark.parametrize('beta', [0.5, 1.0, 1.5, 2.0])
+@pytest.mark.parametrize('dim', [2, 3])
+@pytest.mark.parametrize('num_particles', [2, 4, 8, 16, 32])
+def test_emd_dtype(num_particles, dim, beta, R, norm):
+
+    for i in range(5):
+        ws0, ws1 = np.random.rand(2, num_particles)
+        coords0, coords1 = 2*np.random.rand(2, num_particles, dim) - 1
+
+        # by hand computation with pot
+        dists = (ot.dist(coords0, coords1, metric='euclidean')/R)**beta
+        if norm is True:
+            ws0 /= np.sum(ws0)
+            ws1 /= np.sum(ws1)
+        elif norm == 'extra':
+            diff = np.sum(ws0) - np.sum(ws1)
+            if diff > 0:
+                ws1 = np.append(ws1, diff)
+                dists = np.hstack((dists, np.ones((num_particles, 1))))
+            elif diff < 0:
+                ws0 = np.append(ws0, abs(diff))
+                dists = np.vstack((dists, np.ones(num_particles)))
+        else:
+            ws0 /= np.sum(ws0)
+            ws0 *= np.sum(ws1)
+            ws0[0] += np.sum(ws1) - np.sum(ws0)
+
+        # wasserstein computation
+        wassEMD64 = wasserstein.EMD(beta=beta, R=R, norm=(norm is True), dtype='float64')
+        wassEMD32 = wasserstein.EMD(beta=beta, R=R, norm=(norm is True), dtype='float32')
+        wass_emd64 = wassEMD64(ws0[:num_particles], coords0, ws1[:num_particles], coords1)
+        wass_emd32 = wassEMD32(ws0[:num_particles].astype('float32'), coords0.astype('float32'),
+                               ws1[:num_particles].astype('float32'), coords1.astype('float32'))
+
+        emd_diff = abs(wass_emd64 - wass_emd32)
+        emd_percent_diff = 2*emd_diff/(wass_emd64 + wass_emd32)
+        assert emd_percent_diff < 1e-5 or emd_diff < 5e-5, 'emds do not match'
+
+@pytest.mark.emd
 @pytest.mark.flows
+@pytest.mark.dtype
 @pytest.mark.parametrize('norm', [True, False])
 @pytest.mark.parametrize('R', np.arange(0.2, 2.1, 0.2))
 @pytest.mark.parametrize('beta', [0.5, 1.0, 1.5, 2.0])
 @pytest.mark.parametrize('num_particles', [2, 4, 8, 16])
-def test_emd_flows(num_particles, beta, R, norm):
+@pytest.mark.parametrize('dtype', ['float32', 'float64'])
+def test_emd_flows(dtype, num_particles, beta, R, norm):
 
+    eps = {'float32': 5e-4, 'float64': 1e-14}
+
+    nfail = 0
     for i in range(5):
         ws0, ws1 = np.random.rand(2, num_particles)
-        coords0, coords1 = 2*np.random.rand(2, num_particles, 2) - 1
+        coords0, coords1 = (2*np.random.rand(2, num_particles, 2) - 1).astype(dtype)
 
         # by hand computation with pot
         dists = (ot.dist(coords0, coords1, metric='euclidean')/R)**beta
@@ -130,19 +222,26 @@ def test_emd_flows(num_particles, beta, R, norm):
             pytest.skip()
 
         # wasserstein computation
-        wassEMD = wasserstein.EMD(beta=beta, R=R, norm=norm)
-        wassEMD(ws0[:num_particles], coords0, ws1[:num_particles], coords1)
+        wassEMD = wasserstein.EMD(beta=beta, R=R, norm=norm, dtype=dtype)
+        wassEMD(ws0[:num_particles].astype(dtype), coords0, ws1[:num_particles].astype(dtype), coords1)
 
         # check that numpy and vector agree for wasserstein
         wass_flows = wassEMD.flows()
-        print(wass_flows.shape)
-        print(wassEMD.flows_vec())
         wass_flows_vec = np.asarray(wassEMD.flows_vec()).reshape(wass_flows.shape)
-        assert np.all(wass_flows == wass_flows_vec)
+        if not np.all(wass_flows == wass_flows_vec):
+            nfail += 1
+            m = 'array does not match vec'
 
         # check flows
-        print(np.max(np.abs(pot_flows - wass_flows)), 'worst flow')
-        assert np.all(np.abs(pot_flows - wass_flows) < 1e-14), 'flows do not match'
+        diff = np.abs(pot_flows - wass_flows)
+        pct_diff = 2*np.abs(pot_flows - wass_flows)/(pot_flows + wass_flows + 1e-40)
+        print(np.max(diff), np.max(pct_diff), 'worst flow')
+        if not (np.all(diff < eps[dtype]) or np.all(pct_diff < eps[dtype])):
+            nfail += 1
+            m = 'flows do not match'
+
+    # allow one failure
+    assert nfail <= 1, m
 
 @pytest.mark.emd
 @pytest.mark.dists
@@ -204,137 +303,3 @@ def test_emd_attributes(beta, R, norm):
         elif extra == 1:
             assert wassEMD.n0() == n0 and wassEMD.n1() == n1 + 1
         assert abs(wassEMD.scale() - max(np.sum(ws0), np.sum(ws1))) < 5e-14
-
-@pytest.mark.pairwise_emd
-@pytest.mark.parametrize('store_sym_raw', [True, False])
-@pytest.mark.parametrize('norm', [True, False])
-@pytest.mark.parametrize('print_every', [-2, -1, 0, 1, 2, 1000000000])
-@pytest.mark.parametrize('num_threads', [1, 2, -1])
-@pytest.mark.parametrize('num_events', [1, 2, 16, 64])
-def test_pairwise_emd(num_events, num_threads, print_every, norm, store_sym_raw):
-
-    beta, R = 1.0, 1.0
-    eventsA, eventsB = np.random.rand(2, num_events, 10, 3)
-
-    wassEMD = wasserstein.EMD(beta=beta, R=R, norm=norm)
-    wassPairwiseEMD = wasserstein.PairwiseEMD(beta=beta, R=R, norm=norm, print_every=print_every,
-                        num_threads=num_threads, store_sym_emds_raw=store_sym_raw, verbose=False)
-
-    # symmetric computation
-    wassPairwiseEMD(eventsA)
-    wassPairedEMDs = wassPairwiseEMD.emds()
-    wassVecEMDs = np.asarray(wassPairwiseEMD.emds_vec()).reshape(wassPairedEMDs.shape)
-    assert np.all(wassPairedEMDs == wassVecEMDs)
-
-    wassEMDs = np.zeros((num_events, num_events))
-    for i in range(num_events):
-        for j in range(i):
-            wassEMDs[i,j] = wassEMDs[j,i] = wassEMD(eventsA[i][:,0], eventsA[i][:,1:], eventsA[j][:,0], eventsA[j][:,1:])
-
-    assert np.all(np.abs(wassPairedEMDs - wassEMDs) < 1e-16)
-
-    # all pairs computation
-    wassPairwiseEMD(eventsA, eventsB)
-    wassPairedEMDs = wassPairwiseEMD.emds()
-    wassVecEMDs = np.asarray(wassPairwiseEMD.emds_vec()).reshape(wassPairedEMDs.shape)
-    assert np.all(wassPairedEMDs == wassVecEMDs)
-
-    wassEMDs = np.zeros((num_events, num_events))
-    for i in range(num_events):
-        for j in range(num_events):
-            wassEMDs[i,j] = wassEMD(eventsA[i][:,0], eventsA[i][:,1:], eventsB[j][:,0], eventsB[j][:,1:])
-
-    assert np.all(np.abs(wassPairedEMDs - wassEMDs) < 1e-16)
-
-@pytest.mark.energyflow
-@pytest.mark.pairwise_emd
-@pytest.mark.parametrize('norm', [True, False])
-@pytest.mark.parametrize('R', [0.4, 0.7, 1.0, 1.3])
-@pytest.mark.parametrize('beta', [0.5, 1.0, 1.5, 2.0])
-@pytest.mark.parametrize('num_threads', [1, -1])
-@pytest.mark.parametrize('num_particles', [4, 12])
-@pytest.mark.parametrize('num_events', [1, 2, 16, 64])
-def test_pairwise_emd_with_ef(num_events, num_particles, num_threads, beta, R, norm):
-
-    if platform.system() == 'Windows':
-        pytest.skip()
-
-    import energyflow as ef
-    eventsA, eventsB = np.random.rand(2, num_events, num_particles, 3)
-
-    wassPairwiseEMD = wasserstein.PairwiseEMD(beta=beta, R=R, norm=norm, num_threads=num_threads, verbose=False)
-
-    # symmetric computation
-    wassPairwiseEMD(eventsA)
-    wassEMDs = wassPairwiseEMD.emds()
-    wassVecEMDs = np.asarray(wassPairwiseEMD.emds_vec()).reshape(wassEMDs.shape)
-    assert np.all(wassEMDs == wassVecEMDs)
-
-    nj = num_threads if num_threads != -1 else None
-    if hasattr(ef.emd, 'emds_pot'):
-        efEMDs = ef.emd.emds_pot(eventsA, R=R, beta=beta, norm=norm, n_jobs=nj)
-    else:
-        efEMDs = ef.emd.emds(eventsA, R=R, beta=beta, norm=norm, n_jobs=nj)
-
-    print(wassEMDs)
-    assert np.all(np.abs(efEMDs - wassEMDs) < 1e-13)
-
-    # all pairs computation
-    wassPairwiseEMD(eventsA, eventsB)
-    wassEMDs = wassPairwiseEMD.emds()
-    wassVecEMDs = np.asarray(wassPairwiseEMD.emds_vec()).reshape(wassEMDs.shape)
-    assert np.all(wassEMDs == wassVecEMDs)
-
-    nj = num_threads if num_threads != -1 else None
-    if hasattr(ef.emd, 'emds_pot'):
-        efEMDs = ef.emd.emds_pot(eventsA, eventsB, R=R, beta=beta, norm=norm, n_jobs=nj)
-    else:
-        efEMDs = ef.emd.emds(eventsA, eventsB, R=R, beta=beta, norm=norm, n_jobs=nj)
-
-    print(wassEMDs)
-    assert np.all(np.abs(efEMDs - wassEMDs) < 1e-13)
-
-loaded_ef_events = False
-
-@pytest.mark.corrdim
-@pytest.mark.parametrize('nbins', [pytest.param(0, marks=pytest.mark.xfail), 1, 2, 4, 1000])
-@pytest.mark.parametrize('high', [10.0000001, 100, 1000])
-@pytest.mark.parametrize('low', [1e-10, 1, 10])
-def test_corrdim(low, high, nbins):
-
-    nevents = 150
-
-    corrdim = wasserstein.CorrelationDimension(nbins, low, high)
-    emds = wasserstein.PairwiseEMD(throw_on_error=True)
-    emds.set_external_emd_handler(corrdim)
-
-    if platform.system() == 'Darwin':
-        pytest.skip()
-
-    global X, y, loaded_ef_events
-    if not loaded_ef_events:
-        X, y = ef.qg_jets.load(num_data=nevents, pad=False)
-        for x in X:
-            x[:,1:3] -= np.average(x[:,1:3], weights=x[:,0], axis=0)
-        loaded_ef_events = True
-
-    emds(X, gdim=2)
-
-    # ensure sizes of things
-    assert corrdim.num_calls() == nevents*(nevents - 1)//2
-    assert corrdim.nbins() == nbins
-    assert len(corrdim.bin_centers()) == nbins
-    assert len(corrdim.bin_edges()) == nbins + 1
-    assert len(corrdim.hist_vals_errs()[0]) == nbins + 2
-    assert len(corrdim.hist_vals_errs(False)[0]) == nbins
-    assert len(corrdim.cumulative_vals_vars()[0]) == nbins
-    assert len(corrdim.corrdims()[0]) == nbins - 1
-    assert len(corrdim.corrdim_bins()) == nbins - 1
-
-    # ensure numpy arrays match vectors
-    assert np.all(corrdim.bin_centers() == corrdim.bin_centers_vec())
-    assert np.all(corrdim.bin_edges() == corrdim.bin_edges_vec())
-    assert np.all(np.asarray(corrdim.hist_vals_vars(True)) == np.asarray(corrdim.hist_vals_vars_vec(True)))
-    assert np.all(np.asarray(corrdim.hist_vals_vars(False)) == np.asarray(corrdim.hist_vals_vars_vec(False)))
-    assert np.all(np.asarray(corrdim.cumulative_vals_vars()) == np.asarray(corrdim.cumulative_vals_vars_vec()))
-    assert np.all(np.asarray(corrdim.corrdims()) == np.asarray(corrdim.corrdims_vec()))

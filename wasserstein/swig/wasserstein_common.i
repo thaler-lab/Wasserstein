@@ -103,8 +103,10 @@ using EMDNAMESPACE::DefaultNetworkSimplex;
   namespace EMDNAMESPACE {
     %rename(flows_vec) EMD::flows;
     %rename(dists_vec) EMD::dists;
+    %rename(node_potentials_vec) EMD::node_potentials;
     %rename(flows) EMD::npy_flows;
     %rename(dists) EMD::npy_dists;
+    %rename(node_potentials) EMD::npy_node_potentials;
     %rename(emds_vec) PairwiseEMD::emds;
     %rename(emds) PairwiseEMD::npy_emds;
     %rename(evaluate) ExternalEMDHandler::npy_evaluate;
@@ -153,17 +155,17 @@ using EMDNAMESPACE::DefaultNetworkSimplex;
   }
 %enddef
 
-%define PAIRED_1DNUMPY_FROM_VECPAIR(cppfunccall, size, F)
-  MALLOC_1D_VALUE_ARRAY(arr_out0, n0, size, nbytes0, F)
-  MALLOC_1D_VALUE_ARRAY(arr_out1, n1, size, nbytes1, F)
+%define PAIRED_1DNUMPY_FROM_VECPAIR(cppfunccall, size0, size1, F)
+  MALLOC_1D_VALUE_ARRAY(arr_out0, n0, size0, nbytes0, F)
+  MALLOC_1D_VALUE_ARRAY(arr_out1, n1, size1, nbytes1, F)
   std::pair<std::vector<F>, std::vector<F>> vecpair($self->cppfunccall);
   memcpy(*arr_out0, vecpair.first.data(), nbytes0);
   memcpy(*arr_out1, vecpair.second.data(), nbytes1);
 %enddef
 
-%define RETURN_PAIRED_1DNUMPY_FROM_VECPAIR(pyname, cppfunccall, size, F)
+%define RETURN_PAIRED_1DNUMPY_FROM_VECPAIR(pyname, cppfunccall, size0, size1, F)
   void pyname(F** arr_out0, std::ptrdiff_t* n0, F** arr_out1, std::ptrdiff_t* n1) {
-    PAIRED_1DNUMPY_FROM_VECPAIR(cppfunccall, size, F)
+    PAIRED_1DNUMPY_FROM_VECPAIR(cppfunccall, size0, size1, F)
   }
 %enddef
 
@@ -192,6 +194,7 @@ using EMDNAMESPACE::DefaultNetworkSimplex;
     MALLOC_2D_VALUE_ARRAY($self->n0(), $self->n1(), F)
     memcpy(*arr_out, $self->ground_dists().data(), nbytes);
   }
+  RETURN_PAIRED_1DNUMPY_FROM_VECPAIR(npy_node_potentials, node_potentials(), $self->n0(), $self->n1(), F)
 %enddef
 
 %define PAIRWISE_EMD_NUMPY_FUNCS(F)
@@ -232,7 +235,7 @@ using EMDNAMESPACE::DefaultNetworkSimplex;
     RETURN_1DNUMPY_FROM_VECTOR(npy_bin_edges, bin_edges, $self->nbins() + 1, F)
     void npy_hist_vals_vars(F** arr_out0, std::ptrdiff_t* n0, F** arr_out1, std::ptrdiff_t* n1, bool overflows = true) {
       unsigned nbins = $self->nbins() + (overflows ? 2 : 0);
-      PAIRED_1DNUMPY_FROM_VECPAIR(hist_vals_vars(overflows), nbins, F)
+      PAIRED_1DNUMPY_FROM_VECPAIR(hist_vals_vars(overflows), nbins, nbins, F)
     }
 
     %pythoncode %{
@@ -246,8 +249,8 @@ using EMDNAMESPACE::DefaultNetworkSimplex;
 %define CORRELATION_DIMENSION_NUMPY_FUNCS(F)
   %#ifdef SWIG_NUMPY
     RETURN_1DNUMPY_FROM_VECTOR(npy_corrdim_bins, corrdim_bins, $self->nbins() - 1, F)
-    RETURN_PAIRED_1DNUMPY_FROM_VECPAIR(npy_corrdims, corrdims(), $self->nbins() - 1, F)
-    RETURN_PAIRED_1DNUMPY_FROM_VECPAIR(npy_cumulative_vals_vars, cumulative_vals_vars(), $self->nbins(), F)
+    RETURN_PAIRED_1DNUMPY_FROM_VECPAIR(npy_corrdims, corrdims(), $self->nbins() - 1, $self->nbins() - 1, F)
+    RETURN_PAIRED_1DNUMPY_FROM_VECPAIR(npy_cumulative_vals_vars, cumulative_vals_vars(), $self->nbins(), $self->nbins(), F)
   %#endif // SWIG_NUMPY
 %enddef
 

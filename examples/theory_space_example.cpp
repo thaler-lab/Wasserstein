@@ -27,29 +27,24 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
-#include <cstdlib>
-
-// Helps with reading in events from NumPy .npz files
-#include "NPZEventProducer.hh"
-
-// The Wasserstein library
+// Wasserstein library
 #include "Wasserstein.hh"
+
+// classes and functions for reading/preparing events
+#include "ExampleUtils.hh"
 
 using EMDParticle = emd::EuclideanParticle2D<>;
 using EMD = emd::EMDFloat64<emd::EuclideanEvent2D, emd::EuclideanDistance2D>;
 using PairwiseEMD = emd::PairwiseEMD<EMD>;
 
-template<class P>
-std::vector<P> convert2event(const std::vector<Particle> & particles) {
-  std::vector<P> euclidean_particles;
-  euclidean_particles.reserve(particles.size());
-  for (const Particle & particle : particles)
-    euclidean_particles.push_back(P(particle.pt, {particle.y, particle.phi}));
-  return euclidean_particles;
-}
+int main(int argc, char** argv) {
 
-void SigmaMD_single(EventProducer * evp) {
+  // load events
+  EventProducer * evp(load_events(argc, argv));
+  if (evp == nullptr)
+    return 1;
 
+  // demonstrate some EMD usage
   double EMD_R = 0.4;
   double EMD_beta = 1;
   bool EMD_norm = true;
@@ -106,51 +101,6 @@ void SigmaMD_single(EventProducer * evp) {
   // run computation
   std::cout << "Cross-section Mover's Distance : " << sigmamd_obj(weights0, weights1) << '\n'
             << "Done in " << sigmamd_obj.duration() << "s\n";
-}
-
-EventProducer * load_events(int argc, char** argv) {
-
-  // get number of events from command line
-  long num_events(1000);
-  EventType evtype(All);
-  if (argc >= 2)
-    num_events = atol(argv[1]);
-  if (argc >= 3)
-    evtype = atoi(argv[2]) == 1 ? Quark : Gluon;
-
-  // get energyflow samples
-  const char * home(std::getenv("HOME"));
-  if (home == NULL)
-    throw std::invalid_argument("Error: cannot get HOME environment variable");
-
-  // form path
-  std::string filepath(home);
-  filepath += "/.energyflow/datasets/QG_jets.npz";
-  std::cout << "Filepath: " << filepath << '\n';
-
-  // open file
-  NPZEventProducer * npz(nullptr);
-  try {
-    npz = new NPZEventProducer(filepath, num_events, evtype);
-  }
-  catch (std::exception & e) {
-    std::cerr << "Error: cannot open file " << filepath << ", try running "
-              << "`python3 -c \"import energyflow as ef; ef.qg_jets.load()\"`\n";
-    return nullptr;
-  }
-
-  return npz;
-}
-
-int main(int argc, char** argv) {
-
-  // load events
-  EventProducer * evp(load_events(argc, argv));
-  if (evp == nullptr)
-    return 1;
-
-  // demonstrate some EMD usage
-  SigmaMD_single(evp);
 
   return 0;
 }

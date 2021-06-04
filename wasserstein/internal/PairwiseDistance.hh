@@ -110,6 +110,7 @@ public:
         for (ParticleIterator p1 = ps1.begin(); p1 != end1; ++p1)
           dists[k++] = distance(p0, p1);
     }
+
     else if (extra == ExtraParticle::Zero) {
       dists.resize((ps0.size() + 1) * ps1.size());
       for (ParticleIterator p0 = ps0.begin(), end0 = ps0.end(), end1 = ps1.end(); p0 != end0; ++p0)

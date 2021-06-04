@@ -11,6 +11,5 @@ dist/
 .pytest_cache/
 .eggs/
 mkdocs/
-basic_example
-theory_space_example
+examples/*_example
 **/.deps

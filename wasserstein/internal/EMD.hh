@@ -39,10 +39,12 @@
 #define WASSERSTEIN_EMD_HH
 
 // C++ standard library
+#include <algorithm>
 #include <memory>
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <utility>
 #include <vector>
 
 // Wasserstein headers (required for EMD functionality)
@@ -115,7 +117,7 @@ public:
   // constructor with entirely default arguments
   EMD(Value R = 1, Value beta = 1, bool norm = false,
        bool do_timing = false, bool external_dists = false,
-       unsigned n_iter_max = 100000,
+       std::size_t n_iter_max = 100000,
        Value epsilon_large_factor = 1000,
        Value epsilon_small_factor = 1) :
 
@@ -139,22 +141,18 @@ public:
   void set_R(Value R) { pairwise_distance_.set_R(R); }
   void set_beta(Value beta) { pairwise_distance_.set_beta(beta); }
 
-  // these avoid needing this-> everywhere
+  // these avoid needing this-> with common functions
   #ifndef SWIG_PREPROCESSOR
     using Base::norm;
     using Base::external_dists;
     using Base::n0;
     using Base::n1;
-    using Base::extra;
     using Base::weightdiff;
     using Base::scale;
-    using Base::emd;
-    using Base::status;
-    using Base::do_timing;
   #endif
 
   // set network simplex parameters
-  void set_network_simplex_params(unsigned n_iter_max=100000,
+  void set_network_simplex_params(std::size_t n_iter_max=100000,
                                   Value epsilon_large_factor=1000,
                                   Value epsilon_small_factor=1) {
     network_simplex_.set_params(n_iter_max, epsilon_large_factor, epsilon_small_factor);
@@ -201,7 +199,7 @@ public:
   Value operator()(const ProtoEvent0 & pev0, const ProtoEvent1 & pev1) {
     Event ev0(pev0), ev1(pev1);
     check_emd_status(compute(preprocess(ev0), preprocess(ev1)));
-    return emd();
+    return this->emd();
   }
 
   // runs the computation on two events without any preprocessing
@@ -217,7 +215,7 @@ public:
     const WeightCollection & ws0(ev0.weights()), & ws1(ev1.weights());
 
     // check for timing request
-    if (do_timing()) this->start_timing();
+    if (this->do_timing()) this->start_timing();
 
     // grab number of particles
     this->n0_ = ws0.size();
@@ -261,22 +259,22 @@ public:
 
     // store distances in network simplex if not externally provided
     if (!external_dists())
-      pairwise_distance_.fill_distances(ev0.particles(), ev1.particles(), ground_dists(), extra());
+      pairwise_distance_.fill_distances(ev0.particles(), ev1.particles(), ground_dists(), this->extra());
 
     // run the EarthMoversDistance at this point
     this->status_ = network_simplex_.compute(n0(), n1());
     this->emd_ = network_simplex_.total_cost();
 
     // account for weight scale if not normed
-    if (status() == EMDStatus::Success && !norm())
+    if (this->status() == EMDStatus::Success && !norm())
       this->emd_ *= scale();
 
     // end timing and get duration
-    if (do_timing())
+    if (this->do_timing())
       this->store_duration();
 
     // return status
-    return status();
+    return this->status();
   }
 
   // access dists
@@ -320,6 +318,25 @@ public:
   // access ground dists in network simplex directly
   std::vector<Value> & ground_dists() { return network_simplex_.dists(); }
   //const std::vector<Value> & ground_dists() const { return network_simplex_.dists(); }
+
+  // access number of iterations of the network simplex solver
+  std::size_t n_iter() const { return network_simplex().n_iter(); }
+
+  // access node potentials of network simplex solver
+  std::pair<std::vector<Value>, std::vector<Value>> node_potentials() const {
+    std::pair<std::vector<Value>, std::vector<Value>> nps;
+    nps.first.resize(n0());
+    nps.second.resize(n1());
+
+    std::copy(network_simplex().potentials().begin(),
+              network_simplex().potentials().begin() + n0(),
+              nps.first.begin());
+    std::copy(network_simplex().potentials().begin() + n0(),
+              network_simplex().potentials().begin() + n0() + n1(),
+              nps.second.begin());
+
+    return nps;
+  }
 
 private:
 

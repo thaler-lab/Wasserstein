@@ -196,14 +196,14 @@ public:
   typedef std::vector<char> StateVector;
 
   // constructor
-  NetworkSimplex(unsigned n_iter_max, Value epsilon_large_factor, Value epsilon_small_factor) :
+  NetworkSimplex(std::size_t n_iter_max, Value epsilon_large_factor, Value epsilon_small_factor) :
     MAX(std::numeric_limits<Value>::max()),
     INF(std::numeric_limits<Value>::has_infinity ? std::numeric_limits<Value>::infinity() : MAX)
   {
     set_params(n_iter_max, epsilon_large_factor, epsilon_small_factor);
   }
 
-  void set_params(unsigned n_iter_max, Value epsilon_large_factor, Value epsilon_small_factor) {
+  void set_params(std::size_t n_iter_max, Value epsilon_large_factor, Value epsilon_small_factor) {
     n_iter_max_ = n_iter_max;
     epsilon_large_ = epsilon_large_factor * std::numeric_limits<Value>::epsilon();
     epsilon_small_ = epsilon_small_factor * std::numeric_limits<Value>::epsilon();
@@ -220,8 +220,8 @@ public:
   }
 
   // set dists and weights
-  ValueVector & weights() { return _supplies; }
-  ValueVector & dists() { return _costs; }
+  ValueVector & weights() { return supplies_; }
+  ValueVector & dists() { return costs_; }
 
   // run computation given init, weights, dists
   EMDStatus compute(std::size_t n0, std::size_t n1) {
@@ -233,7 +233,7 @@ public:
     if (status == EMDStatus::Success) {
       total_cost_ = 0;
       for (Arc a = 0; a < arcNum(); a++)
-        total_cost_ += _flows[a] * _costs[a];
+        total_cost_ += flows_[a] * costs_[a];
     }
     else total_cost_ = INVALID_COST_VALUE;
 
@@ -243,28 +243,32 @@ public:
   // access total cost
   Value total_cost() const { return total_cost_; }
 
+  // access number of iterations required
+  std::size_t n_iter() const { return n_iter_; }
+
   // flow and ground_dist vectors, only first n0_*n0_ values should be used
-  const ValueVector & dists() const { return _costs; }
-  const ValueVector & flows() const { return _flows; }
+  const ValueVector & dists() const { return costs_; }
+  const ValueVector & flows() const { return flows_; }
+  const ValueVector & potentials() const { return pis_; }
 
   // free all memory (rarely used, probably only relevant when doing massive computations)
   void free() {
-    free_vector(_costs);
-    free_vector(_supplies);
-    free_vector(_flows);
-    free_vector(_pis);
-    free_vector(_sources);
-    free_vector(_targets);
-    free_vector(_parents);
-    free_vector(_threads);
-    free_vector(_rev_threads);
-    free_vector(_succ_nums);
-    free_vector(_last_succs);
-    free_vector(_dirty_revs);
-    free_vector(_preds);
-    free_vector(_arc_mins);
-    free_vector(_forwards);
-    free_vector(_states);
+    free_vector(costs_);
+    free_vector(supplies_);
+    free_vector(flows_);
+    free_vector(pis_);
+    free_vector(sources_);
+    free_vector(targets_);
+    free_vector(parents_);
+    free_vector(threads_);
+    free_vector(rev_threads_);
+    free_vector(succ_nums_);
+    free_vector(last_succs_);
+    free_vector(dirty_revs_);
+    free_vector(preds_);
+    free_vector(arc_mins_);
+    free_vector(forwards_);
+    free_vector(states_);
   }
 
 private:
@@ -285,37 +289,37 @@ private:
   //---------------------------------------------------------------------------
   
   // constructor parameters
-  unsigned n_iter_max_, iter_;
+  std::size_t n_iter_max_, n_iter_;
   Value epsilon_large_, epsilon_small_;
 
   // large consts initialized in constructor
   Value MAX, INF;
 
   // cost flow storage vectors
-  ValueVector _costs; // ground distances between nodes
-  ValueVector _supplies; // supply values of the nodes
-  ValueVector _flows; // flow along each arc
-  ValueVector _pis; // potentials of the nodes
-  NodeVector _sources; // ids of the source nodes
-  NodeVector _targets; // ids of the target nodes
+  ValueVector costs_; // ground distances between nodes
+  ValueVector flows_; // flow along each arc
+  ValueVector supplies_; // supply values of the nodes
+  ValueVector pis_; // potentials of the nodes
+  NodeVector sources_; // ids of the source nodes
+  NodeVector targets_; // ids of the target nodes
 
   // spanning tree structure vectors
-  NodeVector _parents, _threads, _rev_threads, _succ_nums, _last_succs, _dirty_revs;
-  ArcVector _preds, _arc_mins;
-  BoolVector _forwards;
-  StateVector _states;
+  NodeVector parents_, threads_, rev_threads_, succ_nums_, last_succs_, dirty_revs_;
+  ArcVector preds_, arc_mins_;
+  BoolVector forwards_;
+  StateVector states_;
 
   // variables of BlockSearchPivotRule
-  Arc _next_arc;
-  Node _block_size;
+  Arc next_arc_;
+  Node block_size_;
 
   // other variables
-  Value _sum_supplies, total_cost_;
+  Value sum_supplies_, total_cost_;
 
   // Temporary data used in the current pivot iteration
-  Arc in_arc;
-  Node join, u_in, v_in, u_out, v_out, first, second, stem, par_stem, new_stem, right, last;
-  Value delta;
+  Arc in_arc_;
+  Node join_, u_in_, v_in_, u_out_, v_out_;
+  Value delta_;
 
   //---------------------------------------------------------------------------
   // FullBipartiteGraph functionality
@@ -384,112 +388,112 @@ private:
 
     // reset vectors that are sized according to number of nodes
     Node all_node_num(nodeNum() + 1); // includes extra 1 for root node
-    _supplies.resize(all_node_num);
-    _pis.resize(all_node_num);
-    _parents.resize(all_node_num);
-    _threads.resize(all_node_num);
-    _rev_threads.resize(all_node_num);
-    _succ_nums.resize(all_node_num);
-    _last_succs.resize(all_node_num);
-    _preds.resize(all_node_num);
-    _forwards.resize(all_node_num);
+    supplies_.resize(all_node_num);
+    pis_.resize(all_node_num);
+    parents_.resize(all_node_num);
+    threads_.resize(all_node_num);
+    rev_threads_.resize(all_node_num);
+    succ_nums_.resize(all_node_num);
+    last_succs_.resize(all_node_num);
+    preds_.resize(all_node_num);
+    forwards_.resize(all_node_num);
 
     // reset vectors sized according to number of arcs
     Arc all_arc_num(arcNum() + nodeNum()); // preparing for EQ constraints in init
-    _costs.resize(all_arc_num);
-    _flows.resize(all_arc_num);
-    _sources.resize(all_arc_num); // look into storing this since they will be recomputed many times
-    _targets.resize(all_arc_num); // look into storing this since they will be recomputed many times
-    _states.resize(all_arc_num);
+    costs_.resize(all_arc_num);
+    flows_.resize(all_arc_num);
+    sources_.resize(all_arc_num); // look into storing this since they will be recomputed many times
+    targets_.resize(all_arc_num); // look into storing this since they will be recomputed many times
+    states_.resize(all_arc_num);
 
     // zero out flow (later nodes are initialized below)
-    std::fill(_flows.begin(), _flows.begin() + arcNum(), 0);
+    std::fill(flows_.begin(), flows_.begin() + arcNum(), 0);
 
     // store the arcs in the original order
     for (Arc a = 0; a < arcNum(); a++) {
-      _sources[a] = source(a);
-      _targets[a] = target(a);
+      sources_[a] = source(a);
+      targets_[a] = target(a);
     }
 
     // check for empty problem
     if (nodeNum() == 0) return EMDStatus::Empty;
 
     // check supply total and make secondary supplies negative
-    _sum_supplies = 0;
+    sum_supplies_ = 0;
     for (Node i = 0; i < nsource(); i++)
-      _sum_supplies += _supplies[i];
+      sum_supplies_ += supplies_[i];
     for (Node i = nsource(); i < nodeNum(); i++)
-      _sum_supplies += (_supplies[i] *= -1);
-    if (std::fabs(_sum_supplies) > epsilon_large_) {
-      std::cerr << "sum_supplies " << _sum_supplies << '\n';
+      sum_supplies_ += (supplies_[i] *= -1);
+    if (std::fabs(sum_supplies_) > epsilon_large_) {
+      std::cerr << "sumsupplies_ " << sum_supplies_ << '\n';
       return EMDStatus::SupplyMismatch;
     }
-    _sum_supplies = 0;
+    sum_supplies_ = 0;
 
     // initialize artificial cost
-    Value art_costs;
+    Value artcosts;
     if (std::numeric_limits<Value>::is_exact)
-      art_costs = std::numeric_limits<Value>::max() / 2 + 1;
+      artcosts = std::numeric_limits<Value>::max() / 2 + 1;
     else
-      art_costs = (*std::max_element(_costs.begin(), _costs.end()) + 1) * nodeNum();
+      artcosts = (*std::max_element(costs_.begin(), costs_.end()) + 1) * nodeNum();
 
     // initialize arc maps
-    std::fill(_states.begin(), _states.begin() + arcNum(), STATE_LOWER);
+    std::fill(states_.begin(), states_.begin() + arcNum(), STATE_LOWER);
 
     // set data for the artificial root node
     Node root(nodeNum());
-    _parents[root] = -1;
-    _preds[root] = -1;
-    _threads[root] = 0;
-    _rev_threads[0] = root;
-    _succ_nums[root] = nodeNum() + 1;
-    _last_succs[root] = root - 1;
-    _supplies[root] = -_sum_supplies;
-    _pis[root] = 0;
+    parents_[root] = -1;
+    preds_[root] = -1;
+    threads_[root] = 0;
+    rev_threads_[0] = root;
+    succ_nums_[root] = nodeNum() + 1;
+    last_succs_[root] = root - 1;
+    supplies_[root] = -sum_supplies_;
+    pis_[root] = 0;
 
     // EQ supply constraints
     Arc e(arcNum());
     for (Node u = 0; u < nodeNum(); u++, e++) {
-      _parents[u] = root;
-      _preds[u] = e;
-      _threads[u] = u + 1;
-      _rev_threads[u + 1] = u;
-      _succ_nums[u] = 1;
-      _last_succs[u] = u;
-      _states[e] = STATE_TREE;
-      if (_supplies[u] >= 0) {
-        _forwards[u] = true;
-        _pis[u] = 0;
-        _sources[e] = u;
-        _targets[e] = root;
-        _flows[e] = _supplies[u];
-        _costs[e] = 0;
+      parents_[u] = root;
+      preds_[u] = e;
+      threads_[u] = u + 1;
+      rev_threads_[u + 1] = u;
+      succ_nums_[u] = 1;
+      last_succs_[u] = u;
+      states_[e] = STATE_TREE;
+      if (supplies_[u] >= 0) {
+        forwards_[u] = true;
+        pis_[u] = 0;
+        sources_[e] = u;
+        targets_[e] = root;
+        flows_[e] = supplies_[u];
+        costs_[e] = 0;
       } else {
-        _forwards[u] = false;
-        _pis[u] = art_costs;
-        _sources[e] = root;
-        _targets[e] = u;
-        _flows[e] = -_supplies[u];
-        _costs[e] = art_costs;
+        forwards_[u] = false;
+        pis_[u] = artcosts;
+        sources_[e] = root;
+        targets_[e] = u;
+        flows_[e] = -supplies_[u];
+        costs_[e] = artcosts;
       }
     }
 
     // initialize block search pivot rule
-    _next_arc = 0;
-    _block_size = std::max(Node(BLOCK_SIZE_FACTOR * std::sqrt(Value(arcNum()))), MIN_BLOCK_SIZE);
+    next_arc_ = 0;
+    block_size_ = std::max(Node(BLOCK_SIZE_FACTOR * std::sqrt(Value(arcNum()))), MIN_BLOCK_SIZE);
 
     // perform heuristic initial pivots
     if (!initialPivots()) return EMDStatus::Unbounded;
 
     // Execute the Network Simplex algorithm
-    iter_ = 0;
+    n_iter_ = 0;
     while (findEnteringArc()) {
-      if (iter_++ >= n_iter_max_)
+      if (n_iter_++ >= n_iter_max_)
         return EMDStatus::MaxIterReached;
 
       findJoinNode();
       bool change(findLeavingArc());
-      if (delta >= MAX) return EMDStatus::Unbounded;
+      if (delta_ >= MAX) return EMDStatus::Unbounded;
       changeFlow(change);
       if (change) {
         updateTreeStructure();
@@ -499,12 +503,12 @@ private:
 
     // Check feasibility
     for (Arc e = arcNum(); e != all_arc_num; e++) {
-      if (_flows[e] != 0) {
-        if (std::fabs(_flows[e]) > epsilon_large_) {
-          std::cerr << "Bad flow: " << _flows[e] << '\n';
+      if (flows_[e] != 0) {
+        if (std::fabs(flows_[e]) > epsilon_large_) {
+          std::cerr << "Bad flow: " << flows_[e] << '\n';
           return EMDStatus::Infeasible;
         }
-        else _flows[e] = 0;
+        else flows_[e] = 0;
       }
     }
 
@@ -518,36 +522,36 @@ private:
   // find next entering arc
   bool findEnteringArc() {
     Value a, c, min(0);
-    Arc e(_next_arc);
-    Node cnt(_block_size);
+    Arc e(next_arc_);
+    Node cnt(block_size_);
     for (Arc ind = 0; ind < arcNum(); ind++, e++) {
       if (e == arcNum()) e -= arcNum();
 
-      c = _states[e] * (_costs[e] + _pis[_sources[e]] - _pis[_targets[e]]);
+      c = states_[e] * (costs_[e] + pis_[sources_[e]] - pis_[targets_[e]]);
       if (c < min) {
         min = c;
-        in_arc = e;
+        in_arc_ = e;
       }
       if (--cnt == 0) {
-        Value pi_sources_in_arc(std::fabs(_pis[_sources[in_arc]])),
-              pi_targets_in_arc(std::fabs(_pis[_targets[in_arc]])),
-              cost_in_arc(std::fabs(_costs[in_arc]));
-        a = pi_sources_in_arc > pi_targets_in_arc ? pi_sources_in_arc : pi_targets_in_arc;
-        if (a < cost_in_arc) a = cost_in_arc;
+        Value pisources__in_arc_(std::fabs(pis_[sources_[in_arc_]])),
+              pitargets__in_arc_(std::fabs(pis_[targets_[in_arc_]])),
+              cost_in_arc_(std::fabs(costs_[in_arc_]));
+        a = pisources__in_arc_ > pitargets__in_arc_ ? pisources__in_arc_ : pitargets__in_arc_;
+        if (a < cost_in_arc_) a = cost_in_arc_;
         if (min < -epsilon_small_*a) {
-          _next_arc = e;
+          next_arc_ = e;
           return true;
         }
-        cnt = _block_size;
+        cnt = block_size_;
       }
     }
-    Value pi_sources_in_arc(std::fabs(_pis[_sources[in_arc]])),
-          pi_targets_in_arc(std::fabs(_pis[_targets[in_arc]])),
-          cost_in_arc(std::fabs(_costs[in_arc]));
-    a = pi_sources_in_arc > pi_targets_in_arc ? pi_sources_in_arc : pi_targets_in_arc;
-    if (a < cost_in_arc) a = cost_in_arc;
+    Value pisources__in_arc_(std::fabs(pis_[sources_[in_arc_]])),
+          pitargets__in_arc_(std::fabs(pis_[targets_[in_arc_]])),
+          cost_in_arc_(std::fabs(costs_[in_arc_]));
+    a = pisources__in_arc_ > pitargets__in_arc_ ? pisources__in_arc_ : pitargets__in_arc_;
+    if (a < cost_in_arc_) a = cost_in_arc_;
     if (min < -epsilon_small_*a) {
-      _next_arc = e;
+      next_arc_ = e;
       return true;
     }
     return false;
@@ -561,29 +565,29 @@ private:
   bool initialPivots() {
 
     // Find the min. cost incomming arc for each demand node
-    _arc_mins.clear();
-    _arc_mins.reserve(ntarget());
+    arc_mins_.clear();
+    arc_mins_.reserve(ntarget());
     for (Node v = nsource(); v < nodeNum(); v++) {
-      Value c, min_costs = std::numeric_limits<Value>::max();
-      Arc a, min_arc(INVALID);
+      Value c, mincosts_ = std::numeric_limits<Value>::max();
+      Arc a, min_arc_(INVALID);
       for (firstIn(a, v); a != INVALID; nextIn(a)) {
-        c = _costs[a];
-        if (c < min_costs) {
-          min_costs = c;
-          min_arc = a;
+        c = costs_[a];
+        if (c < mincosts_) {
+          mincosts_ = c;
+          min_arc_ = a;
         }
       }
-      if (min_arc != INVALID)
-        _arc_mins.push_back(min_arc);
+      if (min_arc_ != INVALID)
+        arc_mins_.push_back(min_arc_);
     }
 
     // Perform heuristic initial pivots
-    for (Arc a : _arc_mins) {
-      in_arc = a;
-      if (_states[in_arc] * (_costs[in_arc] + _pis[_sources[in_arc]] - _pis[_targets[in_arc]]) >= 0) continue;
+    for (Arc a : arc_mins_) {
+      in_arc_ = a;
+      if (states_[in_arc_] * (costs_[in_arc_] + pis_[sources_[in_arc_]] - pis_[targets_[in_arc_]]) >= 0) continue;
       findJoinNode();
       bool change(findLeavingArc());
-      if (delta >= MAX) return false;
+      if (delta_ >= MAX) return false;
       changeFlow(change);
       if (change) {
         updateTreeStructure();
@@ -593,14 +597,14 @@ private:
     return true;
   }
 
-  // Find the join node
+  // Find the join_ node
   void findJoinNode() {
-    Node u(_sources[in_arc]), v(_targets[in_arc]);
+    Node u(sources_[in_arc_]), v(targets_[in_arc_]);
     while (u != v) {
-      if (_succ_nums[u] < _succ_nums[v]) u = _parents[u];
-      else v = _parents[v];
+      if (succ_nums_[u] < succ_nums_[v]) u = parents_[u];
+      else v = parents_[v];
     }
-    join = u;
+    join_ = u;
   }
 
   // Find the leaving arc of the cycle and returns true if the
@@ -608,173 +612,175 @@ private:
   bool findLeavingArc() {
 
     // Initialize first and second nodes according to the direction of the cycle
-    if (_states[in_arc] == STATE_LOWER) {
-      first  = _sources[in_arc];
-      second = _targets[in_arc];
+    Node first, second;
+    if (states_[in_arc_] == STATE_LOWER) {
+      first  = sources_[in_arc_];
+      second = targets_[in_arc_];
     } else {
-      first  = _targets[in_arc];
-      second = _sources[in_arc];
+      first  = targets_[in_arc_];
+      second = sources_[in_arc_];
     }
-    delta = INF;
+
+    delta_ = INF;
     char result(0);
     Value d;
 
     // Search the cycle along the path from the first node to the root
-    for (Node u = first; u != join; u = _parents[u]) {
-      d = _forwards[u] ? _flows[_preds[u]] : INF;
-      if (d < delta) {
-        delta = d;
-        u_out = u;
+    for (Node u = first; u != join_; u = parents_[u]) {
+      d = forwards_[u] ? flows_[preds_[u]] : INF;
+      if (d < delta_) {
+        delta_ = d;
+        u_out_ = u;
         result = 1;
       }
     }
+
     // Search the cycle along the path form the second node to the root
-    for (Node u = second; u != join; u = _parents[u]) {
-      d = _forwards[u] ? INF : _flows[_preds[u]];
-      if (d <= delta) {
-        delta = d;
-        u_out = u;
+    for (Node u = second; u != join_; u = parents_[u]) {
+      d = forwards_[u] ? INF : flows_[preds_[u]];
+      if (d <= delta_) {
+        delta_ = d;
+        u_out_ = u;
         result = 2;
       }
     }
 
     if (result == 1) {
-      u_in = first;
-      v_in = second;
+      u_in_ = first;
+      v_in_ = second;
     } else {
-      u_in = second;
-      v_in = first;
+      u_in_ = second;
+      v_in_ = first;
     }
 
     return result != 0;
   }
 
-  // Change _flows and _states vectors
+  // Change flows_ and states_ vectors
   void changeFlow(bool change) {
 
     // Augment along the cycle
-    if (delta > 0) {
-      Value val = _states[in_arc] * delta;
-      _flows[in_arc] += val;
-      for (Node u = _sources[in_arc]; u != join; u = _parents[u])
-        _flows[_preds[u]] += _forwards[u] ? -val : val;
-      for (Node u = _targets[in_arc]; u != join; u = _parents[u])
-        _flows[_preds[u]] += _forwards[u] ? val : -val;
+    if (delta_ > 0) {
+      Value val = states_[in_arc_] * delta_;
+      flows_[in_arc_] += val;
+      for (Node u = sources_[in_arc_]; u != join_; u = parents_[u])
+        flows_[preds_[u]] += forwards_[u] ? -val : val;
+      for (Node u = targets_[in_arc_]; u != join_; u = parents_[u])
+        flows_[preds_[u]] += forwards_[u] ? val : -val;
     }
 
     // Update the state of the entering and leaving arcs
     if (change) {
-      _states[in_arc] = STATE_TREE;
-      _states[_preds[u_out]] = (_flows[_preds[u_out]] == 0) ? STATE_LOWER : STATE_UPPER;
+      states_[in_arc_] = STATE_TREE;
+      states_[preds_[u_out_]] = (flows_[preds_[u_out_]] == 0) ? STATE_LOWER : STATE_UPPER;
     }
-    else _states[in_arc] = -_states[in_arc];
+    else states_[in_arc_] = -states_[in_arc_];
   }
 
   // Update the tree structure
   void updateTreeStructure() {
-    Node w, u(_last_succs[u_in]), old_rev_threads(_rev_threads[u_out]), 
-         old_succ_nums(_succ_nums[u_out]), old_last_succs(_last_succs[u_out]);
-    v_out = _parents[u_out];
-    right = _threads[u];    // the node after it
+    Node w, u(last_succs_[u_in_]), oldrev_threads_(rev_threads_[u_out_]), 
+         oldsucc_nums_(succ_nums_[u_out_]), oldlast_succs_(last_succs_[u_out_]),
+         right(threads_[u]), stem(u_in_), par_stem(v_in_), new_stem, last;
+    v_out_ = parents_[u_out_];
 
-    // Handle the case when old_rev_threads equals to v_in (it also means that join and v_out coincide)
-    if (old_rev_threads == v_in) last = _threads[_last_succs[u_out]];
-    else last = _threads[v_in];
+    // Handle the case when oldrev_threads_ equals to v_in_ (it also means that join_ and v_out_ coincide)
+    if (oldrev_threads_ == v_in_) last = threads_[last_succs_[u_out_]];
+    else last = threads_[v_in_];
 
-    // Update _threads and _parents along the stem nodes (i.e. the nodes
-    // between u_in and u_out, whose parent have to be changed)
-    _threads[v_in] = stem = u_in;
-    _dirty_revs.clear();
-    _dirty_revs.push_back(v_in);
-    par_stem = v_in;
-    while (stem != u_out) {
+    // Update threads_ and parents_ along the stem nodes (i.e. the nodes
+    // between u_in_ and u_out_, whose parent have to be changed)
+    threads_[v_in_] = u_in_;
+    dirty_revs_.clear();
+    dirty_revs_.push_back(v_in_);
+    while (stem != u_out_) {
 
       // Insert the next stem node into the thread list
-      new_stem = _parents[stem];
-      _threads[u] = new_stem;
-      _dirty_revs.push_back(u);
+      new_stem = parents_[stem];
+      threads_[u] = new_stem;
+      dirty_revs_.push_back(u);
 
       // Remove the subtree of stem from the thread list
-      w = _rev_threads[stem];
-      _threads[w] = right;
-      _rev_threads[right] = w;
+      w = rev_threads_[stem];
+      threads_[w] = right;
+      rev_threads_[right] = w;
 
       // Change the parent node and shift stem nodes
-      _parents[stem] = par_stem;
+      parents_[stem] = par_stem;
       par_stem = stem;
       stem = new_stem;
 
       // Update u and right
-      u = _last_succs[stem] == _last_succs[par_stem] ? _rev_threads[par_stem] : _last_succs[stem];
-      right = _threads[u];
+      u = last_succs_[stem] == last_succs_[par_stem] ? rev_threads_[par_stem] : last_succs_[stem];
+      right = threads_[u];
     }
-    _parents[u_out] = par_stem;
-    _threads[u] = last;
-    _rev_threads[last] = _last_succs[u_out] = u;
+    parents_[u_out_] = par_stem;
+    threads_[u] = last;
+    rev_threads_[last] = last_succs_[u_out_] = u;
 
-    // Remove the subtree of u_out from the thread list except for
-    // the case when old_rev_threads equals to v_in
-    // (it also means that join and v_out coincide)
-    if (old_rev_threads != v_in) {
-      _threads[old_rev_threads] = right;
-      _rev_threads[right] = old_rev_threads;
+    // Remove the subtree of u_out_ from the thread list except for
+    // the case when oldrev_threads_ equals to v_in_
+    // (it also means that join_ and v_out_ coincide)
+    if (oldrev_threads_ != v_in_) {
+      threads_[oldrev_threads_] = right;
+      rev_threads_[right] = oldrev_threads_;
     }
 
-    // Update _rev_threads using the new _threads values
-    for (Node u : _dirty_revs)
-      _rev_threads[_threads[u]] = u;
+    // Update rev_threads_ using the new threads_ values
+    for (Node u : dirty_revs_)
+      rev_threads_[threads_[u]] = u;
 
-    // Update _preds, _forwards, _last_succs and _succ_nums for the
-    // stem nodes from u_out to u_in
-    Node tmp_sc(0), tmp_ls(_last_succs[u_out]);
-    u = u_out;
-    while (u != u_in) {
-      w = _parents[u];
-      _preds[u] = _preds[w];
-      _forwards[u] = !_forwards[w];
-      tmp_sc += _succ_nums[u] - _succ_nums[w];
-      _succ_nums[u] = tmp_sc;
-      _last_succs[w] = tmp_ls;
+    // Update preds_, forwards_, last_succs_ and succ_nums_ for the
+    // stem nodes from u_out_ to u_in_
+    Node tmp_sc(0), tmp_ls(last_succs_[u_out_]);
+    u = u_out_;
+    while (u != u_in_) {
+      w = parents_[u];
+      preds_[u] = preds_[w];
+      forwards_[u] = !forwards_[w];
+      tmp_sc += succ_nums_[u] - succ_nums_[w];
+      succ_nums_[u] = tmp_sc;
+      last_succs_[w] = tmp_ls;
       u = w;
     }
-    _preds[u_in] = in_arc;
-    _forwards[u_in] = (u_in == _sources[in_arc]);
-    _succ_nums[u_in] = old_succ_nums;
+    preds_[u_in_] = in_arc_;
+    forwards_[u_in_] = (u_in_ == sources_[in_arc_]);
+    succ_nums_[u_in_] = oldsucc_nums_;
 
-    // Set limits for updating _last_succs from v_in and v_out towards the root
+    // Set limits for updating last_succs_ from v_in_ and v_out_ towards the root
     Node up_limit_in(-1), up_limit_out(-1);
-    if (_last_succs[join] == v_in) up_limit_out = join;
-    else up_limit_in = join;
+    if (last_succs_[join_] == v_in_) up_limit_out = join_;
+    else up_limit_in = join_;
 
-    // Update _last_succs from v_in towards the root
-    for (u = v_in; u != up_limit_in && _last_succs[u] == v_in; u = _parents[u])
-      _last_succs[u] = _last_succs[u_out];
+    // Update last_succs_ from v_in_ towards the root
+    for (u = v_in_; u != up_limit_in && last_succs_[u] == v_in_; u = parents_[u])
+      last_succs_[u] = last_succs_[u_out_];
 
-    // Update _last_succs from v_out towards the root
-    if (join != old_rev_threads && v_in != old_rev_threads)
-      for (u = v_out; u != up_limit_out && _last_succs[u] == old_last_succs; u = _parents[u])
-        _last_succs[u] = old_rev_threads;
+    // Update last_succs_ from v_out_ towards the root
+    if (join_ != oldrev_threads_ && v_in_ != oldrev_threads_)
+      for (u = v_out_; u != up_limit_out && last_succs_[u] == oldlast_succs_; u = parents_[u])
+        last_succs_[u] = oldrev_threads_;
     else 
-      for (u = v_out; u != up_limit_out && _last_succs[u] == old_last_succs; u = _parents[u])
-        _last_succs[u] = _last_succs[u_out];
+      for (u = v_out_; u != up_limit_out && last_succs_[u] == oldlast_succs_; u = parents_[u])
+        last_succs_[u] = last_succs_[u_out_];
 
-    // Update _succ_nums from v_in to join
-    for (u = v_in; u != join; u = _parents[u])
-      _succ_nums[u] += old_succ_nums;
+    // Update succ_nums_ from v_in_ to join_
+    for (u = v_in_; u != join_; u = parents_[u])
+      succ_nums_[u] += oldsucc_nums_;
 
-    // Update _succ_nums from v_out to join
-    for (u = v_out; u != join; u = _parents[u])
-      _succ_nums[u] -= old_succ_nums;
+    // Update succ_nums_ from v_out_ to join_
+    for (u = v_out_; u != join_; u = parents_[u])
+      succ_nums_[u] -= oldsucc_nums_;
   }
 
   // Update potentials
   void updatePotential() {
-    Value sigma = _forwards[u_in] ? _pis[v_in] - _pis[u_in] - _costs[_preds[u_in]] : _pis[v_in] - _pis[u_in] + _costs[_preds[u_in]];
+    Value sigma = forwards_[u_in_] ? pis_[v_in_] - pis_[u_in_] - costs_[preds_[u_in_]] : pis_[v_in_] - pis_[u_in_] + costs_[preds_[u_in_]];
 
     // Update potentials in the subtree, which has been moved
-    Node end = _threads[_last_succs[u_in]];
-    for (Node u = u_in; u != end; u = _threads[u])
-      _pis[u] += sigma;
+    Node end = threads_[last_succs_[u_in_]];
+    for (Node u = u_in_; u != end; u = threads_[u])
+      pis_[u] += sigma;
   }
 
 }; // NetworkSimplex

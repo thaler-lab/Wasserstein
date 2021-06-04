@@ -1,4 +1,4 @@
-SRCS = cnpy.cpp basic_example.cpp theory_space_example.cpp
+SRCS = $(shell ls *.cpp)
 CXXFLAGS = -O3 -Wall -std=c++14 -g -ffast-math
 
 ifeq ($(shell uname), Darwin)
@@ -10,7 +10,7 @@ ifeq ($(shell uname), Linux)
 	LDFLAGS += -fopenmp
 endif
 
-INCLUDES  += -I../wasserstein
+INCLUDES  += -I../wasserstein -Iinclude
 LIBRARIES += -lz
 
 # http://make.mad-scientist.net/papers/advanced-auto-dependency-generation/#combine
@@ -22,9 +22,12 @@ COMPILE.cpp = $(CXX) $(DEPFLAGS) $(CXXFLAGS) $(INCLUDES) -c
 	$(COMPILE.cpp) $(OUTPUT_OPTION) $<
 
 .PHONY: all clean
-all: $(SRCS:.cpp=.o) basic_example theory_space_example
+all: $(SRCS:.cpp=.o) emd_example pairwise_emds_example theory_space_example
 
-basic_example: basic_example.o cnpy.o
+emd_example: emd_example.o cnpy.o
+	$(CXX) -o $@ $^ $(LIBRARIES) $(LDFLAGS)
+
+pairwise_emds_example: pairwise_emds_example.o cnpy.o
 	$(CXX) -o $@ $^ $(LIBRARIES) $(LDFLAGS)
 
 theory_space_example: theory_space_example.o cnpy.o
