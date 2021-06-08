@@ -150,7 +150,7 @@ namespace emd {
     // python function to get events from container of 2d arrays, first column becomes the weights
     %pythoncode %{
 
-      // ensure proper destruction of objects held by this instance
+      # ensure proper destruction of objects held by this instance
       def __del__(self):
           super().__del__()
           if hasattr(self, 'event_arrs'):

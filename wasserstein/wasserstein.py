@@ -878,7 +878,7 @@ class PairwiseEMDFloat64(PairwiseEMDBaseFloat64):
     _reset_B_events = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64__reset_B_events)
 
 
-    // ensure proper destruction of objects held by this instance
+          # ensure proper destruction of objects held by this instance
     def __del__(self):
         super().__del__()
         if hasattr(self, 'event_arrs'):
@@ -966,7 +966,7 @@ class PairwiseEMDFloat32(PairwiseEMDBaseFloat32):
     _reset_B_events = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32__reset_B_events)
 
 
-    // ensure proper destruction of objects held by this instance
+          # ensure proper destruction of objects held by this instance
     def __del__(self):
         super().__del__()
         if hasattr(self, 'event_arrs'):
@@ -1054,7 +1054,7 @@ class PairwiseEMDYPhiFloat64(PairwiseEMDBaseFloat64):
     _reset_B_events = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64__reset_B_events)
 
 
-    // ensure proper destruction of objects held by this instance
+          # ensure proper destruction of objects held by this instance
     def __del__(self):
         super().__del__()
         if hasattr(self, 'event_arrs'):
@@ -1142,7 +1142,7 @@ class PairwiseEMDYPhiFloat32(PairwiseEMDBaseFloat32):
     _reset_B_events = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32__reset_B_events)
 
 
-    // ensure proper destruction of objects held by this instance
+          # ensure proper destruction of objects held by this instance
     def __del__(self):
         super().__del__()
         if hasattr(self, 'event_arrs'):
