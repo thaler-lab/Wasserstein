@@ -94,9 +94,6 @@ import itertools
 
     return (*$self)(std::make_tuple(weights0, nullptr, n0, -1), std::make_tuple(weights1, nullptr, n1, -1));
   }
-
-  EMD_NUMPY_FUNCS(F)
-
 %enddef
 
 %pythoncode %{
@@ -140,9 +137,6 @@ def _store_events(pairwise_emd, events, event_weights, gdim, mask):
     $self->events().emplace_back(weights, coords, n1, d, event_weight);
     $self->preprocess_back_event();
   }
-
-  PAIRWISE_EMD_NUMPY_FUNCS(F)
-
 %enddef
 
 namespace emd {
@@ -155,6 +149,12 @@ namespace emd {
 
     // python function to get events from container of 2d arrays, first column becomes the weights
     %pythoncode %{
+
+      // ensure proper destruction of objects held by this instance
+      def __del__(self):
+          super().__del__()
+          if hasattr(self, 'event_arrs'):
+              del self.event_arrs
 
       def __call__(self, eventsA, eventsB=None, gdim=None, mask=False,
                          event_weightsA=None, event_weightsB=None):

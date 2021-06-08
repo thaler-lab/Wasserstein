@@ -155,58 +155,6 @@ class vectorDouble(object):
 # Register vectorDouble in _wasserstein:
 _wasserstein.vectorDouble_swigregister(vectorDouble)
 
-class vectorFloat(object):
-    r"""Proxy of C++ std::vector< float > class."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
-    iterator = _swig_new_instance_method(_wasserstein.vectorFloat_iterator)
-    def __iter__(self):
-        return self.iterator()
-    __nonzero__ = _swig_new_instance_method(_wasserstein.vectorFloat___nonzero__)
-    __bool__ = _swig_new_instance_method(_wasserstein.vectorFloat___bool__)
-    __len__ = _swig_new_instance_method(_wasserstein.vectorFloat___len__)
-    __getslice__ = _swig_new_instance_method(_wasserstein.vectorFloat___getslice__)
-    __setslice__ = _swig_new_instance_method(_wasserstein.vectorFloat___setslice__)
-    __delslice__ = _swig_new_instance_method(_wasserstein.vectorFloat___delslice__)
-    __delitem__ = _swig_new_instance_method(_wasserstein.vectorFloat___delitem__)
-    __getitem__ = _swig_new_instance_method(_wasserstein.vectorFloat___getitem__)
-    __setitem__ = _swig_new_instance_method(_wasserstein.vectorFloat___setitem__)
-    pop = _swig_new_instance_method(_wasserstein.vectorFloat_pop)
-    append = _swig_new_instance_method(_wasserstein.vectorFloat_append)
-    empty = _swig_new_instance_method(_wasserstein.vectorFloat_empty)
-    size = _swig_new_instance_method(_wasserstein.vectorFloat_size)
-    swap = _swig_new_instance_method(_wasserstein.vectorFloat_swap)
-    begin = _swig_new_instance_method(_wasserstein.vectorFloat_begin)
-    end = _swig_new_instance_method(_wasserstein.vectorFloat_end)
-    rbegin = _swig_new_instance_method(_wasserstein.vectorFloat_rbegin)
-    rend = _swig_new_instance_method(_wasserstein.vectorFloat_rend)
-    clear = _swig_new_instance_method(_wasserstein.vectorFloat_clear)
-    get_allocator = _swig_new_instance_method(_wasserstein.vectorFloat_get_allocator)
-    pop_back = _swig_new_instance_method(_wasserstein.vectorFloat_pop_back)
-    erase = _swig_new_instance_method(_wasserstein.vectorFloat_erase)
-
-    def __init__(self, *args):
-        r"""
-        __init__(vectorFloat self) -> vectorFloat
-        __init__(vectorFloat self, vectorFloat other) -> vectorFloat
-        __init__(vectorFloat self, std::vector< float >::size_type size) -> vectorFloat
-        __init__(vectorFloat self, std::vector< float >::size_type size, std::vector< float >::value_type const & value) -> vectorFloat
-        """
-        _wasserstein.vectorFloat_swiginit(self, _wasserstein.new_vectorFloat(*args))
-    push_back = _swig_new_instance_method(_wasserstein.vectorFloat_push_back)
-    front = _swig_new_instance_method(_wasserstein.vectorFloat_front)
-    back = _swig_new_instance_method(_wasserstein.vectorFloat_back)
-    assign = _swig_new_instance_method(_wasserstein.vectorFloat_assign)
-    resize = _swig_new_instance_method(_wasserstein.vectorFloat_resize)
-    insert = _swig_new_instance_method(_wasserstein.vectorFloat_insert)
-    reserve = _swig_new_instance_method(_wasserstein.vectorFloat_reserve)
-    capacity = _swig_new_instance_method(_wasserstein.vectorFloat_capacity)
-    __swig_destroy__ = _wasserstein.delete_vectorFloat
-
-# Register vectorFloat in _wasserstein:
-_wasserstein.vectorFloat_swigregister(vectorFloat)
-
 class vectorString(object):
     r"""Proxy of C++ std::vector< std::string > class."""
 
@@ -293,6 +241,58 @@ class pairVectorDouble(object):
 # Register pairVectorDouble in _wasserstein:
 _wasserstein.pairVectorDouble_swigregister(pairVectorDouble)
 
+class vectorFloat(object):
+    r"""Proxy of C++ std::vector< float > class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    iterator = _swig_new_instance_method(_wasserstein.vectorFloat_iterator)
+    def __iter__(self):
+        return self.iterator()
+    __nonzero__ = _swig_new_instance_method(_wasserstein.vectorFloat___nonzero__)
+    __bool__ = _swig_new_instance_method(_wasserstein.vectorFloat___bool__)
+    __len__ = _swig_new_instance_method(_wasserstein.vectorFloat___len__)
+    __getslice__ = _swig_new_instance_method(_wasserstein.vectorFloat___getslice__)
+    __setslice__ = _swig_new_instance_method(_wasserstein.vectorFloat___setslice__)
+    __delslice__ = _swig_new_instance_method(_wasserstein.vectorFloat___delslice__)
+    __delitem__ = _swig_new_instance_method(_wasserstein.vectorFloat___delitem__)
+    __getitem__ = _swig_new_instance_method(_wasserstein.vectorFloat___getitem__)
+    __setitem__ = _swig_new_instance_method(_wasserstein.vectorFloat___setitem__)
+    pop = _swig_new_instance_method(_wasserstein.vectorFloat_pop)
+    append = _swig_new_instance_method(_wasserstein.vectorFloat_append)
+    empty = _swig_new_instance_method(_wasserstein.vectorFloat_empty)
+    size = _swig_new_instance_method(_wasserstein.vectorFloat_size)
+    swap = _swig_new_instance_method(_wasserstein.vectorFloat_swap)
+    begin = _swig_new_instance_method(_wasserstein.vectorFloat_begin)
+    end = _swig_new_instance_method(_wasserstein.vectorFloat_end)
+    rbegin = _swig_new_instance_method(_wasserstein.vectorFloat_rbegin)
+    rend = _swig_new_instance_method(_wasserstein.vectorFloat_rend)
+    clear = _swig_new_instance_method(_wasserstein.vectorFloat_clear)
+    get_allocator = _swig_new_instance_method(_wasserstein.vectorFloat_get_allocator)
+    pop_back = _swig_new_instance_method(_wasserstein.vectorFloat_pop_back)
+    erase = _swig_new_instance_method(_wasserstein.vectorFloat_erase)
+
+    def __init__(self, *args):
+        r"""
+        __init__(vectorFloat self) -> vectorFloat
+        __init__(vectorFloat self, vectorFloat other) -> vectorFloat
+        __init__(vectorFloat self, std::vector< float >::size_type size) -> vectorFloat
+        __init__(vectorFloat self, std::vector< float >::size_type size, std::vector< float >::value_type const & value) -> vectorFloat
+        """
+        _wasserstein.vectorFloat_swiginit(self, _wasserstein.new_vectorFloat(*args))
+    push_back = _swig_new_instance_method(_wasserstein.vectorFloat_push_back)
+    front = _swig_new_instance_method(_wasserstein.vectorFloat_front)
+    back = _swig_new_instance_method(_wasserstein.vectorFloat_back)
+    assign = _swig_new_instance_method(_wasserstein.vectorFloat_assign)
+    resize = _swig_new_instance_method(_wasserstein.vectorFloat_resize)
+    insert = _swig_new_instance_method(_wasserstein.vectorFloat_insert)
+    reserve = _swig_new_instance_method(_wasserstein.vectorFloat_reserve)
+    capacity = _swig_new_instance_method(_wasserstein.vectorFloat_capacity)
+    __swig_destroy__ = _wasserstein.delete_vectorFloat
+
+# Register vectorFloat in _wasserstein:
+_wasserstein.vectorFloat_swigregister(vectorFloat)
+
 class pairVectorFloat(object):
     r"""Proxy of C++ std::pair< std::vector< float >,std::vector< float > > class."""
 
@@ -358,11 +358,16 @@ class EMDBaseFloat64(object):
     r"""Proxy of C++ emd::EMDBase< double > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
 
-    def __init__(self, norm=False, do_timing=False, external_dists=False):
-        r"""__init__(EMDBaseFloat64 self, bool norm=False, bool do_timing=False, bool external_dists=False) -> EMDBaseFloat64"""
-        _wasserstein.EMDBaseFloat64_swiginit(self, _wasserstein.new_EMDBaseFloat64(norm, do_timing, external_dists))
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined - class is abstract")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _wasserstein.delete_EMDBaseFloat64
+    R = _swig_new_instance_method(_wasserstein.EMDBaseFloat64_R)
+    beta = _swig_new_instance_method(_wasserstein.EMDBaseFloat64_beta)
+    set_R = _swig_new_instance_method(_wasserstein.EMDBaseFloat64_set_R)
+    set_beta = _swig_new_instance_method(_wasserstein.EMDBaseFloat64_set_beta)
+    set_network_simplex_params = _swig_new_instance_method(_wasserstein.EMDBaseFloat64_set_network_simplex_params)
     norm = _swig_new_instance_method(_wasserstein.EMDBaseFloat64_norm)
     set_norm = _swig_new_instance_method(_wasserstein.EMDBaseFloat64_set_norm)
     do_timing = _swig_new_instance_method(_wasserstein.EMDBaseFloat64_do_timing)
@@ -376,7 +381,16 @@ class EMDBaseFloat64(object):
     status = _swig_new_instance_method(_wasserstein.EMDBaseFloat64_status)
     weightdiff = _swig_new_instance_method(_wasserstein.EMDBaseFloat64_weightdiff)
     scale = _swig_new_instance_method(_wasserstein.EMDBaseFloat64_scale)
+    n_iter = _swig_new_instance_method(_wasserstein.EMDBaseFloat64_n_iter)
+    dists_vec = _swig_new_instance_method(_wasserstein.EMDBaseFloat64_dists_vec)
+    flows_vec = _swig_new_instance_method(_wasserstein.EMDBaseFloat64_flows_vec)
+    flow = _swig_new_instance_method(_wasserstein.EMDBaseFloat64_flow)
+    node_potentials = _swig_new_instance_method(_wasserstein.EMDBaseFloat64_node_potentials)
     duration = _swig_new_instance_method(_wasserstein.EMDBaseFloat64_duration)
+    clear = _swig_new_instance_method(_wasserstein.EMDBaseFloat64_clear)
+    flows = _swig_new_instance_method(_wasserstein.EMDBaseFloat64_flows)
+    dists = _swig_new_instance_method(_wasserstein.EMDBaseFloat64_dists)
+    npy_node_potentials = _swig_new_instance_method(_wasserstein.EMDBaseFloat64_npy_node_potentials)
 
 # Register EMDBaseFloat64 in _wasserstein:
 _wasserstein.EMDBaseFloat64_swigregister(EMDBaseFloat64)
@@ -384,32 +398,57 @@ cvar = _wasserstein.cvar
 PI = cvar.PI
 TWOPI = cvar.TWOPI
 
-class EMDBaseFloat32(object):
-    r"""Proxy of C++ emd::EMDBase< float > class."""
+class PairwiseEMDBaseFloat64(object):
+    r"""Proxy of C++ emd::PairwiseEMDBase< double > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined - class is abstract")
     __repr__ = _swig_repr
+    __swig_destroy__ = _wasserstein.delete_PairwiseEMDBaseFloat64
+    R = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_R)
+    set_R = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_set_R)
+    beta = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_beta)
+    set_beta = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_set_beta)
+    norm = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_norm)
+    set_norm = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_set_norm)
+    set_network_simplex_params = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_set_network_simplex_params)
 
-    def __init__(self, norm=False, do_timing=False, external_dists=False):
-        r"""__init__(EMDBaseFloat32 self, bool norm=False, bool do_timing=False, bool external_dists=False) -> EMDBaseFloat32"""
-        _wasserstein.EMDBaseFloat32_swiginit(self, _wasserstein.new_EMDBaseFloat32(norm, do_timing, external_dists))
-    norm = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_norm)
-    set_norm = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_set_norm)
-    do_timing = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_do_timing)
-    set_do_timing = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_set_do_timing)
-    external_dists = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_external_dists)
-    set_external_dists = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_set_external_dists)
-    n0 = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_n0)
-    n1 = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_n1)
-    extra = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_extra)
-    emd = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_emd)
-    status = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_status)
-    weightdiff = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_weightdiff)
-    scale = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_scale)
-    duration = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_duration)
+    def set_external_emd_handler(self, handler):
+        if not handler.thisown:
+            raise RuntimeError('ExternalEMDHandler must own itself; perhaps it is already in use elsewhere')
+        handler.thisown = 0
+        _wasserstein.PairwiseEMDBaseFloat64_set_external_emd_handler(self, handler)
+        self._external_emd_handler = handler
 
-# Register EMDBaseFloat32 in _wasserstein:
-_wasserstein.EMDBaseFloat32_swigregister(EMDBaseFloat32)
+
+    have_external_emd_handler = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_have_external_emd_handler)
+    num_threads = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_num_threads)
+    set_omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_set_omp_dynamic_chunksize)
+    omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_omp_dynamic_chunksize)
+    set_request_mode = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_set_request_mode)
+    request_mode = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_request_mode)
+    duration = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_duration)
+    nevA = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_nevA)
+    nevB = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_nevB)
+    num_emds = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_num_emds)
+    storage = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_storage)
+    errored = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_errored)
+    error_messages = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_error_messages)
+    emds_vec = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_emds_vec)
+    emd = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_emd)
+
+    def __del__(self):
+        if hasattr(self, '_external_emd_handler'):
+            self._external_emd_handler.thisown = 1
+            del self._external_emd_handler
+
+    emds = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_emds)
+    raw_emds = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_raw_emds)
+
+# Register PairwiseEMDBaseFloat64 in _wasserstein:
+_wasserstein.PairwiseEMDBaseFloat64_swigregister(PairwiseEMDBaseFloat64)
 
 class ExternalEMDHandlerFloat64(object):
     r"""Proxy of C++ emd::ExternalEMDHandler< double > class."""
@@ -428,24 +467,6 @@ class ExternalEMDHandlerFloat64(object):
 
 # Register ExternalEMDHandlerFloat64 in _wasserstein:
 _wasserstein.ExternalEMDHandlerFloat64_swigregister(ExternalEMDHandlerFloat64)
-
-class ExternalEMDHandlerFloat32(object):
-    r"""Proxy of C++ emd::ExternalEMDHandler< float > class."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-
-    def __init__(self, *args, **kwargs):
-        raise AttributeError("No constructor defined - class is abstract")
-    __repr__ = _swig_repr
-    __swig_destroy__ = _wasserstein.delete_ExternalEMDHandlerFloat32
-    description = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat32_description)
-    num_calls = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat32_num_calls)
-    __call__ = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat32___call__)
-    evaluate = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat32_evaluate)
-    evaluate_symmetric = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat32_evaluate_symmetric)
-
-# Register ExternalEMDHandlerFloat32 in _wasserstein:
-_wasserstein.ExternalEMDHandlerFloat32_swigregister(ExternalEMDHandlerFloat32)
 
 class Histogram1DHandlerLogFloat64(ExternalEMDHandlerFloat64):
     r"""Proxy of C++ emd::Histogram1DHandler< boost::histogram::axis::transform::log,double > class."""
@@ -477,36 +498,6 @@ class Histogram1DHandlerLogFloat64(ExternalEMDHandlerFloat64):
 # Register Histogram1DHandlerLogFloat64 in _wasserstein:
 _wasserstein.Histogram1DHandlerLogFloat64_swigregister(Histogram1DHandlerLogFloat64)
 
-class Histogram1DHandlerLogFloat32(ExternalEMDHandlerFloat32):
-    r"""Proxy of C++ emd::Histogram1DHandler< boost::histogram::axis::transform::log,float > class."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-
-    def __init__(self, nbins, axis_min, axis_max):
-        r"""__init__(Histogram1DHandlerLogFloat32 self, unsigned int nbins, float axis_min, float axis_max) -> Histogram1DHandlerLogFloat32"""
-        _wasserstein.Histogram1DHandlerLogFloat32_swiginit(self, _wasserstein.new_Histogram1DHandlerLogFloat32(nbins, axis_min, axis_max))
-    __swig_destroy__ = _wasserstein.delete_Histogram1DHandlerLogFloat32
-    nbins = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_nbins)
-    axis_min = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_axis_min)
-    axis_max = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_axis_max)
-    description = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_description)
-    hist_vals_vars_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_hist_vals_vars_vec)
-    bin_centers_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_bin_centers_vec)
-    bin_edges_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_bin_edges_vec)
-    __str__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32___str__)
-    __repr__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32___repr__)
-    bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_bin_centers)
-    bin_edges = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_bin_edges)
-    hist_vals_vars = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_hist_vals_vars)
-
-    def hist_vals_errs(self, overflows=True):
-        vals, vars = self.hist_vals_vars(overflows)
-        return vals, np.sqrt(vars)
-
-
-# Register Histogram1DHandlerLogFloat32 in _wasserstein:
-_wasserstein.Histogram1DHandlerLogFloat32_swigregister(Histogram1DHandlerLogFloat32)
-
 class Histogram1DHandlerFloat64(ExternalEMDHandlerFloat64):
     r"""Proxy of C++ emd::Histogram1DHandler< boost::histogram::axis::transform::id,double > class."""
 
@@ -536,6 +527,147 @@ class Histogram1DHandlerFloat64(ExternalEMDHandlerFloat64):
 
 # Register Histogram1DHandlerFloat64 in _wasserstein:
 _wasserstein.Histogram1DHandlerFloat64_swigregister(Histogram1DHandlerFloat64)
+
+class EMDBaseFloat32(object):
+    r"""Proxy of C++ emd::EMDBase< float > class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined - class is abstract")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _wasserstein.delete_EMDBaseFloat32
+    R = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_R)
+    beta = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_beta)
+    set_R = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_set_R)
+    set_beta = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_set_beta)
+    set_network_simplex_params = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_set_network_simplex_params)
+    norm = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_norm)
+    set_norm = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_set_norm)
+    do_timing = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_do_timing)
+    set_do_timing = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_set_do_timing)
+    external_dists = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_external_dists)
+    set_external_dists = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_set_external_dists)
+    n0 = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_n0)
+    n1 = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_n1)
+    extra = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_extra)
+    emd = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_emd)
+    status = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_status)
+    weightdiff = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_weightdiff)
+    scale = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_scale)
+    n_iter = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_n_iter)
+    dists_vec = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_dists_vec)
+    flows_vec = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_flows_vec)
+    flow = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_flow)
+    node_potentials = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_node_potentials)
+    duration = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_duration)
+    clear = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_clear)
+    flows = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_flows)
+    dists = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_dists)
+    npy_node_potentials = _swig_new_instance_method(_wasserstein.EMDBaseFloat32_npy_node_potentials)
+
+# Register EMDBaseFloat32 in _wasserstein:
+_wasserstein.EMDBaseFloat32_swigregister(EMDBaseFloat32)
+
+class PairwiseEMDBaseFloat32(object):
+    r"""Proxy of C++ emd::PairwiseEMDBase< float > class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined - class is abstract")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _wasserstein.delete_PairwiseEMDBaseFloat32
+    R = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_R)
+    set_R = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_set_R)
+    beta = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_beta)
+    set_beta = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_set_beta)
+    norm = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_norm)
+    set_norm = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_set_norm)
+    set_network_simplex_params = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_set_network_simplex_params)
+
+    def set_external_emd_handler(self, handler):
+        if not handler.thisown:
+            raise RuntimeError('ExternalEMDHandler must own itself; perhaps it is already in use elsewhere')
+        handler.thisown = 0
+        _wasserstein.PairwiseEMDBaseFloat32_set_external_emd_handler(self, handler)
+        self._external_emd_handler = handler
+
+
+    have_external_emd_handler = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_have_external_emd_handler)
+    num_threads = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_num_threads)
+    set_omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_set_omp_dynamic_chunksize)
+    omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_omp_dynamic_chunksize)
+    set_request_mode = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_set_request_mode)
+    request_mode = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_request_mode)
+    duration = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_duration)
+    nevA = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_nevA)
+    nevB = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_nevB)
+    num_emds = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_num_emds)
+    storage = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_storage)
+    errored = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_errored)
+    error_messages = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_error_messages)
+    emds_vec = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_emds_vec)
+    emd = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_emd)
+
+    def __del__(self):
+        if hasattr(self, '_external_emd_handler'):
+            self._external_emd_handler.thisown = 1
+            del self._external_emd_handler
+
+    emds = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_emds)
+    raw_emds = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_raw_emds)
+
+# Register PairwiseEMDBaseFloat32 in _wasserstein:
+_wasserstein.PairwiseEMDBaseFloat32_swigregister(PairwiseEMDBaseFloat32)
+
+class ExternalEMDHandlerFloat32(object):
+    r"""Proxy of C++ emd::ExternalEMDHandler< float > class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined - class is abstract")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _wasserstein.delete_ExternalEMDHandlerFloat32
+    description = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat32_description)
+    num_calls = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat32_num_calls)
+    __call__ = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat32___call__)
+    evaluate = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat32_evaluate)
+    evaluate_symmetric = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat32_evaluate_symmetric)
+
+# Register ExternalEMDHandlerFloat32 in _wasserstein:
+_wasserstein.ExternalEMDHandlerFloat32_swigregister(ExternalEMDHandlerFloat32)
+
+class Histogram1DHandlerLogFloat32(ExternalEMDHandlerFloat32):
+    r"""Proxy of C++ emd::Histogram1DHandler< boost::histogram::axis::transform::log,float > class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, nbins, axis_min, axis_max):
+        r"""__init__(Histogram1DHandlerLogFloat32 self, unsigned int nbins, float axis_min, float axis_max) -> Histogram1DHandlerLogFloat32"""
+        _wasserstein.Histogram1DHandlerLogFloat32_swiginit(self, _wasserstein.new_Histogram1DHandlerLogFloat32(nbins, axis_min, axis_max))
+    __swig_destroy__ = _wasserstein.delete_Histogram1DHandlerLogFloat32
+    nbins = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_nbins)
+    axis_min = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_axis_min)
+    axis_max = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_axis_max)
+    description = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_description)
+    hist_vals_vars_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_hist_vals_vars_vec)
+    bin_centers_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_bin_centers_vec)
+    bin_edges_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_bin_edges_vec)
+    __str__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32___str__)
+    __repr__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32___repr__)
+    bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_bin_centers)
+    bin_edges = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_bin_edges)
+    hist_vals_vars = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_hist_vals_vars)
+
+    def hist_vals_errs(self, overflows=True):
+        vals, vars = self.hist_vals_vars(overflows)
+        return vals, np.sqrt(vars)
+
+
+# Register Histogram1DHandlerLogFloat32 in _wasserstein:
+_wasserstein.Histogram1DHandlerLogFloat32_swigregister(Histogram1DHandlerLogFloat32)
 
 class Histogram1DHandlerFloat32(ExternalEMDHandlerFloat32):
     r"""Proxy of C++ emd::Histogram1DHandler< boost::histogram::axis::transform::id,float > class."""
@@ -658,26 +790,12 @@ class EMDFloat64(EMDBaseFloat64):
     def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=1000, epsilon_small_factor=1):
         r"""__init__(EMDFloat64 self, double R=1, double beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, std::size_t n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1) -> EMDFloat64"""
         _wasserstein.EMDFloat64_swiginit(self, _wasserstein.new_EMDFloat64(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
-    R = _swig_new_instance_method(_wasserstein.EMDFloat64_R)
-    beta = _swig_new_instance_method(_wasserstein.EMDFloat64_beta)
-    set_R = _swig_new_instance_method(_wasserstein.EMDFloat64_set_R)
-    set_beta = _swig_new_instance_method(_wasserstein.EMDFloat64_set_beta)
-    set_network_simplex_params = _swig_new_instance_method(_wasserstein.EMDFloat64_set_network_simplex_params)
+    __swig_destroy__ = _wasserstein.delete_EMDFloat64
     description = _swig_new_instance_method(_wasserstein.EMDFloat64_description)
-    clear = _swig_new_instance_method(_wasserstein.EMDFloat64_clear)
-    dists_vec = _swig_new_instance_method(_wasserstein.EMDFloat64_dists_vec)
-    flows_vec = _swig_new_instance_method(_wasserstein.EMDFloat64_flows_vec)
-    flow = _swig_new_instance_method(_wasserstein.EMDFloat64_flow)
-    n_iter = _swig_new_instance_method(_wasserstein.EMDFloat64_n_iter)
-    node_potentials_vec = _swig_new_instance_method(_wasserstein.EMDFloat64_node_potentials_vec)
     __str__ = _swig_new_instance_method(_wasserstein.EMDFloat64___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.EMDFloat64___repr__)
     preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.EMDFloat64_preprocess_CenterWeightedCentroid)
     __call__ = _swig_new_instance_method(_wasserstein.EMDFloat64___call__)
-    flows = _swig_new_instance_method(_wasserstein.EMDFloat64_flows)
-    dists = _swig_new_instance_method(_wasserstein.EMDFloat64_dists)
-    node_potentials = _swig_new_instance_method(_wasserstein.EMDFloat64_node_potentials)
-    __swig_destroy__ = _wasserstein.delete_EMDFloat64
 
 # Register EMDFloat64 in _wasserstein:
 _wasserstein.EMDFloat64_swigregister(EMDFloat64)
@@ -690,26 +808,12 @@ class EMDFloat32(EMDBaseFloat32):
     def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=1000, epsilon_small_factor=1):
         r"""__init__(EMDFloat32 self, float R=1, float beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, std::size_t n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1) -> EMDFloat32"""
         _wasserstein.EMDFloat32_swiginit(self, _wasserstein.new_EMDFloat32(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
-    R = _swig_new_instance_method(_wasserstein.EMDFloat32_R)
-    beta = _swig_new_instance_method(_wasserstein.EMDFloat32_beta)
-    set_R = _swig_new_instance_method(_wasserstein.EMDFloat32_set_R)
-    set_beta = _swig_new_instance_method(_wasserstein.EMDFloat32_set_beta)
-    set_network_simplex_params = _swig_new_instance_method(_wasserstein.EMDFloat32_set_network_simplex_params)
+    __swig_destroy__ = _wasserstein.delete_EMDFloat32
     description = _swig_new_instance_method(_wasserstein.EMDFloat32_description)
-    clear = _swig_new_instance_method(_wasserstein.EMDFloat32_clear)
-    dists_vec = _swig_new_instance_method(_wasserstein.EMDFloat32_dists_vec)
-    flows_vec = _swig_new_instance_method(_wasserstein.EMDFloat32_flows_vec)
-    flow = _swig_new_instance_method(_wasserstein.EMDFloat32_flow)
-    n_iter = _swig_new_instance_method(_wasserstein.EMDFloat32_n_iter)
-    node_potentials_vec = _swig_new_instance_method(_wasserstein.EMDFloat32_node_potentials_vec)
     __str__ = _swig_new_instance_method(_wasserstein.EMDFloat32___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.EMDFloat32___repr__)
     preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.EMDFloat32_preprocess_CenterWeightedCentroid)
     __call__ = _swig_new_instance_method(_wasserstein.EMDFloat32___call__)
-    flows = _swig_new_instance_method(_wasserstein.EMDFloat32_flows)
-    dists = _swig_new_instance_method(_wasserstein.EMDFloat32_dists)
-    node_potentials = _swig_new_instance_method(_wasserstein.EMDFloat32_node_potentials)
-    __swig_destroy__ = _wasserstein.delete_EMDFloat32
 
 # Register EMDFloat32 in _wasserstein:
 _wasserstein.EMDFloat32_swigregister(EMDFloat32)
@@ -722,26 +826,12 @@ class EMDYPhiFloat64(EMDBaseFloat64):
     def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=1000, epsilon_small_factor=1):
         r"""__init__(EMDYPhiFloat64 self, double R=1, double beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, std::size_t n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1) -> EMDYPhiFloat64"""
         _wasserstein.EMDYPhiFloat64_swiginit(self, _wasserstein.new_EMDYPhiFloat64(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
-    R = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_R)
-    beta = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_beta)
-    set_R = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_set_R)
-    set_beta = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_set_beta)
-    set_network_simplex_params = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_set_network_simplex_params)
+    __swig_destroy__ = _wasserstein.delete_EMDYPhiFloat64
     description = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_description)
-    clear = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_clear)
-    dists_vec = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_dists_vec)
-    flows_vec = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_flows_vec)
-    flow = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_flow)
-    n_iter = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_n_iter)
-    node_potentials_vec = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_node_potentials_vec)
     __str__ = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64___repr__)
     preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_preprocess_CenterWeightedCentroid)
     __call__ = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64___call__)
-    flows = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_flows)
-    dists = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_dists)
-    node_potentials = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_node_potentials)
-    __swig_destroy__ = _wasserstein.delete_EMDYPhiFloat64
 
 # Register EMDYPhiFloat64 in _wasserstein:
 _wasserstein.EMDYPhiFloat64_swigregister(EMDYPhiFloat64)
@@ -754,91 +844,45 @@ class EMDYPhiFloat32(EMDBaseFloat32):
     def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=1000, epsilon_small_factor=1):
         r"""__init__(EMDYPhiFloat32 self, float R=1, float beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, std::size_t n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1) -> EMDYPhiFloat32"""
         _wasserstein.EMDYPhiFloat32_swiginit(self, _wasserstein.new_EMDYPhiFloat32(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
-    R = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_R)
-    beta = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_beta)
-    set_R = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_set_R)
-    set_beta = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_set_beta)
-    set_network_simplex_params = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_set_network_simplex_params)
+    __swig_destroy__ = _wasserstein.delete_EMDYPhiFloat32
     description = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_description)
-    clear = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_clear)
-    dists_vec = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_dists_vec)
-    flows_vec = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_flows_vec)
-    flow = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_flow)
-    n_iter = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_n_iter)
-    node_potentials_vec = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_node_potentials_vec)
     __str__ = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32___repr__)
     preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_preprocess_CenterWeightedCentroid)
     __call__ = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32___call__)
-    flows = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_flows)
-    dists = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_dists)
-    node_potentials = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_node_potentials)
-    __swig_destroy__ = _wasserstein.delete_EMDYPhiFloat32
 
 # Register EMDYPhiFloat32 in _wasserstein:
 _wasserstein.EMDYPhiFloat32_swigregister(EMDYPhiFloat32)
 
-class PairwiseEMDFloat64(object):
+class PairwiseEMDFloat64(PairwiseEMDBaseFloat64):
     r"""Proxy of C++ emd::PairwiseEMD< emd::EMD< double,emd::DefaultArrayEvent,emd::EuclideanArrayDistance >,double > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
-        r"""__init__(PairwiseEMDFloat64 self, double R=1, double beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool request_mode=False, bool store_sym_emds_raw=True, bool throw_on_error=False, int omp_dynamic_chunksize=10, std::size_t n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat64"""
+        r"""__init__(PairwiseEMDFloat64 self, double R=1, double beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool request_mode=False, bool store_sym_emds_raw=True, bool throw_on_error=False, unsigned int omp_dynamic_chunksize=10, std::size_t n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat64"""
         _wasserstein.PairwiseEMDFloat64_swiginit(self, _wasserstein.new_PairwiseEMDFloat64(*args, **kwargs))
+    __swig_destroy__ = _wasserstein.delete_PairwiseEMDFloat64
     description = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_description)
-    R = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_R)
-    set_R = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_set_R)
-    beta = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_beta)
-    set_beta = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_set_beta)
-    norm = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_norm)
-    set_norm = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_set_norm)
-    set_network_simplex_params = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_set_network_simplex_params)
-    set_omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_set_omp_dynamic_chunksize)
-    omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_omp_dynamic_chunksize)
-
-    def set_external_emd_handler(self, handler):
-        if not handler.thisown:
-            raise RuntimeError('ExternalEMDHandler must own itself; perhaps it is already in use elsewhere')
-        handler.thisown = 0
-        _wasserstein.PairwiseEMDFloat64_set_external_emd_handler(self, handler)
-        self._external_emd_handler = handler
-
-
-    have_external_emd_handler = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_have_external_emd_handler)
-    set_request_mode = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_set_request_mode)
-    request_mode = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_request_mode)
 
     def clear(self):
         _wasserstein.PairwiseEMDFloat64_clear(self)
         self.event_arrs = []
 
 
-    nevA = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_nevA)
-    nevB = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_nevB)
-    num_emds = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_num_emds)
-    storage = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_storage)
-    duration = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_duration)
-    errored = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_errored)
-    error_messages = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_error_messages)
-    emds_vec = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_emds_vec)
-    emd = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_emd)
-    preprocess_back_event = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_preprocess_back_event)
     init = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_init)
     compute = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_compute)
     __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64___repr__)
     preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_preprocess_CenterWeightedCentroid)
-
-    def __del__(self):
-        if hasattr(self, 'event_arrs'):
-            del self.event_arrs
-        if hasattr(self, '_external_emd_handler'):
-            self._external_emd_handler.thisown = 1
-            del self._external_emd_handler
-
     _reset_B_events = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64__reset_B_events)
 
+
+    // ensure proper destruction of objects held by this instance
+    def __del__(self):
+        super().__del__()
+        if hasattr(self, 'event_arrs'):
+            del self.event_arrs
 
     def __call__(self, eventsA, eventsB=None, gdim=None, mask=False,
                        event_weightsA=None, event_weightsB=None):
@@ -894,74 +938,39 @@ class PairwiseEMDFloat64(object):
         _store_events(self, eventsB, event_weightsB, gdim, mask)
 
     _add_event = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64__add_event)
-    emds = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_emds)
-    raw_emds = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_raw_emds)
-    __swig_destroy__ = _wasserstein.delete_PairwiseEMDFloat64
 
 # Register PairwiseEMDFloat64 in _wasserstein:
 _wasserstein.PairwiseEMDFloat64_swigregister(PairwiseEMDFloat64)
 
-class PairwiseEMDFloat32(object):
+class PairwiseEMDFloat32(PairwiseEMDBaseFloat32):
     r"""Proxy of C++ emd::PairwiseEMD< emd::EMD< float,emd::DefaultArrayEvent,emd::EuclideanArrayDistance >,float > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
-        r"""__init__(PairwiseEMDFloat32 self, float R=1, float beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool request_mode=False, bool store_sym_emds_raw=True, bool throw_on_error=False, int omp_dynamic_chunksize=10, std::size_t n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat32"""
+        r"""__init__(PairwiseEMDFloat32 self, float R=1, float beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool request_mode=False, bool store_sym_emds_raw=True, bool throw_on_error=False, unsigned int omp_dynamic_chunksize=10, std::size_t n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat32"""
         _wasserstein.PairwiseEMDFloat32_swiginit(self, _wasserstein.new_PairwiseEMDFloat32(*args, **kwargs))
+    __swig_destroy__ = _wasserstein.delete_PairwiseEMDFloat32
     description = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_description)
-    R = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_R)
-    set_R = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_set_R)
-    beta = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_beta)
-    set_beta = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_set_beta)
-    norm = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_norm)
-    set_norm = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_set_norm)
-    set_network_simplex_params = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_set_network_simplex_params)
-    set_omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_set_omp_dynamic_chunksize)
-    omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_omp_dynamic_chunksize)
-
-    def set_external_emd_handler(self, handler):
-        if not handler.thisown:
-            raise RuntimeError('ExternalEMDHandler must own itself; perhaps it is already in use elsewhere')
-        handler.thisown = 0
-        _wasserstein.PairwiseEMDFloat32_set_external_emd_handler(self, handler)
-        self._external_emd_handler = handler
-
-
-    have_external_emd_handler = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_have_external_emd_handler)
-    set_request_mode = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_set_request_mode)
-    request_mode = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_request_mode)
 
     def clear(self):
         _wasserstein.PairwiseEMDFloat32_clear(self)
         self.event_arrs = []
 
 
-    nevA = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_nevA)
-    nevB = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_nevB)
-    num_emds = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_num_emds)
-    storage = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_storage)
-    duration = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_duration)
-    errored = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_errored)
-    error_messages = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_error_messages)
-    emds_vec = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_emds_vec)
-    emd = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_emd)
-    preprocess_back_event = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_preprocess_back_event)
     init = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_init)
     compute = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_compute)
     __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32___repr__)
     preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_preprocess_CenterWeightedCentroid)
-
-    def __del__(self):
-        if hasattr(self, 'event_arrs'):
-            del self.event_arrs
-        if hasattr(self, '_external_emd_handler'):
-            self._external_emd_handler.thisown = 1
-            del self._external_emd_handler
-
     _reset_B_events = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32__reset_B_events)
 
+
+    // ensure proper destruction of objects held by this instance
+    def __del__(self):
+        super().__del__()
+        if hasattr(self, 'event_arrs'):
+            del self.event_arrs
 
     def __call__(self, eventsA, eventsB=None, gdim=None, mask=False,
                        event_weightsA=None, event_weightsB=None):
@@ -1017,74 +1026,39 @@ class PairwiseEMDFloat32(object):
         _store_events(self, eventsB, event_weightsB, gdim, mask)
 
     _add_event = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32__add_event)
-    emds = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_emds)
-    raw_emds = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_raw_emds)
-    __swig_destroy__ = _wasserstein.delete_PairwiseEMDFloat32
 
 # Register PairwiseEMDFloat32 in _wasserstein:
 _wasserstein.PairwiseEMDFloat32_swigregister(PairwiseEMDFloat32)
 
-class PairwiseEMDYPhiFloat64(object):
+class PairwiseEMDYPhiFloat64(PairwiseEMDBaseFloat64):
     r"""Proxy of C++ emd::PairwiseEMD< emd::EMD< double,emd::DefaultArray2Event,emd::YPhiArrayDistance >,double > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
-        r"""__init__(PairwiseEMDYPhiFloat64 self, double R=1, double beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool request_mode=False, bool store_sym_emds_raw=True, bool throw_on_error=False, int omp_dynamic_chunksize=10, std::size_t n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat64"""
+        r"""__init__(PairwiseEMDYPhiFloat64 self, double R=1, double beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool request_mode=False, bool store_sym_emds_raw=True, bool throw_on_error=False, unsigned int omp_dynamic_chunksize=10, std::size_t n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat64"""
         _wasserstein.PairwiseEMDYPhiFloat64_swiginit(self, _wasserstein.new_PairwiseEMDYPhiFloat64(*args, **kwargs))
+    __swig_destroy__ = _wasserstein.delete_PairwiseEMDYPhiFloat64
     description = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_description)
-    R = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_R)
-    set_R = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_set_R)
-    beta = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_beta)
-    set_beta = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_set_beta)
-    norm = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_norm)
-    set_norm = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_set_norm)
-    set_network_simplex_params = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_set_network_simplex_params)
-    set_omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_set_omp_dynamic_chunksize)
-    omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_omp_dynamic_chunksize)
-
-    def set_external_emd_handler(self, handler):
-        if not handler.thisown:
-            raise RuntimeError('ExternalEMDHandler must own itself; perhaps it is already in use elsewhere')
-        handler.thisown = 0
-        _wasserstein.PairwiseEMDYPhiFloat64_set_external_emd_handler(self, handler)
-        self._external_emd_handler = handler
-
-
-    have_external_emd_handler = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_have_external_emd_handler)
-    set_request_mode = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_set_request_mode)
-    request_mode = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_request_mode)
 
     def clear(self):
         _wasserstein.PairwiseEMDYPhiFloat64_clear(self)
         self.event_arrs = []
 
 
-    nevA = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_nevA)
-    nevB = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_nevB)
-    num_emds = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_num_emds)
-    storage = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_storage)
-    duration = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_duration)
-    errored = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_errored)
-    error_messages = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_error_messages)
-    emds_vec = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_emds_vec)
-    emd = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_emd)
-    preprocess_back_event = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_preprocess_back_event)
     init = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_init)
     compute = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_compute)
     __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64___repr__)
     preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_preprocess_CenterWeightedCentroid)
-
-    def __del__(self):
-        if hasattr(self, 'event_arrs'):
-            del self.event_arrs
-        if hasattr(self, '_external_emd_handler'):
-            self._external_emd_handler.thisown = 1
-            del self._external_emd_handler
-
     _reset_B_events = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64__reset_B_events)
 
+
+    // ensure proper destruction of objects held by this instance
+    def __del__(self):
+        super().__del__()
+        if hasattr(self, 'event_arrs'):
+            del self.event_arrs
 
     def __call__(self, eventsA, eventsB=None, gdim=None, mask=False,
                        event_weightsA=None, event_weightsB=None):
@@ -1140,74 +1114,39 @@ class PairwiseEMDYPhiFloat64(object):
         _store_events(self, eventsB, event_weightsB, gdim, mask)
 
     _add_event = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64__add_event)
-    emds = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_emds)
-    raw_emds = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_raw_emds)
-    __swig_destroy__ = _wasserstein.delete_PairwiseEMDYPhiFloat64
 
 # Register PairwiseEMDYPhiFloat64 in _wasserstein:
 _wasserstein.PairwiseEMDYPhiFloat64_swigregister(PairwiseEMDYPhiFloat64)
 
-class PairwiseEMDYPhiFloat32(object):
+class PairwiseEMDYPhiFloat32(PairwiseEMDBaseFloat32):
     r"""Proxy of C++ emd::PairwiseEMD< emd::EMD< float,emd::DefaultArray2Event,emd::YPhiArrayDistance >,float > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
-        r"""__init__(PairwiseEMDYPhiFloat32 self, float R=1, float beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool request_mode=False, bool store_sym_emds_raw=True, bool throw_on_error=False, int omp_dynamic_chunksize=10, std::size_t n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat32"""
+        r"""__init__(PairwiseEMDYPhiFloat32 self, float R=1, float beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool request_mode=False, bool store_sym_emds_raw=True, bool throw_on_error=False, unsigned int omp_dynamic_chunksize=10, std::size_t n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat32"""
         _wasserstein.PairwiseEMDYPhiFloat32_swiginit(self, _wasserstein.new_PairwiseEMDYPhiFloat32(*args, **kwargs))
+    __swig_destroy__ = _wasserstein.delete_PairwiseEMDYPhiFloat32
     description = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_description)
-    R = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_R)
-    set_R = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_set_R)
-    beta = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_beta)
-    set_beta = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_set_beta)
-    norm = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_norm)
-    set_norm = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_set_norm)
-    set_network_simplex_params = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_set_network_simplex_params)
-    set_omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_set_omp_dynamic_chunksize)
-    omp_dynamic_chunksize = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_omp_dynamic_chunksize)
-
-    def set_external_emd_handler(self, handler):
-        if not handler.thisown:
-            raise RuntimeError('ExternalEMDHandler must own itself; perhaps it is already in use elsewhere')
-        handler.thisown = 0
-        _wasserstein.PairwiseEMDYPhiFloat32_set_external_emd_handler(self, handler)
-        self._external_emd_handler = handler
-
-
-    have_external_emd_handler = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_have_external_emd_handler)
-    set_request_mode = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_set_request_mode)
-    request_mode = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_request_mode)
 
     def clear(self):
         _wasserstein.PairwiseEMDYPhiFloat32_clear(self)
         self.event_arrs = []
 
 
-    nevA = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_nevA)
-    nevB = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_nevB)
-    num_emds = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_num_emds)
-    storage = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_storage)
-    duration = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_duration)
-    errored = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_errored)
-    error_messages = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_error_messages)
-    emds_vec = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_emds_vec)
-    emd = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_emd)
-    preprocess_back_event = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_preprocess_back_event)
     init = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_init)
     compute = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_compute)
     __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32___repr__)
     preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_preprocess_CenterWeightedCentroid)
-
-    def __del__(self):
-        if hasattr(self, 'event_arrs'):
-            del self.event_arrs
-        if hasattr(self, '_external_emd_handler'):
-            self._external_emd_handler.thisown = 1
-            del self._external_emd_handler
-
     _reset_B_events = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32__reset_B_events)
 
+
+    // ensure proper destruction of objects held by this instance
+    def __del__(self):
+        super().__del__()
+        if hasattr(self, 'event_arrs'):
+            del self.event_arrs
 
     def __call__(self, eventsA, eventsB=None, gdim=None, mask=False,
                        event_weightsA=None, event_weightsB=None):
@@ -1263,9 +1202,6 @@ class PairwiseEMDYPhiFloat32(object):
         _store_events(self, eventsB, event_weightsB, gdim, mask)
 
     _add_event = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32__add_event)
-    emds = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_emds)
-    raw_emds = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_raw_emds)
-    __swig_destroy__ = _wasserstein.delete_PairwiseEMDYPhiFloat32
 
 # Register PairwiseEMDYPhiFloat32 in _wasserstein:
 _wasserstein.PairwiseEMDYPhiFloat32_swigregister(PairwiseEMDYPhiFloat32)

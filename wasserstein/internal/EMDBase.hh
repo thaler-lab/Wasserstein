@@ -69,7 +69,7 @@ protected:
 
 public:
 
-  EMDBase(bool norm = false, bool do_timing = false, bool external_dists = false) :
+  EMDBase(bool norm, bool do_timing, bool external_dists) :
     norm_(norm),
     do_timing_(do_timing),
     external_dists_(external_dists),
@@ -79,6 +79,19 @@ public:
     status_(EMDStatus::Empty),
     duration_(0)
   {}
+
+  virtual ~EMDBase() = default;
+
+  // access/set R and beta parameters
+  virtual Value R() const = 0;
+  virtual Value beta() const = 0;
+  virtual void set_R(Value R) = 0;
+  virtual void set_beta(Value beta) = 0;
+
+  // set network simplex parameters
+  virtual void set_network_simplex_params(std::size_t n_iter_max=100000,
+                                          Value epsilon_large_factor=1000,
+                                          Value epsilon_small_factor=1) = 0;
 
   bool norm() const { return norm_; }
   void set_norm(bool norm) { norm_ = norm; } 
@@ -101,13 +114,27 @@ public:
   EMDStatus status() const { return status_; }
   Value weightdiff() const { return weightdiff_; }
   Value scale() const { return scale_; }
+  virtual std::size_t n_iter() const = 0;
+
+  virtual std::vector<Value> dists() const = 0;
+  virtual std::vector<Value> flows() const = 0;
+  virtual Value flow(index_type i, index_type j) const = 0;
+  virtual Value flow(std::size_t ind) const = 0;
+  virtual std::pair<std::vector<Value>, std::vector<Value>> node_potentials() const = 0;
+
+#ifdef SWIG
+  // needed by the python wrapper
+  virtual std::vector<Value> & ground_dists() = 0;
+  virtual const std::vector<Value> & raw_flows() const = 0;
+#endif
 
   // return timing info
   double duration() const { return duration_; }
 
-protected:
+  // free all dynamic memory help by this object
+  virtual void clear() = 0;
 
-  ~EMDBase() = default;
+protected:
 
   // duration of emd computation in seconds
   void start_timing() { start_ = std::chrono::steady_clock::now(); }

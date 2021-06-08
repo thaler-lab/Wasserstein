@@ -135,11 +135,7 @@ public:
     this->set_external_dists(std::is_same<PairwiseDistance, DefaultPairwiseDistance<Value>>::value);
   }
 
-  // access/set R and beta parameters
-  Value R() const { return pairwise_distance_.R(); }
-  Value beta() const { return pairwise_distance_.beta(); }
-  void set_R(Value R) { pairwise_distance_.set_R(R); }
-  void set_beta(Value beta) { pairwise_distance_.set_beta(beta); }
+  virtual ~EMD() = default;
 
   // these avoid needing this-> with common functions
   #ifndef SWIG_PREPROCESSOR
@@ -150,13 +146,6 @@ public:
     using Base::weightdiff;
     using Base::scale;
   #endif
-
-  // set network simplex parameters
-  void set_network_simplex_params(std::size_t n_iter_max=100000,
-                                  Value epsilon_large_factor=1000,
-                                  Value epsilon_small_factor=1) {
-    network_simplex_.set_params(n_iter_max, epsilon_large_factor, epsilon_small_factor);
-  }
 
   // access underlying network simplex and pairwise distance objects
   const NetworkSimplex & network_simplex() const { return network_simplex_; }
@@ -178,12 +167,6 @@ public:
       output_preprocessors(oss);
 
     return oss.str();
-  }
-
-  // free all dynamic memory help by this object
-  void clear() {
-    preprocessors_.clear();
-    network_simplex_.free();
   }
 
   // add preprocessor to internal list
@@ -277,6 +260,34 @@ public:
     return this->status();
   }
 
+  // access ground dists in network simplex directly
+  std::vector<Value> & ground_dists() { return network_simplex_.dists(); }
+  const std::vector<Value> & ground_dists() const { return network_simplex_.dists(); }
+
+// these functions should be private since Python will access them via the base class
+#ifdef SWIG
+private:
+#endif
+
+  // access/set R and beta parameters
+  Value R() const { return pairwise_distance_.R(); }
+  Value beta() const { return pairwise_distance_.beta(); }
+  void set_R(Value R) { pairwise_distance_.set_R(R); }
+  void set_beta(Value beta) { pairwise_distance_.set_beta(beta); }
+
+  // set network simplex parameters
+  void set_network_simplex_params(std::size_t n_iter_max=100000,
+                                  Value epsilon_large_factor=1000,
+                                  Value epsilon_small_factor=1) {
+    network_simplex_.set_params(n_iter_max, epsilon_large_factor, epsilon_small_factor);
+  }
+
+  // free all dynamic memory help by this object
+  void clear() {
+    preprocessors_.clear();
+    network_simplex_.free();
+  }
+
   // access dists
   std::vector<Value> dists() const {
     return std::vector<Value>(network_simplex().dists().begin(),
@@ -315,10 +326,6 @@ public:
     return network_simplex_.flows()[ind] * scale(); 
   }
 
-  // access ground dists in network simplex directly
-  std::vector<Value> & ground_dists() { return network_simplex_.dists(); }
-  //const std::vector<Value> & ground_dists() const { return network_simplex_.dists(); }
-
   // access number of iterations of the network simplex solver
   std::size_t n_iter() const { return network_simplex().n_iter(); }
 
@@ -342,6 +349,11 @@ private:
 
   // set weights of network simplex
   std::vector<Value> & weights() { return network_simplex_.weights(); }
+
+  // access raw flows
+  const std::vector<Value> & raw_flows() const {
+    return network_simplex().flows();
+  }
 
   // applies preprocessors to an event
   Event & preprocess(Event & event) const {

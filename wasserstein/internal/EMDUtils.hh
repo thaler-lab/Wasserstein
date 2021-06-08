@@ -44,16 +44,11 @@
 #include <string>
 #include <vector>
 
-// namespace macros
+// default namespace macros
 #ifndef BEGIN_EMD_NAMESPACE
 #define EMDNAMESPACE emd
 #define BEGIN_EMD_NAMESPACE namespace EMDNAMESPACE {
 #define END_EMD_NAMESPACE }
-#endif
-
-// fastjet macros
-#ifdef __FASTJET_PSEUDOJET_HH__
-#define WASSERSTEIN_FASTJET
 #endif
 
 // parse default types

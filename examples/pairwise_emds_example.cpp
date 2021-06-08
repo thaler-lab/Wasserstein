@@ -46,6 +46,7 @@ int main(int argc, char** argv) {
 
   // demonstrate calculating pairwise EMDs
   PairwiseEMD pairwise_emd_obj(0.4, 1.0, false);
+  std::cout << pairwise_emd_obj.R() << std::endl;
 
   // preprocess events to center
   pairwise_emd_obj.preprocess<emd::CenterWeightedCentroid>();

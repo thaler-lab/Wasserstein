@@ -106,14 +106,14 @@ using EMDNAMESPACE::DefaultNetworkSimplex;
 
   // prepare to extend classes by renaming some methods
   namespace EMDNAMESPACE {
-    %rename(flows_vec) EMD::flows;
-    %rename(dists_vec) EMD::dists;
+    %rename(flows_vec) EMDBase::flows;
+    %rename(dists_vec) EMDBase::dists;
     %rename(node_potentials_vec) EMD::node_potentials;
-    %rename(flows) EMD::npy_flows;
-    %rename(dists) EMD::npy_dists;
+    %rename(flows) EMDBase::npy_flows;
+    %rename(dists) EMDBase::npy_dists;
     %rename(node_potentials) EMD::npy_node_potentials;
-    %rename(emds_vec) PairwiseEMD::emds;
-    %rename(emds) PairwiseEMD::npy_emds;
+    %rename(emds_vec) PairwiseEMDBase::emds;
+    %rename(emds) PairwiseEMDBase::npy_emds;
     %rename(evaluate) ExternalEMDHandler::npy_evaluate;
     %rename(evaluate_symmetric) ExternalEMDHandler::npy_evaluate_symmetric;
     %rename(bin_centers_vec) Histogram1DHandler::bin_centers;
@@ -187,10 +187,10 @@ using EMDNAMESPACE::DefaultNetworkSimplex;
 %enddef
 
 // add functionality to get flows and dists as numpy arrays
-%define EMD_NUMPY_FUNCS(F)
+%define EMDBASE_NUMPY_FUNCS(F)
   void npy_flows(F** arr_out, std::ptrdiff_t* n0, std::ptrdiff_t* n1) {
     MALLOC_2D_VALUE_ARRAY($self->n0(), $self->n1(), F)
-    memcpy(*arr_out, $self->network_simplex().flows().data(), nbytes);
+    memcpy(*arr_out, $self->raw_flows().data(), nbytes);
     
     for (size_t i = 0; i < num_elements; i++)
       values[i] *= $self->scale();
@@ -202,7 +202,7 @@ using EMDNAMESPACE::DefaultNetworkSimplex;
   RETURN_PAIRED_1DNUMPY_FROM_VECPAIR(npy_node_potentials, node_potentials(), $self->n0(), $self->n1(), F)
 %enddef
 
-%define PAIRWISE_EMD_NUMPY_FUNCS(F)
+%define PAIRWISEEMDBASE_NUMPY_FUNCS(F)
   void npy_emds(F** arr_out, std::ptrdiff_t* n0, std::ptrdiff_t* n1) {
     MALLOC_2D_VALUE_ARRAY($self->nevA(), $self->nevB(), F)
     memcpy(*arr_out, $self->emds(false).data(), nbytes);
@@ -278,13 +278,15 @@ namespace EMDNAMESPACE {
   %threadallow PairwiseEMD::compute;
 
   // ignore certain functions
+  %ignore EMDBase::ground_dists;
+  %ignore EMDBase::raw_flows;
   %ignore EMD::compute;
   %ignore EMD::network_simplex;
   %ignore EMD::pairwise_distance;
-  %ignore EMD::ground_dists;
   %ignore PairwiseEMD::compute(const std::vector<Event> & events);
   %ignore PairwiseEMD::compute(const std::vector<Event> & eventsA, const std::vector<Event> & eventsB);
   %ignore PairwiseEMD::events;
+  %ignore PairwiseEMD::preprocess_back_event;
   %ignore ExternalEMDHandler::evaluate;
   %ignore ExternalEMDHandler::evaluate_symmetric;
   %ignore Histogram1DHandler::print_axis;
@@ -293,30 +295,18 @@ namespace EMDNAMESPACE {
 } // namespace EMDNAMESPACE
 
 // include EMD utilities
-%include "wasserstein/internal/EMDUtils.hh"
+%include "wasserstein/internal/EMDUtils.hh" // this must come first
+%include "wasserstein/internal/CenterWeightedCentroid.hh"
+%include "wasserstein/internal/CorrelationDimension.hh"
+%include "wasserstein/internal/EMD.hh"
 %include "wasserstein/internal/EMDBase.hh"
 %include "wasserstein/internal/ExternalEMDHandler.hh"
-
-namespace EMDNAMESPACE {
-
-  // handle templated base class
-  %template(EMDBaseFloat64) EMDBase<double>;
-  %template(ExternalEMDHandlerFloat64) ExternalEMDHandler<double>;
-
-  #ifndef WASSERSTEIN_NO_FLOAT32
-  %template(EMDBaseFloat32) EMDBase<float>;
-  %template(ExternalEMDHandlerFloat32) ExternalEMDHandler<float>;
-  #endif
-
-} // namespace EMDNAMESPACE
-
-// include main EMD code and histogram code
-%include "wasserstein/internal/CenterWeightedCentroid.hh"
-%include "wasserstein/internal/EMD.hh"
 %include "wasserstein/internal/HistogramUtils.hh"
+%include "wasserstein/internal/PairwiseEMDBase.hh"
 %include "wasserstein/internal/PairwiseEMD.hh"
 
 namespace EMDNAMESPACE {
+
   %extend EMD {
     ADD_STR_FROM_DESCRIPTION(false)
     ADD_EXPLICIT_PREPROCESSORS
@@ -325,32 +315,35 @@ namespace EMDNAMESPACE {
   %extend PairwiseEMD {
     ADD_STR_FROM_DESCRIPTION(false)
     ADD_EXPLICIT_PREPROCESSORS
+  }
+
+  %extend PairwiseEMDBase {
 
     // ensure proper destruction of objects held by this instance
     %pythoncode %{
       def __del__(self):
-          if hasattr(self, 'event_arrs'):
-              del self.event_arrs
           if hasattr(self, '_external_emd_handler'):
               self._external_emd_handler.thisown = 1
               del self._external_emd_handler
     %}
-  }
 
-  // ensure that external handler ownership is handled correctly
-  %feature("shadow") PairwiseEMD::set_external_emd_handler %{
-    def set_external_emd_handler(self, handler):
-        if not handler.thisown:
-            raise RuntimeError('ExternalEMDHandler must own itself; perhaps it is already in use elsewhere')
-        handler.thisown = 0
-        $action(self, handler)
-        self._external_emd_handler = handler
-  %}
+    // ensure that external handler ownership is handled correctly
+    %feature("shadow") set_external_emd_handler %{
+      def set_external_emd_handler(self, handler):
+          if not handler.thisown:
+              raise RuntimeError('ExternalEMDHandler must own itself; perhaps it is already in use elsewhere')
+          handler.thisown = 0
+          $action(self, handler)
+          self._external_emd_handler = handler
+    %}
+  }
 
   %extend Histogram1DHandler { ADD_STR_FROM_DESCRIPTION() }
   %extend CorrelationDimension { ADD_STR_FROM_DESCRIPTION() }
 
   // instantiate explicit ExternalEMDHandler and Histogram1DHandler classes
+  %extend EMDBase<double> { EMDBASE_NUMPY_FUNCS(double) }
+  %extend PairwiseEMDBase<double> { PAIRWISEEMDBASE_NUMPY_FUNCS(double) }
   %extend ExternalEMDHandler<double> { EXTERNAL_EMD_HANDLER_NUMPY_FUNCS(double) }
   %extend Histogram1DHandler<boost::histogram::axis::transform::log, double> {
     HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(double)
@@ -358,34 +351,35 @@ namespace EMDNAMESPACE {
   %extend Histogram1DHandler<boost::histogram::axis::transform::id, double> {
     HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(double)
   }
+  %extend CorrelationDimension<double> { CORRELATION_DIMENSION_NUMPY_FUNCS(double) }
+
+  %template(EMDBaseFloat64) EMDBase<double>;
+  %template(PairwiseEMDBaseFloat64) PairwiseEMDBase<double>;
+  %template(ExternalEMDHandlerFloat64) ExternalEMDHandler<double>;
   %template(Histogram1DHandlerLogFloat64) Histogram1DHandler<boost::histogram::axis::transform::log, double>;
   %template(Histogram1DHandlerFloat64) Histogram1DHandler<boost::histogram::axis::transform::id, double>;
 
   #ifndef WASSERSTEIN_NO_FLOAT32
-  %extend ExternalEMDHandler<float> { EXTERNAL_EMD_HANDLER_NUMPY_FUNCS(float) }
-  %extend Histogram1DHandler<boost::histogram::axis::transform::log, float> {
-    HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(float)
-  }
-  %extend Histogram1DHandler<boost::histogram::axis::transform::id, float> {
-    HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(float)
-  }
-  %template(Histogram1DHandlerLogFloat32) Histogram1DHandler<boost::histogram::axis::transform::log, float>;
-  %template(Histogram1DHandlerFloat32) Histogram1DHandler<boost::histogram::axis::transform::id, float>;
-  #endif
-}
+    %extend EMDBase<float> { EMDBASE_NUMPY_FUNCS(float) }
+    %extend PairwiseEMDBase<float> { PAIRWISEEMDBASE_NUMPY_FUNCS(float) }
+    %extend ExternalEMDHandler<float> { EXTERNAL_EMD_HANDLER_NUMPY_FUNCS(float) }
+    %extend Histogram1DHandler<boost::histogram::axis::transform::log, float> {
+      HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(float)
+    }
+    %extend Histogram1DHandler<boost::histogram::axis::transform::id, float> {
+      HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(float)
+    }
+    %extend CorrelationDimension<float> { CORRELATION_DIMENSION_NUMPY_FUNCS(float) }
 
-// include correlation dimension
-%include "wasserstein/internal/CorrelationDimension.hh"
-
-namespace EMDNAMESPACE {
-  %extend CorrelationDimension<double> { CORRELATION_DIMENSION_NUMPY_FUNCS(double) }
-
-  #ifndef WASSERSTEIN_NO_FLOAT32
-  %template(CorrelationDimension) CorrelationDimension<double>;
-  %extend CorrelationDimension<float> { CORRELATION_DIMENSION_NUMPY_FUNCS(float) }
-  %template(CorrelationDimensionFloat32) CorrelationDimension<float>;
+    %template(EMDBaseFloat32) EMDBase<float>;
+    %template(PairwiseEMDBaseFloat32) PairwiseEMDBase<float>;
+    %template(ExternalEMDHandlerFloat32) ExternalEMDHandler<float>;
+    %template(Histogram1DHandlerLogFloat32) Histogram1DHandler<boost::histogram::axis::transform::log, float>;
+    %template(Histogram1DHandlerFloat32) Histogram1DHandler<boost::histogram::axis::transform::id, float>;
+    %template(CorrelationDimensionFloat64) CorrelationDimension<double>;
+    %template(CorrelationDimensionFloat32) CorrelationDimension<float>;
   #else
-  %template(CorrelationDimensionFloat64) CorrelationDimension<double>;
+    %template(CorrelationDimension) CorrelationDimension<double>;
   #endif
 }
 
