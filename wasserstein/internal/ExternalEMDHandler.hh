@@ -63,7 +63,7 @@ class ExternalEMDHandler {
 public:
 
   ExternalEMDHandler() : num_calls_(0) {}
-  virtual ~ExternalEMDHandler() {}
+  virtual ~ExternalEMDHandler() = default;
 
   virtual std::string description() const = 0;
   std::size_t num_calls() const { return num_calls_; }

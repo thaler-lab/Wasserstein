@@ -65,7 +65,7 @@
 
 BEGIN_EMD_NAMESPACE
 
-namespace {
+namespace hist {
 
 // gets bin centers from an axis
 template<typename V, class Axis>
@@ -190,14 +190,14 @@ public:
     if (axis_min >= axis_max)
       throw std::invalid_argument("axis_min should be less than axis_max");
 
-    axis_ = Axis(nbins, axis_min, axis_max);
-    hist_ = boost::histogram::make_weighted_histogram(axis_);
+    axis() = Axis(nbins, axis_min, axis_max);
+    hist() = boost::histogram::make_weighted_histogram(axis());
   }
 
-  virtual ~Histogram1DHandler() {}
+  virtual ~Histogram1DHandler() = default;
 
   // access the constructor arguments
-  unsigned nbins() const { return axis_.size(); }
+  unsigned nbins() const { return axis().size(); }
   Value axis_min() const { return axis().value(0); }
   Value axis_max() const { return axis().value(axis().size()); }
 
@@ -207,7 +207,7 @@ public:
         << "  ExternalEMDHandler - " << name() << '\n'
         << "    bins - " << nbins() << '\n'
         << "    range - [" << axis_min() << ", " << axis_max() << ")\n"
-        << "    axis_transform - " << name_transform<Transform>() << '\n';
+        << "    axis_transform - " << hist::name_transform<Transform>() << '\n';
 
     return oss.str();
   }
@@ -222,34 +222,34 @@ public:
 
   // get histogram values and errors
   std::pair<std::vector<Value>, std::vector<Value>> hist_vals_vars(bool overflows = true) const {
-    return get_1d_hist<Value>(hist_, overflows);
+    return hist::get_1d_hist<Value>(hist_, overflows);
   }
 
   // get bins
-  std::vector<Value> bin_centers() const { return get_bin_centers<Value>(axis_); }
-  std::vector<Value> bin_edges() const { return get_bin_edges<Value>(axis_); }
+  std::vector<Value> bin_centers() const { return hist::get_bin_centers<Value>(axis()); }
+  std::vector<Value> bin_edges() const { return hist::get_bin_edges<Value>(axis()); }
 
   // return textual representation of axis/hist
-  std::string print_axis() const { return print_axis(axis_); }
-  std::string print_hist() const { return print_1d_hist(hist_); }
+  std::string print_axis() const { return hist::print_axis(axis()); }
+  std::string print_hist() const { return hist::print_1d_hist(hist()); }
 
 #ifdef BOOST_HISTOGRAM_SERIALIZATION_HPP
   void load(std::istream & is) {
     boost::archive::text_iarchive ia(is);
-    ia >> axis_ >> hist_;
+    ia >> axis() >> hist();
   }
 
   void save(std::ostream & os) {
     boost::archive::text_oarchive oa(os);
-    oa << axis_;
-    oa << hist_;
+    oa << axis();
+    oa << hist();
   }
 
   Histogram1DHandler<Transform> & operator+=(const Histogram1DHandler<Transform> & other) {
-    if (other.axis() != axis_)
+    if (other.axis() != axis())
       throw std::invalid_argument("other histogram does not have the same axis and so cannot be added");
     
-    hist_ += other.hist();
+    hist() += other.hist();
     return *this;
   }
 #endif // BOOST_HISTOGRAM_SERIALIZATION_HPP
@@ -257,7 +257,7 @@ public:
 protected:
 
   void handle(Value emd, Value weight) {
-    hist_(boost::histogram::weight(weight), emd);
+    hist()(boost::histogram::weight(weight), emd);
   }
 
   virtual std::string name() const { return "Histogram1DHandler"; }

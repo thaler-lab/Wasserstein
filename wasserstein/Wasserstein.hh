@@ -48,12 +48,16 @@
 
 BEGIN_EMD_NAMESPACE
 
-// _EMD using double precision
+#ifdef DECLARE_WASSERSTEIN_TEMPLATES
+  WASSERSTEIN_TEMPLATES
+#endif
+
+// EMD using double precision
 template<template<typename> class Event = DefaultEvent,
          template<typename> class PairwiseDistance = DefaultPairwiseDistance>
 using EMDFloat64 = EMD<double, Event, PairwiseDistance>;
 
-// _EMD using single precision
+// EMD using single precision
 template<template<typename> class Event = DefaultEvent,
          template<typename> class PairwiseDistance = DefaultPairwiseDistance>
 using EMDFloat32 = EMD<float, Event, PairwiseDistance>;

@@ -46,18 +46,39 @@
 
 // default namespace macros
 #ifndef BEGIN_EMD_NAMESPACE
-#define EMDNAMESPACE emd
-#define BEGIN_EMD_NAMESPACE namespace EMDNAMESPACE {
-#define END_EMD_NAMESPACE }
+# define BEGIN_EMD_NAMESPACE namespace EMDNAMESPACE {
+# define END_EMD_NAMESPACE }
+# define EMDNAMESPACE emd
 #endif
+
+// default template visibility
+#ifndef WASSERSTEIN_TEMPLATE_VISIBILITY
+# define WASSERSTEIN_TEMPLATE_VISIBILITY extern
+#endif
+
+// macro for declaring templated types
+#define WASSERSTEIN_TEMPLATE(...) WASSERSTEIN_TEMPLATE_VISIBILITY template class __VA_ARGS__;
+#ifdef WASSERSTEIN_NO_FLOAT32
+# define WASSERSTEIN_TEMPLATE_FLOAT32(...)
+#else
+# define WASSERSTEIN_TEMPLATE_FLOAT32(...) WASSERSTEIN_TEMPLATE(__VA_ARGS__)
+#endif
+
+#define WASSERSTEIN_TEMPLATES \
+  WASSERSTEIN_EMDBASE_TEMPLATES \
+  WASSERSTEIN_PAIRWISEEMDBASE_TEMPLATES \
+  WASSERSTEIN_NETWORKSIMPLEX_TEMPLATES \
+  WASSERSTEIN_EXTERNALEMDHANDLER_TEMPLATES \
+  WASSERSTEIN_HISTOGRAM1DHANDLER_TEMPLATES \
+  WASSERSTEIN_CORRELATIONDIMENSION_TEMPLATES
 
 // parse default types
 #ifndef WASSERSTEIN_DEFAULT_VALUE_TYPE
-#define WASSERSTEIN_DEFAULT_VALUE_TYPE double
+# define WASSERSTEIN_DEFAULT_VALUE_TYPE double
 #endif
 
 #ifndef WASSERSTEIN_INDEX_TYPE
-#define WASSERSTEIN_INDEX_TYPE std::ptrdiff_t
+# define WASSERSTEIN_INDEX_TYPE std::ptrdiff_t
 #endif
 
 
@@ -72,7 +93,7 @@ using index_type = WASSERSTEIN_INDEX_TYPE;
 ////////////////////////////////////////////////////////////////////////////////
 
 const double PI = 3.14159265358979323846;
-const double TWOPI = 2*PI;
+const double TWOPI = 6.28318530717958647693;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -98,11 +119,22 @@ enum class EMDPairsStorage : char { Full = 0, FullSymmetric = 1, FlattenedSymmet
 template<typename Value>
 class EMDBase;
 
+template<typename Value>
+class PairwiseEMDBase;
+
 template<class WeightCollection, class ParticleCollection>
 struct EventBase;
 
 template <class PairwiseDistance, class ParticleCollection, typename Value>
 class PairwiseDistanceBase;
+
+#define WASSERSTEIN_EMDBASE_TEMPLATES \
+  WASSERSTEIN_TEMPLATE(EMDBase<double>) \
+  WASSERSTEIN_TEMPLATE_FLOAT32(EMDBase<float>)
+
+#define WASSERSTEIN_PAIRWISEEMDBASE_TEMPLATES \
+  WASSERSTEIN_TEMPLATE(PairwiseEMDBase<double>) \
+  WASSERSTEIN_TEMPLATE_FLOAT32(PairwiseEMDBase<float>)
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -114,6 +146,10 @@ class NetworkSimplex;
 
 template<typename Value>
 using DefaultNetworkSimplex = NetworkSimplex<Value, index_type, int, char>;
+
+#define WASSERSTEIN_NETWORKSIMPLEX_TEMPLATES \
+  WASSERSTEIN_TEMPLATE(NetworkSimplex<double, index_type, int, char>) \
+  WASSERSTEIN_TEMPLATE_FLOAT32(NetworkSimplex<float, index_type, int, char>)
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -220,6 +256,20 @@ class Histogram1DHandler;
 
 template<typename Value = default_value_type>
 class CorrelationDimension;
+
+#define WASSERSTEIN_EXTERNALEMDHANDLER_TEMPLATES \
+  WASSERSTEIN_TEMPLATE(ExternalEMDHandler<double>) \
+  WASSERSTEIN_TEMPLATE_FLOAT32(ExternalEMDHandler<float>)
+
+#define WASSERSTEIN_HISTOGRAM1DHANDLER_TEMPLATES \
+  WASSERSTEIN_TEMPLATE(Histogram1DHandler<boost::histogram::axis::transform::log, double>) \
+  WASSERSTEIN_TEMPLATE(Histogram1DHandler<boost::histogram::axis::transform::id, double>) \
+  WASSERSTEIN_TEMPLATE_FLOAT32(Histogram1DHandler<boost::histogram::axis::transform::log, float>) \
+  WASSERSTEIN_TEMPLATE_FLOAT32(Histogram1DHandler<boost::histogram::axis::transform::id, float>)
+
+#define WASSERSTEIN_CORRELATIONDIMENSION_TEMPLATES \
+  WASSERSTEIN_TEMPLATE(CorrelationDimension<double>) \
+  WASSERSTEIN_TEMPLATE_FLOAT32(CorrelationDimension<float>)
 
 
 ////////////////////////////////////////////////////////////////////////////////
