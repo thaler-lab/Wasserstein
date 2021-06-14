@@ -2,13 +2,13 @@
 language: python
 
 install:
-  - python3 -m pip install .
+  - python3 -m pip install .[test]
 
-before_script:
-  - python3 -m pip install pytest energyflow pot
+#before_script:
+#  - python3 -m pip install pytest energyflow pot
 
 script:
-  - pytest
+  - pytest wasserstein
 
 stages:
   - test
