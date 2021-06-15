@@ -3,7 +3,7 @@
 echo "Preparing to upload to PyPI ..."
 
 echo "Installing cibuildwheel and twine ..."
-python3 -m pip install twine
+python3 -m pip install cibuildwheel twine
 
 echo "Building wheels ..."
 python3 -m cibuildwheel --output-dir wheelhouse
