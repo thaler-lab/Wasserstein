@@ -63,7 +63,7 @@ jobs:
         with:
           python-version: '3.8'
       - name: Build wheels and upload to PyPI
-        run: ./scripts/pypi-upload.sh
+        run: ./scripts/build-wheels-and-upload.sh
 
   macos-build:
     runs-on: macos-latest
@@ -77,7 +77,7 @@ jobs:
       - name: Install libomp
         run: brew install libomp
       - name: Build wheels and upload to PyPI
-        run: ./scripts/pypi-upload.sh sdist
+        run: ./scripts/build-wheels-and-upload.sh sdist
 
   windows-build:
     runs-on: windows-latest
@@ -89,4 +89,4 @@ jobs:
         with:
           python-version: '3.8'
       - name: Build wheels and upload to PyPI
-        run: ./scripts/pypi-upload.sh
+        run: ./scripts/build-wheels-and-upload.sh

@@ -34,7 +34,7 @@ def test_pairwise_emd(num_events, num_threads, print_every, norm, store_sym_raw)
 
     emd_diffs = np.abs(wassPairedEMDs - wassEMDs)
     print(emd_diffs.max())
-    assert np.all(emd_diffs < 1e-15)
+    assert np.all(emd_diffs < 1e-14)
 
     # all pairs computation
     wassPairwiseEMD(eventsA, eventsB)
@@ -49,7 +49,7 @@ def test_pairwise_emd(num_events, num_threads, print_every, norm, store_sym_raw)
 
     emd_diffs = np.abs(wassPairedEMDs - wassEMDs)
     print(emd_diffs.max())
-    assert np.all(emd_diffs < 1e-15)
+    assert np.all(emd_diffs < 1e-14)
 
 @pytest.mark.energyflow
 @pytest.mark.pairwise_emd
