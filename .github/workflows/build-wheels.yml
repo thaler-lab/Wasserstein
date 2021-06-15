@@ -1,0 +1,88 @@
+name: Build, test, and upload Python wheels
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  PYPI_TEST: true
+  CIBW_SKIP: pp*
+  TWINE_USERNAME: __token__
+  TWINE_PASSWORD_PYPITEST: ${{ secrets.TWINE_PASSWORD_PYPITEST }}
+
+jobs:
+  linux-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Install Python packages
+        run: python3 -m pip install .[test] pytest
+      - name: Test package
+        run: pytest wasserstein
+
+  macos-test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Install Python packages
+        run: python3 -m pip install .[test] pytest
+      - name: Test package
+        run: pytest wasserstein
+
+  windows-test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Install Python packages
+        run: python3 -m pip install .[test] pytest
+      - name: Test package
+        run: pytest wasserstein
+
+  linux-build:
+    runs-on: ubuntu-latest
+    needs: [linux-test, macos-test, windows-test]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Build wheels and upload to PyPI
+        run: ./scripts/pypi-upload.sh
+
+  macos-build:
+    runs-on: macos-latest
+    needs: [linux-test, macos-test, windows-test]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Build wheels and upload to PyPI
+        run: ./scripts/pypi-upload.sh sdist
+
+  windows-build:
+    runs-on: windows-latest
+    needs: [linux-test, macos-test, windows-test]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Build wheels and upload to PyPI
+        run: ./scripts/pypi-upload.sh
