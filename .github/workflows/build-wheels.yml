@@ -89,4 +89,5 @@ jobs:
         with:
           python-version: '3.8'
       - name: Build wheels and upload to PyPI
+        shell: bash
         run: ./scripts/build-wheels-and-upload.sh
