@@ -6,8 +6,13 @@ on:
       - master
 
 env:
-  PYPI_TEST: true
+  PYPI: 0
+  PYPITEST: 1
+  CIBW_BEFORE_TEST: pip install cython
   CIBW_SKIP: pp*
+  CIBW_TEST_COMMAND: pytest {package}
+  CIBW_TEST_REQUIRES: pytest numpy pot energyflow
+  CIBW_TEST_SKIP: *i686 *win32
   TWINE_USERNAME: __token__
   TWINE_PASSWORD_PYPITEST: ${{ secrets.TWINE_PASSWORD_PYPITEST }}
 
