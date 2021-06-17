@@ -6,15 +6,17 @@ on:
       - master
 
 env:
-  PYPI: 0
+  PYPI: 1
   PYPITEST: 1
   CIBW_BEFORE_TEST: pip install cython
-  CIBW_SKIP:
+  CIBW_BUILD_VERBOSITY: 1
+  CIBW_SKIP: pp*
   CIBW_TEST_COMMAND: pytest {package}
   CIBW_TEST_REQUIRES: pytest numpy pot energyflow
   CIBW_TEST_SKIP: "*i686 *win32"
   TWINE_USERNAME: __token__
   TWINE_PASSWORD_PYPITEST: ${{ secrets.TWINE_PASSWORD_PYPITEST }}
+  TWINE_PASSWORD_PYPI: ${{ secrets.TWINE_PASSWORD_PYPI }}
 
 jobs:
   linux-test:
@@ -68,7 +70,7 @@ jobs:
         with:
           python-version: '3.8'
       - name: Build wheels and upload to PyPI
-        run: ./scripts/build-wheels-and-upload.sh
+        run: ./scripts/build-wheels-and-upload.sh sdist
 
   macos-build:
     runs-on: macos-latest
@@ -82,7 +84,7 @@ jobs:
       - name: Install libomp
         run: brew install libomp
       - name: Build wheels and upload to PyPI
-        run: ./scripts/build-wheels-and-upload.sh sdist
+        run: ./scripts/build-wheels-and-upload.sh
 
   windows-build:
     runs-on: windows-latest
