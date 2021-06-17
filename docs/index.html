@@ -135,7 +135,8 @@
                 <h1 id="welcome-to-wasserstein">Welcome to Wasserstein</h1>
 <p><img src="https://github.com/pkomiske/EnergyFlow/raw/images/JetCustom_29522924_24981665_EMD.jpg" width="60%"/></p>
 <h2 id="features">Features</h2>
-<p>The Wasserstein package computes Wasserstein distances and related quantities efficiently. It contains an efficient implementation of the network simplex algorithm originally from the <a href="https://lemon.cs.elte.hu/trac/lemon">LEMON graph library</a>, modified by <a href="https://github.com/nbonneel/network_simplex">Nicolas Boneel</a>, modified by the authors of the <a href="https://pythonot.github.io/">Python Optimal Transport (POT)</a> library, and further modified in this package by Patrick Komiske. The main code is written in C++ with a Python wrapper provided via <a href="http://swig.org/">SWIG</a>.</p>
+<p>The Wasserstein package computes Wasserstein distances and related quantities efficiently. It contains an efficient implementation of the network simplex algorithm originally from the <a href="https://lemon.cs.elte.hu/trac/lemon">LEMON graph library</a>, modified by <a href="https://github.com/nbonneel/network_simplex">Nicolas Boneel</a>, modified by the authors of the <a href="https://pythonot.github.io/">Python Optimal Transport (POT)</a> library, and further modified in this package by Patrick Komiske. The main code is written in C++ with a NumPy-based Python wrapper provided via <a href="http://swig.org/">SWIG</a>.</p>
+<p>To get started, check out the <a href="demos">Python Binder Demo</a> or the <a href="examples">C++ Examples</a>.</p>
 <p>The following classes contain the main functionalities of Wasserstein:</p>
 <ul>
 <li><a href="docs/emd">EMD</a>: Computes the Wasserstein distance between two distributions, including a possible penalty term. Can use either the builtin Euclidean ground distance (with the possibility of raising these to a power <code>beta</code>) or a custom ground distance between distributions.
@@ -144,7 +145,7 @@
 <br><br></li>
 <li><a href="docs/correlationdimension">CorrelationDimension</a>: The correlation dimension is a type of fractal dimension that estimates dimensionality of the underlying data manifold on which the distributions live. It has been applied to <a href="https://doi.org/10.1103/PhysRevD.101.034009">CMS Open Data</a>.</li>
 </ul>
-<p>The current version is <code>1.0.0a1</code>. Changes are summarized in the <a href="releases">Release Notes</a>. Using the most up-to-date version is recommended. As of version <code>0.2.0</code>, tests have been written covering the majority of the code. The source code can be found on <a href="https://github.com/pkomiske/Wasserstein">GitHub</a>.</p>
+<p>The current version is <code>1.0.0</code>. Changes are summarized in the <a href="releases">Release Notes</a>. Using the most up-to-date version is recommended. As of version <code>0.2.0</code>, tests have been written covering the majority of the code. The source code can be found on <a href="https://github.com/pkomiske/Wasserstein">GitHub</a>.</p>
 <h2 id="references">References</h2>
 <p>[1] N. Bonneel, M. van de Panne, S. Paris, W. Heidrich, <em>Displacement interpolation using Lagrangian mass transport</em>, <a href="https://doi.org/10.1145/2070781.2024192">ACM Trans. Graph. <strong>30</strong></a> (2011).</p>
 <p>[2] P. T. Komiske, E. M. Metodiev, and J. Thaler, <em>The Metric Space of Collider Events</em>, <a href="https://doi.org/10.1103/PhysRevLett.123.041801">Phys. Rev. Lett. <strong>123</strong> (2019) 041801</a> [<a href="https://arxiv.org/abs/1902.02346">1902.02346</a>].</p>
@@ -211,5 +212,5 @@
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-06-04 02:33:35.816063+00:00
+Build Date UTC : 2021-06-17 14:23:08.304205+00:00
 -->

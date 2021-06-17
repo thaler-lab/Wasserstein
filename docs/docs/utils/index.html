@@ -174,7 +174,7 @@
 <p>Throws a <code>std::runtime_error</code> with a descriptive message if <code>status</code> is not <code>EMDStatus::Success</code>.</p>
 <h3 id="emdstatus">EMDStatus</h3>
 <p>Used to indicate the result of running the network simplex algorithm.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">enum</span> <span class="k">class</span> <span class="nc">EMDStatus</span> <span class="o">:</span> <span class="kt">char</span> <span class="p">{</span> 
+<div class="codehilite"><pre><span></span><code><span class="k">enum</span> <span class="k">class</span> <span class="nc">wasserstein</span><span class="o">::</span><span class="nl">EMDStatus</span> <span class="p">:</span> <span class="kt">char</span> <span class="p">{</span> 
   <span class="n">Success</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
   <span class="n">Empty</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
   <span class="n">SupplyMismatch</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
@@ -186,16 +186,25 @@
 
 <h3 id="extraparticle">ExtraParticle</h3>
 <p>Used to indicate which event, if any, got an artificial extra particle during an EMD computation.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">enum</span> <span class="k">class</span> <span class="nc">ExtraParticle</span> <span class="o">:</span> <span class="kt">char</span> <span class="p">{</span> <span class="n">Neither</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">,</span> <span class="n">Zero</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">One</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">};</span>
+<div class="codehilite"><pre><span></span><code><span class="k">enum</span> <span class="k">class</span> <span class="nc">wasserstein</span><span class="o">::</span><span class="nl">ExtraParticle</span> <span class="p">:</span> <span class="kt">char</span> <span class="p">{</span>
+  <span class="n">Neither</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">,</span>
+  <span class="n">Zero</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="n">One</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">};</span>
 </code></pre></div>
 
 <h3 id="emdpairsstorage">EMDPairsStorage</h3>
 <p>Used to indicate the type of storage for EMDs in a <code>PairwiseEMD</code></p>
-<div class="codehilite"><pre><span></span><code><span class="k">enum</span> <span class="k">class</span> <span class="nc">EMDPairsStorage</span> <span class="o">:</span> <span class="kt">char</span> <span class="p">{</span> <span class="n">Full</span><span class="p">,</span> <span class="n">FullSymmetric</span><span class="p">,</span> <span class="n">FlattenedSymmetric</span><span class="p">,</span> <span class="n">External</span> <span class="p">};</span>
+<div class="codehilite"><pre><span></span><code><span class="k">enum</span> <span class="k">class</span> <span class="nc">wasserstein</span><span class="o">::</span><span class="nl">EMDPairsStorage</span> <span class="p">:</span> <span class="kt">char</span> <span class="p">{</span>
+  <span class="n">Full</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="n">FullSymmetric</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="n">FlattenedSymmetric</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="n">External</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="p">};</span>
 </code></pre></div>
 
 <h3 id="centerweightedcentroid">CenterWeightedCentroid</h3>
-<p>Not normally instantiated directly. Used with the templated <code>preprocess</code> method of the <code>_EMD</code> and <code>PairwiseEMD</code> classes to adjust all particles so that the weighted centroid is located at the origin.</p>
+<p>Not normally instantiated directly. Used with the templated <code>preprocess</code> method of the <code>EMD</code> and <code>PairwiseEMD</code> classes to adjust all particles so that the weighted centroid is located at the origin.</p>
               
             </div>
           </div>

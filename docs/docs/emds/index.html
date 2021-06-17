@@ -527,28 +527,28 @@ tolerance can be stricter.</li>
 <h2 id="c">C++</h2>
 <p>The <code>PairwiseEMD</code> C++ class is a template class that accepts a fully-qualified <code>EMD</code> type parameter, from which it obtains information about event types, pairwise distance types, etc. There is a second template parameter which defaults to the value type of the <code>EMD</code> type, but can also be set separately. There are two constructors: one that takes many of the same arguments as the <code>EMD</code> class in order to construct them internally and one that acquires these settings from an <code>EMD</code> object.</p>
 <div class="codehilite"><pre><span></span><code><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">EMD</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">Value</span> <span class="o">=</span> <span class="k">typename</span> <span class="nc">EMD</span><span class="o">::</span><span class="n">value_type</span><span class="o">&gt;</span>
-<span class="n">emd</span><span class="o">::</span><span class="n">PairwiseEMD</span><span class="p">(</span><span class="n">Value</span> <span class="n">R</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Value</span> <span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">norm</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
-                 <span class="kt">int</span> <span class="n">num_threads</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">,</span>
-                 <span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="n">print_every</span> <span class="o">=</span> <span class="mi">-10</span><span class="p">,</span>
-                 <span class="kt">unsigned</span> <span class="n">verbose</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-                 <span class="kt">bool</span> <span class="n">request_mode</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
-                 <span class="kt">bool</span> <span class="n">store_sym_emds_raw</span> <span class="o">=</span> <span class="nb">true</span><span class="p">,</span>
-                 <span class="kt">bool</span> <span class="n">throw_on_error</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
-                 <span class="kt">int</span> <span class="n">omp_dynamic_chunksize</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
-                 <span class="kt">unsigned</span> <span class="n">n_iter_max</span> <span class="o">=</span> <span class="mi">100000</span><span class="p">,</span>
-                 <span class="n">Value</span> <span class="n">epsilon_large_factor</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
-                 <span class="n">Value</span> <span class="n">epsilon_small_factor</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-                 <span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span> <span class="n">os</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">);</span>
+<span class="n">wasserstein</span><span class="o">::</span><span class="n">PairwiseEMD</span><span class="p">(</span><span class="n">Value</span> <span class="n">R</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Value</span> <span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">norm</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
+                         <span class="kt">int</span> <span class="n">num_threads</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">,</span>
+                         <span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="n">print_every</span> <span class="o">=</span> <span class="mi">-10</span><span class="p">,</span>
+                         <span class="kt">unsigned</span> <span class="n">verbose</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                         <span class="kt">bool</span> <span class="n">request_mode</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
+                         <span class="kt">bool</span> <span class="n">store_sym_emds_raw</span> <span class="o">=</span> <span class="nb">true</span><span class="p">,</span>
+                         <span class="kt">bool</span> <span class="n">throw_on_error</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
+                         <span class="kt">int</span> <span class="n">omp_dynamic_chunksize</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                         <span class="kt">unsigned</span> <span class="n">n_iter_max</span> <span class="o">=</span> <span class="mi">100000</span><span class="p">,</span>
+                         <span class="n">Value</span> <span class="n">epsilon_large_factor</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+                         <span class="n">Value</span> <span class="n">epsilon_small_factor</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                         <span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span> <span class="n">os</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">);</span>
 
 <span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">EMD</span><span class="o">&gt;</span>
-<span class="n">emd</span><span class="o">::</span><span class="n">PairwiseEMD</span><span class="p">(</span><span class="k">const</span> <span class="n">EMD</span> <span class="o">&amp;</span> <span class="n">emd</span><span class="p">,</span>
-                 <span class="kt">int</span> <span class="n">num_threads</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">,</span>
-                 <span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="n">print_every</span> <span class="o">=</span> <span class="mi">-10</span><span class="p">,</span>
-                 <span class="kt">unsigned</span> <span class="n">verbose</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-                 <span class="kt">bool</span> <span class="n">store_sym_emds_raw</span> <span class="o">=</span> <span class="nb">true</span><span class="p">,</span>
-                 <span class="kt">bool</span> <span class="n">throw_on_error</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
-                 <span class="kt">int</span> <span class="n">omp_dynamic_chunksize</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
-                 <span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span> <span class="n">os</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">)</span>
+<span class="n">wasserstein</span><span class="o">::</span><span class="n">PairwiseEMD</span><span class="p">(</span><span class="k">const</span> <span class="n">EMD</span> <span class="o">&amp;</span> <span class="n">emd</span><span class="p">,</span>
+                         <span class="kt">int</span> <span class="n">num_threads</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">,</span>
+                         <span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="n">print_every</span> <span class="o">=</span> <span class="mi">-10</span><span class="p">,</span>
+                         <span class="kt">unsigned</span> <span class="n">verbose</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                         <span class="kt">bool</span> <span class="n">store_sym_emds_raw</span> <span class="o">=</span> <span class="nb">true</span><span class="p">,</span>
+                         <span class="kt">bool</span> <span class="n">throw_on_error</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
+                         <span class="kt">int</span> <span class="n">omp_dynamic_chunksize</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                         <span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span> <span class="n">os</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">)</span>
 </code></pre></div>
 
 <p>See the <a href="#python">Python class</a> of the same name for the meaning of these arguments. <code>os</code> is an output stream that will be used for printing if <code>verbose &gt; 0</code>.</p>
@@ -623,7 +623,7 @@ tolerance can be stricter.</li>
 <span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="nf">nevA</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="nf">nevB</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="nf">num_emds</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<span class="n">emd</span><span class="o">::</span><span class="n">EMDPairsStorage</span> <span class="nf">storage</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="n">wasserstein</span><span class="o">::</span><span class="n">EMDPairsStorage</span> <span class="nf">storage</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="kt">double</span> <span class="nf">duration</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="kt">bool</span> <span class="nf">errored</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">error_messages</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
@@ -665,7 +665,7 @@ tolerance can be stricter.</li>
 </code></pre></div>
 
 <p>Adds a preprocessor to the internal list. Each event will be preprocessed by the preprocessors in the order they were given. Currently, there is one preprocessor as part of Wasserstein, <a href="../utils/#centerweightedcentroid"><code>CenterWeightedCentroid</code></a>. Since this preprocessor takes no arguments, it can be added as:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">pairwise_emd_obj</span><span class="p">.</span><span class="n">preprocess</span><span class="o">&lt;</span><span class="n">emd</span><span class="o">::</span><span class="n">CenterWeightedCentroid</span><span class="o">&gt;</span><span class="p">()</span>
+<div class="codehilite"><pre><span></span><code><span class="n">pairwise_emd_obj</span><span class="p">.</span><span class="n">preprocess</span><span class="o">&lt;</span><span class="n">wasserstein</span><span class="o">::</span><span class="n">CenterWeightedCentroid</span><span class="o">&gt;</span><span class="p">()</span>
 </code></pre></div>
 
 <p>In general, any arguments to the preprocessor class are given as arguments to this method. A reference to the <code>PairwiseEMD</code> object is returned.</p>

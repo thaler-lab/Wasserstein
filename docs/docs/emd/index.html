@@ -113,6 +113,8 @@
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#duration">duration</a>
     </li>
+    <li class="toctree-l4"><a class="reference internal" href="#n_iter">n_iter</a>
+    </li>
         </ul>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#getset-options">Get/Set Options</a>
@@ -136,6 +138,8 @@
     <li class="toctree-l4"><a class="reference internal" href="#operator">operator()</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#compute">compute</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#ground_dists">ground_dists</a>
     </li>
         </ul>
     </li>
@@ -345,7 +349,7 @@ tolerance can be stricter.</li>
 <p>The ground distances between the particles.</p>
 <p><strong>Returns</strong></p>
 <ul>
-<li><em>numpy.ndarray</em><ul>
+<li><em>numpy.ndarray</em> (first version only)<ul>
 <li>The ground distance matrix as an array with shape <code>(n0, n1)</code>.</li>
 </ul>
 </li>
@@ -357,7 +361,7 @@ tolerance can be stricter.</li>
 <p>The optimal flow matrix.</p>
 <p><strong>Returns</strong></p>
 <ul>
-<li><em>numpy.ndarray</em><ul>
+<li><em>numpy.ndarray</em> (first version only)<ul>
 <li>The flow matrix as an array with shape <code>(n0, n1)</code>.</li>
 </ul>
 </li>
@@ -477,6 +481,30 @@ tolerance can be stricter.</li>
 </ul>
 </li>
 </ul>
+<h4 id="n_iter">n_iter</h4>
+<p>````python
+n_iter()</p>
+<div class="codehilite"><pre><span></span><code>The number of iterations the most recent optimal transport calculation took to finish.
+
+**Returns**
+
+- _int_
+    - Number of iterations run by the Network Simplex solver.
+
+#### node_potentials
+
+```python
+node_potentials()
+</code></pre></div>
+
+<p>The potentials assigned in the Network Simplex algorithm to the particles in each event.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li>(<em>numpy.ndarray</em>, <em>numpy.ndarray</em>)<ul>
+<li>A pair of NumPy arrays corresponding to the node potentials in the first and second event.</li>
+</ul>
+</li>
+</ul>
 <hr />
 <h3 id="getset-options">Get/Set Options</h3>
 <p>These methods can be used to get the current settings of the <code>EMD</code> object or to set new ones. The getter methods are:</p>
@@ -535,11 +563,11 @@ tolerance can be stricter.</li>
          <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">Event</span> <span class="o">=</span> <span class="n">DefaultEvent</span><span class="p">,</span>
          <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">PairwiseDistance</span> <span class="o">=</span> <span class="n">DefaultPairwiseDistance</span><span class="p">,</span>
          <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">NetworkSimplex</span> <span class="o">=</span> <span class="n">DefaultNetworkSimplex</span><span class="o">&gt;</span>
-<span class="n">emd</span><span class="o">::</span><span class="n">EMD</span><span class="p">(</span><span class="n">Value</span> <span class="n">R</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Value</span> <span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">norm</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
-         <span class="kt">bool</span> <span class="n">do_timing</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">external_dists</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
-         <span class="kt">unsigned</span> <span class="n">n_iter_max</span> <span class="o">=</span> <span class="mi">100000</span><span class="p">,</span>
-         <span class="n">Value</span> <span class="n">epsilon_large_factor</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
-         <span class="n">Value</span> <span class="n">epsilon_small_factor</span> <span class="o">=</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">wasserstein</span><span class="o">::</span><span class="n">EMD</span><span class="p">(</span><span class="n">Value</span> <span class="n">R</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Value</span> <span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">norm</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
+                 <span class="kt">bool</span> <span class="n">do_timing</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">external_dists</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
+                 <span class="kt">unsigned</span> <span class="n">n_iter_max</span> <span class="o">=</span> <span class="mi">100000</span><span class="p">,</span>
+                 <span class="n">Value</span> <span class="n">epsilon_large_factor</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+                 <span class="n">Value</span> <span class="n">epsilon_small_factor</span> <span class="o">=</span> <span class="mi">1</span><span class="p">);</span>
 </code></pre></div>
 
 <p>See the <a href="#python">Python class</a> of the same name for the meaning of these arguments. <code>external_dists</code> is a new flag indicating whether or not the internal <code>PairwiseDistance</code> object should be used to obtain ground distances or whether the ground distances will be externally provided (see the <code>ground_dists()</code> method below).</p>
@@ -600,28 +628,35 @@ tolerance can be stricter.</li>
 <ul>
 <li>The Wasserstein distance between the two events.</li>
 </ul>
-<p>To provide external ground distances, one should use the following method to access the vector of distances used by the <code>NetworkSimplex</code> object. Note that if <code>norm=false</code>, then  one of the events will generically get an extra particle to account for the difference in weights, and the external dists should account for this. The distances are expected to be provided in row-major (C-style) order.</p>
+<h4 id="ground_dists">ground_dists</h4>
 <div class="codehilite"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">ground_dists</span><span class="p">();</span>
+<span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">ground_dists</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 </code></pre></div>
 
+<p>To provide external ground distances, one should use this method to access a reference to the vector of distances used by the <code>NetworkSimplex</code> object. The user is free to resize this vector and copy/assign distances into it. Note that if <code>norm=false</code>, then  one of the events will generically get an extra particle to account for the difference in weights, and the external dists should account for this. The distances are expected to be provided in row-major (C-style) order.</p>
+<p><strong>Returns</strong>
+    - A (const) reference to the vector of ground distances used by the <code>NetworkSimplex</code> object.</p>
 <hr />
 <h3 id="access-results_1">Access Results</h3>
 <p>Many of the methods share the same names as the <a href="#access-results">Python ones</a>. These are:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">Value</span> <span class="nf">emd</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<span class="n">emd</span><span class="o">::</span><span class="n">EMDStatus</span> <span class="nf">status</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="n">wasserstein</span><span class="o">::</span><span class="n">EMDStatus</span> <span class="nf">status</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span> <span class="n">dists</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span> <span class="n">flows</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<span class="n">Value</span> <span class="nf">flow</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="n">i</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="n">j</span><span class="p">);</span>
-<span class="n">Value</span> <span class="nf">flow</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">ind</span><span class="p">);</span>
+<span class="n">Value</span> <span class="nf">flow</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="n">i</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="n">j</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<span class="n">Value</span> <span class="nf">flow</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">ind</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 
 <span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="nf">n0</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="nf">n1</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<span class="n">emd</span><span class="o">::</span><span class="n">ExtraParticle</span> <span class="nf">extra</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-
+<span class="n">wasserstein</span><span class="o">::</span><span class="n">ExtraParticle</span> <span class="nf">extra</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="n">Value</span> <span class="nf">weightdiff</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="n">Value</span> <span class="nf">scale</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
 <span class="kt">double</span> <span class="nf">duration</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="nf">n_iter</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;&gt;</span> <span class="n">node_potentials</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 </code></pre></div>
 
 <p><code>EMDStatus</code> and <code>ExtraParticle</code> are enums; see the <a href="../utils/#c">C++ Utils</a></p>
@@ -645,7 +680,7 @@ tolerance can be stricter.</li>
 <span class="kt">void</span> <span class="nf">set_do_timing</span><span class="p">(</span><span class="kt">bool</span> <span class="n">do_timing</span><span class="p">);</span>
 <span class="kt">void</span> <span class="nf">set_external_dists</span><span class="p">(</span><span class="kt">bool</span> <span class="n">exdists</span><span class="p">);</span>
 <span class="kt">void</span> <span class="nf">set_network_simplex_params</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">n_iter_max</span> <span class="o">=</span> <span class="mi">100000</span><span class="p">,</span>
-                                <span class="n">Value</span> <span class="n">epsilon_large_factor</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
+                                <span class="n">Value</span> <span class="n">epsilon_large_factor</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
                                 <span class="n">Value</span> <span class="n">epsilon_small_factor</span> <span class="o">=</span> <span class="mi">1</span><span class="p">);</span>
 </code></pre></div>
 
@@ -657,7 +692,7 @@ tolerance can be stricter.</li>
 </code></pre></div>
 
 <p>Adds a preprocessor to the internal list. Each event will be preprocessed by the preprocessors in the order they were given. Currently, there is one preprocessor as part of Wasserstein, <a href="../utils/#centerweightedcentroid"><code>CenterWeightedCentroid</code></a>. Since this preprocessor takes no arguments, it can be added as:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">emd_obj</span><span class="p">.</span><span class="n">preprocess</span><span class="o">&lt;</span><span class="n">emd</span><span class="o">::</span><span class="n">CenterWeightedCentroid</span><span class="o">&gt;</span><span class="p">()</span>
+<div class="codehilite"><pre><span></span><code><span class="n">emd_obj</span><span class="p">.</span><span class="n">preprocess</span><span class="o">&lt;</span><span class="n">wasserstein</span><span class="o">::</span><span class="n">CenterWeightedCentroid</span><span class="o">&gt;</span><span class="p">()</span>
 </code></pre></div>
 
 <p>In general, any arguments to the preprocessor class are given as arguments to this method. A reference to the <code>EMD</code> object is returned.</p>

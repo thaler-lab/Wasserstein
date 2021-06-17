@@ -318,7 +318,7 @@
 </ul>
 <p><strong>Returns</strong></p>
 <ul>
-<li>(<em>numpy.ndarray</em>, <em>numpy.ndarray</em>)<ul>
+<li>(<em>numpy.ndarray</em>, <em>numpy.ndarray</em>) (first version only)<ul>
 <li>A pair of numpy arrays, the first is the values of the histogram and the second is the variances. If <code>overflows</code> is <code>True</code> then each will have length <code>nbins+2</code>, otherwise they will have length <code>nbins</code>.</li>
 </ul>
 </li>
@@ -455,7 +455,7 @@
 <h3 id="externalemdhandler_1">ExternalEMDHandler</h3>
 <p>The functionality mirrors that of the Python wrapper. We list here the declarations of the methods of this class:</p>
 <div class="codehilite"><pre><span></span><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">Value</span><span class="o">&gt;</span>
-<span class="n">emd</span><span class="o">::</span><span class="n">ExternalEMDHandler</span><span class="p">();</span>
+<span class="n">wasserstein</span><span class="o">::</span><span class="n">ExternalEMDHandler</span><span class="p">();</span>
 
 <span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="nf">description</span><span class="p">()</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="nf">num_calls</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
@@ -473,7 +473,7 @@
 <h3 id="histogram1dhandler_1">Histogram1DHandler</h3>
 <p>The functionality mirrors that of the Python wrapper. We list here the declarations of the methods of this class:</p>
 <div class="codehilite"><pre><span></span><code><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">Transform</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">Value</span><span class="o">&gt;</span>
-<span class="n">emd</span><span class="o">::</span><span class="n">Histogram1DHandler</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">nbins</span><span class="p">,</span> <span class="n">Value</span> <span class="n">axis_min</span><span class="p">,</span> <span class="n">Value</span> <span class="n">axis_max</span><span class="p">)</span>
+<span class="n">wasserstein</span><span class="o">::</span><span class="n">Histogram1DHandler</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">nbins</span><span class="p">,</span> <span class="n">Value</span> <span class="n">axis_min</span><span class="p">,</span> <span class="n">Value</span> <span class="n">axis_max</span><span class="p">)</span>
 
 <span class="kt">unsigned</span> <span class="n">nbins</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="n">Value</span> <span class="nf">axis_min</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
@@ -498,7 +498,7 @@
 <h3 id="correlationdimension_1">CorrelationDimension</h3>
 <p>The functionality mirrors that of the Python wrapper. This class inherits from <code>Histogram1DHandler&lt;boost::histogram::axis::transform::log, Value&gt;</code>. We list here the declarations of the methods of this class:</p>
 <div class="codehilite"><pre><span></span><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">Value</span><span class="o">&gt;</span>
-<span class="n">emd</span><span class="o">::</span><span class="n">CorrelationDimension</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">nbins</span><span class="p">,</span> <span class="n">Value</span> <span class="n">axis_min</span><span class="p">,</span> <span class="n">Value</span> <span class="n">axis_max</span><span class="p">);</span>
+<span class="n">wasserstein</span><span class="o">::</span><span class="n">CorrelationDimension</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">nbins</span><span class="p">,</span> <span class="n">Value</span> <span class="n">axis_min</span><span class="p">,</span> <span class="n">Value</span> <span class="n">axis_max</span><span class="p">);</span>
 
 <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;&gt;</span>
 <span class="n">corrdims</span><span class="p">(</span><span class="n">Value</span> <span class="n">eps</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="n">Value</span><span class="o">&gt;::</span><span class="n">epsilon</span><span class="p">())</span> <span class="k">const</span><span class="p">;</span>
