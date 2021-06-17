@@ -37,8 +37,6 @@ $$  /   \$$ |$$ |  $$ |\$$$$$$  |\$$$$$$  |$$$$$$$$\ $$ |  $$ |\$$$$$$  |  $$ | 
 ------------------------------------------------------------------------
 """
 
-from __future__ import absolute_import
-
 from .wasserstein import *
 
 # basic package info

@@ -7,9 +7,9 @@ on:
 
 env:
   PYPI: 0
-  PYPITEST: 0
+  PYPITEST: 1
   CIBW_BEFORE_TEST: pip install cython
-  CIBW_SKIP: pp*
+  CIBW_SKIP:
   CIBW_TEST_COMMAND: pytest {package}
   CIBW_TEST_REQUIRES: pytest numpy pot energyflow
   CIBW_TEST_SKIP: "*i686 *win32"

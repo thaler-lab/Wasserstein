@@ -70,6 +70,7 @@ if sys.argv[1] == 'swig':
 else:
     wasserstein = Extension('wasserstein._wasserstein',
                             sources=[os.path.join('wasserstein', 'wasserstein.cpp')],
+                            define_macros=[('SWIG_TYPE_TABLE', 'wasserstein')],
                             include_dirs=[np.get_include(), '.'],
                             extra_compile_args=cxxflags,
                             extra_link_args=ldflags,

@@ -3,5 +3,5 @@
 requires = [
     "setuptools>=42",
     "wheel>=0.36",
-    "oldest-supported-numpy; python_version>='3.5'",
+    "oldest-supported-numpy",
 ]
