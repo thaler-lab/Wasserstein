@@ -52,7 +52,7 @@
 #include "ExternalEMDHandler.hh"
 
 
-BEGIN_EMD_NAMESPACE
+BEGIN_WASSERSTEIN_NAMESPACE
 
 ////////////////////////////////////////////////////////////////////////////////
 // EMD - Computes the Earth/Energy Mover's Distance between two "events" which
@@ -77,7 +77,7 @@ public:
 
   // this is used with fastjet and harmless otherwise
   #ifdef WASSERSTEIN_FASTJET
-  typedef typename Event::ParticleWeight ParticleWeight;
+    typedef typename Event::ParticleWeight ParticleWeight;
   #endif
 
   // event-dependent typedefs
@@ -93,9 +93,9 @@ public:
   friend class PairwiseEMD;
 
   // check that value_type has been consistently defined 
-  static_assert(std::is_same<value_type, typename Event::value_type>::value,
+  static_assert(std::is_same<Value, typename Event::value_type>::value,
                 "WeightCollection and NetworkSimplex should have the same value_type.");
-  static_assert(std::is_same<value_type, typename PairwiseDistance::value_type>::value,
+  static_assert(std::is_same<Value, typename PairwiseDistance::value_type>::value,
                 "PairwiseDistance and NetworkSimplex should have the same value_type.");
   static_assert(std::is_same<typename ParticleCollection::value_type,
                              typename PairwiseDistance::Particle>::value,
@@ -104,13 +104,14 @@ public:
   // check for consistent template arguments
   static_assert(std::is_base_of<EventBase<WeightCollection, ParticleCollection>, Event>::value,
                 "First  EMD template parameter should be derived from EventBase<...>.");
-  static_assert(std::is_base_of<PairwiseDistanceBase<PairwiseDistance, ParticleCollection, value_type>,
+  static_assert(std::is_base_of<PairwiseDistanceBase<PairwiseDistance, ParticleCollection, Value>,
                                 PairwiseDistance>::value,
                 "Second EMD template parameter should be derived from PairwiseDistanceBase<...>.");
-  static_assert(std::is_base_of<emd::NetworkSimplex<typename NetworkSimplex::Value,
-                                                    typename NetworkSimplex::Arc, 
-                                                    typename NetworkSimplex::Node,
-                                                    typename NetworkSimplex::Bool>,
+  static_assert(std::is_base_of<WASSERSTEIN_NAMESPACE::NetworkSimplex<
+                                                       typename NetworkSimplex::Value,
+                                                       typename NetworkSimplex::Arc, 
+                                                       typename NetworkSimplex::Node,
+                                                       typename NetworkSimplex::Bool>,
                                 NetworkSimplex>::value,
                 "This EMD template parameter should be derived from NetworkSimplex<...>.");
 
@@ -132,7 +133,8 @@ public:
     this->scale_ = 1;
 
     // automatically set external dists in the default case
-    this->set_external_dists(std::is_same<PairwiseDistance, DefaultPairwiseDistance<Value>>::value);
+    this->set_external_dists(std::is_same<PairwiseDistance,
+                                          DefaultPairwiseDistance<Value>>::value);
   }
 
   virtual ~EMD() = default;
@@ -198,7 +200,8 @@ public:
     const WeightCollection & ws0(ev0.weights()), & ws1(ev1.weights());
 
     // check for timing request
-    if (this->do_timing()) this->start_timing();
+    if (this->do_timing())
+      this->start_timing();
 
     // grab number of particles
     this->n0_ = ws0.size();
@@ -231,7 +234,11 @@ public:
       this->extra_ = ExtraParticle::One;
       this->n1_++;
       weights().resize(n0() + n1() + 1); // +1 is to match what network simplex will do anyway
-      *std::copy(ws1.begin(), ws1.end(), std::copy(ws0.begin(), ws0.end(), weights().begin())) = -weightdiff();
+      *std::copy(ws1.begin(),
+                 ws1.end(),
+                 std::copy(ws0.begin(),
+                           ws0.end(),
+                           weights().begin())) = -weightdiff();
     }
 
     // if not norm, prepare to scale each weight by the max total
@@ -242,7 +249,8 @@ public:
 
     // store distances in network simplex if not externally provided
     if (!external_dists())
-      pairwise_distance_.fill_distances(ev0.particles(), ev1.particles(), ground_dists(), this->extra());
+      pairwise_distance_.fill_distances(ev0.particles(), ev1.particles(),
+                                        ground_dists(), this->extra());
 
     // run the EarthMoversDistance at this point
     this->status_ = network_simplex_.compute(n0(), n1());
@@ -379,6 +387,15 @@ private:
       oss << "    - " << preproc->description() << '\n';
   }
 
+#ifdef WASSERSTEIN_SERIALIZATION
+  friend class boost::serialization::access;
+  template<class Archive>
+  void serialize(Archive & ar, const unsigned int version) {
+    ar & boost::serialization::base_object<Base>(*this)
+       & pairwise_distance_ & network_simplex_;
+  }
+#endif
+
   /////////////////////
   // class data members
   /////////////////////
@@ -392,6 +409,6 @@ private:
 
 }; // EMD
 
-END_EMD_NAMESPACE
+END_WASSERSTEIN_NAMESPACE
 
 #endif // WASSERSTEIN_EMD_HH

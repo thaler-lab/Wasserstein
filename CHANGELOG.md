@@ -1,6 +1,10 @@
-## 1.0.0
+## 1.0.x
+
+**1.0.0**
 
 - Many small tweaks to public API; see documentation.
+- C++ examples updated.
+- Float32 functionality now available and tested in Python.
 
 ## 0.3.x
 

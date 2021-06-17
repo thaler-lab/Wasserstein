@@ -31,6 +31,9 @@ emd_example: src/emd_example.o src/cnpy.o
 pairwise_emds_example: src/pairwise_emds_example.o src/cnpy.o
 	$(CXX) -o $@ $^ $(LIBRARIES) $(LDFLAGS)
 
+serialization_example: src/serialization_example.o src/cnpy.o
+	$(CXX) -o $@ $^ $(LIBRARIES) $(LDFLAGS) -lboost_serialization	
+
 theory_space_example: src/theory_space_example.o src/cnpy.o
 	$(CXX) -o $@ $^ $(LIBRARIES) $(LDFLAGS)
 

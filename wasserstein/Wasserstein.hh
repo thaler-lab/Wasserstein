@@ -46,7 +46,8 @@
 #include "internal/PairwiseDistance.hh"
 #include "internal/PairwiseEMD.hh"
 
-BEGIN_EMD_NAMESPACE
+
+BEGIN_WASSERSTEIN_NAMESPACE
 
 #ifdef DECLARE_WASSERSTEIN_TEMPLATES
   WASSERSTEIN_TEMPLATES
@@ -62,6 +63,6 @@ template<template<typename> class Event = DefaultEvent,
          template<typename> class PairwiseDistance = DefaultPairwiseDistance>
 using EMDFloat32 = EMD<float, Event, PairwiseDistance>;
 
-END_EMD_NAMESPACE
+END_WASSERSTEIN_NAMESPACE
 
 #endif // WASSERSTEIN_HH

@@ -145,7 +145,8 @@ SOFTWARE.
 
 #include "EMDUtils.hh"
 
-BEGIN_EMD_NAMESPACE
+
+BEGIN_WASSERSTEIN_NAMESPACE
 
 //-----------------------------------------------------------------------------
 // NetworkSimplex
@@ -168,6 +169,15 @@ const double INVALID_COST_VALUE = -1.0;
 // - Bool: boolean type (often not "bool" to avoid std::vector<bool> being slow)
 template<typename V, typename A, typename N, typename B>
 class NetworkSimplex {
+
+#ifdef WASSERSTEIN_SERIALIZATION
+  friend class boost::serialization::access;
+  template<class Archive>
+  void serialize(Archive & ar, const unsigned int version) {
+    ar & n_iter_max_ & epsilon_large_ & epsilon_small_;
+  }
+#endif
+
 public:
 
   // EMD-style typedefs
@@ -195,10 +205,15 @@ public:
   typedef std::vector<Bool> BoolVector;
   typedef std::vector<char> StateVector;
 
-  // constructor
-  NetworkSimplex(std::size_t n_iter_max, Value epsilon_large_factor, Value epsilon_small_factor) :
+  // default constructor
+  NetworkSimplex() :
     MAX(std::numeric_limits<Value>::max()),
     INF(std::numeric_limits<Value>::has_infinity ? std::numeric_limits<Value>::infinity() : MAX)
+  {}
+
+  // constructor
+  NetworkSimplex(std::size_t n_iter_max, Value epsilon_large_factor, Value epsilon_small_factor) :
+    NetworkSimplex()
   {
     set_params(n_iter_max, epsilon_large_factor, epsilon_small_factor);
   }
@@ -213,7 +228,7 @@ public:
   std::string description() const {
     std::ostringstream oss;
     oss << "  NetworkSimplex\n"
-        << "    n_iter_max - " << n_iter_max_    << '\n'
+        << "    n_iter_max - "    << n_iter_max_    << '\n'
         << "    epsilon_large - " << epsilon_large_ << '\n'
         << "    epsilon_small - " << epsilon_small_ << '\n';
     return oss.str();
@@ -785,6 +800,6 @@ private:
 
 }; // NetworkSimplex
 
-END_EMD_NAMESPACE
+END_WASSERSTEIN_NAMESPACE
 
 #endif // WASSERSTEIN_NETWORK_SIMPLEX_HH

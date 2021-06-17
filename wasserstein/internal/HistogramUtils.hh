@@ -56,20 +56,17 @@
 
 // Boost histogram headers
 #include <boost/histogram.hpp>
-#ifdef BOOST_HISTOGRAM_SERIALIZATION_HPP
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/archive/text_oarchive.hpp>
-#endif
 
 #include "ExternalEMDHandler.hh"
 
-BEGIN_EMD_NAMESPACE
+
+BEGIN_WASSERSTEIN_NAMESPACE
 
 namespace hist {
 
 // gets bin centers from an axis
 template<typename V, class Axis>
-inline std::vector<V> get_bin_centers(const Axis & axis) {
+std::vector<V> get_bin_centers(const Axis & axis) {
 
   std::vector<V> bin_centers_vec(axis.size());
   for (int i = 0; i < axis.size(); i++)
@@ -80,7 +77,7 @@ inline std::vector<V> get_bin_centers(const Axis & axis) {
 
 // gets bin edges from an axis
 template<typename V, class Axis>
-inline std::vector<V> get_bin_edges(const Axis & axis) {
+std::vector<V> get_bin_edges(const Axis & axis) {
 
   if (axis.size() == 0) return std::vector<V>();
 
@@ -130,7 +127,7 @@ std::string name_transform() {
 }
 
 template<class Axis>
-inline std::string print_axis(const Axis & axis) {
+std::string print_axis(const Axis & axis) {
 
   std::ostringstream oss;
   oss << std::setprecision(16);
@@ -145,7 +142,7 @@ inline std::string print_axis(const Axis & axis) {
 }
 
 template<class Hist>
-inline std::string print_1d_hist(const Hist & hist) {
+std::string print_1d_hist(const Hist & hist) {
 
   std::ostringstream oss;
   oss << std::setprecision(16);
@@ -183,6 +180,10 @@ protected:
 
 public:
 
+  // default constructor
+  Histogram1DHandler() = default;
+
+  // constructor that will set up the histogram
   Histogram1DHandler(unsigned nbins, Value axis_min, Value axis_max) {
 
     if (nbins == 0)
@@ -233,26 +234,14 @@ public:
   std::string print_axis() const { return hist::print_axis(axis()); }
   std::string print_hist() const { return hist::print_1d_hist(hist()); }
 
-#ifdef BOOST_HISTOGRAM_SERIALIZATION_HPP
-  void load(std::istream & is) {
-    boost::archive::text_iarchive ia(is);
-    ia >> axis() >> hist();
-  }
-
-  void save(std::ostream & os) {
-    boost::archive::text_oarchive oa(os);
-    oa << axis();
-    oa << hist();
-  }
-
-  Histogram1DHandler<Transform> & operator+=(const Histogram1DHandler<Transform> & other) {
+  Histogram1DHandler<Transform, Value> &
+  operator+=(const Histogram1DHandler<Transform, Value> & other) {
     if (other.axis() != axis())
-      throw std::invalid_argument("other histogram does not have the same axis and so cannot be added");
+      throw std::invalid_argument("`other` does not have the same axis and so cannot be added");
     
     hist() += other.hist();
     return *this;
   }
-#endif // BOOST_HISTOGRAM_SERIALIZATION_HPP
 
 protected:
 
@@ -262,8 +251,19 @@ protected:
 
   virtual std::string name() const { return "Histogram1DHandler"; }
 
+private:
+
+#ifdef WASSERSTEIN_SERIALIZATION
+  friend class boost::serialization::access;
+  template<class Archive>
+  void serialize(Archive & ar, const unsigned int version) {
+    ar & boost::serialization::base_object<ExternalEMDHandler<Value>>(*this)
+       & axis() & hist();
+  }
+#endif
+
 }; // Histogram1DHandler
 
-END_EMD_NAMESPACE
+END_WASSERSTEIN_NAMESPACE
 
 #endif // WASSERSTEIN_HISTOGRAMUTILS_HH

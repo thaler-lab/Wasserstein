@@ -31,7 +31,7 @@
 %module("threads"=1) wasserstein
 %nothreadallow;
 
-#define EMDNAMESPACE emd
+#define WASSERSTEIN_NAMESPACE wasserstein
 
 // this ensures SWIG parses class members properly
 #define SWIG_WASSERSTEIN
@@ -42,16 +42,16 @@
 %{
 // this controls some class access modifiers
 #ifndef SWIG_WASSERSTEIN
-#define SWIG_WASSERSTEIN
+# define SWIG_WASSERSTEIN
 #endif
 
-namespace emd {}
-using namespace emd;
+namespace wasserstein {}
+using namespace wasserstein;
 %}
 
 // Python imports at the top of the module
 %pythonbegin %{
-import itertools
+  import itertools
 %}
 
 %feature("autodoc", "1");
@@ -139,7 +139,7 @@ def _store_events(pairwise_emd, events, event_weights, gdim, mask):
   }
 %enddef
 
-namespace emd {
+namespace WASSERSTEIN_NAMESPACE {
 
   %extend PairwiseEMD {
 
@@ -238,7 +238,7 @@ namespace emd {
   %template(PairwiseEMDYPhiFloat64) PairwiseEMD<EMD<double, DefaultArray2Event, YPhiArrayDistance>, double>;
   %template(PairwiseEMDYPhiFloat32) PairwiseEMD<EMD<float,  DefaultArray2Event, YPhiArrayDistance>, float>;
 
-} // namespace emd
+} // namespace WASSERSTEIN_NAMESPACE
 
 DECLARE_PYTHON_FUNC_VARIABLE_FLOAT_TYPE(EMD)
 DECLARE_PYTHON_FUNC_VARIABLE_FLOAT_TYPE(EMDYPhi)

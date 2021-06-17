@@ -44,6 +44,7 @@
 #ifndef WASSERSTEIN_PAIRWISEEMDBASE_HH
 #define WASSERSTEIN_PAIRWISEEMDBASE_HH
 
+#include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -56,7 +57,8 @@
 #include "EMDUtils.hh"
 #include "ExternalEMDHandler.hh"
 
-BEGIN_EMD_NAMESPACE
+
+BEGIN_WASSERSTEIN_NAMESPACE
 
 ////////////////////////////////////////////////////////////////////////////////
 // EMDBase - base class to reduce wrapper code for simple EMD access functions
@@ -83,6 +85,35 @@ protected:
   // info about stored events
   index_type nevA_, nevB_, num_emds_;
   EMDPairsStorage emd_storage_;
+
+private:
+
+#ifdef WASSERSTEIN_SERIALIZATION
+  friend class boost::serialization::access;
+
+  template<class Archive>
+  void save(Archive & ar, const unsigned int version) const {
+    ar & num_threads_ & print_every_
+       & verbose_ & omp_dynamic_chunksize_
+       & request_mode_ & store_sym_emds_raw_ & throw_on_error_
+       & emds_ & error_messages_
+       & nevA_ & nevB_ & num_emds_ & emd_storage_;
+  }
+
+  template<class Archive>
+  void load(Archive & ar, const unsigned int version) {
+    ar & num_threads_ & print_every_
+       & verbose_ & omp_dynamic_chunksize_
+       & request_mode_ & store_sym_emds_raw_ & throw_on_error_
+       & emds_ & error_messages_
+       & nevA_ & nevB_ & num_emds_ & emd_storage_;
+
+    handler_ = nullptr;
+    print_stream_ = &std::cout;
+  }
+
+  BOOST_SERIALIZATION_SPLIT_MEMBER()
+#endif
 
 public:
 
@@ -236,19 +267,6 @@ public:
     else return emds_[i*nevB() + j];
   }
 
-private:
-
-  // determine the number of threads to use
-  static int determine_num_threads(int num_threads) {
-    #ifdef _OPENMP
-      if (num_threads == -1 || num_threads > omp_get_max_threads())
-        return omp_get_max_threads();
-      return num_threads;
-    #else
-      return 1;
-    #endif
-  }
-
 protected:
 
   void clear(bool free_memory) {
@@ -285,8 +303,21 @@ protected:
     return -1;
   }
 
+private:
+
+  // determine the number of threads to use
+  static int determine_num_threads(int num_threads) {
+    #ifdef _OPENMP
+      if (num_threads == -1 || num_threads > omp_get_max_threads())
+        return omp_get_max_threads();
+      return num_threads;
+    #else
+      return 1;
+    #endif
+  }
+
 }; // PairwiseEMDBase
 
-END_EMD_NAMESPACE
+END_WASSERSTEIN_NAMESPACE
 
 #endif // WASSERSTEIN_PAIRWISEEMDBASE_HH

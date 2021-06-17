@@ -39,10 +39,13 @@
 #define WASSERSTEIN_EMDBASE_HH
 
 #include <chrono>
+#include <utility>
+#include <vector>
 
 #include "EMDUtils.hh"
 
-BEGIN_EMD_NAMESPACE
+
+BEGIN_WASSERSTEIN_NAMESPACE
 
 ////////////////////////////////////////////////////////////////////////////////
 // EMDBase - base class to reduce wrapper code for simple EMD access functions
@@ -144,8 +147,18 @@ protected:
     return duration_;
   }
 
+private:
+
+#ifdef WASSERSTEIN_SERIALIZATION
+  friend class boost::serialization::access;
+  template<class Archive>
+  void serialize(Archive & ar, const unsigned int version) {
+    ar & norm_ & do_timing_ & external_dists_;
+  }
+#endif
+
 }; // EMDBase
 
-END_EMD_NAMESPACE
+END_WASSERSTEIN_NAMESPACE
 
 #endif // WASSERSTEIN_EMDBASE_HH

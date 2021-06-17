@@ -53,10 +53,12 @@
 
 #include "HistogramUtils.hh"
 
-BEGIN_EMD_NAMESPACE
+
+BEGIN_WASSERSTEIN_NAMESPACE
 
 template<typename Value>
-class CorrelationDimension : public Histogram1DHandler<boost::histogram::axis::transform::log, Value> {
+class CorrelationDimension :
+  public Histogram1DHandler<boost::histogram::axis::transform::log, Value> {
 public:
 
   typedef Histogram1DHandler<boost::histogram::axis::transform::log, Value> Hist1DBase;
@@ -67,6 +69,10 @@ public:
     using Hist1DBase::hist;
   #endif
 
+  // default constructor
+  CorrelationDimension() = default;
+
+  // constructor setting up a histogram
   CorrelationDimension(unsigned nbins, Value axis_min, Value axis_max) :
     Hist1DBase(nbins, axis_min, axis_max)
   {}
@@ -126,8 +132,16 @@ private:
 
   std::string name() const { return "CorrelationDimension"; }
 
+#ifdef WASSERSTEIN_SERIALIZATION
+  friend class boost::serialization::access;
+  template<class Archive>
+  void serialize(Archive & ar, const unsigned int version) {
+    ar & boost::serialization::base_object<Hist1DBase>(*this);
+  }
+#endif
+
 }; // CorrelationDimension
 
-END_EMD_NAMESPACE
+END_WASSERSTEIN_NAMESPACE
 
 #endif // WASSERSTEIN_EXTERNALHANDLERS_HH

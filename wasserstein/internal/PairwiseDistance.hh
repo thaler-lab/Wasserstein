@@ -49,8 +49,8 @@
 
 #include "EMDUtils.hh"
 
-BEGIN_EMD_NAMESPACE
 
+BEGIN_WASSERSTEIN_NAMESPACE
 
 ////////////////////////////////////////////////////////////////////////////////
 // PairwiseDistanceBase - implements (theta_ij/R)^beta between particles i and j
@@ -64,14 +64,21 @@ public:
   typedef typename ParticleCollection::const_iterator ParticleIterator;
   typedef Value value_type;
 
-  PairwiseDistanceBase(Value R, Value beta) {
-    set_R(R);
-    set_beta(beta);
+  // default constructor
+  PairwiseDistanceBase() {
 
     // check that we properly have passed a derived class (must be here because derived class is incomplete)
     static_assert(std::is_base_of<PairwiseDistanceBase<PairwiseDistance, ParticleCollection, Value>,
                                   PairwiseDistance>::value, 
                   "Template parameter must be a derived class of PairwiseDistanceBase.");
+  }
+
+  // constructor with parameters
+  PairwiseDistanceBase(Value R, Value beta) :
+    PairwiseDistanceBase()
+  {
+    set_R(R);
+    set_beta(beta);    
   }
 
   // description of class
@@ -155,6 +162,14 @@ protected:
 private:
 
   Value R_, R2_, beta_, halfbeta_;
+
+#ifdef WASSERSTEIN_SERIALIZATION
+  friend class boost::serialization::access;
+  template<class Archive>
+  void serialize(Archive & ar, const unsigned int version) {
+    ar & R_ & R2_ & beta_ & halfbeta_;
+  }
+#endif
 
 }; // PairwiseDistanceBase
 
@@ -293,6 +308,6 @@ public:
   }
 }; // EuclideanParticleDistance
 
-END_EMD_NAMESPACE
+END_WASSERSTEIN_NAMESPACE
 
 #endif // WASSERSTEIN_PAIRWISEDISTANCE_HH

@@ -56,7 +56,8 @@
 
 #include "EMDUtils.hh"
 
-BEGIN_EMD_NAMESPACE
+
+BEGIN_WASSERSTEIN_NAMESPACE
 
 // center generic event according to weighted centroid
 template<class EMD>
@@ -111,11 +112,12 @@ private:
 
   // enable overloaded operator for FastJetEvent
 #ifdef WASSERSTEIN_FASTJET
-  FastJetEvent<typename EMD::ParticleWeight> & center(FastJetEvent<typename EMD::ParticleWeight> & event) const;
+  FastJetEvent<typename EMD::ParticleWeight> &
+  center(FastJetEvent<typename EMD::ParticleWeight> & event) const;
 #endif
 
 }; // CenterWeightedCentroid
 
-END_EMD_NAMESPACE
+END_WASSERSTEIN_NAMESPACE
 
 #endif // WASSERSTEIN_CENTERWEIGHTEDCENTROID_HH

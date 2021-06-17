@@ -50,7 +50,8 @@
 
 #include "EMDUtils.hh"
 
-BEGIN_EMD_NAMESPACE
+
+BEGIN_WASSERSTEIN_NAMESPACE
 
 ////////////////////////////////////////////////////////////////////////////////
 // EuclideanParticleND - struct to hold an N-dimensional vector and a weight
@@ -146,6 +147,6 @@ struct EuclideanParticle3D : public EuclideanParticleND<3, Value> {
 
 }; // EuclideanParticle3D
 
-END_EMD_NAMESPACE
+END_WASSERSTEIN_NAMESPACE
 
 #endif // WASSERSTEIN_EUCLIDEANPARTICLE_HH

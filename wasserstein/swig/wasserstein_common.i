@@ -40,8 +40,8 @@
 %template(pairVectorDouble) std::pair<std::vector<double>, std::vector<double>>;
 
 #ifndef WASSERSTEIN_NO_FLOAT32
-%template(vectorFloat) std::vector<float>;
-%template(pairVectorFloat) std::pair<std::vector<float>, std::vector<float>>;
+  %template(vectorFloat) std::vector<float>;
+  %template(pairVectorFloat) std::pair<std::vector<float>, std::vector<float>>;
 #endif
 
 // this helps to exclude some problematic code from swig
@@ -50,7 +50,7 @@
 %{
 // include this to avoid needing to define it at compile time 
 #ifndef SWIG
-#define SWIG
+# define SWIG
 #endif
 
 // needed by numpy.i, harmless otherwise
@@ -63,7 +63,7 @@
 // the main library headers
 #include "wasserstein/Wasserstein.hh"
 
-using EMDNAMESPACE::DefaultNetworkSimplex;
+using WASSERSTEIN_NAMESPACE::DefaultNetworkSimplex;
 %}
 
 // numpy wrapping and initialization
@@ -71,12 +71,12 @@ using EMDNAMESPACE::DefaultNetworkSimplex;
 
   %include numpy.i
   %init %{
-  import_array();
+    import_array();
   %}
 
   // Python imports at the top of the module
   %pythonbegin %{
-  import numpy as np
+    import numpy as np
   %}
 
   // numpy typemaps
@@ -100,12 +100,12 @@ using EMDNAMESPACE::DefaultNetworkSimplex;
   WASSERSTEIN_NUMPY_TYPEMAPS(double)
 
   #ifndef WASSERSTEIN_NO_FLOAT32
-  %numpy_typemaps(float,  NPY_FLOAT,  std::ptrdiff_t)
-  WASSERSTEIN_NUMPY_TYPEMAPS(float)
+    %numpy_typemaps(float,  NPY_FLOAT,  std::ptrdiff_t)
+    WASSERSTEIN_NUMPY_TYPEMAPS(float)
   #endif
 
   // prepare to extend classes by renaming some methods
-  namespace EMDNAMESPACE {
+  namespace WASSERSTEIN_NAMESPACE {
     %rename(flows_vec) EMDBase::flows;
     %rename(dists_vec) EMDBase::dists;
     %rename(node_potentials_vec) EMD::node_potentials;
@@ -208,7 +208,7 @@ using EMDNAMESPACE::DefaultNetworkSimplex;
     memcpy(*arr_out, $self->emds(false).data(), nbytes);
   }
   void raw_emds(F** arr_out0, std::ptrdiff_t* n0) {
-    if ($self->storage() != EMDNAMESPACE::EMDPairsStorage::FlattenedSymmetric)
+    if ($self->storage() != WASSERSTEIN_NAMESPACE::EMDPairsStorage::FlattenedSymmetric)
       throw std::runtime_error("raw emds only available with raw symmetric storage");
 
     MALLOC_1D_VALUE_ARRAY(arr_out0, n0, $self->num_emds(), nbytes, F)
@@ -260,7 +260,7 @@ using EMDNAMESPACE::DefaultNetworkSimplex;
 %enddef
 
 %define ADD_EXPLICIT_PREPROCESSORS
-void preprocess_CenterWeightedCentroid() { $self->preprocess<EMDNAMESPACE::CenterWeightedCentroid>(); }
+void preprocess_CenterWeightedCentroid() { $self->preprocess<WASSERSTEIN_NAMESPACE::CenterWeightedCentroid>(); }
 %enddef
 
 // basic exception handling for all functions
@@ -272,7 +272,7 @@ void preprocess_CenterWeightedCentroid() { $self->preprocess<EMDNAMESPACE::Cente
   }
 }
 
-namespace EMDNAMESPACE {
+namespace WASSERSTEIN_NAMESPACE {
 
   // allow threads in PairwiseEMD computation
   %threadallow PairwiseEMD::compute;
@@ -292,7 +292,7 @@ namespace EMDNAMESPACE {
   %ignore Histogram1DHandler::print_axis;
   %ignore Histogram1DHandler::print_hist;
 
-} // namespace EMDNAMESPACE
+} // namespace WASSERSTEIN_NAMESPACE
 
 // include EMD utilities
 %include "wasserstein/internal/EMDUtils.hh" // this must come first
@@ -305,7 +305,7 @@ namespace EMDNAMESPACE {
 %include "wasserstein/internal/PairwiseEMDBase.hh"
 %include "wasserstein/internal/PairwiseEMD.hh"
 
-namespace EMDNAMESPACE {
+namespace WASSERSTEIN_NAMESPACE {
 
   %extend EMD {
     ADD_STR_FROM_DESCRIPTION(false)
@@ -397,5 +397,5 @@ def func(*args, **kwargs):
 %enddef
 
 #ifndef WASSERSTEIN_NO_FLOAT32
-DECLARE_PYTHON_FUNC_VARIABLE_FLOAT_TYPE(CorrelationDimension)
+  DECLARE_PYTHON_FUNC_VARIABLE_FLOAT_TYPE(CorrelationDimension)
 #endif

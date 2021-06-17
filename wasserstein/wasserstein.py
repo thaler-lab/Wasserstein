@@ -355,7 +355,7 @@ EMDPairsStorage_External = _wasserstein.EMDPairsStorage_External
 
 check_emd_status = _wasserstein.check_emd_status
 class EMDBaseFloat64(object):
-    r"""Proxy of C++ emd::EMDBase< double > class."""
+    r"""Proxy of C++ wasserstein::EMDBase< double > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
@@ -399,7 +399,7 @@ PI = cvar.PI
 TWOPI = cvar.TWOPI
 
 class PairwiseEMDBaseFloat64(object):
-    r"""Proxy of C++ emd::PairwiseEMDBase< double > class."""
+    r"""Proxy of C++ wasserstein::PairwiseEMDBase< double > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
@@ -451,7 +451,7 @@ class PairwiseEMDBaseFloat64(object):
 _wasserstein.PairwiseEMDBaseFloat64_swigregister(PairwiseEMDBaseFloat64)
 
 class ExternalEMDHandlerFloat64(object):
-    r"""Proxy of C++ emd::ExternalEMDHandler< double > class."""
+    r"""Proxy of C++ wasserstein::ExternalEMDHandler< double > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
@@ -469,13 +469,16 @@ class ExternalEMDHandlerFloat64(object):
 _wasserstein.ExternalEMDHandlerFloat64_swigregister(ExternalEMDHandlerFloat64)
 
 class Histogram1DHandlerLogFloat64(ExternalEMDHandlerFloat64):
-    r"""Proxy of C++ emd::Histogram1DHandler< boost::histogram::axis::transform::log,double > class."""
+    r"""Proxy of C++ wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
-    def __init__(self, nbins, axis_min, axis_max):
-        r"""__init__(Histogram1DHandlerLogFloat64 self, unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandlerLogFloat64"""
-        _wasserstein.Histogram1DHandlerLogFloat64_swiginit(self, _wasserstein.new_Histogram1DHandlerLogFloat64(nbins, axis_min, axis_max))
+    def __init__(self, *args):
+        r"""
+        __init__(Histogram1DHandlerLogFloat64 self) -> Histogram1DHandlerLogFloat64
+        __init__(Histogram1DHandlerLogFloat64 self, unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandlerLogFloat64
+        """
+        _wasserstein.Histogram1DHandlerLogFloat64_swiginit(self, _wasserstein.new_Histogram1DHandlerLogFloat64(*args))
     __swig_destroy__ = _wasserstein.delete_Histogram1DHandlerLogFloat64
     nbins = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat64_nbins)
     axis_min = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat64_axis_min)
@@ -484,6 +487,7 @@ class Histogram1DHandlerLogFloat64(ExternalEMDHandlerFloat64):
     hist_vals_vars_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat64_hist_vals_vars_vec)
     bin_centers_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat64_bin_centers_vec)
     bin_edges_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat64_bin_edges_vec)
+    __iadd__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat64___iadd__)
     __str__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat64___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat64___repr__)
     bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat64_bin_centers)
@@ -499,13 +503,16 @@ class Histogram1DHandlerLogFloat64(ExternalEMDHandlerFloat64):
 _wasserstein.Histogram1DHandlerLogFloat64_swigregister(Histogram1DHandlerLogFloat64)
 
 class Histogram1DHandlerFloat64(ExternalEMDHandlerFloat64):
-    r"""Proxy of C++ emd::Histogram1DHandler< boost::histogram::axis::transform::id,double > class."""
+    r"""Proxy of C++ wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
-    def __init__(self, nbins, axis_min, axis_max):
-        r"""__init__(Histogram1DHandlerFloat64 self, unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandlerFloat64"""
-        _wasserstein.Histogram1DHandlerFloat64_swiginit(self, _wasserstein.new_Histogram1DHandlerFloat64(nbins, axis_min, axis_max))
+    def __init__(self, *args):
+        r"""
+        __init__(Histogram1DHandlerFloat64 self) -> Histogram1DHandlerFloat64
+        __init__(Histogram1DHandlerFloat64 self, unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandlerFloat64
+        """
+        _wasserstein.Histogram1DHandlerFloat64_swiginit(self, _wasserstein.new_Histogram1DHandlerFloat64(*args))
     __swig_destroy__ = _wasserstein.delete_Histogram1DHandlerFloat64
     nbins = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat64_nbins)
     axis_min = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat64_axis_min)
@@ -514,6 +521,7 @@ class Histogram1DHandlerFloat64(ExternalEMDHandlerFloat64):
     hist_vals_vars_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat64_hist_vals_vars_vec)
     bin_centers_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat64_bin_centers_vec)
     bin_edges_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat64_bin_edges_vec)
+    __iadd__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat64___iadd__)
     __str__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat64___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat64___repr__)
     bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat64_bin_centers)
@@ -529,7 +537,7 @@ class Histogram1DHandlerFloat64(ExternalEMDHandlerFloat64):
 _wasserstein.Histogram1DHandlerFloat64_swigregister(Histogram1DHandlerFloat64)
 
 class EMDBaseFloat32(object):
-    r"""Proxy of C++ emd::EMDBase< float > class."""
+    r"""Proxy of C++ wasserstein::EMDBase< float > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
@@ -570,7 +578,7 @@ class EMDBaseFloat32(object):
 _wasserstein.EMDBaseFloat32_swigregister(EMDBaseFloat32)
 
 class PairwiseEMDBaseFloat32(object):
-    r"""Proxy of C++ emd::PairwiseEMDBase< float > class."""
+    r"""Proxy of C++ wasserstein::PairwiseEMDBase< float > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
@@ -622,7 +630,7 @@ class PairwiseEMDBaseFloat32(object):
 _wasserstein.PairwiseEMDBaseFloat32_swigregister(PairwiseEMDBaseFloat32)
 
 class ExternalEMDHandlerFloat32(object):
-    r"""Proxy of C++ emd::ExternalEMDHandler< float > class."""
+    r"""Proxy of C++ wasserstein::ExternalEMDHandler< float > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
@@ -640,13 +648,16 @@ class ExternalEMDHandlerFloat32(object):
 _wasserstein.ExternalEMDHandlerFloat32_swigregister(ExternalEMDHandlerFloat32)
 
 class Histogram1DHandlerLogFloat32(ExternalEMDHandlerFloat32):
-    r"""Proxy of C++ emd::Histogram1DHandler< boost::histogram::axis::transform::log,float > class."""
+    r"""Proxy of C++ wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
-    def __init__(self, nbins, axis_min, axis_max):
-        r"""__init__(Histogram1DHandlerLogFloat32 self, unsigned int nbins, float axis_min, float axis_max) -> Histogram1DHandlerLogFloat32"""
-        _wasserstein.Histogram1DHandlerLogFloat32_swiginit(self, _wasserstein.new_Histogram1DHandlerLogFloat32(nbins, axis_min, axis_max))
+    def __init__(self, *args):
+        r"""
+        __init__(Histogram1DHandlerLogFloat32 self) -> Histogram1DHandlerLogFloat32
+        __init__(Histogram1DHandlerLogFloat32 self, unsigned int nbins, float axis_min, float axis_max) -> Histogram1DHandlerLogFloat32
+        """
+        _wasserstein.Histogram1DHandlerLogFloat32_swiginit(self, _wasserstein.new_Histogram1DHandlerLogFloat32(*args))
     __swig_destroy__ = _wasserstein.delete_Histogram1DHandlerLogFloat32
     nbins = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_nbins)
     axis_min = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_axis_min)
@@ -655,6 +666,7 @@ class Histogram1DHandlerLogFloat32(ExternalEMDHandlerFloat32):
     hist_vals_vars_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_hist_vals_vars_vec)
     bin_centers_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_bin_centers_vec)
     bin_edges_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_bin_edges_vec)
+    __iadd__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32___iadd__)
     __str__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32___repr__)
     bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_bin_centers)
@@ -670,13 +682,16 @@ class Histogram1DHandlerLogFloat32(ExternalEMDHandlerFloat32):
 _wasserstein.Histogram1DHandlerLogFloat32_swigregister(Histogram1DHandlerLogFloat32)
 
 class Histogram1DHandlerFloat32(ExternalEMDHandlerFloat32):
-    r"""Proxy of C++ emd::Histogram1DHandler< boost::histogram::axis::transform::id,float > class."""
+    r"""Proxy of C++ wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
-    def __init__(self, nbins, axis_min, axis_max):
-        r"""__init__(Histogram1DHandlerFloat32 self, unsigned int nbins, float axis_min, float axis_max) -> Histogram1DHandlerFloat32"""
-        _wasserstein.Histogram1DHandlerFloat32_swiginit(self, _wasserstein.new_Histogram1DHandlerFloat32(nbins, axis_min, axis_max))
+    def __init__(self, *args):
+        r"""
+        __init__(Histogram1DHandlerFloat32 self) -> Histogram1DHandlerFloat32
+        __init__(Histogram1DHandlerFloat32 self, unsigned int nbins, float axis_min, float axis_max) -> Histogram1DHandlerFloat32
+        """
+        _wasserstein.Histogram1DHandlerFloat32_swiginit(self, _wasserstein.new_Histogram1DHandlerFloat32(*args))
     __swig_destroy__ = _wasserstein.delete_Histogram1DHandlerFloat32
     nbins = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat32_nbins)
     axis_min = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat32_axis_min)
@@ -685,6 +700,7 @@ class Histogram1DHandlerFloat32(ExternalEMDHandlerFloat32):
     hist_vals_vars_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat32_hist_vals_vars_vec)
     bin_centers_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat32_bin_centers_vec)
     bin_edges_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat32_bin_edges_vec)
+    __iadd__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat32___iadd__)
     __str__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat32___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat32___repr__)
     bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat32_bin_centers)
@@ -700,13 +716,16 @@ class Histogram1DHandlerFloat32(ExternalEMDHandlerFloat32):
 _wasserstein.Histogram1DHandlerFloat32_swigregister(Histogram1DHandlerFloat32)
 
 class CorrelationDimensionFloat64(Histogram1DHandlerLogFloat64):
-    r"""Proxy of C++ emd::CorrelationDimension< double > class."""
+    r"""Proxy of C++ wasserstein::CorrelationDimension< double > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
-    def __init__(self, nbins, axis_min, axis_max):
-        r"""__init__(CorrelationDimensionFloat64 self, unsigned int nbins, double axis_min, double axis_max) -> CorrelationDimensionFloat64"""
-        _wasserstein.CorrelationDimensionFloat64_swiginit(self, _wasserstein.new_CorrelationDimensionFloat64(nbins, axis_min, axis_max))
+    def __init__(self, *args):
+        r"""
+        __init__(CorrelationDimensionFloat64 self) -> CorrelationDimensionFloat64
+        __init__(CorrelationDimensionFloat64 self, unsigned int nbins, double axis_min, double axis_max) -> CorrelationDimensionFloat64
+        """
+        _wasserstein.CorrelationDimensionFloat64_swiginit(self, _wasserstein.new_CorrelationDimensionFloat64(*args))
     corrdims_vec = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat64_corrdims_vec)
     corrdim_bins_vec = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat64_corrdim_bins_vec)
     cumulative_vals_vars_vec = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat64_cumulative_vals_vars_vec)
@@ -721,13 +740,16 @@ class CorrelationDimensionFloat64(Histogram1DHandlerLogFloat64):
 _wasserstein.CorrelationDimensionFloat64_swigregister(CorrelationDimensionFloat64)
 
 class CorrelationDimensionFloat32(Histogram1DHandlerLogFloat32):
-    r"""Proxy of C++ emd::CorrelationDimension< float > class."""
+    r"""Proxy of C++ wasserstein::CorrelationDimension< float > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
-    def __init__(self, nbins, axis_min, axis_max):
-        r"""__init__(CorrelationDimensionFloat32 self, unsigned int nbins, float axis_min, float axis_max) -> CorrelationDimensionFloat32"""
-        _wasserstein.CorrelationDimensionFloat32_swiginit(self, _wasserstein.new_CorrelationDimensionFloat32(nbins, axis_min, axis_max))
+    def __init__(self, *args):
+        r"""
+        __init__(CorrelationDimensionFloat32 self) -> CorrelationDimensionFloat32
+        __init__(CorrelationDimensionFloat32 self, unsigned int nbins, float axis_min, float axis_max) -> CorrelationDimensionFloat32
+        """
+        _wasserstein.CorrelationDimensionFloat32_swiginit(self, _wasserstein.new_CorrelationDimensionFloat32(*args))
     corrdims_vec = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat32_corrdims_vec)
     corrdim_bins_vec = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat32_corrdim_bins_vec)
     cumulative_vals_vars_vec = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat32_cumulative_vals_vars_vec)
@@ -783,7 +805,7 @@ def _store_events(pairwise_emd, events, event_weights, gdim, mask):
         pairwise_emd._add_event(weights, coords, event_weight)
 
 class EMDFloat64(EMDBaseFloat64):
-    r"""Proxy of C++ emd::EMD< double,emd::DefaultArrayEvent,emd::EuclideanArrayDistance > class."""
+    r"""Proxy of C++ wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
@@ -801,7 +823,7 @@ class EMDFloat64(EMDBaseFloat64):
 _wasserstein.EMDFloat64_swigregister(EMDFloat64)
 
 class EMDFloat32(EMDBaseFloat32):
-    r"""Proxy of C++ emd::EMD< float,emd::DefaultArrayEvent,emd::EuclideanArrayDistance > class."""
+    r"""Proxy of C++ wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
@@ -819,7 +841,7 @@ class EMDFloat32(EMDBaseFloat32):
 _wasserstein.EMDFloat32_swigregister(EMDFloat32)
 
 class EMDYPhiFloat64(EMDBaseFloat64):
-    r"""Proxy of C++ emd::EMD< double,emd::DefaultArray2Event,emd::YPhiArrayDistance > class."""
+    r"""Proxy of C++ wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
@@ -837,7 +859,7 @@ class EMDYPhiFloat64(EMDBaseFloat64):
 _wasserstein.EMDYPhiFloat64_swigregister(EMDYPhiFloat64)
 
 class EMDYPhiFloat32(EMDBaseFloat32):
-    r"""Proxy of C++ emd::EMD< float,emd::DefaultArray2Event,emd::YPhiArrayDistance > class."""
+    r"""Proxy of C++ wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
@@ -855,12 +877,12 @@ class EMDYPhiFloat32(EMDBaseFloat32):
 _wasserstein.EMDYPhiFloat32_swigregister(EMDYPhiFloat32)
 
 class PairwiseEMDFloat64(PairwiseEMDBaseFloat64):
-    r"""Proxy of C++ emd::PairwiseEMD< emd::EMD< double,emd::DefaultArrayEvent,emd::EuclideanArrayDistance >,double > class."""
+    r"""Proxy of C++ wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
-        r"""__init__(PairwiseEMDFloat64 self, double R=1, double beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool request_mode=False, bool store_sym_emds_raw=True, bool throw_on_error=False, unsigned int omp_dynamic_chunksize=10, std::size_t n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat64"""
+        r"""__init__(PairwiseEMDFloat64 self, double R=1, double beta=1, bool norm=False, int num_threads=-1, wasserstein::index_type print_every=-10, unsigned int verbose=1, bool request_mode=False, bool store_sym_emds_raw=True, bool throw_on_error=False, unsigned int omp_dynamic_chunksize=10, std::size_t n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat64"""
         _wasserstein.PairwiseEMDFloat64_swiginit(self, _wasserstein.new_PairwiseEMDFloat64(*args, **kwargs))
     __swig_destroy__ = _wasserstein.delete_PairwiseEMDFloat64
     description = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_description)
@@ -943,12 +965,12 @@ class PairwiseEMDFloat64(PairwiseEMDBaseFloat64):
 _wasserstein.PairwiseEMDFloat64_swigregister(PairwiseEMDFloat64)
 
 class PairwiseEMDFloat32(PairwiseEMDBaseFloat32):
-    r"""Proxy of C++ emd::PairwiseEMD< emd::EMD< float,emd::DefaultArrayEvent,emd::EuclideanArrayDistance >,float > class."""
+    r"""Proxy of C++ wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
-        r"""__init__(PairwiseEMDFloat32 self, float R=1, float beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool request_mode=False, bool store_sym_emds_raw=True, bool throw_on_error=False, unsigned int omp_dynamic_chunksize=10, std::size_t n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat32"""
+        r"""__init__(PairwiseEMDFloat32 self, float R=1, float beta=1, bool norm=False, int num_threads=-1, wasserstein::index_type print_every=-10, unsigned int verbose=1, bool request_mode=False, bool store_sym_emds_raw=True, bool throw_on_error=False, unsigned int omp_dynamic_chunksize=10, std::size_t n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDFloat32"""
         _wasserstein.PairwiseEMDFloat32_swiginit(self, _wasserstein.new_PairwiseEMDFloat32(*args, **kwargs))
     __swig_destroy__ = _wasserstein.delete_PairwiseEMDFloat32
     description = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_description)
@@ -1031,12 +1053,12 @@ class PairwiseEMDFloat32(PairwiseEMDBaseFloat32):
 _wasserstein.PairwiseEMDFloat32_swigregister(PairwiseEMDFloat32)
 
 class PairwiseEMDYPhiFloat64(PairwiseEMDBaseFloat64):
-    r"""Proxy of C++ emd::PairwiseEMD< emd::EMD< double,emd::DefaultArray2Event,emd::YPhiArrayDistance >,double > class."""
+    r"""Proxy of C++ wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
-        r"""__init__(PairwiseEMDYPhiFloat64 self, double R=1, double beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool request_mode=False, bool store_sym_emds_raw=True, bool throw_on_error=False, unsigned int omp_dynamic_chunksize=10, std::size_t n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat64"""
+        r"""__init__(PairwiseEMDYPhiFloat64 self, double R=1, double beta=1, bool norm=False, int num_threads=-1, wasserstein::index_type print_every=-10, unsigned int verbose=1, bool request_mode=False, bool store_sym_emds_raw=True, bool throw_on_error=False, unsigned int omp_dynamic_chunksize=10, std::size_t n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat64"""
         _wasserstein.PairwiseEMDYPhiFloat64_swiginit(self, _wasserstein.new_PairwiseEMDYPhiFloat64(*args, **kwargs))
     __swig_destroy__ = _wasserstein.delete_PairwiseEMDYPhiFloat64
     description = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_description)
@@ -1119,12 +1141,12 @@ class PairwiseEMDYPhiFloat64(PairwiseEMDBaseFloat64):
 _wasserstein.PairwiseEMDYPhiFloat64_swigregister(PairwiseEMDYPhiFloat64)
 
 class PairwiseEMDYPhiFloat32(PairwiseEMDBaseFloat32):
-    r"""Proxy of C++ emd::PairwiseEMD< emd::EMD< float,emd::DefaultArray2Event,emd::YPhiArrayDistance >,float > class."""
+    r"""Proxy of C++ wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > class."""
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
     def __init__(self, *args, **kwargs):
-        r"""__init__(PairwiseEMDYPhiFloat32 self, float R=1, float beta=1, bool norm=False, int num_threads=-1, emd::index_type print_every=-10, unsigned int verbose=1, bool request_mode=False, bool store_sym_emds_raw=True, bool throw_on_error=False, unsigned int omp_dynamic_chunksize=10, std::size_t n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat32"""
+        r"""__init__(PairwiseEMDYPhiFloat32 self, float R=1, float beta=1, bool norm=False, int num_threads=-1, wasserstein::index_type print_every=-10, unsigned int verbose=1, bool request_mode=False, bool store_sym_emds_raw=True, bool throw_on_error=False, unsigned int omp_dynamic_chunksize=10, std::size_t n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1, std::ostream & os=std::cout) -> PairwiseEMDYPhiFloat32"""
         _wasserstein.PairwiseEMDYPhiFloat32_swiginit(self, _wasserstein.new_PairwiseEMDYPhiFloat32(*args, **kwargs))
     __swig_destroy__ = _wasserstein.delete_PairwiseEMDYPhiFloat32
     description = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_description)

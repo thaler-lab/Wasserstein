@@ -39,15 +39,17 @@
 #define WASSERSTEIN_EVENT_HH
 
 // C++ standard library
-#include <cassert>
-#include <cmath>
+#include <algorithm>
+#include <stdexcept>
+#include <string>
 #include <tuple>
+#include <vector>
 
 #include "EMDUtils.hh"
 #include "EuclideanParticle.hh"
 
-BEGIN_EMD_NAMESPACE
 
+BEGIN_WASSERSTEIN_NAMESPACE
 
 ////////////////////////////////////////////////////////////////////////////////
 // EventBase - "events" constitute a weighted collection of "particles"
@@ -60,7 +62,7 @@ struct EventBase {
 
   // constructor from particle collection only
   EventBase(const ParticleCollection & particles, value_type event_weight = 1) :
-    particles_(particles), total_weight_(0), event_weight_(event_weight), has_weights_(false)
+    particles_(particles), event_weight_(event_weight), total_weight_(0), has_weights_(false)
   {}
 
   // constructor from particle collection and weight collection
@@ -84,19 +86,20 @@ struct EventBase {
   const ParticleCollection & particles() const { return particles_; }
   index_type dimension() const { throw std::logic_error("shouldn't get here"); }
 
-  // access weights
+  // access particle weights
   WeightCollection & weights() { return weights_; }
   const WeightCollection & weights() const { return weights_; }
   value_type & total_weight() { return total_weight_; }
   const value_type & total_weight() const { return total_weight_; }
   bool has_weights() const { return has_weights_; }
-
-  // overloaded by FastJetEvent
-  void ensure_weights() { assert(has_weights_); }
+  void ensure_weights() {
+    if (!has_weights())
+      throw std::logic_error("must have weights here");
+  }
 
   // normalize weights and total
   void normalize_weights() {
-    if (!has_weights_)
+    if (!has_weights())
       throw std::logic_error("Weights must be set prior to calling normalize_weights.");
 
     // normalize each weight
@@ -108,11 +111,12 @@ struct EventBase {
 
 protected:
 
+  // don't ever expect to access event via pointer to base class
   ~EventBase() = default;
 
   ParticleCollection particles_;
   WeightCollection weights_;
-  value_type total_weight_, event_weight_;
+  value_type event_weight_, total_weight_;
   bool has_weights_;
 
 }; // EventBase
@@ -166,43 +170,50 @@ struct ArrayWeightCollection {
 
   typedef Value value_type;
 
-  // contructor, int is used for compatibility with SWIG's numpy.i
-  ArrayWeightCollection(value_type * array, index_type size) : array_(array), size_(size), delete_(false) {}
+  // contructor
+  ArrayWeightCollection(Value * array, index_type size) :
+    array_(array), size_(size), delete_array_on_destruction_(false)
+  {}
+
+  // default constructor
   ArrayWeightCollection() : ArrayWeightCollection(nullptr, 0) {}
+
+  // destructor checks for freeing any memory we may have allocated
   ~ArrayWeightCollection() {
-    if (delete_)
+    if (delete_array_on_destruction_)
       delete[] array_;
   }
 
   index_type size() const { return size_; }
-  value_type * begin() { return array_; }
-  value_type * end() { return array_ + size_; }
-  const value_type * begin() const { return array_; }
-  const value_type * end() const { return array_ + size_; }
+  Value * begin() { return array_; }
+  Value * end() { return begin() + size(); }
+  const Value * begin() const { return array_; }
+  const Value * end() const { return begin() + size(); }
 
-  const value_type & operator[](index_type i) const { return array_[i]; }
-  value_type & operator[](index_type i) { return array_[i]; }
+  const Value & operator[](index_type i) const { return array_[i]; }
+  Value & operator[](index_type i) { return array_[i]; }
 
-  // copy internal memory
+  // copy internal memory, used to avoid affecting arrays if we norm the weights
   void copy() {
-    if (delete_)
+
+    if (delete_array_on_destruction_)
       throw std::runtime_error("Should not call copy twice on an ArrayWeightCollection");
-    delete_ = true;
+    delete_array_on_destruction_ = true;
 
     // get new chunk of memory
-    //V * new_array((V*) malloc(nbytes));
-    value_type * new_array(new value_type[size()]);
+    Value * new_array(new Value[size()]);
 
     // copy old array into new one
-    memcpy(new_array, array_, std::size_t(size())*sizeof(value_type));
+    std::copy(begin(), end(), new_array);
+    //memcpy(new_array, array_, std::size_t(size())*sizeof(Value));
     array_ = new_array;
   }
 
 private:
 
-  value_type * array_;
+  Value * array_;
   index_type size_;
-  bool delete_;
+  bool delete_array_on_destruction_;
 
 }; // ArrayWeightCollection
 
@@ -233,8 +244,6 @@ protected:
       return *this;
     }
     T * operator*() const { return ptr_; }
-    //const T & operator[](index_type i) const { return ptr_[i]; }
-    //T & operator[](index_type i) { return ptr_[i]; }
     bool operator!=(const templated_iterator & other) const { return ptr_ != other.ptr_; }
     index_type stride() const { return stride_; }
   };
@@ -249,11 +258,11 @@ public:
   index_type size() const { return size_; }
   index_type stride() const { return stride_; }
   index_type dimension() const { return stride(); }
-  static index_type stride_static() { return -1; }
+  static index_type expected_stride() { return -1; }
 
   using const_iterator = templated_iterator<const Value>;
   using iterator = templated_iterator<Value>;
-  typedef const_iterator value_type;
+  using value_type = const_iterator;
 
   const_iterator begin() const { return const_iterator(array(), stride()); }
   const_iterator end() const { return const_iterator(array() + size()*stride(), stride()); }
@@ -289,14 +298,13 @@ public:
   using ArrayParticleCollection<Value>::ArrayParticleCollection;
   using const_iterator = templated_iterator<const Value>;
   using iterator = templated_iterator<Value>;
-  typedef const_iterator value_type;
+  using value_type = const_iterator;
 
   Array2ParticleCollection(Value * array, index_type size, index_type stride) :
     ArrayParticleCollection<Value>(array, size, stride)
   {
-    if (this->stride() != stride_static())
-      throw std::invalid_argument("expected particles to have " +
-                                  std::to_string(stride_static()) + " dimensions");
+    if (this->stride() != 2)
+      throw std::invalid_argument("expected particles to have 2 dimensions");
   }
 
   const_iterator begin() const { return const_iterator(this->array()); }
@@ -305,7 +313,7 @@ public:
   const_iterator cend() const { return end(); }
   iterator begin() { return iterator(this->array()); }
   iterator end() { return iterator(this->array() + 2*this->size()); }
-  static index_type stride_static() { return 2; }
+  static index_type expected_stride() { return 2; }
 
 }; // Array2ParticleCollection
 
@@ -319,13 +327,13 @@ struct ArrayEvent : public EventBase<ArrayWeightCollection<Value>, _ParticleColl
 
   typedef Value value_type;
   typedef _ParticleCollection<Value> ParticleCollection;
-  typedef ArrayWeightCollection<value_type> WeightCollection;
+  typedef ArrayWeightCollection<Value> WeightCollection;
   typedef EventBase<WeightCollection, ParticleCollection> Base;
 
   // full constructor
-  ArrayEvent(value_type * weight_array, value_type * particle_array,
+  ArrayEvent(Value * weight_array, Value * particle_array,
              index_type size, index_type stride,
-             value_type event_weight = 1) :
+             Value event_weight = 1) :
     Base(WeightCollection(weight_array, size),
          ParticleCollection(particle_array, size, stride),
          event_weight)
@@ -336,8 +344,8 @@ struct ArrayEvent : public EventBase<ArrayWeightCollection<Value>, _ParticleColl
   }
 
   // constructor from single argument (for use with Python)
-  ArrayEvent(const std::tuple<value_type*, value_type*, index_type, index_type> & tup,
-             value_type event_weight = 1) :
+  ArrayEvent(const std::tuple<Value*, Value*, index_type, index_type> & tup,
+             Value event_weight = 1) :
     ArrayEvent(std::get<0>(tup), std::get<1>(tup), std::get<2>(tup), std::get<3>(tup), event_weight)
   {}
 
@@ -355,10 +363,10 @@ struct ArrayEvent : public EventBase<ArrayWeightCollection<Value>, _ParticleColl
   }
 
   static std::string name() {
-    index_type stride(ParticleCollection::stride_static());
+    index_type stride(ParticleCollection::expected_stride());
 
     std::ostringstream oss;
-    oss << "ArrayEvent<" << sizeof(value_type) << "-byte float, ";
+    oss << "ArrayEvent<" << sizeof(Value) << "-byte float, ";
     if (stride < 0)
       oss << "variable particle dimension>";
     else
@@ -378,24 +386,24 @@ template<typename Value>
 struct VectorEvent : public EventBase<std::vector<Value>, std::vector<Value>> {
 
   typedef Value value_type;
-  typedef std::vector<value_type> ParticleCollection;
-  typedef std::vector<value_type> WeightCollection;
+  typedef std::vector<Value> ParticleCollection;
+  typedef std::vector<Value> WeightCollection;
   typedef EventBase<WeightCollection, ParticleCollection> Base;
 
   // constructor with a single argument
-  VectorEvent(const std::pair<ParticleCollection, WeightCollection> && proto_event, value_type event_weight = 1) :
+  VectorEvent(const std::pair<ParticleCollection, WeightCollection> && proto_event, Value event_weight = 1) :
     VectorEvent(proto_event.first, proto_event.second, event_weight)
   {}
 
   // constructor from vectors of particles and weights
-  VectorEvent(const ParticleCollection & particles, const WeightCollection & weights, value_type event_weight = 1) :
+  VectorEvent(const ParticleCollection & particles, const WeightCollection & weights, Value event_weight = 1) :
     Base(weights, particles, event_weight)
   {
     if (particles.size() % weights.size() != 0)
       throw std::invalid_argument("particles.size() must be cleanly divisible by weights.size()");
 
     // set total weight
-    for (value_type weight : this->weights_)
+    for (Value weight : this->weights_)
       this->total_weight_ += weight;
   }
 
@@ -409,12 +417,12 @@ struct VectorEvent : public EventBase<std::vector<Value>, std::vector<Value>> {
 
   static std::string name() {
     std::ostringstream oss;
-    oss << "VectorEvent<" << sizeof(value_type) << "-byte float>";
+    oss << "VectorEvent<" << sizeof(Value) << "-byte float>";
     return oss.str();
   }
 
 }; // VectorEvent
 
-END_EMD_NAMESPACE
+END_WASSERSTEIN_NAMESPACE
 
 #endif // WASSERSTEIN_EVENT_HH

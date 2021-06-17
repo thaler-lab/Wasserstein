@@ -53,7 +53,8 @@
 
 #include "PairwiseEMDBase.hh"
 
-BEGIN_EMD_NAMESPACE
+
+BEGIN_WASSERSTEIN_NAMESPACE
 
 template<typename InputIterator>
 using RequireInputIterator = typename std::enable_if<std::is_convertible<typename
@@ -83,6 +84,25 @@ private:
 
   std::ostringstream oss_;
   index_type emd_counter_;
+
+#ifdef WASSERSTEIN_SERIALIZATION
+  friend class boost::serialization::access;
+
+  template<class Archive>
+  void save(Archive & ar, const unsigned int version) const {
+    ar & boost::serialization::base_object<Base>(*this)
+       & emd_objs_ & two_event_sets_ & emd_counter_;
+  }
+
+  template<class Archive>
+  void load(Archive & ar, const unsigned int version) {
+    ar & boost::serialization::base_object<Base>(*this)
+       & emd_objs_ & two_event_sets_ & emd_counter_;
+
+    construct();
+    events().resize(nevA() + nevB());
+  }
+#endif
 
 public:
 
@@ -262,16 +282,12 @@ public:
         emd_obj.clear();
     }
 
-    // start clock for overall timing
-    emd_objs_[0].start_timing();
-
     // turn off timing in EMD objects (harmless to call this each time, only needed in constructor)
     for (EMD & emd_obj : emd_objs_)
       emd_obj.do_timing_ = false;
 
-    // setup stringstream for printing
-    oss_ = std::ostringstream(std::ios_base::ate);
-    oss_.setf(std::ios_base::fixed, std::ios_base::floatfield);
+    // initialization that needs to happen when object is created
+    construct();
   }
 
 // these should be private for the SWIG Python wrappers and public otherwise
@@ -449,6 +465,16 @@ private:
 
 private:
 
+  void construct() {
+
+    // start clock for overall timing
+    emd_objs_[0].start_timing();
+
+    // setup stringstream for printing
+    oss_ = std::ostringstream(std::ios_base::ate);
+    oss_.setf(std::ios_base::fixed, std::ios_base::floatfield);
+  }
+
   Value _evaluate_emd(index_type i, index_type j, int thread) {
     
     // run and check for failure
@@ -539,6 +565,6 @@ private:
 
 }; // PairwiseEMD
 
-END_EMD_NAMESPACE
+END_WASSERSTEIN_NAMESPACE
 
 #endif // WASSERSTEIN_PAIRWISEEMD_HH

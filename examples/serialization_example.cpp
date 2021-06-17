@@ -28,6 +28,7 @@
 //------------------------------------------------------------------------
 
 // Wasserstein library
+#define WASSERSTEIN_SERIALIZATION
 #include "Wasserstein.hh"
 
 // classes and functions for reading/preparing events
@@ -53,6 +54,38 @@ int main(int argc, char** argv) {
   if (evp == nullptr)
     return 1;
 
+  ////////////////////////////
+  // EMD Serialization
+  ////////////////////////////
+
+  // demonstrate calculating single EMDs
+  EMD emd_obj(0.4, 1.0, true);
+
+  // preprocess events to center
+  emd_obj.preprocess<emd::CenterWeightedCentroid>();
+
+  // print description
+  std::cout << emd_obj.description() << std::endl;
+
+  // serialize
+  std::stringstream ss;
+  boost::archive::text_oarchive oa(ss);
+  oa << emd_obj;
+
+  // extract
+  boost::archive::text_iarchive ia(ss);
+  EMD new_emd_obj;
+  ia >> new_emd_obj;
+
+  // print EMD description
+  std::cout << new_emd_obj.description()
+            << "Note that preprocessors are not currently preserved in serialized objects"
+            << std::endl;
+
+  /////////////////////////////////////////////////////
+  // PairwiseEMD and CorrelationDimension Serialization
+  /////////////////////////////////////////////////////
+
   // demonstrate calculating pairwise EMDs
   PairwiseEMD pairwise_emd_obj(0.4, 1.0, false);
 
@@ -70,31 +103,38 @@ int main(int argc, char** argv) {
   for (int i = 0; i < 1000 && evp->next(); i++)
     events.push_back(convert2event<EMDParticle>(evp->particles()));
 
-  // run computation
-  pairwise_emd_obj(events);
-
-  // get max and min EMD value
-  const std::vector<double> & emds(pairwise_emd_obj.emds(true));
-  std::cout << "Min. EMD - " << *std::min_element(emds.begin(), emds.end()) << '\n'
-            << "Max. EMD - " << *std::max_element(emds.begin(), emds.end()) << '\n'
-            << '\n';
-
   // setup correlation dimension
   CorrelationDimension corrdim(50, 10., 250.);
   pairwise_emd_obj.set_external_emd_handler(corrdim);
 
-  // rerun computation
+  // run computation
   pairwise_emd_obj(events);
 
+  // serialize
+  std::stringstream ss2;
+  boost::archive::text_oarchive oa2(ss2);
+  oa2 << pairwise_emd_obj << corrdim;
+
+  // define empty objects
+  PairwiseEMD new_pairwise_emd_obj;
+  CorrelationDimension new_corrdim;
+
+  // extract
+  boost::archive::text_iarchive ia2(ss2);
+  ia2 >> new_pairwise_emd_obj >> new_corrdim;
+
+  // print PairwiseEMD description
+  std::cout << new_pairwise_emd_obj.description()
+            << "Note that preprocessors are not currently preserved in serialized objects"
+            << std::endl;
+
   // print out correlation dimensions
-  auto corrdims(corrdim.corrdims());
-  auto corrdim_bins(corrdim.corrdim_bins());
+  auto corrdims(new_corrdim.corrdims());
+  auto corrdim_bins(new_corrdim.corrdim_bins());
   std::cout << "\nEMD         Corr. Dim.  Error\n" << std::left;
   for (unsigned i = 0; i < corrdims.first.size(); i++)
     std::cout << std::setw(12) << corrdim_bins[i]
               << std::setw(12) << corrdims.first[i]
               << std::setw(12) << corrdims.second[i]
               << '\n';
-
-  return 0;
 }

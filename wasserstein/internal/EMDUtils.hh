@@ -44,11 +44,27 @@
 #include <string>
 #include <vector>
 
+// serialization code based on boost serialization
+#ifdef WASSERSTEIN_SERIALIZATION
+# include <boost/archive/binary_iarchive.hpp>
+# include <boost/archive/binary_oarchive.hpp>
+# include <boost/archive/text_iarchive.hpp>
+# include <boost/archive/text_oarchive.hpp>
+# include <boost/serialization/string.hpp>
+# include <boost/serialization/vector.hpp>
+
+// compression based on boost iostreams
+# ifdef WASSERSTEIN_COMPRESSION
+#  include <boost/iostreams/filtering_stream.hpp>
+#  include <boost/iostreams/filter/zlib.hpp>
+# endif
+#endif // WASSERSTEIN_SERIALIZATION
+
 // default namespace macros
-#ifndef BEGIN_EMD_NAMESPACE
-# define BEGIN_EMD_NAMESPACE namespace EMDNAMESPACE {
-# define END_EMD_NAMESPACE }
-# define EMDNAMESPACE emd
+#ifndef BEGIN_WASSERSTEIN_NAMESPACE
+# define WASSERSTEIN_NAMESPACE wasserstein
+# define BEGIN_WASSERSTEIN_NAMESPACE namespace WASSERSTEIN_NAMESPACE {
+# define END_WASSERSTEIN_NAMESPACE }
 #endif
 
 // default template visibility
@@ -82,7 +98,7 @@
 #endif
 
 
-BEGIN_EMD_NAMESPACE
+BEGIN_WASSERSTEIN_NAMESPACE
 
 using default_value_type = WASSERSTEIN_DEFAULT_VALUE_TYPE;
 using index_type = WASSERSTEIN_INDEX_TYPE;
@@ -100,7 +116,7 @@ const double TWOPI = 6.28318530717958647693;
 // Enums
 ////////////////////////////////////////////////////////////////////////////////
 
-enum class EMDStatus : char { 
+enum class EMDStatus : char {
   Success = 0,
   Empty = 1,
   SupplyMismatch = 2,
@@ -108,8 +124,19 @@ enum class EMDStatus : char {
   MaxIterReached = 4,
   Infeasible = 5
 };
-enum class ExtraParticle : char { Neither = -1, Zero = 0, One = 1 };
-enum class EMDPairsStorage : char { Full = 0, FullSymmetric = 1, FlattenedSymmetric = 2, External = 3 };
+
+enum class ExtraParticle : char {
+  Neither = -1,
+  Zero = 0,
+  One = 1
+};
+
+enum class EMDPairsStorage : char {
+  Full = 0,
+  FullSymmetric = 1,
+  FlattenedSymmetric = 2,
+  External = 3
+};
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -295,7 +322,8 @@ inline void check_emd_status(EMDStatus status) {
         throw std::runtime_error("EMDStatus - Empty");
         break;
       case EMDStatus::SupplyMismatch:
-        throw std::runtime_error("EMDStatus - SupplyMismatch, consider increasing epsilon_large_factor");
+        throw std::runtime_error("EMDStatus - SupplyMismatch, "
+                                 "consider increasing `epsilon_large_factor`");
         break;
       case EMDStatus::Unbounded:
         throw std::runtime_error("EMDStatus - Unbounded");
@@ -311,7 +339,7 @@ inline void check_emd_status(EMDStatus status) {
     }
 }
 
-// helps with freeing memory
+// frees vector memory by swapping the buffer with an empty vector that will soon be destroyed
 template<typename T>
 void free_vector(std::vector<T> & vec) {
   std::vector<T>().swap(vec);
@@ -329,7 +357,7 @@ public:
 
   typedef typename EMD::Event Event;
 
-  virtual ~Preprocessor() {}
+  virtual ~Preprocessor() = default;
 
   // returns description
   virtual std::string description() const { return "Preprocessor"; };
@@ -337,8 +365,16 @@ public:
   // call this preprocessor on event
   virtual Event & operator()(Event & event) const { return event; };
 
+protected:
+
+#ifdef WASSERSTEIN_SERIALIZATION
+  friend class boost::serialization::access;
+  template<class Archive>
+  void serialize(Archive & ar, const unsigned int version) {}
+#endif
+
 }; // Preprocessor
 
-END_EMD_NAMESPACE
+END_WASSERSTEIN_NAMESPACE
 
 #endif // WASSERSTEIN_EMDUTILS_HH

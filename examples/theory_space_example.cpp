@@ -33,9 +33,15 @@
 // classes and functions for reading/preparing events
 #include "ExampleUtils.hh"
 
-using EMDParticle = emd::EuclideanParticle2D<>;
-using EMD = emd::EMDFloat64<emd::EuclideanEvent2D, emd::EuclideanDistance2D>;
+// `EMDFloat64` uses `double` for the floating-point type
+// first template parameter is an Event type, second is a PairwiseDistance type
+using EMD = emd::EMDFloat64<emd::EuclideanEvent2D, emd::YPhiParticleDistance>;
+
+// `PairwiseEMD` is a templated class accepting a fully qualified `EMD` type
 using PairwiseEMD = emd::PairwiseEMD<EMD>;
+
+// the `EuclideanParticle[N]D` classes provide a simple container for weighted particles
+using EMDParticle = emd::EuclideanParticle2D<>;
 
 int main(int argc, char** argv) {
 

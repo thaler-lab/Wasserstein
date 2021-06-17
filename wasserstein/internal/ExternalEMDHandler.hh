@@ -52,7 +52,8 @@
 
 #include "EMDUtils.hh"
 
-BEGIN_EMD_NAMESPACE
+
+BEGIN_WASSERSTEIN_NAMESPACE
 
 ////////////////////////////////////////////////////////////////////////////////
 // ExternalEMDHandler - base class for handling values from a PairwiseEMD on the fly
@@ -133,8 +134,16 @@ private:
   std::mutex mutex_;
   std::size_t num_calls_;
 
+#ifdef WASSERSTEIN_SERIALIZATION
+  friend class boost::serialization::access;
+  template<class Archive>
+  void serialize(Archive & ar, const unsigned int version) {
+    ar & num_calls_;
+  }
+#endif
+
 }; // ExternalEMDHandler
 
-END_EMD_NAMESPACE
+END_WASSERSTEIN_NAMESPACE
 
 #endif // WASSERSTEIN_EXTERNALEMDHANDLER_HH
