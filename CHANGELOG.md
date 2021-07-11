@@ -1,5 +1,7 @@
 ## 1.0.x
 
+- Removing default constructors for `CorrelationDimension` and `Histogram1DUtils` from Python.
+
 **1.0.0**
 
 - Many small tweaks to public API; see documentation.

@@ -67,10 +67,10 @@ public:
     using Hist1DBase::bin_centers;
     using Hist1DBase::axis;
     using Hist1DBase::hist;
+  
+    // default constructor, useful for deserialization
+    CorrelationDimension() = default;
   #endif
-
-  // default constructor
-  CorrelationDimension() = default;
 
   // constructor setting up a histogram
   CorrelationDimension(unsigned nbins, Value axis_min, Value axis_max) :

@@ -166,22 +166,20 @@ public:
   typedef boost::histogram::axis::regular<Value, Transform> Axis;
 
 #ifndef SWIG_PREPROCESSOR
+  protected:
+    Axis axis_;
 
-protected:
-  Axis axis_;
+  public:
+    typedef decltype(boost::histogram::make_weighted_histogram(axis_)) Hist;
+
+    // default constructor, useful for deserialization
+    Histogram1DHandler() = default;
+
+  protected:
+    Hist hist_;
+#endif // SWIG_PREPROCESSOR
 
 public:
-  typedef decltype(boost::histogram::make_weighted_histogram(axis_)) Hist;
-
-protected:
-  Hist hist_;
-
-#endif
-
-public:
-
-  // default constructor
-  Histogram1DHandler() = default;
 
   // constructor that will set up the histogram
   Histogram1DHandler(unsigned nbins, Value axis_min, Value axis_max) {

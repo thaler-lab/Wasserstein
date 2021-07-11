@@ -17431,44 +17431,7 @@ SWIGINTERN PyObject *ExternalEMDHandlerFloat64_swigregister(PyObject *SWIGUNUSED
   return SWIG_Py_Void();
 }
 
-SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerLogFloat64__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
-  PyObject *resultobj = 0;
-  wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *result = 0 ;
-  
-  if ((nobjs < 0) || (nobjs > 0)) SWIG_fail;
-  {
-    try {
-      result = (wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *)new wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double >(); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerLogFloat64__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerLogFloat64(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   unsigned int arg1 ;
   double arg2 ;
@@ -17479,20 +17442,26 @@ SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerLogFloat64__SWIG_1(PyObject *SW
   int ecode2 = 0 ;
   double val3 ;
   int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  char * kwnames[] = {
+    (char *)"nbins",  (char *)"axis_min",  (char *)"axis_max",  NULL 
+  };
   wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *result = 0 ;
   
-  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
-  ecode1 = SWIG_AsVal_unsigned_SS_int(swig_obj[0], &val1);
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:new_Histogram1DHandlerLogFloat64", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_Histogram1DHandlerLogFloat64" "', argument " "1"" of type '" "unsigned int""'");
   } 
   arg1 = static_cast< unsigned int >(val1);
-  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_Histogram1DHandlerLogFloat64" "', argument " "2"" of type '" "double""'");
   } 
   arg2 = static_cast< double >(val2);
-  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_Histogram1DHandlerLogFloat64" "', argument " "3"" of type '" "double""'");
   } 
@@ -17526,49 +17495,6 @@ SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerLogFloat64__SWIG_1(PyObject *SW
   return resultobj;
 fail:
   return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerLogFloat64(PyObject *self, PyObject *args) {
-  Py_ssize_t argc;
-  PyObject *argv[4] = {
-    0
-  };
-  
-  if (!(argc = SWIG_Python_UnpackTuple(args, "new_Histogram1DHandlerLogFloat64", 0, 3, argv))) SWIG_fail;
-  --argc;
-  if (argc == 0) {
-    return _wrap_new_Histogram1DHandlerLogFloat64__SWIG_0(self, argc, argv);
-  }
-  if (argc == 3) {
-    int _v;
-    {
-      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
-      _v = SWIG_CheckState(res);
-    }
-    if (_v) {
-      {
-        int res = SWIG_AsVal_double(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        {
-          int res = SWIG_AsVal_double(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          return _wrap_new_Histogram1DHandlerLogFloat64__SWIG_1(self, argc, argv);
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_Histogram1DHandlerLogFloat64'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double >::Histogram1DHandler()\n"
-    "    wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double >::Histogram1DHandler(unsigned int,double,double)\n");
-  return 0;
 }
 
 
@@ -18401,44 +18327,7 @@ SWIGINTERN PyObject *Histogram1DHandlerLogFloat64_swiginit(PyObject *SWIGUNUSEDP
   return SWIG_Python_InitShadowInstance(args);
 }
 
-SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerFloat64__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
-  PyObject *resultobj = 0;
-  wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > *result = 0 ;
-  
-  if ((nobjs < 0) || (nobjs > 0)) SWIG_fail;
-  {
-    try {
-      result = (wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > *)new wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double >(); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_double_t, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerFloat64__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerFloat64(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   unsigned int arg1 ;
   double arg2 ;
@@ -18449,20 +18338,26 @@ SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerFloat64__SWIG_1(PyObject *SWIGU
   int ecode2 = 0 ;
   double val3 ;
   int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  char * kwnames[] = {
+    (char *)"nbins",  (char *)"axis_min",  (char *)"axis_max",  NULL 
+  };
   wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > *result = 0 ;
   
-  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
-  ecode1 = SWIG_AsVal_unsigned_SS_int(swig_obj[0], &val1);
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:new_Histogram1DHandlerFloat64", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_Histogram1DHandlerFloat64" "', argument " "1"" of type '" "unsigned int""'");
   } 
   arg1 = static_cast< unsigned int >(val1);
-  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_Histogram1DHandlerFloat64" "', argument " "2"" of type '" "double""'");
   } 
   arg2 = static_cast< double >(val2);
-  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_Histogram1DHandlerFloat64" "', argument " "3"" of type '" "double""'");
   } 
@@ -18496,49 +18391,6 @@ SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerFloat64__SWIG_1(PyObject *SWIGU
   return resultobj;
 fail:
   return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerFloat64(PyObject *self, PyObject *args) {
-  Py_ssize_t argc;
-  PyObject *argv[4] = {
-    0
-  };
-  
-  if (!(argc = SWIG_Python_UnpackTuple(args, "new_Histogram1DHandlerFloat64", 0, 3, argv))) SWIG_fail;
-  --argc;
-  if (argc == 0) {
-    return _wrap_new_Histogram1DHandlerFloat64__SWIG_0(self, argc, argv);
-  }
-  if (argc == 3) {
-    int _v;
-    {
-      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
-      _v = SWIG_CheckState(res);
-    }
-    if (_v) {
-      {
-        int res = SWIG_AsVal_double(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        {
-          int res = SWIG_AsVal_double(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          return _wrap_new_Histogram1DHandlerFloat64__SWIG_1(self, argc, argv);
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_Histogram1DHandlerFloat64'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double >::Histogram1DHandler()\n"
-    "    wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double >::Histogram1DHandler(unsigned int,double,double)\n");
-  return 0;
 }
 
 
@@ -23053,44 +22905,7 @@ SWIGINTERN PyObject *ExternalEMDHandlerFloat32_swigregister(PyObject *SWIGUNUSED
   return SWIG_Py_Void();
 }
 
-SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerLogFloat32__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
-  PyObject *resultobj = 0;
-  wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *result = 0 ;
-  
-  if ((nobjs < 0) || (nobjs > 0)) SWIG_fail;
-  {
-    try {
-      result = (wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *)new wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float >(); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_float_t, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerLogFloat32__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerLogFloat32(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   unsigned int arg1 ;
   float arg2 ;
@@ -23101,20 +22916,26 @@ SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerLogFloat32__SWIG_1(PyObject *SW
   int ecode2 = 0 ;
   float val3 ;
   int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  char * kwnames[] = {
+    (char *)"nbins",  (char *)"axis_min",  (char *)"axis_max",  NULL 
+  };
   wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *result = 0 ;
   
-  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
-  ecode1 = SWIG_AsVal_unsigned_SS_int(swig_obj[0], &val1);
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:new_Histogram1DHandlerLogFloat32", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_Histogram1DHandlerLogFloat32" "', argument " "1"" of type '" "unsigned int""'");
   } 
   arg1 = static_cast< unsigned int >(val1);
-  ecode2 = SWIG_AsVal_float(swig_obj[1], &val2);
+  ecode2 = SWIG_AsVal_float(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_Histogram1DHandlerLogFloat32" "', argument " "2"" of type '" "float""'");
   } 
   arg2 = static_cast< float >(val2);
-  ecode3 = SWIG_AsVal_float(swig_obj[2], &val3);
+  ecode3 = SWIG_AsVal_float(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_Histogram1DHandlerLogFloat32" "', argument " "3"" of type '" "float""'");
   } 
@@ -23148,49 +22969,6 @@ SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerLogFloat32__SWIG_1(PyObject *SW
   return resultobj;
 fail:
   return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerLogFloat32(PyObject *self, PyObject *args) {
-  Py_ssize_t argc;
-  PyObject *argv[4] = {
-    0
-  };
-  
-  if (!(argc = SWIG_Python_UnpackTuple(args, "new_Histogram1DHandlerLogFloat32", 0, 3, argv))) SWIG_fail;
-  --argc;
-  if (argc == 0) {
-    return _wrap_new_Histogram1DHandlerLogFloat32__SWIG_0(self, argc, argv);
-  }
-  if (argc == 3) {
-    int _v;
-    {
-      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
-      _v = SWIG_CheckState(res);
-    }
-    if (_v) {
-      {
-        int res = SWIG_AsVal_float(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        {
-          int res = SWIG_AsVal_float(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          return _wrap_new_Histogram1DHandlerLogFloat32__SWIG_1(self, argc, argv);
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_Histogram1DHandlerLogFloat32'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float >::Histogram1DHandler()\n"
-    "    wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float >::Histogram1DHandler(unsigned int,float,float)\n");
-  return 0;
 }
 
 
@@ -24023,44 +23801,7 @@ SWIGINTERN PyObject *Histogram1DHandlerLogFloat32_swiginit(PyObject *SWIGUNUSEDP
   return SWIG_Python_InitShadowInstance(args);
 }
 
-SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerFloat32__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
-  PyObject *resultobj = 0;
-  wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *result = 0 ;
-  
-  if ((nobjs < 0) || (nobjs > 0)) SWIG_fail;
-  {
-    try {
-      result = (wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *)new wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float >(); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_float_t, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerFloat32__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerFloat32(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   unsigned int arg1 ;
   float arg2 ;
@@ -24071,20 +23812,26 @@ SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerFloat32__SWIG_1(PyObject *SWIGU
   int ecode2 = 0 ;
   float val3 ;
   int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  char * kwnames[] = {
+    (char *)"nbins",  (char *)"axis_min",  (char *)"axis_max",  NULL 
+  };
   wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *result = 0 ;
   
-  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
-  ecode1 = SWIG_AsVal_unsigned_SS_int(swig_obj[0], &val1);
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:new_Histogram1DHandlerFloat32", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_Histogram1DHandlerFloat32" "', argument " "1"" of type '" "unsigned int""'");
   } 
   arg1 = static_cast< unsigned int >(val1);
-  ecode2 = SWIG_AsVal_float(swig_obj[1], &val2);
+  ecode2 = SWIG_AsVal_float(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_Histogram1DHandlerFloat32" "', argument " "2"" of type '" "float""'");
   } 
   arg2 = static_cast< float >(val2);
-  ecode3 = SWIG_AsVal_float(swig_obj[2], &val3);
+  ecode3 = SWIG_AsVal_float(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_Histogram1DHandlerFloat32" "', argument " "3"" of type '" "float""'");
   } 
@@ -24118,49 +23865,6 @@ SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerFloat32__SWIG_1(PyObject *SWIGU
   return resultobj;
 fail:
   return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerFloat32(PyObject *self, PyObject *args) {
-  Py_ssize_t argc;
-  PyObject *argv[4] = {
-    0
-  };
-  
-  if (!(argc = SWIG_Python_UnpackTuple(args, "new_Histogram1DHandlerFloat32", 0, 3, argv))) SWIG_fail;
-  --argc;
-  if (argc == 0) {
-    return _wrap_new_Histogram1DHandlerFloat32__SWIG_0(self, argc, argv);
-  }
-  if (argc == 3) {
-    int _v;
-    {
-      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
-      _v = SWIG_CheckState(res);
-    }
-    if (_v) {
-      {
-        int res = SWIG_AsVal_float(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        {
-          int res = SWIG_AsVal_float(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          return _wrap_new_Histogram1DHandlerFloat32__SWIG_1(self, argc, argv);
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_Histogram1DHandlerFloat32'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float >::Histogram1DHandler()\n"
-    "    wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float >::Histogram1DHandler(unsigned int,float,float)\n");
-  return 0;
 }
 
 
@@ -24993,44 +24697,7 @@ SWIGINTERN PyObject *Histogram1DHandlerFloat32_swiginit(PyObject *SWIGUNUSEDPARM
   return SWIG_Python_InitShadowInstance(args);
 }
 
-SWIGINTERN PyObject *_wrap_new_CorrelationDimensionFloat64__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
-  PyObject *resultobj = 0;
-  wasserstein::CorrelationDimension< double > *result = 0 ;
-  
-  if ((nobjs < 0) || (nobjs > 0)) SWIG_fail;
-  {
-    try {
-      result = (wasserstein::CorrelationDimension< double > *)new wasserstein::CorrelationDimension< double >(); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_CorrelationDimensionFloat64__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_new_CorrelationDimensionFloat64(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   unsigned int arg1 ;
   double arg2 ;
@@ -25041,20 +24708,26 @@ SWIGINTERN PyObject *_wrap_new_CorrelationDimensionFloat64__SWIG_1(PyObject *SWI
   int ecode2 = 0 ;
   double val3 ;
   int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  char * kwnames[] = {
+    (char *)"nbins",  (char *)"axis_min",  (char *)"axis_max",  NULL 
+  };
   wasserstein::CorrelationDimension< double > *result = 0 ;
   
-  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
-  ecode1 = SWIG_AsVal_unsigned_SS_int(swig_obj[0], &val1);
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:new_CorrelationDimensionFloat64", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_CorrelationDimensionFloat64" "', argument " "1"" of type '" "unsigned int""'");
   } 
   arg1 = static_cast< unsigned int >(val1);
-  ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_CorrelationDimensionFloat64" "', argument " "2"" of type '" "double""'");
   } 
   arg2 = static_cast< double >(val2);
-  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_CorrelationDimensionFloat64" "', argument " "3"" of type '" "double""'");
   } 
@@ -25088,49 +24761,6 @@ SWIGINTERN PyObject *_wrap_new_CorrelationDimensionFloat64__SWIG_1(PyObject *SWI
   return resultobj;
 fail:
   return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_CorrelationDimensionFloat64(PyObject *self, PyObject *args) {
-  Py_ssize_t argc;
-  PyObject *argv[4] = {
-    0
-  };
-  
-  if (!(argc = SWIG_Python_UnpackTuple(args, "new_CorrelationDimensionFloat64", 0, 3, argv))) SWIG_fail;
-  --argc;
-  if (argc == 0) {
-    return _wrap_new_CorrelationDimensionFloat64__SWIG_0(self, argc, argv);
-  }
-  if (argc == 3) {
-    int _v;
-    {
-      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
-      _v = SWIG_CheckState(res);
-    }
-    if (_v) {
-      {
-        int res = SWIG_AsVal_double(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        {
-          int res = SWIG_AsVal_double(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          return _wrap_new_CorrelationDimensionFloat64__SWIG_1(self, argc, argv);
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_CorrelationDimensionFloat64'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    wasserstein::CorrelationDimension< double >::CorrelationDimension()\n"
-    "    wasserstein::CorrelationDimension< double >::CorrelationDimension(unsigned int,double,double)\n");
-  return 0;
 }
 
 
@@ -25732,44 +25362,7 @@ SWIGINTERN PyObject *CorrelationDimensionFloat64_swiginit(PyObject *SWIGUNUSEDPA
   return SWIG_Python_InitShadowInstance(args);
 }
 
-SWIGINTERN PyObject *_wrap_new_CorrelationDimensionFloat32__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
-  PyObject *resultobj = 0;
-  wasserstein::CorrelationDimension< float > *result = 0 ;
-  
-  if ((nobjs < 0) || (nobjs > 0)) SWIG_fail;
-  {
-    try {
-      result = (wasserstein::CorrelationDimension< float > *)new wasserstein::CorrelationDimension< float >(); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_wasserstein__CorrelationDimensionT_float_t, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_CorrelationDimensionFloat32__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+SWIGINTERN PyObject *_wrap_new_CorrelationDimensionFloat32(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   unsigned int arg1 ;
   float arg2 ;
@@ -25780,20 +25373,26 @@ SWIGINTERN PyObject *_wrap_new_CorrelationDimensionFloat32__SWIG_1(PyObject *SWI
   int ecode2 = 0 ;
   float val3 ;
   int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  char * kwnames[] = {
+    (char *)"nbins",  (char *)"axis_min",  (char *)"axis_max",  NULL 
+  };
   wasserstein::CorrelationDimension< float > *result = 0 ;
   
-  if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
-  ecode1 = SWIG_AsVal_unsigned_SS_int(swig_obj[0], &val1);
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:new_CorrelationDimensionFloat32", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_CorrelationDimensionFloat32" "', argument " "1"" of type '" "unsigned int""'");
   } 
   arg1 = static_cast< unsigned int >(val1);
-  ecode2 = SWIG_AsVal_float(swig_obj[1], &val2);
+  ecode2 = SWIG_AsVal_float(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_CorrelationDimensionFloat32" "', argument " "2"" of type '" "float""'");
   } 
   arg2 = static_cast< float >(val2);
-  ecode3 = SWIG_AsVal_float(swig_obj[2], &val3);
+  ecode3 = SWIG_AsVal_float(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_CorrelationDimensionFloat32" "', argument " "3"" of type '" "float""'");
   } 
@@ -25827,49 +25426,6 @@ SWIGINTERN PyObject *_wrap_new_CorrelationDimensionFloat32__SWIG_1(PyObject *SWI
   return resultobj;
 fail:
   return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_CorrelationDimensionFloat32(PyObject *self, PyObject *args) {
-  Py_ssize_t argc;
-  PyObject *argv[4] = {
-    0
-  };
-  
-  if (!(argc = SWIG_Python_UnpackTuple(args, "new_CorrelationDimensionFloat32", 0, 3, argv))) SWIG_fail;
-  --argc;
-  if (argc == 0) {
-    return _wrap_new_CorrelationDimensionFloat32__SWIG_0(self, argc, argv);
-  }
-  if (argc == 3) {
-    int _v;
-    {
-      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
-      _v = SWIG_CheckState(res);
-    }
-    if (_v) {
-      {
-        int res = SWIG_AsVal_float(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        {
-          int res = SWIG_AsVal_float(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          return _wrap_new_CorrelationDimensionFloat32__SWIG_1(self, argc, argv);
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_CorrelationDimensionFloat32'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    wasserstein::CorrelationDimension< float >::CorrelationDimension()\n"
-    "    wasserstein::CorrelationDimension< float >::CorrelationDimension(unsigned int,float,float)\n");
-  return 0;
 }
 
 
@@ -33248,10 +32804,7 @@ static PyMethodDef SwigMethods[] = {
 		""},
 	 { "ExternalEMDHandlerFloat64_evaluate_symmetric", (PyCFunction)(void(*)(void))_wrap_ExternalEMDHandlerFloat64_evaluate_symmetric, METH_VARARGS|METH_KEYWORDS, "ExternalEMDHandlerFloat64_evaluate_symmetric(ExternalEMDHandlerFloat64 self, double * emds, double * event_weights)"},
 	 { "ExternalEMDHandlerFloat64_swigregister", ExternalEMDHandlerFloat64_swigregister, METH_O, NULL},
-	 { "new_Histogram1DHandlerLogFloat64", _wrap_new_Histogram1DHandlerLogFloat64, METH_VARARGS, "\n"
-		"Histogram1DHandlerLogFloat64()\n"
-		"new_Histogram1DHandlerLogFloat64(unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandlerLogFloat64\n"
-		""},
+	 { "new_Histogram1DHandlerLogFloat64", (PyCFunction)(void(*)(void))_wrap_new_Histogram1DHandlerLogFloat64, METH_VARARGS|METH_KEYWORDS, "new_Histogram1DHandlerLogFloat64(unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandlerLogFloat64"},
 	 { "delete_Histogram1DHandlerLogFloat64", _wrap_delete_Histogram1DHandlerLogFloat64, METH_O, "delete_Histogram1DHandlerLogFloat64(Histogram1DHandlerLogFloat64 self)"},
 	 { "Histogram1DHandlerLogFloat64_nbins", _wrap_Histogram1DHandlerLogFloat64_nbins, METH_O, "Histogram1DHandlerLogFloat64_nbins(Histogram1DHandlerLogFloat64 self) -> unsigned int"},
 	 { "Histogram1DHandlerLogFloat64_axis_min", _wrap_Histogram1DHandlerLogFloat64_axis_min, METH_O, "Histogram1DHandlerLogFloat64_axis_min(Histogram1DHandlerLogFloat64 self) -> double"},
@@ -33268,10 +32821,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "Histogram1DHandlerLogFloat64_hist_vals_vars", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerLogFloat64_hist_vals_vars, METH_VARARGS|METH_KEYWORDS, "Histogram1DHandlerLogFloat64_hist_vals_vars(Histogram1DHandlerLogFloat64 self, bool overflows=True)"},
 	 { "Histogram1DHandlerLogFloat64_swigregister", Histogram1DHandlerLogFloat64_swigregister, METH_O, NULL},
 	 { "Histogram1DHandlerLogFloat64_swiginit", Histogram1DHandlerLogFloat64_swiginit, METH_VARARGS, NULL},
-	 { "new_Histogram1DHandlerFloat64", _wrap_new_Histogram1DHandlerFloat64, METH_VARARGS, "\n"
-		"Histogram1DHandlerFloat64()\n"
-		"new_Histogram1DHandlerFloat64(unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandlerFloat64\n"
-		""},
+	 { "new_Histogram1DHandlerFloat64", (PyCFunction)(void(*)(void))_wrap_new_Histogram1DHandlerFloat64, METH_VARARGS|METH_KEYWORDS, "new_Histogram1DHandlerFloat64(unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandlerFloat64"},
 	 { "delete_Histogram1DHandlerFloat64", _wrap_delete_Histogram1DHandlerFloat64, METH_O, "delete_Histogram1DHandlerFloat64(Histogram1DHandlerFloat64 self)"},
 	 { "Histogram1DHandlerFloat64_nbins", _wrap_Histogram1DHandlerFloat64_nbins, METH_O, "Histogram1DHandlerFloat64_nbins(Histogram1DHandlerFloat64 self) -> unsigned int"},
 	 { "Histogram1DHandlerFloat64_axis_min", _wrap_Histogram1DHandlerFloat64_axis_min, METH_O, "Histogram1DHandlerFloat64_axis_min(Histogram1DHandlerFloat64 self) -> double"},
@@ -33358,10 +32908,7 @@ static PyMethodDef SwigMethods[] = {
 		""},
 	 { "ExternalEMDHandlerFloat32_evaluate_symmetric", (PyCFunction)(void(*)(void))_wrap_ExternalEMDHandlerFloat32_evaluate_symmetric, METH_VARARGS|METH_KEYWORDS, "ExternalEMDHandlerFloat32_evaluate_symmetric(ExternalEMDHandlerFloat32 self, float * emds, float * event_weights)"},
 	 { "ExternalEMDHandlerFloat32_swigregister", ExternalEMDHandlerFloat32_swigregister, METH_O, NULL},
-	 { "new_Histogram1DHandlerLogFloat32", _wrap_new_Histogram1DHandlerLogFloat32, METH_VARARGS, "\n"
-		"Histogram1DHandlerLogFloat32()\n"
-		"new_Histogram1DHandlerLogFloat32(unsigned int nbins, float axis_min, float axis_max) -> Histogram1DHandlerLogFloat32\n"
-		""},
+	 { "new_Histogram1DHandlerLogFloat32", (PyCFunction)(void(*)(void))_wrap_new_Histogram1DHandlerLogFloat32, METH_VARARGS|METH_KEYWORDS, "new_Histogram1DHandlerLogFloat32(unsigned int nbins, float axis_min, float axis_max) -> Histogram1DHandlerLogFloat32"},
 	 { "delete_Histogram1DHandlerLogFloat32", _wrap_delete_Histogram1DHandlerLogFloat32, METH_O, "delete_Histogram1DHandlerLogFloat32(Histogram1DHandlerLogFloat32 self)"},
 	 { "Histogram1DHandlerLogFloat32_nbins", _wrap_Histogram1DHandlerLogFloat32_nbins, METH_O, "Histogram1DHandlerLogFloat32_nbins(Histogram1DHandlerLogFloat32 self) -> unsigned int"},
 	 { "Histogram1DHandlerLogFloat32_axis_min", _wrap_Histogram1DHandlerLogFloat32_axis_min, METH_O, "Histogram1DHandlerLogFloat32_axis_min(Histogram1DHandlerLogFloat32 self) -> float"},
@@ -33378,10 +32925,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "Histogram1DHandlerLogFloat32_hist_vals_vars", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerLogFloat32_hist_vals_vars, METH_VARARGS|METH_KEYWORDS, "Histogram1DHandlerLogFloat32_hist_vals_vars(Histogram1DHandlerLogFloat32 self, bool overflows=True)"},
 	 { "Histogram1DHandlerLogFloat32_swigregister", Histogram1DHandlerLogFloat32_swigregister, METH_O, NULL},
 	 { "Histogram1DHandlerLogFloat32_swiginit", Histogram1DHandlerLogFloat32_swiginit, METH_VARARGS, NULL},
-	 { "new_Histogram1DHandlerFloat32", _wrap_new_Histogram1DHandlerFloat32, METH_VARARGS, "\n"
-		"Histogram1DHandlerFloat32()\n"
-		"new_Histogram1DHandlerFloat32(unsigned int nbins, float axis_min, float axis_max) -> Histogram1DHandlerFloat32\n"
-		""},
+	 { "new_Histogram1DHandlerFloat32", (PyCFunction)(void(*)(void))_wrap_new_Histogram1DHandlerFloat32, METH_VARARGS|METH_KEYWORDS, "new_Histogram1DHandlerFloat32(unsigned int nbins, float axis_min, float axis_max) -> Histogram1DHandlerFloat32"},
 	 { "delete_Histogram1DHandlerFloat32", _wrap_delete_Histogram1DHandlerFloat32, METH_O, "delete_Histogram1DHandlerFloat32(Histogram1DHandlerFloat32 self)"},
 	 { "Histogram1DHandlerFloat32_nbins", _wrap_Histogram1DHandlerFloat32_nbins, METH_O, "Histogram1DHandlerFloat32_nbins(Histogram1DHandlerFloat32 self) -> unsigned int"},
 	 { "Histogram1DHandlerFloat32_axis_min", _wrap_Histogram1DHandlerFloat32_axis_min, METH_O, "Histogram1DHandlerFloat32_axis_min(Histogram1DHandlerFloat32 self) -> float"},
@@ -33398,10 +32942,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "Histogram1DHandlerFloat32_hist_vals_vars", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerFloat32_hist_vals_vars, METH_VARARGS|METH_KEYWORDS, "Histogram1DHandlerFloat32_hist_vals_vars(Histogram1DHandlerFloat32 self, bool overflows=True)"},
 	 { "Histogram1DHandlerFloat32_swigregister", Histogram1DHandlerFloat32_swigregister, METH_O, NULL},
 	 { "Histogram1DHandlerFloat32_swiginit", Histogram1DHandlerFloat32_swiginit, METH_VARARGS, NULL},
-	 { "new_CorrelationDimensionFloat64", _wrap_new_CorrelationDimensionFloat64, METH_VARARGS, "\n"
-		"CorrelationDimensionFloat64()\n"
-		"new_CorrelationDimensionFloat64(unsigned int nbins, double axis_min, double axis_max) -> CorrelationDimensionFloat64\n"
-		""},
+	 { "new_CorrelationDimensionFloat64", (PyCFunction)(void(*)(void))_wrap_new_CorrelationDimensionFloat64, METH_VARARGS|METH_KEYWORDS, "new_CorrelationDimensionFloat64(unsigned int nbins, double axis_min, double axis_max) -> CorrelationDimensionFloat64"},
 	 { "CorrelationDimensionFloat64_corrdims_vec", (PyCFunction)(void(*)(void))_wrap_CorrelationDimensionFloat64_corrdims_vec, METH_VARARGS|METH_KEYWORDS, "CorrelationDimensionFloat64_corrdims_vec(CorrelationDimensionFloat64 self, double eps=std::numeric_limits< double >::epsilon()) -> pairVectorDouble"},
 	 { "CorrelationDimensionFloat64_corrdim_bins_vec", _wrap_CorrelationDimensionFloat64_corrdim_bins_vec, METH_O, "CorrelationDimensionFloat64_corrdim_bins_vec(CorrelationDimensionFloat64 self) -> vectorDouble"},
 	 { "CorrelationDimensionFloat64_cumulative_vals_vars_vec", _wrap_CorrelationDimensionFloat64_cumulative_vals_vars_vec, METH_O, "CorrelationDimensionFloat64_cumulative_vals_vars_vec(CorrelationDimensionFloat64 self) -> pairVectorDouble"},
@@ -33413,10 +32954,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "delete_CorrelationDimensionFloat64", _wrap_delete_CorrelationDimensionFloat64, METH_O, "delete_CorrelationDimensionFloat64(CorrelationDimensionFloat64 self)"},
 	 { "CorrelationDimensionFloat64_swigregister", CorrelationDimensionFloat64_swigregister, METH_O, NULL},
 	 { "CorrelationDimensionFloat64_swiginit", CorrelationDimensionFloat64_swiginit, METH_VARARGS, NULL},
-	 { "new_CorrelationDimensionFloat32", _wrap_new_CorrelationDimensionFloat32, METH_VARARGS, "\n"
-		"CorrelationDimensionFloat32()\n"
-		"new_CorrelationDimensionFloat32(unsigned int nbins, float axis_min, float axis_max) -> CorrelationDimensionFloat32\n"
-		""},
+	 { "new_CorrelationDimensionFloat32", (PyCFunction)(void(*)(void))_wrap_new_CorrelationDimensionFloat32, METH_VARARGS|METH_KEYWORDS, "new_CorrelationDimensionFloat32(unsigned int nbins, float axis_min, float axis_max) -> CorrelationDimensionFloat32"},
 	 { "CorrelationDimensionFloat32_corrdims_vec", (PyCFunction)(void(*)(void))_wrap_CorrelationDimensionFloat32_corrdims_vec, METH_VARARGS|METH_KEYWORDS, "CorrelationDimensionFloat32_corrdims_vec(CorrelationDimensionFloat32 self, float eps=std::numeric_limits< float >::epsilon()) -> pairVectorFloat"},
 	 { "CorrelationDimensionFloat32_corrdim_bins_vec", _wrap_CorrelationDimensionFloat32_corrdim_bins_vec, METH_O, "CorrelationDimensionFloat32_corrdim_bins_vec(CorrelationDimensionFloat32 self) -> vectorFloat"},
 	 { "CorrelationDimensionFloat32_cumulative_vals_vars_vec", _wrap_CorrelationDimensionFloat32_cumulative_vals_vars_vec, METH_O, "CorrelationDimensionFloat32_cumulative_vals_vars_vec(CorrelationDimensionFloat32 self) -> pairVectorFloat"},
@@ -33848,10 +33386,7 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 		""},
 	 { "ExternalEMDHandlerFloat64_evaluate_symmetric", (PyCFunction)(void(*)(void))_wrap_ExternalEMDHandlerFloat64_evaluate_symmetric, METH_VARARGS|METH_KEYWORDS, "evaluate_symmetric(ExternalEMDHandlerFloat64 self, double * emds, double * event_weights)"},
 	 { "ExternalEMDHandlerFloat64_swigregister", ExternalEMDHandlerFloat64_swigregister, METH_O, NULL},
-	 { "new_Histogram1DHandlerLogFloat64", _wrap_new_Histogram1DHandlerLogFloat64, METH_VARARGS, "\n"
-		"Histogram1DHandlerLogFloat64()\n"
-		"new_Histogram1DHandlerLogFloat64(unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandlerLogFloat64\n"
-		""},
+	 { "new_Histogram1DHandlerLogFloat64", (PyCFunction)(void(*)(void))_wrap_new_Histogram1DHandlerLogFloat64, METH_VARARGS|METH_KEYWORDS, "new_Histogram1DHandlerLogFloat64(unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandlerLogFloat64"},
 	 { "delete_Histogram1DHandlerLogFloat64", _wrap_delete_Histogram1DHandlerLogFloat64, METH_O, "delete_Histogram1DHandlerLogFloat64(Histogram1DHandlerLogFloat64 self)"},
 	 { "Histogram1DHandlerLogFloat64_nbins", _wrap_Histogram1DHandlerLogFloat64_nbins, METH_O, "nbins(Histogram1DHandlerLogFloat64 self) -> unsigned int"},
 	 { "Histogram1DHandlerLogFloat64_axis_min", _wrap_Histogram1DHandlerLogFloat64_axis_min, METH_O, "axis_min(Histogram1DHandlerLogFloat64 self) -> double"},
@@ -33868,10 +33403,7 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "Histogram1DHandlerLogFloat64_hist_vals_vars", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerLogFloat64_hist_vals_vars, METH_VARARGS|METH_KEYWORDS, "hist_vals_vars(Histogram1DHandlerLogFloat64 self, bool overflows=True)"},
 	 { "Histogram1DHandlerLogFloat64_swigregister", Histogram1DHandlerLogFloat64_swigregister, METH_O, NULL},
 	 { "Histogram1DHandlerLogFloat64_swiginit", Histogram1DHandlerLogFloat64_swiginit, METH_VARARGS, NULL},
-	 { "new_Histogram1DHandlerFloat64", _wrap_new_Histogram1DHandlerFloat64, METH_VARARGS, "\n"
-		"Histogram1DHandlerFloat64()\n"
-		"new_Histogram1DHandlerFloat64(unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandlerFloat64\n"
-		""},
+	 { "new_Histogram1DHandlerFloat64", (PyCFunction)(void(*)(void))_wrap_new_Histogram1DHandlerFloat64, METH_VARARGS|METH_KEYWORDS, "new_Histogram1DHandlerFloat64(unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandlerFloat64"},
 	 { "delete_Histogram1DHandlerFloat64", _wrap_delete_Histogram1DHandlerFloat64, METH_O, "delete_Histogram1DHandlerFloat64(Histogram1DHandlerFloat64 self)"},
 	 { "Histogram1DHandlerFloat64_nbins", _wrap_Histogram1DHandlerFloat64_nbins, METH_O, "nbins(Histogram1DHandlerFloat64 self) -> unsigned int"},
 	 { "Histogram1DHandlerFloat64_axis_min", _wrap_Histogram1DHandlerFloat64_axis_min, METH_O, "axis_min(Histogram1DHandlerFloat64 self) -> double"},
@@ -33958,10 +33490,7 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 		""},
 	 { "ExternalEMDHandlerFloat32_evaluate_symmetric", (PyCFunction)(void(*)(void))_wrap_ExternalEMDHandlerFloat32_evaluate_symmetric, METH_VARARGS|METH_KEYWORDS, "evaluate_symmetric(ExternalEMDHandlerFloat32 self, float * emds, float * event_weights)"},
 	 { "ExternalEMDHandlerFloat32_swigregister", ExternalEMDHandlerFloat32_swigregister, METH_O, NULL},
-	 { "new_Histogram1DHandlerLogFloat32", _wrap_new_Histogram1DHandlerLogFloat32, METH_VARARGS, "\n"
-		"Histogram1DHandlerLogFloat32()\n"
-		"new_Histogram1DHandlerLogFloat32(unsigned int nbins, float axis_min, float axis_max) -> Histogram1DHandlerLogFloat32\n"
-		""},
+	 { "new_Histogram1DHandlerLogFloat32", (PyCFunction)(void(*)(void))_wrap_new_Histogram1DHandlerLogFloat32, METH_VARARGS|METH_KEYWORDS, "new_Histogram1DHandlerLogFloat32(unsigned int nbins, float axis_min, float axis_max) -> Histogram1DHandlerLogFloat32"},
 	 { "delete_Histogram1DHandlerLogFloat32", _wrap_delete_Histogram1DHandlerLogFloat32, METH_O, "delete_Histogram1DHandlerLogFloat32(Histogram1DHandlerLogFloat32 self)"},
 	 { "Histogram1DHandlerLogFloat32_nbins", _wrap_Histogram1DHandlerLogFloat32_nbins, METH_O, "nbins(Histogram1DHandlerLogFloat32 self) -> unsigned int"},
 	 { "Histogram1DHandlerLogFloat32_axis_min", _wrap_Histogram1DHandlerLogFloat32_axis_min, METH_O, "axis_min(Histogram1DHandlerLogFloat32 self) -> float"},
@@ -33978,10 +33507,7 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "Histogram1DHandlerLogFloat32_hist_vals_vars", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerLogFloat32_hist_vals_vars, METH_VARARGS|METH_KEYWORDS, "hist_vals_vars(Histogram1DHandlerLogFloat32 self, bool overflows=True)"},
 	 { "Histogram1DHandlerLogFloat32_swigregister", Histogram1DHandlerLogFloat32_swigregister, METH_O, NULL},
 	 { "Histogram1DHandlerLogFloat32_swiginit", Histogram1DHandlerLogFloat32_swiginit, METH_VARARGS, NULL},
-	 { "new_Histogram1DHandlerFloat32", _wrap_new_Histogram1DHandlerFloat32, METH_VARARGS, "\n"
-		"Histogram1DHandlerFloat32()\n"
-		"new_Histogram1DHandlerFloat32(unsigned int nbins, float axis_min, float axis_max) -> Histogram1DHandlerFloat32\n"
-		""},
+	 { "new_Histogram1DHandlerFloat32", (PyCFunction)(void(*)(void))_wrap_new_Histogram1DHandlerFloat32, METH_VARARGS|METH_KEYWORDS, "new_Histogram1DHandlerFloat32(unsigned int nbins, float axis_min, float axis_max) -> Histogram1DHandlerFloat32"},
 	 { "delete_Histogram1DHandlerFloat32", _wrap_delete_Histogram1DHandlerFloat32, METH_O, "delete_Histogram1DHandlerFloat32(Histogram1DHandlerFloat32 self)"},
 	 { "Histogram1DHandlerFloat32_nbins", _wrap_Histogram1DHandlerFloat32_nbins, METH_O, "nbins(Histogram1DHandlerFloat32 self) -> unsigned int"},
 	 { "Histogram1DHandlerFloat32_axis_min", _wrap_Histogram1DHandlerFloat32_axis_min, METH_O, "axis_min(Histogram1DHandlerFloat32 self) -> float"},
@@ -33998,10 +33524,7 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "Histogram1DHandlerFloat32_hist_vals_vars", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerFloat32_hist_vals_vars, METH_VARARGS|METH_KEYWORDS, "hist_vals_vars(Histogram1DHandlerFloat32 self, bool overflows=True)"},
 	 { "Histogram1DHandlerFloat32_swigregister", Histogram1DHandlerFloat32_swigregister, METH_O, NULL},
 	 { "Histogram1DHandlerFloat32_swiginit", Histogram1DHandlerFloat32_swiginit, METH_VARARGS, NULL},
-	 { "new_CorrelationDimensionFloat64", _wrap_new_CorrelationDimensionFloat64, METH_VARARGS, "\n"
-		"CorrelationDimensionFloat64()\n"
-		"new_CorrelationDimensionFloat64(unsigned int nbins, double axis_min, double axis_max) -> CorrelationDimensionFloat64\n"
-		""},
+	 { "new_CorrelationDimensionFloat64", (PyCFunction)(void(*)(void))_wrap_new_CorrelationDimensionFloat64, METH_VARARGS|METH_KEYWORDS, "new_CorrelationDimensionFloat64(unsigned int nbins, double axis_min, double axis_max) -> CorrelationDimensionFloat64"},
 	 { "CorrelationDimensionFloat64_corrdims_vec", (PyCFunction)(void(*)(void))_wrap_CorrelationDimensionFloat64_corrdims_vec, METH_VARARGS|METH_KEYWORDS, "corrdims_vec(CorrelationDimensionFloat64 self, double eps=std::numeric_limits< double >::epsilon()) -> pairVectorDouble"},
 	 { "CorrelationDimensionFloat64_corrdim_bins_vec", _wrap_CorrelationDimensionFloat64_corrdim_bins_vec, METH_O, "corrdim_bins_vec(CorrelationDimensionFloat64 self) -> vectorDouble"},
 	 { "CorrelationDimensionFloat64_cumulative_vals_vars_vec", _wrap_CorrelationDimensionFloat64_cumulative_vals_vars_vec, METH_O, "cumulative_vals_vars_vec(CorrelationDimensionFloat64 self) -> pairVectorDouble"},
@@ -34013,10 +33536,7 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "delete_CorrelationDimensionFloat64", _wrap_delete_CorrelationDimensionFloat64, METH_O, "delete_CorrelationDimensionFloat64(CorrelationDimensionFloat64 self)"},
 	 { "CorrelationDimensionFloat64_swigregister", CorrelationDimensionFloat64_swigregister, METH_O, NULL},
 	 { "CorrelationDimensionFloat64_swiginit", CorrelationDimensionFloat64_swiginit, METH_VARARGS, NULL},
-	 { "new_CorrelationDimensionFloat32", _wrap_new_CorrelationDimensionFloat32, METH_VARARGS, "\n"
-		"CorrelationDimensionFloat32()\n"
-		"new_CorrelationDimensionFloat32(unsigned int nbins, float axis_min, float axis_max) -> CorrelationDimensionFloat32\n"
-		""},
+	 { "new_CorrelationDimensionFloat32", (PyCFunction)(void(*)(void))_wrap_new_CorrelationDimensionFloat32, METH_VARARGS|METH_KEYWORDS, "new_CorrelationDimensionFloat32(unsigned int nbins, float axis_min, float axis_max) -> CorrelationDimensionFloat32"},
 	 { "CorrelationDimensionFloat32_corrdims_vec", (PyCFunction)(void(*)(void))_wrap_CorrelationDimensionFloat32_corrdims_vec, METH_VARARGS|METH_KEYWORDS, "corrdims_vec(CorrelationDimensionFloat32 self, float eps=std::numeric_limits< float >::epsilon()) -> pairVectorFloat"},
 	 { "CorrelationDimensionFloat32_corrdim_bins_vec", _wrap_CorrelationDimensionFloat32_corrdim_bins_vec, METH_O, "corrdim_bins_vec(CorrelationDimensionFloat32 self) -> vectorFloat"},
 	 { "CorrelationDimensionFloat32_cumulative_vals_vars_vec", _wrap_CorrelationDimensionFloat32_cumulative_vals_vars_vec, METH_O, "cumulative_vals_vars_vec(CorrelationDimensionFloat32 self) -> pairVectorFloat"},

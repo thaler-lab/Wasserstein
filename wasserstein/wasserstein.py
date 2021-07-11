@@ -500,12 +500,9 @@ class Histogram1DHandlerLogFloat64(ExternalEMDHandlerFloat64):
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
-    def __init__(self, *args):
-        r"""
-        __init__(Histogram1DHandlerLogFloat64 self) -> Histogram1DHandlerLogFloat64
-        __init__(Histogram1DHandlerLogFloat64 self, unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandlerLogFloat64
-        """
-        _wasserstein.Histogram1DHandlerLogFloat64_swiginit(self, _wasserstein.new_Histogram1DHandlerLogFloat64(*args))
+    def __init__(self, nbins: "unsigned int", axis_min: "double", axis_max: "double"):
+        r"""__init__(Histogram1DHandlerLogFloat64 self, unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandlerLogFloat64"""
+        _wasserstein.Histogram1DHandlerLogFloat64_swiginit(self, _wasserstein.new_Histogram1DHandlerLogFloat64(nbins, axis_min, axis_max))
     __swig_destroy__ = _wasserstein.delete_Histogram1DHandlerLogFloat64
     nbins = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat64_nbins)
     axis_min = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat64_axis_min)
@@ -534,12 +531,9 @@ class Histogram1DHandlerFloat64(ExternalEMDHandlerFloat64):
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
-    def __init__(self, *args):
-        r"""
-        __init__(Histogram1DHandlerFloat64 self) -> Histogram1DHandlerFloat64
-        __init__(Histogram1DHandlerFloat64 self, unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandlerFloat64
-        """
-        _wasserstein.Histogram1DHandlerFloat64_swiginit(self, _wasserstein.new_Histogram1DHandlerFloat64(*args))
+    def __init__(self, nbins: "unsigned int", axis_min: "double", axis_max: "double"):
+        r"""__init__(Histogram1DHandlerFloat64 self, unsigned int nbins, double axis_min, double axis_max) -> Histogram1DHandlerFloat64"""
+        _wasserstein.Histogram1DHandlerFloat64_swiginit(self, _wasserstein.new_Histogram1DHandlerFloat64(nbins, axis_min, axis_max))
     __swig_destroy__ = _wasserstein.delete_Histogram1DHandlerFloat64
     nbins = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat64_nbins)
     axis_min = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat64_axis_min)
@@ -708,12 +702,9 @@ class Histogram1DHandlerLogFloat32(ExternalEMDHandlerFloat32):
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
-    def __init__(self, *args):
-        r"""
-        __init__(Histogram1DHandlerLogFloat32 self) -> Histogram1DHandlerLogFloat32
-        __init__(Histogram1DHandlerLogFloat32 self, unsigned int nbins, float axis_min, float axis_max) -> Histogram1DHandlerLogFloat32
-        """
-        _wasserstein.Histogram1DHandlerLogFloat32_swiginit(self, _wasserstein.new_Histogram1DHandlerLogFloat32(*args))
+    def __init__(self, nbins: "unsigned int", axis_min: "float", axis_max: "float"):
+        r"""__init__(Histogram1DHandlerLogFloat32 self, unsigned int nbins, float axis_min, float axis_max) -> Histogram1DHandlerLogFloat32"""
+        _wasserstein.Histogram1DHandlerLogFloat32_swiginit(self, _wasserstein.new_Histogram1DHandlerLogFloat32(nbins, axis_min, axis_max))
     __swig_destroy__ = _wasserstein.delete_Histogram1DHandlerLogFloat32
     nbins = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_nbins)
     axis_min = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_axis_min)
@@ -742,12 +733,9 @@ class Histogram1DHandlerFloat32(ExternalEMDHandlerFloat32):
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
-    def __init__(self, *args):
-        r"""
-        __init__(Histogram1DHandlerFloat32 self) -> Histogram1DHandlerFloat32
-        __init__(Histogram1DHandlerFloat32 self, unsigned int nbins, float axis_min, float axis_max) -> Histogram1DHandlerFloat32
-        """
-        _wasserstein.Histogram1DHandlerFloat32_swiginit(self, _wasserstein.new_Histogram1DHandlerFloat32(*args))
+    def __init__(self, nbins: "unsigned int", axis_min: "float", axis_max: "float"):
+        r"""__init__(Histogram1DHandlerFloat32 self, unsigned int nbins, float axis_min, float axis_max) -> Histogram1DHandlerFloat32"""
+        _wasserstein.Histogram1DHandlerFloat32_swiginit(self, _wasserstein.new_Histogram1DHandlerFloat32(nbins, axis_min, axis_max))
     __swig_destroy__ = _wasserstein.delete_Histogram1DHandlerFloat32
     nbins = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat32_nbins)
     axis_min = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat32_axis_min)
@@ -776,12 +764,9 @@ class CorrelationDimensionFloat64(Histogram1DHandlerLogFloat64):
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
-    def __init__(self, *args):
-        r"""
-        __init__(CorrelationDimensionFloat64 self) -> CorrelationDimensionFloat64
-        __init__(CorrelationDimensionFloat64 self, unsigned int nbins, double axis_min, double axis_max) -> CorrelationDimensionFloat64
-        """
-        _wasserstein.CorrelationDimensionFloat64_swiginit(self, _wasserstein.new_CorrelationDimensionFloat64(*args))
+    def __init__(self, nbins: "unsigned int", axis_min: "double", axis_max: "double"):
+        r"""__init__(CorrelationDimensionFloat64 self, unsigned int nbins, double axis_min, double axis_max) -> CorrelationDimensionFloat64"""
+        _wasserstein.CorrelationDimensionFloat64_swiginit(self, _wasserstein.new_CorrelationDimensionFloat64(nbins, axis_min, axis_max))
     corrdims_vec = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat64_corrdims_vec)
     corrdim_bins_vec = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat64_corrdim_bins_vec)
     cumulative_vals_vars_vec = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat64_cumulative_vals_vars_vec)
@@ -800,12 +785,9 @@ class CorrelationDimensionFloat32(Histogram1DHandlerLogFloat32):
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
-    def __init__(self, *args):
-        r"""
-        __init__(CorrelationDimensionFloat32 self) -> CorrelationDimensionFloat32
-        __init__(CorrelationDimensionFloat32 self, unsigned int nbins, float axis_min, float axis_max) -> CorrelationDimensionFloat32
-        """
-        _wasserstein.CorrelationDimensionFloat32_swiginit(self, _wasserstein.new_CorrelationDimensionFloat32(*args))
+    def __init__(self, nbins: "unsigned int", axis_min: "float", axis_max: "float"):
+        r"""__init__(CorrelationDimensionFloat32 self, unsigned int nbins, float axis_min, float axis_max) -> CorrelationDimensionFloat32"""
+        _wasserstein.CorrelationDimensionFloat32_swiginit(self, _wasserstein.new_CorrelationDimensionFloat32(nbins, axis_min, axis_max))
     corrdims_vec = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat32_corrdims_vec)
     corrdim_bins_vec = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat32_corrdim_bins_vec)
     cumulative_vals_vars_vec = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat32_cumulative_vals_vars_vec)
@@ -865,7 +847,7 @@ class EMDFloat64(EMDBaseFloat64):
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
-    def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=1000, epsilon_small_factor=1):
+    def __init__(self, R: "double"=1, beta: "double"=1, norm: "bool"=False, do_timing: "bool"=False, external_dists: "bool"=False, n_iter_max: "std::size_t"=100000, epsilon_large_factor: "double"=1000, epsilon_small_factor: "double"=1):
         r"""__init__(EMDFloat64 self, double R=1, double beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, std::size_t n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1) -> EMDFloat64"""
         _wasserstein.EMDFloat64_swiginit(self, _wasserstein.new_EMDFloat64(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
     __swig_destroy__ = _wasserstein.delete_EMDFloat64
@@ -883,7 +865,7 @@ class EMDFloat32(EMDBaseFloat32):
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
-    def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=1000, epsilon_small_factor=1):
+    def __init__(self, R: "float"=1, beta: "float"=1, norm: "bool"=False, do_timing: "bool"=False, external_dists: "bool"=False, n_iter_max: "std::size_t"=100000, epsilon_large_factor: "float"=1000, epsilon_small_factor: "float"=1):
         r"""__init__(EMDFloat32 self, float R=1, float beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, std::size_t n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1) -> EMDFloat32"""
         _wasserstein.EMDFloat32_swiginit(self, _wasserstein.new_EMDFloat32(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
     __swig_destroy__ = _wasserstein.delete_EMDFloat32
@@ -901,7 +883,7 @@ class EMDYPhiFloat64(EMDBaseFloat64):
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
-    def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=1000, epsilon_small_factor=1):
+    def __init__(self, R: "double"=1, beta: "double"=1, norm: "bool"=False, do_timing: "bool"=False, external_dists: "bool"=False, n_iter_max: "std::size_t"=100000, epsilon_large_factor: "double"=1000, epsilon_small_factor: "double"=1):
         r"""__init__(EMDYPhiFloat64 self, double R=1, double beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, std::size_t n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1) -> EMDYPhiFloat64"""
         _wasserstein.EMDYPhiFloat64_swiginit(self, _wasserstein.new_EMDYPhiFloat64(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
     __swig_destroy__ = _wasserstein.delete_EMDYPhiFloat64
@@ -919,7 +901,7 @@ class EMDYPhiFloat32(EMDBaseFloat32):
 
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
 
-    def __init__(self, R=1, beta=1, norm=False, do_timing=False, external_dists=False, n_iter_max=100000, epsilon_large_factor=1000, epsilon_small_factor=1):
+    def __init__(self, R: "float"=1, beta: "float"=1, norm: "bool"=False, do_timing: "bool"=False, external_dists: "bool"=False, n_iter_max: "std::size_t"=100000, epsilon_large_factor: "float"=1000, epsilon_small_factor: "float"=1):
         r"""__init__(EMDYPhiFloat32 self, float R=1, float beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, std::size_t n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1) -> EMDYPhiFloat32"""
         _wasserstein.EMDYPhiFloat32_swiginit(self, _wasserstein.new_EMDYPhiFloat32(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
     __swig_destroy__ = _wasserstein.delete_EMDYPhiFloat32
