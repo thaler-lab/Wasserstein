@@ -5,10 +5,8 @@
 # the SWIG interface file instead.
 
 
-import itertools
-
-
 import numpy as np
+import itertools
 
 
 
@@ -439,10 +437,39 @@ class PairwiseEMDBaseFloat64(object):
     emds_vec = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_emds_vec)
     emd = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_emd)
 
+
     def __del__(self):
         if hasattr(self, '_external_emd_handler'):
             self._external_emd_handler.thisown = 1
             del self._external_emd_handler
+
+    def __call__(self, eventsA, eventsB=None, gdim=None, mask=False,
+                       event_weightsA=None, event_weightsB=None):
+
+        if eventsB is None:
+            self.init(len(eventsA))
+            eventsB = event_weightsB = []
+        else:
+            self.init(len(eventsA), len(eventsB))
+
+        if event_weightsA is None:
+            event_weightsA = np.ones(len(eventsA), dtype=float)
+        elif len(event_weightsA) != len(eventsA):
+            raise ValueError('length of `event_weightsA` does not match length of `eventsA`')
+
+        if event_weightsB is None:
+            event_weightsB = np.ones(len(eventsB), dtype=float)
+        elif len(event_weightsB) != len(eventsB):
+            raise ValueError('length of `event_weightsB` does not match length of `eventsB`')
+
+        self.event_arrs = []
+        _store_events(self, itertools.chain(eventsA, eventsB),
+                            itertools.chain(event_weightsA, event_weightsB),
+                            gdim, mask)
+
+    # run actual computation
+        if not self.request_mode():
+            self.compute()
 
     emds = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_emds)
     raw_emds = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_raw_emds)
@@ -618,10 +645,39 @@ class PairwiseEMDBaseFloat32(object):
     emds_vec = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_emds_vec)
     emd = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_emd)
 
+
     def __del__(self):
         if hasattr(self, '_external_emd_handler'):
             self._external_emd_handler.thisown = 1
             del self._external_emd_handler
+
+    def __call__(self, eventsA, eventsB=None, gdim=None, mask=False,
+                       event_weightsA=None, event_weightsB=None):
+
+        if eventsB is None:
+            self.init(len(eventsA))
+            eventsB = event_weightsB = []
+        else:
+            self.init(len(eventsA), len(eventsB))
+
+        if event_weightsA is None:
+            event_weightsA = np.ones(len(eventsA), dtype=float)
+        elif len(event_weightsA) != len(eventsA):
+            raise ValueError('length of `event_weightsA` does not match length of `eventsA`')
+
+        if event_weightsB is None:
+            event_weightsB = np.ones(len(eventsB), dtype=float)
+        elif len(event_weightsB) != len(eventsB):
+            raise ValueError('length of `event_weightsB` does not match length of `eventsB`')
+
+        self.event_arrs = []
+        _store_events(self, itertools.chain(eventsA, eventsB),
+                            itertools.chain(event_weightsA, event_weightsB),
+                            gdim, mask)
+
+    # run actual computation
+        if not self.request_mode():
+            self.compute()
 
     emds = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_emds)
     raw_emds = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_raw_emds)
@@ -906,34 +962,6 @@ class PairwiseEMDFloat64(PairwiseEMDBaseFloat64):
         if hasattr(self, 'event_arrs'):
             del self.event_arrs
 
-    def __call__(self, eventsA, eventsB=None, gdim=None, mask=False,
-                       event_weightsA=None, event_weightsB=None):
-
-        if eventsB is None:
-            self.init(len(eventsA))
-            eventsB = event_weightsB = []
-        else:
-            self.init(len(eventsA), len(eventsB))
-
-        if event_weightsA is None:
-            event_weightsA = np.ones(len(eventsA), dtype=np.double)
-        elif len(event_weightsA) != len(eventsA):
-            raise ValueError('length of `event_weightsA` does not match length of `eventsA`')
-
-        if event_weightsB is None:
-            event_weightsB = np.ones(len(eventsB), dtype=np.double)
-        elif len(event_weightsB) != len(eventsB):
-            raise ValueError('length of `event_weightsB` does not match length of `eventsB`')
-
-        self.event_arrs = []
-        _store_events(self, itertools.chain(eventsA, eventsB),
-                            itertools.chain(event_weightsA, event_weightsB),
-                            gdim, mask)
-
-    # run actual computation
-        if not self.request_mode():
-            self.compute()
-
     def set_new_eventsB(self, eventsB, gdim=None, mask=False, event_weightsB=None):
 
     # check that we have been initialized before
@@ -993,34 +1021,6 @@ class PairwiseEMDFloat32(PairwiseEMDBaseFloat32):
         super().__del__()
         if hasattr(self, 'event_arrs'):
             del self.event_arrs
-
-    def __call__(self, eventsA, eventsB=None, gdim=None, mask=False,
-                       event_weightsA=None, event_weightsB=None):
-
-        if eventsB is None:
-            self.init(len(eventsA))
-            eventsB = event_weightsB = []
-        else:
-            self.init(len(eventsA), len(eventsB))
-
-        if event_weightsA is None:
-            event_weightsA = np.ones(len(eventsA), dtype=np.double)
-        elif len(event_weightsA) != len(eventsA):
-            raise ValueError('length of `event_weightsA` does not match length of `eventsA`')
-
-        if event_weightsB is None:
-            event_weightsB = np.ones(len(eventsB), dtype=np.double)
-        elif len(event_weightsB) != len(eventsB):
-            raise ValueError('length of `event_weightsB` does not match length of `eventsB`')
-
-        self.event_arrs = []
-        _store_events(self, itertools.chain(eventsA, eventsB),
-                            itertools.chain(event_weightsA, event_weightsB),
-                            gdim, mask)
-
-    # run actual computation
-        if not self.request_mode():
-            self.compute()
 
     def set_new_eventsB(self, eventsB, gdim=None, mask=False, event_weightsB=None):
 
@@ -1082,34 +1082,6 @@ class PairwiseEMDYPhiFloat64(PairwiseEMDBaseFloat64):
         if hasattr(self, 'event_arrs'):
             del self.event_arrs
 
-    def __call__(self, eventsA, eventsB=None, gdim=None, mask=False,
-                       event_weightsA=None, event_weightsB=None):
-
-        if eventsB is None:
-            self.init(len(eventsA))
-            eventsB = event_weightsB = []
-        else:
-            self.init(len(eventsA), len(eventsB))
-
-        if event_weightsA is None:
-            event_weightsA = np.ones(len(eventsA), dtype=np.double)
-        elif len(event_weightsA) != len(eventsA):
-            raise ValueError('length of `event_weightsA` does not match length of `eventsA`')
-
-        if event_weightsB is None:
-            event_weightsB = np.ones(len(eventsB), dtype=np.double)
-        elif len(event_weightsB) != len(eventsB):
-            raise ValueError('length of `event_weightsB` does not match length of `eventsB`')
-
-        self.event_arrs = []
-        _store_events(self, itertools.chain(eventsA, eventsB),
-                            itertools.chain(event_weightsA, event_weightsB),
-                            gdim, mask)
-
-    # run actual computation
-        if not self.request_mode():
-            self.compute()
-
     def set_new_eventsB(self, eventsB, gdim=None, mask=False, event_weightsB=None):
 
     # check that we have been initialized before
@@ -1169,34 +1141,6 @@ class PairwiseEMDYPhiFloat32(PairwiseEMDBaseFloat32):
         super().__del__()
         if hasattr(self, 'event_arrs'):
             del self.event_arrs
-
-    def __call__(self, eventsA, eventsB=None, gdim=None, mask=False,
-                       event_weightsA=None, event_weightsB=None):
-
-        if eventsB is None:
-            self.init(len(eventsA))
-            eventsB = event_weightsB = []
-        else:
-            self.init(len(eventsA), len(eventsB))
-
-        if event_weightsA is None:
-            event_weightsA = np.ones(len(eventsA), dtype=np.double)
-        elif len(event_weightsA) != len(eventsA):
-            raise ValueError('length of `event_weightsA` does not match length of `eventsA`')
-
-        if event_weightsB is None:
-            event_weightsB = np.ones(len(eventsB), dtype=np.double)
-        elif len(event_weightsB) != len(eventsB):
-            raise ValueError('length of `event_weightsB` does not match length of `eventsB`')
-
-        self.event_arrs = []
-        _store_events(self, itertools.chain(eventsA, eventsB),
-                            itertools.chain(event_weightsA, event_weightsB),
-                            gdim, mask)
-
-    # run actual computation
-        if not self.request_mode():
-            self.compute()
 
     def set_new_eventsB(self, eventsB, gdim=None, mask=False, event_weightsB=None):
 

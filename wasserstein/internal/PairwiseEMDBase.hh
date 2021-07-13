@@ -163,7 +163,7 @@ public:
   template<class EMDHandler>
   EMDHandler * external_emd_handler() {
     if (!have_external_emd_handler())
-      throw std::logic_error("no external emd handler set");
+      throw std::invalid_argument("no external emd handler set");
 
     return dynamic_cast<EMDHandler>(handler_);
   }
@@ -207,7 +207,7 @@ public:
 
     // check for having no emds stored
     if (emd_storage_ == EMDPairsStorage::External)
-      throw std::logic_error("No EMDs stored");
+      throw std::invalid_argument("No EMDs stored");
 
     // check if we need to construct a new full matrix from a raw symmetric one
     if (emd_storage_ == EMDPairsStorage::FlattenedSymmetric && !raw) {
@@ -258,7 +258,7 @@ public:
 
     // check for External handling, in which case we don't have any emds stored
     if (emd_storage_ == EMDPairsStorage::External)
-      throw std::logic_error("EMD requested but external handler provided, so no EMDs stored");
+      throw std::invalid_argument("EMD requested but external handler provided, so no EMDs stored");
 
     // index into emd vector (j always bigger than i because upper triangular storage)
     if (emd_storage_ == EMDPairsStorage::FlattenedSymmetric)

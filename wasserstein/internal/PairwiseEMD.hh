@@ -187,8 +187,10 @@ public:
       oss << "auto, " << std::abs(this->print_every_) << " total chunks";
 
     oss << '\n'
+        << "  request_mode - " << this->request_mode() << '\n'
         << "  store_sym_emds_raw - " << this->store_sym_emds_raw_ << '\n'
         << "  throw_on_error - " << this->throw_on_error_ << '\n'
+        << "  omp_dynamic_chunksize - " << this->omp_dynamic_chunksize() << '\n'
         << '\n'
         << (this->handler_ ? this->handler_->description() : "  Pairwise EMD distance matrix stored internally\n");
         
@@ -319,7 +321,7 @@ private:
   double duration() const { return emd_objs_[0].duration(); }
 
 // Wasserstein needs access to these functions in the SWIG Python wrapper, else they can be private
-#ifdef SWIG_WASSERSTEIN
+#ifdef SWIG
 public:
 #else
 private:

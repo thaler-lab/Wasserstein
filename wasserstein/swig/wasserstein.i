@@ -49,11 +49,6 @@ namespace wasserstein {}
 using namespace wasserstein;
 %}
 
-// Python imports at the top of the module
-%pythonbegin %{
-  import itertools
-%}
-
 %feature("autodoc", "1");
 
 // include common wasserstein wrappers
@@ -155,34 +150,6 @@ namespace WASSERSTEIN_NAMESPACE {
           super().__del__()
           if hasattr(self, 'event_arrs'):
               del self.event_arrs
-
-      def __call__(self, eventsA, eventsB=None, gdim=None, mask=False,
-                         event_weightsA=None, event_weightsB=None):
-
-          if eventsB is None:
-              self.init(len(eventsA))
-              eventsB = event_weightsB = []
-          else:
-              self.init(len(eventsA), len(eventsB))
-
-          if event_weightsA is None:
-              event_weightsA = np.ones(len(eventsA), dtype=np.double)
-          elif len(event_weightsA) != len(eventsA):
-              raise ValueError('length of `event_weightsA` does not match length of `eventsA`')
-
-          if event_weightsB is None:
-              event_weightsB = np.ones(len(eventsB), dtype=np.double)
-          elif len(event_weightsB) != len(eventsB):
-              raise ValueError('length of `event_weightsB` does not match length of `eventsB`')
-
-          self.event_arrs = []
-          _store_events(self, itertools.chain(eventsA, eventsB),
-                              itertools.chain(event_weightsA, event_weightsB),
-                              gdim, mask)
-
-          # run actual computation
-          if not self.request_mode():
-              self.compute()
 
       def set_new_eventsB(self, eventsB, gdim=None, mask=False, event_weightsB=None):
 
