@@ -33,41 +33,41 @@ import re
 import subprocess
 import sys
 
-from setuptools import setup
-from setuptools.extension import Extension
-
-import numpy as np
-
-with open(os.path.join('wasserstein', '__init__.py'), 'r') as f:
-    __version__ = re.search(r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read()).group(1)
-
-cxxflags = ['-fopenmp', '-ffast-math', '-std=c++14', '-g0']
-ldflags = []
-libs = []
-
-# MaxOS
-if platform.system() == 'Darwin':
-    cxxflags.insert(0, '-Xpreprocessor')
-    libs.append('omp')
-
-# Linux
-elif platform.system() == 'Linux':
-    ldflags.append('-fopenmp')
-
-# Windows
-elif platform.system() == 'Windows':
-    cxxflags = ['/openmp', '/std:c++14']
-    ldflags = ['/openmp']
-
+# generate swig wrapper
 if sys.argv[1] == 'swig':
-    opts = '-fastproxy -w511 -keyword'
-    if len(sys.argv) >= 3 and sys.argv[2] == '-py3':
-        opts += ' -py3'
-    command = 'swig -python -c++ {} -o wasserstein/wasserstein.cpp wasserstein/swig/wasserstein.i'.format(opts)
+    command = ('swig -python -c++ -fastproxy -w511 -keyword -py3 '
+               '-o wasserstein/wasserstein.cpp wasserstein/swig/wasserstein.i')
     print(command)
     subprocess.run(command.split())
 
+# compile python package
 else:
+
+    import numpy as np
+    from setuptools import setup
+    from setuptools.extension import Extension
+
+    with open(os.path.join('wasserstein', '__init__.py'), 'r') as f:
+        __version__ = re.search(r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read()).group(1)
+
+    cxxflags = ['-fopenmp', '-ffast-math', '-std=c++14', '-g0']
+    ldflags = []
+    libs = []
+
+    # MacOS
+    if platform.system() == 'Darwin':
+        cxxflags.insert(0, '-Xpreprocessor')
+        libs.append('omp')
+
+    # Linux
+    elif platform.system() == 'Linux':
+        ldflags.append('-fopenmp')
+
+    # Windows
+    elif platform.system() == 'Windows':
+        cxxflags = ['/openmp', '/std:c++14']
+        ldflags = ['/openmp']
+
     wasserstein = Extension('wasserstein._wasserstein',
                             sources=[os.path.join('wasserstein', 'wasserstein.cpp')],
                             define_macros=[('SWIG_TYPE_TABLE', 'wasserstein')],
