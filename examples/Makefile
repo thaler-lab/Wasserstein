@@ -38,7 +38,7 @@ theory_space_example: src/theory_space_example.o src/cnpy.o
 	$(CXX) -o $@ $^ $(LIBRARIES) $(LDFLAGS)
 
 clean:
-	rm -rfv *.o *_examples src/*.o $(DEPDIR)
+	rm -rfv *.o *_example src/*.o $(DEPDIR)
 
 $(DEPDIR): ; @mkdir -p $@
 DEPFILES := $(SRCS:%.cpp=$(DEPDIR)/%.d)
