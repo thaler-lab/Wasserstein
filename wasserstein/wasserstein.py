@@ -438,6 +438,7 @@ class PairwiseEMDBaseFloat64(object):
     emd = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat64_emd)
 
 
+          # ensure proper destruction of objects held by this instance
     def __del__(self):
         if hasattr(self, '_external_emd_handler'):
             self._external_emd_handler.thisown = 1
@@ -467,7 +468,6 @@ class PairwiseEMDBaseFloat64(object):
                             itertools.chain(event_weightsA, event_weightsB),
                             gdim, mask)
 
-    # run actual computation
         if not self.request_mode():
             self.compute()
 
@@ -512,7 +512,6 @@ class Histogram1DHandlerLogFloat64(ExternalEMDHandlerFloat64):
     bin_centers_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat64_bin_centers_vec)
     bin_edges_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat64_bin_edges_vec)
     __iadd__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat64___iadd__)
-    __str__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat64___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat64___repr__)
     bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat64_bin_centers)
     bin_edges = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat64_bin_edges)
@@ -543,7 +542,6 @@ class Histogram1DHandlerFloat64(ExternalEMDHandlerFloat64):
     bin_centers_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat64_bin_centers_vec)
     bin_edges_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat64_bin_edges_vec)
     __iadd__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat64___iadd__)
-    __str__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat64___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat64___repr__)
     bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat64_bin_centers)
     bin_edges = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat64_bin_edges)
@@ -640,6 +638,7 @@ class PairwiseEMDBaseFloat32(object):
     emd = _swig_new_instance_method(_wasserstein.PairwiseEMDBaseFloat32_emd)
 
 
+          # ensure proper destruction of objects held by this instance
     def __del__(self):
         if hasattr(self, '_external_emd_handler'):
             self._external_emd_handler.thisown = 1
@@ -669,7 +668,6 @@ class PairwiseEMDBaseFloat32(object):
                             itertools.chain(event_weightsA, event_weightsB),
                             gdim, mask)
 
-    # run actual computation
         if not self.request_mode():
             self.compute()
 
@@ -714,7 +712,6 @@ class Histogram1DHandlerLogFloat32(ExternalEMDHandlerFloat32):
     bin_centers_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_bin_centers_vec)
     bin_edges_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_bin_edges_vec)
     __iadd__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32___iadd__)
-    __str__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32___repr__)
     bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_bin_centers)
     bin_edges = _swig_new_instance_method(_wasserstein.Histogram1DHandlerLogFloat32_bin_edges)
@@ -745,7 +742,6 @@ class Histogram1DHandlerFloat32(ExternalEMDHandlerFloat32):
     bin_centers_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat32_bin_centers_vec)
     bin_edges_vec = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat32_bin_edges_vec)
     __iadd__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat32___iadd__)
-    __str__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat32___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat32___repr__)
     bin_centers = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat32_bin_centers)
     bin_edges = _swig_new_instance_method(_wasserstein.Histogram1DHandlerFloat32_bin_edges)
@@ -759,27 +755,6 @@ class Histogram1DHandlerFloat32(ExternalEMDHandlerFloat32):
 # Register Histogram1DHandlerFloat32 in _wasserstein:
 _wasserstein.Histogram1DHandlerFloat32_swigregister(Histogram1DHandlerFloat32)
 
-class CorrelationDimensionFloat64(Histogram1DHandlerLogFloat64):
-    r"""Proxy of C++ wasserstein::CorrelationDimension< double > class."""
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-
-    def __init__(self, nbins: "unsigned int", axis_min: "double", axis_max: "double"):
-        r"""__init__(CorrelationDimensionFloat64 self, unsigned int nbins, double axis_min, double axis_max) -> CorrelationDimensionFloat64"""
-        _wasserstein.CorrelationDimensionFloat64_swiginit(self, _wasserstein.new_CorrelationDimensionFloat64(nbins, axis_min, axis_max))
-    corrdims_vec = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat64_corrdims_vec)
-    corrdim_bins_vec = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat64_corrdim_bins_vec)
-    cumulative_vals_vars_vec = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat64_cumulative_vals_vars_vec)
-    __str__ = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat64___str__)
-    __repr__ = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat64___repr__)
-    corrdim_bins = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat64_corrdim_bins)
-    corrdims = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat64_corrdims)
-    cumulative_vals_vars = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat64_cumulative_vals_vars)
-    __swig_destroy__ = _wasserstein.delete_CorrelationDimensionFloat64
-
-# Register CorrelationDimensionFloat64 in _wasserstein:
-_wasserstein.CorrelationDimensionFloat64_swigregister(CorrelationDimensionFloat64)
-
 class CorrelationDimensionFloat32(Histogram1DHandlerLogFloat32):
     r"""Proxy of C++ wasserstein::CorrelationDimension< float > class."""
 
@@ -791,7 +766,6 @@ class CorrelationDimensionFloat32(Histogram1DHandlerLogFloat32):
     corrdims_vec = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat32_corrdims_vec)
     corrdim_bins_vec = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat32_corrdim_bins_vec)
     cumulative_vals_vars_vec = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat32_cumulative_vals_vars_vec)
-    __str__ = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat32___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat32___repr__)
     corrdim_bins = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat32_corrdim_bins)
     corrdims = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat32_corrdims)
@@ -800,6 +774,26 @@ class CorrelationDimensionFloat32(Histogram1DHandlerLogFloat32):
 
 # Register CorrelationDimensionFloat32 in _wasserstein:
 _wasserstein.CorrelationDimensionFloat32_swigregister(CorrelationDimensionFloat32)
+
+class CorrelationDimensionFloat64(Histogram1DHandlerLogFloat64):
+    r"""Proxy of C++ wasserstein::CorrelationDimension< double > class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, nbins: "unsigned int", axis_min: "double", axis_max: "double"):
+        r"""__init__(CorrelationDimensionFloat64 self, unsigned int nbins, double axis_min, double axis_max) -> CorrelationDimensionFloat64"""
+        _wasserstein.CorrelationDimensionFloat64_swiginit(self, _wasserstein.new_CorrelationDimensionFloat64(nbins, axis_min, axis_max))
+    corrdims_vec = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat64_corrdims_vec)
+    corrdim_bins_vec = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat64_corrdim_bins_vec)
+    cumulative_vals_vars_vec = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat64_cumulative_vals_vars_vec)
+    __repr__ = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat64___repr__)
+    corrdim_bins = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat64_corrdim_bins)
+    corrdims = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat64_corrdims)
+    cumulative_vals_vars = _swig_new_instance_method(_wasserstein.CorrelationDimensionFloat64_cumulative_vals_vars)
+    __swig_destroy__ = _wasserstein.delete_CorrelationDimensionFloat64
+
+# Register CorrelationDimensionFloat64 in _wasserstein:
+_wasserstein.CorrelationDimensionFloat64_swigregister(CorrelationDimensionFloat64)
 
 
 def CorrelationDimension(*args, **kwargs):
@@ -852,7 +846,6 @@ class EMDFloat64(EMDBaseFloat64):
         _wasserstein.EMDFloat64_swiginit(self, _wasserstein.new_EMDFloat64(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
     __swig_destroy__ = _wasserstein.delete_EMDFloat64
     description = _swig_new_instance_method(_wasserstein.EMDFloat64_description)
-    __str__ = _swig_new_instance_method(_wasserstein.EMDFloat64___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.EMDFloat64___repr__)
     preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.EMDFloat64_preprocess_CenterWeightedCentroid)
     __call__ = _swig_new_instance_method(_wasserstein.EMDFloat64___call__)
@@ -870,7 +863,6 @@ class EMDFloat32(EMDBaseFloat32):
         _wasserstein.EMDFloat32_swiginit(self, _wasserstein.new_EMDFloat32(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
     __swig_destroy__ = _wasserstein.delete_EMDFloat32
     description = _swig_new_instance_method(_wasserstein.EMDFloat32_description)
-    __str__ = _swig_new_instance_method(_wasserstein.EMDFloat32___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.EMDFloat32___repr__)
     preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.EMDFloat32_preprocess_CenterWeightedCentroid)
     __call__ = _swig_new_instance_method(_wasserstein.EMDFloat32___call__)
@@ -888,7 +880,6 @@ class EMDYPhiFloat64(EMDBaseFloat64):
         _wasserstein.EMDYPhiFloat64_swiginit(self, _wasserstein.new_EMDYPhiFloat64(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
     __swig_destroy__ = _wasserstein.delete_EMDYPhiFloat64
     description = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_description)
-    __str__ = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64___repr__)
     preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64_preprocess_CenterWeightedCentroid)
     __call__ = _swig_new_instance_method(_wasserstein.EMDYPhiFloat64___call__)
@@ -906,7 +897,6 @@ class EMDYPhiFloat32(EMDBaseFloat32):
         _wasserstein.EMDYPhiFloat32_swiginit(self, _wasserstein.new_EMDYPhiFloat32(R, beta, norm, do_timing, external_dists, n_iter_max, epsilon_large_factor, epsilon_small_factor))
     __swig_destroy__ = _wasserstein.delete_EMDYPhiFloat32
     description = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_description)
-    __str__ = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32___repr__)
     preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32_preprocess_CenterWeightedCentroid)
     __call__ = _swig_new_instance_method(_wasserstein.EMDYPhiFloat32___call__)
@@ -932,7 +922,6 @@ class PairwiseEMDFloat64(PairwiseEMDBaseFloat64):
 
     init = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_init)
     compute = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_compute)
-    __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64___repr__)
     preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_preprocess_CenterWeightedCentroid)
     _reset_B_events = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64__reset_B_events)
@@ -992,7 +981,6 @@ class PairwiseEMDFloat32(PairwiseEMDBaseFloat32):
 
     init = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_init)
     compute = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_compute)
-    __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32___repr__)
     preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_preprocess_CenterWeightedCentroid)
     _reset_B_events = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32__reset_B_events)
@@ -1052,7 +1040,6 @@ class PairwiseEMDYPhiFloat64(PairwiseEMDBaseFloat64):
 
     init = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_init)
     compute = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_compute)
-    __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64___repr__)
     preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_preprocess_CenterWeightedCentroid)
     _reset_B_events = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64__reset_B_events)
@@ -1112,7 +1099,6 @@ class PairwiseEMDYPhiFloat32(PairwiseEMDBaseFloat32):
 
     init = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_init)
     compute = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_compute)
-    __str__ = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32___str__)
     __repr__ = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32___repr__)
     preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_preprocess_CenterWeightedCentroid)
     _reset_B_events = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32__reset_B_events)

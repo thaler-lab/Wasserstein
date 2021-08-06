@@ -36,9 +36,6 @@
 // this ensures SWIG parses class members properly
 #define SWIG_WASSERSTEIN
 
-// use numpy
-#define SWIG_NUMPY
-
 %{
 // this controls some class access modifiers
 #ifndef SWIG_WASSERSTEIN

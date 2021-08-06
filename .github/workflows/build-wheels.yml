@@ -7,7 +7,7 @@ on:
 
 env:
   PYPI: 0
-  PYPITEST: 0
+  PYPITEST: 1
   CIBW_BEFORE_TEST: pip install cython
   CIBW_SKIP: pp*
   CIBW_TEST_COMMAND: pytest {package}

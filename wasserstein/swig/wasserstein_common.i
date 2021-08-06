@@ -48,6 +48,7 @@
 #define SWIG_PREPROCESSOR
 
 %{
+
 // include this to avoid needing to define it at compile time 
 #ifndef SWIG
 # define SWIG
@@ -64,80 +65,76 @@
 #include "wasserstein/Wasserstein.hh"
 
 using WASSERSTEIN_NAMESPACE::DefaultNetworkSimplex;
+
 %}
 
-// numpy wrapping and initialization
-#ifdef SWIG_NUMPY
+%include numpy.i
+%init %{
+  import_array();
+%}
 
-  %include numpy.i
-  %init %{
-    import_array();
-  %}
+// Python imports at the top of the module
+%pythonbegin %{
+  import numpy as np
+  import itertools
+%}
 
-  // Python imports at the top of the module
-  %pythonbegin %{
-    import numpy as np
-    import itertools
-  %}
+// numpy typemaps
+%define WASSERSTEIN_NUMPY_TYPEMAPS(F)
+  %apply (F* IN_ARRAY1, std::ptrdiff_t DIM1) {(F* weights0, std::ptrdiff_t n0),
+                                              (F* weights1, std::ptrdiff_t n1),
+                                              (F* emds, std::ptrdiff_t n0),
+                                              (F* event_weights, std::ptrdiff_t n1)}
+  %apply (F* IN_ARRAY2, std::ptrdiff_t DIM1, std::ptrdiff_t DIM2) {(F* coords0, std::ptrdiff_t n00, std::ptrdiff_t n01),
+                                                                   (F* coords1, std::ptrdiff_t n10, std::ptrdiff_t n11),
+                                                                   (F* external_dists, std::ptrdiff_t d0, std::ptrdiff_t d1)}
 
-  // numpy typemaps
-  %define WASSERSTEIN_NUMPY_TYPEMAPS(F)
-    %apply (F* IN_ARRAY1, std::ptrdiff_t DIM1) {(F* weights0, std::ptrdiff_t n0),
-                                                (F* weights1, std::ptrdiff_t n1),
-                                                (F* emds, std::ptrdiff_t n0),
-                                                (F* event_weights, std::ptrdiff_t n1)}
-    %apply (F* IN_ARRAY2, std::ptrdiff_t DIM1, std::ptrdiff_t DIM2) {(F* coords0, std::ptrdiff_t n00, std::ptrdiff_t n01),
-                                                                     (F* coords1, std::ptrdiff_t n10, std::ptrdiff_t n11),
-                                                                     (F* external_dists, std::ptrdiff_t d0, std::ptrdiff_t d1)}
+  %apply (F* INPLACE_ARRAY1, std::ptrdiff_t DIM1) {(F* weights, std::ptrdiff_t n)}
+  %apply (F* INPLACE_ARRAY2, std::ptrdiff_t DIM1, std::ptrdiff_t DIM2) {(F* coords, std::ptrdiff_t n1, std::ptrdiff_t d)}
 
-    %apply (F* INPLACE_ARRAY1, std::ptrdiff_t DIM1) {(F* weights, std::ptrdiff_t n)}
-    %apply (F* INPLACE_ARRAY2, std::ptrdiff_t DIM1, std::ptrdiff_t DIM2) {(F* coords, std::ptrdiff_t n1, std::ptrdiff_t d)}
+  %apply (F** ARGOUTVIEWM_ARRAY1, std::ptrdiff_t* DIM1) {(F** arr_out0, std::ptrdiff_t* n0), (F** arr_out1, std::ptrdiff_t* n1)}
+  %apply (F** ARGOUTVIEWM_ARRAY2, std::ptrdiff_t* DIM1, std::ptrdiff_t* DIM2) {(F** arr_out, std::ptrdiff_t* n0, std::ptrdiff_t* n1)}
+%enddef
 
-    %apply (F** ARGOUTVIEWM_ARRAY1, std::ptrdiff_t* DIM1) {(F** arr_out0, std::ptrdiff_t* n0), (F** arr_out1, std::ptrdiff_t* n1)}
-    %apply (F** ARGOUTVIEWM_ARRAY2, std::ptrdiff_t* DIM1, std::ptrdiff_t* DIM2) {(F** arr_out, std::ptrdiff_t* n0, std::ptrdiff_t* n1)}
-  %enddef
+%numpy_typemaps(double, NPY_DOUBLE, std::ptrdiff_t)
+WASSERSTEIN_NUMPY_TYPEMAPS(double)
 
-  %numpy_typemaps(double, NPY_DOUBLE, std::ptrdiff_t)
-  WASSERSTEIN_NUMPY_TYPEMAPS(double)
+#ifndef WASSERSTEIN_NO_FLOAT32
+  %numpy_typemaps(float,  NPY_FLOAT,  std::ptrdiff_t)
+  WASSERSTEIN_NUMPY_TYPEMAPS(float)
+#endif
 
-  #ifndef WASSERSTEIN_NO_FLOAT32
-    %numpy_typemaps(float,  NPY_FLOAT,  std::ptrdiff_t)
-    WASSERSTEIN_NUMPY_TYPEMAPS(float)
-  #endif
-
-  // prepare to extend classes by renaming some methods
-  namespace WASSERSTEIN_NAMESPACE {
-    %rename(flows_vec) EMDBase::flows;
-    %rename(dists_vec) EMDBase::dists;
-    %rename(node_potentials_vec) EMD::node_potentials;
-    %rename(flows) EMDBase::npy_flows;
-    %rename(dists) EMDBase::npy_dists;
-    %rename(node_potentials) EMD::npy_node_potentials;
-    %rename(emds_vec) PairwiseEMDBase::emds;
-    %rename(emds) PairwiseEMDBase::npy_emds;
-    %rename(evaluate) ExternalEMDHandler::npy_evaluate;
-    %rename(evaluate_symmetric) ExternalEMDHandler::npy_evaluate_symmetric;
-    %rename(bin_centers_vec) Histogram1DHandler::bin_centers;
-    %rename(bin_edges_vec) Histogram1DHandler::bin_edges;
-    %rename(hist_vals_vars_vec) Histogram1DHandler::hist_vals_vars;
-    %rename(bin_centers) Histogram1DHandler::npy_bin_centers;
-    %rename(bin_edges) Histogram1DHandler::npy_bin_edges;
-    %rename(hist_vals_vars) Histogram1DHandler::npy_hist_vals_vars;
-    %rename(cumulative_vals_vars_vec) CorrelationDimension::cumulative_vals_vars;
-    %rename(corrdim_bins_vec) CorrelationDimension::corrdim_bins;
-    %rename(corrdims_vec) CorrelationDimension::corrdims;
-    %rename(cumulative_vals_vars) CorrelationDimension::npy_cumulative_vals_vars;
-    %rename(corrdim_bins) CorrelationDimension::npy_corrdim_bins;
-    %rename(corrdims) CorrelationDimension::npy_corrdims;
-  }
-
-#endif // SWIG_NUMPY
+// prepare to extend classes by renaming some methods
+namespace WASSERSTEIN_NAMESPACE {
+  %rename(flows_vec) EMDBase::flows;
+  %rename(dists_vec) EMDBase::dists;
+  %rename(node_potentials_vec) EMD::node_potentials;
+  %rename(flows) EMDBase::npy_flows;
+  %rename(dists) EMDBase::npy_dists;
+  %rename(node_potentials) EMD::npy_node_potentials;
+  %rename(emds_vec) PairwiseEMDBase::emds;
+  %rename(emds) PairwiseEMDBase::npy_emds;
+  %rename(evaluate) ExternalEMDHandler::npy_evaluate;
+  %rename(evaluate_symmetric) ExternalEMDHandler::npy_evaluate_symmetric;
+  %rename(bin_centers_vec) Histogram1DHandler::bin_centers;
+  %rename(bin_edges_vec) Histogram1DHandler::bin_edges;
+  %rename(hist_vals_vars_vec) Histogram1DHandler::hist_vals_vars;
+  %rename(bin_centers) Histogram1DHandler::npy_bin_centers;
+  %rename(bin_edges) Histogram1DHandler::npy_bin_edges;
+  %rename(hist_vals_vars) Histogram1DHandler::npy_hist_vals_vars;
+  %rename(cumulative_vals_vars_vec) CorrelationDimension::cumulative_vals_vars;
+  %rename(corrdim_bins_vec) CorrelationDimension::corrdim_bins;
+  %rename(corrdims_vec) CorrelationDimension::corrdims;
+  %rename(cumulative_vals_vars) CorrelationDimension::npy_cumulative_vals_vars;
+  %rename(corrdim_bins) CorrelationDimension::npy_corrdim_bins;
+  %rename(corrdims) CorrelationDimension::npy_corrdims;
+}
 
 // makes python class printable from a description method
-%define ADD_STR_FROM_DESCRIPTION(...)
-  std::string __str__() const {
-    return $self->description(__VA_ARGS__);
-  }
+%define ADD_REPR_FROM_DESCRIPTION_ARGS(...)
+  //std::string __str__() const {
+  //  return $self->description(__VA_ARGS__);
+  //}
   std::string __repr__() const {
     return $self->description(__VA_ARGS__);
   }
@@ -218,50 +215,44 @@ using WASSERSTEIN_NAMESPACE::DefaultNetworkSimplex;
 %enddef
 
 %define EXTERNAL_EMD_HANDLER_NUMPY_FUNCS(F)
-  %#ifdef SWIG_NUMPY
-    void npy_evaluate(F* emds, std::ptrdiff_t n0) {
-      $self->evaluate(emds, n0);
-    }
-    void npy_evaluate(F* emds, std::ptrdiff_t n0, F* event_weights, std::ptrdiff_t n1) {
-      if (n0 != n1)
-        throw std::invalid_argument("length of `emds` should match lengh of `event_weights`");
-      $self->evaluate(emds, n0, event_weights);
-    }
-    void npy_evaluate_symmetric(F* emds, std::ptrdiff_t n0, F* event_weights, std::ptrdiff_t n1) {
-      if (n0 != n1*(n1 - 1)/2)
-        throw std::invalid_argument("length of `emds` should be lengh of `event_weights` choose 2");
-      $self->evaluate_symmetric(emds, n1, event_weights);
-    }
-  %#endif // SWIG_NUMPY
+  void npy_evaluate(F* emds, std::ptrdiff_t n0) {
+    $self->evaluate(emds, n0);
+  }
+  void npy_evaluate(F* emds, std::ptrdiff_t n0, F* event_weights, std::ptrdiff_t n1) {
+    if (n0 != n1)
+      throw std::invalid_argument("length of `emds` should match lengh of `event_weights`");
+    $self->evaluate(emds, n0, event_weights);
+  }
+  void npy_evaluate_symmetric(F* emds, std::ptrdiff_t n0, F* event_weights, std::ptrdiff_t n1) {
+    if (n0 != n1*(n1 - 1)/2)
+      throw std::invalid_argument("length of `emds` should be lengh of `event_weights` choose 2");
+    $self->evaluate_symmetric(emds, n1, event_weights);
+  }
 %enddef
 
 %define HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(F)
-  %#ifdef SWIG_NUMPY
-    RETURN_1DNUMPY_FROM_VECTOR(npy_bin_centers, bin_centers, $self->nbins(), F)
-    RETURN_1DNUMPY_FROM_VECTOR(npy_bin_edges, bin_edges, $self->nbins() + 1, F)
-    void npy_hist_vals_vars(F** arr_out0, std::ptrdiff_t* n0, F** arr_out1, std::ptrdiff_t* n1, bool overflows = true) {
-      unsigned nbins = $self->nbins() + (overflows ? 2 : 0);
-      PAIRED_1DNUMPY_FROM_VECPAIR(hist_vals_vars(overflows), nbins, nbins, F)
-    }
+  RETURN_1DNUMPY_FROM_VECTOR(npy_bin_centers, bin_centers, $self->nbins(), F)
+  RETURN_1DNUMPY_FROM_VECTOR(npy_bin_edges, bin_edges, $self->nbins() + 1, F)
+  void npy_hist_vals_vars(F** arr_out0, std::ptrdiff_t* n0, F** arr_out1, std::ptrdiff_t* n1, bool overflows = true) {
+    unsigned nbins = $self->nbins() + (overflows ? 2 : 0);
+    PAIRED_1DNUMPY_FROM_VECPAIR(hist_vals_vars(overflows), nbins, nbins, F)
+  }
 
-    %pythoncode %{
-      def hist_vals_errs(self, overflows=True):
-          vals, vars = self.hist_vals_vars(overflows)
-          return vals, np.sqrt(vars)
-    %}
-  %#endif // SWIG_NUMPY
+  %pythoncode %{
+    def hist_vals_errs(self, overflows=True):
+        vals, vars = self.hist_vals_vars(overflows)
+        return vals, np.sqrt(vars)
+  %}
 %enddef
 
 %define CORRELATION_DIMENSION_NUMPY_FUNCS(F)
-  %#ifdef SWIG_NUMPY
-    RETURN_1DNUMPY_FROM_VECTOR(npy_corrdim_bins, corrdim_bins, $self->nbins() - 1, F)
-    RETURN_PAIRED_1DNUMPY_FROM_VECPAIR(npy_corrdims, corrdims(), $self->nbins() - 1, $self->nbins() - 1, F)
-    RETURN_PAIRED_1DNUMPY_FROM_VECPAIR(npy_cumulative_vals_vars, cumulative_vals_vars(), $self->nbins(), $self->nbins(), F)
-  %#endif // SWIG_NUMPY
+  RETURN_1DNUMPY_FROM_VECTOR(npy_corrdim_bins, corrdim_bins, $self->nbins() - 1, F)
+  RETURN_PAIRED_1DNUMPY_FROM_VECPAIR(npy_corrdims, corrdims(), $self->nbins() - 1, $self->nbins() - 1, F)
+  RETURN_PAIRED_1DNUMPY_FROM_VECPAIR(npy_cumulative_vals_vars, cumulative_vals_vars(), $self->nbins(), $self->nbins(), F)
 %enddef
 
 %define ADD_EXPLICIT_PREPROCESSORS
-void preprocess_CenterWeightedCentroid() { $self->preprocess<WASSERSTEIN_NAMESPACE::CenterWeightedCentroid>(); }
+  void preprocess_CenterWeightedCentroid() { $self->preprocess<WASSERSTEIN_NAMESPACE::CenterWeightedCentroid>(); }
 %enddef
 
 // basic exception handling for all functions
@@ -309,20 +300,19 @@ namespace WASSERSTEIN_NAMESPACE {
 namespace WASSERSTEIN_NAMESPACE {
 
   %extend EMD {
-    ADD_STR_FROM_DESCRIPTION(false)
+    ADD_REPR_FROM_DESCRIPTION_ARGS(false)
     ADD_EXPLICIT_PREPROCESSORS
   }
 
   %extend PairwiseEMD {
-    ADD_STR_FROM_DESCRIPTION(false)
+    ADD_REPR_FROM_DESCRIPTION_ARGS(false)
     ADD_EXPLICIT_PREPROCESSORS
   }
 
   %extend PairwiseEMDBase {
-
-    // ensure proper destruction of objects held by this instance
     %pythoncode %{
 
+      # ensure proper destruction of objects held by this instance
       def __del__(self):
           if hasattr(self, '_external_emd_handler'):
               self._external_emd_handler.thisown = 1
@@ -352,7 +342,6 @@ namespace WASSERSTEIN_NAMESPACE {
                               itertools.chain(event_weightsA, event_weightsB),
                               gdim, mask)
 
-          # run actual computation
           if not self.request_mode():
               self.compute()
     %}
@@ -368,46 +357,64 @@ namespace WASSERSTEIN_NAMESPACE {
     %}
   }
 
-  %extend Histogram1DHandler { ADD_STR_FROM_DESCRIPTION() }
-  %extend CorrelationDimension { ADD_STR_FROM_DESCRIPTION() }
+  // these extensions do not depend on the float precision
+  %extend Histogram1DHandler { ADD_REPR_FROM_DESCRIPTION_ARGS() }
+  %extend CorrelationDimension { ADD_REPR_FROM_DESCRIPTION_ARGS() }
 
-  // instantiate explicit ExternalEMDHandler and Histogram1DHandler classes
+  // EMDBase
   %extend EMDBase<double> { EMDBASE_NUMPY_FUNCS(double) }
+  %template(EMDBaseFloat64) EMDBase<double>;
+
+  // PairwiseEMDBase
   %extend PairwiseEMDBase<double> { PAIRWISEEMDBASE_NUMPY_FUNCS(double) }
+  %template(PairwiseEMDBaseFloat64) PairwiseEMDBase<double>;
+
+  // ExternalEMDHandler
   %extend ExternalEMDHandler<double> { EXTERNAL_EMD_HANDLER_NUMPY_FUNCS(double) }
+  %template(ExternalEMDHandlerFloat64) ExternalEMDHandler<double>;
+
+  // Histogram1DHandler
   %extend Histogram1DHandler<boost::histogram::axis::transform::log, double> {
     HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(double)
   }
+  %template(Histogram1DHandlerLogFloat64) Histogram1DHandler<boost::histogram::axis::transform::log, double>;
   %extend Histogram1DHandler<boost::histogram::axis::transform::id, double> {
     HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(double)
   }
-  %extend CorrelationDimension<double> { CORRELATION_DIMENSION_NUMPY_FUNCS(double) }
-
-  %template(EMDBaseFloat64) EMDBase<double>;
-  %template(PairwiseEMDBaseFloat64) PairwiseEMDBase<double>;
-  %template(ExternalEMDHandlerFloat64) ExternalEMDHandler<double>;
-  %template(Histogram1DHandlerLogFloat64) Histogram1DHandler<boost::histogram::axis::transform::log, double>;
   %template(Histogram1DHandlerFloat64) Histogram1DHandler<boost::histogram::axis::transform::id, double>;
 
+  // CorrelationDimension
+  %extend CorrelationDimension<double> { CORRELATION_DIMENSION_NUMPY_FUNCS(double) }
+
   #ifndef WASSERSTEIN_NO_FLOAT32
+
+    // EMDBase
     %extend EMDBase<float> { EMDBASE_NUMPY_FUNCS(float) }
+    %template(EMDBaseFloat32) EMDBase<float>;
+
+    // PairwiseEMDBase
     %extend PairwiseEMDBase<float> { PAIRWISEEMDBASE_NUMPY_FUNCS(float) }
+    %template(PairwiseEMDBaseFloat32) PairwiseEMDBase<float>;
+    
+    // ExternalEMDHandler
     %extend ExternalEMDHandler<float> { EXTERNAL_EMD_HANDLER_NUMPY_FUNCS(float) }
+    %template(ExternalEMDHandlerFloat32) ExternalEMDHandler<float>;
+
+    // Histogram1DHandler
     %extend Histogram1DHandler<boost::histogram::axis::transform::log, float> {
       HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(float)
     }
+    %template(Histogram1DHandlerLogFloat32) Histogram1DHandler<boost::histogram::axis::transform::log, float>;
     %extend Histogram1DHandler<boost::histogram::axis::transform::id, float> {
       HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(float)
     }
-    %extend CorrelationDimension<float> { CORRELATION_DIMENSION_NUMPY_FUNCS(float) }
-
-    %template(EMDBaseFloat32) EMDBase<float>;
-    %template(PairwiseEMDBaseFloat32) PairwiseEMDBase<float>;
-    %template(ExternalEMDHandlerFloat32) ExternalEMDHandler<float>;
-    %template(Histogram1DHandlerLogFloat32) Histogram1DHandler<boost::histogram::axis::transform::log, float>;
     %template(Histogram1DHandlerFloat32) Histogram1DHandler<boost::histogram::axis::transform::id, float>;
-    %template(CorrelationDimensionFloat64) CorrelationDimension<double>;
+    
+    // CorrelationDimension
+    %extend CorrelationDimension<float> { CORRELATION_DIMENSION_NUMPY_FUNCS(float) }
     %template(CorrelationDimensionFloat32) CorrelationDimension<float>;
+    %template(CorrelationDimensionFloat64) CorrelationDimension<double>;
+
   #else
     %template(CorrelationDimension) CorrelationDimension<double>;
   #endif

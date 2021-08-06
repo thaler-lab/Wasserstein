@@ -5440,6 +5440,7 @@ SWIGINTERN void std_vector_Sl_float_Sg__insert__SWIG_1(std::vector< float > *sel
       }
     
 
+
 // include this to avoid needing to define it at compile time 
 #ifndef SWIG
 # define SWIG
@@ -5456,6 +5457,7 @@ SWIGINTERN void std_vector_Sl_float_Sg__insert__SWIG_1(std::vector< float > *sel
 #include "wasserstein/Wasserstein.hh"
 
 using WASSERSTEIN_NAMESPACE::DefaultNetworkSimplex;
+
 
 
 #ifndef SWIG_FILE_WITH_INIT
@@ -5582,7 +5584,7 @@ SWIG_AsVal_bool (PyObject *obj, bool *val)
 
 
 SWIGINTERN void wasserstein_EMDBase_Sl_double_Sg__npy_flows(wasserstein::EMDBase< double > *self,double **arr_out,std::ptrdiff_t *n0,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,179,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,176,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -5598,7 +5600,7 @@ SWIGINTERN void wasserstein_EMDBase_Sl_double_Sg__npy_flows(wasserstein::EMDBase
       values[i] *= self->scale();
   }
 SWIGINTERN void wasserstein_EMDBase_Sl_double_Sg__npy_dists(wasserstein::EMDBase< double > *self,double **arr_out,std::ptrdiff_t *n0,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,179,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,176,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -5611,8 +5613,8 @@ SWIGINTERN void wasserstein_EMDBase_Sl_double_Sg__npy_dists(wasserstein::EMDBase
     memcpy(*arr_out, self->ground_dists().data(), nbytes);
   }
 SWIGINTERN void wasserstein_EMDBase_Sl_double_Sg__npy_node_potentials(wasserstein::EMDBase< double > *self,double **arr_out0,std::ptrdiff_t *n0,double **arr_out1,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,164,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,161,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->n0();
   size_t nbytes0 = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes0);
@@ -5621,7 +5623,7 @@ SWIGINTERN void wasserstein_EMDBase_Sl_double_Sg__npy_node_potentials(wasserstei
     return;
   }
 /*@SWIG@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = self->n1();
   size_t nbytes1 = size_t(*n1)*sizeof(double);
   *arr_out1 = (double *) malloc(nbytes1);
@@ -5636,7 +5638,7 @@ SWIGINTERN void wasserstein_EMDBase_Sl_double_Sg__npy_node_potentials(wasserstei
 /*@SWIG@*/
   }
 SWIGINTERN void wasserstein_PairwiseEMDBase_Sl_double_Sg__npy_emds(wasserstein::PairwiseEMDBase< double > *self,double **arr_out,std::ptrdiff_t *n0,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,179,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,176,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->nevA();
   *n1 = self->nevB();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -5652,7 +5654,7 @@ SWIGINTERN void wasserstein_PairwiseEMDBase_Sl_double_Sg__raw_emds(wasserstein::
     if (self->storage() != wasserstein::EMDPairsStorage::FlattenedSymmetric)
       throw std::runtime_error("raw emds only available with raw symmetric storage");
 
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->num_emds();
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -6061,18 +6063,18 @@ SWIGINTERN void wasserstein_PairwiseEMDBase_Sl_double_Sg__raw_emds(wasserstein::
 
 
 SWIGINTERN void wasserstein_ExternalEMDHandler_Sl_double_Sg__npy_evaluate__SWIG_0(wasserstein::ExternalEMDHandler< double > *self,double *emds,std::ptrdiff_t n0){
-      self->evaluate(emds, n0);
-    }
+    self->evaluate(emds, n0);
+  }
 SWIGINTERN void wasserstein_ExternalEMDHandler_Sl_double_Sg__npy_evaluate__SWIG_1(wasserstein::ExternalEMDHandler< double > *self,double *emds,std::ptrdiff_t n0,double *event_weights,std::ptrdiff_t n1){
-      if (n0 != n1)
-        throw std::invalid_argument("length of `emds` should match lengh of `event_weights`");
-      self->evaluate(emds, n0, event_weights);
-    }
+    if (n0 != n1)
+      throw std::invalid_argument("length of `emds` should match lengh of `event_weights`");
+    self->evaluate(emds, n0, event_weights);
+  }
 SWIGINTERN void wasserstein_ExternalEMDHandler_Sl_double_Sg__npy_evaluate_symmetric(wasserstein::ExternalEMDHandler< double > *self,double *emds,std::ptrdiff_t n0,double *event_weights,std::ptrdiff_t n1){
-      if (n0 != n1*(n1 - 1)/2)
-        throw std::invalid_argument("length of `emds` should be lengh of `event_weights` choose 2");
-      self->evaluate_symmetric(emds, n1, event_weights);
-    }
+    if (n0 != n1*(n1 - 1)/2)
+      throw std::invalid_argument("length of `emds` should be lengh of `event_weights` choose 2");
+    self->evaluate_symmetric(emds, n1, event_weights);
+  }
 
 SWIGINTERN int
 SWIG_AsVal_unsigned_SS_int (PyObject * obj, unsigned int *val)
@@ -6096,14 +6098,11 @@ SWIGINTERNINLINE PyObject*
   return PyInt_FromSize_t((size_t) value);
 }
 
-SWIGINTERN std::string wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_double_Sg____str__(wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *self){
-    return self->description();
-  }
 SWIGINTERN std::string wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_double_Sg____repr__(wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *self){
     return self->description();
   }
 SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_double_Sg__npy_bin_centers(wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *self,double **arr_out0,std::ptrdiff_t *n0){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins();
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -6115,7 +6114,7 @@ SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform
     memcpy(*arr_out0, self->bin_centers().data(), nbytes);
   }
 SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_double_Sg__npy_bin_edges(wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *self,double **arr_out0,std::ptrdiff_t *n0){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() + 1;
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -6127,9 +6126,9 @@ SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform
     memcpy(*arr_out0, self->bin_edges().data(), nbytes);
   }
 SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_double_Sg__npy_hist_vals_vars(wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *self,double **arr_out0,std::ptrdiff_t *n0,double **arr_out1,std::ptrdiff_t *n1,bool overflows=true){
-      unsigned nbins = self->nbins() + (overflows ? 2 : 0);
-      /*@SWIG:wasserstein/swig/wasserstein_common.i,164,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+    unsigned nbins = self->nbins() + (overflows ? 2 : 0);
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,161,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = nbins;
   size_t nbytes0 = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes0);
@@ -6138,7 +6137,7 @@ SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform
     return;
   }
 /*@SWIG@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = nbins;
   size_t nbytes1 = size_t(*n1)*sizeof(double);
   *arr_out1 = (double *) malloc(nbytes1);
@@ -6151,15 +6150,12 @@ SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform
   memcpy(*arr_out0, vecpair.first.data(), nbytes0);
   memcpy(*arr_out1, vecpair.second.data(), nbytes1);
 /*@SWIG@*/
-    }
-SWIGINTERN std::string wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_double_Sg____str__(wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *self){
-    return self->description();
   }
 SWIGINTERN std::string wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_double_Sg____repr__(wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *self){
     return self->description();
   }
 SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_double_Sg__npy_bin_centers(wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > *self,double **arr_out0,std::ptrdiff_t *n0){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins();
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -6171,7 +6167,7 @@ SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform
     memcpy(*arr_out0, self->bin_centers().data(), nbytes);
   }
 SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_double_Sg__npy_bin_edges(wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > *self,double **arr_out0,std::ptrdiff_t *n0){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() + 1;
   size_t nbytes = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes);
@@ -6183,9 +6179,9 @@ SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform
     memcpy(*arr_out0, self->bin_edges().data(), nbytes);
   }
 SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_double_Sg__npy_hist_vals_vars(wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > *self,double **arr_out0,std::ptrdiff_t *n0,double **arr_out1,std::ptrdiff_t *n1,bool overflows=true){
-      unsigned nbins = self->nbins() + (overflows ? 2 : 0);
-      /*@SWIG:wasserstein/swig/wasserstein_common.i,164,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+    unsigned nbins = self->nbins() + (overflows ? 2 : 0);
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,161,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = nbins;
   size_t nbytes0 = size_t(*n0)*sizeof(double);
   *arr_out0 = (double *) malloc(nbytes0);
@@ -6194,7 +6190,7 @@ SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform
     return;
   }
 /*@SWIG@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = nbins;
   size_t nbytes1 = size_t(*n1)*sizeof(double);
   *arr_out1 = (double *) malloc(nbytes1);
@@ -6207,9 +6203,9 @@ SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform
   memcpy(*arr_out0, vecpair.first.data(), nbytes0);
   memcpy(*arr_out1, vecpair.second.data(), nbytes1);
 /*@SWIG@*/
-    }
+  }
 SWIGINTERN void wasserstein_EMDBase_Sl_float_Sg__npy_flows(wasserstein::EMDBase< float > *self,float **arr_out,std::ptrdiff_t *n0,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,179,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,176,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -6225,7 +6221,7 @@ SWIGINTERN void wasserstein_EMDBase_Sl_float_Sg__npy_flows(wasserstein::EMDBase<
       values[i] *= self->scale();
   }
 SWIGINTERN void wasserstein_EMDBase_Sl_float_Sg__npy_dists(wasserstein::EMDBase< float > *self,float **arr_out,std::ptrdiff_t *n0,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,179,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,176,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->n0();
   *n1 = self->n1();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -6238,8 +6234,8 @@ SWIGINTERN void wasserstein_EMDBase_Sl_float_Sg__npy_dists(wasserstein::EMDBase<
     memcpy(*arr_out, self->ground_dists().data(), nbytes);
   }
 SWIGINTERN void wasserstein_EMDBase_Sl_float_Sg__npy_node_potentials(wasserstein::EMDBase< float > *self,float **arr_out0,std::ptrdiff_t *n0,float **arr_out1,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,164,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,161,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->n0();
   size_t nbytes0 = size_t(*n0)*sizeof(float);
   *arr_out0 = (float *) malloc(nbytes0);
@@ -6248,7 +6244,7 @@ SWIGINTERN void wasserstein_EMDBase_Sl_float_Sg__npy_node_potentials(wasserstein
     return;
   }
 /*@SWIG@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = self->n1();
   size_t nbytes1 = size_t(*n1)*sizeof(float);
   *arr_out1 = (float *) malloc(nbytes1);
@@ -6263,7 +6259,7 @@ SWIGINTERN void wasserstein_EMDBase_Sl_float_Sg__npy_node_potentials(wasserstein
 /*@SWIG@*/
   }
 SWIGINTERN void wasserstein_PairwiseEMDBase_Sl_float_Sg__npy_emds(wasserstein::PairwiseEMDBase< float > *self,float **arr_out,std::ptrdiff_t *n0,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,179,MALLOC_2D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,176,MALLOC_2D_VALUE_ARRAY@*/
   *n0 = self->nevA();
   *n1 = self->nevB();
   size_t num_elements = size_t(*n0)*size_t(*n1);
@@ -6279,7 +6275,7 @@ SWIGINTERN void wasserstein_PairwiseEMDBase_Sl_float_Sg__raw_emds(wasserstein::P
     if (self->storage() != wasserstein::EMDPairsStorage::FlattenedSymmetric)
       throw std::runtime_error("raw emds only available with raw symmetric storage");
 
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->num_emds();
   size_t nbytes = size_t(*n0)*sizeof(float);
   *arr_out0 = (float *) malloc(nbytes);
@@ -6291,26 +6287,23 @@ SWIGINTERN void wasserstein_PairwiseEMDBase_Sl_float_Sg__raw_emds(wasserstein::P
     memcpy(*arr_out0, self->emds(true).data(), nbytes);
   }
 SWIGINTERN void wasserstein_ExternalEMDHandler_Sl_float_Sg__npy_evaluate__SWIG_0(wasserstein::ExternalEMDHandler< float > *self,float *emds,std::ptrdiff_t n0){
-      self->evaluate(emds, n0);
-    }
+    self->evaluate(emds, n0);
+  }
 SWIGINTERN void wasserstein_ExternalEMDHandler_Sl_float_Sg__npy_evaluate__SWIG_1(wasserstein::ExternalEMDHandler< float > *self,float *emds,std::ptrdiff_t n0,float *event_weights,std::ptrdiff_t n1){
-      if (n0 != n1)
-        throw std::invalid_argument("length of `emds` should match lengh of `event_weights`");
-      self->evaluate(emds, n0, event_weights);
-    }
+    if (n0 != n1)
+      throw std::invalid_argument("length of `emds` should match lengh of `event_weights`");
+    self->evaluate(emds, n0, event_weights);
+  }
 SWIGINTERN void wasserstein_ExternalEMDHandler_Sl_float_Sg__npy_evaluate_symmetric(wasserstein::ExternalEMDHandler< float > *self,float *emds,std::ptrdiff_t n0,float *event_weights,std::ptrdiff_t n1){
-      if (n0 != n1*(n1 - 1)/2)
-        throw std::invalid_argument("length of `emds` should be lengh of `event_weights` choose 2");
-      self->evaluate_symmetric(emds, n1, event_weights);
-    }
-SWIGINTERN std::string wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_float_Sg____str__(wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *self){
-    return self->description();
+    if (n0 != n1*(n1 - 1)/2)
+      throw std::invalid_argument("length of `emds` should be lengh of `event_weights` choose 2");
+    self->evaluate_symmetric(emds, n1, event_weights);
   }
 SWIGINTERN std::string wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_float_Sg____repr__(wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *self){
     return self->description();
   }
 SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_float_Sg__npy_bin_centers(wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *self,float **arr_out0,std::ptrdiff_t *n0){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins();
   size_t nbytes = size_t(*n0)*sizeof(float);
   *arr_out0 = (float *) malloc(nbytes);
@@ -6322,7 +6315,7 @@ SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform
     memcpy(*arr_out0, self->bin_centers().data(), nbytes);
   }
 SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_float_Sg__npy_bin_edges(wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *self,float **arr_out0,std::ptrdiff_t *n0){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() + 1;
   size_t nbytes = size_t(*n0)*sizeof(float);
   *arr_out0 = (float *) malloc(nbytes);
@@ -6334,9 +6327,9 @@ SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform
     memcpy(*arr_out0, self->bin_edges().data(), nbytes);
   }
 SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_float_Sg__npy_hist_vals_vars(wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *self,float **arr_out0,std::ptrdiff_t *n0,float **arr_out1,std::ptrdiff_t *n1,bool overflows=true){
-      unsigned nbins = self->nbins() + (overflows ? 2 : 0);
-      /*@SWIG:wasserstein/swig/wasserstein_common.i,164,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+    unsigned nbins = self->nbins() + (overflows ? 2 : 0);
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,161,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = nbins;
   size_t nbytes0 = size_t(*n0)*sizeof(float);
   *arr_out0 = (float *) malloc(nbytes0);
@@ -6345,7 +6338,7 @@ SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform
     return;
   }
 /*@SWIG@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = nbins;
   size_t nbytes1 = size_t(*n1)*sizeof(float);
   *arr_out1 = (float *) malloc(nbytes1);
@@ -6358,15 +6351,12 @@ SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform
   memcpy(*arr_out0, vecpair.first.data(), nbytes0);
   memcpy(*arr_out1, vecpair.second.data(), nbytes1);
 /*@SWIG@*/
-    }
-SWIGINTERN std::string wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_float_Sg____str__(wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *self){
-    return self->description();
   }
 SWIGINTERN std::string wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_float_Sg____repr__(wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *self){
     return self->description();
   }
 SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_float_Sg__npy_bin_centers(wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *self,float **arr_out0,std::ptrdiff_t *n0){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins();
   size_t nbytes = size_t(*n0)*sizeof(float);
   *arr_out0 = (float *) malloc(nbytes);
@@ -6378,7 +6368,7 @@ SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform
     memcpy(*arr_out0, self->bin_centers().data(), nbytes);
   }
 SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_float_Sg__npy_bin_edges(wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *self,float **arr_out0,std::ptrdiff_t *n0){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() + 1;
   size_t nbytes = size_t(*n0)*sizeof(float);
   *arr_out0 = (float *) malloc(nbytes);
@@ -6390,9 +6380,9 @@ SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform
     memcpy(*arr_out0, self->bin_edges().data(), nbytes);
   }
 SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_float_Sg__npy_hist_vals_vars(wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *self,float **arr_out0,std::ptrdiff_t *n0,float **arr_out1,std::ptrdiff_t *n1,bool overflows=true){
-      unsigned nbins = self->nbins() + (overflows ? 2 : 0);
-      /*@SWIG:wasserstein/swig/wasserstein_common.i,164,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+    unsigned nbins = self->nbins() + (overflows ? 2 : 0);
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,161,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = nbins;
   size_t nbytes0 = size_t(*n0)*sizeof(float);
   *arr_out0 = (float *) malloc(nbytes0);
@@ -6401,7 +6391,7 @@ SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform
     return;
   }
 /*@SWIG@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = nbins;
   size_t nbytes1 = size_t(*n1)*sizeof(float);
   *arr_out1 = (float *) malloc(nbytes1);
@@ -6414,83 +6404,12 @@ SWIGINTERN void wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform
   memcpy(*arr_out0, vecpair.first.data(), nbytes0);
   memcpy(*arr_out1, vecpair.second.data(), nbytes1);
 /*@SWIG@*/
-    }
-SWIGINTERN std::string wasserstein_CorrelationDimension_Sl_double_Sg____str__(wasserstein::CorrelationDimension< double > const *self){
-    return self->description();
-  }
-SWIGINTERN std::string wasserstein_CorrelationDimension_Sl_double_Sg____repr__(wasserstein::CorrelationDimension< double > const *self){
-    return self->description();
-  }
-SWIGINTERN void wasserstein_CorrelationDimension_Sl_double_Sg__npy_corrdim_bins(wasserstein::CorrelationDimension< double > *self,double **arr_out0,std::ptrdiff_t *n0){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
-  *n0 = self->nbins() - 1;
-  size_t nbytes = size_t(*n0)*sizeof(double);
-  *arr_out0 = (double *) malloc(nbytes);
-  if (*arr_out0 == NULL) {
-    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes) + " bytes");
-    return;
-  }
-/*@SWIG@*/
-    memcpy(*arr_out0, self->corrdim_bins().data(), nbytes);
-  }
-SWIGINTERN void wasserstein_CorrelationDimension_Sl_double_Sg__npy_corrdims(wasserstein::CorrelationDimension< double > *self,double **arr_out0,std::ptrdiff_t *n0,double **arr_out1,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,164,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
-  *n0 = self->nbins() - 1;
-  size_t nbytes0 = size_t(*n0)*sizeof(double);
-  *arr_out0 = (double *) malloc(nbytes0);
-  if (*arr_out0 == NULL) {
-    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes0) + " bytes");
-    return;
-  }
-/*@SWIG@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
-  *n1 = self->nbins() - 1;
-  size_t nbytes1 = size_t(*n1)*sizeof(double);
-  *arr_out1 = (double *) malloc(nbytes1);
-  if (*arr_out1 == NULL) {
-    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes1) + " bytes");
-    return;
-  }
-/*@SWIG@*/
-  std::pair<std::vector<double>, std::vector<double>> vecpair(self->corrdims());
-  memcpy(*arr_out0, vecpair.first.data(), nbytes0);
-  memcpy(*arr_out1, vecpair.second.data(), nbytes1);
-/*@SWIG@*/
-  }
-SWIGINTERN void wasserstein_CorrelationDimension_Sl_double_Sg__npy_cumulative_vals_vars(wasserstein::CorrelationDimension< double > *self,double **arr_out0,std::ptrdiff_t *n0,double **arr_out1,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,164,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
-  *n0 = self->nbins();
-  size_t nbytes0 = size_t(*n0)*sizeof(double);
-  *arr_out0 = (double *) malloc(nbytes0);
-  if (*arr_out0 == NULL) {
-    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes0) + " bytes");
-    return;
-  }
-/*@SWIG@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
-  *n1 = self->nbins();
-  size_t nbytes1 = size_t(*n1)*sizeof(double);
-  *arr_out1 = (double *) malloc(nbytes1);
-  if (*arr_out1 == NULL) {
-    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes1) + " bytes");
-    return;
-  }
-/*@SWIG@*/
-  std::pair<std::vector<double>, std::vector<double>> vecpair(self->cumulative_vals_vars());
-  memcpy(*arr_out0, vecpair.first.data(), nbytes0);
-  memcpy(*arr_out1, vecpair.second.data(), nbytes1);
-/*@SWIG@*/
-  }
-SWIGINTERN std::string wasserstein_CorrelationDimension_Sl_float_Sg____str__(wasserstein::CorrelationDimension< float > const *self){
-    return self->description();
   }
 SWIGINTERN std::string wasserstein_CorrelationDimension_Sl_float_Sg____repr__(wasserstein::CorrelationDimension< float > const *self){
     return self->description();
   }
 SWIGINTERN void wasserstein_CorrelationDimension_Sl_float_Sg__npy_corrdim_bins(wasserstein::CorrelationDimension< float > *self,float **arr_out0,std::ptrdiff_t *n0){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() - 1;
   size_t nbytes = size_t(*n0)*sizeof(float);
   *arr_out0 = (float *) malloc(nbytes);
@@ -6502,8 +6421,8 @@ SWIGINTERN void wasserstein_CorrelationDimension_Sl_float_Sg__npy_corrdim_bins(w
     memcpy(*arr_out0, self->corrdim_bins().data(), nbytes);
   }
 SWIGINTERN void wasserstein_CorrelationDimension_Sl_float_Sg__npy_corrdims(wasserstein::CorrelationDimension< float > *self,float **arr_out0,std::ptrdiff_t *n0,float **arr_out1,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,164,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,161,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins() - 1;
   size_t nbytes0 = size_t(*n0)*sizeof(float);
   *arr_out0 = (float *) malloc(nbytes0);
@@ -6512,7 +6431,7 @@ SWIGINTERN void wasserstein_CorrelationDimension_Sl_float_Sg__npy_corrdims(wasse
     return;
   }
 /*@SWIG@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = self->nbins() - 1;
   size_t nbytes1 = size_t(*n1)*sizeof(float);
   *arr_out1 = (float *) malloc(nbytes1);
@@ -6527,8 +6446,8 @@ SWIGINTERN void wasserstein_CorrelationDimension_Sl_float_Sg__npy_corrdims(wasse
 /*@SWIG@*/
   }
 SWIGINTERN void wasserstein_CorrelationDimension_Sl_float_Sg__npy_cumulative_vals_vars(wasserstein::CorrelationDimension< float > *self,float **arr_out0,std::ptrdiff_t *n0,float **arr_out1,std::ptrdiff_t *n1){
-    /*@SWIG:wasserstein/swig/wasserstein_common.i,164,PAIRED_1DNUMPY_FROM_VECPAIR@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,161,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n0 = self->nbins();
   size_t nbytes0 = size_t(*n0)*sizeof(float);
   *arr_out0 = (float *) malloc(nbytes0);
@@ -6537,7 +6456,7 @@ SWIGINTERN void wasserstein_CorrelationDimension_Sl_float_Sg__npy_cumulative_val
     return;
   }
 /*@SWIG@*/
-  /*@SWIG:wasserstein/swig/wasserstein_common.i,147,MALLOC_1D_VALUE_ARRAY@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
   *n1 = self->nbins();
   size_t nbytes1 = size_t(*n1)*sizeof(float);
   *arr_out1 = (float *) malloc(nbytes1);
@@ -6551,8 +6470,70 @@ SWIGINTERN void wasserstein_CorrelationDimension_Sl_float_Sg__npy_cumulative_val
   memcpy(*arr_out1, vecpair.second.data(), nbytes1);
 /*@SWIG@*/
   }
-SWIGINTERN std::string wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg____str__(wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *self){
-    return self->description(false);
+SWIGINTERN std::string wasserstein_CorrelationDimension_Sl_double_Sg____repr__(wasserstein::CorrelationDimension< double > const *self){
+    return self->description();
+  }
+SWIGINTERN void wasserstein_CorrelationDimension_Sl_double_Sg__npy_corrdim_bins(wasserstein::CorrelationDimension< double > *self,double **arr_out0,std::ptrdiff_t *n0){
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
+  *n0 = self->nbins() - 1;
+  size_t nbytes = size_t(*n0)*sizeof(double);
+  *arr_out0 = (double *) malloc(nbytes);
+  if (*arr_out0 == NULL) {
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes) + " bytes");
+    return;
+  }
+/*@SWIG@*/
+    memcpy(*arr_out0, self->corrdim_bins().data(), nbytes);
+  }
+SWIGINTERN void wasserstein_CorrelationDimension_Sl_double_Sg__npy_corrdims(wasserstein::CorrelationDimension< double > *self,double **arr_out0,std::ptrdiff_t *n0,double **arr_out1,std::ptrdiff_t *n1){
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,161,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
+  *n0 = self->nbins() - 1;
+  size_t nbytes0 = size_t(*n0)*sizeof(double);
+  *arr_out0 = (double *) malloc(nbytes0);
+  if (*arr_out0 == NULL) {
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes0) + " bytes");
+    return;
+  }
+/*@SWIG@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
+  *n1 = self->nbins() - 1;
+  size_t nbytes1 = size_t(*n1)*sizeof(double);
+  *arr_out1 = (double *) malloc(nbytes1);
+  if (*arr_out1 == NULL) {
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes1) + " bytes");
+    return;
+  }
+/*@SWIG@*/
+  std::pair<std::vector<double>, std::vector<double>> vecpair(self->corrdims());
+  memcpy(*arr_out0, vecpair.first.data(), nbytes0);
+  memcpy(*arr_out1, vecpair.second.data(), nbytes1);
+/*@SWIG@*/
+  }
+SWIGINTERN void wasserstein_CorrelationDimension_Sl_double_Sg__npy_cumulative_vals_vars(wasserstein::CorrelationDimension< double > *self,double **arr_out0,std::ptrdiff_t *n0,double **arr_out1,std::ptrdiff_t *n1){
+    /*@SWIG:wasserstein/swig/wasserstein_common.i,161,PAIRED_1DNUMPY_FROM_VECPAIR@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
+  *n0 = self->nbins();
+  size_t nbytes0 = size_t(*n0)*sizeof(double);
+  *arr_out0 = (double *) malloc(nbytes0);
+  if (*arr_out0 == NULL) {
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes0) + " bytes");
+    return;
+  }
+/*@SWIG@*/
+  /*@SWIG:wasserstein/swig/wasserstein_common.i,144,MALLOC_1D_VALUE_ARRAY@*/
+  *n1 = self->nbins();
+  size_t nbytes1 = size_t(*n1)*sizeof(double);
+  *arr_out1 = (double *) malloc(nbytes1);
+  if (*arr_out1 == NULL) {
+    throw std::runtime_error("Failed to allocate " + std::to_string(nbytes1) + " bytes");
+    return;
+  }
+/*@SWIG@*/
+  std::pair<std::vector<double>, std::vector<double>> vecpair(self->cumulative_vals_vars());
+  memcpy(*arr_out0, vecpair.first.data(), nbytes0);
+  memcpy(*arr_out1, vecpair.second.data(), nbytes1);
+/*@SWIG@*/
   }
 SWIGINTERN std::string wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg____repr__(wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *self){
     return self->description(false);
@@ -6583,9 +6564,6 @@ SWIGINTERN double wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_
 
     return (*self)(std::make_tuple(weights0, nullptr, n0, -1), std::make_tuple(weights1, nullptr, n1, -1));
   }
-SWIGINTERN std::string wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg____str__(wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *self){
-    return self->description(false);
-  }
 SWIGINTERN std::string wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg____repr__(wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *self){
     return self->description(false);
   }
@@ -6614,9 +6592,6 @@ SWIGINTERN float wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wa
     self->set_external_dists(true);
 
     return (*self)(std::make_tuple(weights0, nullptr, n0, -1), std::make_tuple(weights1, nullptr, n1, -1));
-  }
-SWIGINTERN std::string wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg____str__(wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *self){
-    return self->description(false);
   }
 SWIGINTERN std::string wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg____repr__(wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *self){
     return self->description(false);
@@ -6647,9 +6622,6 @@ SWIGINTERN double wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc
 
     return (*self)(std::make_tuple(weights0, nullptr, n0, -1), std::make_tuple(weights1, nullptr, n1, -1));
   }
-SWIGINTERN std::string wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg____str__(wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *self){
-    return self->description(false);
-  }
 SWIGINTERN std::string wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg____repr__(wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *self){
     return self->description(false);
   }
@@ -6679,9 +6651,6 @@ SWIGINTERN float wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_w
 
     return (*self)(std::make_tuple(weights0, nullptr, n0, -1), std::make_tuple(weights1, nullptr, n1, -1));
   }
-SWIGINTERN std::string wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_double_Sg____str__(wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > const *self){
-    return self->description(false);
-  }
 SWIGINTERN std::string wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_double_Sg____repr__(wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > const *self){
     return self->description(false);
   }
@@ -6693,9 +6662,6 @@ SWIGINTERN void wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserst
 
     self->events().emplace_back(weights, coords, n1, d, event_weight);
     self->preprocess_back_event();
-  }
-SWIGINTERN std::string wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_float_Sg____str__(wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > const *self){
-    return self->description(false);
   }
 SWIGINTERN std::string wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_float_Sg____repr__(wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > const *self){
     return self->description(false);
@@ -6709,9 +6675,6 @@ SWIGINTERN void wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserste
     self->events().emplace_back(weights, coords, n1, d, event_weight);
     self->preprocess_back_event();
   }
-SWIGINTERN std::string wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_double_Sg____str__(wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > const *self){
-    return self->description(false);
-  }
 SWIGINTERN std::string wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_double_Sg____repr__(wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > const *self){
     return self->description(false);
   }
@@ -6723,9 +6686,6 @@ SWIGINTERN void wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserst
 
     self->events().emplace_back(weights, coords, n1, d, event_weight);
     self->preprocess_back_event();
-  }
-SWIGINTERN std::string wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_float_Sg____str__(wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > const *self){
-    return self->description(false);
   }
 SWIGINTERN std::string wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_float_Sg____repr__(wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > const *self){
     return self->description(false);
@@ -17947,53 +17907,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat64___str__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *arg1 = (wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  std::string result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64___str__" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > * >(argp1);
-  {
-    try {
-      result = wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_double_Sg____str__((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *)arg1); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat64___repr__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *arg1 = (wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *) 0 ;
@@ -18837,53 +18750,6 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat64___iadd__(PyObject *SWIGUNUS
     }
   }
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_double_t, SWIG_POINTER_OWN |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat64___str__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > *arg1 = (wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  std::string result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_double_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64___str__" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > * >(argp1);
-  {
-    try {
-      result = wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_double_Sg____str__((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *)arg1); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
   return resultobj;
 fail:
   return NULL;
@@ -23421,53 +23287,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat32___str__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *arg1 = (wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  std::string result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_float_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32___str__" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > * >(argp1);
-  {
-    try {
-      result = wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_float_Sg____str__((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *)arg1); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat32___repr__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *arg1 = (wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *) 0 ;
@@ -24317,53 +24136,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat32___str__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *arg1 = (wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  std::string result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_float_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32___str__" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > * >(argp1);
-  {
-    try {
-      result = wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_float_Sg____str__((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *)arg1); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat32___repr__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *arg1 = (wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *) 0 ;
@@ -24697,671 +24469,6 @@ SWIGINTERN PyObject *Histogram1DHandlerFloat32_swiginit(PyObject *SWIGUNUSEDPARM
   return SWIG_Python_InitShadowInstance(args);
 }
 
-SWIGINTERN PyObject *_wrap_new_CorrelationDimensionFloat64(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
-  PyObject *resultobj = 0;
-  unsigned int arg1 ;
-  double arg2 ;
-  double arg3 ;
-  unsigned int val1 ;
-  int ecode1 = 0 ;
-  double val2 ;
-  int ecode2 = 0 ;
-  double val3 ;
-  int ecode3 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  char * kwnames[] = {
-    (char *)"nbins",  (char *)"axis_min",  (char *)"axis_max",  NULL 
-  };
-  wasserstein::CorrelationDimension< double > *result = 0 ;
-  
-  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:new_CorrelationDimensionFloat64", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
-  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_CorrelationDimensionFloat64" "', argument " "1"" of type '" "unsigned int""'");
-  } 
-  arg1 = static_cast< unsigned int >(val1);
-  ecode2 = SWIG_AsVal_double(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_CorrelationDimensionFloat64" "', argument " "2"" of type '" "double""'");
-  } 
-  arg2 = static_cast< double >(val2);
-  ecode3 = SWIG_AsVal_double(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_CorrelationDimensionFloat64" "', argument " "3"" of type '" "double""'");
-  } 
-  arg3 = static_cast< double >(val3);
-  {
-    try {
-      result = (wasserstein::CorrelationDimension< double > *)new wasserstein::CorrelationDimension< double >(arg1,arg2,arg3); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_corrdims_vec(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
-  PyObject *resultobj = 0;
-  wasserstein::CorrelationDimension< double > *arg1 = (wasserstein::CorrelationDimension< double > *) 0 ;
-  double arg2 = (double) std::numeric_limits< double >::epsilon() ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  double val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  char * kwnames[] = {
-    (char *)"self",  (char *)"eps",  NULL 
-  };
-  std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > result;
-  
-  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:CorrelationDimensionFloat64_corrdims_vec", kwnames, &obj0, &obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_corrdims_vec" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > const *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
-  if (obj1) {
-    ecode2 = SWIG_AsVal_double(obj1, &val2);
-    if (!SWIG_IsOK(ecode2)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "CorrelationDimensionFloat64_corrdims_vec" "', argument " "2"" of type '" "double""'");
-    } 
-    arg2 = static_cast< double >(val2);
-  }
-  {
-    try {
-      result = ((wasserstein::CorrelationDimension< double > const *)arg1)->corrdims(arg2); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = swig::from(static_cast< std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_corrdim_bins_vec(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  wasserstein::CorrelationDimension< double > *arg1 = (wasserstein::CorrelationDimension< double > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  std::vector< double,std::allocator< double > > result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_corrdim_bins_vec" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > const *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
-  {
-    try {
-      result = ((wasserstein::CorrelationDimension< double > const *)arg1)->corrdim_bins(); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = swig::from(static_cast< std::vector< double,std::allocator< double > > >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_cumulative_vals_vars_vec(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  wasserstein::CorrelationDimension< double > *arg1 = (wasserstein::CorrelationDimension< double > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_cumulative_vals_vars_vec" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > const *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
-  {
-    try {
-      result = ((wasserstein::CorrelationDimension< double > const *)arg1)->cumulative_vals_vars(); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = swig::from(static_cast< std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64___str__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  wasserstein::CorrelationDimension< double > *arg1 = (wasserstein::CorrelationDimension< double > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  std::string result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64___str__" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > const *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
-  {
-    try {
-      result = wasserstein_CorrelationDimension_Sl_double_Sg____str__((wasserstein::CorrelationDimension< double > const *)arg1); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64___repr__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  wasserstein::CorrelationDimension< double > *arg1 = (wasserstein::CorrelationDimension< double > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  std::string result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64___repr__" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > const *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
-  {
-    try {
-      result = wasserstein_CorrelationDimension_Sl_double_Sg____repr__((wasserstein::CorrelationDimension< double > const *)arg1); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_corrdim_bins(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  wasserstein::CorrelationDimension< double > *arg1 = (wasserstein::CorrelationDimension< double > *) 0 ;
-  double **arg2 = (double **) 0 ;
-  std::ptrdiff_t *arg3 = (std::ptrdiff_t *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  double *data_temp2 = NULL ;
-  std::ptrdiff_t dim_temp2 ;
-  PyObject *swig_obj[1] ;
-  
-  {
-    arg2 = &data_temp2;
-    arg3 = &dim_temp2;
-  }
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_corrdim_bins" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
-  {
-    try {
-      wasserstein_CorrelationDimension_Sl_double_Sg__npy_corrdim_bins(arg1,arg2,arg3); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_Py_Void();
-  {
-    npy_intp dims[1] = {
-      *arg3 
-    };
-    PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg2));
-    PyArrayObject* array = (PyArrayObject*) obj;
-    
-    if (!array) SWIG_fail;
-    
-#ifdef SWIGPY_USE_CAPSULE
-    PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
-#else
-    PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
-#endif
-    
-#if NPY_API_VERSION < 0x00000007
-    PyArray_BASE(array) = cap;
-#else
-    PyArray_SetBaseObject(array,cap);
-#endif
-    
-    resultobj = SWIG_Python_AppendOutput(resultobj,obj);
-  }
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_corrdims(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  wasserstein::CorrelationDimension< double > *arg1 = (wasserstein::CorrelationDimension< double > *) 0 ;
-  double **arg2 = (double **) 0 ;
-  std::ptrdiff_t *arg3 = (std::ptrdiff_t *) 0 ;
-  double **arg4 = (double **) 0 ;
-  std::ptrdiff_t *arg5 = (std::ptrdiff_t *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  double *data_temp2 = NULL ;
-  std::ptrdiff_t dim_temp2 ;
-  double *data_temp4 = NULL ;
-  std::ptrdiff_t dim_temp4 ;
-  PyObject *swig_obj[1] ;
-  
-  {
-    arg2 = &data_temp2;
-    arg3 = &dim_temp2;
-  }
-  {
-    arg4 = &data_temp4;
-    arg5 = &dim_temp4;
-  }
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_corrdims" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
-  {
-    try {
-      wasserstein_CorrelationDimension_Sl_double_Sg__npy_corrdims(arg1,arg2,arg3,arg4,arg5); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_Py_Void();
-  {
-    npy_intp dims[1] = {
-      *arg3 
-    };
-    PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg2));
-    PyArrayObject* array = (PyArrayObject*) obj;
-    
-    if (!array) SWIG_fail;
-    
-#ifdef SWIGPY_USE_CAPSULE
-    PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
-#else
-    PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
-#endif
-    
-#if NPY_API_VERSION < 0x00000007
-    PyArray_BASE(array) = cap;
-#else
-    PyArray_SetBaseObject(array,cap);
-#endif
-    
-    resultobj = SWIG_Python_AppendOutput(resultobj,obj);
-  }
-  {
-    npy_intp dims[1] = {
-      *arg5 
-    };
-    PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg4));
-    PyArrayObject* array = (PyArrayObject*) obj;
-    
-    if (!array) SWIG_fail;
-    
-#ifdef SWIGPY_USE_CAPSULE
-    PyObject* cap = PyCapsule_New((void*)(*arg4), SWIGPY_CAPSULE_NAME, free_cap);
-#else
-    PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg4), free);
-#endif
-    
-#if NPY_API_VERSION < 0x00000007
-    PyArray_BASE(array) = cap;
-#else
-    PyArray_SetBaseObject(array,cap);
-#endif
-    
-    resultobj = SWIG_Python_AppendOutput(resultobj,obj);
-  }
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_cumulative_vals_vars(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  wasserstein::CorrelationDimension< double > *arg1 = (wasserstein::CorrelationDimension< double > *) 0 ;
-  double **arg2 = (double **) 0 ;
-  std::ptrdiff_t *arg3 = (std::ptrdiff_t *) 0 ;
-  double **arg4 = (double **) 0 ;
-  std::ptrdiff_t *arg5 = (std::ptrdiff_t *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  double *data_temp2 = NULL ;
-  std::ptrdiff_t dim_temp2 ;
-  double *data_temp4 = NULL ;
-  std::ptrdiff_t dim_temp4 ;
-  PyObject *swig_obj[1] ;
-  
-  {
-    arg2 = &data_temp2;
-    arg3 = &dim_temp2;
-  }
-  {
-    arg4 = &data_temp4;
-    arg5 = &dim_temp4;
-  }
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_cumulative_vals_vars" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
-  {
-    try {
-      wasserstein_CorrelationDimension_Sl_double_Sg__npy_cumulative_vals_vars(arg1,arg2,arg3,arg4,arg5); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_Py_Void();
-  {
-    npy_intp dims[1] = {
-      *arg3 
-    };
-    PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg2));
-    PyArrayObject* array = (PyArrayObject*) obj;
-    
-    if (!array) SWIG_fail;
-    
-#ifdef SWIGPY_USE_CAPSULE
-    PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
-#else
-    PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
-#endif
-    
-#if NPY_API_VERSION < 0x00000007
-    PyArray_BASE(array) = cap;
-#else
-    PyArray_SetBaseObject(array,cap);
-#endif
-    
-    resultobj = SWIG_Python_AppendOutput(resultobj,obj);
-  }
-  {
-    npy_intp dims[1] = {
-      *arg5 
-    };
-    PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg4));
-    PyArrayObject* array = (PyArrayObject*) obj;
-    
-    if (!array) SWIG_fail;
-    
-#ifdef SWIGPY_USE_CAPSULE
-    PyObject* cap = PyCapsule_New((void*)(*arg4), SWIGPY_CAPSULE_NAME, free_cap);
-#else
-    PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg4), free);
-#endif
-    
-#if NPY_API_VERSION < 0x00000007
-    PyArray_BASE(array) = cap;
-#else
-    PyArray_SetBaseObject(array,cap);
-#endif
-    
-    resultobj = SWIG_Python_AppendOutput(resultobj,obj);
-  }
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_delete_CorrelationDimensionFloat64(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  wasserstein::CorrelationDimension< double > *arg1 = (wasserstein::CorrelationDimension< double > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_CorrelationDimensionFloat64" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
-  {
-    try {
-      delete arg1; 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *CorrelationDimensionFloat64_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *obj;
-  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, SWIG_NewClientData(obj));
-  return SWIG_Py_Void();
-}
-
-SWIGINTERN PyObject *CorrelationDimensionFloat64_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  return SWIG_Python_InitShadowInstance(args);
-}
-
 SWIGINTERN PyObject *_wrap_new_CorrelationDimensionFloat32(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   unsigned int arg1 ;
@@ -25577,53 +24684,6 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat32_cumulative_vals_vars_vec(
     }
   }
   resultobj = swig::from(static_cast< std::pair< std::vector< float,std::allocator< float > >,std::vector< float,std::allocator< float > > > >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat32___str__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  wasserstein::CorrelationDimension< float > *arg1 = (wasserstein::CorrelationDimension< float > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  std::string result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_float_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat32___str__" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< float > const *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::CorrelationDimension< float > * >(argp1);
-  {
-    try {
-      result = wasserstein_CorrelationDimension_Sl_float_Sg____str__((wasserstein::CorrelationDimension< float > const *)arg1); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
   return resultobj;
 fail:
   return NULL;
@@ -26027,6 +25087,624 @@ SWIGINTERN PyObject *CorrelationDimensionFloat32_swiginit(PyObject *SWIGUNUSEDPA
   return SWIG_Python_InitShadowInstance(args);
 }
 
+SWIGINTERN PyObject *_wrap_new_CorrelationDimensionFloat64(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  unsigned int arg1 ;
+  double arg2 ;
+  double arg3 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  char * kwnames[] = {
+    (char *)"nbins",  (char *)"axis_min",  (char *)"axis_max",  NULL 
+  };
+  wasserstein::CorrelationDimension< double > *result = 0 ;
+  
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:new_CorrelationDimensionFloat64", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_CorrelationDimensionFloat64" "', argument " "1"" of type '" "unsigned int""'");
+  } 
+  arg1 = static_cast< unsigned int >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_CorrelationDimensionFloat64" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_CorrelationDimensionFloat64" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  {
+    try {
+      result = (wasserstein::CorrelationDimension< double > *)new wasserstein::CorrelationDimension< double >(arg1,arg2,arg3); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_corrdims_vec(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  wasserstein::CorrelationDimension< double > *arg1 = (wasserstein::CorrelationDimension< double > *) 0 ;
+  double arg2 = (double) std::numeric_limits< double >::epsilon() ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char * kwnames[] = {
+    (char *)"self",  (char *)"eps",  NULL 
+  };
+  std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > result;
+  
+  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:CorrelationDimensionFloat64_corrdims_vec", kwnames, &obj0, &obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_corrdims_vec" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
+  if (obj1) {
+    ecode2 = SWIG_AsVal_double(obj1, &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "CorrelationDimensionFloat64_corrdims_vec" "', argument " "2"" of type '" "double""'");
+    } 
+    arg2 = static_cast< double >(val2);
+  }
+  {
+    try {
+      result = ((wasserstein::CorrelationDimension< double > const *)arg1)->corrdims(arg2); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = swig::from(static_cast< std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_corrdim_bins_vec(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  wasserstein::CorrelationDimension< double > *arg1 = (wasserstein::CorrelationDimension< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  std::vector< double,std::allocator< double > > result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_corrdim_bins_vec" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
+  {
+    try {
+      result = ((wasserstein::CorrelationDimension< double > const *)arg1)->corrdim_bins(); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = swig::from(static_cast< std::vector< double,std::allocator< double > > >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_cumulative_vals_vars_vec(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  wasserstein::CorrelationDimension< double > *arg1 = (wasserstein::CorrelationDimension< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_cumulative_vals_vars_vec" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
+  {
+    try {
+      result = ((wasserstein::CorrelationDimension< double > const *)arg1)->cumulative_vals_vars(); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = swig::from(static_cast< std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64___repr__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  wasserstein::CorrelationDimension< double > *arg1 = (wasserstein::CorrelationDimension< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  std::string result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64___repr__" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
+  {
+    try {
+      result = wasserstein_CorrelationDimension_Sl_double_Sg____repr__((wasserstein::CorrelationDimension< double > const *)arg1); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_corrdim_bins(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  wasserstein::CorrelationDimension< double > *arg1 = (wasserstein::CorrelationDimension< double > *) 0 ;
+  double **arg2 = (double **) 0 ;
+  std::ptrdiff_t *arg3 = (std::ptrdiff_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double *data_temp2 = NULL ;
+  std::ptrdiff_t dim_temp2 ;
+  PyObject *swig_obj[1] ;
+  
+  {
+    arg2 = &data_temp2;
+    arg3 = &dim_temp2;
+  }
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_corrdim_bins" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
+  {
+    try {
+      wasserstein_CorrelationDimension_Sl_double_Sg__npy_corrdim_bins(arg1,arg2,arg3); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  {
+    npy_intp dims[1] = {
+      *arg3 
+    };
+    PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg2));
+    PyArrayObject* array = (PyArrayObject*) obj;
+    
+    if (!array) SWIG_fail;
+    
+#ifdef SWIGPY_USE_CAPSULE
+    PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
+#else
+    PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
+#endif
+    
+#if NPY_API_VERSION < 0x00000007
+    PyArray_BASE(array) = cap;
+#else
+    PyArray_SetBaseObject(array,cap);
+#endif
+    
+    resultobj = SWIG_Python_AppendOutput(resultobj,obj);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_corrdims(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  wasserstein::CorrelationDimension< double > *arg1 = (wasserstein::CorrelationDimension< double > *) 0 ;
+  double **arg2 = (double **) 0 ;
+  std::ptrdiff_t *arg3 = (std::ptrdiff_t *) 0 ;
+  double **arg4 = (double **) 0 ;
+  std::ptrdiff_t *arg5 = (std::ptrdiff_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double *data_temp2 = NULL ;
+  std::ptrdiff_t dim_temp2 ;
+  double *data_temp4 = NULL ;
+  std::ptrdiff_t dim_temp4 ;
+  PyObject *swig_obj[1] ;
+  
+  {
+    arg2 = &data_temp2;
+    arg3 = &dim_temp2;
+  }
+  {
+    arg4 = &data_temp4;
+    arg5 = &dim_temp4;
+  }
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_corrdims" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
+  {
+    try {
+      wasserstein_CorrelationDimension_Sl_double_Sg__npy_corrdims(arg1,arg2,arg3,arg4,arg5); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  {
+    npy_intp dims[1] = {
+      *arg3 
+    };
+    PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg2));
+    PyArrayObject* array = (PyArrayObject*) obj;
+    
+    if (!array) SWIG_fail;
+    
+#ifdef SWIGPY_USE_CAPSULE
+    PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
+#else
+    PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
+#endif
+    
+#if NPY_API_VERSION < 0x00000007
+    PyArray_BASE(array) = cap;
+#else
+    PyArray_SetBaseObject(array,cap);
+#endif
+    
+    resultobj = SWIG_Python_AppendOutput(resultobj,obj);
+  }
+  {
+    npy_intp dims[1] = {
+      *arg5 
+    };
+    PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg4));
+    PyArrayObject* array = (PyArrayObject*) obj;
+    
+    if (!array) SWIG_fail;
+    
+#ifdef SWIGPY_USE_CAPSULE
+    PyObject* cap = PyCapsule_New((void*)(*arg4), SWIGPY_CAPSULE_NAME, free_cap);
+#else
+    PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg4), free);
+#endif
+    
+#if NPY_API_VERSION < 0x00000007
+    PyArray_BASE(array) = cap;
+#else
+    PyArray_SetBaseObject(array,cap);
+#endif
+    
+    resultobj = SWIG_Python_AppendOutput(resultobj,obj);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_cumulative_vals_vars(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  wasserstein::CorrelationDimension< double > *arg1 = (wasserstein::CorrelationDimension< double > *) 0 ;
+  double **arg2 = (double **) 0 ;
+  std::ptrdiff_t *arg3 = (std::ptrdiff_t *) 0 ;
+  double **arg4 = (double **) 0 ;
+  std::ptrdiff_t *arg5 = (std::ptrdiff_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double *data_temp2 = NULL ;
+  std::ptrdiff_t dim_temp2 ;
+  double *data_temp4 = NULL ;
+  std::ptrdiff_t dim_temp4 ;
+  PyObject *swig_obj[1] ;
+  
+  {
+    arg2 = &data_temp2;
+    arg3 = &dim_temp2;
+  }
+  {
+    arg4 = &data_temp4;
+    arg5 = &dim_temp4;
+  }
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_cumulative_vals_vars" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
+  {
+    try {
+      wasserstein_CorrelationDimension_Sl_double_Sg__npy_cumulative_vals_vars(arg1,arg2,arg3,arg4,arg5); 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  {
+    npy_intp dims[1] = {
+      *arg3 
+    };
+    PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg2));
+    PyArrayObject* array = (PyArrayObject*) obj;
+    
+    if (!array) SWIG_fail;
+    
+#ifdef SWIGPY_USE_CAPSULE
+    PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
+#else
+    PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
+#endif
+    
+#if NPY_API_VERSION < 0x00000007
+    PyArray_BASE(array) = cap;
+#else
+    PyArray_SetBaseObject(array,cap);
+#endif
+    
+    resultobj = SWIG_Python_AppendOutput(resultobj,obj);
+  }
+  {
+    npy_intp dims[1] = {
+      *arg5 
+    };
+    PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg4));
+    PyArrayObject* array = (PyArrayObject*) obj;
+    
+    if (!array) SWIG_fail;
+    
+#ifdef SWIGPY_USE_CAPSULE
+    PyObject* cap = PyCapsule_New((void*)(*arg4), SWIGPY_CAPSULE_NAME, free_cap);
+#else
+    PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg4), free);
+#endif
+    
+#if NPY_API_VERSION < 0x00000007
+    PyArray_BASE(array) = cap;
+#else
+    PyArray_SetBaseObject(array,cap);
+#endif
+    
+    resultobj = SWIG_Python_AppendOutput(resultobj,obj);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_CorrelationDimensionFloat64(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  wasserstein::CorrelationDimension< double > *arg1 = (wasserstein::CorrelationDimension< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_CorrelationDimensionFloat64" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
+  {
+    try {
+      delete arg1; 
+    }
+    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
+    catch (std::invalid_argument& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::domain_error& e) {
+      SWIG_exception_fail(SWIG_ValueError, e.what() );
+    } catch (std::overflow_error& e) {
+      SWIG_exception_fail(SWIG_OverflowError, e.what() );
+    } catch (std::out_of_range& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::length_error& e) {
+      SWIG_exception_fail(SWIG_IndexError, e.what() );
+    } catch (std::runtime_error& e) {
+      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
+    } catch (std::exception& e) {
+      SWIG_exception_fail(SWIG_SystemError, e.what() );
+    }
+    /*@SWIG@*/
+    catch (...) {
+      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *CorrelationDimensionFloat64_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *CorrelationDimensionFloat64_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  return SWIG_Python_InitShadowInstance(args);
+}
+
 SWIGINTERN PyObject *_wrap_new_EMDFloat64(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   double arg1 = (double) 1 ;
@@ -26232,53 +25910,6 @@ SWIGINTERN PyObject *_wrap_EMDFloat64_description(PyObject *SWIGUNUSEDPARM(self)
   {
     try {
       result = ((wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *)arg1)->description(arg2); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EMDFloat64___str__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *arg1 = (wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  std::string result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_double_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat64___str__" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > * >(argp1);
-  {
-    try {
-      result = wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg____str__((wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *)arg1); 
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -27018,53 +26649,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_EMDFloat32___str__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *arg1 = (wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  std::string result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_float_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat32___str__" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > * >(argp1);
-  {
-    try {
-      result = wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg____str__((wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *)arg1); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_EMDFloat32___repr__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *arg1 = (wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *) 0 ;
@@ -27775,53 +27359,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_EMDYPhiFloat64___str__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *arg1 = (wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  std::string result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_double_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat64___str__" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > * >(argp1);
-  {
-    try {
-      result = wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg____str__((wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *)arg1); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_EMDYPhiFloat64___repr__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *arg1 = (wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *) 0 ;
@@ -28503,53 +28040,6 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat32_description(PyObject *SWIGUNUSEDPARM(s
   {
     try {
       result = ((wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *)arg1)->description(arg2); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_EMDYPhiFloat32___str__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *arg1 = (wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  std::string result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_float_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat32___str__" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > * >(argp1);
-  {
-    try {
-      result = wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg____str__((wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *)arg1); 
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -29634,53 +29124,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_PairwiseEMDFloat64___str__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *arg1 = (wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  std::string result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat64___str__" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > const *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > * >(argp1);
-  {
-    try {
-      result = wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_double_Sg____str__((wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > const *)arg1); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_PairwiseEMDFloat64___repr__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *arg1 = (wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *) 0 ;
@@ -30489,53 +29932,6 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat32_compute(PyObject *SWIGUNUSEDPARM(s
     }
   }
   resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_PairwiseEMDFloat32___str__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > *arg1 = (wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  std::string result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat32___str__" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > const *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > * >(argp1);
-  {
-    try {
-      result = wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_float_Sg____str__((wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > const *)arg1); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
   return resultobj;
 fail:
   return NULL;
@@ -31356,53 +30752,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat64___str__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *arg1 = (wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  std::string result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat64___str__" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > const *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > * >(argp1);
-  {
-    try {
-      result = wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_double_Sg____str__((wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > const *)arg1); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat64___repr__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *arg1 = (wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *) 0 ;
@@ -32217,53 +31566,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat32___str__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *arg1 = (wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  std::string result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat32___str__" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > const *""'"); 
-  }
-  arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > * >(argp1);
-  {
-    try {
-      result = wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_float_Sg____str__((wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > const *)arg1); 
-    }
-    /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
-    catch (std::invalid_argument& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::domain_error& e) {
-      SWIG_exception_fail(SWIG_ValueError, e.what() );
-    } catch (std::overflow_error& e) {
-      SWIG_exception_fail(SWIG_OverflowError, e.what() );
-    } catch (std::out_of_range& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::length_error& e) {
-      SWIG_exception_fail(SWIG_IndexError, e.what() );
-    } catch (std::runtime_error& e) {
-      SWIG_exception_fail(SWIG_RuntimeError, e.what() );
-    } catch (std::exception& e) {
-      SWIG_exception_fail(SWIG_SystemError, e.what() );
-    }
-    /*@SWIG@*/
-    catch (...) {
-      SWIG_exception_fail(SWIG_UnknownError, "unknown exception");
-    }
-  }
-  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat32___repr__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *arg1 = (wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *) 0 ;
@@ -32814,7 +32116,6 @@ static PyMethodDef SwigMethods[] = {
 	 { "Histogram1DHandlerLogFloat64_bin_centers_vec", _wrap_Histogram1DHandlerLogFloat64_bin_centers_vec, METH_O, "Histogram1DHandlerLogFloat64_bin_centers_vec(Histogram1DHandlerLogFloat64 self) -> vectorDouble"},
 	 { "Histogram1DHandlerLogFloat64_bin_edges_vec", _wrap_Histogram1DHandlerLogFloat64_bin_edges_vec, METH_O, "Histogram1DHandlerLogFloat64_bin_edges_vec(Histogram1DHandlerLogFloat64 self) -> vectorDouble"},
 	 { "Histogram1DHandlerLogFloat64___iadd__", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerLogFloat64___iadd__, METH_VARARGS|METH_KEYWORDS, "Histogram1DHandlerLogFloat64___iadd__(Histogram1DHandlerLogFloat64 self, Histogram1DHandlerLogFloat64 other) -> Histogram1DHandlerLogFloat64"},
-	 { "Histogram1DHandlerLogFloat64___str__", _wrap_Histogram1DHandlerLogFloat64___str__, METH_O, "Histogram1DHandlerLogFloat64___str__(Histogram1DHandlerLogFloat64 self) -> std::string"},
 	 { "Histogram1DHandlerLogFloat64___repr__", _wrap_Histogram1DHandlerLogFloat64___repr__, METH_O, "Histogram1DHandlerLogFloat64___repr__(Histogram1DHandlerLogFloat64 self) -> std::string"},
 	 { "Histogram1DHandlerLogFloat64_bin_centers", _wrap_Histogram1DHandlerLogFloat64_bin_centers, METH_O, "Histogram1DHandlerLogFloat64_bin_centers(Histogram1DHandlerLogFloat64 self)"},
 	 { "Histogram1DHandlerLogFloat64_bin_edges", _wrap_Histogram1DHandlerLogFloat64_bin_edges, METH_O, "Histogram1DHandlerLogFloat64_bin_edges(Histogram1DHandlerLogFloat64 self)"},
@@ -32831,7 +32132,6 @@ static PyMethodDef SwigMethods[] = {
 	 { "Histogram1DHandlerFloat64_bin_centers_vec", _wrap_Histogram1DHandlerFloat64_bin_centers_vec, METH_O, "Histogram1DHandlerFloat64_bin_centers_vec(Histogram1DHandlerFloat64 self) -> vectorDouble"},
 	 { "Histogram1DHandlerFloat64_bin_edges_vec", _wrap_Histogram1DHandlerFloat64_bin_edges_vec, METH_O, "Histogram1DHandlerFloat64_bin_edges_vec(Histogram1DHandlerFloat64 self) -> vectorDouble"},
 	 { "Histogram1DHandlerFloat64___iadd__", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerFloat64___iadd__, METH_VARARGS|METH_KEYWORDS, "Histogram1DHandlerFloat64___iadd__(Histogram1DHandlerFloat64 self, Histogram1DHandlerFloat64 other) -> Histogram1DHandlerFloat64"},
-	 { "Histogram1DHandlerFloat64___str__", _wrap_Histogram1DHandlerFloat64___str__, METH_O, "Histogram1DHandlerFloat64___str__(Histogram1DHandlerFloat64 self) -> std::string"},
 	 { "Histogram1DHandlerFloat64___repr__", _wrap_Histogram1DHandlerFloat64___repr__, METH_O, "Histogram1DHandlerFloat64___repr__(Histogram1DHandlerFloat64 self) -> std::string"},
 	 { "Histogram1DHandlerFloat64_bin_centers", _wrap_Histogram1DHandlerFloat64_bin_centers, METH_O, "Histogram1DHandlerFloat64_bin_centers(Histogram1DHandlerFloat64 self)"},
 	 { "Histogram1DHandlerFloat64_bin_edges", _wrap_Histogram1DHandlerFloat64_bin_edges, METH_O, "Histogram1DHandlerFloat64_bin_edges(Histogram1DHandlerFloat64 self)"},
@@ -32918,7 +32218,6 @@ static PyMethodDef SwigMethods[] = {
 	 { "Histogram1DHandlerLogFloat32_bin_centers_vec", _wrap_Histogram1DHandlerLogFloat32_bin_centers_vec, METH_O, "Histogram1DHandlerLogFloat32_bin_centers_vec(Histogram1DHandlerLogFloat32 self) -> vectorFloat"},
 	 { "Histogram1DHandlerLogFloat32_bin_edges_vec", _wrap_Histogram1DHandlerLogFloat32_bin_edges_vec, METH_O, "Histogram1DHandlerLogFloat32_bin_edges_vec(Histogram1DHandlerLogFloat32 self) -> vectorFloat"},
 	 { "Histogram1DHandlerLogFloat32___iadd__", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerLogFloat32___iadd__, METH_VARARGS|METH_KEYWORDS, "Histogram1DHandlerLogFloat32___iadd__(Histogram1DHandlerLogFloat32 self, Histogram1DHandlerLogFloat32 other) -> Histogram1DHandlerLogFloat32"},
-	 { "Histogram1DHandlerLogFloat32___str__", _wrap_Histogram1DHandlerLogFloat32___str__, METH_O, "Histogram1DHandlerLogFloat32___str__(Histogram1DHandlerLogFloat32 self) -> std::string"},
 	 { "Histogram1DHandlerLogFloat32___repr__", _wrap_Histogram1DHandlerLogFloat32___repr__, METH_O, "Histogram1DHandlerLogFloat32___repr__(Histogram1DHandlerLogFloat32 self) -> std::string"},
 	 { "Histogram1DHandlerLogFloat32_bin_centers", _wrap_Histogram1DHandlerLogFloat32_bin_centers, METH_O, "Histogram1DHandlerLogFloat32_bin_centers(Histogram1DHandlerLogFloat32 self)"},
 	 { "Histogram1DHandlerLogFloat32_bin_edges", _wrap_Histogram1DHandlerLogFloat32_bin_edges, METH_O, "Histogram1DHandlerLogFloat32_bin_edges(Histogram1DHandlerLogFloat32 self)"},
@@ -32935,30 +32234,16 @@ static PyMethodDef SwigMethods[] = {
 	 { "Histogram1DHandlerFloat32_bin_centers_vec", _wrap_Histogram1DHandlerFloat32_bin_centers_vec, METH_O, "Histogram1DHandlerFloat32_bin_centers_vec(Histogram1DHandlerFloat32 self) -> vectorFloat"},
 	 { "Histogram1DHandlerFloat32_bin_edges_vec", _wrap_Histogram1DHandlerFloat32_bin_edges_vec, METH_O, "Histogram1DHandlerFloat32_bin_edges_vec(Histogram1DHandlerFloat32 self) -> vectorFloat"},
 	 { "Histogram1DHandlerFloat32___iadd__", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerFloat32___iadd__, METH_VARARGS|METH_KEYWORDS, "Histogram1DHandlerFloat32___iadd__(Histogram1DHandlerFloat32 self, Histogram1DHandlerFloat32 other) -> Histogram1DHandlerFloat32"},
-	 { "Histogram1DHandlerFloat32___str__", _wrap_Histogram1DHandlerFloat32___str__, METH_O, "Histogram1DHandlerFloat32___str__(Histogram1DHandlerFloat32 self) -> std::string"},
 	 { "Histogram1DHandlerFloat32___repr__", _wrap_Histogram1DHandlerFloat32___repr__, METH_O, "Histogram1DHandlerFloat32___repr__(Histogram1DHandlerFloat32 self) -> std::string"},
 	 { "Histogram1DHandlerFloat32_bin_centers", _wrap_Histogram1DHandlerFloat32_bin_centers, METH_O, "Histogram1DHandlerFloat32_bin_centers(Histogram1DHandlerFloat32 self)"},
 	 { "Histogram1DHandlerFloat32_bin_edges", _wrap_Histogram1DHandlerFloat32_bin_edges, METH_O, "Histogram1DHandlerFloat32_bin_edges(Histogram1DHandlerFloat32 self)"},
 	 { "Histogram1DHandlerFloat32_hist_vals_vars", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerFloat32_hist_vals_vars, METH_VARARGS|METH_KEYWORDS, "Histogram1DHandlerFloat32_hist_vals_vars(Histogram1DHandlerFloat32 self, bool overflows=True)"},
 	 { "Histogram1DHandlerFloat32_swigregister", Histogram1DHandlerFloat32_swigregister, METH_O, NULL},
 	 { "Histogram1DHandlerFloat32_swiginit", Histogram1DHandlerFloat32_swiginit, METH_VARARGS, NULL},
-	 { "new_CorrelationDimensionFloat64", (PyCFunction)(void(*)(void))_wrap_new_CorrelationDimensionFloat64, METH_VARARGS|METH_KEYWORDS, "new_CorrelationDimensionFloat64(unsigned int nbins, double axis_min, double axis_max) -> CorrelationDimensionFloat64"},
-	 { "CorrelationDimensionFloat64_corrdims_vec", (PyCFunction)(void(*)(void))_wrap_CorrelationDimensionFloat64_corrdims_vec, METH_VARARGS|METH_KEYWORDS, "CorrelationDimensionFloat64_corrdims_vec(CorrelationDimensionFloat64 self, double eps=std::numeric_limits< double >::epsilon()) -> pairVectorDouble"},
-	 { "CorrelationDimensionFloat64_corrdim_bins_vec", _wrap_CorrelationDimensionFloat64_corrdim_bins_vec, METH_O, "CorrelationDimensionFloat64_corrdim_bins_vec(CorrelationDimensionFloat64 self) -> vectorDouble"},
-	 { "CorrelationDimensionFloat64_cumulative_vals_vars_vec", _wrap_CorrelationDimensionFloat64_cumulative_vals_vars_vec, METH_O, "CorrelationDimensionFloat64_cumulative_vals_vars_vec(CorrelationDimensionFloat64 self) -> pairVectorDouble"},
-	 { "CorrelationDimensionFloat64___str__", _wrap_CorrelationDimensionFloat64___str__, METH_O, "CorrelationDimensionFloat64___str__(CorrelationDimensionFloat64 self) -> std::string"},
-	 { "CorrelationDimensionFloat64___repr__", _wrap_CorrelationDimensionFloat64___repr__, METH_O, "CorrelationDimensionFloat64___repr__(CorrelationDimensionFloat64 self) -> std::string"},
-	 { "CorrelationDimensionFloat64_corrdim_bins", _wrap_CorrelationDimensionFloat64_corrdim_bins, METH_O, "CorrelationDimensionFloat64_corrdim_bins(CorrelationDimensionFloat64 self)"},
-	 { "CorrelationDimensionFloat64_corrdims", _wrap_CorrelationDimensionFloat64_corrdims, METH_O, "CorrelationDimensionFloat64_corrdims(CorrelationDimensionFloat64 self)"},
-	 { "CorrelationDimensionFloat64_cumulative_vals_vars", _wrap_CorrelationDimensionFloat64_cumulative_vals_vars, METH_O, "CorrelationDimensionFloat64_cumulative_vals_vars(CorrelationDimensionFloat64 self)"},
-	 { "delete_CorrelationDimensionFloat64", _wrap_delete_CorrelationDimensionFloat64, METH_O, "delete_CorrelationDimensionFloat64(CorrelationDimensionFloat64 self)"},
-	 { "CorrelationDimensionFloat64_swigregister", CorrelationDimensionFloat64_swigregister, METH_O, NULL},
-	 { "CorrelationDimensionFloat64_swiginit", CorrelationDimensionFloat64_swiginit, METH_VARARGS, NULL},
 	 { "new_CorrelationDimensionFloat32", (PyCFunction)(void(*)(void))_wrap_new_CorrelationDimensionFloat32, METH_VARARGS|METH_KEYWORDS, "new_CorrelationDimensionFloat32(unsigned int nbins, float axis_min, float axis_max) -> CorrelationDimensionFloat32"},
 	 { "CorrelationDimensionFloat32_corrdims_vec", (PyCFunction)(void(*)(void))_wrap_CorrelationDimensionFloat32_corrdims_vec, METH_VARARGS|METH_KEYWORDS, "CorrelationDimensionFloat32_corrdims_vec(CorrelationDimensionFloat32 self, float eps=std::numeric_limits< float >::epsilon()) -> pairVectorFloat"},
 	 { "CorrelationDimensionFloat32_corrdim_bins_vec", _wrap_CorrelationDimensionFloat32_corrdim_bins_vec, METH_O, "CorrelationDimensionFloat32_corrdim_bins_vec(CorrelationDimensionFloat32 self) -> vectorFloat"},
 	 { "CorrelationDimensionFloat32_cumulative_vals_vars_vec", _wrap_CorrelationDimensionFloat32_cumulative_vals_vars_vec, METH_O, "CorrelationDimensionFloat32_cumulative_vals_vars_vec(CorrelationDimensionFloat32 self) -> pairVectorFloat"},
-	 { "CorrelationDimensionFloat32___str__", _wrap_CorrelationDimensionFloat32___str__, METH_O, "CorrelationDimensionFloat32___str__(CorrelationDimensionFloat32 self) -> std::string"},
 	 { "CorrelationDimensionFloat32___repr__", _wrap_CorrelationDimensionFloat32___repr__, METH_O, "CorrelationDimensionFloat32___repr__(CorrelationDimensionFloat32 self) -> std::string"},
 	 { "CorrelationDimensionFloat32_corrdim_bins", _wrap_CorrelationDimensionFloat32_corrdim_bins, METH_O, "CorrelationDimensionFloat32_corrdim_bins(CorrelationDimensionFloat32 self)"},
 	 { "CorrelationDimensionFloat32_corrdims", _wrap_CorrelationDimensionFloat32_corrdims, METH_O, "CorrelationDimensionFloat32_corrdims(CorrelationDimensionFloat32 self)"},
@@ -32966,10 +32251,20 @@ static PyMethodDef SwigMethods[] = {
 	 { "delete_CorrelationDimensionFloat32", _wrap_delete_CorrelationDimensionFloat32, METH_O, "delete_CorrelationDimensionFloat32(CorrelationDimensionFloat32 self)"},
 	 { "CorrelationDimensionFloat32_swigregister", CorrelationDimensionFloat32_swigregister, METH_O, NULL},
 	 { "CorrelationDimensionFloat32_swiginit", CorrelationDimensionFloat32_swiginit, METH_VARARGS, NULL},
+	 { "new_CorrelationDimensionFloat64", (PyCFunction)(void(*)(void))_wrap_new_CorrelationDimensionFloat64, METH_VARARGS|METH_KEYWORDS, "new_CorrelationDimensionFloat64(unsigned int nbins, double axis_min, double axis_max) -> CorrelationDimensionFloat64"},
+	 { "CorrelationDimensionFloat64_corrdims_vec", (PyCFunction)(void(*)(void))_wrap_CorrelationDimensionFloat64_corrdims_vec, METH_VARARGS|METH_KEYWORDS, "CorrelationDimensionFloat64_corrdims_vec(CorrelationDimensionFloat64 self, double eps=std::numeric_limits< double >::epsilon()) -> pairVectorDouble"},
+	 { "CorrelationDimensionFloat64_corrdim_bins_vec", _wrap_CorrelationDimensionFloat64_corrdim_bins_vec, METH_O, "CorrelationDimensionFloat64_corrdim_bins_vec(CorrelationDimensionFloat64 self) -> vectorDouble"},
+	 { "CorrelationDimensionFloat64_cumulative_vals_vars_vec", _wrap_CorrelationDimensionFloat64_cumulative_vals_vars_vec, METH_O, "CorrelationDimensionFloat64_cumulative_vals_vars_vec(CorrelationDimensionFloat64 self) -> pairVectorDouble"},
+	 { "CorrelationDimensionFloat64___repr__", _wrap_CorrelationDimensionFloat64___repr__, METH_O, "CorrelationDimensionFloat64___repr__(CorrelationDimensionFloat64 self) -> std::string"},
+	 { "CorrelationDimensionFloat64_corrdim_bins", _wrap_CorrelationDimensionFloat64_corrdim_bins, METH_O, "CorrelationDimensionFloat64_corrdim_bins(CorrelationDimensionFloat64 self)"},
+	 { "CorrelationDimensionFloat64_corrdims", _wrap_CorrelationDimensionFloat64_corrdims, METH_O, "CorrelationDimensionFloat64_corrdims(CorrelationDimensionFloat64 self)"},
+	 { "CorrelationDimensionFloat64_cumulative_vals_vars", _wrap_CorrelationDimensionFloat64_cumulative_vals_vars, METH_O, "CorrelationDimensionFloat64_cumulative_vals_vars(CorrelationDimensionFloat64 self)"},
+	 { "delete_CorrelationDimensionFloat64", _wrap_delete_CorrelationDimensionFloat64, METH_O, "delete_CorrelationDimensionFloat64(CorrelationDimensionFloat64 self)"},
+	 { "CorrelationDimensionFloat64_swigregister", CorrelationDimensionFloat64_swigregister, METH_O, NULL},
+	 { "CorrelationDimensionFloat64_swiginit", CorrelationDimensionFloat64_swiginit, METH_VARARGS, NULL},
 	 { "new_EMDFloat64", (PyCFunction)(void(*)(void))_wrap_new_EMDFloat64, METH_VARARGS|METH_KEYWORDS, "new_EMDFloat64(double R=1, double beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, std::size_t n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1) -> EMDFloat64"},
 	 { "delete_EMDFloat64", _wrap_delete_EMDFloat64, METH_O, "delete_EMDFloat64(EMDFloat64 self)"},
 	 { "EMDFloat64_description", (PyCFunction)(void(*)(void))_wrap_EMDFloat64_description, METH_VARARGS|METH_KEYWORDS, "EMDFloat64_description(EMDFloat64 self, bool write_preprocessors=True) -> std::string"},
-	 { "EMDFloat64___str__", _wrap_EMDFloat64___str__, METH_O, "EMDFloat64___str__(EMDFloat64 self) -> std::string"},
 	 { "EMDFloat64___repr__", _wrap_EMDFloat64___repr__, METH_O, "EMDFloat64___repr__(EMDFloat64 self) -> std::string"},
 	 { "EMDFloat64_preprocess_CenterWeightedCentroid", _wrap_EMDFloat64_preprocess_CenterWeightedCentroid, METH_O, "EMDFloat64_preprocess_CenterWeightedCentroid(EMDFloat64 self)"},
 	 { "EMDFloat64___call__", _wrap_EMDFloat64___call__, METH_VARARGS, "\n"
@@ -32981,7 +32276,6 @@ static PyMethodDef SwigMethods[] = {
 	 { "new_EMDFloat32", (PyCFunction)(void(*)(void))_wrap_new_EMDFloat32, METH_VARARGS|METH_KEYWORDS, "new_EMDFloat32(float R=1, float beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, std::size_t n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1) -> EMDFloat32"},
 	 { "delete_EMDFloat32", _wrap_delete_EMDFloat32, METH_O, "delete_EMDFloat32(EMDFloat32 self)"},
 	 { "EMDFloat32_description", (PyCFunction)(void(*)(void))_wrap_EMDFloat32_description, METH_VARARGS|METH_KEYWORDS, "EMDFloat32_description(EMDFloat32 self, bool write_preprocessors=True) -> std::string"},
-	 { "EMDFloat32___str__", _wrap_EMDFloat32___str__, METH_O, "EMDFloat32___str__(EMDFloat32 self) -> std::string"},
 	 { "EMDFloat32___repr__", _wrap_EMDFloat32___repr__, METH_O, "EMDFloat32___repr__(EMDFloat32 self) -> std::string"},
 	 { "EMDFloat32_preprocess_CenterWeightedCentroid", _wrap_EMDFloat32_preprocess_CenterWeightedCentroid, METH_O, "EMDFloat32_preprocess_CenterWeightedCentroid(EMDFloat32 self)"},
 	 { "EMDFloat32___call__", _wrap_EMDFloat32___call__, METH_VARARGS, "\n"
@@ -32993,7 +32287,6 @@ static PyMethodDef SwigMethods[] = {
 	 { "new_EMDYPhiFloat64", (PyCFunction)(void(*)(void))_wrap_new_EMDYPhiFloat64, METH_VARARGS|METH_KEYWORDS, "new_EMDYPhiFloat64(double R=1, double beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, std::size_t n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1) -> EMDYPhiFloat64"},
 	 { "delete_EMDYPhiFloat64", _wrap_delete_EMDYPhiFloat64, METH_O, "delete_EMDYPhiFloat64(EMDYPhiFloat64 self)"},
 	 { "EMDYPhiFloat64_description", (PyCFunction)(void(*)(void))_wrap_EMDYPhiFloat64_description, METH_VARARGS|METH_KEYWORDS, "EMDYPhiFloat64_description(EMDYPhiFloat64 self, bool write_preprocessors=True) -> std::string"},
-	 { "EMDYPhiFloat64___str__", _wrap_EMDYPhiFloat64___str__, METH_O, "EMDYPhiFloat64___str__(EMDYPhiFloat64 self) -> std::string"},
 	 { "EMDYPhiFloat64___repr__", _wrap_EMDYPhiFloat64___repr__, METH_O, "EMDYPhiFloat64___repr__(EMDYPhiFloat64 self) -> std::string"},
 	 { "EMDYPhiFloat64_preprocess_CenterWeightedCentroid", _wrap_EMDYPhiFloat64_preprocess_CenterWeightedCentroid, METH_O, "EMDYPhiFloat64_preprocess_CenterWeightedCentroid(EMDYPhiFloat64 self)"},
 	 { "EMDYPhiFloat64___call__", _wrap_EMDYPhiFloat64___call__, METH_VARARGS, "\n"
@@ -33005,7 +32298,6 @@ static PyMethodDef SwigMethods[] = {
 	 { "new_EMDYPhiFloat32", (PyCFunction)(void(*)(void))_wrap_new_EMDYPhiFloat32, METH_VARARGS|METH_KEYWORDS, "new_EMDYPhiFloat32(float R=1, float beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, std::size_t n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1) -> EMDYPhiFloat32"},
 	 { "delete_EMDYPhiFloat32", _wrap_delete_EMDYPhiFloat32, METH_O, "delete_EMDYPhiFloat32(EMDYPhiFloat32 self)"},
 	 { "EMDYPhiFloat32_description", (PyCFunction)(void(*)(void))_wrap_EMDYPhiFloat32_description, METH_VARARGS|METH_KEYWORDS, "EMDYPhiFloat32_description(EMDYPhiFloat32 self, bool write_preprocessors=True) -> std::string"},
-	 { "EMDYPhiFloat32___str__", _wrap_EMDYPhiFloat32___str__, METH_O, "EMDYPhiFloat32___str__(EMDYPhiFloat32 self) -> std::string"},
 	 { "EMDYPhiFloat32___repr__", _wrap_EMDYPhiFloat32___repr__, METH_O, "EMDYPhiFloat32___repr__(EMDYPhiFloat32 self) -> std::string"},
 	 { "EMDYPhiFloat32_preprocess_CenterWeightedCentroid", _wrap_EMDYPhiFloat32_preprocess_CenterWeightedCentroid, METH_O, "EMDYPhiFloat32_preprocess_CenterWeightedCentroid(EMDYPhiFloat32 self)"},
 	 { "EMDYPhiFloat32___call__", _wrap_EMDYPhiFloat32___call__, METH_VARARGS, "\n"
@@ -33023,7 +32315,6 @@ static PyMethodDef SwigMethods[] = {
 		"PairwiseEMDFloat64_init(PairwiseEMDFloat64 self, wasserstein::index_type nevA, wasserstein::index_type nevB)\n"
 		""},
 	 { "PairwiseEMDFloat64_compute", _wrap_PairwiseEMDFloat64_compute, METH_O, "PairwiseEMDFloat64_compute(PairwiseEMDFloat64 self)"},
-	 { "PairwiseEMDFloat64___str__", _wrap_PairwiseEMDFloat64___str__, METH_O, "PairwiseEMDFloat64___str__(PairwiseEMDFloat64 self) -> std::string"},
 	 { "PairwiseEMDFloat64___repr__", _wrap_PairwiseEMDFloat64___repr__, METH_O, "PairwiseEMDFloat64___repr__(PairwiseEMDFloat64 self) -> std::string"},
 	 { "PairwiseEMDFloat64_preprocess_CenterWeightedCentroid", _wrap_PairwiseEMDFloat64_preprocess_CenterWeightedCentroid, METH_O, "PairwiseEMDFloat64_preprocess_CenterWeightedCentroid(PairwiseEMDFloat64 self)"},
 	 { "PairwiseEMDFloat64__reset_B_events", _wrap_PairwiseEMDFloat64__reset_B_events, METH_O, "PairwiseEMDFloat64__reset_B_events(PairwiseEMDFloat64 self)"},
@@ -33039,7 +32330,6 @@ static PyMethodDef SwigMethods[] = {
 		"PairwiseEMDFloat32_init(PairwiseEMDFloat32 self, wasserstein::index_type nevA, wasserstein::index_type nevB)\n"
 		""},
 	 { "PairwiseEMDFloat32_compute", _wrap_PairwiseEMDFloat32_compute, METH_O, "PairwiseEMDFloat32_compute(PairwiseEMDFloat32 self)"},
-	 { "PairwiseEMDFloat32___str__", _wrap_PairwiseEMDFloat32___str__, METH_O, "PairwiseEMDFloat32___str__(PairwiseEMDFloat32 self) -> std::string"},
 	 { "PairwiseEMDFloat32___repr__", _wrap_PairwiseEMDFloat32___repr__, METH_O, "PairwiseEMDFloat32___repr__(PairwiseEMDFloat32 self) -> std::string"},
 	 { "PairwiseEMDFloat32_preprocess_CenterWeightedCentroid", _wrap_PairwiseEMDFloat32_preprocess_CenterWeightedCentroid, METH_O, "PairwiseEMDFloat32_preprocess_CenterWeightedCentroid(PairwiseEMDFloat32 self)"},
 	 { "PairwiseEMDFloat32__reset_B_events", _wrap_PairwiseEMDFloat32__reset_B_events, METH_O, "PairwiseEMDFloat32__reset_B_events(PairwiseEMDFloat32 self)"},
@@ -33055,7 +32345,6 @@ static PyMethodDef SwigMethods[] = {
 		"PairwiseEMDYPhiFloat64_init(PairwiseEMDYPhiFloat64 self, wasserstein::index_type nevA, wasserstein::index_type nevB)\n"
 		""},
 	 { "PairwiseEMDYPhiFloat64_compute", _wrap_PairwiseEMDYPhiFloat64_compute, METH_O, "PairwiseEMDYPhiFloat64_compute(PairwiseEMDYPhiFloat64 self)"},
-	 { "PairwiseEMDYPhiFloat64___str__", _wrap_PairwiseEMDYPhiFloat64___str__, METH_O, "PairwiseEMDYPhiFloat64___str__(PairwiseEMDYPhiFloat64 self) -> std::string"},
 	 { "PairwiseEMDYPhiFloat64___repr__", _wrap_PairwiseEMDYPhiFloat64___repr__, METH_O, "PairwiseEMDYPhiFloat64___repr__(PairwiseEMDYPhiFloat64 self) -> std::string"},
 	 { "PairwiseEMDYPhiFloat64_preprocess_CenterWeightedCentroid", _wrap_PairwiseEMDYPhiFloat64_preprocess_CenterWeightedCentroid, METH_O, "PairwiseEMDYPhiFloat64_preprocess_CenterWeightedCentroid(PairwiseEMDYPhiFloat64 self)"},
 	 { "PairwiseEMDYPhiFloat64__reset_B_events", _wrap_PairwiseEMDYPhiFloat64__reset_B_events, METH_O, "PairwiseEMDYPhiFloat64__reset_B_events(PairwiseEMDYPhiFloat64 self)"},
@@ -33071,7 +32360,6 @@ static PyMethodDef SwigMethods[] = {
 		"PairwiseEMDYPhiFloat32_init(PairwiseEMDYPhiFloat32 self, wasserstein::index_type nevA, wasserstein::index_type nevB)\n"
 		""},
 	 { "PairwiseEMDYPhiFloat32_compute", _wrap_PairwiseEMDYPhiFloat32_compute, METH_O, "PairwiseEMDYPhiFloat32_compute(PairwiseEMDYPhiFloat32 self)"},
-	 { "PairwiseEMDYPhiFloat32___str__", _wrap_PairwiseEMDYPhiFloat32___str__, METH_O, "PairwiseEMDYPhiFloat32___str__(PairwiseEMDYPhiFloat32 self) -> std::string"},
 	 { "PairwiseEMDYPhiFloat32___repr__", _wrap_PairwiseEMDYPhiFloat32___repr__, METH_O, "PairwiseEMDYPhiFloat32___repr__(PairwiseEMDYPhiFloat32 self) -> std::string"},
 	 { "PairwiseEMDYPhiFloat32_preprocess_CenterWeightedCentroid", _wrap_PairwiseEMDYPhiFloat32_preprocess_CenterWeightedCentroid, METH_O, "PairwiseEMDYPhiFloat32_preprocess_CenterWeightedCentroid(PairwiseEMDYPhiFloat32 self)"},
 	 { "PairwiseEMDYPhiFloat32__reset_B_events", _wrap_PairwiseEMDYPhiFloat32__reset_B_events, METH_O, "PairwiseEMDYPhiFloat32__reset_B_events(PairwiseEMDYPhiFloat32 self)"},
@@ -33396,7 +32684,6 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "Histogram1DHandlerLogFloat64_bin_centers_vec", _wrap_Histogram1DHandlerLogFloat64_bin_centers_vec, METH_O, "bin_centers_vec(Histogram1DHandlerLogFloat64 self) -> vectorDouble"},
 	 { "Histogram1DHandlerLogFloat64_bin_edges_vec", _wrap_Histogram1DHandlerLogFloat64_bin_edges_vec, METH_O, "bin_edges_vec(Histogram1DHandlerLogFloat64 self) -> vectorDouble"},
 	 { "Histogram1DHandlerLogFloat64___iadd__", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerLogFloat64___iadd__, METH_VARARGS|METH_KEYWORDS, "__iadd__(Histogram1DHandlerLogFloat64 self, Histogram1DHandlerLogFloat64 other) -> Histogram1DHandlerLogFloat64"},
-	 { "Histogram1DHandlerLogFloat64___str__", _wrap_Histogram1DHandlerLogFloat64___str__, METH_O, "__str__(Histogram1DHandlerLogFloat64 self) -> std::string"},
 	 { "Histogram1DHandlerLogFloat64___repr__", _wrap_Histogram1DHandlerLogFloat64___repr__, METH_O, "__repr__(Histogram1DHandlerLogFloat64 self) -> std::string"},
 	 { "Histogram1DHandlerLogFloat64_bin_centers", _wrap_Histogram1DHandlerLogFloat64_bin_centers, METH_O, "bin_centers(Histogram1DHandlerLogFloat64 self)"},
 	 { "Histogram1DHandlerLogFloat64_bin_edges", _wrap_Histogram1DHandlerLogFloat64_bin_edges, METH_O, "bin_edges(Histogram1DHandlerLogFloat64 self)"},
@@ -33413,7 +32700,6 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "Histogram1DHandlerFloat64_bin_centers_vec", _wrap_Histogram1DHandlerFloat64_bin_centers_vec, METH_O, "bin_centers_vec(Histogram1DHandlerFloat64 self) -> vectorDouble"},
 	 { "Histogram1DHandlerFloat64_bin_edges_vec", _wrap_Histogram1DHandlerFloat64_bin_edges_vec, METH_O, "bin_edges_vec(Histogram1DHandlerFloat64 self) -> vectorDouble"},
 	 { "Histogram1DHandlerFloat64___iadd__", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerFloat64___iadd__, METH_VARARGS|METH_KEYWORDS, "__iadd__(Histogram1DHandlerFloat64 self, Histogram1DHandlerFloat64 other) -> Histogram1DHandlerFloat64"},
-	 { "Histogram1DHandlerFloat64___str__", _wrap_Histogram1DHandlerFloat64___str__, METH_O, "__str__(Histogram1DHandlerFloat64 self) -> std::string"},
 	 { "Histogram1DHandlerFloat64___repr__", _wrap_Histogram1DHandlerFloat64___repr__, METH_O, "__repr__(Histogram1DHandlerFloat64 self) -> std::string"},
 	 { "Histogram1DHandlerFloat64_bin_centers", _wrap_Histogram1DHandlerFloat64_bin_centers, METH_O, "bin_centers(Histogram1DHandlerFloat64 self)"},
 	 { "Histogram1DHandlerFloat64_bin_edges", _wrap_Histogram1DHandlerFloat64_bin_edges, METH_O, "bin_edges(Histogram1DHandlerFloat64 self)"},
@@ -33500,7 +32786,6 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "Histogram1DHandlerLogFloat32_bin_centers_vec", _wrap_Histogram1DHandlerLogFloat32_bin_centers_vec, METH_O, "bin_centers_vec(Histogram1DHandlerLogFloat32 self) -> vectorFloat"},
 	 { "Histogram1DHandlerLogFloat32_bin_edges_vec", _wrap_Histogram1DHandlerLogFloat32_bin_edges_vec, METH_O, "bin_edges_vec(Histogram1DHandlerLogFloat32 self) -> vectorFloat"},
 	 { "Histogram1DHandlerLogFloat32___iadd__", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerLogFloat32___iadd__, METH_VARARGS|METH_KEYWORDS, "__iadd__(Histogram1DHandlerLogFloat32 self, Histogram1DHandlerLogFloat32 other) -> Histogram1DHandlerLogFloat32"},
-	 { "Histogram1DHandlerLogFloat32___str__", _wrap_Histogram1DHandlerLogFloat32___str__, METH_O, "__str__(Histogram1DHandlerLogFloat32 self) -> std::string"},
 	 { "Histogram1DHandlerLogFloat32___repr__", _wrap_Histogram1DHandlerLogFloat32___repr__, METH_O, "__repr__(Histogram1DHandlerLogFloat32 self) -> std::string"},
 	 { "Histogram1DHandlerLogFloat32_bin_centers", _wrap_Histogram1DHandlerLogFloat32_bin_centers, METH_O, "bin_centers(Histogram1DHandlerLogFloat32 self)"},
 	 { "Histogram1DHandlerLogFloat32_bin_edges", _wrap_Histogram1DHandlerLogFloat32_bin_edges, METH_O, "bin_edges(Histogram1DHandlerLogFloat32 self)"},
@@ -33517,30 +32802,16 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "Histogram1DHandlerFloat32_bin_centers_vec", _wrap_Histogram1DHandlerFloat32_bin_centers_vec, METH_O, "bin_centers_vec(Histogram1DHandlerFloat32 self) -> vectorFloat"},
 	 { "Histogram1DHandlerFloat32_bin_edges_vec", _wrap_Histogram1DHandlerFloat32_bin_edges_vec, METH_O, "bin_edges_vec(Histogram1DHandlerFloat32 self) -> vectorFloat"},
 	 { "Histogram1DHandlerFloat32___iadd__", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerFloat32___iadd__, METH_VARARGS|METH_KEYWORDS, "__iadd__(Histogram1DHandlerFloat32 self, Histogram1DHandlerFloat32 other) -> Histogram1DHandlerFloat32"},
-	 { "Histogram1DHandlerFloat32___str__", _wrap_Histogram1DHandlerFloat32___str__, METH_O, "__str__(Histogram1DHandlerFloat32 self) -> std::string"},
 	 { "Histogram1DHandlerFloat32___repr__", _wrap_Histogram1DHandlerFloat32___repr__, METH_O, "__repr__(Histogram1DHandlerFloat32 self) -> std::string"},
 	 { "Histogram1DHandlerFloat32_bin_centers", _wrap_Histogram1DHandlerFloat32_bin_centers, METH_O, "bin_centers(Histogram1DHandlerFloat32 self)"},
 	 { "Histogram1DHandlerFloat32_bin_edges", _wrap_Histogram1DHandlerFloat32_bin_edges, METH_O, "bin_edges(Histogram1DHandlerFloat32 self)"},
 	 { "Histogram1DHandlerFloat32_hist_vals_vars", (PyCFunction)(void(*)(void))_wrap_Histogram1DHandlerFloat32_hist_vals_vars, METH_VARARGS|METH_KEYWORDS, "hist_vals_vars(Histogram1DHandlerFloat32 self, bool overflows=True)"},
 	 { "Histogram1DHandlerFloat32_swigregister", Histogram1DHandlerFloat32_swigregister, METH_O, NULL},
 	 { "Histogram1DHandlerFloat32_swiginit", Histogram1DHandlerFloat32_swiginit, METH_VARARGS, NULL},
-	 { "new_CorrelationDimensionFloat64", (PyCFunction)(void(*)(void))_wrap_new_CorrelationDimensionFloat64, METH_VARARGS|METH_KEYWORDS, "new_CorrelationDimensionFloat64(unsigned int nbins, double axis_min, double axis_max) -> CorrelationDimensionFloat64"},
-	 { "CorrelationDimensionFloat64_corrdims_vec", (PyCFunction)(void(*)(void))_wrap_CorrelationDimensionFloat64_corrdims_vec, METH_VARARGS|METH_KEYWORDS, "corrdims_vec(CorrelationDimensionFloat64 self, double eps=std::numeric_limits< double >::epsilon()) -> pairVectorDouble"},
-	 { "CorrelationDimensionFloat64_corrdim_bins_vec", _wrap_CorrelationDimensionFloat64_corrdim_bins_vec, METH_O, "corrdim_bins_vec(CorrelationDimensionFloat64 self) -> vectorDouble"},
-	 { "CorrelationDimensionFloat64_cumulative_vals_vars_vec", _wrap_CorrelationDimensionFloat64_cumulative_vals_vars_vec, METH_O, "cumulative_vals_vars_vec(CorrelationDimensionFloat64 self) -> pairVectorDouble"},
-	 { "CorrelationDimensionFloat64___str__", _wrap_CorrelationDimensionFloat64___str__, METH_O, "__str__(CorrelationDimensionFloat64 self) -> std::string"},
-	 { "CorrelationDimensionFloat64___repr__", _wrap_CorrelationDimensionFloat64___repr__, METH_O, "__repr__(CorrelationDimensionFloat64 self) -> std::string"},
-	 { "CorrelationDimensionFloat64_corrdim_bins", _wrap_CorrelationDimensionFloat64_corrdim_bins, METH_O, "corrdim_bins(CorrelationDimensionFloat64 self)"},
-	 { "CorrelationDimensionFloat64_corrdims", _wrap_CorrelationDimensionFloat64_corrdims, METH_O, "corrdims(CorrelationDimensionFloat64 self)"},
-	 { "CorrelationDimensionFloat64_cumulative_vals_vars", _wrap_CorrelationDimensionFloat64_cumulative_vals_vars, METH_O, "cumulative_vals_vars(CorrelationDimensionFloat64 self)"},
-	 { "delete_CorrelationDimensionFloat64", _wrap_delete_CorrelationDimensionFloat64, METH_O, "delete_CorrelationDimensionFloat64(CorrelationDimensionFloat64 self)"},
-	 { "CorrelationDimensionFloat64_swigregister", CorrelationDimensionFloat64_swigregister, METH_O, NULL},
-	 { "CorrelationDimensionFloat64_swiginit", CorrelationDimensionFloat64_swiginit, METH_VARARGS, NULL},
 	 { "new_CorrelationDimensionFloat32", (PyCFunction)(void(*)(void))_wrap_new_CorrelationDimensionFloat32, METH_VARARGS|METH_KEYWORDS, "new_CorrelationDimensionFloat32(unsigned int nbins, float axis_min, float axis_max) -> CorrelationDimensionFloat32"},
 	 { "CorrelationDimensionFloat32_corrdims_vec", (PyCFunction)(void(*)(void))_wrap_CorrelationDimensionFloat32_corrdims_vec, METH_VARARGS|METH_KEYWORDS, "corrdims_vec(CorrelationDimensionFloat32 self, float eps=std::numeric_limits< float >::epsilon()) -> pairVectorFloat"},
 	 { "CorrelationDimensionFloat32_corrdim_bins_vec", _wrap_CorrelationDimensionFloat32_corrdim_bins_vec, METH_O, "corrdim_bins_vec(CorrelationDimensionFloat32 self) -> vectorFloat"},
 	 { "CorrelationDimensionFloat32_cumulative_vals_vars_vec", _wrap_CorrelationDimensionFloat32_cumulative_vals_vars_vec, METH_O, "cumulative_vals_vars_vec(CorrelationDimensionFloat32 self) -> pairVectorFloat"},
-	 { "CorrelationDimensionFloat32___str__", _wrap_CorrelationDimensionFloat32___str__, METH_O, "__str__(CorrelationDimensionFloat32 self) -> std::string"},
 	 { "CorrelationDimensionFloat32___repr__", _wrap_CorrelationDimensionFloat32___repr__, METH_O, "__repr__(CorrelationDimensionFloat32 self) -> std::string"},
 	 { "CorrelationDimensionFloat32_corrdim_bins", _wrap_CorrelationDimensionFloat32_corrdim_bins, METH_O, "corrdim_bins(CorrelationDimensionFloat32 self)"},
 	 { "CorrelationDimensionFloat32_corrdims", _wrap_CorrelationDimensionFloat32_corrdims, METH_O, "corrdims(CorrelationDimensionFloat32 self)"},
@@ -33548,10 +32819,20 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "delete_CorrelationDimensionFloat32", _wrap_delete_CorrelationDimensionFloat32, METH_O, "delete_CorrelationDimensionFloat32(CorrelationDimensionFloat32 self)"},
 	 { "CorrelationDimensionFloat32_swigregister", CorrelationDimensionFloat32_swigregister, METH_O, NULL},
 	 { "CorrelationDimensionFloat32_swiginit", CorrelationDimensionFloat32_swiginit, METH_VARARGS, NULL},
+	 { "new_CorrelationDimensionFloat64", (PyCFunction)(void(*)(void))_wrap_new_CorrelationDimensionFloat64, METH_VARARGS|METH_KEYWORDS, "new_CorrelationDimensionFloat64(unsigned int nbins, double axis_min, double axis_max) -> CorrelationDimensionFloat64"},
+	 { "CorrelationDimensionFloat64_corrdims_vec", (PyCFunction)(void(*)(void))_wrap_CorrelationDimensionFloat64_corrdims_vec, METH_VARARGS|METH_KEYWORDS, "corrdims_vec(CorrelationDimensionFloat64 self, double eps=std::numeric_limits< double >::epsilon()) -> pairVectorDouble"},
+	 { "CorrelationDimensionFloat64_corrdim_bins_vec", _wrap_CorrelationDimensionFloat64_corrdim_bins_vec, METH_O, "corrdim_bins_vec(CorrelationDimensionFloat64 self) -> vectorDouble"},
+	 { "CorrelationDimensionFloat64_cumulative_vals_vars_vec", _wrap_CorrelationDimensionFloat64_cumulative_vals_vars_vec, METH_O, "cumulative_vals_vars_vec(CorrelationDimensionFloat64 self) -> pairVectorDouble"},
+	 { "CorrelationDimensionFloat64___repr__", _wrap_CorrelationDimensionFloat64___repr__, METH_O, "__repr__(CorrelationDimensionFloat64 self) -> std::string"},
+	 { "CorrelationDimensionFloat64_corrdim_bins", _wrap_CorrelationDimensionFloat64_corrdim_bins, METH_O, "corrdim_bins(CorrelationDimensionFloat64 self)"},
+	 { "CorrelationDimensionFloat64_corrdims", _wrap_CorrelationDimensionFloat64_corrdims, METH_O, "corrdims(CorrelationDimensionFloat64 self)"},
+	 { "CorrelationDimensionFloat64_cumulative_vals_vars", _wrap_CorrelationDimensionFloat64_cumulative_vals_vars, METH_O, "cumulative_vals_vars(CorrelationDimensionFloat64 self)"},
+	 { "delete_CorrelationDimensionFloat64", _wrap_delete_CorrelationDimensionFloat64, METH_O, "delete_CorrelationDimensionFloat64(CorrelationDimensionFloat64 self)"},
+	 { "CorrelationDimensionFloat64_swigregister", CorrelationDimensionFloat64_swigregister, METH_O, NULL},
+	 { "CorrelationDimensionFloat64_swiginit", CorrelationDimensionFloat64_swiginit, METH_VARARGS, NULL},
 	 { "new_EMDFloat64", (PyCFunction)(void(*)(void))_wrap_new_EMDFloat64, METH_VARARGS|METH_KEYWORDS, "new_EMDFloat64(double R=1, double beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, std::size_t n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1) -> EMDFloat64"},
 	 { "delete_EMDFloat64", _wrap_delete_EMDFloat64, METH_O, "delete_EMDFloat64(EMDFloat64 self)"},
 	 { "EMDFloat64_description", (PyCFunction)(void(*)(void))_wrap_EMDFloat64_description, METH_VARARGS|METH_KEYWORDS, "description(EMDFloat64 self, bool write_preprocessors=True) -> std::string"},
-	 { "EMDFloat64___str__", _wrap_EMDFloat64___str__, METH_O, "__str__(EMDFloat64 self) -> std::string"},
 	 { "EMDFloat64___repr__", _wrap_EMDFloat64___repr__, METH_O, "__repr__(EMDFloat64 self) -> std::string"},
 	 { "EMDFloat64_preprocess_CenterWeightedCentroid", _wrap_EMDFloat64_preprocess_CenterWeightedCentroid, METH_O, "preprocess_CenterWeightedCentroid(EMDFloat64 self)"},
 	 { "EMDFloat64___call__", _wrap_EMDFloat64___call__, METH_VARARGS, "\n"
@@ -33563,7 +32844,6 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "new_EMDFloat32", (PyCFunction)(void(*)(void))_wrap_new_EMDFloat32, METH_VARARGS|METH_KEYWORDS, "new_EMDFloat32(float R=1, float beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, std::size_t n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1) -> EMDFloat32"},
 	 { "delete_EMDFloat32", _wrap_delete_EMDFloat32, METH_O, "delete_EMDFloat32(EMDFloat32 self)"},
 	 { "EMDFloat32_description", (PyCFunction)(void(*)(void))_wrap_EMDFloat32_description, METH_VARARGS|METH_KEYWORDS, "description(EMDFloat32 self, bool write_preprocessors=True) -> std::string"},
-	 { "EMDFloat32___str__", _wrap_EMDFloat32___str__, METH_O, "__str__(EMDFloat32 self) -> std::string"},
 	 { "EMDFloat32___repr__", _wrap_EMDFloat32___repr__, METH_O, "__repr__(EMDFloat32 self) -> std::string"},
 	 { "EMDFloat32_preprocess_CenterWeightedCentroid", _wrap_EMDFloat32_preprocess_CenterWeightedCentroid, METH_O, "preprocess_CenterWeightedCentroid(EMDFloat32 self)"},
 	 { "EMDFloat32___call__", _wrap_EMDFloat32___call__, METH_VARARGS, "\n"
@@ -33575,7 +32855,6 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "new_EMDYPhiFloat64", (PyCFunction)(void(*)(void))_wrap_new_EMDYPhiFloat64, METH_VARARGS|METH_KEYWORDS, "new_EMDYPhiFloat64(double R=1, double beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, std::size_t n_iter_max=100000, double epsilon_large_factor=1000, double epsilon_small_factor=1) -> EMDYPhiFloat64"},
 	 { "delete_EMDYPhiFloat64", _wrap_delete_EMDYPhiFloat64, METH_O, "delete_EMDYPhiFloat64(EMDYPhiFloat64 self)"},
 	 { "EMDYPhiFloat64_description", (PyCFunction)(void(*)(void))_wrap_EMDYPhiFloat64_description, METH_VARARGS|METH_KEYWORDS, "description(EMDYPhiFloat64 self, bool write_preprocessors=True) -> std::string"},
-	 { "EMDYPhiFloat64___str__", _wrap_EMDYPhiFloat64___str__, METH_O, "__str__(EMDYPhiFloat64 self) -> std::string"},
 	 { "EMDYPhiFloat64___repr__", _wrap_EMDYPhiFloat64___repr__, METH_O, "__repr__(EMDYPhiFloat64 self) -> std::string"},
 	 { "EMDYPhiFloat64_preprocess_CenterWeightedCentroid", _wrap_EMDYPhiFloat64_preprocess_CenterWeightedCentroid, METH_O, "preprocess_CenterWeightedCentroid(EMDYPhiFloat64 self)"},
 	 { "EMDYPhiFloat64___call__", _wrap_EMDYPhiFloat64___call__, METH_VARARGS, "\n"
@@ -33587,7 +32866,6 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 	 { "new_EMDYPhiFloat32", (PyCFunction)(void(*)(void))_wrap_new_EMDYPhiFloat32, METH_VARARGS|METH_KEYWORDS, "new_EMDYPhiFloat32(float R=1, float beta=1, bool norm=False, bool do_timing=False, bool external_dists=False, std::size_t n_iter_max=100000, float epsilon_large_factor=1000, float epsilon_small_factor=1) -> EMDYPhiFloat32"},
 	 { "delete_EMDYPhiFloat32", _wrap_delete_EMDYPhiFloat32, METH_O, "delete_EMDYPhiFloat32(EMDYPhiFloat32 self)"},
 	 { "EMDYPhiFloat32_description", (PyCFunction)(void(*)(void))_wrap_EMDYPhiFloat32_description, METH_VARARGS|METH_KEYWORDS, "description(EMDYPhiFloat32 self, bool write_preprocessors=True) -> std::string"},
-	 { "EMDYPhiFloat32___str__", _wrap_EMDYPhiFloat32___str__, METH_O, "__str__(EMDYPhiFloat32 self) -> std::string"},
 	 { "EMDYPhiFloat32___repr__", _wrap_EMDYPhiFloat32___repr__, METH_O, "__repr__(EMDYPhiFloat32 self) -> std::string"},
 	 { "EMDYPhiFloat32_preprocess_CenterWeightedCentroid", _wrap_EMDYPhiFloat32_preprocess_CenterWeightedCentroid, METH_O, "preprocess_CenterWeightedCentroid(EMDYPhiFloat32 self)"},
 	 { "EMDYPhiFloat32___call__", _wrap_EMDYPhiFloat32___call__, METH_VARARGS, "\n"
@@ -33605,7 +32883,6 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 		"init(PairwiseEMDFloat64 self, wasserstein::index_type nevA, wasserstein::index_type nevB)\n"
 		""},
 	 { "PairwiseEMDFloat64_compute", _wrap_PairwiseEMDFloat64_compute, METH_O, "compute(PairwiseEMDFloat64 self)"},
-	 { "PairwiseEMDFloat64___str__", _wrap_PairwiseEMDFloat64___str__, METH_O, "__str__(PairwiseEMDFloat64 self) -> std::string"},
 	 { "PairwiseEMDFloat64___repr__", _wrap_PairwiseEMDFloat64___repr__, METH_O, "__repr__(PairwiseEMDFloat64 self) -> std::string"},
 	 { "PairwiseEMDFloat64_preprocess_CenterWeightedCentroid", _wrap_PairwiseEMDFloat64_preprocess_CenterWeightedCentroid, METH_O, "preprocess_CenterWeightedCentroid(PairwiseEMDFloat64 self)"},
 	 { "PairwiseEMDFloat64__reset_B_events", _wrap_PairwiseEMDFloat64__reset_B_events, METH_O, "_reset_B_events(PairwiseEMDFloat64 self)"},
@@ -33621,7 +32898,6 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 		"init(PairwiseEMDFloat32 self, wasserstein::index_type nevA, wasserstein::index_type nevB)\n"
 		""},
 	 { "PairwiseEMDFloat32_compute", _wrap_PairwiseEMDFloat32_compute, METH_O, "compute(PairwiseEMDFloat32 self)"},
-	 { "PairwiseEMDFloat32___str__", _wrap_PairwiseEMDFloat32___str__, METH_O, "__str__(PairwiseEMDFloat32 self) -> std::string"},
 	 { "PairwiseEMDFloat32___repr__", _wrap_PairwiseEMDFloat32___repr__, METH_O, "__repr__(PairwiseEMDFloat32 self) -> std::string"},
 	 { "PairwiseEMDFloat32_preprocess_CenterWeightedCentroid", _wrap_PairwiseEMDFloat32_preprocess_CenterWeightedCentroid, METH_O, "preprocess_CenterWeightedCentroid(PairwiseEMDFloat32 self)"},
 	 { "PairwiseEMDFloat32__reset_B_events", _wrap_PairwiseEMDFloat32__reset_B_events, METH_O, "_reset_B_events(PairwiseEMDFloat32 self)"},
@@ -33637,7 +32913,6 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 		"init(PairwiseEMDYPhiFloat64 self, wasserstein::index_type nevA, wasserstein::index_type nevB)\n"
 		""},
 	 { "PairwiseEMDYPhiFloat64_compute", _wrap_PairwiseEMDYPhiFloat64_compute, METH_O, "compute(PairwiseEMDYPhiFloat64 self)"},
-	 { "PairwiseEMDYPhiFloat64___str__", _wrap_PairwiseEMDYPhiFloat64___str__, METH_O, "__str__(PairwiseEMDYPhiFloat64 self) -> std::string"},
 	 { "PairwiseEMDYPhiFloat64___repr__", _wrap_PairwiseEMDYPhiFloat64___repr__, METH_O, "__repr__(PairwiseEMDYPhiFloat64 self) -> std::string"},
 	 { "PairwiseEMDYPhiFloat64_preprocess_CenterWeightedCentroid", _wrap_PairwiseEMDYPhiFloat64_preprocess_CenterWeightedCentroid, METH_O, "preprocess_CenterWeightedCentroid(PairwiseEMDYPhiFloat64 self)"},
 	 { "PairwiseEMDYPhiFloat64__reset_B_events", _wrap_PairwiseEMDYPhiFloat64__reset_B_events, METH_O, "_reset_B_events(PairwiseEMDYPhiFloat64 self)"},
@@ -33653,7 +32928,6 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 		"init(PairwiseEMDYPhiFloat32 self, wasserstein::index_type nevA, wasserstein::index_type nevB)\n"
 		""},
 	 { "PairwiseEMDYPhiFloat32_compute", _wrap_PairwiseEMDYPhiFloat32_compute, METH_O, "compute(PairwiseEMDYPhiFloat32 self)"},
-	 { "PairwiseEMDYPhiFloat32___str__", _wrap_PairwiseEMDYPhiFloat32___str__, METH_O, "__str__(PairwiseEMDYPhiFloat32 self) -> std::string"},
 	 { "PairwiseEMDYPhiFloat32___repr__", _wrap_PairwiseEMDYPhiFloat32___repr__, METH_O, "__repr__(PairwiseEMDYPhiFloat32 self) -> std::string"},
 	 { "PairwiseEMDYPhiFloat32_preprocess_CenterWeightedCentroid", _wrap_PairwiseEMDYPhiFloat32_preprocess_CenterWeightedCentroid, METH_O, "preprocess_CenterWeightedCentroid(PairwiseEMDYPhiFloat32 self)"},
 	 { "PairwiseEMDYPhiFloat32__reset_B_events", _wrap_PairwiseEMDYPhiFloat32__reset_B_events, METH_O, "_reset_B_events(PairwiseEMDYPhiFloat32 self)"},
@@ -33687,11 +32961,11 @@ static void *_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__
 static void *_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_tTo_p_wasserstein__PairwiseEMDBaseT_double_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((wasserstein::PairwiseEMDBase< double > *)  ((wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance,wasserstein::DefaultNetworkSimplex >,double > *) x));
 }
-static void *_p_wasserstein__CorrelationDimensionT_double_tTo_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *)  ((wasserstein::CorrelationDimension< double > *) x));
-}
 static void *_p_wasserstein__CorrelationDimensionT_float_tTo_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_float_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *)  ((wasserstein::CorrelationDimension< float > *) x));
+}
+static void *_p_wasserstein__CorrelationDimensionT_double_tTo_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *)  ((wasserstein::CorrelationDimension< double > *) x));
 }
 static void *_p_wasserstein__CorrelationDimensionT_float_tTo_p_wasserstein__ExternalEMDHandlerT_float_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((wasserstein::ExternalEMDHandler< float > *) (wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *) ((wasserstein::CorrelationDimension< float > *) x));
