@@ -132,11 +132,8 @@ namespace WASSERSTEIN_NAMESPACE {
 
 // makes python class printable from a description method
 %define ADD_REPR_FROM_DESCRIPTION_ARGS
-  //std::string __str__() const {
-  //  return $self->description(__VA_ARGS__);
-  //}
   std::string __repr__() const {
-    return $self->description(__VA_ARGS__);
+    return $self->description();
   }
 %enddef
 
