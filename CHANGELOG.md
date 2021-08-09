@@ -1,5 +1,8 @@
 ## 1.0.x
 
+**1.0.1**
+
+- Small tweaks to C++ API for EventGeometry package.
 - Removing default constructors for `CorrelationDimension` and `Histogram1DUtils` from Python.
 
 **1.0.0**

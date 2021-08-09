@@ -6,7 +6,7 @@ on:
       - master
 
 env:
-  PYPI: 0
+  PYPI: 1
   PYPITEST: 1
   CIBW_BEFORE_TEST: pip install cython
   CIBW_SKIP: pp*

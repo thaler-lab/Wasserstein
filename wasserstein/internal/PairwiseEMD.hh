@@ -174,7 +174,7 @@ public:
   }
 
   // return a description of this object as a string
-  std::string description(bool write_preprocessors = true) const {
+  std::string description() const {
     std::ostringstream oss;
     oss << std::boolalpha
         << "Pairwise" << emd_objs_[0].description(false) << '\n'
@@ -193,9 +193,9 @@ public:
         << "  omp_dynamic_chunksize - " << this->omp_dynamic_chunksize() << '\n'
         << '\n'
         << (this->handler_ ? this->handler_->description() : "  Pairwise EMD distance matrix stored internally\n");
-        
-    if (write_preprocessors)
-      emd_objs_[0].output_preprocessors(oss);
+      
+    // this will not print preprocessors if there aren't any  
+    emd_objs_[0].output_preprocessors(oss);
 
     return oss.str();
   }

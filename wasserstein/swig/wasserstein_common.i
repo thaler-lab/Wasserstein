@@ -131,7 +131,7 @@ namespace WASSERSTEIN_NAMESPACE {
 }
 
 // makes python class printable from a description method
-%define ADD_REPR_FROM_DESCRIPTION_ARGS(...)
+%define ADD_REPR_FROM_DESCRIPTION_ARGS
   //std::string __str__() const {
   //  return $self->description(__VA_ARGS__);
   //}
@@ -300,12 +300,12 @@ namespace WASSERSTEIN_NAMESPACE {
 namespace WASSERSTEIN_NAMESPACE {
 
   %extend EMD {
-    ADD_REPR_FROM_DESCRIPTION_ARGS(false)
+    ADD_REPR_FROM_DESCRIPTION_ARGS
     ADD_EXPLICIT_PREPROCESSORS
   }
 
   %extend PairwiseEMD {
-    ADD_REPR_FROM_DESCRIPTION_ARGS(false)
+    ADD_REPR_FROM_DESCRIPTION_ARGS
     ADD_EXPLICIT_PREPROCESSORS
   }
 
@@ -358,8 +358,8 @@ namespace WASSERSTEIN_NAMESPACE {
   }
 
   // these extensions do not depend on the float precision
-  %extend Histogram1DHandler { ADD_REPR_FROM_DESCRIPTION_ARGS() }
-  %extend CorrelationDimension { ADD_REPR_FROM_DESCRIPTION_ARGS() }
+  %extend Histogram1DHandler { ADD_REPR_FROM_DESCRIPTION_ARGS }
+  %extend CorrelationDimension { ADD_REPR_FROM_DESCRIPTION_ARGS }
 
   // EMDBase
   %extend EMDBase<double> { EMDBASE_NUMPY_FUNCS(double) }

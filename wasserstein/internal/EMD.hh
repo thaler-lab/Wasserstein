@@ -381,10 +381,13 @@ private:
   }
 
   // output description of preprocessors contained in this object
+  // does nothing if there are no preprocessors
   void output_preprocessors(std::ostream & oss) const {
-    oss << "\n  Preprocessors:\n";
-    for (const auto & preproc : preprocessors_)
-      oss << "    - " << preproc->description() << '\n';
+    if(preprocessors_.size()) {
+      oss << "\n  Preprocessors:\n";
+      for (const auto & preproc : preprocessors_)
+        oss << "    - " << preproc->description() << '\n';  
+    }
   }
 
 #ifdef WASSERSTEIN_SERIALIZATION
