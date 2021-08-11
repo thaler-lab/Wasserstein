@@ -79,7 +79,10 @@ struct EventBase {
   }
 
   // default constructor
-  EventBase() {}
+  EventBase() = default;
+
+  // default destructor
+  virtual ~EventBase() = default;
 
   // preprocess particles (useful for EventGeometry to copy PseudoJet kinematics)
   virtual ParticleCollection preprocess_particles(const ParticleCollection & pc) const {
@@ -118,9 +121,6 @@ struct EventBase {
   }
 
 protected:
-
-  // don't ever expect to access event via pointer to base class
-  ~EventBase() = default;
 
   ParticleCollection particles_;
   WeightCollection weights_;
