@@ -62,8 +62,7 @@ struct EventBase {
 
   // constructor from particle collection only
   EventBase(const ParticleCollection & particles, value_type event_weight = 1) :
-    //particles_(preprocess_particles(particles)),
-    particles_(particles),
+    particles_(preprocess_particles(particles)),
     event_weight_(event_weight),
     total_weight_(0),
     has_weights_(false)
@@ -83,9 +82,9 @@ struct EventBase {
   EventBase() {}
 
   // preprocess particles (useful for EventGeometry to copy PseudoJet kinematics)
-  //virtual ParticleCollection preprocess_particles(const ParticleCollection & pc) const {
-  //  return pc;
-  //}
+  virtual ParticleCollection preprocess_particles(const ParticleCollection & pc) const {
+    return pc;
+  }
 
   // access event_weight
   value_type event_weight() const { return event_weight_; }
