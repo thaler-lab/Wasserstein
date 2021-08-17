@@ -106,7 +106,7 @@ public:
   }
 
   // computes symmetric pairwise distances matrix between all particles in a collection
-  void fill_distances_symmetric(const ParticleCollection & ps, std::vector<Value> & dists) {
+  /*void fill_distances_symmetric(const ParticleCollection & ps, std::vector<Value> & dists) {
     std::size_t mult(ps.size()), i(0);
     dists.resize(mult*mult);
 
@@ -118,7 +118,7 @@ public:
       for (ParticleIterator p1 = ps.begin(); j < i; ++p1, j++)
         dists[ixm + j] = dists[j*mult + i] = pd->distance(p0, p1);
     }
-  }
+  }*/
 
   // computes pairwise distances between two particle collections
   void fill_distances(const ParticleCollection & ps0, const ParticleCollection & ps1,
