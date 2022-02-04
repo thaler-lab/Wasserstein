@@ -1,13 +1,13 @@
 r"""
 
-$$\      $$\  $$$$$$\   $$$$$$\   $$$$$$\  $$$$$$$$\ $$$$$$$\   $$$$$$\ $$$$$$$$\ $$$$$$$$\ $$$$$$\ $$\   $$\ 
-$$ | $\  $$ |$$  __$$\ $$  __$$\ $$  __$$\ $$  _____|$$  __$$\ $$  __$$\\__$$  __|$$  _____|\_$$  _|$$$\  $$ |
-$$ |$$$\ $$ |$$ /  $$ |$$ /  \__|$$ /  \__|$$ |      $$ |  $$ |$$ /  \__|  $$ |   $$ |        $$ |  $$$$\ $$ |
-$$ $$ $$\$$ |$$$$$$$$ |\$$$$$$\  \$$$$$$\  $$$$$\    $$$$$$$  |\$$$$$$\    $$ |   $$$$$\      $$ |  $$ $$\$$ |
-$$$$  _$$$$ |$$  __$$ | \____$$\  \____$$\ $$  __|   $$  __$$<  \____$$\   $$ |   $$  __|     $$ |  $$ \$$$$ |
-$$$  / \$$$ |$$ |  $$ |$$\   $$ |$$\   $$ |$$ |      $$ |  $$ |$$\   $$ |  $$ |   $$ |        $$ |  $$ |\$$$ |
-$$  /   \$$ |$$ |  $$ |\$$$$$$  |\$$$$$$  |$$$$$$$$\ $$ |  $$ |\$$$$$$  |  $$ |   $$$$$$$$\ $$$$$$\ $$ | \$$ |
-\__/     \__|\__|  \__| \______/  \______/ \________|\__|  \__| \______/   \__|   \________|\______|\__|  \__|
+$$\      $$\                                                               $$\               $$\           
+$$ | $\  $$ |                                                              $$ |              \__|          
+$$ |$$$\ $$ | $$$$$$\   $$$$$$$\  $$$$$$$\  $$$$$$\   $$$$$$\   $$$$$$$\ $$$$$$\    $$$$$$\  $$\ $$$$$$$\  
+$$ $$ $$\$$ | \____$$\ $$  _____|$$  _____|$$  __$$\ $$  __$$\ $$  _____|\_$$  _|  $$  __$$\ $$ |$$  __$$\ 
+$$$$  _$$$$ | $$$$$$$ |\$$$$$$\  \$$$$$$\  $$$$$$$$ |$$ |  \__|\$$$$$$\    $$ |    $$$$$$$$ |$$ |$$ |  $$ |
+$$$  / \$$$ |$$  __$$ | \____$$\  \____$$\ $$   ____|$$ |       \____$$\   $$ |$$\ $$   ____|$$ |$$ |  $$ |
+$$  /   \$$ |\$$$$$$$ |$$$$$$$  |$$$$$$$  |\$$$$$$$\ $$ |      $$$$$$$  |  \$$$$  |\$$$$$$$\ $$ |$$ |  $$ |
+\__/     \__| \_______|\_______/ \_______/  \_______|\__|      \_______/    \____/  \_______|\__|\__|  \__|
 
 ------------------------------------------------------------------------
  This file is part of Wasserstein, a C++ library with a Python wrapper
@@ -20,7 +20,7 @@ $$  /   \$$ |$$ |  $$ |\$$$$$$  |\$$$$$$  |$$$$$$$$\ $$ |  $$ |\$$$$$$  |  $$ | 
        https://doi.org/10.1145/2070781.2024192
    - LEMON graph library https://lemon.cs.elte.hu/trac/lemon
 
- Copyright (C) 2019-2021 Patrick T. Komiske III
+ Copyright (C) 2019-2022 Patrick T. Komiske III
  
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -37,10 +37,75 @@ $$  /   \$$ |$$ |  $$ |\$$$$$$  |\$$$$$$  |$$$$$$$$\ $$ |  $$ |\$$$$$$  |  $$ | 
 ------------------------------------------------------------------------
 """
 
-from .wasserstein import *
-
 # basic package info
 __author__  = 'Patrick T. Komiske III'
-__email__   = 'pkomiske@mit.edu'
+__email__   = 'pkomiske@gmail.com'
 __license__ = 'GPLv3'
-__version__ = '1.0.1'
+__version__ = '1.0.2a0'
+
+from . import config
+from .config import *
+
+# these are all attributes of wasserstein submodule that should be top-level visible
+__all__ = [
+
+    # primary functionality with variable dtype
+    'EMD', 'EMDYPhi',
+    'PairwiseEMD', 'PairwiseEMDYPhi',
+    'CorrelationDimension',
+
+    # EMDStatus enum constants
+    'EMDStatus_Success',
+    'EMDStatus_Empty',
+    'EMDStatus_SupplyMismatch',
+    'EMDStatus_Unbounded',
+    'EMDStatus_MaxIterReached',
+    'EMDStatus_Infeasible',
+
+    # ExtraParticle enum constants
+    'ExtraParticle_Neither',
+    'ExtraParticle_Zero',
+    'ExtraParticle_One',
+
+    # EMDPairsStorage enum constants
+    'EMDPairsStorage_Full',
+    'EMDPairsStorage_FullSymmetric',
+    'EMDPairsStorage_FlattenedSymmetric',
+    'EMDPairsStorage_External',
+
+    # other functions
+    'check_emd_status',
+
+    # classes with fixed dtype
+    'EMDFloat64', 'EMDFloat32',
+    'EMDYPhiFloat64', 'EMDYPhiFloat32',
+    'PairwiseEMDFloat64', 'PairwiseEMDFloat32',
+    'PairwiseEMDYPhiFloat64', 'PairwiseEMDYPhiFloat32',
+    'ExternalEMDHandlerFloat64', 'ExternalEMDHandlerFloat32',
+    'Histogram1DHandlerLogFloat64', 'Histogram1DHandlerLogFloat32',
+    'Histogram1DHandlerFloat64', 'Histogram1DHandlerFloat32',
+    'CorrelationDimensionFloat64', 'CorrelationDimensionFloat32',
+] + config.__all__
+
+# enables lazy importing of wasserstein submodule
+def __getattr__(name):
+    if name in __all__:
+        from . import wasserstein
+        attr = getattr(wasserstein, name)
+        globals()[name] = attr
+        return attr
+
+    # handle specially grabbing the submodule
+    elif name == 'wasserstein':
+        import importlib
+        wasserstein = importlib.import_module('.wasserstein', __name__)
+        globals()['wasserstein'] = wasserstein
+        return wasserstein
+
+    raise AttributeError(f'module `{__name__}` has no attribute `{name}`')
+
+# properly lists everything available in this module
+def __dir__():
+    return __all__ + [ 'wasserstein',
+        '__author__', '__email__', '__license__', '__version__',
+        '__doc__', '__name__', '__package__']

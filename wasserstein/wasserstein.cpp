@@ -2768,8 +2768,7 @@ static swig_module_info swig_module = {swig_types, 53, 0, 0, 0, 0};
 #  define SWIG_init    init_wasserstein
 
 #endif
-#define SWIG_name    "_wasserstein"
-
+#define SWIG_name "#WASSERSTEIN_SWIG_NAME"
 #define SWIGVERSION 0x040002 
 #define SWIG_VERSION SWIGVERSION
 
@@ -13657,6 +13656,20 @@ SWIGINTERN PyObject *Swig_var_TWOPI_get(void) {
   PyObject *pyobj = 0;
   
   pyobj = SWIG_From_double(static_cast< double >(wasserstein::TWOPI));
+  return pyobj;
+}
+
+
+SWIGINTERN int Swig_var_COMPILED_WITH_OPENMP_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable COMPILED_WITH_OPENMP is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *Swig_var_COMPILED_WITH_OPENMP_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_bool(static_cast< bool >(wasserstein::COMPILED_WITH_OPENMP));
   return pyobj;
 }
 
@@ -33909,6 +33922,7 @@ SWIG_init(void) {
   Py_DECREF(globals);
   SWIG_addvarlink(globals, "PI", Swig_var_PI_get, Swig_var_PI_set);
   SWIG_addvarlink(globals, "TWOPI", Swig_var_TWOPI_get, Swig_var_TWOPI_set);
+  SWIG_addvarlink(globals, "COMPILED_WITH_OPENMP", Swig_var_COMPILED_WITH_OPENMP_get, Swig_var_COMPILED_WITH_OPENMP_set);
   SWIG_Python_SetConstant(d, "EMDStatus_Success",SWIG_From_int(static_cast< int >(wasserstein::EMDStatus::Success)));
   SWIG_Python_SetConstant(d, "EMDStatus_Empty",SWIG_From_int(static_cast< int >(wasserstein::EMDStatus::Empty)));
   SWIG_Python_SetConstant(d, "EMDStatus_SupplyMismatch",SWIG_From_int(static_cast< int >(wasserstein::EMDStatus::SupplyMismatch)));

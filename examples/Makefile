@@ -1,3 +1,4 @@
+CXX = g++
 SRCS = $(shell ls *.cpp) cnpy.cpp
 CXXFLAGS = -O3 -Wall -std=c++14 -g -ffast-math
 

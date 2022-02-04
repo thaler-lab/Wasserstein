@@ -6,8 +6,6 @@
 #include <iostream>
 #include <vector>
 
-#include <boost/format.hpp>
-
 // enum for selecting which events to include
 enum EventType { Gluon, Quark, All };
 
@@ -45,7 +43,7 @@ public:
   {}
 
   void print_loaded() {
-    std::cout << boost::format("Loaded dataset in %4.2fs\n") % duration() << std::flush;
+    std::cout << "Loaded dataset in " << duration() << "s\n" << std::flush;
     start_ = std::chrono::steady_clock::now();
   }
 

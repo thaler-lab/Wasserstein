@@ -11,7 +11,7 @@
 #       https://doi.org/10.1145/2070781.2024192
 #   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon
 #
-# Copyright (C) 2019-2021 Patrick T. Komiske III
+# Copyright (C) 2019-2022 Patrick T. Komiske III
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------
 
+import fileinput
 import os
 import platform
 import re
@@ -40,6 +41,14 @@ if sys.argv[1] == 'swig':
     print(command)
     subprocess.run(command.split())
 
+    # patch up output
+    with fileinput.input('wasserstein/wasserstein.cpp', inplace=True) as f:
+        for line in f:
+            if 'define' in line and 'SWIG_name' in line:
+                sys.stdout.write('#define SWIG_name "#WASSERSTEIN_SWIG_NAME"')
+            else:
+                sys.stdout.write(line)
+
 # compile python package
 else:
 
@@ -50,33 +59,46 @@ else:
     with open(os.path.join('wasserstein', '__init__.py'), 'r') as f:
         __version__ = re.search(r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read()).group(1)
 
-    cxxflags = ['-fopenmp', '-ffast-math', '-std=c++14', '-g0']
-    ldflags = []
-    libs = []
+    macros = [('SWIG_TYPE_TABLE', 'wasserstein'),
+              ('PyInit__wasserstein', 'PyInit__wasserstein_omp'),
+              ('WASSERSTEIN_SWIG_NAME', '_wasserstein_omp')]
+    includes = [np.get_include(), '.']
+    cxxflags = ['-std=c++14', '-ffast-math',  '-g0']
+    omp_cxxflags = ['-fopenmp']
 
     # MacOS
     if platform.system() == 'Darwin':
-        cxxflags.insert(0, '-Xpreprocessor')
-        libs.append('omp')
+        omp_cxxflags.insert(0, '-Xpreprocessor')
+        libs = ['omp']
+        ldflags = ['-Wl,-rpath,/usr/local/lib']
 
     # Linux
     elif platform.system() == 'Linux':
-        ldflags.append('-fopenmp')
+        ldflags = ['-fopenmp']
 
     # Windows
     elif platform.system() == 'Windows':
-        cxxflags = ['/openmp', '/std:c++14']
-        ldflags = ['/openmp']
+        omp_cxxflags = ldflags = ['/openmp']
+        cxxflags = ['/std:c++14', '/fp:fast']
 
-    wasserstein = Extension('wasserstein._wasserstein',
-                            sources=[os.path.join('wasserstein', 'wasserstein.cpp')],
-                            define_macros=[('SWIG_TYPE_TABLE', 'wasserstein')],
-                            include_dirs=[np.get_include(), '.'],
-                            extra_compile_args=cxxflags,
-                            extra_link_args=ldflags,
-                            libraries=libs)
+    # wasserstein library with openmp
+    exts = [Extension('wasserstein._wasserstein_omp',
+                      sources=[os.path.join('wasserstein', 'wasserstein.cpp')],
+                      define_macros=macros,
+                      include_dirs=includes,
+                      extra_compile_args=cxxflags + omp_cxxflags,
+                      extra_link_args=ldflags,
+                      libraries=libs)]
 
-    setup(
-        ext_modules=[wasserstein],
-        version=__version__
-    )
+    # wasserstein library without openmp
+    if platform.system() == 'Darwin':
+        noomp_fpath = 'wasserstein/wasserstein_noomp.cpp'
+        if not os.path.exists(noomp_fpath):
+            os.symlink('wasserstein.cpp', noomp_fpath)
+        exts.append(Extension('wasserstein._wasserstein_noomp',
+                              sources=[noomp_fpath],
+                              define_macros=[(x[0], x[1].replace('omp', 'noomp')) for x in macros],
+                              include_dirs=includes,
+                              extra_compile_args=cxxflags))
+
+    setup(ext_modules=exts, version=__version__)

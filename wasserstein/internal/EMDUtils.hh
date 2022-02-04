@@ -11,7 +11,7 @@
 //       https://doi.org/10.1145/2070781.2024192
 //   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon
 //
-// Copyright (C) 2019-2021 Patrick T. Komiske III
+// Copyright (C) 2019-2022 Patrick T. Komiske III
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -111,6 +111,12 @@ using index_type = WASSERSTEIN_INDEX_TYPE;
 const double PI = 3.14159265358979323846;
 const double TWOPI = 6.28318530717958647693;
 
+constexpr bool COMPILED_WITH_OPENMP = 
+  #ifdef _OPENMP
+    true;
+  #else
+    false;
+  #endif
 
 ////////////////////////////////////////////////////////////////////////////////
 // Enums

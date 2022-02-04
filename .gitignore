@@ -7,6 +7,7 @@ build/
 Wasserstein Testing.ipynb
 Wasserstein.sublime*
 Wasserstein.egg-info
+wasserstein_noomp.cpp
 dist/
 .pytest_cache/
 .eggs/

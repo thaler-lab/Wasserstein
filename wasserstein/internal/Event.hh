@@ -11,7 +11,7 @@
 //       https://doi.org/10.1145/2070781.2024192
 //   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon
 //
-// Copyright (C) 2019-2021 Patrick T. Komiske III
+// Copyright (C) 2019-2022 Patrick T. Komiske III
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -79,7 +79,10 @@ struct EventBase {
   }
 
   // default constructor
-  EventBase() {}
+  EventBase() = default;
+
+  // default destructor
+  virtual ~EventBase() = default;
 
   // preprocess particles (useful for EventGeometry to copy PseudoJet kinematics)
   virtual ParticleCollection preprocess_particles(const ParticleCollection & pc) const {
@@ -118,9 +121,6 @@ struct EventBase {
   }
 
 protected:
-
-  // don't ever expect to access event via pointer to base class
-  ~EventBase() = default;
 
   ParticleCollection particles_;
   WeightCollection weights_;

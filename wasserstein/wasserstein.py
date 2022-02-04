@@ -395,6 +395,7 @@ _wasserstein.EMDBaseFloat64_swigregister(EMDBaseFloat64)
 cvar = _wasserstein.cvar
 PI = cvar.PI
 TWOPI = cvar.TWOPI
+COMPILED_WITH_OPENMP = cvar.COMPILED_WITH_OPENMP
 
 class PairwiseEMDBaseFloat64(object):
     r"""Proxy of C++ wasserstein::PairwiseEMDBase< double > class."""

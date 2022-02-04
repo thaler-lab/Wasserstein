@@ -7,12 +7,7 @@ on:
 
 env:
   PYPI: 0
-  PYPITEST: 0
-  CIBW_BEFORE_TEST: pip install cython
-  CIBW_SKIP: pp* cp310*
-  CIBW_TEST_COMMAND: pytest {package}
-  CIBW_TEST_REQUIRES: pytest numpy pot energyflow
-  CIBW_TEST_SKIP: "*i686 *win32"
+  PYPITEST: 1
   TWINE_USERNAME: __token__
   TWINE_PASSWORD_PYPITEST: ${{ secrets.TWINE_PASSWORD_PYPITEST }}
   TWINE_PASSWORD_PYPI: ${{ secrets.TWINE_PASSWORD_PYPI }}
@@ -25,7 +20,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.8'
+          python-version: '3.9'
       - name: Install Python packages
         run: python3 -m pip install .[test] pytest
       - name: Test package
@@ -38,9 +33,9 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.8'
-      - name: Install libomp
-        run: brew install libomp
+          python-version: '3.9'
+      - name: Compile and install libomp from source
+        run: ./scripts/install-libomp-macos.sh
       - name: Install Python packages
         run: python3 -m pip install .[test] pytest
       - name: Test package
@@ -53,7 +48,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.8'
+          python-version: '3.9'
       - name: Install Python packages
         run: python3 -m pip install .[test] pytest
       - name: Test package
@@ -67,7 +62,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.8'
+          python-version: '3.9'
       - name: Build wheels and upload to PyPI
         run: ./scripts/build-wheels-and-upload.sh sdist
 
@@ -79,9 +74,9 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.8'
-      - name: Install libomp
-        run: brew install libomp
+          python-version: '3.9'
+      - name: Compile and install libomp from source
+        run: ./scripts/install-libomp-macos.sh
       - name: Build wheels and upload to PyPI
         run: ./scripts/build-wheels-and-upload.sh
 
@@ -93,7 +88,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.8'
+          python-version: '3.9'
       - name: Build wheels and upload to PyPI
         shell: bash
         run: ./scripts/build-wheels-and-upload.sh
