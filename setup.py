@@ -65,6 +65,7 @@ else:
     includes = [np.get_include(), '.']
     cxxflags = ['-std=c++14', '-ffast-math',  '-g0']
     omp_cxxflags = ['-fopenmp']
+    libs = []
 
     # MacOS
     if platform.system() == 'Darwin':
