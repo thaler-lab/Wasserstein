@@ -105,24 +105,40 @@ public:
     halfbeta_ = beta/2;
   }
 
+  // computes symmetric pairwise distances matrix between all particles in a collection
+  /*void fill_distances_symmetric(const ParticleCollection & ps, std::vector<Value> & dists) {
+    std::size_t mult(ps.size()), i(0);
+    dists.resize(mult*mult);
+
+    const PairwiseDistance * pd(static_cast<const PairwiseDistance *>(this));
+    for (ParticleIterator p0 = ps.begin(); i < mult; ++p0, i++) {
+      std::size_t ixm(i*mult), j(0);
+      dists[ixm + i] = 0;
+
+      for (ParticleIterator p1 = ps.begin(); j < i; ++p1, j++)
+        dists[ixm + j] = dists[j*mult + i] = pd->distance(p0, p1);
+    }
+  }*/
+
   // computes pairwise distances between two particle collections
   void fill_distances(const ParticleCollection & ps0, const ParticleCollection & ps1,
                       std::vector<Value> & dists, ExtraParticle extra) {
 
     std::size_t k(0);
+    const PairwiseDistance * pd(static_cast<const PairwiseDistance *>(this));
 
     if (extra == ExtraParticle::Neither) {
       dists.resize(ps0.size() * ps1.size());
       for (ParticleIterator p0 = ps0.begin(), end0 = ps0.end(), end1 = ps1.end(); p0 != end0; ++p0)
         for (ParticleIterator p1 = ps1.begin(); p1 != end1; ++p1)
-          dists[k++] = distance(p0, p1);
+          dists[k++] = pd->distance(p0, p1);
     }
 
     else if (extra == ExtraParticle::Zero) {
       dists.resize((ps0.size() + 1) * ps1.size());
       for (ParticleIterator p0 = ps0.begin(), end0 = ps0.end(), end1 = ps1.end(); p0 != end0; ++p0)
         for (ParticleIterator p1 = ps1.begin(); p1 != end1; ++p1)
-          dists[k++] = distance(p0, p1);
+          dists[k++] = pd->distance(p0, p1);
       for (std::size_t j = 0, end = ps1.size(); j < end; j++)
         dists[k++] = 1;
     }
@@ -132,7 +148,7 @@ public:
       dists.resize(ps0.size() * (ps1.size() + 1));
       for (ParticleIterator p0 = ps0.begin(), end0 = ps0.end(), end1 = ps1.end(); p0 != end0; ++p0) {
         for (ParticleIterator p1 = ps1.begin(); p1 != end1; ++p1)
-          dists[k++] = distance(p0, p1);
+          dists[k++] = pd->distance(p0, p1);
         dists[k++] = 1;
       }
     }
@@ -141,7 +157,14 @@ public:
   // returns the distance divided by R, all to beta power
   Value distance(const ParticleIterator & p0, const ParticleIterator & p1) const {
     Value pd(PairwiseDistance::plain_distance_(p0, p1));
-    return (beta_ == 1.0 ? std::sqrt(pd)/R_ : (beta_ == 2.0 ? pd/R2_ : std::pow(pd/R2_, halfbeta_)));
+
+    if (this->beta() == 1.0)
+      return std::sqrt(pd)/R_;
+
+    if (this->beta() == 2.0)
+      return pd/R2_;
+
+    return std::pow(pd/R2_, halfbeta_);
   }
 
   // return the plain distance, without the square root
