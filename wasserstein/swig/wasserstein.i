@@ -99,11 +99,13 @@ def _store_events(pairwise_emd, events, event_weights, gdim, mask):
     for event, event_weight in zip(events, event_weights):
 
         # ensure event is 2d
-        event = np.atleast_2d(event)
-
-        # consider gdim
+        event = np.asarray(event)
+        if event.ndim != 2:
+            raise ValueError('event must be a 2-dimensional array')
         if gdim is not None:
-            event = event[:,:gdim+1]
+            if event.shape[1] <= gdim:
+                raise ValueError('event should have at least gdim={} coordinates'.format(gdim))
+            event = event[:,:1+gdim]
 
         # consider mask
         if mask:

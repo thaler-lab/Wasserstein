@@ -276,8 +276,8 @@ public:
 
   static std::string name() { return "YPhiArrayDistance"; }
   static Value plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
-    Value dy((*p0)[0] - (*p1)[0]), dphi(std::fabs((*p0)[1] - (*p1)[1]));
-    if (dphi > PI) dphi = TWOPI - dphi;
+    Value dy((*p0)[0] - (*p1)[0]), absdphi(std::fabs((*p0)[1] - (*p1)[1]));
+    Value dphi(PI - std::fabs(std::fmod(absdphi, TWOPI) - PI));
     return dy*dy + dphi*dphi;
   }
 }; // EuclideanArrayDistance
@@ -325,8 +325,8 @@ public:
 
   static std::string name() { return "YPhiParticleDistance"; }
   static Value plain_distance(const Particle & p0, const Particle & p1) {
-    Value dy(p0[0] - p1[0]), dphi(p0[1] - p1[1]);
-    if (dphi > PI) dphi = TWOPI - dphi;
+    Value dy(p0[0] - p1[0]), absdphi(std::fabs(p0[1] - p1[1]));
+    Value dphi(PI - std::fabs(std::fmod(absdphi, TWOPI) - PI));
     return dy*dy + dphi*dphi;
   }
 }; // EuclideanParticleDistance
