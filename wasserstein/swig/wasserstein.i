@@ -112,8 +112,12 @@ def _store_events(pairwise_emd, events, event_weights, gdim, mask):
             event = event[np.sum(event[:,1:]**2, axis=1) <= R2]
 
         # extract weights and coords
-        weights = np.asarray(event[:,0], dtype=np.double, order='C')
-        coords = np.asarray(event[:,1:], dtype=np.double, order='C')
+        # usually, these would make copies anyway
+        # sometimes, e.g. in the case of a single particle, they may not
+        # weights are never modified due to internal copying
+        # coords may be modified (e.g. by centering), so we always make a copy of them
+        weights = np.array(event[:,0], dtype=np.double, order='C', copy=False)
+        coords = np.array(event[:,1:], dtype=np.double, order='C', copy=True)
         
         # ensure that the lifetime of these arrays lasts through the computation
         pairwise_emd.event_arrs.append((weights, coords))
@@ -144,12 +148,6 @@ namespace WASSERSTEIN_NAMESPACE {
     // python function to get events from container of 2d arrays, first column becomes the weights
     %pythoncode %{
 
-      # ensure proper destruction of objects held by this instance
-      def __del__(self):
-          super().__del__()
-          if hasattr(self, 'event_arrs'):
-              del self.event_arrs
-
       def set_new_eventsB(self, eventsB, gdim=None, mask=False, event_weightsB=None):
 
           # check that we have been initialized before
@@ -178,9 +176,10 @@ namespace WASSERSTEIN_NAMESPACE {
 
     // ensure that python array of events is deleted also
     %feature("shadow") clear %{
-      def clear(self):
-          $action(self)
-          self.event_arrs = []
+      def clear(self, *args, **kwargs):
+          $action(self, *args, **kwargs)
+          if hasattr(self, 'event_arrs'):
+              del self.event_arrs
     %}
   }
 

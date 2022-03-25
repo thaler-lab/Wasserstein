@@ -156,7 +156,7 @@ public:
 
   // returns the distance divided by R, all to beta power
   Value distance(const ParticleIterator & p0, const ParticleIterator & p1) const {
-    Value pd(PairwiseDistance::plain_distance_(p0, p1));
+    Value pd(PairwiseDistance::plain_distance_from_iterator(p0, p1));
 
     if (this->beta() == 1.0)
       return std::sqrt(pd)/R_;
@@ -168,7 +168,7 @@ public:
   }
 
   // return the plain distance, without the square root
-  static Value plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
+  static Value plain_distance_from_iterator(const ParticleIterator & p0, const ParticleIterator & p1) {
     return PairwiseDistance::plain_distance(*p0, *p1);
   }
 
@@ -214,7 +214,7 @@ public:
   using PairwiseDistanceBase<DefaultPairwiseDistance<Value>, ParticleCollection, Value>::PairwiseDistanceBase;
 
   static std::string name() { return "DefaultPairwiseDistance (none)"; }
-  static Value plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
+  static Value plain_distance_from_iterator(const ParticleIterator & p0, const ParticleIterator & p1) {
     return -1;
   }
 
@@ -239,7 +239,7 @@ public:
   using PairwiseDistanceBase<EuclideanArrayDistance<Value>, ParticleCollection, Value>::PairwiseDistanceBase;
 
   static std::string name() { return "EuclideanArrayDistance"; }
-  static Value plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
+  static Value plain_distance_from_iterator(const ParticleIterator & p0, const ParticleIterator & p1) {
     if (p0.stride() == 2) {
       Value dx((*p0)[0] - (*p1)[0]), dy((*p0)[1] - (*p1)[1]);
       return dx*dx + dy*dy;
@@ -275,7 +275,7 @@ public:
   using PairwiseDistanceBase<YPhiArrayDistance<Value>, ParticleCollection, Value>::PairwiseDistanceBase;
 
   static std::string name() { return "YPhiArrayDistance"; }
-  static Value plain_distance_(const ParticleIterator & p0, const ParticleIterator & p1) {
+  static Value plain_distance_from_iterator(const ParticleIterator & p0, const ParticleIterator & p1) {
     Value dy((*p0)[0] - (*p1)[0]), absdphi(std::fabs((*p0)[1] - (*p1)[1]));
     Value dphi(PI - std::fabs(std::fmod(absdphi, TWOPI) - PI));
     return dy*dy + dphi*dphi;

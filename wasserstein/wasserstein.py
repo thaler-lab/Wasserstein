@@ -830,8 +830,12 @@ def _store_events(pairwise_emd, events, event_weights, gdim, mask):
             event = event[np.sum(event[:,1:]**2, axis=1) <= R2]
 
 # extract weights and coords
-        weights = np.asarray(event[:,0], dtype=np.double, order='C')
-        coords = np.asarray(event[:,1:], dtype=np.double, order='C')
+# usually, these would make copies anyway
+# sometimes, e.g. in the case of a single particle, they may not
+# weights are never modified due to internal copying
+# coords may be modified (e.g. by centering), so we always make a copy of them
+        weights = np.array(event[:,0], dtype=np.double, order='C', copy=False)
+        coords = np.array(event[:,1:], dtype=np.double, order='C', copy=True)
 
 # ensure that the lifetime of these arrays lasts through the computation
         pairwise_emd.event_arrs.append((weights, coords))
@@ -918,9 +922,10 @@ class PairwiseEMDFloat64(PairwiseEMDBaseFloat64):
     __swig_destroy__ = _wasserstein.delete_PairwiseEMDFloat64
     description = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_description)
 
-    def clear(self):
-        _wasserstein.PairwiseEMDFloat64_clear(self)
-        self.event_arrs = []
+    def clear(self, *args, **kwargs):
+        _wasserstein.PairwiseEMDFloat64_clear(self, *args, **kwargs)
+        if hasattr(self, 'event_arrs'):
+            del self.event_arrs
 
 
     init = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_init)
@@ -929,12 +934,6 @@ class PairwiseEMDFloat64(PairwiseEMDBaseFloat64):
     preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64_preprocess_CenterWeightedCentroid)
     _reset_B_events = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64__reset_B_events)
 
-
-          # ensure proper destruction of objects held by this instance
-    def __del__(self):
-        super().__del__()
-        if hasattr(self, 'event_arrs'):
-            del self.event_arrs
 
     def set_new_eventsB(self, eventsB, gdim=None, mask=False, event_weightsB=None):
 
@@ -977,9 +976,10 @@ class PairwiseEMDFloat32(PairwiseEMDBaseFloat32):
     __swig_destroy__ = _wasserstein.delete_PairwiseEMDFloat32
     description = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_description)
 
-    def clear(self):
-        _wasserstein.PairwiseEMDFloat32_clear(self)
-        self.event_arrs = []
+    def clear(self, *args, **kwargs):
+        _wasserstein.PairwiseEMDFloat32_clear(self, *args, **kwargs)
+        if hasattr(self, 'event_arrs'):
+            del self.event_arrs
 
 
     init = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_init)
@@ -988,12 +988,6 @@ class PairwiseEMDFloat32(PairwiseEMDBaseFloat32):
     preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32_preprocess_CenterWeightedCentroid)
     _reset_B_events = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32__reset_B_events)
 
-
-          # ensure proper destruction of objects held by this instance
-    def __del__(self):
-        super().__del__()
-        if hasattr(self, 'event_arrs'):
-            del self.event_arrs
 
     def set_new_eventsB(self, eventsB, gdim=None, mask=False, event_weightsB=None):
 
@@ -1036,9 +1030,10 @@ class PairwiseEMDYPhiFloat64(PairwiseEMDBaseFloat64):
     __swig_destroy__ = _wasserstein.delete_PairwiseEMDYPhiFloat64
     description = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_description)
 
-    def clear(self):
-        _wasserstein.PairwiseEMDYPhiFloat64_clear(self)
-        self.event_arrs = []
+    def clear(self, *args, **kwargs):
+        _wasserstein.PairwiseEMDYPhiFloat64_clear(self, *args, **kwargs)
+        if hasattr(self, 'event_arrs'):
+            del self.event_arrs
 
 
     init = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_init)
@@ -1047,12 +1042,6 @@ class PairwiseEMDYPhiFloat64(PairwiseEMDBaseFloat64):
     preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64_preprocess_CenterWeightedCentroid)
     _reset_B_events = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64__reset_B_events)
 
-
-          # ensure proper destruction of objects held by this instance
-    def __del__(self):
-        super().__del__()
-        if hasattr(self, 'event_arrs'):
-            del self.event_arrs
 
     def set_new_eventsB(self, eventsB, gdim=None, mask=False, event_weightsB=None):
 
@@ -1095,9 +1084,10 @@ class PairwiseEMDYPhiFloat32(PairwiseEMDBaseFloat32):
     __swig_destroy__ = _wasserstein.delete_PairwiseEMDYPhiFloat32
     description = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_description)
 
-    def clear(self):
-        _wasserstein.PairwiseEMDYPhiFloat32_clear(self)
-        self.event_arrs = []
+    def clear(self, *args, **kwargs):
+        _wasserstein.PairwiseEMDYPhiFloat32_clear(self, *args, **kwargs)
+        if hasattr(self, 'event_arrs'):
+            del self.event_arrs
 
 
     init = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_init)
@@ -1106,12 +1096,6 @@ class PairwiseEMDYPhiFloat32(PairwiseEMDBaseFloat32):
     preprocess_CenterWeightedCentroid = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32_preprocess_CenterWeightedCentroid)
     _reset_B_events = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32__reset_B_events)
 
-
-          # ensure proper destruction of objects held by this instance
-    def __del__(self):
-        super().__del__()
-        if hasattr(self, 'event_arrs'):
-            del self.event_arrs
 
     def set_new_eventsB(self, eventsB, gdim=None, mask=False, event_weightsB=None):
 

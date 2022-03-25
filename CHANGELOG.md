@@ -1,5 +1,9 @@
 ## 1.0.x
 
+- Enable OpenMP functionality to be toggled on/off ,prior to using any Wasserstein functionality, via a lazy import mechanism.
+- Fixed events being modified in place by `preprocess_CenterWeightedCentroid`.
+- Fixed bug in `emd()` method of `PairwiseEMD` when `request_mode` is enabled.
+
 **1.0.1**
 
 - Small tweaks to C++ API for EventGeometry package.

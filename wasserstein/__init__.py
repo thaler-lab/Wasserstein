@@ -106,6 +106,14 @@ def __getattr__(name):
 
 # properly lists everything available in this module
 def __dir__():
-    return __all__ + [ 'wasserstein',
-        '__author__', '__email__', '__license__', '__version__',
-        '__doc__', '__name__', '__package__']
+    return __all__ + [
+        'wasserstein',
+        'config',
+        '__author__',
+        '__email__',
+        '__license__',
+        '__version__',
+        '__doc__',
+        '__name__',
+        '__package__'
+    ]

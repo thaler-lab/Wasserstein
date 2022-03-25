@@ -253,7 +253,7 @@ public:
         throw std::out_of_range("invalid thread index");
 
       // run and check for failure
-      _evaluate_emd(i, j, thread);
+      return _evaluate_emd(i, j, thread);
     }
 
     // check for External handling, in which case we don't have any emds stored

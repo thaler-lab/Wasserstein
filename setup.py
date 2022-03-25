@@ -82,6 +82,9 @@ else:
         omp_cxxflags = ldflags = ['/openmp']
         cxxflags = ['/std:c++14', '/fp:fast']
 
+    else:
+        raise RuntimeError('{} not supported'.format(platform.system()))
+
     # wasserstein library with openmp
     exts = [Extension('wasserstein._wasserstein_omp',
                       sources=[os.path.join('wasserstein', 'wasserstein.cpp')],

@@ -213,7 +213,6 @@ struct ArrayWeightCollection {
 
     // copy old array into new one
     std::copy(begin(), end(), new_array);
-    //memcpy(new_array, array_, std::size_t(size())*sizeof(Value));
     array_ = new_array;
   }
 
