@@ -318,6 +318,9 @@ namespace WASSERSTEIN_NAMESPACE {
       def __call__(self, eventsA, eventsB=None, gdim=None, mask=False,
                          event_weightsA=None, event_weightsB=None):
 
+          dtype = np.float64 if 'Float64' in self.__class__.__name__ else np.float32
+          self._float_dtype = dtype
+
           if eventsB is None:
               self.init(len(eventsA))
               eventsB = event_weightsB = []
@@ -325,19 +328,19 @@ namespace WASSERSTEIN_NAMESPACE {
               self.init(len(eventsA), len(eventsB))
 
           if event_weightsA is None:
-              event_weightsA = np.ones(len(eventsA), dtype=float)
+              event_weightsA = np.ones(len(eventsA))
           elif len(event_weightsA) != len(eventsA):
               raise ValueError('length of `event_weightsA` does not match length of `eventsA`')
 
           if event_weightsB is None:
-              event_weightsB = np.ones(len(eventsB), dtype=float)
+              event_weightsB = np.ones(len(eventsB))
           elif len(event_weightsB) != len(eventsB):
               raise ValueError('length of `event_weightsB` does not match length of `eventsB`')
 
           self.event_arrs = []
           _store_events(self, itertools.chain(eventsA, eventsB),
                               itertools.chain(event_weightsA, event_weightsB),
-                              gdim, mask)
+                              gdim, mask, dtype)
 
           if not self.request_mode():
               self.compute()

@@ -91,7 +91,7 @@ using namespace wasserstein;
 %pythoncode %{
 
 # function for storing events in a pairwise_emd object
-def _store_events(pairwise_emd, events, event_weights, gdim, mask):
+def _store_events(pairwise_emd, events, event_weights, gdim, mask, dtype):
 
     if mask:
         R2 = pairwise_emd.R()**2
@@ -116,14 +116,14 @@ def _store_events(pairwise_emd, events, event_weights, gdim, mask):
         # sometimes, e.g. in the case of a single particle, they may not
         # weights are never modified due to internal copying
         # coords may be modified (e.g. by centering), so we always make a copy of them
-        weights = np.array(event[:,0], dtype=np.double, order='C', copy=False)
-        coords = np.array(event[:,1:], dtype=np.double, order='C', copy=True)
+        weights = np.array(event[:,0], dtype=dtype, order='C', copy=False)
+        coords = np.array(event[:,1:], dtype=dtype, order='C', copy=True)
         
         # ensure that the lifetime of these arrays lasts through the computation
         pairwise_emd.event_arrs.append((weights, coords))
 
         # store individual event
-        pairwise_emd._add_event(weights, coords, event_weight)
+        pairwise_emd._add_event(weights, coords, float(event_weight))
 %}
 
 %define WASSERSTEIN_PAIRWISE_EMD_NUMPY_FUNCS(F)
@@ -159,7 +159,7 @@ namespace WASSERSTEIN_NAMESPACE {
               raise RuntimeError('PairwiseEMD object must be in request mode in order to set new eventsB')
 
           if event_weightsB is None:
-              event_weightsB = np.ones(len(eventsB), dtype=np.double)
+              event_weightsB = np.ones(len(eventsB))
           elif len(event_weightsB) != len(eventsB):
               raise ValueError('length of `event_weightsB` does not match length of `eventsB`')
 
@@ -171,7 +171,7 @@ namespace WASSERSTEIN_NAMESPACE {
 
           # reinitialize
           self.init(self.nevA(), len(eventsB))
-          _store_events(self, eventsB, event_weightsB, gdim, mask)
+          _store_events(self, eventsB, event_weightsB, gdim, mask, self._float_dtype)
     %}
 
     // ensure that python array of events is deleted also

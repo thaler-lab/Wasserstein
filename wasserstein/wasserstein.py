@@ -448,6 +448,9 @@ class PairwiseEMDBaseFloat64(object):
     def __call__(self, eventsA, eventsB=None, gdim=None, mask=False,
                        event_weightsA=None, event_weightsB=None):
 
+        dtype = np.float64 if 'Float64' in self.__class__.__name__ else np.float32
+        self._float_dtype = dtype
+
         if eventsB is None:
             self.init(len(eventsA))
             eventsB = event_weightsB = []
@@ -455,19 +458,19 @@ class PairwiseEMDBaseFloat64(object):
             self.init(len(eventsA), len(eventsB))
 
         if event_weightsA is None:
-            event_weightsA = np.ones(len(eventsA), dtype=float)
+            event_weightsA = np.ones(len(eventsA))
         elif len(event_weightsA) != len(eventsA):
             raise ValueError('length of `event_weightsA` does not match length of `eventsA`')
 
         if event_weightsB is None:
-            event_weightsB = np.ones(len(eventsB), dtype=float)
+            event_weightsB = np.ones(len(eventsB))
         elif len(event_weightsB) != len(eventsB):
             raise ValueError('length of `event_weightsB` does not match length of `eventsB`')
 
         self.event_arrs = []
         _store_events(self, itertools.chain(eventsA, eventsB),
                             itertools.chain(event_weightsA, event_weightsB),
-                            gdim, mask)
+                            gdim, mask, dtype)
 
         if not self.request_mode():
             self.compute()
@@ -648,6 +651,9 @@ class PairwiseEMDBaseFloat32(object):
     def __call__(self, eventsA, eventsB=None, gdim=None, mask=False,
                        event_weightsA=None, event_weightsB=None):
 
+        dtype = np.float64 if 'Float64' in self.__class__.__name__ else np.float32
+        self._float_dtype = dtype
+
         if eventsB is None:
             self.init(len(eventsA))
             eventsB = event_weightsB = []
@@ -655,19 +661,19 @@ class PairwiseEMDBaseFloat32(object):
             self.init(len(eventsA), len(eventsB))
 
         if event_weightsA is None:
-            event_weightsA = np.ones(len(eventsA), dtype=float)
+            event_weightsA = np.ones(len(eventsA))
         elif len(event_weightsA) != len(eventsA):
             raise ValueError('length of `event_weightsA` does not match length of `eventsA`')
 
         if event_weightsB is None:
-            event_weightsB = np.ones(len(eventsB), dtype=float)
+            event_weightsB = np.ones(len(eventsB))
         elif len(event_weightsB) != len(eventsB):
             raise ValueError('length of `event_weightsB` does not match length of `eventsB`')
 
         self.event_arrs = []
         _store_events(self, itertools.chain(eventsA, eventsB),
                             itertools.chain(event_weightsA, event_weightsB),
-                            gdim, mask)
+                            gdim, mask, dtype)
 
         if not self.request_mode():
             self.compute()
@@ -809,7 +815,7 @@ def CorrelationDimension(*args, **kwargs):
 
 
 # function for storing events in a pairwise_emd object
-def _store_events(pairwise_emd, events, event_weights, gdim, mask):
+def _store_events(pairwise_emd, events, event_weights, gdim, mask, dtype):
 
     if mask:
         R2 = pairwise_emd.R()**2
@@ -834,14 +840,14 @@ def _store_events(pairwise_emd, events, event_weights, gdim, mask):
 # sometimes, e.g. in the case of a single particle, they may not
 # weights are never modified due to internal copying
 # coords may be modified (e.g. by centering), so we always make a copy of them
-        weights = np.array(event[:,0], dtype=np.double, order='C', copy=False)
-        coords = np.array(event[:,1:], dtype=np.double, order='C', copy=True)
+        weights = np.array(event[:,0], dtype=dtype, order='C', copy=False)
+        coords = np.array(event[:,1:], dtype=dtype, order='C', copy=True)
 
 # ensure that the lifetime of these arrays lasts through the computation
         pairwise_emd.event_arrs.append((weights, coords))
 
 # store individual event
-        pairwise_emd._add_event(weights, coords, event_weight)
+        pairwise_emd._add_event(weights, coords, float(event_weight))
 
 class EMDFloat64(EMDBaseFloat64):
     r"""Proxy of C++ wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > class."""
@@ -946,7 +952,7 @@ class PairwiseEMDFloat64(PairwiseEMDBaseFloat64):
             raise RuntimeError('PairwiseEMD object must be in request mode in order to set new eventsB')
 
         if event_weightsB is None:
-            event_weightsB = np.ones(len(eventsB), dtype=np.double)
+            event_weightsB = np.ones(len(eventsB))
         elif len(event_weightsB) != len(eventsB):
             raise ValueError('length of `event_weightsB` does not match length of `eventsB`')
 
@@ -958,7 +964,7 @@ class PairwiseEMDFloat64(PairwiseEMDBaseFloat64):
 
     # reinitialize
         self.init(self.nevA(), len(eventsB))
-        _store_events(self, eventsB, event_weightsB, gdim, mask)
+        _store_events(self, eventsB, event_weightsB, gdim, mask, self._float_dtype)
 
     _add_event = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat64__add_event)
 
@@ -1000,7 +1006,7 @@ class PairwiseEMDFloat32(PairwiseEMDBaseFloat32):
             raise RuntimeError('PairwiseEMD object must be in request mode in order to set new eventsB')
 
         if event_weightsB is None:
-            event_weightsB = np.ones(len(eventsB), dtype=np.double)
+            event_weightsB = np.ones(len(eventsB))
         elif len(event_weightsB) != len(eventsB):
             raise ValueError('length of `event_weightsB` does not match length of `eventsB`')
 
@@ -1012,7 +1018,7 @@ class PairwiseEMDFloat32(PairwiseEMDBaseFloat32):
 
     # reinitialize
         self.init(self.nevA(), len(eventsB))
-        _store_events(self, eventsB, event_weightsB, gdim, mask)
+        _store_events(self, eventsB, event_weightsB, gdim, mask, self._float_dtype)
 
     _add_event = _swig_new_instance_method(_wasserstein.PairwiseEMDFloat32__add_event)
 
@@ -1054,7 +1060,7 @@ class PairwiseEMDYPhiFloat64(PairwiseEMDBaseFloat64):
             raise RuntimeError('PairwiseEMD object must be in request mode in order to set new eventsB')
 
         if event_weightsB is None:
-            event_weightsB = np.ones(len(eventsB), dtype=np.double)
+            event_weightsB = np.ones(len(eventsB))
         elif len(event_weightsB) != len(eventsB):
             raise ValueError('length of `event_weightsB` does not match length of `eventsB`')
 
@@ -1066,7 +1072,7 @@ class PairwiseEMDYPhiFloat64(PairwiseEMDBaseFloat64):
 
     # reinitialize
         self.init(self.nevA(), len(eventsB))
-        _store_events(self, eventsB, event_weightsB, gdim, mask)
+        _store_events(self, eventsB, event_weightsB, gdim, mask, self._float_dtype)
 
     _add_event = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat64__add_event)
 
@@ -1108,7 +1114,7 @@ class PairwiseEMDYPhiFloat32(PairwiseEMDBaseFloat32):
             raise RuntimeError('PairwiseEMD object must be in request mode in order to set new eventsB')
 
         if event_weightsB is None:
-            event_weightsB = np.ones(len(eventsB), dtype=np.double)
+            event_weightsB = np.ones(len(eventsB))
         elif len(event_weightsB) != len(eventsB):
             raise ValueError('length of `event_weightsB` does not match length of `eventsB`')
 
@@ -1120,7 +1126,7 @@ class PairwiseEMDYPhiFloat32(PairwiseEMDBaseFloat32):
 
     # reinitialize
         self.init(self.nevA(), len(eventsB))
-        _store_events(self, eventsB, event_weightsB, gdim, mask)
+        _store_events(self, eventsB, event_weightsB, gdim, mask, self._float_dtype)
 
     _add_event = _swig_new_instance_method(_wasserstein.PairwiseEMDYPhiFloat32__add_event)
 
