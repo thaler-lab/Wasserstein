@@ -493,8 +493,9 @@ class ExternalEMDHandlerFloat64(object):
     description = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat64_description)
     num_calls = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat64_num_calls)
     __call__ = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat64___call__)
-    evaluate = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat64_evaluate)
-    evaluate_symmetric = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat64_evaluate_symmetric)
+    evaluate1d = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat64_evaluate1d)
+    evaluate2d = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat64_evaluate2d)
+    evaluate1d_symmetric = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat64_evaluate1d_symmetric)
 
 # Register ExternalEMDHandlerFloat64 in _wasserstein:
 _wasserstein.ExternalEMDHandlerFloat64_swigregister(ExternalEMDHandlerFloat64)
@@ -696,8 +697,9 @@ class ExternalEMDHandlerFloat32(object):
     description = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat32_description)
     num_calls = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat32_num_calls)
     __call__ = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat32___call__)
-    evaluate = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat32_evaluate)
-    evaluate_symmetric = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat32_evaluate_symmetric)
+    evaluate1d = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat32_evaluate1d)
+    evaluate2d = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat32_evaluate2d)
+    evaluate1d_symmetric = _swig_new_instance_method(_wasserstein.ExternalEMDHandlerFloat32_evaluate1d_symmetric)
 
 # Register ExternalEMDHandlerFloat32 in _wasserstein:
 _wasserstein.ExternalEMDHandlerFloat32_swigregister(ExternalEMDHandlerFloat32)

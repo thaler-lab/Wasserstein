@@ -84,10 +84,14 @@ using WASSERSTEIN_NAMESPACE::DefaultNetworkSimplex;
   %apply (F* IN_ARRAY1, std::ptrdiff_t DIM1) {(F* weights0, std::ptrdiff_t n0),
                                               (F* weights1, std::ptrdiff_t n1),
                                               (F* emds, std::ptrdiff_t n0),
-                                              (F* event_weights, std::ptrdiff_t n1)}
+                                              (F* event_weights, std::ptrdiff_t n1),
+                                              (F* event_weightsA, std::ptrdiff_t nwA),
+                                              (F* event_weightsB, std::ptrdiff_t nwB)}
   %apply (F* IN_ARRAY2, std::ptrdiff_t DIM1, std::ptrdiff_t DIM2) {(F* coords0, std::ptrdiff_t n00, std::ptrdiff_t n01),
                                                                    (F* coords1, std::ptrdiff_t n10, std::ptrdiff_t n11),
-                                                                   (F* external_dists, std::ptrdiff_t d0, std::ptrdiff_t d1)}
+                                                                   (F* external_dists, std::ptrdiff_t d0, std::ptrdiff_t d1),
+                                                                   (F* emds, std::ptrdiff_t nA, std::ptrdiff_t nB),
+                                                                   (F* event_weights, std::ptrdiff_t nwA, std::ptrdiff_t nwB)}
 
   %apply (F* INPLACE_ARRAY1, std::ptrdiff_t DIM1) {(F* weights, std::ptrdiff_t n)}
   %apply (F* INPLACE_ARRAY2, std::ptrdiff_t DIM1, std::ptrdiff_t DIM2) {(F* coords, std::ptrdiff_t n1, std::ptrdiff_t d)}
@@ -114,8 +118,9 @@ namespace WASSERSTEIN_NAMESPACE {
   %rename(node_potentials) EMD::npy_node_potentials;
   %rename(emds_vec) PairwiseEMDBase::emds;
   %rename(emds) PairwiseEMDBase::npy_emds;
-  %rename(evaluate) ExternalEMDHandler::npy_evaluate;
-  %rename(evaluate_symmetric) ExternalEMDHandler::npy_evaluate_symmetric;
+  %rename(evaluate1d) ExternalEMDHandler::npy_evaluate1d;
+  %rename(evaluate2d) ExternalEMDHandler::npy_evaluate2d;
+  %rename(evaluate1d_symmetric) ExternalEMDHandler::npy_evaluate1d_symmetric;
   %rename(bin_centers_vec) Histogram1DHandler::bin_centers;
   %rename(bin_edges_vec) Histogram1DHandler::bin_edges;
   %rename(hist_vals_vars_vec) Histogram1DHandler::hist_vals_vars;
@@ -212,18 +217,41 @@ namespace WASSERSTEIN_NAMESPACE {
 %enddef
 
 %define EXTERNAL_EMD_HANDLER_NUMPY_FUNCS(F)
-  void npy_evaluate(F* emds, std::ptrdiff_t n0) {
+  void npy_evaluate1d(F* emds, std::ptrdiff_t n0) {
     $self->evaluate(emds, n0);
   }
-  void npy_evaluate(F* emds, std::ptrdiff_t n0, F* event_weights, std::ptrdiff_t n1) {
+  void npy_evaluate2d(F* emds, std::ptrdiff_t nA, std::ptrdiff_t nB) {
+    $self->evaluate(emds, nA * nB);
+  }
+  void npy_evaluate1d(F* emds, std::ptrdiff_t n0, F* event_weights, std::ptrdiff_t n1) {
     if (n0 != n1)
       throw std::invalid_argument("length of `emds` should match lengh of `event_weights`");
     $self->evaluate(emds, n0, event_weights);
   }
-  void npy_evaluate_symmetric(F* emds, std::ptrdiff_t n0, F* event_weights, std::ptrdiff_t n1) {
+  void npy_evaluate2d(F* emds, std::ptrdiff_t nA, std::ptrdiff_t nB,
+                      F* event_weights, std::ptrdiff_t nwA, std::ptrdiff_t nwB) {
+    if (nA != nwA || nB != nwB)
+      throw std::invalid_argument("shape of `emds` should match shape of `event_weights`");
+    $self->evaluate(emds, nA * nB, event_weights);
+  }
+  void npy_evaluate2d(F* emds, std::ptrdiff_t nA, std::ptrdiff_t nB,
+                      F* event_weightsA, std::ptrdiff_t nwA,
+                      F* event_weightsB, std::ptrdiff_t nwB) {
+    if (nA != nwA || nB != nwB)
+      throw std::invalid_argument("shape of `emds` should be (len(event_weightsA), len(event_weightsB))");
+    std::vector<F> event_weights(nwA + nwB);
+    std::copy(event_weightsB,
+              event_weightsB + nwB,
+              std::copy(event_weightsA,
+                        event_weightsA + nwA,
+                        event_weights.data())
+              );
+    $self->evaluate(emds, nA * nB, event_weights.data(), nwA, nwB);
+  }
+  void npy_evaluate1d_symmetric(F* emds, std::ptrdiff_t n0, F* event_weights, std::ptrdiff_t n1, bool upper_triangular = true) {
     if (n0 != n1*(n1 - 1)/2)
       throw std::invalid_argument("length of `emds` should be lengh of `event_weights` choose 2");
-    $self->evaluate_symmetric(emds, n1, event_weights);
+    $self->evaluate_symmetric(emds, n1, event_weights, upper_triangular);
   }
 %enddef
 
