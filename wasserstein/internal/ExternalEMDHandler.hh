@@ -109,8 +109,8 @@ public:
     
     std::lock_guard<std::mutex> handler_guard(mutex_);
     if (weights == nullptr) {
-      for (std::size_t i = 0; i < num_emds; i++)
-        handle(emds[i], 1);
+      for (std::size_t k = 0; k < num_emds; k++)
+        handle(emds[k], 1);
     }
 
     // there is a weight for every emd
@@ -121,9 +121,11 @@ public:
 
     // weights is weightsA concatenated with weightsB
     else if (nA != 0 && nB != 0) {
+      const Value * weightsA(weights);
+      const Value * weightsB(weights + nA);
       for (std::size_t i = 0, k = 0; i < nA; i++)
         for (std::size_t j = 0; j < nB; j++, k++)
-          handle(emds[k], weights[i] * weights[nA + j]);
+          handle(emds[k], weightsA[i] * weightsB[j]);
     }
 
     // something is wrong with the arguments

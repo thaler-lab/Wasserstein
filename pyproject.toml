@@ -11,6 +11,8 @@ requires = [
 skip = "pp* *musllinux*"
 test-skip = "*i686 *win32"
 
+archs-macos = "x86_64 arm64"
+
 before-test = "pip install cython"
 test-command = "pytest {package}"
 test-requires = ["pytest", "numpy", "pot", "energyflow"]
