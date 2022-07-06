@@ -11,8 +11,10 @@ requires = [
 skip = "pp* *musllinux*"
 test-skip = "*i686 *win32"
 
-archs-macos = "x86_64 arm64"
-
 before-test = "pip install cython; pip install -i https://test.pypi.org/simple energyflow==1.3.3a0"
 test-command = "pytest {package}"
 test-requires = ["pytest", "numpy", "pot", "energyflow"]
+
+[tool.cibuildwheel.macos]
+
+archs = "x86_64 arm64"
