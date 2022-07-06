@@ -274,12 +274,12 @@ def test_emd_dists(num_particles, beta, R, norm):
         # check flows
         print(np.max(np.abs(dists - wass_dists[:num_particles,:num_particles])), 'worst dist diff')
         if norm:
-            assert np.all(np.abs(dists - wass_dists) < 5e-14)
+            assert np.all(np.abs(dists - wass_dists) < 5e-12)
         elif wassEMD.extra() == 0:
-            assert np.all(np.abs(dists - wass_dists[:num_particles]) < 5e-14)
+            assert np.all(np.abs(dists - wass_dists[:num_particles]) < 5e-12)
             assert np.all(wass_dists[-1] == 1)
         elif wassEMD.extra() == 1:
-            assert np.all(np.abs(dists - wass_dists[:,:num_particles]) < 5e-14)
+            assert np.all(np.abs(dists - wass_dists[:,:num_particles]) < 5e-12)
             assert np.all(wass_dists[:,-1] == 1)
 
 @pytest.mark.emd
