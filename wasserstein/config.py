@@ -26,6 +26,7 @@
 #------------------------------------------------------------------------
 
 import platform
+import warnings
 
 __all__ = ['with_openmp', 'without_openmp', 'openmp']
 
@@ -41,7 +42,8 @@ def with_openmp():
 
 def without_openmp():
     if platform.system() != 'Darwin':
-        raise RuntimeError('cannot opt-out of OpenMP on {}'.format(platform.system()))
+        #raise RuntimeError('cannot opt-out of OpenMP on {}'.format(platform.system()))
+        warnings.warn('cannot opt-out of OpenMP on {}'.format(platform.system()))
 
     global _USE_WITH_OPENMP
     if _CAN_SET_OPENMP:
