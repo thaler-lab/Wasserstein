@@ -40,8 +40,6 @@ def test_emd(num_particles, dim, beta, R, norm):
         if pot_emd == 0:
             pytest.skip()
 
-        print(wasserstein)
-
         # wasserstein computation
         wassEMD = wasserstein.EMD(beta=beta, R=R, norm=(norm is True))
         wass_emd = wassEMD(ws0[:num_particles], coords0, ws1[:num_particles], coords1)
