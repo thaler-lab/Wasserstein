@@ -1,8 +1,15 @@
-## 1.0.x
+## 1.1.x
 
-- Enable OpenMP functionality to be toggled on/off ,prior to using any Wasserstein functionality, via a lazy import mechanism.
+**1.1.0**
+
+- Removed support for Python 3.6.
+- Python 3.10 wheels uploaded to PyPI.
+- Apple silicon arm64 wheels uploaded to PyPI.
+- Enable OpenMP functionality to be toggled on/off, prior to using any Wasserstein functionality, via a lazy import mechanism.
 - Fixed events being modified in place by `preprocess_CenterWeightedCentroid`.
 - Fixed bug in `emd()` method of `PairwiseEMD` when `request_mode` is enabled.
+
+## 1.0.x
 
 **1.0.1**
 

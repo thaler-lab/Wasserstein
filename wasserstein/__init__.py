@@ -41,7 +41,7 @@ $$  /   \$$ |\$$$$$$$ |$$$$$$$  |$$$$$$$  |\$$$$$$$\ $$ |      $$$$$$$  |  \$$$$
 __author__  = 'Patrick T. Komiske III'
 __email__   = 'pkomiske@gmail.com'
 __license__ = 'GPLv3'
-__version__ = '1.1.0a0'
+__version__ = '1.1.0'
 
 from . import config
 from .config import *

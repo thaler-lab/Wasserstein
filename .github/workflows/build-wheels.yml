@@ -6,7 +6,7 @@ on:
       - master
 
 env:
-  PYPI: 0
+  PYPI: 1
   PYPITEST: 1
   TWINE_USERNAME: __token__
   TWINE_PASSWORD_PYPITEST: ${{ secrets.TWINE_PASSWORD_PYPITEST }}
@@ -16,9 +16,9 @@ jobs:
   linux-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.9'
       - name: Install Python packages
@@ -31,9 +31,9 @@ jobs:
   macos-test:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.9'
       - name: Compile and install libomp from source
@@ -48,9 +48,9 @@ jobs:
   windows-test:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.9'
       - name: Install Python packages
@@ -64,9 +64,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [linux-test, macos-test, windows-test]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.9'
       - name: Build wheels and upload to PyPI
@@ -76,9 +76,9 @@ jobs:
     runs-on: macos-latest
     needs: [linux-test, macos-test, windows-test]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.9'
       - name: Compile and install libomp from source
@@ -90,9 +90,9 @@ jobs:
     runs-on: windows-latest
     needs: [linux-test, macos-test, windows-test]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.9'
       - name: Build wheels and upload to PyPI

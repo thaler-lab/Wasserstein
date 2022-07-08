@@ -1,49 +1,42 @@
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <meta name="author" content="Patrick T. Komiske III">
-  <link rel="canonical" href="https://pkomiske.github.io/Wasserstein/docs/externalemdhandler/">
-  <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>External EMD Handlers - Wasserstein</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Patrick T. Komiske III" /><link rel="canonical" href="https://pkomiske.github.io/Wasserstein/docs/externalemdhandler/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>External EMD Handlers - Wasserstein</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link href="../../css/eftheme.css" rel="stylesheet" />
+        <link href="../../css/pygmentize_friendly.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "External EMD Handlers";
+        var mkdocs_page_input_path = "docs/externalemdhandler.md";
+        var mkdocs_page_url = "/Wasserstein/docs/externalemdhandler/";
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]--> 
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-  <link rel="stylesheet" href="../../css/theme.css" />
-  <link rel="stylesheet" href="../../css/theme_extra.css" />
-  <link href="../../css/eftheme.css" rel="stylesheet" />
-  <link href="../../css/pygmentize_friendly.css" rel="stylesheet" />
-  
-  <script>
-    // Current page data
-    var mkdocs_page_name = "External EMD Handlers";
-    var mkdocs_page_input_path = "docs/externalemdhandler.md";
-    var mkdocs_page_url = "/Wasserstein/docs/externalemdhandler/";
-  </script>
-  
-  <script src="../../js/jquery-2.1.1.min.js" defer></script>
-  <script src="../../js/modernizr-2.8.3.min.js" defer></script> 
-  
-  <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-122962541-3', 'Wasserstein');
-      ga('send', 'pageview');
-  </script>
-  
+        ga('create', 'UA-122962541-3', 'Wasserstein');
+        ga('send', 'pageview');
+      </script>
+    
 </head>
 
 <body class="wy-body-for-nav" role="document">
 
   <div class="wy-grid-for-nav">
-
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
@@ -51,39 +44,38 @@
     <div class="eflogo">
       <img src="../../img/eflogowhite.png"  class="eflogo-img"> Wasserstein
     </div>
-  </a>
-        <div role="search">
+  </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
-                    </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Getting Started</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../installation/">Installation</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../demos/">Python Demos</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../examples/">C++ Examples</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../faqs/">FAQs</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../releases/">Release Notes</a>
-                    </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Documentation</span></p>
-                <ul class="current">
-                    <li class="toctree-l1"><a class="reference internal" href="../emd/">EMD</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../emds/">PairwiseEMD</a>
-                    </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">External EMD Handlers</a>
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../installation/">Installation</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../demos/">Python Demos</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/">C++ Examples</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../faqs/">FAQs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../releases/">Release Notes</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Documentation</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../emd/">EMD</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../emds/">PairwiseEMD</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">External EMD Handlers</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#python">Python</a>
         <ul>
@@ -146,49 +138,37 @@
         </ul>
     </li>
     </ul>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../event/">Events</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../pairwisedistance/">Pairwise Distance</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../utils/">Utils</a>
-                    </li>
-                </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../event/">Events</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../pairwisedistance/">Pairwise Distance</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../utils/">Utils</a>
+                  </li>
+              </ul>
       </div>
     </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../..">Wasserstein</a>
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Wasserstein</a>
+        
       </nav>
-
-      
       <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="../..">Docs</a> &raquo;</li>
-    
-      
-        
-          <li>Documentation &raquo;</li>
-        
-      
-    
-    <li>External EMD Handlers</li>
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Documentation &raquo;</li><li>External EMD Handlers</li>
     <li class="wy-breadcrumbs-aside">
-      
     </li>
   </ul>
-  
   <hr/>
 </div>
-          <div role="main">
-            <div class="section">
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
               
                 <h1 id="external-emd-handlers">External EMD Handlers</h1>
 <hr />
@@ -508,31 +488,22 @@
 </code></pre></div>
               
             </div>
-          </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../emds/" class="btn btn-neutral float-left" title="PairwiseEMD"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../event/" class="btn btn-neutral float-right" title="Events">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-        <a href="../emds/" class="btn btn-neutral" title="PairwiseEMD"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-      
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <!-- Copyright etc -->
-    
       <p>Copyright (C) 2019-2021 Patrick T. Komiske III</p>
-    
   </div>
 
-  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-      
+          
         </div>
       </div>
 
@@ -540,20 +511,23 @@
 
   </div>
 
-  <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-          <a href="https://github.com/pkomiske/Wasserstein/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
-      
-      
-        <span><a href="../emds/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../event/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/pkomiske/Wasserstein/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../emds/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../event/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
     <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
     <script src="../../js/theme.js" defer></script>
       <script src="../../js/extra.js" defer></script>
       <script src="https://polyfill.io/v3/polyfill.min.js?features=es6" defer></script>
