@@ -294,7 +294,7 @@ private:
 
   // State constants for arcs
   enum ArcState : char {
-    STATE_UPPER = -1,
+    STATE_UPPER = 2,
     STATE_TREE  =  0,
     STATE_LOWER =  1
   };

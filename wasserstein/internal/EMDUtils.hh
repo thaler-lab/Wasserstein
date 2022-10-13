@@ -132,7 +132,7 @@ enum class EMDStatus : char {
 };
 
 enum class ExtraParticle : char {
-  Neither = -1,
+  Neither = 2,
   Zero = 0,
   One = 1
 };
