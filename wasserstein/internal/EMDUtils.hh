@@ -62,7 +62,7 @@
 
 // default namespace macros
 #ifndef BEGIN_WASSERSTEIN_NAMESPACE
-# define WASSERSTEIN_NAMESPACE wasserstein
+# define WASSERSTEIN_NAMESPACE emd
 # define BEGIN_WASSERSTEIN_NAMESPACE namespace WASSERSTEIN_NAMESPACE {
 # define END_WASSERSTEIN_NAMESPACE }
 #endif
