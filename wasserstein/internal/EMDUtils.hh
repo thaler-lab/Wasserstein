@@ -131,7 +131,7 @@ enum class EMDStatus : char {
   Infeasible = 5
 };
 
-enum class ExtraParticle : char {
+enum class ExtraParticle : signed char {
   Neither = -1,
   Zero = 0,
   One = 1

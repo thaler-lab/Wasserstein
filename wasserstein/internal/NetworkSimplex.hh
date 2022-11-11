@@ -293,7 +293,7 @@ private:
   //---------------------------------------------------------------------------
 
   // State constants for arcs
-  enum ArcState : char {
+  enum ArcState : signed char {
     STATE_UPPER = -1,
     STATE_TREE  =  0,
     STATE_LOWER =  1
