@@ -44,9 +44,8 @@ def test_emd(num_particles, dim, beta, R, norm):
         wassEMD = wasserstein.EMD(beta=beta, R=R, norm=(norm is True))
         wass_emd = wassEMD(ws0[:num_particles], coords0, ws1[:num_particles], coords1)
 
-        emd_diff = abs(pot_emd - wass_emd)
-        emd_percent_diff = 2*emd_diff/(pot_emd + wass_emd)
-        assert emd_percent_diff < 1e-13 or emd_diff < 1e-13, 'emds do not match'
+        assert pot_emd == pytest.approx(wass_emd, rel=1e-12)
+        assert pot_emd == pytest.approx(wass_emd, abs=1e-10)
 
 @pytest.mark.emd
 @pytest.mark.emdcustom
@@ -89,9 +88,8 @@ def test_emd_custom(num_particles, dim, beta, R, norm):
         wassEMD = wasserstein.EMD(norm=(norm is True))
         wass_emd = wassEMD(ws0, ws1, dists)
 
-        emd_diff = abs(pot_emd - wass_emd)
-        emd_percent_diff = 2*emd_diff/(pot_emd + wass_emd)
-        assert emd_percent_diff < 1e-13 or emd_diff < 1e-13, 'emds do not match'
+        assert pot_emd == pytest.approx(wass_emd, rel=1e-12)
+        assert pot_emd == pytest.approx(wass_emd, abs=1e-10)
 
 @pytest.mark.emd
 @pytest.mark.emdcustom
@@ -137,9 +135,8 @@ def test_emd_yphi(num_particles, dim, beta, R, norm):
         wass_emd = wassEMD(ws0, ws1, dists)
         wass_emdyphi = wassEMDyphi(ws0[:num_particles], coords0, ws1[:num_particles], coords1)
 
-        emd_diff = abs(wass_emdyphi - wass_emd)
-        emd_percent_diff = 2*emd_diff/(wass_emdyphi + wass_emd)
-        assert emd_percent_diff < 1e-13 or emd_diff < 1e-13, 'emds do not match'
+        assert wass_emdyphi == pytest.approx(wass_emd, rel=1e-12)
+        assert wass_emdyphi == pytest.approx(wass_emd, abs=1e-10)
 
 @pytest.mark.emd
 @pytest.mark.dtype
