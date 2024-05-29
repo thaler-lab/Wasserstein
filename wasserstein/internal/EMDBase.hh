@@ -12,26 +12,26 @@
 //   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon
 //
 // Copyright (C) 2019-2022 Patrick T. Komiske III
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
-/*  ______ __  __ _____  ____           _____ ______ 
+/*  ______ __  __ _____  ____           _____ ______
  * |  ____|  \/  |  __ \|  _ \   /\    / ____|  ____|
- * | |__  | \  / | |  | | |_) | /  \  | (___ | |__   
- * |  __| | |\/| | |  | |  _ < / /\ \  \___ \|  __|  
- * | |____| |  | | |__| | |_) / ____ \ ____) | |____ 
+ * | |__  | \  / | |  | | |_) | /  \  | (___ | |__
+ * |  __| | |\/| | |  | |  _ < / /\ \  \___ \|  __|
+ * | |____| |  | | |__| | |_) / ____ \ ____) | |____
  * |______|_|  |_|_____/|____/_/    \_\_____/|______|
  */
 
@@ -97,7 +97,7 @@ public:
                                           Value epsilon_small_factor=1) = 0;
 
   bool norm() const { return norm_; }
-  void set_norm(bool norm) { norm_ = norm; } 
+  void set_norm(bool norm) { norm_ = norm; }
 
   bool do_timing() const { return do_timing_; }
   void set_do_timing(bool timing) { do_timing_ = timing; }

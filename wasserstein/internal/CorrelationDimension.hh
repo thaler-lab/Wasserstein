@@ -12,28 +12,28 @@
 //   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon
 //
 // Copyright (C) 2019-2022 Patrick T. Komiske III
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
-/*   _____ ____  _____  _____  ______ _            _______ _____ ____  _   _ 
+/*   _____ ____  _____  _____  ______ _            _______ _____ ____  _   _
  *  / ____/ __ \|  __ \|  __ \|  ____| |        /\|__   __|_   _/ __ \| \ | |
  * | |   | |  | | |__) | |__) | |__  | |       /  \  | |    | || |  | |  \| |
  * | |   | |  | |  _  /|  _  /|  __| | |      / /\ \ | |    | || |  | | . ` |
  * | |___| |__| | | \ \| | \ \| |____| |____ / ____ \| |   _| || |__| | |\  |
  *  \_____\____/|_|  \_\_|  \_\______|______/_/    \_\_|  |_____\____/|_| \_|
- *  _____ _____ __  __ ______ _   _  _____ _____ ____  _   _ 
+ *  _____ _____ __  __ ______ _   _  _____ _____ ____  _   _
  * |  __ \_   _|  \/  |  ____| \ | |/ ____|_   _/ __ \| \ | |
  * | |  | || | | \  / | |__  |  \| | (___   | || |  | |  \| |
  * | |  | || | | |\/| |  __| | . ` |\___ \  | || |  | | . ` |
@@ -67,7 +67,7 @@ public:
     using Hist1DBase::bin_centers;
     using Hist1DBase::axis;
     using Hist1DBase::hist;
-  
+
     // default constructor, useful for deserialization
     CorrelationDimension() = default;
   #endif
@@ -92,7 +92,7 @@ public:
       Value dmidbin(std::log(midbins[i + 1]/midbins[i]));
 
       dims[i] = std::log(cum_vals[i + 1]/(cum_vals[i] + eps) + eps)/dmidbin;
-      dim_errs[i] = std::sqrt(cum_vars[i + 1]/(cum_vals[i + 1]*cum_vals[i + 1] + eps) + 
+      dim_errs[i] = std::sqrt(cum_vars[i + 1]/(cum_vals[i + 1]*cum_vals[i + 1] + eps) +
                               cum_vars[i]    /(cum_vals[i]    *cum_vals[i]     + eps)   )/dmidbin;
     }
 

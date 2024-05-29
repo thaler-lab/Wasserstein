@@ -782,7 +782,7 @@ SWIG_UnpackDataName(const char *c, void *ptr, size_t sz, const char *name) {
 #define PyString_FromString(x) PyUnicode_FromString(x)
 #define PyString_Format(fmt, args)  PyUnicode_Format(fmt, args)
 #define PyString_AsString(str) PyBytes_AsString(str)
-#define PyString_Size(str) PyBytes_Size(str)	
+#define PyString_Size(str) PyBytes_Size(str)
 #define PyString_InternFromString(key) PyUnicode_InternFromString(key)
 #define Py_TPFLAGS_HAVE_CLASS Py_TPFLAGS_BASETYPE
 #define PyString_AS_STRING(x) PyUnicode_AS_STRING(x)
@@ -841,7 +841,7 @@ SWIGINTERN PyObject*
 SWIG_Python_str_FromChar(const char *c)
 {
 #if PY_VERSION_HEX >= 0x03000000
-  return PyUnicode_FromString(c); 
+  return PyUnicode_FromString(c);
 #else
   return PyString_FromString(c);
 #endif
@@ -978,7 +978,7 @@ SWIG_Python_RaiseOrModifyTypeError(const char *message)
 #  endif
 #  if defined(SWIG_PYTHON_USE_GIL) /* Use PyGILState threads calls */
 #    ifndef SWIG_PYTHON_INITIALIZE_THREADS
-#     define SWIG_PYTHON_INITIALIZE_THREADS  PyEval_InitThreads() 
+#     define SWIG_PYTHON_INITIALIZE_THREADS  PyEval_InitThreads()
 #    endif
 #    ifdef __cplusplus /* C++ code */
        class SWIG_Python_Thread_Block {
@@ -1095,7 +1095,7 @@ typedef struct swig_const_info {
 
 #define SWIG_InternalNewPointerObj(ptr, type, flags)	SWIG_Python_NewPointerObj(NULL, ptr, type, flags)
 
-#define SWIG_CheckImplicit(ty)                          SWIG_Python_CheckImplicit(ty) 
+#define SWIG_CheckImplicit(ty)                          SWIG_Python_CheckImplicit(ty)
 #define SWIG_AcquirePtr(ptr, src)                       SWIG_Python_AcquirePtr(ptr, src)
 #define swig_owntype                                    int
 
@@ -1122,26 +1122,26 @@ typedef struct swig_const_info {
 #define SWIG_SetModule(clientdata, pointer)             SWIG_Python_SetModule(pointer)
 #define SWIG_NewClientData(obj)                         SwigPyClientData_New(obj)
 
-#define SWIG_SetErrorObj                                SWIG_Python_SetErrorObj                            
-#define SWIG_SetErrorMsg                        	SWIG_Python_SetErrorMsg				   
-#define SWIG_ErrorType(code)                    	SWIG_Python_ErrorType(code)                        
-#define SWIG_Error(code, msg)            		SWIG_Python_SetErrorMsg(SWIG_ErrorType(code), msg) 
-#define SWIG_fail                        		goto fail					   
+#define SWIG_SetErrorObj                                SWIG_Python_SetErrorObj
+#define SWIG_SetErrorMsg                        	SWIG_Python_SetErrorMsg
+#define SWIG_ErrorType(code)                    	SWIG_Python_ErrorType(code)
+#define SWIG_Error(code, msg)            		SWIG_Python_SetErrorMsg(SWIG_ErrorType(code), msg)
+#define SWIG_fail                        		goto fail
 
 
 /* Runtime API implementation */
 
 /* Error manipulation */
 
-SWIGINTERN void 
+SWIGINTERN void
 SWIG_Python_SetErrorObj(PyObject *errtype, PyObject *obj) {
-  SWIG_PYTHON_THREAD_BEGIN_BLOCK; 
+  SWIG_PYTHON_THREAD_BEGIN_BLOCK;
   PyErr_SetObject(errtype, obj);
   Py_DECREF(obj);
   SWIG_PYTHON_THREAD_END_BLOCK;
 }
 
-SWIGINTERN void 
+SWIGINTERN void
 SWIG_Python_SetErrorMsg(PyObject *errtype, const char *msg) {
   SWIG_PYTHON_THREAD_BEGIN_BLOCK;
   PyErr_SetString(errtype, msg);
@@ -1162,7 +1162,7 @@ SwigPyBuiltin_AddPublicSymbol(PyObject *seq, const char *key) {
 }
 
 SWIGINTERN void
-SWIG_Python_SetConstant(PyObject *d, PyObject *public_interface, const char *name, PyObject *obj) {   
+SWIG_Python_SetConstant(PyObject *d, PyObject *public_interface, const char *name, PyObject *obj) {
   PyDict_SetItemString(d, name, obj);
   Py_DECREF(obj);
   if (public_interface)
@@ -1172,9 +1172,9 @@ SWIG_Python_SetConstant(PyObject *d, PyObject *public_interface, const char *nam
 #else
 
 SWIGINTERN void
-SWIG_Python_SetConstant(PyObject *d, const char *name, PyObject *obj) {   
+SWIG_Python_SetConstant(PyObject *d, const char *name, PyObject *obj) {
   PyDict_SetItemString(d, name, obj);
-  Py_DECREF(obj);                            
+  Py_DECREF(obj);
 }
 
 #endif
@@ -1209,11 +1209,11 @@ SWIG_Python_UnpackTuple(PyObject *args, const char *name, Py_ssize_t min, Py_ssi
     if (!min && !max) {
       return 1;
     } else {
-      PyErr_Format(PyExc_TypeError, "%s expected %s%d arguments, got none", 
+      PyErr_Format(PyExc_TypeError, "%s expected %s%d arguments, got none",
 		   name, (min == max ? "" : "at least "), (int)min);
       return 0;
     }
-  }  
+  }
   if (!PyTuple_Check(args)) {
     if (min <= 1 && max >= 1) {
       Py_ssize_t i;
@@ -1228,11 +1228,11 @@ SWIG_Python_UnpackTuple(PyObject *args, const char *name, Py_ssize_t min, Py_ssi
   } else {
     Py_ssize_t l = PyTuple_GET_SIZE(args);
     if (l < min) {
-      PyErr_Format(PyExc_TypeError, "%s expected %s%d arguments, got %d", 
+      PyErr_Format(PyExc_TypeError, "%s expected %s%d arguments, got %d",
 		   name, (min == max ? "" : "at least "), (int)min, (int)l);
       return 0;
     } else if (l > max) {
-      PyErr_Format(PyExc_TypeError, "%s expected %s%d arguments, got %d", 
+      PyErr_Format(PyExc_TypeError, "%s expected %s%d arguments, got %d",
 		   name, (min == max ? "" : "at most "), (int)max, (int)l);
       return 0;
     } else {
@@ -1244,7 +1244,7 @@ SWIG_Python_UnpackTuple(PyObject *args, const char *name, Py_ssize_t min, Py_ssi
 	objs[l] = 0;
       }
       return i + 1;
-    }    
+    }
   }
 }
 
@@ -1293,7 +1293,7 @@ extern "C" {
 
 /* The python void return value */
 
-SWIGRUNTIMEINLINE PyObject * 
+SWIGRUNTIMEINLINE PyObject *
 SWIG_Py_Void(void)
 {
   PyObject *none = Py_None;
@@ -1313,7 +1313,7 @@ typedef struct {
   PyTypeObject *pytype;
 } SwigPyClientData;
 
-SWIGRUNTIMEINLINE int 
+SWIGRUNTIMEINLINE int
 SWIG_Python_CheckImplicit(swig_type_info *ty)
 {
   SwigPyClientData *data = (SwigPyClientData *)ty->clientdata;
@@ -1331,7 +1331,7 @@ SWIG_Python_ExceptionType(swig_type_info *desc) {
 }
 
 
-SWIGRUNTIME SwigPyClientData * 
+SWIGRUNTIME SwigPyClientData *
 SwigPyClientData_New(PyObject* obj)
 {
   if (!obj) {
@@ -1377,7 +1377,7 @@ SwigPyClientData_New(PyObject* obj)
   }
 }
 
-SWIGRUNTIME void 
+SWIGRUNTIME void
 SwigPyClientData_Del(SwigPyClientData *data) {
   Py_XDECREF(data->newraw);
   Py_XDECREF(data->newargs);
@@ -1470,7 +1470,7 @@ SwigPyObject_repr(SwigPyObject *v)
     PyString_ConcatAndDel(&repr,nrep);
 # endif
   }
-  return repr;  
+  return repr;
 }
 
 /* We need a version taking two PyObject* parameters so it's a valid
@@ -1499,7 +1499,7 @@ SwigPyObject_richcompare(SwigPyObject *v, SwigPyObject *w, int op)
     return Py_NotImplemented;
   }
   res = PyBool_FromLong( (SwigPyObject_compare(v, w)==0) == (op == Py_EQ) ? 1 : 0);
-  return res;  
+  return res;
 }
 
 
@@ -1559,7 +1559,7 @@ SwigPyObject_dealloc(PyObject *v)
          StopIteration will be active right now, and this needs to
          remain true upon return from SwigPyObject_dealloc.  So save
          and restore. */
-      
+
       PyObject *type = NULL, *value = NULL, *traceback = NULL;
       PyErr_Fetch(&type, &value, &traceback);
 
@@ -1579,19 +1579,19 @@ SwigPyObject_dealloc(PyObject *v)
       PyErr_Restore(type, value, traceback);
 
       Py_XDECREF(res);
-    } 
+    }
 #if !defined(SWIG_PYTHON_SILENT_MEMLEAK)
     else {
       const char *name = SWIG_TypePrettyName(ty);
       printf("swig/python detected a memory leak of type '%s', no destructor found.\n", (name ? name : "unknown"));
     }
 #endif
-  } 
+  }
   Py_XDECREF(next);
   PyObject_DEL(v);
 }
 
-SWIGRUNTIME PyObject* 
+SWIGRUNTIME PyObject*
 SwigPyObject_append(PyObject* v, PyObject* next)
 {
   SwigPyObject *sobj = (SwigPyObject *) v;
@@ -1604,11 +1604,11 @@ SwigPyObject_append(PyObject* v, PyObject* next)
   return SWIG_Py_Void();
 }
 
-SWIGRUNTIME PyObject* 
+SWIGRUNTIME PyObject*
 SwigPyObject_next(PyObject* v, PyObject *SWIGUNUSEDPARM(args))
 {
   SwigPyObject *sobj = (SwigPyObject *) v;
-  if (sobj->next) {    
+  if (sobj->next) {
     Py_INCREF(sobj->next);
     return sobj->next;
   } else {
@@ -1647,7 +1647,7 @@ SwigPyObject_own(PyObject *v, PyObject *args)
       } else {
         SwigPyObject_disown(v,args);
       }
-    } 
+    }
     return obj;
   }
 }
@@ -1660,7 +1660,7 @@ swigobject_methods[] = {
   {"append",  SwigPyObject_append,  METH_O,       "appends another 'this' object"},
   {"next",    SwigPyObject_next,    METH_NOARGS,  "returns the next 'this' object"},
   {"__repr__",SwigPyObject_repr2,   METH_NOARGS,  "returns object representation"},
-  {0, 0, 0, 0}  
+  {0, 0, 0, 0}
 };
 
 SWIGRUNTIME PyTypeObject*
@@ -1828,7 +1828,7 @@ SwigPyPacked_repr(SwigPyPacked *v)
     return SWIG_Python_str_FromFormat("<Swig Packed at %s%s>", result, v->ty->name);
   } else {
     return SWIG_Python_str_FromFormat("<Swig Packed %s>", v->ty->name);
-  }  
+  }
 }
 
 SWIGRUNTIME PyObject *
@@ -1839,7 +1839,7 @@ SwigPyPacked_str(SwigPyPacked *v)
     return SWIG_Python_str_FromFormat("%s%s", result, v->ty->name);
   } else {
     return SWIG_Python_str_FromChar(v->ty->name);
-  }  
+  }
 }
 
 SWIGRUNTIME int
@@ -1861,7 +1861,7 @@ SwigPyPacked_type(void) {
 
 SWIGRUNTIMEINLINE int
 SwigPyPacked_Check(PyObject *op) {
-  return ((op)->ob_type == SwigPyPacked_TypeOnce()) 
+  return ((op)->ob_type == SwigPyPacked_TypeOnce())
     || (strcmp((op)->ob_type->tp_name,"SwigPyPacked") == 0);
 }
 
@@ -2013,11 +2013,11 @@ SWIG_This(void)
 
 /* TODO: I don't know how to implement the fast getset in Python 3 right now */
 #if PY_VERSION_HEX>=0x03000000
-#define SWIG_PYTHON_SLOW_GETSET_THIS 
+#define SWIG_PYTHON_SLOW_GETSET_THIS
 #endif
 
 SWIGRUNTIME SwigPyObject *
-SWIG_Python_GetSwigThis(PyObject *pyobj) 
+SWIG_Python_GetSwigThis(PyObject *pyobj)
 {
   PyObject *obj;
 
@@ -2040,7 +2040,7 @@ SWIG_Python_GetSwigThis(PyObject *pyobj)
 
 #if !defined(SWIG_PYTHON_SLOW_GETSET_THIS)
   if (PyInstance_Check(pyobj)) {
-    obj = _PyInstance_Lookup(pyobj, SWIG_This());      
+    obj = _PyInstance_Lookup(pyobj, SWIG_This());
   } else {
     PyObject **dictptr = _PyObject_GetDictPtr(pyobj);
     if (dictptr != NULL) {
@@ -2073,7 +2073,7 @@ SWIG_Python_GetSwigThis(PyObject *pyobj)
 #endif
   if (obj && !SwigPyObject_Check(obj)) {
     /* a PyObject is called 'this', try to get the 'real this'
-       SwigPyObject from it */ 
+       SwigPyObject from it */
     return SWIG_Python_GetSwigThis(obj);
   }
   return (SwigPyObject *)obj;
@@ -2180,7 +2180,7 @@ SWIG_Python_ConvertPtrAndOwn(PyObject *obj, void **ptr, swig_type_info *ty, int 
                   res = SWIG_AddCast(res);
                   res = SWIG_AddNewMask(res);
                 } else {
-                  res = SWIG_AddCast(res);		    
+                  res = SWIG_AddCast(res);
                 }
               }
             }
@@ -2243,7 +2243,7 @@ SWIG_Python_ConvertPacked(PyObject *obj, void *ptr, size_t sz, swig_type_info *t
     }
   }
   return SWIG_OK;
-}  
+}
 
 /* -----------------------------------------------------------------------------
  * Create a new pointer object
@@ -2254,7 +2254,7 @@ SWIG_Python_ConvertPacked(PyObject *obj, void *ptr, size_t sz, swig_type_info *t
   'this' attribute.
 */
 
-SWIGRUNTIME PyObject* 
+SWIGRUNTIME PyObject*
 SWIG_Python_NewShadowInstance(SwigPyClientData *data, PyObject *swig_this)
 {
   PyObject *inst = 0;
@@ -2325,7 +2325,7 @@ SWIG_Python_SetSwigThis(PyObject *inst, PyObject *swig_this)
   }
 #endif
   return PyObject_SetAttr(inst, SWIG_This(), swig_this);
-} 
+}
 
 
 SWIGINTERN PyObject *
@@ -2407,7 +2407,7 @@ SWIG_Python_NewPackedObj(void *ptr, size_t sz, swig_type_info *type) {
 }
 
 /* -----------------------------------------------------------------------------*
- *  Get type list 
+ *  Get type list
  * -----------------------------------------------------------------------------*/
 
 #ifdef SWIG_LINK_RUNTIME
@@ -2477,7 +2477,7 @@ SWIGRUNTIME swig_type_info *
 SWIG_Python_TypeQuery(const char *type)
 {
   PyObject *cache = SWIG_Python_TypeCache();
-  PyObject *key = SWIG_Python_str_FromChar(type); 
+  PyObject *key = SWIG_Python_str_FromChar(type);
   PyObject *obj = PyDict_GetItem(cache, key);
   swig_type_info *descriptor;
   if (obj) {
@@ -2495,7 +2495,7 @@ SWIG_Python_TypeQuery(const char *type)
   return descriptor;
 }
 
-/* 
+/*
    For backward compatibility only
 */
 #define SWIG_POINTER_EXCEPTION  0
@@ -2504,7 +2504,7 @@ SWIG_Python_TypeQuery(const char *type)
 
 SWIGRUNTIME int
 SWIG_Python_AddErrMesg(const char* mesg, int infront)
-{  
+{
   if (PyErr_Occurred()) {
     PyObject *type = 0;
     PyObject *value = 0;
@@ -2529,7 +2529,7 @@ SWIG_Python_AddErrMesg(const char* mesg, int infront)
     return 0;
   }
 }
-  
+
 SWIGRUNTIME int
 SWIG_Python_ArgFail(int argnum)
 {
@@ -2563,10 +2563,10 @@ SWIG_Python_TypeError(const char *type, PyObject *obj)
 		     type, otype);
 	return;
       }
-    } else 
-#endif      
+    } else
+#endif
     {
-      const char *otype = (obj ? obj->ob_type->tp_name : 0); 
+      const char *otype = (obj ? obj->ob_type->tp_name : 0);
       if (otype) {
 	PyObject *str = PyObject_Str(obj);
 	const char *cstr = str ? SWIG_Python_str_AsChar(str) : 0;
@@ -2581,7 +2581,7 @@ SWIG_Python_TypeError(const char *type, PyObject *obj)
 	Py_XDECREF(str);
 	return;
       }
-    }   
+    }
     PyErr_Format(PyExc_TypeError, "a '%s' is expected", type);
   } else {
     PyErr_Format(PyExc_TypeError, "unexpected type is received");
@@ -2653,7 +2653,7 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
   } else {
     res = f(descr, obj, value);
   }
-  
+
   done:
   Py_DECREF(name);
   return res;
@@ -2667,9 +2667,9 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
 
 
 
-#define SWIG_exception_fail(code, msg) do { SWIG_Error(code, msg); SWIG_fail; } while(0) 
+#define SWIG_exception_fail(code, msg) do { SWIG_Error(code, msg); SWIG_fail; } while(0)
 
-#define SWIG_contract_assert(expr, msg) if (!(expr)) { SWIG_Error(SWIG_RuntimeError, msg); SWIG_fail; } else 
+#define SWIG_contract_assert(expr, msg) if (!(expr)) { SWIG_Error(SWIG_RuntimeError, msg); SWIG_fail; } else
 
 
 
@@ -2688,7 +2688,7 @@ SWIGINTERN PyObject *SWIG_PyStaticMethod_New(PyObject *SWIGUNUSEDPARM(self), PyO
 #endif
 
 
-  #define SWIG_exception(code, msg) do { SWIG_Error(code, msg); SWIG_fail;; } while(0) 
+  #define SWIG_exception(code, msg) do { SWIG_Error(code, msg); SWIG_fail;; } while(0)
 
 
 /* -------- TYPES TABLE (BEGIN) -------- */
@@ -2769,12 +2769,12 @@ static swig_module_info swig_module = {swig_types, 53, 0, 0, 0, 0};
 
 #endif
 #define SWIG_name "#WASSERSTEIN_SWIG_NAME"
-#define SWIGVERSION 0x040002 
+#define SWIGVERSION 0x040002
 #define SWIG_VERSION SWIGVERSION
 
 
-#define SWIG_as_voidptr(a) const_cast< void * >(static_cast< const void * >(a)) 
-#define SWIG_as_voidptrptr(a) ((void)SWIG_as_voidptr(*a),reinterpret_cast< void** >(a)) 
+#define SWIG_as_voidptr(a) const_cast< void * >(static_cast< const void * >(a))
+#define SWIG_as_voidptrptr(a) ((void)SWIG_as_voidptr(*a),reinterpret_cast< void** >(a))
 
 
 #include <stdexcept>
@@ -2793,10 +2793,10 @@ namespace swig {
     SwigPtr_PyObject(const SwigPtr_PyObject& item) : _obj(item._obj)
     {
       SWIG_PYTHON_THREAD_BEGIN_BLOCK;
-      Py_XINCREF(_obj);      
+      Py_XINCREF(_obj);
       SWIG_PYTHON_THREAD_END_BLOCK;
     }
-    
+
     SwigPtr_PyObject(PyObject *obj, bool initial_ref = true) :_obj(obj)
     {
       if (initial_ref) {
@@ -2805,24 +2805,24 @@ namespace swig {
         SWIG_PYTHON_THREAD_END_BLOCK;
       }
     }
-    
-    SwigPtr_PyObject & operator=(const SwigPtr_PyObject& item) 
+
+    SwigPtr_PyObject & operator=(const SwigPtr_PyObject& item)
     {
       SWIG_PYTHON_THREAD_BEGIN_BLOCK;
       Py_XINCREF(item._obj);
       Py_XDECREF(_obj);
       _obj = item._obj;
       SWIG_PYTHON_THREAD_END_BLOCK;
-      return *this;      
+      return *this;
     }
-    
-    ~SwigPtr_PyObject() 
+
+    ~SwigPtr_PyObject()
     {
       SWIG_PYTHON_THREAD_BEGIN_BLOCK;
       Py_XDECREF(_obj);
       SWIG_PYTHON_THREAD_END_BLOCK;
     }
-    
+
     operator PyObject *() const
     {
       return _obj;
@@ -2839,12 +2839,12 @@ namespace swig {
 namespace swig {
   struct SwigVar_PyObject : SwigPtr_PyObject {
     SwigVar_PyObject(PyObject* obj = 0) : SwigPtr_PyObject(obj, false) { }
-    
+
     SwigVar_PyObject & operator = (PyObject* obj)
     {
       Py_XDECREF(_obj);
       _obj = obj;
-      return *this;      
+      return *this;
     }
   };
 }
@@ -2900,7 +2900,7 @@ namespace swig {
     SwigPyIterator(PyObject *seq) : _seq(seq)
     {
     }
-      
+
   public:
     virtual ~SwigPyIterator() {}
 
@@ -2909,7 +2909,7 @@ namespace swig {
 
     // Forward iterator method, required by Python
     virtual SwigPyIterator *incr(size_t n = 1) = 0;
-    
+
     // Backward iterator method, very common in C++, but not required in Python
     virtual SwigPyIterator *decr(size_t /*n*/ = 1)
     {
@@ -2926,17 +2926,17 @@ namespace swig {
     {
       throw std::invalid_argument("operation not supported");
     }
-    
+
     // C++ common/needed methods
     virtual SwigPyIterator *copy() const = 0;
 
-    PyObject *next()     
+    PyObject *next()
     {
-      SWIG_PYTHON_THREAD_BEGIN_BLOCK; // disable threads       
+      SWIG_PYTHON_THREAD_BEGIN_BLOCK; // disable threads
       PyObject *obj = value();
-      incr();       
+      incr();
       SWIG_PYTHON_THREAD_END_BLOCK; // re-enable threads
-      return obj;     
+      return obj;
     }
 
     /* Make an alias for Python 3.x */
@@ -2947,10 +2947,10 @@ namespace swig {
 
     PyObject *previous()
     {
-      SWIG_PYTHON_THREAD_BEGIN_BLOCK; // disable threads       
+      SWIG_PYTHON_THREAD_BEGIN_BLOCK; // disable threads
       decr();
       PyObject *obj = value();
-      SWIG_PYTHON_THREAD_END_BLOCK; // re-enable threads       
+      SWIG_PYTHON_THREAD_END_BLOCK; // re-enable threads
       return obj;
     }
 
@@ -2958,17 +2958,17 @@ namespace swig {
     {
       return  (n > 0) ?  incr(n) : decr(-n);
     }
-      
+
     bool operator == (const SwigPyIterator& x)  const
     {
       return equal(x);
     }
-      
+
     bool operator != (const SwigPyIterator& x) const
     {
       return ! operator==(x);
     }
-      
+
     SwigPyIterator& operator += (ptrdiff_t n)
     {
       return *advance(n);
@@ -2978,7 +2978,7 @@ namespace swig {
     {
       return *advance(-n);
     }
-      
+
     SwigPyIterator* operator + (ptrdiff_t n) const
     {
       return copy()->advance(n);
@@ -2988,21 +2988,21 @@ namespace swig {
     {
       return copy()->advance(-n);
     }
-      
+
     ptrdiff_t operator - (const SwigPyIterator& x) const
     {
       return x.distance(*this);
     }
-      
+
     static swig_type_info* descriptor() {
       static int init = 0;
       static swig_type_info* desc = 0;
       if (!init) {
 	desc = SWIG_TypeQuery("swig::SwigPyIterator *");
 	init = 1;
-      }	
+      }
       return desc;
-    }    
+    }
   };
 
 #if defined(SWIGPYTHON_BUILTIN)
@@ -3098,7 +3098,7 @@ SWIG_CanCastAsInteger(double *d, double min, double max) {
 
 
 SWIGINTERN int
-SWIG_AsVal_unsigned_SS_long (PyObject *obj, unsigned long *val) 
+SWIG_AsVal_unsigned_SS_long (PyObject *obj, unsigned long *val)
 {
 #if PY_VERSION_HEX < 0x03000000
   if (PyInt_Check(obj)) {
@@ -3222,11 +3222,11 @@ SWIG_AsVal_size_t (PyObject * obj, size_t *val)
 }
 
 
-  #define SWIG_From_long   PyInt_FromLong 
+  #define SWIG_From_long   PyInt_FromLong
 
 
 #ifdef SWIG_LONG_LONG_AVAILABLE
-SWIGINTERNINLINE PyObject* 
+SWIGINTERNINLINE PyObject*
 SWIG_From_long_SS_long  (long long value)
 {
   return ((value < LONG_MIN) || (value > LONG_MAX)) ?
@@ -3237,7 +3237,7 @@ SWIG_From_long_SS_long  (long long value)
 
 SWIGINTERNINLINE PyObject *
 SWIG_From_ptrdiff_t  (ptrdiff_t value)
-{    
+{
 #ifdef SWIG_LONG_LONG_AVAILABLE
   if (sizeof(ptrdiff_t) <= sizeof(long)) {
 #endif
@@ -3452,7 +3452,7 @@ namespace swig {
 }
 
 
-namespace swig {  
+namespace swig {
   /*
     Traits that provides the from method
   */
@@ -3495,7 +3495,7 @@ namespace swig {
     Traits that provides the asval/as/check method
   */
   template <class Type>
-  struct traits_asptr {   
+  struct traits_asptr {
     static int asptr(PyObject *obj, Type **val) {
       int res = SWIG_ERROR;
       swig_type_info *descriptor = type_info<Type>();
@@ -3514,20 +3514,20 @@ namespace swig {
       }
       return res;
     }
-  }; 
+  };
 
   template <class Type>
   inline int asptr(PyObject *obj, Type **vptr) {
     return traits_asptr<Type>::asptr(obj, vptr);
   }
 
-  template <class Type> 
+  template <class Type>
   struct traits_asval {
     static int asval(PyObject *obj, Type *val) {
       if (val) {
 	Type *p = 0;
 	int res = traits_asptr<Type>::asptr(obj, &p);
-	if (!SWIG_IsOK(res)) return res;	
+	if (!SWIG_IsOK(res)) return res;
 	if (p) {
 	  typedef typename noconst_traits<Type>::noconst_type noconst_type;
 	  *(const_cast<noconst_type*>(val)) = *p;
@@ -3560,13 +3560,13 @@ namespace swig {
       }
     }
   };
-  
+
   template <class Type>
   inline int asval(PyObject *obj, Type *val) {
     return traits_asval<Type>::asval(obj, val);
   }
 
-  template <class Type> 
+  template <class Type>
   struct traits_as<Type, value_category> {
     static Type as(PyObject *obj) {
       Type v;
@@ -3581,10 +3581,10 @@ namespace swig {
     }
   };
 
-  template <class Type> 
+  template <class Type>
   struct traits_as<Type, pointer_category> {
     static Type as(PyObject *obj) {
-      Type *v = 0;      
+      Type *v = 0;
       int res = (obj ? traits_asptr<Type>::asptr(obj, &v) : SWIG_ERROR);
       if (SWIG_IsOK(res) && v) {
 	if (SWIG_IsNewObj(res)) {
@@ -3603,10 +3603,10 @@ namespace swig {
     }
   };
 
-  template <class Type> 
+  template <class Type>
   struct traits_as<Type*, pointer_category> {
     static Type* as(PyObject *obj) {
-      Type *v = 0;      
+      Type *v = 0;
       int res = (obj ? traits_asptr<Type>::asptr(obj, &v) : SWIG_ERROR);
       if (SWIG_IsOK(res)) {
 	return v;
@@ -3618,13 +3618,13 @@ namespace swig {
       }
     }
   };
-    
+
   template <class Type>
   inline Type as(PyObject *obj) {
     return traits_as<Type, typename traits<Type>::category>::as(obj);
   }
 
-  template <class Type> 
+  template <class Type>
   struct traits_check<Type, value_category> {
     static bool check(PyObject *obj) {
       int res = obj ? asval(obj, (Type *)(0)) : SWIG_ERROR;
@@ -3632,7 +3632,7 @@ namespace swig {
     }
   };
 
-  template <class Type> 
+  template <class Type>
   struct traits_check<Type, pointer_category> {
     static bool check(PyObject *obj) {
       int res = obj ? asptr(obj, (Type **)(0)) : SWIG_ERROR;
@@ -3655,7 +3655,7 @@ namespace std {
   {
     bool
     operator()(PyObject * v, PyObject *w) const
-    { 
+    {
       bool res;
       SWIG_PYTHON_THREAD_BEGIN_BLOCK;
       res = PyObject_RichCompareBool(v, w, Py_LT) ? true : false;
@@ -3701,9 +3701,9 @@ namespace swig {
   template <> struct traits<PyObject *> {
     typedef value_category category;
     static const char* type_name() { return "PyObject *"; }
-  };  
+  };
 
-  template <>  struct traits_asval<PyObject * > {   
+  template <>  struct traits_asval<PyObject * > {
     typedef PyObject * value_type;
     static int asval(PyObject *obj, value_type *val) {
       if (val) *val = obj;
@@ -3711,7 +3711,7 @@ namespace swig {
     }
   };
 
-  template <> 
+  template <>
   struct traits_check<PyObject *, value_category> {
     static bool check(PyObject *) {
       return true;
@@ -3725,7 +3725,7 @@ namespace swig {
       return val;
     }
   };
-  
+
 }
 
 namespace swig {
@@ -3837,7 +3837,7 @@ namespace swig {
             it++;
         }
         return sequence;
-      } 
+      }
     } else {
       Sequence *sequence = new Sequence();
       swig::traits_reserve<Sequence>::reserve(*sequence, (ii - jj - step - 1) / -step);
@@ -4006,7 +4006,7 @@ namespace swig {
   {
   public:
     typedef OutIterator out_iterator;
-    typedef typename std::iterator_traits<out_iterator>::value_type value_type;    
+    typedef typename std::iterator_traits<out_iterator>::value_type value_type;
     typedef SwigPyIterator_T<out_iterator> self_type;
 
     SwigPyIterator_T(out_iterator curr, PyObject *seq)
@@ -4019,7 +4019,7 @@ namespace swig {
       return current;
     }
 
-    
+
     bool equal (const SwigPyIterator &iter) const
     {
       const self_type *iters = dynamic_cast<const self_type *>(&iter);
@@ -4029,7 +4029,7 @@ namespace swig {
 	throw std::invalid_argument("bad iterator type");
       }
     }
-    
+
     ptrdiff_t distance(const SwigPyIterator &iter) const
     {
       const self_type *iters = dynamic_cast<const self_type *>(&iter);
@@ -4038,14 +4038,14 @@ namespace swig {
       } else {
 	throw std::invalid_argument("bad iterator type");
       }
-    }    
-    
+    }
+
   protected:
     out_iterator current;
   };
-  
+
   template <class ValueType>
-  struct from_oper 
+  struct from_oper
   {
     typedef const ValueType& argument_type;
     typedef PyObject *result_type;
@@ -4055,7 +4055,7 @@ namespace swig {
     }
   };
 
-  template<typename OutIterator, 
+  template<typename OutIterator,
 	   typename ValueType = typename std::iterator_traits<OutIterator>::value_type,
 	   typename FromOper = from_oper<ValueType> >
   class SwigPyForwardIteratorOpen_T :  public SwigPyIterator_T<OutIterator>
@@ -4066,16 +4066,16 @@ namespace swig {
     typedef ValueType value_type;
     typedef SwigPyIterator_T<out_iterator>  base;
     typedef SwigPyForwardIteratorOpen_T<OutIterator, ValueType, FromOper> self_type;
-    
+
     SwigPyForwardIteratorOpen_T(out_iterator curr, PyObject *seq)
       : SwigPyIterator_T<OutIterator>(curr, seq)
     {
     }
-    
+
     PyObject *value() const {
       return from(static_cast<const value_type&>(*(base::current)));
     }
-    
+
     SwigPyIterator *copy() const
     {
       return new self_type(*this);
@@ -4091,7 +4091,7 @@ namespace swig {
 
   };
 
-  template<typename OutIterator, 
+  template<typename OutIterator,
 	   typename ValueType = typename std::iterator_traits<OutIterator>::value_type,
 	   typename FromOper = from_oper<ValueType> >
   class SwigPyIteratorOpen_T :  public SwigPyForwardIteratorOpen_T<OutIterator, ValueType, FromOper>
@@ -4102,7 +4102,7 @@ namespace swig {
     typedef ValueType value_type;
     typedef SwigPyIterator_T<out_iterator>  base;
     typedef SwigPyIteratorOpen_T<OutIterator, ValueType, FromOper> self_type;
-    
+
     SwigPyIteratorOpen_T(out_iterator curr, PyObject *seq)
       : SwigPyForwardIteratorOpen_T<OutIterator>(curr, seq)
     {
@@ -4117,7 +4117,7 @@ namespace swig {
     }
   };
 
-  template<typename OutIterator, 
+  template<typename OutIterator,
 	   typename ValueType = typename std::iterator_traits<OutIterator>::value_type,
 	   typename FromOper = from_oper<ValueType> >
   class SwigPyForwardIteratorClosed_T :  public SwigPyIterator_T<OutIterator>
@@ -4126,14 +4126,14 @@ namespace swig {
     FromOper from;
     typedef OutIterator out_iterator;
     typedef ValueType value_type;
-    typedef SwigPyIterator_T<out_iterator>  base;    
+    typedef SwigPyIterator_T<out_iterator>  base;
     typedef SwigPyForwardIteratorClosed_T<OutIterator, ValueType, FromOper> self_type;
-    
+
     SwigPyForwardIteratorClosed_T(out_iterator curr, out_iterator first, out_iterator last, PyObject *seq)
       : SwigPyIterator_T<OutIterator>(curr, seq), begin(first), end(last)
     {
     }
-    
+
     PyObject *value() const {
       if (base::current == end) {
 	throw stop_iteration();
@@ -4141,7 +4141,7 @@ namespace swig {
 	return from(static_cast<const value_type&>(*(base::current)));
       }
     }
-    
+
     SwigPyIterator *copy() const
     {
       return new self_type(*this);
@@ -4164,7 +4164,7 @@ namespace swig {
     out_iterator end;
   };
 
-  template<typename OutIterator, 
+  template<typename OutIterator,
 	   typename ValueType = typename std::iterator_traits<OutIterator>::value_type,
 	   typename FromOper = from_oper<ValueType> >
   class SwigPyIteratorClosed_T :  public SwigPyForwardIteratorClosed_T<OutIterator,ValueType,FromOper>
@@ -4176,7 +4176,7 @@ namespace swig {
     typedef SwigPyIterator_T<out_iterator>  base;
     typedef SwigPyForwardIteratorClosed_T<OutIterator, ValueType, FromOper> base0;
     typedef SwigPyIteratorClosed_T<OutIterator, ValueType, FromOper> self_type;
-    
+
     SwigPyIteratorClosed_T(out_iterator curr, out_iterator first, out_iterator last, PyObject *seq)
       : SwigPyForwardIteratorClosed_T<OutIterator,ValueType,FromOper>(curr, first, last, seq)
     {
@@ -4236,7 +4236,7 @@ namespace swig
       : _seq(seq), _index(index)
     {
     }
-    
+
     operator T () const
     {
       swig::SwigVar_PyObject item = PySequence_GetItem(_seq, _index);
@@ -4455,7 +4455,7 @@ namespace swig
 }
 
 
-  #define SWIG_From_double   PyFloat_FromDouble 
+  #define SWIG_From_double   PyFloat_FromDouble
 
 
 namespace swig {
@@ -4572,7 +4572,7 @@ namespace swig {
 	return traits_asptr_stdseq<std::vector<T> >::asptr(obj, vec);
       }
     };
-    
+
     template <class T>
     struct traits_from<std::vector<T> > {
       static PyObject *from(const std::vector<T>& vec) {
@@ -4590,7 +4590,7 @@ namespace swig {
 	  }
 	};
       }
-    
+
 SWIGINTERN swig::SwigPyIterator *std_vector_Sl_double_Sg__iterator(std::vector< double > *self,PyObject **PYTHON_SELF){
       return swig::make_output_iterator(self->begin(), self->begin(), self->end(), *PYTHON_SELF);
     }
@@ -4604,7 +4604,7 @@ SWIGINTERN std::vector< double >::size_type std_vector_Sl_double_Sg____len__(std
       return self->size();
     }
 
-SWIGINTERNINLINE PyObject* 
+SWIGINTERNINLINE PyObject*
 SWIG_From_unsigned_SS_long  (unsigned long value)
 {
   return (value > LONG_MAX) ?
@@ -4613,7 +4613,7 @@ SWIG_From_unsigned_SS_long  (unsigned long value)
 
 
 #ifdef SWIG_LONG_LONG_AVAILABLE
-SWIGINTERNINLINE PyObject* 
+SWIGINTERNINLINE PyObject*
 SWIG_From_unsigned_SS_long_SS_long  (unsigned long long value)
 {
   return (value > LONG_MAX) ?
@@ -4624,7 +4624,7 @@ SWIG_From_unsigned_SS_long_SS_long  (unsigned long long value)
 
 SWIGINTERNINLINE PyObject *
 SWIG_From_size_t  (size_t value)
-{    
+{
 #ifdef SWIG_LONG_LONG_AVAILABLE
   if (sizeof(size_t) <= sizeof(unsigned long)) {
 #endif
@@ -4716,9 +4716,9 @@ namespace swig {
   };
 
   template <>
-  struct container_owner<swig::pointer_category> {  
+  struct container_owner<swig::pointer_category> {
     /*
-     * Call to add a back-reference to the owning object when returning a 
+     * Call to add a back-reference to the owning object when returning a
      * reference from a container.  Will only set the reference if child
      * is a SWIG wrapper object that does not own the pointer.
      *
@@ -4774,7 +4774,7 @@ SWIG_AsCharPtrAndSize(PyObject *obj, char** cptr, size_t* psize, int *alloc)
 #else
   if (PyUnicode_Check(obj))
 #endif
-#else  
+#else
   if (PyString_Check(obj))
 #endif
   {
@@ -4875,7 +4875,7 @@ SWIG_AsCharPtrAndSize(PyObject *obj, char** cptr, size_t* psize, int *alloc)
 
 
 SWIGINTERN int
-SWIG_AsPtr_std_string (PyObject * obj, std::string **val) 
+SWIG_AsPtr_std_string (PyObject * obj, std::string **val)
 {
   char* buf = 0 ; size_t size = 0; int alloc = SWIG_OLDOBJ;
   if (SWIG_IsOK((SWIG_AsCharPtrAndSize(obj, &buf, &size, &alloc)))) {
@@ -4929,7 +4929,7 @@ SWIG_FromCharPtrAndSize(const char* carray, size_t size)
   if (carray) {
     if (size > INT_MAX) {
       swig_type_info* pchar_descriptor = SWIG_pchar_descriptor();
-      return pchar_descriptor ? 
+      return pchar_descriptor ?
 	SWIG_InternalNewPointerObj(const_cast< char * >(carray), pchar_descriptor, 0) : SWIG_Py_Void();
     } else {
 #if PY_VERSION_HEX >= 0x03000000
@@ -4983,7 +4983,7 @@ namespace swig {
 	  }
 	};
       }
-    
+
 SWIGINTERN swig::SwigPyIterator *std_vector_Sl_std_string_Sg__iterator(std::vector< std::string > *self,PyObject **PYTHON_SELF){
       return swig::make_output_iterator(self->begin(), self->begin(), self->end(), *PYTHON_SELF);
     }
@@ -5132,7 +5132,7 @@ SWIGINTERN void std_vector_Sl_std_string_Sg__insert__SWIG_1(std::vector< std::st
       typedef std::pair<T,U> value_type;
 
       static int get_pair(PyObject* first, PyObject* second,
-			  std::pair<T,U> **val) 
+			  std::pair<T,U> **val)
       {
 	if (val) {
 	  value_type *vp = (new std::pair<T,U>());
@@ -5239,7 +5239,7 @@ SWIGINTERN void std_vector_Sl_std_string_Sg__insert__SWIG_1(std::vector< std::st
 	  }
 	};
       }
-    
+
 
 /* Getting isfinite working pre C99 across multiple platforms is non-trivial. Users can provide SWIG_isfinite on older platforms. */
 #ifndef SWIG_isfinite
@@ -5296,14 +5296,14 @@ SWIG_AsVal_float (PyObject * obj, float *val)
     } else {
       if (val) *val = static_cast< float >(v);
     }
-  }  
+  }
   return res;
 }
 
 
 SWIGINTERNINLINE PyObject *
 SWIG_From_float  (float value)
-{    
+{
   return SWIG_From_double  (value);
 }
 
@@ -5336,7 +5336,7 @@ namespace swig {
 	  }
 	};
       }
-    
+
 SWIGINTERN swig::SwigPyIterator *std_vector_Sl_float_Sg__iterator(std::vector< float > *self,PyObject **PYTHON_SELF){
       return swig::make_output_iterator(self->begin(), self->begin(), self->end(), *PYTHON_SELF);
     }
@@ -5437,10 +5437,10 @@ SWIGINTERN void std_vector_Sl_float_Sg__insert__SWIG_1(std::vector< float > *sel
 	  }
 	};
       }
-    
 
 
-// include this to avoid needing to define it at compile time 
+
+// include this to avoid needing to define it at compile time
 #ifndef SWIG
 # define SWIG
 #endif
@@ -5467,7 +5467,7 @@ using WASSERSTEIN_NAMESPACE::DefaultNetworkSimplex;
 #include <numpy/arrayobject.h>
 
 
-#include <complex> 
+#include <complex>
 
 
 SWIGINTERNINLINE PyObject*
@@ -5488,7 +5488,7 @@ SWIG_AsVal_int (PyObject * obj, int *val)
     } else {
       if (val) *val = static_cast< int >(v);
     }
-  }  
+  }
   return res;
 }
 
@@ -5594,7 +5594,7 @@ SWIGINTERN void wasserstein_EMDBase_Sl_double_Sg__npy_flows(wasserstein::EMDBase
   *arr_out = values;
 /*@SWIG@*/
     memcpy(*arr_out, self->raw_flows().data(), nbytes);
-    
+
     for (size_t i = 0; i < num_elements; i++)
       values[i] *= self->scale();
   }
@@ -6106,7 +6106,7 @@ SWIG_AsVal_unsigned_SS_int (PyObject * obj, unsigned int *val)
     } else {
       if (val) *val = static_cast< unsigned int >(v);
     }
-  }  
+  }
   return res;
 }
 
@@ -6235,7 +6235,7 @@ SWIGINTERN void wasserstein_EMDBase_Sl_float_Sg__npy_flows(wasserstein::EMDBase<
   *arr_out = values;
 /*@SWIG@*/
     memcpy(*arr_out, self->raw_flows().data(), nbytes);
-    
+
     for (size_t i = 0; i < num_elements; i++)
       values[i] *= self->scale();
   }
@@ -6747,12 +6747,12 @@ SWIGINTERN PyObject *_wrap_delete_SwigPyIterator(PyObject *SWIGUNUSEDPARM(self),
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_swig__SwigPyIterator, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_SwigPyIterator" "', argument " "1"" of type '" "swig::SwigPyIterator *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_SwigPyIterator" "', argument " "1"" of type '" "swig::SwigPyIterator *""'");
   }
   arg1 = reinterpret_cast< swig::SwigPyIterator * >(argp1);
   delete arg1;
@@ -6770,12 +6770,12 @@ SWIGINTERN PyObject *_wrap_SwigPyIterator_value(PyObject *SWIGUNUSEDPARM(self), 
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   PyObject *result = 0 ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_swig__SwigPyIterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator_value" "', argument " "1"" of type '" "swig::SwigPyIterator const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator_value" "', argument " "1"" of type '" "swig::SwigPyIterator const *""'");
   }
   arg1 = reinterpret_cast< swig::SwigPyIterator * >(argp1);
   try {
@@ -6805,21 +6805,21 @@ SWIGINTERN PyObject *_wrap_SwigPyIterator_incr(PyObject *SWIGUNUSEDPARM(self), P
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"n",  NULL 
+    (char *)"self",  (char *)"n",  NULL
   };
   swig::SwigPyIterator *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:SwigPyIterator_incr", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_swig__SwigPyIterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator_incr" "', argument " "1"" of type '" "swig::SwigPyIterator *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator_incr" "', argument " "1"" of type '" "swig::SwigPyIterator *""'");
   }
   arg1 = reinterpret_cast< swig::SwigPyIterator * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_size_t(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SwigPyIterator_incr" "', argument " "2"" of type '" "size_t""'");
-    } 
+    }
     arg2 = static_cast< size_t >(val2);
   }
   try {
@@ -6849,21 +6849,21 @@ SWIGINTERN PyObject *_wrap_SwigPyIterator_decr(PyObject *SWIGUNUSEDPARM(self), P
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"n",  NULL 
+    (char *)"self",  (char *)"n",  NULL
   };
   swig::SwigPyIterator *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:SwigPyIterator_decr", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_swig__SwigPyIterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator_decr" "', argument " "1"" of type '" "swig::SwigPyIterator *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator_decr" "', argument " "1"" of type '" "swig::SwigPyIterator *""'");
   }
   arg1 = reinterpret_cast< swig::SwigPyIterator * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_size_t(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SwigPyIterator_decr" "', argument " "2"" of type '" "size_t""'");
-    } 
+    }
     arg2 = static_cast< size_t >(val2);
   }
   try {
@@ -6893,22 +6893,22 @@ SWIGINTERN PyObject *_wrap_SwigPyIterator_distance(PyObject *SWIGUNUSEDPARM(self
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"x",  NULL 
+    (char *)"self",  (char *)"x",  NULL
   };
   ptrdiff_t result;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:SwigPyIterator_distance", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_swig__SwigPyIterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator_distance" "', argument " "1"" of type '" "swig::SwigPyIterator const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator_distance" "', argument " "1"" of type '" "swig::SwigPyIterator const *""'");
   }
   arg1 = reinterpret_cast< swig::SwigPyIterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_swig__SwigPyIterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SwigPyIterator_distance" "', argument " "2"" of type '" "swig::SwigPyIterator const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SwigPyIterator_distance" "', argument " "2"" of type '" "swig::SwigPyIterator const &""'");
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SwigPyIterator_distance" "', argument " "2"" of type '" "swig::SwigPyIterator const &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SwigPyIterator_distance" "', argument " "2"" of type '" "swig::SwigPyIterator const &""'");
   }
   arg2 = reinterpret_cast< swig::SwigPyIterator * >(argp2);
   try {
@@ -6934,22 +6934,22 @@ SWIGINTERN PyObject *_wrap_SwigPyIterator_equal(PyObject *SWIGUNUSEDPARM(self), 
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"x",  NULL 
+    (char *)"self",  (char *)"x",  NULL
   };
   bool result;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:SwigPyIterator_equal", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_swig__SwigPyIterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator_equal" "', argument " "1"" of type '" "swig::SwigPyIterator const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator_equal" "', argument " "1"" of type '" "swig::SwigPyIterator const *""'");
   }
   arg1 = reinterpret_cast< swig::SwigPyIterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_swig__SwigPyIterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SwigPyIterator_equal" "', argument " "2"" of type '" "swig::SwigPyIterator const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SwigPyIterator_equal" "', argument " "2"" of type '" "swig::SwigPyIterator const &""'");
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SwigPyIterator_equal" "', argument " "2"" of type '" "swig::SwigPyIterator const &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SwigPyIterator_equal" "', argument " "2"" of type '" "swig::SwigPyIterator const &""'");
   }
   arg2 = reinterpret_cast< swig::SwigPyIterator * >(argp2);
   try {
@@ -6971,12 +6971,12 @@ SWIGINTERN PyObject *_wrap_SwigPyIterator_copy(PyObject *SWIGUNUSEDPARM(self), P
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   swig::SwigPyIterator *result = 0 ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_swig__SwigPyIterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator_copy" "', argument " "1"" of type '" "swig::SwigPyIterator const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator_copy" "', argument " "1"" of type '" "swig::SwigPyIterator const *""'");
   }
   arg1 = reinterpret_cast< swig::SwigPyIterator * >(argp1);
   result = (swig::SwigPyIterator *)((swig::SwigPyIterator const *)arg1)->copy();
@@ -6994,12 +6994,12 @@ SWIGINTERN PyObject *_wrap_SwigPyIterator_next(PyObject *SWIGUNUSEDPARM(self), P
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   PyObject *result = 0 ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_swig__SwigPyIterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator_next" "', argument " "1"" of type '" "swig::SwigPyIterator *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator_next" "', argument " "1"" of type '" "swig::SwigPyIterator *""'");
   }
   arg1 = reinterpret_cast< swig::SwigPyIterator * >(argp1);
   try {
@@ -7025,12 +7025,12 @@ SWIGINTERN PyObject *_wrap_SwigPyIterator___next__(PyObject *SWIGUNUSEDPARM(self
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   PyObject *result = 0 ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_swig__SwigPyIterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator___next__" "', argument " "1"" of type '" "swig::SwigPyIterator *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator___next__" "', argument " "1"" of type '" "swig::SwigPyIterator *""'");
   }
   arg1 = reinterpret_cast< swig::SwigPyIterator * >(argp1);
   try {
@@ -7056,12 +7056,12 @@ SWIGINTERN PyObject *_wrap_SwigPyIterator_previous(PyObject *SWIGUNUSEDPARM(self
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   PyObject *result = 0 ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_swig__SwigPyIterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator_previous" "', argument " "1"" of type '" "swig::SwigPyIterator *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator_previous" "', argument " "1"" of type '" "swig::SwigPyIterator *""'");
   }
   arg1 = reinterpret_cast< swig::SwigPyIterator * >(argp1);
   try {
@@ -7091,20 +7091,20 @@ SWIGINTERN PyObject *_wrap_SwigPyIterator_advance(PyObject *SWIGUNUSEDPARM(self)
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"n",  NULL 
+    (char *)"self",  (char *)"n",  NULL
   };
   swig::SwigPyIterator *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:SwigPyIterator_advance", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_swig__SwigPyIterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator_advance" "', argument " "1"" of type '" "swig::SwigPyIterator *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator_advance" "', argument " "1"" of type '" "swig::SwigPyIterator *""'");
   }
   arg1 = reinterpret_cast< swig::SwigPyIterator * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SwigPyIterator_advance" "', argument " "2"" of type '" "ptrdiff_t""'");
-  } 
+  }
   arg2 = static_cast< ptrdiff_t >(val2);
   try {
     result = (swig::SwigPyIterator *)(arg1)->advance(arg2);
@@ -7133,22 +7133,22 @@ SWIGINTERN PyObject *_wrap_SwigPyIterator___eq__(PyObject *SWIGUNUSEDPARM(self),
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"x",  NULL 
+    (char *)"self",  (char *)"x",  NULL
   };
   bool result;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:SwigPyIterator___eq__", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_swig__SwigPyIterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator___eq__" "', argument " "1"" of type '" "swig::SwigPyIterator const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator___eq__" "', argument " "1"" of type '" "swig::SwigPyIterator const *""'");
   }
   arg1 = reinterpret_cast< swig::SwigPyIterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_swig__SwigPyIterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SwigPyIterator___eq__" "', argument " "2"" of type '" "swig::SwigPyIterator const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SwigPyIterator___eq__" "', argument " "2"" of type '" "swig::SwigPyIterator const &""'");
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SwigPyIterator___eq__" "', argument " "2"" of type '" "swig::SwigPyIterator const &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SwigPyIterator___eq__" "', argument " "2"" of type '" "swig::SwigPyIterator const &""'");
   }
   arg2 = reinterpret_cast< swig::SwigPyIterator * >(argp2);
   result = (bool)((swig::SwigPyIterator const *)arg1)->operator ==((swig::SwigPyIterator const &)*arg2);
@@ -7172,22 +7172,22 @@ SWIGINTERN PyObject *_wrap_SwigPyIterator___ne__(PyObject *SWIGUNUSEDPARM(self),
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"x",  NULL 
+    (char *)"self",  (char *)"x",  NULL
   };
   bool result;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:SwigPyIterator___ne__", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_swig__SwigPyIterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator___ne__" "', argument " "1"" of type '" "swig::SwigPyIterator const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator___ne__" "', argument " "1"" of type '" "swig::SwigPyIterator const *""'");
   }
   arg1 = reinterpret_cast< swig::SwigPyIterator * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_swig__SwigPyIterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SwigPyIterator___ne__" "', argument " "2"" of type '" "swig::SwigPyIterator const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SwigPyIterator___ne__" "', argument " "2"" of type '" "swig::SwigPyIterator const &""'");
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SwigPyIterator___ne__" "', argument " "2"" of type '" "swig::SwigPyIterator const &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SwigPyIterator___ne__" "', argument " "2"" of type '" "swig::SwigPyIterator const &""'");
   }
   arg2 = reinterpret_cast< swig::SwigPyIterator * >(argp2);
   result = (bool)((swig::SwigPyIterator const *)arg1)->operator !=((swig::SwigPyIterator const &)*arg2);
@@ -7211,20 +7211,20 @@ SWIGINTERN PyObject *_wrap_SwigPyIterator___iadd__(PyObject *SWIGUNUSEDPARM(self
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"n",  NULL 
+    (char *)"self",  (char *)"n",  NULL
   };
   swig::SwigPyIterator *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:SwigPyIterator___iadd__", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_swig__SwigPyIterator, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator___iadd__" "', argument " "1"" of type '" "swig::SwigPyIterator *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator___iadd__" "', argument " "1"" of type '" "swig::SwigPyIterator *""'");
   }
   arg1 = reinterpret_cast< swig::SwigPyIterator * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SwigPyIterator___iadd__" "', argument " "2"" of type '" "ptrdiff_t""'");
-  } 
+  }
   arg2 = static_cast< ptrdiff_t >(val2);
   try {
     result = (swig::SwigPyIterator *) &(arg1)->operator +=(arg2);
@@ -7253,20 +7253,20 @@ SWIGINTERN PyObject *_wrap_SwigPyIterator___isub__(PyObject *SWIGUNUSEDPARM(self
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"n",  NULL 
+    (char *)"self",  (char *)"n",  NULL
   };
   swig::SwigPyIterator *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:SwigPyIterator___isub__", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_swig__SwigPyIterator, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator___isub__" "', argument " "1"" of type '" "swig::SwigPyIterator *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator___isub__" "', argument " "1"" of type '" "swig::SwigPyIterator *""'");
   }
   arg1 = reinterpret_cast< swig::SwigPyIterator * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SwigPyIterator___isub__" "', argument " "2"" of type '" "ptrdiff_t""'");
-  } 
+  }
   arg2 = static_cast< ptrdiff_t >(val2);
   try {
     result = (swig::SwigPyIterator *) &(arg1)->operator -=(arg2);
@@ -7295,20 +7295,20 @@ SWIGINTERN PyObject *_wrap_SwigPyIterator___add__(PyObject *SWIGUNUSEDPARM(self)
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"n",  NULL 
+    (char *)"self",  (char *)"n",  NULL
   };
   swig::SwigPyIterator *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:SwigPyIterator___add__", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_swig__SwigPyIterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator___add__" "', argument " "1"" of type '" "swig::SwigPyIterator const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator___add__" "', argument " "1"" of type '" "swig::SwigPyIterator const *""'");
   }
   arg1 = reinterpret_cast< swig::SwigPyIterator * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SwigPyIterator___add__" "', argument " "2"" of type '" "ptrdiff_t""'");
-  } 
+  }
   arg2 = static_cast< ptrdiff_t >(val2);
   try {
     result = (swig::SwigPyIterator *)((swig::SwigPyIterator const *)arg1)->operator +(arg2);
@@ -7337,17 +7337,17 @@ SWIGINTERN PyObject *_wrap_SwigPyIterator___sub____SWIG_0(PyObject *SWIGUNUSEDPA
   ptrdiff_t val2 ;
   int ecode2 = 0 ;
   swig::SwigPyIterator *result = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_swig__SwigPyIterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator___sub__" "', argument " "1"" of type '" "swig::SwigPyIterator const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator___sub__" "', argument " "1"" of type '" "swig::SwigPyIterator const *""'");
   }
   arg1 = reinterpret_cast< swig::SwigPyIterator * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SwigPyIterator___sub__" "', argument " "2"" of type '" "ptrdiff_t""'");
-  } 
+  }
   arg2 = static_cast< ptrdiff_t >(val2);
   try {
     result = (swig::SwigPyIterator *)((swig::SwigPyIterator const *)arg1)->operator -(arg2);
@@ -7376,19 +7376,19 @@ SWIGINTERN PyObject *_wrap_SwigPyIterator___sub____SWIG_1(PyObject *SWIGUNUSEDPA
   void *argp2 = 0 ;
   int res2 = 0 ;
   ptrdiff_t result;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_swig__SwigPyIterator, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator___sub__" "', argument " "1"" of type '" "swig::SwigPyIterator const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SwigPyIterator___sub__" "', argument " "1"" of type '" "swig::SwigPyIterator const *""'");
   }
   arg1 = reinterpret_cast< swig::SwigPyIterator * >(argp1);
   res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_swig__SwigPyIterator,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SwigPyIterator___sub__" "', argument " "2"" of type '" "swig::SwigPyIterator const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SwigPyIterator___sub__" "', argument " "2"" of type '" "swig::SwigPyIterator const &""'");
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SwigPyIterator___sub__" "', argument " "2"" of type '" "swig::SwigPyIterator const &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SwigPyIterator___sub__" "', argument " "2"" of type '" "swig::SwigPyIterator const &""'");
   }
   arg2 = reinterpret_cast< swig::SwigPyIterator * >(argp2);
   result = ((swig::SwigPyIterator const *)arg1)->operator -((swig::SwigPyIterator const &)*arg2);
@@ -7406,7 +7406,7 @@ SWIGINTERN PyObject *_wrap_SwigPyIterator___sub__(PyObject *self, PyObject *args
   PyObject *argv[3] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "SwigPyIterator___sub__", 0, 2, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -7437,7 +7437,7 @@ SWIGINTERN PyObject *_wrap_SwigPyIterator___sub__(PyObject *self, PyObject *args
       }
     }
   }
-  
+
 fail:
   Py_INCREF(Py_NotImplemented);
   return Py_NotImplemented;
@@ -7459,13 +7459,13 @@ SWIGINTERN PyObject *_wrap_vectorDouble_iterator(PyObject *SWIGUNUSEDPARM(self),
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   swig::SwigPyIterator *result = 0 ;
-  
+
   arg2 = &swig_obj[0];
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_iterator" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_iterator" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   result = (swig::SwigPyIterator *)std_vector_Sl_double_Sg__iterator(arg1,arg2);
@@ -7483,12 +7483,12 @@ SWIGINTERN PyObject *_wrap_vectorDouble___nonzero__(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___nonzero__" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___nonzero__" "', argument " "1"" of type '" "std::vector< double > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   result = (bool)std_vector_Sl_double_Sg____nonzero__((std::vector< double > const *)arg1);
@@ -7506,12 +7506,12 @@ SWIGINTERN PyObject *_wrap_vectorDouble___bool__(PyObject *SWIGUNUSEDPARM(self),
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___bool__" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___bool__" "', argument " "1"" of type '" "std::vector< double > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   result = (bool)std_vector_Sl_double_Sg____bool__((std::vector< double > const *)arg1);
@@ -7529,12 +7529,12 @@ SWIGINTERN PyObject *_wrap_vectorDouble___len__(PyObject *SWIGUNUSEDPARM(self), 
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< double >::size_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___len__" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___len__" "', argument " "1"" of type '" "std::vector< double > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   result = std_vector_Sl_double_Sg____len__((std::vector< double > const *)arg1);
@@ -7560,25 +7560,25 @@ SWIGINTERN PyObject *_wrap_vectorDouble___getslice__(PyObject *SWIGUNUSEDPARM(se
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"i",  (char *)"j",  NULL 
+    (char *)"self",  (char *)"i",  (char *)"j",  NULL
   };
   std::vector< double,std::allocator< double > > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:vectorDouble___getslice__", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___getslice__" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___getslice__" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorDouble___getslice__" "', argument " "2"" of type '" "std::vector< double >::difference_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< double >::difference_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorDouble___getslice__" "', argument " "3"" of type '" "std::vector< double >::difference_type""'");
-  } 
+  }
   arg3 = static_cast< std::vector< double >::difference_type >(val3);
   try {
     result = (std::vector< double,std::allocator< double > > *)std_vector_Sl_double_Sg____getslice__(arg1,arg2,arg3);
@@ -7605,22 +7605,22 @@ SWIGINTERN PyObject *_wrap_vectorDouble___setslice____SWIG_0(PyObject *SWIGUNUSE
   int ecode2 = 0 ;
   ptrdiff_t val3 ;
   int ecode3 = 0 ;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___setslice__" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___setslice__" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorDouble___setslice__" "', argument " "2"" of type '" "std::vector< double >::difference_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< double >::difference_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorDouble___setslice__" "', argument " "3"" of type '" "std::vector< double >::difference_type""'");
-  } 
+  }
   arg3 = static_cast< std::vector< double >::difference_type >(val3);
   try {
     std_vector_Sl_double_Sg____setslice____SWIG_0(arg1,arg2,arg3);
@@ -7649,31 +7649,31 @@ SWIGINTERN PyObject *_wrap_vectorDouble___setslice____SWIG_1(PyObject *SWIGUNUSE
   ptrdiff_t val3 ;
   int ecode3 = 0 ;
   int res4 = SWIG_OLDOBJ ;
-  
+
   if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___setslice__" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___setslice__" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorDouble___setslice__" "', argument " "2"" of type '" "std::vector< double >::difference_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< double >::difference_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorDouble___setslice__" "', argument " "3"" of type '" "std::vector< double >::difference_type""'");
-  } 
+  }
   arg3 = static_cast< std::vector< double >::difference_type >(val3);
   {
     std::vector< double,std::allocator< double > > *ptr = (std::vector< double,std::allocator< double > > *)0;
     res4 = swig::asptr(swig_obj[3], &ptr);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "vectorDouble___setslice__" "', argument " "4"" of type '" "std::vector< double,std::allocator< double > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "vectorDouble___setslice__" "', argument " "4"" of type '" "std::vector< double,std::allocator< double > > const &""'");
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorDouble___setslice__" "', argument " "4"" of type '" "std::vector< double,std::allocator< double > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorDouble___setslice__" "', argument " "4"" of type '" "std::vector< double,std::allocator< double > > const &""'");
     }
     arg4 = ptr;
   }
@@ -7698,7 +7698,7 @@ SWIGINTERN PyObject *_wrap_vectorDouble___setslice__(PyObject *self, PyObject *a
   PyObject *argv[5] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "vectorDouble___setslice__", 0, 4, argv))) SWIG_fail;
   --argc;
   if (argc == 3) {
@@ -7745,7 +7745,7 @@ SWIGINTERN PyObject *_wrap_vectorDouble___setslice__(PyObject *self, PyObject *a
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'vectorDouble___setslice__'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -7770,24 +7770,24 @@ SWIGINTERN PyObject *_wrap_vectorDouble___delslice__(PyObject *SWIGUNUSEDPARM(se
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"i",  (char *)"j",  NULL 
+    (char *)"self",  (char *)"i",  (char *)"j",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:vectorDouble___delslice__", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___delslice__" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___delslice__" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorDouble___delslice__" "', argument " "2"" of type '" "std::vector< double >::difference_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< double >::difference_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorDouble___delslice__" "', argument " "3"" of type '" "std::vector< double >::difference_type""'");
-  } 
+  }
   arg3 = static_cast< std::vector< double >::difference_type >(val3);
   try {
     std_vector_Sl_double_Sg____delslice__(arg1,arg2,arg3);
@@ -7811,17 +7811,17 @@ SWIGINTERN PyObject *_wrap_vectorDouble___delitem____SWIG_0(PyObject *SWIGUNUSED
   int res1 = 0 ;
   ptrdiff_t val2 ;
   int ecode2 = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___delitem__" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___delitem__" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorDouble___delitem__" "', argument " "2"" of type '" "std::vector< double >::difference_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< double >::difference_type >(val2);
   try {
     std_vector_Sl_double_Sg____delitem____SWIG_0(arg1,arg2);
@@ -7844,11 +7844,11 @@ SWIGINTERN PyObject *_wrap_vectorDouble___getitem____SWIG_0(PyObject *SWIGUNUSED
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::vector< double,std::allocator< double > > *result = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___getitem__" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___getitem__" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   {
@@ -7879,11 +7879,11 @@ SWIGINTERN PyObject *_wrap_vectorDouble___setitem____SWIG_0(PyObject *SWIGUNUSED
   void *argp1 = 0 ;
   int res1 = 0 ;
   int res3 = SWIG_OLDOBJ ;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___setitem__" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___setitem__" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   {
@@ -7896,10 +7896,10 @@ SWIGINTERN PyObject *_wrap_vectorDouble___setitem____SWIG_0(PyObject *SWIGUNUSED
     std::vector< double,std::allocator< double > > *ptr = (std::vector< double,std::allocator< double > > *)0;
     res3 = swig::asptr(swig_obj[2], &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorDouble___setitem__" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorDouble___setitem__" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > const &""'");
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorDouble___setitem__" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorDouble___setitem__" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > const &""'");
     }
     arg3 = ptr;
   }
@@ -7925,11 +7925,11 @@ SWIGINTERN PyObject *_wrap_vectorDouble___setitem____SWIG_1(PyObject *SWIGUNUSED
   PySliceObject *arg2 = (PySliceObject *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___setitem__" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___setitem__" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   {
@@ -7958,11 +7958,11 @@ SWIGINTERN PyObject *_wrap_vectorDouble___delitem____SWIG_1(PyObject *SWIGUNUSED
   PySliceObject *arg2 = (PySliceObject *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___delitem__" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___delitem__" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   {
@@ -7990,7 +7990,7 @@ SWIGINTERN PyObject *_wrap_vectorDouble___delitem__(PyObject *self, PyObject *ar
   PyObject *argv[3] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "vectorDouble___delitem__", 0, 2, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -8020,7 +8020,7 @@ SWIGINTERN PyObject *_wrap_vectorDouble___delitem__(PyObject *self, PyObject *ar
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'vectorDouble___delitem__'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -8039,17 +8039,17 @@ SWIGINTERN PyObject *_wrap_vectorDouble___getitem____SWIG_1(PyObject *SWIGUNUSED
   ptrdiff_t val2 ;
   int ecode2 = 0 ;
   std::vector< double >::value_type *result = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___getitem__" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___getitem__" "', argument " "1"" of type '" "std::vector< double > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorDouble___getitem__" "', argument " "2"" of type '" "std::vector< double >::difference_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< double >::difference_type >(val2);
   try {
     result = (std::vector< double >::value_type *) &std_vector_Sl_double_Sg____getitem____SWIG_1((std::vector< double > const *)arg1,arg2);
@@ -8069,7 +8069,7 @@ SWIGINTERN PyObject *_wrap_vectorDouble___getitem__(PyObject *self, PyObject *ar
   PyObject *argv[3] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "vectorDouble___getitem__", 0, 2, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -8099,7 +8099,7 @@ SWIGINTERN PyObject *_wrap_vectorDouble___getitem__(PyObject *self, PyObject *ar
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'vectorDouble___getitem__'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -8121,22 +8121,22 @@ SWIGINTERN PyObject *_wrap_vectorDouble___setitem____SWIG_2(PyObject *SWIGUNUSED
   std::vector< double >::value_type temp3 ;
   double val3 ;
   int ecode3 = 0 ;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___setitem__" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble___setitem__" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorDouble___setitem__" "', argument " "2"" of type '" "std::vector< double >::difference_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< double >::difference_type >(val2);
   ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorDouble___setitem__" "', argument " "3"" of type '" "std::vector< double >::value_type""'");
-  } 
+  }
   temp3 = static_cast< std::vector< double >::value_type >(val3);
   arg3 = &temp3;
   try {
@@ -8156,7 +8156,7 @@ SWIGINTERN PyObject *_wrap_vectorDouble___setitem__(PyObject *self, PyObject *ar
   PyObject *argv[4] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "vectorDouble___setitem__", 0, 3, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -8209,7 +8209,7 @@ SWIGINTERN PyObject *_wrap_vectorDouble___setitem__(PyObject *self, PyObject *ar
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'vectorDouble___setitem__'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -8227,12 +8227,12 @@ SWIGINTERN PyObject *_wrap_vectorDouble_pop(PyObject *SWIGUNUSEDPARM(self), PyOb
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< double >::value_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_pop" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_pop" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   try {
@@ -8259,19 +8259,19 @@ SWIGINTERN PyObject *_wrap_vectorDouble_append(PyObject *SWIGUNUSEDPARM(self), P
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"x",  NULL 
+    (char *)"self",  (char *)"x",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:vectorDouble_append", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_append" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_append" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorDouble_append" "', argument " "2"" of type '" "std::vector< double >::value_type""'");
-  } 
+  }
   temp2 = static_cast< std::vector< double >::value_type >(val2);
   arg2 = &temp2;
   std_vector_Sl_double_Sg__append(arg1,(double const &)*arg2);
@@ -8285,7 +8285,7 @@ fail:
 SWIGINTERN PyObject *_wrap_new_vectorDouble__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
   PyObject *resultobj = 0;
   std::vector< double > *result = 0 ;
-  
+
   if ((nobjs < 0) || (nobjs > 0)) SWIG_fail;
   result = (std::vector< double > *)new std::vector< double >();
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, SWIG_POINTER_NEW |  0 );
@@ -8300,16 +8300,16 @@ SWIGINTERN PyObject *_wrap_new_vectorDouble__SWIG_1(PyObject *SWIGUNUSEDPARM(sel
   std::vector< double > *arg1 = 0 ;
   int res1 = SWIG_OLDOBJ ;
   std::vector< double > *result = 0 ;
-  
+
   if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
   {
     std::vector< double,std::allocator< double > > *ptr = (std::vector< double,std::allocator< double > > *)0;
     res1 = swig::asptr(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_vectorDouble" "', argument " "1"" of type '" "std::vector< double > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_vectorDouble" "', argument " "1"" of type '" "std::vector< double > const &""'");
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_vectorDouble" "', argument " "1"" of type '" "std::vector< double > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_vectorDouble" "', argument " "1"" of type '" "std::vector< double > const &""'");
     }
     arg1 = ptr;
   }
@@ -8330,12 +8330,12 @@ SWIGINTERN PyObject *_wrap_vectorDouble_empty(PyObject *SWIGUNUSEDPARM(self), Py
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_empty" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_empty" "', argument " "1"" of type '" "std::vector< double > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   result = (bool)((std::vector< double > const *)arg1)->empty();
@@ -8353,12 +8353,12 @@ SWIGINTERN PyObject *_wrap_vectorDouble_size(PyObject *SWIGUNUSEDPARM(self), PyO
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< double >::size_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_size" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_size" "', argument " "1"" of type '" "std::vector< double > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   result = ((std::vector< double > const *)arg1)->size();
@@ -8380,21 +8380,21 @@ SWIGINTERN PyObject *_wrap_vectorDouble_swap(PyObject *SWIGUNUSEDPARM(self), PyO
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"v",  NULL 
+    (char *)"self",  (char *)"v",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:vectorDouble_swap", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_swap" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_swap" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vectorDouble_swap" "', argument " "2"" of type '" "std::vector< double > &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vectorDouble_swap" "', argument " "2"" of type '" "std::vector< double > &""'");
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorDouble_swap" "', argument " "2"" of type '" "std::vector< double > &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorDouble_swap" "', argument " "2"" of type '" "std::vector< double > &""'");
   }
   arg2 = reinterpret_cast< std::vector< double > * >(argp2);
   (arg1)->swap(*arg2);
@@ -8412,12 +8412,12 @@ SWIGINTERN PyObject *_wrap_vectorDouble_begin(PyObject *SWIGUNUSEDPARM(self), Py
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< double >::iterator result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_begin" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_begin" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   result = (arg1)->begin();
@@ -8436,12 +8436,12 @@ SWIGINTERN PyObject *_wrap_vectorDouble_end(PyObject *SWIGUNUSEDPARM(self), PyOb
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< double >::iterator result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_end" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_end" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   result = (arg1)->end();
@@ -8460,12 +8460,12 @@ SWIGINTERN PyObject *_wrap_vectorDouble_rbegin(PyObject *SWIGUNUSEDPARM(self), P
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< double >::reverse_iterator result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_rbegin" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_rbegin" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   result = (arg1)->rbegin();
@@ -8484,12 +8484,12 @@ SWIGINTERN PyObject *_wrap_vectorDouble_rend(PyObject *SWIGUNUSEDPARM(self), PyO
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< double >::reverse_iterator result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_rend" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_rend" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   result = (arg1)->rend();
@@ -8507,12 +8507,12 @@ SWIGINTERN PyObject *_wrap_vectorDouble_clear(PyObject *SWIGUNUSEDPARM(self), Py
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_clear" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_clear" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   (arg1)->clear();
@@ -8530,12 +8530,12 @@ SWIGINTERN PyObject *_wrap_vectorDouble_get_allocator(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   SwigValueWrapper< std::allocator< double > > result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_get_allocator" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_get_allocator" "', argument " "1"" of type '" "std::vector< double > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   result = ((std::vector< double > const *)arg1)->get_allocator();
@@ -8552,12 +8552,12 @@ SWIGINTERN PyObject *_wrap_new_vectorDouble__SWIG_2(PyObject *SWIGUNUSEDPARM(sel
   size_t val1 ;
   int ecode1 = 0 ;
   std::vector< double > *result = 0 ;
-  
+
   if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
   ecode1 = SWIG_AsVal_size_t(swig_obj[0], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_vectorDouble" "', argument " "1"" of type '" "std::vector< double >::size_type""'");
-  } 
+  }
   arg1 = static_cast< std::vector< double >::size_type >(val1);
   result = (std::vector< double > *)new std::vector< double >(arg1);
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, SWIG_POINTER_NEW |  0 );
@@ -8573,12 +8573,12 @@ SWIGINTERN PyObject *_wrap_vectorDouble_pop_back(PyObject *SWIGUNUSEDPARM(self),
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_pop_back" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_pop_back" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   (arg1)->pop_back();
@@ -8597,17 +8597,17 @@ SWIGINTERN PyObject *_wrap_vectorDouble_resize__SWIG_0(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   size_t val2 ;
   int ecode2 = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_resize" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_resize" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorDouble_resize" "', argument " "2"" of type '" "std::vector< double >::size_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< double >::size_type >(val2);
   (arg1)->resize(arg2);
   resultobj = SWIG_Py_Void();
@@ -8626,11 +8626,11 @@ SWIGINTERN PyObject *_wrap_vectorDouble_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(s
   swig::SwigPyIterator *iter2 = 0 ;
   int res2 ;
   std::vector< double >::iterator result;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_erase" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_erase" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   res2 = SWIG_ConvertPtr(swig_obj[1], SWIG_as_voidptrptr(&iter2), swig::SwigPyIterator::descriptor(), 0);
@@ -8665,11 +8665,11 @@ SWIGINTERN PyObject *_wrap_vectorDouble_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(s
   swig::SwigPyIterator *iter3 = 0 ;
   int res3 ;
   std::vector< double >::iterator result;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_erase" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_erase" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   res2 = SWIG_ConvertPtr(swig_obj[1], SWIG_as_voidptrptr(&iter2), swig::SwigPyIterator::descriptor(), 0);
@@ -8708,7 +8708,7 @@ SWIGINTERN PyObject *_wrap_vectorDouble_erase(PyObject *self, PyObject *args) {
   PyObject *argv[4] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "vectorDouble_erase", 0, 3, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -8742,7 +8742,7 @@ SWIGINTERN PyObject *_wrap_vectorDouble_erase(PyObject *self, PyObject *args) {
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'vectorDouble_erase'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -8762,17 +8762,17 @@ SWIGINTERN PyObject *_wrap_new_vectorDouble__SWIG_3(PyObject *SWIGUNUSEDPARM(sel
   double val2 ;
   int ecode2 = 0 ;
   std::vector< double > *result = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   ecode1 = SWIG_AsVal_size_t(swig_obj[0], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_vectorDouble" "', argument " "1"" of type '" "std::vector< double >::size_type""'");
-  } 
+  }
   arg1 = static_cast< std::vector< double >::size_type >(val1);
   ecode2 = SWIG_AsVal_double(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_vectorDouble" "', argument " "2"" of type '" "std::vector< double >::value_type""'");
-  } 
+  }
   temp2 = static_cast< std::vector< double >::value_type >(val2);
   arg2 = &temp2;
   result = (std::vector< double > *)new std::vector< double >(arg1,(std::vector< double >::value_type const &)*arg2);
@@ -8788,7 +8788,7 @@ SWIGINTERN PyObject *_wrap_new_vectorDouble(PyObject *self, PyObject *args) {
   PyObject *argv[3] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "new_vectorDouble", 0, 2, argv))) SWIG_fail;
   --argc;
   if (argc == 0) {
@@ -8828,7 +8828,7 @@ SWIGINTERN PyObject *_wrap_new_vectorDouble(PyObject *self, PyObject *args) {
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_vectorDouble'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -8852,19 +8852,19 @@ SWIGINTERN PyObject *_wrap_vectorDouble_push_back(PyObject *SWIGUNUSEDPARM(self)
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"x",  NULL 
+    (char *)"self",  (char *)"x",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:vectorDouble_push_back", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_push_back" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_push_back" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorDouble_push_back" "', argument " "2"" of type '" "std::vector< double >::value_type""'");
-  } 
+  }
   temp2 = static_cast< std::vector< double >::value_type >(val2);
   arg2 = &temp2;
   (arg1)->push_back((std::vector< double >::value_type const &)*arg2);
@@ -8882,12 +8882,12 @@ SWIGINTERN PyObject *_wrap_vectorDouble_front(PyObject *SWIGUNUSEDPARM(self), Py
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< double >::value_type *result = 0 ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_front" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_front" "', argument " "1"" of type '" "std::vector< double > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   result = (std::vector< double >::value_type *) &((std::vector< double > const *)arg1)->front();
@@ -8906,12 +8906,12 @@ SWIGINTERN PyObject *_wrap_vectorDouble_back(PyObject *SWIGUNUSEDPARM(self), PyO
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< double >::value_type *result = 0 ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_back" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_back" "', argument " "1"" of type '" "std::vector< double > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   result = (std::vector< double >::value_type *) &((std::vector< double > const *)arg1)->back();
@@ -8939,24 +8939,24 @@ SWIGINTERN PyObject *_wrap_vectorDouble_assign(PyObject *SWIGUNUSEDPARM(self), P
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"n",  (char *)"x",  NULL 
+    (char *)"self",  (char *)"n",  (char *)"x",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:vectorDouble_assign", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_assign" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_assign" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorDouble_assign" "', argument " "2"" of type '" "std::vector< double >::size_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< double >::size_type >(val2);
   ecode3 = SWIG_AsVal_double(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorDouble_assign" "', argument " "3"" of type '" "std::vector< double >::value_type""'");
-  } 
+  }
   temp3 = static_cast< std::vector< double >::value_type >(val3);
   arg3 = &temp3;
   (arg1)->assign(arg2,(std::vector< double >::value_type const &)*arg3);
@@ -8979,22 +8979,22 @@ SWIGINTERN PyObject *_wrap_vectorDouble_resize__SWIG_1(PyObject *SWIGUNUSEDPARM(
   std::vector< double >::value_type temp3 ;
   double val3 ;
   int ecode3 = 0 ;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_resize" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_resize" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorDouble_resize" "', argument " "2"" of type '" "std::vector< double >::size_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< double >::size_type >(val2);
   ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorDouble_resize" "', argument " "3"" of type '" "std::vector< double >::value_type""'");
-  } 
+  }
   temp3 = static_cast< std::vector< double >::value_type >(val3);
   arg3 = &temp3;
   (arg1)->resize(arg2,(std::vector< double >::value_type const &)*arg3);
@@ -9010,7 +9010,7 @@ SWIGINTERN PyObject *_wrap_vectorDouble_resize(PyObject *self, PyObject *args) {
   PyObject *argv[4] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "vectorDouble_resize", 0, 3, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -9047,7 +9047,7 @@ SWIGINTERN PyObject *_wrap_vectorDouble_resize(PyObject *self, PyObject *args) {
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'vectorDouble_resize'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -9070,11 +9070,11 @@ SWIGINTERN PyObject *_wrap_vectorDouble_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(
   double val3 ;
   int ecode3 = 0 ;
   std::vector< double >::iterator result;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_insert" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_insert" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   res2 = SWIG_ConvertPtr(swig_obj[1], SWIG_as_voidptrptr(&iter2), swig::SwigPyIterator::descriptor(), 0);
@@ -9091,7 +9091,7 @@ SWIGINTERN PyObject *_wrap_vectorDouble_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(
   ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorDouble_insert" "', argument " "3"" of type '" "std::vector< double >::value_type""'");
-  } 
+  }
   temp3 = static_cast< std::vector< double >::value_type >(val3);
   arg3 = &temp3;
   result = std_vector_Sl_double_Sg__insert__SWIG_0(arg1,arg2,(double const &)*arg3);
@@ -9118,11 +9118,11 @@ SWIGINTERN PyObject *_wrap_vectorDouble_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(
   std::vector< double >::value_type temp4 ;
   double val4 ;
   int ecode4 = 0 ;
-  
+
   if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_insert" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_insert" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   res2 = SWIG_ConvertPtr(swig_obj[1], SWIG_as_voidptrptr(&iter2), swig::SwigPyIterator::descriptor(), 0);
@@ -9139,12 +9139,12 @@ SWIGINTERN PyObject *_wrap_vectorDouble_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(
   ecode3 = SWIG_AsVal_size_t(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorDouble_insert" "', argument " "3"" of type '" "std::vector< double >::size_type""'");
-  } 
+  }
   arg3 = static_cast< std::vector< double >::size_type >(val3);
   ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
   if (!SWIG_IsOK(ecode4)) {
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "vectorDouble_insert" "', argument " "4"" of type '" "std::vector< double >::value_type""'");
-  } 
+  }
   temp4 = static_cast< std::vector< double >::value_type >(val4);
   arg4 = &temp4;
   std_vector_Sl_double_Sg__insert__SWIG_1(arg1,arg2,arg3,(double const &)*arg4);
@@ -9160,7 +9160,7 @@ SWIGINTERN PyObject *_wrap_vectorDouble_insert(PyObject *self, PyObject *args) {
   PyObject *argv[5] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "vectorDouble_insert", 0, 4, argv))) SWIG_fail;
   --argc;
   if (argc == 3) {
@@ -9207,7 +9207,7 @@ SWIGINTERN PyObject *_wrap_vectorDouble_insert(PyObject *self, PyObject *args) {
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'vectorDouble_insert'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -9228,19 +9228,19 @@ SWIGINTERN PyObject *_wrap_vectorDouble_reserve(PyObject *SWIGUNUSEDPARM(self), 
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"n",  NULL 
+    (char *)"self",  (char *)"n",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:vectorDouble_reserve", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_reserve" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_reserve" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorDouble_reserve" "', argument " "2"" of type '" "std::vector< double >::size_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< double >::size_type >(val2);
   (arg1)->reserve(arg2);
   resultobj = SWIG_Py_Void();
@@ -9257,12 +9257,12 @@ SWIGINTERN PyObject *_wrap_vectorDouble_capacity(PyObject *SWIGUNUSEDPARM(self),
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< double >::size_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_capacity" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorDouble_capacity" "', argument " "1"" of type '" "std::vector< double > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   result = ((std::vector< double > const *)arg1)->capacity();
@@ -9279,17 +9279,17 @@ SWIGINTERN PyObject *_wrap_delete_vectorDouble(PyObject *SWIGUNUSEDPARM(self), P
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_vectorDouble" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_vectorDouble" "', argument " "1"" of type '" "std::vector< double > *""'");
   }
   arg1 = reinterpret_cast< std::vector< double > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -9338,13 +9338,13 @@ SWIGINTERN PyObject *_wrap_vectorString_iterator(PyObject *SWIGUNUSEDPARM(self),
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   swig::SwigPyIterator *result = 0 ;
-  
+
   arg2 = &swig_obj[0];
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_iterator" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_iterator" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   result = (swig::SwigPyIterator *)std_vector_Sl_std_string_Sg__iterator(arg1,arg2);
@@ -9362,12 +9362,12 @@ SWIGINTERN PyObject *_wrap_vectorString___nonzero__(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___nonzero__" "', argument " "1"" of type '" "std::vector< std::string > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___nonzero__" "', argument " "1"" of type '" "std::vector< std::string > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   result = (bool)std_vector_Sl_std_string_Sg____nonzero__((std::vector< std::string > const *)arg1);
@@ -9385,12 +9385,12 @@ SWIGINTERN PyObject *_wrap_vectorString___bool__(PyObject *SWIGUNUSEDPARM(self),
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___bool__" "', argument " "1"" of type '" "std::vector< std::string > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___bool__" "', argument " "1"" of type '" "std::vector< std::string > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   result = (bool)std_vector_Sl_std_string_Sg____bool__((std::vector< std::string > const *)arg1);
@@ -9408,12 +9408,12 @@ SWIGINTERN PyObject *_wrap_vectorString___len__(PyObject *SWIGUNUSEDPARM(self), 
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< std::string >::size_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___len__" "', argument " "1"" of type '" "std::vector< std::string > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___len__" "', argument " "1"" of type '" "std::vector< std::string > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   result = std_vector_Sl_std_string_Sg____len__((std::vector< std::string > const *)arg1);
@@ -9439,25 +9439,25 @@ SWIGINTERN PyObject *_wrap_vectorString___getslice__(PyObject *SWIGUNUSEDPARM(se
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"i",  (char *)"j",  NULL 
+    (char *)"self",  (char *)"i",  (char *)"j",  NULL
   };
   std::vector< std::string,std::allocator< std::string > > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:vectorString___getslice__", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___getslice__" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___getslice__" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorString___getslice__" "', argument " "2"" of type '" "std::vector< std::string >::difference_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< std::string >::difference_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorString___getslice__" "', argument " "3"" of type '" "std::vector< std::string >::difference_type""'");
-  } 
+  }
   arg3 = static_cast< std::vector< std::string >::difference_type >(val3);
   try {
     result = (std::vector< std::string,std::allocator< std::string > > *)std_vector_Sl_std_string_Sg____getslice__(arg1,arg2,arg3);
@@ -9484,22 +9484,22 @@ SWIGINTERN PyObject *_wrap_vectorString___setslice____SWIG_0(PyObject *SWIGUNUSE
   int ecode2 = 0 ;
   ptrdiff_t val3 ;
   int ecode3 = 0 ;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___setslice__" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___setslice__" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorString___setslice__" "', argument " "2"" of type '" "std::vector< std::string >::difference_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< std::string >::difference_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorString___setslice__" "', argument " "3"" of type '" "std::vector< std::string >::difference_type""'");
-  } 
+  }
   arg3 = static_cast< std::vector< std::string >::difference_type >(val3);
   try {
     std_vector_Sl_std_string_Sg____setslice____SWIG_0(arg1,arg2,arg3);
@@ -9528,31 +9528,31 @@ SWIGINTERN PyObject *_wrap_vectorString___setslice____SWIG_1(PyObject *SWIGUNUSE
   ptrdiff_t val3 ;
   int ecode3 = 0 ;
   int res4 = SWIG_OLDOBJ ;
-  
+
   if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___setslice__" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___setslice__" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorString___setslice__" "', argument " "2"" of type '" "std::vector< std::string >::difference_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< std::string >::difference_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorString___setslice__" "', argument " "3"" of type '" "std::vector< std::string >::difference_type""'");
-  } 
+  }
   arg3 = static_cast< std::vector< std::string >::difference_type >(val3);
   {
     std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
     res4 = swig::asptr(swig_obj[3], &ptr);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "vectorString___setslice__" "', argument " "4"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "vectorString___setslice__" "', argument " "4"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'");
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorString___setslice__" "', argument " "4"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorString___setslice__" "', argument " "4"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'");
     }
     arg4 = ptr;
   }
@@ -9577,7 +9577,7 @@ SWIGINTERN PyObject *_wrap_vectorString___setslice__(PyObject *self, PyObject *a
   PyObject *argv[5] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "vectorString___setslice__", 0, 4, argv))) SWIG_fail;
   --argc;
   if (argc == 3) {
@@ -9624,7 +9624,7 @@ SWIGINTERN PyObject *_wrap_vectorString___setslice__(PyObject *self, PyObject *a
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'vectorString___setslice__'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -9649,24 +9649,24 @@ SWIGINTERN PyObject *_wrap_vectorString___delslice__(PyObject *SWIGUNUSEDPARM(se
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"i",  (char *)"j",  NULL 
+    (char *)"self",  (char *)"i",  (char *)"j",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:vectorString___delslice__", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___delslice__" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___delslice__" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorString___delslice__" "', argument " "2"" of type '" "std::vector< std::string >::difference_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< std::string >::difference_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorString___delslice__" "', argument " "3"" of type '" "std::vector< std::string >::difference_type""'");
-  } 
+  }
   arg3 = static_cast< std::vector< std::string >::difference_type >(val3);
   try {
     std_vector_Sl_std_string_Sg____delslice__(arg1,arg2,arg3);
@@ -9690,17 +9690,17 @@ SWIGINTERN PyObject *_wrap_vectorString___delitem____SWIG_0(PyObject *SWIGUNUSED
   int res1 = 0 ;
   ptrdiff_t val2 ;
   int ecode2 = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___delitem__" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___delitem__" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorString___delitem__" "', argument " "2"" of type '" "std::vector< std::string >::difference_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< std::string >::difference_type >(val2);
   try {
     std_vector_Sl_std_string_Sg____delitem____SWIG_0(arg1,arg2);
@@ -9723,11 +9723,11 @@ SWIGINTERN PyObject *_wrap_vectorString___getitem____SWIG_0(PyObject *SWIGUNUSED
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::vector< std::string,std::allocator< std::string > > *result = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___getitem__" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___getitem__" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   {
@@ -9758,11 +9758,11 @@ SWIGINTERN PyObject *_wrap_vectorString___setitem____SWIG_0(PyObject *SWIGUNUSED
   void *argp1 = 0 ;
   int res1 = 0 ;
   int res3 = SWIG_OLDOBJ ;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___setitem__" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___setitem__" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   {
@@ -9775,10 +9775,10 @@ SWIGINTERN PyObject *_wrap_vectorString___setitem____SWIG_0(PyObject *SWIGUNUSED
     std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
     res3 = swig::asptr(swig_obj[2], &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorString___setitem__" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorString___setitem__" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'");
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorString___setitem__" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorString___setitem__" "', argument " "3"" of type '" "std::vector< std::string,std::allocator< std::string > > const &""'");
     }
     arg3 = ptr;
   }
@@ -9804,11 +9804,11 @@ SWIGINTERN PyObject *_wrap_vectorString___setitem____SWIG_1(PyObject *SWIGUNUSED
   PySliceObject *arg2 = (PySliceObject *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___setitem__" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___setitem__" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   {
@@ -9837,11 +9837,11 @@ SWIGINTERN PyObject *_wrap_vectorString___delitem____SWIG_1(PyObject *SWIGUNUSED
   PySliceObject *arg2 = (PySliceObject *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___delitem__" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___delitem__" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   {
@@ -9869,7 +9869,7 @@ SWIGINTERN PyObject *_wrap_vectorString___delitem__(PyObject *self, PyObject *ar
   PyObject *argv[3] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "vectorString___delitem__", 0, 2, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -9899,7 +9899,7 @@ SWIGINTERN PyObject *_wrap_vectorString___delitem__(PyObject *self, PyObject *ar
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'vectorString___delitem__'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -9918,17 +9918,17 @@ SWIGINTERN PyObject *_wrap_vectorString___getitem____SWIG_1(PyObject *SWIGUNUSED
   ptrdiff_t val2 ;
   int ecode2 = 0 ;
   std::vector< std::string >::value_type *result = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___getitem__" "', argument " "1"" of type '" "std::vector< std::string > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___getitem__" "', argument " "1"" of type '" "std::vector< std::string > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorString___getitem__" "', argument " "2"" of type '" "std::vector< std::string >::difference_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< std::string >::difference_type >(val2);
   try {
     result = (std::vector< std::string >::value_type *) &std_vector_Sl_std_string_Sg____getitem____SWIG_1((std::vector< std::string > const *)arg1,arg2);
@@ -9948,7 +9948,7 @@ SWIGINTERN PyObject *_wrap_vectorString___getitem__(PyObject *self, PyObject *ar
   PyObject *argv[3] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "vectorString___getitem__", 0, 2, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -9978,7 +9978,7 @@ SWIGINTERN PyObject *_wrap_vectorString___getitem__(PyObject *self, PyObject *ar
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'vectorString___getitem__'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -9998,26 +9998,26 @@ SWIGINTERN PyObject *_wrap_vectorString___setitem____SWIG_2(PyObject *SWIGUNUSED
   ptrdiff_t val2 ;
   int ecode2 = 0 ;
   int res3 = SWIG_OLDOBJ ;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___setitem__" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString___setitem__" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorString___setitem__" "', argument " "2"" of type '" "std::vector< std::string >::difference_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< std::string >::difference_type >(val2);
   {
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorString___setitem__" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorString___setitem__" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'");
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorString___setitem__" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorString___setitem__" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'");
     }
     arg3 = ptr;
   }
@@ -10040,7 +10040,7 @@ SWIGINTERN PyObject *_wrap_vectorString___setitem__(PyObject *self, PyObject *ar
   PyObject *argv[4] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "vectorString___setitem__", 0, 3, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -10091,7 +10091,7 @@ SWIGINTERN PyObject *_wrap_vectorString___setitem__(PyObject *self, PyObject *ar
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'vectorString___setitem__'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -10109,12 +10109,12 @@ SWIGINTERN PyObject *_wrap_vectorString_pop(PyObject *SWIGUNUSEDPARM(self), PyOb
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< std::string >::value_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_pop" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_pop" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   try {
@@ -10139,23 +10139,23 @@ SWIGINTERN PyObject *_wrap_vectorString_append(PyObject *SWIGUNUSEDPARM(self), P
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"x",  NULL 
+    (char *)"self",  (char *)"x",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:vectorString_append", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_append" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_append" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   {
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vectorString_append" "', argument " "2"" of type '" "std::vector< std::string >::value_type const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vectorString_append" "', argument " "2"" of type '" "std::vector< std::string >::value_type const &""'");
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorString_append" "', argument " "2"" of type '" "std::vector< std::string >::value_type const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorString_append" "', argument " "2"" of type '" "std::vector< std::string >::value_type const &""'");
     }
     arg2 = ptr;
   }
@@ -10172,7 +10172,7 @@ fail:
 SWIGINTERN PyObject *_wrap_new_vectorString__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
   PyObject *resultobj = 0;
   std::vector< std::string > *result = 0 ;
-  
+
   if ((nobjs < 0) || (nobjs > 0)) SWIG_fail;
   result = (std::vector< std::string > *)new std::vector< std::string >();
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, SWIG_POINTER_NEW |  0 );
@@ -10187,16 +10187,16 @@ SWIGINTERN PyObject *_wrap_new_vectorString__SWIG_1(PyObject *SWIGUNUSEDPARM(sel
   std::vector< std::string > *arg1 = 0 ;
   int res1 = SWIG_OLDOBJ ;
   std::vector< std::string > *result = 0 ;
-  
+
   if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
   {
     std::vector< std::string,std::allocator< std::string > > *ptr = (std::vector< std::string,std::allocator< std::string > > *)0;
     res1 = swig::asptr(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_vectorString" "', argument " "1"" of type '" "std::vector< std::string > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_vectorString" "', argument " "1"" of type '" "std::vector< std::string > const &""'");
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_vectorString" "', argument " "1"" of type '" "std::vector< std::string > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_vectorString" "', argument " "1"" of type '" "std::vector< std::string > const &""'");
     }
     arg1 = ptr;
   }
@@ -10217,12 +10217,12 @@ SWIGINTERN PyObject *_wrap_vectorString_empty(PyObject *SWIGUNUSEDPARM(self), Py
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_empty" "', argument " "1"" of type '" "std::vector< std::string > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_empty" "', argument " "1"" of type '" "std::vector< std::string > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   result = (bool)((std::vector< std::string > const *)arg1)->empty();
@@ -10240,12 +10240,12 @@ SWIGINTERN PyObject *_wrap_vectorString_size(PyObject *SWIGUNUSEDPARM(self), PyO
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< std::string >::size_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_size" "', argument " "1"" of type '" "std::vector< std::string > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_size" "', argument " "1"" of type '" "std::vector< std::string > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   result = ((std::vector< std::string > const *)arg1)->size();
@@ -10267,21 +10267,21 @@ SWIGINTERN PyObject *_wrap_vectorString_swap(PyObject *SWIGUNUSEDPARM(self), PyO
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"v",  NULL 
+    (char *)"self",  (char *)"v",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:vectorString_swap", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_swap" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_swap" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vectorString_swap" "', argument " "2"" of type '" "std::vector< std::string > &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vectorString_swap" "', argument " "2"" of type '" "std::vector< std::string > &""'");
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorString_swap" "', argument " "2"" of type '" "std::vector< std::string > &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorString_swap" "', argument " "2"" of type '" "std::vector< std::string > &""'");
   }
   arg2 = reinterpret_cast< std::vector< std::string > * >(argp2);
   (arg1)->swap(*arg2);
@@ -10299,12 +10299,12 @@ SWIGINTERN PyObject *_wrap_vectorString_begin(PyObject *SWIGUNUSEDPARM(self), Py
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< std::string >::iterator result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_begin" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_begin" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   result = (arg1)->begin();
@@ -10323,12 +10323,12 @@ SWIGINTERN PyObject *_wrap_vectorString_end(PyObject *SWIGUNUSEDPARM(self), PyOb
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< std::string >::iterator result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_end" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_end" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   result = (arg1)->end();
@@ -10347,12 +10347,12 @@ SWIGINTERN PyObject *_wrap_vectorString_rbegin(PyObject *SWIGUNUSEDPARM(self), P
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< std::string >::reverse_iterator result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_rbegin" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_rbegin" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   result = (arg1)->rbegin();
@@ -10371,12 +10371,12 @@ SWIGINTERN PyObject *_wrap_vectorString_rend(PyObject *SWIGUNUSEDPARM(self), PyO
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< std::string >::reverse_iterator result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_rend" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_rend" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   result = (arg1)->rend();
@@ -10394,12 +10394,12 @@ SWIGINTERN PyObject *_wrap_vectorString_clear(PyObject *SWIGUNUSEDPARM(self), Py
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_clear" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_clear" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   (arg1)->clear();
@@ -10417,12 +10417,12 @@ SWIGINTERN PyObject *_wrap_vectorString_get_allocator(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   SwigValueWrapper< std::allocator< std::string > > result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_get_allocator" "', argument " "1"" of type '" "std::vector< std::string > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_get_allocator" "', argument " "1"" of type '" "std::vector< std::string > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   result = ((std::vector< std::string > const *)arg1)->get_allocator();
@@ -10439,12 +10439,12 @@ SWIGINTERN PyObject *_wrap_new_vectorString__SWIG_2(PyObject *SWIGUNUSEDPARM(sel
   size_t val1 ;
   int ecode1 = 0 ;
   std::vector< std::string > *result = 0 ;
-  
+
   if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
   ecode1 = SWIG_AsVal_size_t(swig_obj[0], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_vectorString" "', argument " "1"" of type '" "std::vector< std::string >::size_type""'");
-  } 
+  }
   arg1 = static_cast< std::vector< std::string >::size_type >(val1);
   result = (std::vector< std::string > *)new std::vector< std::string >(arg1);
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, SWIG_POINTER_NEW |  0 );
@@ -10460,12 +10460,12 @@ SWIGINTERN PyObject *_wrap_vectorString_pop_back(PyObject *SWIGUNUSEDPARM(self),
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_pop_back" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_pop_back" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   (arg1)->pop_back();
@@ -10484,17 +10484,17 @@ SWIGINTERN PyObject *_wrap_vectorString_resize__SWIG_0(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   size_t val2 ;
   int ecode2 = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_resize" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_resize" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorString_resize" "', argument " "2"" of type '" "std::vector< std::string >::size_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< std::string >::size_type >(val2);
   (arg1)->resize(arg2);
   resultobj = SWIG_Py_Void();
@@ -10513,11 +10513,11 @@ SWIGINTERN PyObject *_wrap_vectorString_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(s
   swig::SwigPyIterator *iter2 = 0 ;
   int res2 ;
   std::vector< std::string >::iterator result;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_erase" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_erase" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   res2 = SWIG_ConvertPtr(swig_obj[1], SWIG_as_voidptrptr(&iter2), swig::SwigPyIterator::descriptor(), 0);
@@ -10552,11 +10552,11 @@ SWIGINTERN PyObject *_wrap_vectorString_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(s
   swig::SwigPyIterator *iter3 = 0 ;
   int res3 ;
   std::vector< std::string >::iterator result;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_erase" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_erase" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   res2 = SWIG_ConvertPtr(swig_obj[1], SWIG_as_voidptrptr(&iter2), swig::SwigPyIterator::descriptor(), 0);
@@ -10595,7 +10595,7 @@ SWIGINTERN PyObject *_wrap_vectorString_erase(PyObject *self, PyObject *args) {
   PyObject *argv[4] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "vectorString_erase", 0, 3, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -10629,7 +10629,7 @@ SWIGINTERN PyObject *_wrap_vectorString_erase(PyObject *self, PyObject *args) {
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'vectorString_erase'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -10647,21 +10647,21 @@ SWIGINTERN PyObject *_wrap_new_vectorString__SWIG_3(PyObject *SWIGUNUSEDPARM(sel
   int ecode1 = 0 ;
   int res2 = SWIG_OLDOBJ ;
   std::vector< std::string > *result = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   ecode1 = SWIG_AsVal_size_t(swig_obj[0], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_vectorString" "', argument " "1"" of type '" "std::vector< std::string >::size_type""'");
-  } 
+  }
   arg1 = static_cast< std::vector< std::string >::size_type >(val1);
   {
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(swig_obj[1], &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_vectorString" "', argument " "2"" of type '" "std::vector< std::string >::value_type const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_vectorString" "', argument " "2"" of type '" "std::vector< std::string >::value_type const &""'");
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_vectorString" "', argument " "2"" of type '" "std::vector< std::string >::value_type const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_vectorString" "', argument " "2"" of type '" "std::vector< std::string >::value_type const &""'");
     }
     arg2 = ptr;
   }
@@ -10680,7 +10680,7 @@ SWIGINTERN PyObject *_wrap_new_vectorString(PyObject *self, PyObject *args) {
   PyObject *argv[3] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "new_vectorString", 0, 2, argv))) SWIG_fail;
   --argc;
   if (argc == 0) {
@@ -10718,7 +10718,7 @@ SWIGINTERN PyObject *_wrap_new_vectorString(PyObject *self, PyObject *args) {
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_vectorString'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -10740,23 +10740,23 @@ SWIGINTERN PyObject *_wrap_vectorString_push_back(PyObject *SWIGUNUSEDPARM(self)
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"x",  NULL 
+    (char *)"self",  (char *)"x",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:vectorString_push_back", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_push_back" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_push_back" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   {
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vectorString_push_back" "', argument " "2"" of type '" "std::vector< std::string >::value_type const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vectorString_push_back" "', argument " "2"" of type '" "std::vector< std::string >::value_type const &""'");
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorString_push_back" "', argument " "2"" of type '" "std::vector< std::string >::value_type const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorString_push_back" "', argument " "2"" of type '" "std::vector< std::string >::value_type const &""'");
     }
     arg2 = ptr;
   }
@@ -10777,12 +10777,12 @@ SWIGINTERN PyObject *_wrap_vectorString_front(PyObject *SWIGUNUSEDPARM(self), Py
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< std::string >::value_type *result = 0 ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_front" "', argument " "1"" of type '" "std::vector< std::string > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_front" "', argument " "1"" of type '" "std::vector< std::string > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   result = (std::vector< std::string >::value_type *) &((std::vector< std::string > const *)arg1)->front();
@@ -10801,12 +10801,12 @@ SWIGINTERN PyObject *_wrap_vectorString_back(PyObject *SWIGUNUSEDPARM(self), PyO
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< std::string >::value_type *result = 0 ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_back" "', argument " "1"" of type '" "std::vector< std::string > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_back" "', argument " "1"" of type '" "std::vector< std::string > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   result = (std::vector< std::string >::value_type *) &((std::vector< std::string > const *)arg1)->back();
@@ -10832,28 +10832,28 @@ SWIGINTERN PyObject *_wrap_vectorString_assign(PyObject *SWIGUNUSEDPARM(self), P
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"n",  (char *)"x",  NULL 
+    (char *)"self",  (char *)"n",  (char *)"x",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:vectorString_assign", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_assign" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_assign" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorString_assign" "', argument " "2"" of type '" "std::vector< std::string >::size_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< std::string >::size_type >(val2);
   {
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(obj2, &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorString_assign" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorString_assign" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'");
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorString_assign" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorString_assign" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'");
     }
     arg3 = ptr;
   }
@@ -10877,26 +10877,26 @@ SWIGINTERN PyObject *_wrap_vectorString_resize__SWIG_1(PyObject *SWIGUNUSEDPARM(
   size_t val2 ;
   int ecode2 = 0 ;
   int res3 = SWIG_OLDOBJ ;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_resize" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_resize" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorString_resize" "', argument " "2"" of type '" "std::vector< std::string >::size_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< std::string >::size_type >(val2);
   {
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorString_resize" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorString_resize" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'");
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorString_resize" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorString_resize" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'");
     }
     arg3 = ptr;
   }
@@ -10915,7 +10915,7 @@ SWIGINTERN PyObject *_wrap_vectorString_resize(PyObject *self, PyObject *args) {
   PyObject *argv[4] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "vectorString_resize", 0, 3, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -10950,7 +10950,7 @@ SWIGINTERN PyObject *_wrap_vectorString_resize(PyObject *self, PyObject *args) {
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'vectorString_resize'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -10971,11 +10971,11 @@ SWIGINTERN PyObject *_wrap_vectorString_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(
   int res2 ;
   int res3 = SWIG_OLDOBJ ;
   std::vector< std::string >::iterator result;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_insert" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_insert" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   res2 = SWIG_ConvertPtr(swig_obj[1], SWIG_as_voidptrptr(&iter2), swig::SwigPyIterator::descriptor(), 0);
@@ -10993,10 +10993,10 @@ SWIGINTERN PyObject *_wrap_vectorString_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(swig_obj[2], &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorString_insert" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorString_insert" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'");
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorString_insert" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorString_insert" "', argument " "3"" of type '" "std::vector< std::string >::value_type const &""'");
     }
     arg3 = ptr;
   }
@@ -11024,11 +11024,11 @@ SWIGINTERN PyObject *_wrap_vectorString_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(
   size_t val3 ;
   int ecode3 = 0 ;
   int res4 = SWIG_OLDOBJ ;
-  
+
   if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_insert" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_insert" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   res2 = SWIG_ConvertPtr(swig_obj[1], SWIG_as_voidptrptr(&iter2), swig::SwigPyIterator::descriptor(), 0);
@@ -11045,16 +11045,16 @@ SWIGINTERN PyObject *_wrap_vectorString_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(
   ecode3 = SWIG_AsVal_size_t(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorString_insert" "', argument " "3"" of type '" "std::vector< std::string >::size_type""'");
-  } 
+  }
   arg3 = static_cast< std::vector< std::string >::size_type >(val3);
   {
     std::string *ptr = (std::string *)0;
     res4 = SWIG_AsPtr_std_string(swig_obj[3], &ptr);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "vectorString_insert" "', argument " "4"" of type '" "std::vector< std::string >::value_type const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "vectorString_insert" "', argument " "4"" of type '" "std::vector< std::string >::value_type const &""'");
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorString_insert" "', argument " "4"" of type '" "std::vector< std::string >::value_type const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorString_insert" "', argument " "4"" of type '" "std::vector< std::string >::value_type const &""'");
     }
     arg4 = ptr;
   }
@@ -11073,7 +11073,7 @@ SWIGINTERN PyObject *_wrap_vectorString_insert(PyObject *self, PyObject *args) {
   PyObject *argv[5] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "vectorString_insert", 0, 4, argv))) SWIG_fail;
   --argc;
   if (argc == 3) {
@@ -11116,7 +11116,7 @@ SWIGINTERN PyObject *_wrap_vectorString_insert(PyObject *self, PyObject *args) {
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'vectorString_insert'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -11137,19 +11137,19 @@ SWIGINTERN PyObject *_wrap_vectorString_reserve(PyObject *SWIGUNUSEDPARM(self), 
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"n",  NULL 
+    (char *)"self",  (char *)"n",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:vectorString_reserve", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_reserve" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_reserve" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorString_reserve" "', argument " "2"" of type '" "std::vector< std::string >::size_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< std::string >::size_type >(val2);
   (arg1)->reserve(arg2);
   resultobj = SWIG_Py_Void();
@@ -11166,12 +11166,12 @@ SWIGINTERN PyObject *_wrap_vectorString_capacity(PyObject *SWIGUNUSEDPARM(self),
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< std::string >::size_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_capacity" "', argument " "1"" of type '" "std::vector< std::string > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorString_capacity" "', argument " "1"" of type '" "std::vector< std::string > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   result = ((std::vector< std::string > const *)arg1)->capacity();
@@ -11188,17 +11188,17 @@ SWIGINTERN PyObject *_wrap_delete_vectorString(PyObject *SWIGUNUSEDPARM(self), P
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_vectorString" "', argument " "1"" of type '" "std::vector< std::string > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_vectorString" "', argument " "1"" of type '" "std::vector< std::string > *""'");
   }
   arg1 = reinterpret_cast< std::vector< std::string > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -11242,7 +11242,7 @@ SWIGINTERN PyObject *vectorString_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObj
 SWIGINTERN PyObject *_wrap_new_pairVectorDouble__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
   PyObject *resultobj = 0;
   std::pair< std::vector< double >,std::vector< double > > *result = 0 ;
-  
+
   if ((nobjs < 0) || (nobjs > 0)) SWIG_fail;
   result = (std::pair< std::vector< double >,std::vector< double > > *)new std::pair< std::vector< double >,std::vector< double > >();
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t, SWIG_POINTER_NEW |  0 );
@@ -11257,13 +11257,13 @@ SWIGINTERN PyObject *_wrap_new_pairVectorDouble__SWIG_1(PyObject *SWIGUNUSEDPARM
   std::vector< double,std::allocator< double > > arg1 ;
   std::vector< double,std::allocator< double > > arg2 ;
   std::pair< std::vector< double >,std::vector< double > > *result = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   {
     std::vector< double,std::allocator< double > > *ptr = (std::vector< double,std::allocator< double > > *)0;
     int res = swig::asptr(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "new_pairVectorDouble" "', argument " "1"" of type '" "std::vector< double,std::allocator< double > >""'"); 
+      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "new_pairVectorDouble" "', argument " "1"" of type '" "std::vector< double,std::allocator< double > >""'");
     }
     arg1 = *ptr;
     if (SWIG_IsNewObj(res)) delete ptr;
@@ -11272,7 +11272,7 @@ SWIGINTERN PyObject *_wrap_new_pairVectorDouble__SWIG_1(PyObject *SWIGUNUSEDPARM
     std::vector< double,std::allocator< double > > *ptr = (std::vector< double,std::allocator< double > > *)0;
     int res = swig::asptr(swig_obj[1], &ptr);
     if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "new_pairVectorDouble" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > >""'"); 
+      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "new_pairVectorDouble" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > >""'");
     }
     arg2 = *ptr;
     if (SWIG_IsNewObj(res)) delete ptr;
@@ -11290,16 +11290,16 @@ SWIGINTERN PyObject *_wrap_new_pairVectorDouble__SWIG_2(PyObject *SWIGUNUSEDPARM
   std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > *arg1 = 0 ;
   int res1 = SWIG_OLDOBJ ;
   std::pair< std::vector< double >,std::vector< double > > *result = 0 ;
-  
+
   if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
   {
     std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > *ptr = (std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > *)0;
     res1 = swig::asptr(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_pairVectorDouble" "', argument " "1"" of type '" "std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_pairVectorDouble" "', argument " "1"" of type '" "std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > const &""'");
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_pairVectorDouble" "', argument " "1"" of type '" "std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_pairVectorDouble" "', argument " "1"" of type '" "std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > const &""'");
     }
     arg1 = ptr;
   }
@@ -11318,7 +11318,7 @@ SWIGINTERN PyObject *_wrap_new_pairVectorDouble(PyObject *self, PyObject *args) 
   PyObject *argv[3] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "new_pairVectorDouble", 0, 2, argv))) SWIG_fail;
   --argc;
   if (argc == 0) {
@@ -11344,7 +11344,7 @@ SWIGINTERN PyObject *_wrap_new_pairVectorDouble(PyObject *self, PyObject *args) 
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_pairVectorDouble'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -11364,16 +11364,16 @@ SWIGINTERN PyObject *_wrap_pairVectorDouble_first_set(PyObject *SWIGUNUSEDPARM(s
   void *argp2 = 0 ;
   int res2 = 0 ;
   PyObject *swig_obj[2] ;
-  
+
   if (!SWIG_Python_UnpackTuple(args, "pairVectorDouble_first_set", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pairVectorDouble_first_set" "', argument " "1"" of type '" "std::pair< std::vector< double >,std::vector< double > > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pairVectorDouble_first_set" "', argument " "1"" of type '" "std::pair< std::vector< double >,std::vector< double > > *""'");
   }
   arg1 = reinterpret_cast< std::pair< std::vector< double >,std::vector< double > > * >(argp1);
   res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pairVectorDouble_first_set" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pairVectorDouble_first_set" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > *""'");
   }
   arg2 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp2);
   if (arg1) (arg1)->first = *arg2;
@@ -11391,12 +11391,12 @@ SWIGINTERN PyObject *_wrap_pairVectorDouble_first_get(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< double,std::allocator< double > > *result = 0 ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pairVectorDouble_first_get" "', argument " "1"" of type '" "std::pair< std::vector< double >,std::vector< double > > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pairVectorDouble_first_get" "', argument " "1"" of type '" "std::pair< std::vector< double >,std::vector< double > > *""'");
   }
   arg1 = reinterpret_cast< std::pair< std::vector< double >,std::vector< double > > * >(argp1);
   result = (std::vector< double,std::allocator< double > > *)& ((arg1)->first);
@@ -11416,16 +11416,16 @@ SWIGINTERN PyObject *_wrap_pairVectorDouble_second_set(PyObject *SWIGUNUSEDPARM(
   void *argp2 = 0 ;
   int res2 = 0 ;
   PyObject *swig_obj[2] ;
-  
+
   if (!SWIG_Python_UnpackTuple(args, "pairVectorDouble_second_set", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pairVectorDouble_second_set" "', argument " "1"" of type '" "std::pair< std::vector< double >,std::vector< double > > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pairVectorDouble_second_set" "', argument " "1"" of type '" "std::pair< std::vector< double >,std::vector< double > > *""'");
   }
   arg1 = reinterpret_cast< std::pair< std::vector< double >,std::vector< double > > * >(argp1);
   res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pairVectorDouble_second_set" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pairVectorDouble_second_set" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > *""'");
   }
   arg2 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp2);
   if (arg1) (arg1)->second = *arg2;
@@ -11443,12 +11443,12 @@ SWIGINTERN PyObject *_wrap_pairVectorDouble_second_get(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< double,std::allocator< double > > *result = 0 ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pairVectorDouble_second_get" "', argument " "1"" of type '" "std::pair< std::vector< double >,std::vector< double > > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pairVectorDouble_second_get" "', argument " "1"" of type '" "std::pair< std::vector< double >,std::vector< double > > *""'");
   }
   arg1 = reinterpret_cast< std::pair< std::vector< double >,std::vector< double > > * >(argp1);
   result = (std::vector< double,std::allocator< double > > *)& ((arg1)->second);
@@ -11465,17 +11465,17 @@ SWIGINTERN PyObject *_wrap_delete_pairVectorDouble(PyObject *SWIGUNUSEDPARM(self
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__pairT_std__vectorT_double_std__allocatorT_double_t_t_std__vectorT_double_std__allocatorT_double_t_t_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_pairVectorDouble" "', argument " "1"" of type '" "std::pair< std::vector< double >,std::vector< double > > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_pairVectorDouble" "', argument " "1"" of type '" "std::pair< std::vector< double >,std::vector< double > > *""'");
   }
   arg1 = reinterpret_cast< std::pair< std::vector< double >,std::vector< double > > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -11524,13 +11524,13 @@ SWIGINTERN PyObject *_wrap_vectorFloat_iterator(PyObject *SWIGUNUSEDPARM(self), 
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   swig::SwigPyIterator *result = 0 ;
-  
+
   arg2 = &swig_obj[0];
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_iterator" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_iterator" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   result = (swig::SwigPyIterator *)std_vector_Sl_float_Sg__iterator(arg1,arg2);
@@ -11548,12 +11548,12 @@ SWIGINTERN PyObject *_wrap_vectorFloat___nonzero__(PyObject *SWIGUNUSEDPARM(self
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___nonzero__" "', argument " "1"" of type '" "std::vector< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___nonzero__" "', argument " "1"" of type '" "std::vector< float > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   result = (bool)std_vector_Sl_float_Sg____nonzero__((std::vector< float > const *)arg1);
@@ -11571,12 +11571,12 @@ SWIGINTERN PyObject *_wrap_vectorFloat___bool__(PyObject *SWIGUNUSEDPARM(self), 
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___bool__" "', argument " "1"" of type '" "std::vector< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___bool__" "', argument " "1"" of type '" "std::vector< float > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   result = (bool)std_vector_Sl_float_Sg____bool__((std::vector< float > const *)arg1);
@@ -11594,12 +11594,12 @@ SWIGINTERN PyObject *_wrap_vectorFloat___len__(PyObject *SWIGUNUSEDPARM(self), P
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< float >::size_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___len__" "', argument " "1"" of type '" "std::vector< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___len__" "', argument " "1"" of type '" "std::vector< float > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   result = std_vector_Sl_float_Sg____len__((std::vector< float > const *)arg1);
@@ -11625,25 +11625,25 @@ SWIGINTERN PyObject *_wrap_vectorFloat___getslice__(PyObject *SWIGUNUSEDPARM(sel
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"i",  (char *)"j",  NULL 
+    (char *)"self",  (char *)"i",  (char *)"j",  NULL
   };
   std::vector< float,std::allocator< float > > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:vectorFloat___getslice__", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___getslice__" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___getslice__" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorFloat___getslice__" "', argument " "2"" of type '" "std::vector< float >::difference_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< float >::difference_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorFloat___getslice__" "', argument " "3"" of type '" "std::vector< float >::difference_type""'");
-  } 
+  }
   arg3 = static_cast< std::vector< float >::difference_type >(val3);
   try {
     result = (std::vector< float,std::allocator< float > > *)std_vector_Sl_float_Sg____getslice__(arg1,arg2,arg3);
@@ -11670,22 +11670,22 @@ SWIGINTERN PyObject *_wrap_vectorFloat___setslice____SWIG_0(PyObject *SWIGUNUSED
   int ecode2 = 0 ;
   ptrdiff_t val3 ;
   int ecode3 = 0 ;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___setslice__" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___setslice__" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorFloat___setslice__" "', argument " "2"" of type '" "std::vector< float >::difference_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< float >::difference_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorFloat___setslice__" "', argument " "3"" of type '" "std::vector< float >::difference_type""'");
-  } 
+  }
   arg3 = static_cast< std::vector< float >::difference_type >(val3);
   try {
     std_vector_Sl_float_Sg____setslice____SWIG_0(arg1,arg2,arg3);
@@ -11714,31 +11714,31 @@ SWIGINTERN PyObject *_wrap_vectorFloat___setslice____SWIG_1(PyObject *SWIGUNUSED
   ptrdiff_t val3 ;
   int ecode3 = 0 ;
   int res4 = SWIG_OLDOBJ ;
-  
+
   if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___setslice__" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___setslice__" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorFloat___setslice__" "', argument " "2"" of type '" "std::vector< float >::difference_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< float >::difference_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorFloat___setslice__" "', argument " "3"" of type '" "std::vector< float >::difference_type""'");
-  } 
+  }
   arg3 = static_cast< std::vector< float >::difference_type >(val3);
   {
     std::vector< float,std::allocator< float > > *ptr = (std::vector< float,std::allocator< float > > *)0;
     res4 = swig::asptr(swig_obj[3], &ptr);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "vectorFloat___setslice__" "', argument " "4"" of type '" "std::vector< float,std::allocator< float > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "vectorFloat___setslice__" "', argument " "4"" of type '" "std::vector< float,std::allocator< float > > const &""'");
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorFloat___setslice__" "', argument " "4"" of type '" "std::vector< float,std::allocator< float > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorFloat___setslice__" "', argument " "4"" of type '" "std::vector< float,std::allocator< float > > const &""'");
     }
     arg4 = ptr;
   }
@@ -11763,7 +11763,7 @@ SWIGINTERN PyObject *_wrap_vectorFloat___setslice__(PyObject *self, PyObject *ar
   PyObject *argv[5] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "vectorFloat___setslice__", 0, 4, argv))) SWIG_fail;
   --argc;
   if (argc == 3) {
@@ -11810,7 +11810,7 @@ SWIGINTERN PyObject *_wrap_vectorFloat___setslice__(PyObject *self, PyObject *ar
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'vectorFloat___setslice__'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -11835,24 +11835,24 @@ SWIGINTERN PyObject *_wrap_vectorFloat___delslice__(PyObject *SWIGUNUSEDPARM(sel
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"i",  (char *)"j",  NULL 
+    (char *)"self",  (char *)"i",  (char *)"j",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:vectorFloat___delslice__", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___delslice__" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___delslice__" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorFloat___delslice__" "', argument " "2"" of type '" "std::vector< float >::difference_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< float >::difference_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorFloat___delslice__" "', argument " "3"" of type '" "std::vector< float >::difference_type""'");
-  } 
+  }
   arg3 = static_cast< std::vector< float >::difference_type >(val3);
   try {
     std_vector_Sl_float_Sg____delslice__(arg1,arg2,arg3);
@@ -11876,17 +11876,17 @@ SWIGINTERN PyObject *_wrap_vectorFloat___delitem____SWIG_0(PyObject *SWIGUNUSEDP
   int res1 = 0 ;
   ptrdiff_t val2 ;
   int ecode2 = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___delitem__" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___delitem__" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorFloat___delitem__" "', argument " "2"" of type '" "std::vector< float >::difference_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< float >::difference_type >(val2);
   try {
     std_vector_Sl_float_Sg____delitem____SWIG_0(arg1,arg2);
@@ -11909,11 +11909,11 @@ SWIGINTERN PyObject *_wrap_vectorFloat___getitem____SWIG_0(PyObject *SWIGUNUSEDP
   void *argp1 = 0 ;
   int res1 = 0 ;
   std::vector< float,std::allocator< float > > *result = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___getitem__" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___getitem__" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   {
@@ -11944,11 +11944,11 @@ SWIGINTERN PyObject *_wrap_vectorFloat___setitem____SWIG_0(PyObject *SWIGUNUSEDP
   void *argp1 = 0 ;
   int res1 = 0 ;
   int res3 = SWIG_OLDOBJ ;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___setitem__" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___setitem__" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   {
@@ -11961,10 +11961,10 @@ SWIGINTERN PyObject *_wrap_vectorFloat___setitem____SWIG_0(PyObject *SWIGUNUSEDP
     std::vector< float,std::allocator< float > > *ptr = (std::vector< float,std::allocator< float > > *)0;
     res3 = swig::asptr(swig_obj[2], &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorFloat___setitem__" "', argument " "3"" of type '" "std::vector< float,std::allocator< float > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "vectorFloat___setitem__" "', argument " "3"" of type '" "std::vector< float,std::allocator< float > > const &""'");
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorFloat___setitem__" "', argument " "3"" of type '" "std::vector< float,std::allocator< float > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorFloat___setitem__" "', argument " "3"" of type '" "std::vector< float,std::allocator< float > > const &""'");
     }
     arg3 = ptr;
   }
@@ -11990,11 +11990,11 @@ SWIGINTERN PyObject *_wrap_vectorFloat___setitem____SWIG_1(PyObject *SWIGUNUSEDP
   PySliceObject *arg2 = (PySliceObject *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___setitem__" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___setitem__" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   {
@@ -12023,11 +12023,11 @@ SWIGINTERN PyObject *_wrap_vectorFloat___delitem____SWIG_1(PyObject *SWIGUNUSEDP
   PySliceObject *arg2 = (PySliceObject *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___delitem__" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___delitem__" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   {
@@ -12055,7 +12055,7 @@ SWIGINTERN PyObject *_wrap_vectorFloat___delitem__(PyObject *self, PyObject *arg
   PyObject *argv[3] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "vectorFloat___delitem__", 0, 2, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -12085,7 +12085,7 @@ SWIGINTERN PyObject *_wrap_vectorFloat___delitem__(PyObject *self, PyObject *arg
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'vectorFloat___delitem__'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -12104,17 +12104,17 @@ SWIGINTERN PyObject *_wrap_vectorFloat___getitem____SWIG_1(PyObject *SWIGUNUSEDP
   ptrdiff_t val2 ;
   int ecode2 = 0 ;
   std::vector< float >::value_type *result = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___getitem__" "', argument " "1"" of type '" "std::vector< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___getitem__" "', argument " "1"" of type '" "std::vector< float > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorFloat___getitem__" "', argument " "2"" of type '" "std::vector< float >::difference_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< float >::difference_type >(val2);
   try {
     result = (std::vector< float >::value_type *) &std_vector_Sl_float_Sg____getitem____SWIG_1((std::vector< float > const *)arg1,arg2);
@@ -12134,7 +12134,7 @@ SWIGINTERN PyObject *_wrap_vectorFloat___getitem__(PyObject *self, PyObject *arg
   PyObject *argv[3] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "vectorFloat___getitem__", 0, 2, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -12164,7 +12164,7 @@ SWIGINTERN PyObject *_wrap_vectorFloat___getitem__(PyObject *self, PyObject *arg
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'vectorFloat___getitem__'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -12186,22 +12186,22 @@ SWIGINTERN PyObject *_wrap_vectorFloat___setitem____SWIG_2(PyObject *SWIGUNUSEDP
   std::vector< float >::value_type temp3 ;
   float val3 ;
   int ecode3 = 0 ;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___setitem__" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat___setitem__" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorFloat___setitem__" "', argument " "2"" of type '" "std::vector< float >::difference_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< float >::difference_type >(val2);
   ecode3 = SWIG_AsVal_float(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorFloat___setitem__" "', argument " "3"" of type '" "std::vector< float >::value_type""'");
-  } 
+  }
   temp3 = static_cast< std::vector< float >::value_type >(val3);
   arg3 = &temp3;
   try {
@@ -12221,7 +12221,7 @@ SWIGINTERN PyObject *_wrap_vectorFloat___setitem__(PyObject *self, PyObject *arg
   PyObject *argv[4] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "vectorFloat___setitem__", 0, 3, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -12274,7 +12274,7 @@ SWIGINTERN PyObject *_wrap_vectorFloat___setitem__(PyObject *self, PyObject *arg
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'vectorFloat___setitem__'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -12292,12 +12292,12 @@ SWIGINTERN PyObject *_wrap_vectorFloat_pop(PyObject *SWIGUNUSEDPARM(self), PyObj
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< float >::value_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_pop" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_pop" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   try {
@@ -12324,19 +12324,19 @@ SWIGINTERN PyObject *_wrap_vectorFloat_append(PyObject *SWIGUNUSEDPARM(self), Py
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"x",  NULL 
+    (char *)"self",  (char *)"x",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:vectorFloat_append", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_append" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_append" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   ecode2 = SWIG_AsVal_float(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorFloat_append" "', argument " "2"" of type '" "std::vector< float >::value_type""'");
-  } 
+  }
   temp2 = static_cast< std::vector< float >::value_type >(val2);
   arg2 = &temp2;
   std_vector_Sl_float_Sg__append(arg1,(float const &)*arg2);
@@ -12350,7 +12350,7 @@ fail:
 SWIGINTERN PyObject *_wrap_new_vectorFloat__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
   PyObject *resultobj = 0;
   std::vector< float > *result = 0 ;
-  
+
   if ((nobjs < 0) || (nobjs > 0)) SWIG_fail;
   result = (std::vector< float > *)new std::vector< float >();
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, SWIG_POINTER_NEW |  0 );
@@ -12365,16 +12365,16 @@ SWIGINTERN PyObject *_wrap_new_vectorFloat__SWIG_1(PyObject *SWIGUNUSEDPARM(self
   std::vector< float > *arg1 = 0 ;
   int res1 = SWIG_OLDOBJ ;
   std::vector< float > *result = 0 ;
-  
+
   if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
   {
     std::vector< float,std::allocator< float > > *ptr = (std::vector< float,std::allocator< float > > *)0;
     res1 = swig::asptr(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_vectorFloat" "', argument " "1"" of type '" "std::vector< float > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_vectorFloat" "', argument " "1"" of type '" "std::vector< float > const &""'");
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_vectorFloat" "', argument " "1"" of type '" "std::vector< float > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_vectorFloat" "', argument " "1"" of type '" "std::vector< float > const &""'");
     }
     arg1 = ptr;
   }
@@ -12395,12 +12395,12 @@ SWIGINTERN PyObject *_wrap_vectorFloat_empty(PyObject *SWIGUNUSEDPARM(self), PyO
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_empty" "', argument " "1"" of type '" "std::vector< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_empty" "', argument " "1"" of type '" "std::vector< float > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   result = (bool)((std::vector< float > const *)arg1)->empty();
@@ -12418,12 +12418,12 @@ SWIGINTERN PyObject *_wrap_vectorFloat_size(PyObject *SWIGUNUSEDPARM(self), PyOb
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< float >::size_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_size" "', argument " "1"" of type '" "std::vector< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_size" "', argument " "1"" of type '" "std::vector< float > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   result = ((std::vector< float > const *)arg1)->size();
@@ -12445,21 +12445,21 @@ SWIGINTERN PyObject *_wrap_vectorFloat_swap(PyObject *SWIGUNUSEDPARM(self), PyOb
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"v",  NULL 
+    (char *)"self",  (char *)"v",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:vectorFloat_swap", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_swap" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_swap" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vectorFloat_swap" "', argument " "2"" of type '" "std::vector< float > &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "vectorFloat_swap" "', argument " "2"" of type '" "std::vector< float > &""'");
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorFloat_swap" "', argument " "2"" of type '" "std::vector< float > &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "vectorFloat_swap" "', argument " "2"" of type '" "std::vector< float > &""'");
   }
   arg2 = reinterpret_cast< std::vector< float > * >(argp2);
   (arg1)->swap(*arg2);
@@ -12477,12 +12477,12 @@ SWIGINTERN PyObject *_wrap_vectorFloat_begin(PyObject *SWIGUNUSEDPARM(self), PyO
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< float >::iterator result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_begin" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_begin" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   result = (arg1)->begin();
@@ -12501,12 +12501,12 @@ SWIGINTERN PyObject *_wrap_vectorFloat_end(PyObject *SWIGUNUSEDPARM(self), PyObj
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< float >::iterator result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_end" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_end" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   result = (arg1)->end();
@@ -12525,12 +12525,12 @@ SWIGINTERN PyObject *_wrap_vectorFloat_rbegin(PyObject *SWIGUNUSEDPARM(self), Py
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< float >::reverse_iterator result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_rbegin" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_rbegin" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   result = (arg1)->rbegin();
@@ -12549,12 +12549,12 @@ SWIGINTERN PyObject *_wrap_vectorFloat_rend(PyObject *SWIGUNUSEDPARM(self), PyOb
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< float >::reverse_iterator result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_rend" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_rend" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   result = (arg1)->rend();
@@ -12572,12 +12572,12 @@ SWIGINTERN PyObject *_wrap_vectorFloat_clear(PyObject *SWIGUNUSEDPARM(self), PyO
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_clear" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_clear" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   (arg1)->clear();
@@ -12595,12 +12595,12 @@ SWIGINTERN PyObject *_wrap_vectorFloat_get_allocator(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   SwigValueWrapper< std::allocator< float > > result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_get_allocator" "', argument " "1"" of type '" "std::vector< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_get_allocator" "', argument " "1"" of type '" "std::vector< float > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   result = ((std::vector< float > const *)arg1)->get_allocator();
@@ -12617,12 +12617,12 @@ SWIGINTERN PyObject *_wrap_new_vectorFloat__SWIG_2(PyObject *SWIGUNUSEDPARM(self
   size_t val1 ;
   int ecode1 = 0 ;
   std::vector< float > *result = 0 ;
-  
+
   if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
   ecode1 = SWIG_AsVal_size_t(swig_obj[0], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_vectorFloat" "', argument " "1"" of type '" "std::vector< float >::size_type""'");
-  } 
+  }
   arg1 = static_cast< std::vector< float >::size_type >(val1);
   result = (std::vector< float > *)new std::vector< float >(arg1);
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, SWIG_POINTER_NEW |  0 );
@@ -12638,12 +12638,12 @@ SWIGINTERN PyObject *_wrap_vectorFloat_pop_back(PyObject *SWIGUNUSEDPARM(self), 
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_pop_back" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_pop_back" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   (arg1)->pop_back();
@@ -12662,17 +12662,17 @@ SWIGINTERN PyObject *_wrap_vectorFloat_resize__SWIG_0(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   size_t val2 ;
   int ecode2 = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_resize" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_resize" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorFloat_resize" "', argument " "2"" of type '" "std::vector< float >::size_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< float >::size_type >(val2);
   (arg1)->resize(arg2);
   resultobj = SWIG_Py_Void();
@@ -12691,11 +12691,11 @@ SWIGINTERN PyObject *_wrap_vectorFloat_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(se
   swig::SwigPyIterator *iter2 = 0 ;
   int res2 ;
   std::vector< float >::iterator result;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_erase" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_erase" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   res2 = SWIG_ConvertPtr(swig_obj[1], SWIG_as_voidptrptr(&iter2), swig::SwigPyIterator::descriptor(), 0);
@@ -12730,11 +12730,11 @@ SWIGINTERN PyObject *_wrap_vectorFloat_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(se
   swig::SwigPyIterator *iter3 = 0 ;
   int res3 ;
   std::vector< float >::iterator result;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_erase" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_erase" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   res2 = SWIG_ConvertPtr(swig_obj[1], SWIG_as_voidptrptr(&iter2), swig::SwigPyIterator::descriptor(), 0);
@@ -12773,7 +12773,7 @@ SWIGINTERN PyObject *_wrap_vectorFloat_erase(PyObject *self, PyObject *args) {
   PyObject *argv[4] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "vectorFloat_erase", 0, 3, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -12807,7 +12807,7 @@ SWIGINTERN PyObject *_wrap_vectorFloat_erase(PyObject *self, PyObject *args) {
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'vectorFloat_erase'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -12827,17 +12827,17 @@ SWIGINTERN PyObject *_wrap_new_vectorFloat__SWIG_3(PyObject *SWIGUNUSEDPARM(self
   float val2 ;
   int ecode2 = 0 ;
   std::vector< float > *result = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   ecode1 = SWIG_AsVal_size_t(swig_obj[0], &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_vectorFloat" "', argument " "1"" of type '" "std::vector< float >::size_type""'");
-  } 
+  }
   arg1 = static_cast< std::vector< float >::size_type >(val1);
   ecode2 = SWIG_AsVal_float(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_vectorFloat" "', argument " "2"" of type '" "std::vector< float >::value_type""'");
-  } 
+  }
   temp2 = static_cast< std::vector< float >::value_type >(val2);
   arg2 = &temp2;
   result = (std::vector< float > *)new std::vector< float >(arg1,(std::vector< float >::value_type const &)*arg2);
@@ -12853,7 +12853,7 @@ SWIGINTERN PyObject *_wrap_new_vectorFloat(PyObject *self, PyObject *args) {
   PyObject *argv[3] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "new_vectorFloat", 0, 2, argv))) SWIG_fail;
   --argc;
   if (argc == 0) {
@@ -12893,7 +12893,7 @@ SWIGINTERN PyObject *_wrap_new_vectorFloat(PyObject *self, PyObject *args) {
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_vectorFloat'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -12917,19 +12917,19 @@ SWIGINTERN PyObject *_wrap_vectorFloat_push_back(PyObject *SWIGUNUSEDPARM(self),
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"x",  NULL 
+    (char *)"self",  (char *)"x",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:vectorFloat_push_back", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_push_back" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_push_back" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   ecode2 = SWIG_AsVal_float(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorFloat_push_back" "', argument " "2"" of type '" "std::vector< float >::value_type""'");
-  } 
+  }
   temp2 = static_cast< std::vector< float >::value_type >(val2);
   arg2 = &temp2;
   (arg1)->push_back((std::vector< float >::value_type const &)*arg2);
@@ -12947,12 +12947,12 @@ SWIGINTERN PyObject *_wrap_vectorFloat_front(PyObject *SWIGUNUSEDPARM(self), PyO
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< float >::value_type *result = 0 ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_front" "', argument " "1"" of type '" "std::vector< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_front" "', argument " "1"" of type '" "std::vector< float > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   result = (std::vector< float >::value_type *) &((std::vector< float > const *)arg1)->front();
@@ -12971,12 +12971,12 @@ SWIGINTERN PyObject *_wrap_vectorFloat_back(PyObject *SWIGUNUSEDPARM(self), PyOb
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< float >::value_type *result = 0 ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_back" "', argument " "1"" of type '" "std::vector< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_back" "', argument " "1"" of type '" "std::vector< float > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   result = (std::vector< float >::value_type *) &((std::vector< float > const *)arg1)->back();
@@ -13004,24 +13004,24 @@ SWIGINTERN PyObject *_wrap_vectorFloat_assign(PyObject *SWIGUNUSEDPARM(self), Py
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"n",  (char *)"x",  NULL 
+    (char *)"self",  (char *)"n",  (char *)"x",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:vectorFloat_assign", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_assign" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_assign" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorFloat_assign" "', argument " "2"" of type '" "std::vector< float >::size_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< float >::size_type >(val2);
   ecode3 = SWIG_AsVal_float(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorFloat_assign" "', argument " "3"" of type '" "std::vector< float >::value_type""'");
-  } 
+  }
   temp3 = static_cast< std::vector< float >::value_type >(val3);
   arg3 = &temp3;
   (arg1)->assign(arg2,(std::vector< float >::value_type const &)*arg3);
@@ -13044,22 +13044,22 @@ SWIGINTERN PyObject *_wrap_vectorFloat_resize__SWIG_1(PyObject *SWIGUNUSEDPARM(s
   std::vector< float >::value_type temp3 ;
   float val3 ;
   int ecode3 = 0 ;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_resize" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_resize" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorFloat_resize" "', argument " "2"" of type '" "std::vector< float >::size_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< float >::size_type >(val2);
   ecode3 = SWIG_AsVal_float(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorFloat_resize" "', argument " "3"" of type '" "std::vector< float >::value_type""'");
-  } 
+  }
   temp3 = static_cast< std::vector< float >::value_type >(val3);
   arg3 = &temp3;
   (arg1)->resize(arg2,(std::vector< float >::value_type const &)*arg3);
@@ -13075,7 +13075,7 @@ SWIGINTERN PyObject *_wrap_vectorFloat_resize(PyObject *self, PyObject *args) {
   PyObject *argv[4] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "vectorFloat_resize", 0, 3, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -13112,7 +13112,7 @@ SWIGINTERN PyObject *_wrap_vectorFloat_resize(PyObject *self, PyObject *args) {
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'vectorFloat_resize'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -13135,11 +13135,11 @@ SWIGINTERN PyObject *_wrap_vectorFloat_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(s
   float val3 ;
   int ecode3 = 0 ;
   std::vector< float >::iterator result;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_insert" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_insert" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   res2 = SWIG_ConvertPtr(swig_obj[1], SWIG_as_voidptrptr(&iter2), swig::SwigPyIterator::descriptor(), 0);
@@ -13156,7 +13156,7 @@ SWIGINTERN PyObject *_wrap_vectorFloat_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(s
   ecode3 = SWIG_AsVal_float(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorFloat_insert" "', argument " "3"" of type '" "std::vector< float >::value_type""'");
-  } 
+  }
   temp3 = static_cast< std::vector< float >::value_type >(val3);
   arg3 = &temp3;
   result = std_vector_Sl_float_Sg__insert__SWIG_0(arg1,arg2,(float const &)*arg3);
@@ -13183,11 +13183,11 @@ SWIGINTERN PyObject *_wrap_vectorFloat_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(s
   std::vector< float >::value_type temp4 ;
   float val4 ;
   int ecode4 = 0 ;
-  
+
   if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_insert" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_insert" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   res2 = SWIG_ConvertPtr(swig_obj[1], SWIG_as_voidptrptr(&iter2), swig::SwigPyIterator::descriptor(), 0);
@@ -13204,12 +13204,12 @@ SWIGINTERN PyObject *_wrap_vectorFloat_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(s
   ecode3 = SWIG_AsVal_size_t(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "vectorFloat_insert" "', argument " "3"" of type '" "std::vector< float >::size_type""'");
-  } 
+  }
   arg3 = static_cast< std::vector< float >::size_type >(val3);
   ecode4 = SWIG_AsVal_float(swig_obj[3], &val4);
   if (!SWIG_IsOK(ecode4)) {
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "vectorFloat_insert" "', argument " "4"" of type '" "std::vector< float >::value_type""'");
-  } 
+  }
   temp4 = static_cast< std::vector< float >::value_type >(val4);
   arg4 = &temp4;
   std_vector_Sl_float_Sg__insert__SWIG_1(arg1,arg2,arg3,(float const &)*arg4);
@@ -13225,7 +13225,7 @@ SWIGINTERN PyObject *_wrap_vectorFloat_insert(PyObject *self, PyObject *args) {
   PyObject *argv[5] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "vectorFloat_insert", 0, 4, argv))) SWIG_fail;
   --argc;
   if (argc == 3) {
@@ -13272,7 +13272,7 @@ SWIGINTERN PyObject *_wrap_vectorFloat_insert(PyObject *self, PyObject *args) {
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'vectorFloat_insert'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -13293,19 +13293,19 @@ SWIGINTERN PyObject *_wrap_vectorFloat_reserve(PyObject *SWIGUNUSEDPARM(self), P
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"n",  NULL 
+    (char *)"self",  (char *)"n",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:vectorFloat_reserve", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_reserve" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_reserve" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "vectorFloat_reserve" "', argument " "2"" of type '" "std::vector< float >::size_type""'");
-  } 
+  }
   arg2 = static_cast< std::vector< float >::size_type >(val2);
   (arg1)->reserve(arg2);
   resultobj = SWIG_Py_Void();
@@ -13322,12 +13322,12 @@ SWIGINTERN PyObject *_wrap_vectorFloat_capacity(PyObject *SWIGUNUSEDPARM(self), 
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< float >::size_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_capacity" "', argument " "1"" of type '" "std::vector< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "vectorFloat_capacity" "', argument " "1"" of type '" "std::vector< float > const *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   result = ((std::vector< float > const *)arg1)->capacity();
@@ -13344,17 +13344,17 @@ SWIGINTERN PyObject *_wrap_delete_vectorFloat(PyObject *SWIGUNUSEDPARM(self), Py
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_vectorFloat" "', argument " "1"" of type '" "std::vector< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_vectorFloat" "', argument " "1"" of type '" "std::vector< float > *""'");
   }
   arg1 = reinterpret_cast< std::vector< float > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -13398,7 +13398,7 @@ SWIGINTERN PyObject *vectorFloat_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObje
 SWIGINTERN PyObject *_wrap_new_pairVectorFloat__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
   PyObject *resultobj = 0;
   std::pair< std::vector< float >,std::vector< float > > *result = 0 ;
-  
+
   if ((nobjs < 0) || (nobjs > 0)) SWIG_fail;
   result = (std::pair< std::vector< float >,std::vector< float > > *)new std::pair< std::vector< float >,std::vector< float > >();
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__pairT_std__vectorT_float_std__allocatorT_float_t_t_std__vectorT_float_std__allocatorT_float_t_t_t, SWIG_POINTER_NEW |  0 );
@@ -13413,13 +13413,13 @@ SWIGINTERN PyObject *_wrap_new_pairVectorFloat__SWIG_1(PyObject *SWIGUNUSEDPARM(
   std::vector< float,std::allocator< float > > arg1 ;
   std::vector< float,std::allocator< float > > arg2 ;
   std::pair< std::vector< float >,std::vector< float > > *result = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   {
     std::vector< float,std::allocator< float > > *ptr = (std::vector< float,std::allocator< float > > *)0;
     int res = swig::asptr(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "new_pairVectorFloat" "', argument " "1"" of type '" "std::vector< float,std::allocator< float > >""'"); 
+      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "new_pairVectorFloat" "', argument " "1"" of type '" "std::vector< float,std::allocator< float > >""'");
     }
     arg1 = *ptr;
     if (SWIG_IsNewObj(res)) delete ptr;
@@ -13428,7 +13428,7 @@ SWIGINTERN PyObject *_wrap_new_pairVectorFloat__SWIG_1(PyObject *SWIGUNUSEDPARM(
     std::vector< float,std::allocator< float > > *ptr = (std::vector< float,std::allocator< float > > *)0;
     int res = swig::asptr(swig_obj[1], &ptr);
     if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "new_pairVectorFloat" "', argument " "2"" of type '" "std::vector< float,std::allocator< float > >""'"); 
+      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "new_pairVectorFloat" "', argument " "2"" of type '" "std::vector< float,std::allocator< float > >""'");
     }
     arg2 = *ptr;
     if (SWIG_IsNewObj(res)) delete ptr;
@@ -13446,16 +13446,16 @@ SWIGINTERN PyObject *_wrap_new_pairVectorFloat__SWIG_2(PyObject *SWIGUNUSEDPARM(
   std::pair< std::vector< float,std::allocator< float > >,std::vector< float,std::allocator< float > > > *arg1 = 0 ;
   int res1 = SWIG_OLDOBJ ;
   std::pair< std::vector< float >,std::vector< float > > *result = 0 ;
-  
+
   if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
   {
     std::pair< std::vector< float,std::allocator< float > >,std::vector< float,std::allocator< float > > > *ptr = (std::pair< std::vector< float,std::allocator< float > >,std::vector< float,std::allocator< float > > > *)0;
     res1 = swig::asptr(swig_obj[0], &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_pairVectorFloat" "', argument " "1"" of type '" "std::pair< std::vector< float,std::allocator< float > >,std::vector< float,std::allocator< float > > > const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_pairVectorFloat" "', argument " "1"" of type '" "std::pair< std::vector< float,std::allocator< float > >,std::vector< float,std::allocator< float > > > const &""'");
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_pairVectorFloat" "', argument " "1"" of type '" "std::pair< std::vector< float,std::allocator< float > >,std::vector< float,std::allocator< float > > > const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_pairVectorFloat" "', argument " "1"" of type '" "std::pair< std::vector< float,std::allocator< float > >,std::vector< float,std::allocator< float > > > const &""'");
     }
     arg1 = ptr;
   }
@@ -13474,7 +13474,7 @@ SWIGINTERN PyObject *_wrap_new_pairVectorFloat(PyObject *self, PyObject *args) {
   PyObject *argv[3] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "new_pairVectorFloat", 0, 2, argv))) SWIG_fail;
   --argc;
   if (argc == 0) {
@@ -13500,7 +13500,7 @@ SWIGINTERN PyObject *_wrap_new_pairVectorFloat(PyObject *self, PyObject *args) {
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_pairVectorFloat'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -13520,16 +13520,16 @@ SWIGINTERN PyObject *_wrap_pairVectorFloat_first_set(PyObject *SWIGUNUSEDPARM(se
   void *argp2 = 0 ;
   int res2 = 0 ;
   PyObject *swig_obj[2] ;
-  
+
   if (!SWIG_Python_UnpackTuple(args, "pairVectorFloat_first_set", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__pairT_std__vectorT_float_std__allocatorT_float_t_t_std__vectorT_float_std__allocatorT_float_t_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pairVectorFloat_first_set" "', argument " "1"" of type '" "std::pair< std::vector< float >,std::vector< float > > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pairVectorFloat_first_set" "', argument " "1"" of type '" "std::pair< std::vector< float >,std::vector< float > > *""'");
   }
   arg1 = reinterpret_cast< std::pair< std::vector< float >,std::vector< float > > * >(argp1);
   res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pairVectorFloat_first_set" "', argument " "2"" of type '" "std::vector< float,std::allocator< float > > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pairVectorFloat_first_set" "', argument " "2"" of type '" "std::vector< float,std::allocator< float > > *""'");
   }
   arg2 = reinterpret_cast< std::vector< float,std::allocator< float > > * >(argp2);
   if (arg1) (arg1)->first = *arg2;
@@ -13547,12 +13547,12 @@ SWIGINTERN PyObject *_wrap_pairVectorFloat_first_get(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< float,std::allocator< float > > *result = 0 ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__pairT_std__vectorT_float_std__allocatorT_float_t_t_std__vectorT_float_std__allocatorT_float_t_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pairVectorFloat_first_get" "', argument " "1"" of type '" "std::pair< std::vector< float >,std::vector< float > > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pairVectorFloat_first_get" "', argument " "1"" of type '" "std::pair< std::vector< float >,std::vector< float > > *""'");
   }
   arg1 = reinterpret_cast< std::pair< std::vector< float >,std::vector< float > > * >(argp1);
   result = (std::vector< float,std::allocator< float > > *)& ((arg1)->first);
@@ -13572,16 +13572,16 @@ SWIGINTERN PyObject *_wrap_pairVectorFloat_second_set(PyObject *SWIGUNUSEDPARM(s
   void *argp2 = 0 ;
   int res2 = 0 ;
   PyObject *swig_obj[2] ;
-  
+
   if (!SWIG_Python_UnpackTuple(args, "pairVectorFloat_second_set", 2, 2, swig_obj)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__pairT_std__vectorT_float_std__allocatorT_float_t_t_std__vectorT_float_std__allocatorT_float_t_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pairVectorFloat_second_set" "', argument " "1"" of type '" "std::pair< std::vector< float >,std::vector< float > > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pairVectorFloat_second_set" "', argument " "1"" of type '" "std::pair< std::vector< float >,std::vector< float > > *""'");
   }
   arg1 = reinterpret_cast< std::pair< std::vector< float >,std::vector< float > > * >(argp1);
   res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pairVectorFloat_second_set" "', argument " "2"" of type '" "std::vector< float,std::allocator< float > > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pairVectorFloat_second_set" "', argument " "2"" of type '" "std::vector< float,std::allocator< float > > *""'");
   }
   arg2 = reinterpret_cast< std::vector< float,std::allocator< float > > * >(argp2);
   if (arg1) (arg1)->second = *arg2;
@@ -13599,12 +13599,12 @@ SWIGINTERN PyObject *_wrap_pairVectorFloat_second_get(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< float,std::allocator< float > > *result = 0 ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__pairT_std__vectorT_float_std__allocatorT_float_t_t_std__vectorT_float_std__allocatorT_float_t_t_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pairVectorFloat_second_get" "', argument " "1"" of type '" "std::pair< std::vector< float >,std::vector< float > > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pairVectorFloat_second_get" "', argument " "1"" of type '" "std::pair< std::vector< float >,std::vector< float > > *""'");
   }
   arg1 = reinterpret_cast< std::pair< std::vector< float >,std::vector< float > > * >(argp1);
   result = (std::vector< float,std::allocator< float > > *)& ((arg1)->second);
@@ -13621,17 +13621,17 @@ SWIGINTERN PyObject *_wrap_delete_pairVectorFloat(PyObject *SWIGUNUSEDPARM(self)
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_std__pairT_std__vectorT_float_std__allocatorT_float_t_t_std__vectorT_float_std__allocatorT_float_t_t_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_pairVectorFloat" "', argument " "1"" of type '" "std::pair< std::vector< float >,std::vector< float > > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_pairVectorFloat" "', argument " "1"" of type '" "std::pair< std::vector< float >,std::vector< float > > *""'");
   }
   arg1 = reinterpret_cast< std::pair< std::vector< float >,std::vector< float > > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -13680,7 +13680,7 @@ SWIGINTERN int Swig_var_PI_set(PyObject *) {
 
 SWIGINTERN PyObject *Swig_var_PI_get(void) {
   PyObject *pyobj = 0;
-  
+
   pyobj = SWIG_From_double(static_cast< double >(wasserstein::PI));
   return pyobj;
 }
@@ -13694,7 +13694,7 @@ SWIGINTERN int Swig_var_TWOPI_set(PyObject *) {
 
 SWIGINTERN PyObject *Swig_var_TWOPI_get(void) {
   PyObject *pyobj = 0;
-  
+
   pyobj = SWIG_From_double(static_cast< double >(wasserstein::TWOPI));
   return pyobj;
 }
@@ -13708,7 +13708,7 @@ SWIGINTERN int Swig_var_COMPILED_WITH_OPENMP_set(PyObject *) {
 
 SWIGINTERN PyObject *Swig_var_COMPILED_WITH_OPENMP_get(void) {
   PyObject *pyobj = 0;
-  
+
   pyobj = SWIG_From_bool(static_cast< bool >(wasserstein::COMPILED_WITH_OPENMP));
   return pyobj;
 }
@@ -13721,18 +13721,18 @@ SWIGINTERN PyObject *_wrap_check_emd_status(PyObject *SWIGUNUSEDPARM(self), PyOb
   int ecode1 = 0 ;
   PyObject * obj0 = 0 ;
   char * kwnames[] = {
-    (char *)"status",  NULL 
+    (char *)"status",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O:check_emd_status", kwnames, &obj0)) SWIG_fail;
   ecode1 = SWIG_AsVal_int(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "check_emd_status" "', argument " "1"" of type '" "wasserstein::EMDStatus""'");
-  } 
+  }
   arg1 = static_cast< wasserstein::EMDStatus >(val1);
   {
     try {
-      wasserstein::check_emd_status(arg1); 
+      wasserstein::check_emd_status(arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -13768,17 +13768,17 @@ SWIGINTERN PyObject *_wrap_delete_EMDBaseFloat64(PyObject *SWIGUNUSEDPARM(self),
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EMDBaseFloat64" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EMDBaseFloat64" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -13815,17 +13815,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_R(PyObject *SWIGUNUSEDPARM(self), PyOb
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   double result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_R" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_R" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      result = (double)((wasserstein::EMDBase< double > const *)arg1)->R(); 
+      result = (double)((wasserstein::EMDBase< double > const *)arg1)->R();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -13862,17 +13862,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_beta(PyObject *SWIGUNUSEDPARM(self), P
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   double result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_beta" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_beta" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      result = (double)((wasserstein::EMDBase< double > const *)arg1)->beta(); 
+      result = (double)((wasserstein::EMDBase< double > const *)arg1)->beta();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -13913,23 +13913,23 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_set_R(PyObject *SWIGUNUSEDPARM(self), 
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"R",  NULL 
+    (char *)"self",  (char *)"R",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:EMDBaseFloat64_set_R", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_set_R" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_set_R" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDBaseFloat64_set_R" "', argument " "2"" of type '" "double""'");
-  } 
+  }
   arg2 = static_cast< double >(val2);
   {
     try {
-      (arg1)->set_R(arg2); 
+      (arg1)->set_R(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -13970,23 +13970,23 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_set_beta(PyObject *SWIGUNUSEDPARM(self
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"beta",  NULL 
+    (char *)"self",  (char *)"beta",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:EMDBaseFloat64_set_beta", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_set_beta" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_set_beta" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDBaseFloat64_set_beta" "', argument " "2"" of type '" "double""'");
-  } 
+  }
   arg2 = static_cast< double >(val2);
   {
     try {
-      (arg1)->set_beta(arg2); 
+      (arg1)->set_beta(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -14035,39 +14035,39 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_set_network_simplex_params(PyObject *S
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  NULL 
+    (char *)"self",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|OOO:EMDBaseFloat64_set_network_simplex_params", kwnames, &obj0, &obj1, &obj2, &obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_set_network_simplex_params" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_set_network_simplex_params" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_size_t(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDBaseFloat64_set_network_simplex_params" "', argument " "2"" of type '" "std::size_t""'");
-    } 
+    }
     arg2 = static_cast< std::size_t >(val2);
   }
   if (obj2) {
     ecode3 = SWIG_AsVal_double(obj2, &val3);
     if (!SWIG_IsOK(ecode3)) {
       SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "EMDBaseFloat64_set_network_simplex_params" "', argument " "3"" of type '" "double""'");
-    } 
+    }
     arg3 = static_cast< double >(val3);
   }
   if (obj3) {
     ecode4 = SWIG_AsVal_double(obj3, &val4);
     if (!SWIG_IsOK(ecode4)) {
       SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "EMDBaseFloat64_set_network_simplex_params" "', argument " "4"" of type '" "double""'");
-    } 
+    }
     arg4 = static_cast< double >(val4);
   }
   {
     try {
-      (arg1)->set_network_simplex_params(arg2,arg3,arg4); 
+      (arg1)->set_network_simplex_params(arg2,arg3,arg4);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -14104,17 +14104,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_norm(PyObject *SWIGUNUSEDPARM(self), P
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_norm" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_norm" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      result = (bool)((wasserstein::EMDBase< double > const *)arg1)->norm(); 
+      result = (bool)((wasserstein::EMDBase< double > const *)arg1)->norm();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -14155,23 +14155,23 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_set_norm(PyObject *SWIGUNUSEDPARM(self
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"norm",  NULL 
+    (char *)"self",  (char *)"norm",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:EMDBaseFloat64_set_norm", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_set_norm" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_set_norm" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   ecode2 = SWIG_AsVal_bool(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDBaseFloat64_set_norm" "', argument " "2"" of type '" "bool""'");
-  } 
+  }
   arg2 = static_cast< bool >(val2);
   {
     try {
-      (arg1)->set_norm(arg2); 
+      (arg1)->set_norm(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -14208,17 +14208,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_do_timing(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_do_timing" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_do_timing" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      result = (bool)((wasserstein::EMDBase< double > const *)arg1)->do_timing(); 
+      result = (bool)((wasserstein::EMDBase< double > const *)arg1)->do_timing();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -14259,23 +14259,23 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_set_do_timing(PyObject *SWIGUNUSEDPARM
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"timing",  NULL 
+    (char *)"self",  (char *)"timing",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:EMDBaseFloat64_set_do_timing", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_set_do_timing" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_set_do_timing" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   ecode2 = SWIG_AsVal_bool(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDBaseFloat64_set_do_timing" "', argument " "2"" of type '" "bool""'");
-  } 
+  }
   arg2 = static_cast< bool >(val2);
   {
     try {
-      (arg1)->set_do_timing(arg2); 
+      (arg1)->set_do_timing(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -14312,17 +14312,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_external_dists(PyObject *SWIGUNUSEDPAR
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_external_dists" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_external_dists" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      result = (bool)((wasserstein::EMDBase< double > const *)arg1)->external_dists(); 
+      result = (bool)((wasserstein::EMDBase< double > const *)arg1)->external_dists();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -14363,23 +14363,23 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_set_external_dists(PyObject *SWIGUNUSE
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"exdists",  NULL 
+    (char *)"self",  (char *)"exdists",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:EMDBaseFloat64_set_external_dists", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_set_external_dists" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_set_external_dists" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   ecode2 = SWIG_AsVal_bool(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDBaseFloat64_set_external_dists" "', argument " "2"" of type '" "bool""'");
-  } 
+  }
   arg2 = static_cast< bool >(val2);
   {
     try {
-      (arg1)->set_external_dists(arg2); 
+      (arg1)->set_external_dists(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -14416,17 +14416,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_n0(PyObject *SWIGUNUSEDPARM(self), PyO
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   wasserstein::index_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_n0" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_n0" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      result = ((wasserstein::EMDBase< double > const *)arg1)->n0(); 
+      result = ((wasserstein::EMDBase< double > const *)arg1)->n0();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -14463,17 +14463,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_n1(PyObject *SWIGUNUSEDPARM(self), PyO
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   wasserstein::index_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_n1" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_n1" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      result = ((wasserstein::EMDBase< double > const *)arg1)->n1(); 
+      result = ((wasserstein::EMDBase< double > const *)arg1)->n1();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -14510,17 +14510,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_extra(PyObject *SWIGUNUSEDPARM(self), 
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   wasserstein::ExtraParticle result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_extra" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_extra" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      result = (wasserstein::ExtraParticle)((wasserstein::EMDBase< double > const *)arg1)->extra(); 
+      result = (wasserstein::ExtraParticle)((wasserstein::EMDBase< double > const *)arg1)->extra();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -14557,17 +14557,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_emd(PyObject *SWIGUNUSEDPARM(self), Py
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   double result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_emd" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_emd" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      result = (double)((wasserstein::EMDBase< double > const *)arg1)->emd(); 
+      result = (double)((wasserstein::EMDBase< double > const *)arg1)->emd();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -14604,17 +14604,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_status(PyObject *SWIGUNUSEDPARM(self),
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   wasserstein::EMDStatus result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_status" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_status" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      result = (wasserstein::EMDStatus)((wasserstein::EMDBase< double > const *)arg1)->status(); 
+      result = (wasserstein::EMDStatus)((wasserstein::EMDBase< double > const *)arg1)->status();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -14651,17 +14651,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_weightdiff(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   double result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_weightdiff" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_weightdiff" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      result = (double)((wasserstein::EMDBase< double > const *)arg1)->weightdiff(); 
+      result = (double)((wasserstein::EMDBase< double > const *)arg1)->weightdiff();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -14698,17 +14698,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_scale(PyObject *SWIGUNUSEDPARM(self), 
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   double result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_scale" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_scale" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      result = (double)((wasserstein::EMDBase< double > const *)arg1)->scale(); 
+      result = (double)((wasserstein::EMDBase< double > const *)arg1)->scale();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -14745,17 +14745,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_n_iter(PyObject *SWIGUNUSEDPARM(self),
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::size_t result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_n_iter" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_n_iter" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      result = ((wasserstein::EMDBase< double > const *)arg1)->n_iter(); 
+      result = ((wasserstein::EMDBase< double > const *)arg1)->n_iter();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -14792,17 +14792,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_dists_vec(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< double,std::allocator< double > > result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_dists_vec" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_dists_vec" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      result = ((wasserstein::EMDBase< double > const *)arg1)->dists(); 
+      result = ((wasserstein::EMDBase< double > const *)arg1)->dists();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -14839,17 +14839,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_flows_vec(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< double,std::allocator< double > > result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_flows_vec" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_flows_vec" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      result = ((wasserstein::EMDBase< double > const *)arg1)->flows(); 
+      result = ((wasserstein::EMDBase< double > const *)arg1)->flows();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -14891,26 +14891,26 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_flow__SWIG_0(PyObject *SWIGUNUSEDPARM(
   ptrdiff_t val3 ;
   int ecode3 = 0 ;
   double result;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_flow" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_flow" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDBaseFloat64_flow" "', argument " "2"" of type '" "wasserstein::index_type""'");
-  } 
+  }
   arg2 = static_cast< wasserstein::index_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "EMDBaseFloat64_flow" "', argument " "3"" of type '" "wasserstein::index_type""'");
-  } 
+  }
   arg3 = static_cast< wasserstein::index_type >(val3);
   {
     try {
-      result = (double)((wasserstein::EMDBase< double > const *)arg1)->flow(arg2,arg3); 
+      result = (double)((wasserstein::EMDBase< double > const *)arg1)->flow(arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -14949,21 +14949,21 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_flow__SWIG_1(PyObject *SWIGUNUSEDPARM(
   size_t val2 ;
   int ecode2 = 0 ;
   double result;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_flow" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_flow" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDBaseFloat64_flow" "', argument " "2"" of type '" "std::size_t""'");
-  } 
+  }
   arg2 = static_cast< std::size_t >(val2);
   {
     try {
-      result = (double)((wasserstein::EMDBase< double > const *)arg1)->flow(arg2); 
+      result = (double)((wasserstein::EMDBase< double > const *)arg1)->flow(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -14998,7 +14998,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_flow(PyObject *self, PyObject *args) {
   PyObject *argv[4] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "EMDBaseFloat64_flow", 0, 3, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -15037,7 +15037,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_flow(PyObject *self, PyObject *args) {
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'EMDBaseFloat64_flow'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -15054,17 +15054,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_node_potentials(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_node_potentials" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_node_potentials" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      result = ((wasserstein::EMDBase< double > const *)arg1)->node_potentials(); 
+      result = ((wasserstein::EMDBase< double > const *)arg1)->node_potentials();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -15101,17 +15101,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_duration(PyObject *SWIGUNUSEDPARM(self
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   double result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_duration" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_duration" "', argument " "1"" of type '" "wasserstein::EMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      result = (double)((wasserstein::EMDBase< double > const *)arg1)->duration(); 
+      result = (double)((wasserstein::EMDBase< double > const *)arg1)->duration();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -15147,17 +15147,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_clear(PyObject *SWIGUNUSEDPARM(self), 
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_clear" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_clear" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      (arg1)->clear(); 
+      (arg1)->clear();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -15199,7 +15199,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_flows(PyObject *SWIGUNUSEDPARM(self), 
   std::ptrdiff_t dim1_temp2 ;
   std::ptrdiff_t dim2_temp2 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim1_temp2;
@@ -15209,12 +15209,12 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_flows(PyObject *SWIGUNUSEDPARM(self), 
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_flows" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_flows" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      wasserstein_EMDBase_Sl_double_Sg__npy_flows(arg1,arg2,arg3,arg4); 
+      wasserstein_EMDBase_Sl_double_Sg__npy_flows(arg1,arg2,arg3,arg4);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -15240,25 +15240,25 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_flows(PyObject *SWIGUNUSEDPARM(self), 
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[2] = {
-      *arg3, *arg4 
+      *arg3, *arg4
     };
     PyObject* obj = PyArray_SimpleNewFromData(2, dims, NPY_DOUBLE, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -15279,7 +15279,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_dists(PyObject *SWIGUNUSEDPARM(self), 
   std::ptrdiff_t dim1_temp2 ;
   std::ptrdiff_t dim2_temp2 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim1_temp2;
@@ -15289,12 +15289,12 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_dists(PyObject *SWIGUNUSEDPARM(self), 
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_dists" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_dists" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      wasserstein_EMDBase_Sl_double_Sg__npy_dists(arg1,arg2,arg3,arg4); 
+      wasserstein_EMDBase_Sl_double_Sg__npy_dists(arg1,arg2,arg3,arg4);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -15320,25 +15320,25 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_dists(PyObject *SWIGUNUSEDPARM(self), 
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[2] = {
-      *arg3, *arg4 
+      *arg3, *arg4
     };
     PyObject* obj = PyArray_SimpleNewFromData(2, dims, NPY_DOUBLE, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -15361,7 +15361,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_npy_node_potentials(PyObject *SWIGUNUS
   double *data_temp4 = NULL ;
   std::ptrdiff_t dim_temp4 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -15374,12 +15374,12 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_npy_node_potentials(PyObject *SWIGUNUS
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_npy_node_potentials" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat64_npy_node_potentials" "', argument " "1"" of type '" "wasserstein::EMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< double > * >(argp1);
   {
     try {
-      wasserstein_EMDBase_Sl_double_Sg__npy_node_potentials(arg1,arg2,arg3,arg4,arg5); 
+      wasserstein_EMDBase_Sl_double_Sg__npy_node_potentials(arg1,arg2,arg3,arg4,arg5);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -15405,48 +15405,48 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat64_npy_node_potentials(PyObject *SWIGUNUS
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   {
     npy_intp dims[1] = {
-      *arg5 
+      *arg5
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg4));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg4), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg4), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -15468,17 +15468,17 @@ SWIGINTERN PyObject *_wrap_delete_PairwiseEMDBaseFloat64(PyObject *SWIGUNUSEDPAR
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_PairwiseEMDBaseFloat64" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_PairwiseEMDBaseFloat64" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -15515,17 +15515,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_R(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   double result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_R" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_R" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   {
     try {
-      result = (double)((wasserstein::PairwiseEMDBase< double > const *)arg1)->R(); 
+      result = (double)((wasserstein::PairwiseEMDBase< double > const *)arg1)->R();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -15566,23 +15566,23 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_set_R(PyObject *SWIGUNUSEDPARM
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"R",  NULL 
+    (char *)"self",  (char *)"R",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:PairwiseEMDBaseFloat64_set_R", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_set_R" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_set_R" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDBaseFloat64_set_R" "', argument " "2"" of type '" "double""'");
-  } 
+  }
   arg2 = static_cast< double >(val2);
   {
     try {
-      (arg1)->set_R(arg2); 
+      (arg1)->set_R(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -15619,17 +15619,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_beta(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   double result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_beta" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_beta" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   {
     try {
-      result = (double)((wasserstein::PairwiseEMDBase< double > const *)arg1)->beta(); 
+      result = (double)((wasserstein::PairwiseEMDBase< double > const *)arg1)->beta();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -15670,23 +15670,23 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_set_beta(PyObject *SWIGUNUSEDP
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"beta",  NULL 
+    (char *)"self",  (char *)"beta",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:PairwiseEMDBaseFloat64_set_beta", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_set_beta" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_set_beta" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDBaseFloat64_set_beta" "', argument " "2"" of type '" "double""'");
-  } 
+  }
   arg2 = static_cast< double >(val2);
   {
     try {
-      (arg1)->set_beta(arg2); 
+      (arg1)->set_beta(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -15723,17 +15723,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_norm(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_norm" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_norm" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   {
     try {
-      result = (bool)((wasserstein::PairwiseEMDBase< double > const *)arg1)->norm(); 
+      result = (bool)((wasserstein::PairwiseEMDBase< double > const *)arg1)->norm();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -15774,23 +15774,23 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_set_norm(PyObject *SWIGUNUSEDP
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"norm",  NULL 
+    (char *)"self",  (char *)"norm",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:PairwiseEMDBaseFloat64_set_norm", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_set_norm" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_set_norm" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   ecode2 = SWIG_AsVal_bool(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDBaseFloat64_set_norm" "', argument " "2"" of type '" "bool""'");
-  } 
+  }
   arg2 = static_cast< bool >(val2);
   {
     try {
-      (arg1)->set_norm(arg2); 
+      (arg1)->set_norm(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -15839,39 +15839,39 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_set_network_simplex_params(PyO
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  NULL 
+    (char *)"self",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|OOO:PairwiseEMDBaseFloat64_set_network_simplex_params", kwnames, &obj0, &obj1, &obj2, &obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_set_network_simplex_params" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_set_network_simplex_params" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_size_t(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDBaseFloat64_set_network_simplex_params" "', argument " "2"" of type '" "std::size_t""'");
-    } 
+    }
     arg2 = static_cast< std::size_t >(val2);
   }
   if (obj2) {
     ecode3 = SWIG_AsVal_double(obj2, &val3);
     if (!SWIG_IsOK(ecode3)) {
       SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "PairwiseEMDBaseFloat64_set_network_simplex_params" "', argument " "3"" of type '" "double""'");
-    } 
+    }
     arg3 = static_cast< double >(val3);
   }
   if (obj3) {
     ecode4 = SWIG_AsVal_double(obj3, &val4);
     if (!SWIG_IsOK(ecode4)) {
       SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "PairwiseEMDBaseFloat64_set_network_simplex_params" "', argument " "4"" of type '" "double""'");
-    } 
+    }
     arg4 = static_cast< double >(val4);
   }
   {
     try {
-      (arg1)->set_network_simplex_params(arg2,arg3,arg4); 
+      (arg1)->set_network_simplex_params(arg2,arg3,arg4);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -15912,26 +15912,26 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_set_external_emd_handler(PyObj
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"handler",  NULL 
+    (char *)"self",  (char *)"handler",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:PairwiseEMDBaseFloat64_set_external_emd_handler", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_set_external_emd_handler" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_set_external_emd_handler" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_double_t,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "PairwiseEMDBaseFloat64_set_external_emd_handler" "', argument " "2"" of type '" "wasserstein::ExternalEMDHandler< double > &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "PairwiseEMDBaseFloat64_set_external_emd_handler" "', argument " "2"" of type '" "wasserstein::ExternalEMDHandler< double > &""'");
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "PairwiseEMDBaseFloat64_set_external_emd_handler" "', argument " "2"" of type '" "wasserstein::ExternalEMDHandler< double > &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "PairwiseEMDBaseFloat64_set_external_emd_handler" "', argument " "2"" of type '" "wasserstein::ExternalEMDHandler< double > &""'");
   }
   arg2 = reinterpret_cast< wasserstein::ExternalEMDHandler< double > * >(argp2);
   {
     try {
-      (arg1)->set_external_emd_handler(*arg2); 
+      (arg1)->set_external_emd_handler(*arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -15968,17 +15968,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_have_external_emd_handler(PyOb
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_have_external_emd_handler" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_have_external_emd_handler" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   {
     try {
-      result = (bool)((wasserstein::PairwiseEMDBase< double > const *)arg1)->have_external_emd_handler(); 
+      result = (bool)((wasserstein::PairwiseEMDBase< double > const *)arg1)->have_external_emd_handler();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -16015,17 +16015,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_num_threads(PyObject *SWIGUNUS
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   int result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_num_threads" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_num_threads" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   {
     try {
-      result = (int)((wasserstein::PairwiseEMDBase< double > const *)arg1)->num_threads(); 
+      result = (int)((wasserstein::PairwiseEMDBase< double > const *)arg1)->num_threads();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -16066,23 +16066,23 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_set_omp_dynamic_chunksize(PyOb
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"chunksize",  NULL 
+    (char *)"self",  (char *)"chunksize",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:PairwiseEMDBaseFloat64_set_omp_dynamic_chunksize", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_set_omp_dynamic_chunksize" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_set_omp_dynamic_chunksize" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDBaseFloat64_set_omp_dynamic_chunksize" "', argument " "2"" of type '" "int""'");
-  } 
+  }
   arg2 = static_cast< int >(val2);
   {
     try {
-      (arg1)->set_omp_dynamic_chunksize(arg2); 
+      (arg1)->set_omp_dynamic_chunksize(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -16119,17 +16119,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_omp_dynamic_chunksize(PyObject
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   int result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_omp_dynamic_chunksize" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_omp_dynamic_chunksize" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   {
     try {
-      result = (int)((wasserstein::PairwiseEMDBase< double > const *)arg1)->omp_dynamic_chunksize(); 
+      result = (int)((wasserstein::PairwiseEMDBase< double > const *)arg1)->omp_dynamic_chunksize();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -16170,23 +16170,23 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_set_request_mode(PyObject *SWI
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"mode",  NULL 
+    (char *)"self",  (char *)"mode",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:PairwiseEMDBaseFloat64_set_request_mode", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_set_request_mode" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_set_request_mode" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   ecode2 = SWIG_AsVal_bool(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDBaseFloat64_set_request_mode" "', argument " "2"" of type '" "bool""'");
-  } 
+  }
   arg2 = static_cast< bool >(val2);
   {
     try {
-      (arg1)->set_request_mode(arg2); 
+      (arg1)->set_request_mode(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -16223,17 +16223,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_request_mode(PyObject *SWIGUNU
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_request_mode" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_request_mode" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   {
     try {
-      result = (bool)((wasserstein::PairwiseEMDBase< double > const *)arg1)->request_mode(); 
+      result = (bool)((wasserstein::PairwiseEMDBase< double > const *)arg1)->request_mode();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -16270,17 +16270,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_duration(PyObject *SWIGUNUSEDP
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   double result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_duration" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_duration" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   {
     try {
-      result = (double)((wasserstein::PairwiseEMDBase< double > const *)arg1)->duration(); 
+      result = (double)((wasserstein::PairwiseEMDBase< double > const *)arg1)->duration();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -16317,17 +16317,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_nevA(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   wasserstein::index_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_nevA" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_nevA" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   {
     try {
-      result = ((wasserstein::PairwiseEMDBase< double > const *)arg1)->nevA(); 
+      result = ((wasserstein::PairwiseEMDBase< double > const *)arg1)->nevA();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -16364,17 +16364,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_nevB(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   wasserstein::index_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_nevB" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_nevB" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   {
     try {
-      result = ((wasserstein::PairwiseEMDBase< double > const *)arg1)->nevB(); 
+      result = ((wasserstein::PairwiseEMDBase< double > const *)arg1)->nevB();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -16411,17 +16411,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_num_emds(PyObject *SWIGUNUSEDP
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   wasserstein::index_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_num_emds" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_num_emds" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   {
     try {
-      result = ((wasserstein::PairwiseEMDBase< double > const *)arg1)->num_emds(); 
+      result = ((wasserstein::PairwiseEMDBase< double > const *)arg1)->num_emds();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -16458,17 +16458,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_storage(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   wasserstein::EMDPairsStorage result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_storage" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_storage" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   {
     try {
-      result = (wasserstein::EMDPairsStorage)((wasserstein::PairwiseEMDBase< double > const *)arg1)->storage(); 
+      result = (wasserstein::EMDPairsStorage)((wasserstein::PairwiseEMDBase< double > const *)arg1)->storage();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -16505,17 +16505,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_errored(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_errored" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_errored" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   {
     try {
-      result = (bool)((wasserstein::PairwiseEMDBase< double > const *)arg1)->errored(); 
+      result = (bool)((wasserstein::PairwiseEMDBase< double > const *)arg1)->errored();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -16552,17 +16552,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_error_messages(PyObject *SWIGU
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< std::string,std::allocator< std::string > > *result = 0 ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_error_messages" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_error_messages" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   {
     try {
-      result = (std::vector< std::string,std::allocator< std::string > > *) &((wasserstein::PairwiseEMDBase< double > const *)arg1)->error_messages(); 
+      result = (std::vector< std::string,std::allocator< std::string > > *) &((wasserstein::PairwiseEMDBase< double > const *)arg1)->error_messages();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -16603,26 +16603,26 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_emds_vec(PyObject *SWIGUNUSEDP
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"raw",  NULL 
+    (char *)"self",  (char *)"raw",  NULL
   };
   std::vector< double,std::allocator< double > > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:PairwiseEMDBaseFloat64_emds_vec", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_emds_vec" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_emds_vec" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_bool(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDBaseFloat64_emds_vec" "', argument " "2"" of type '" "bool""'");
-    } 
+    }
     arg2 = static_cast< bool >(val2);
   }
   {
     try {
-      result = (std::vector< double,std::allocator< double > > *) &(arg1)->emds(arg2); 
+      result = (std::vector< double,std::allocator< double > > *) &(arg1)->emds(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -16671,36 +16671,36 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_emd(PyObject *SWIGUNUSEDPARM(s
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"i",  (char *)"j",  (char *)"thread",  NULL 
+    (char *)"self",  (char *)"i",  (char *)"j",  (char *)"thread",  NULL
   };
   double result;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO|O:PairwiseEMDBaseFloat64_emd", kwnames, &obj0, &obj1, &obj2, &obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_emd" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_emd" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDBaseFloat64_emd" "', argument " "2"" of type '" "wasserstein::index_type""'");
-  } 
+  }
   arg2 = static_cast< wasserstein::index_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "PairwiseEMDBaseFloat64_emd" "', argument " "3"" of type '" "wasserstein::index_type""'");
-  } 
+  }
   arg3 = static_cast< wasserstein::index_type >(val3);
   if (obj3) {
     ecode4 = SWIG_AsVal_int(obj3, &val4);
     if (!SWIG_IsOK(ecode4)) {
       SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "PairwiseEMDBaseFloat64_emd" "', argument " "4"" of type '" "int""'");
-    } 
+    }
     arg4 = static_cast< int >(val4);
   }
   {
     try {
-      result = (double)(arg1)->emd(arg2,arg3,arg4); 
+      result = (double)(arg1)->emd(arg2,arg3,arg4);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -16742,7 +16742,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_emds(PyObject *SWIGUNUSEDPARM(
   std::ptrdiff_t dim1_temp2 ;
   std::ptrdiff_t dim2_temp2 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim1_temp2;
@@ -16752,12 +16752,12 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_emds(PyObject *SWIGUNUSEDPARM(
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_emds" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_emds" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   {
     try {
-      wasserstein_PairwiseEMDBase_Sl_double_Sg__npy_emds(arg1,arg2,arg3,arg4); 
+      wasserstein_PairwiseEMDBase_Sl_double_Sg__npy_emds(arg1,arg2,arg3,arg4);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -16783,25 +16783,25 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_emds(PyObject *SWIGUNUSEDPARM(
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[2] = {
-      *arg3, *arg4 
+      *arg3, *arg4
     };
     PyObject* obj = PyArray_SimpleNewFromData(2, dims, NPY_DOUBLE, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -16820,7 +16820,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_raw_emds(PyObject *SWIGUNUSEDP
   double *data_temp2 = NULL ;
   std::ptrdiff_t dim_temp2 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -16829,12 +16829,12 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_raw_emds(PyObject *SWIGUNUSEDP
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_raw_emds" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat64_raw_emds" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< double > * >(argp1);
   {
     try {
-      wasserstein_PairwiseEMDBase_Sl_double_Sg__raw_emds(arg1,arg2,arg3); 
+      wasserstein_PairwiseEMDBase_Sl_double_Sg__raw_emds(arg1,arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -16860,25 +16860,25 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat64_raw_emds(PyObject *SWIGUNUSEDP
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -16900,17 +16900,17 @@ SWIGINTERN PyObject *_wrap_delete_ExternalEMDHandlerFloat64(PyObject *SWIGUNUSED
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_double_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ExternalEMDHandlerFloat64" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ExternalEMDHandlerFloat64" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::ExternalEMDHandler< double > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -16947,17 +16947,17 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_description(PyObject *SWIGU
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat64_description" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat64_description" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::ExternalEMDHandler< double > * >(argp1);
   {
     try {
-      result = ((wasserstein::ExternalEMDHandler< double > const *)arg1)->description(); 
+      result = ((wasserstein::ExternalEMDHandler< double > const *)arg1)->description();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -16994,17 +16994,17 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_num_calls(PyObject *SWIGUNU
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::size_t result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat64_num_calls" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat64_num_calls" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::ExternalEMDHandler< double > * >(argp1);
   {
     try {
-      result = ((wasserstein::ExternalEMDHandler< double > const *)arg1)->num_calls(); 
+      result = ((wasserstein::ExternalEMDHandler< double > const *)arg1)->num_calls();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -17049,30 +17049,30 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64___call__(PyObject *SWIGUNUS
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"emd",  (char *)"weight",  NULL 
+    (char *)"self",  (char *)"emd",  (char *)"weight",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO|O:ExternalEMDHandlerFloat64___call__", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat64___call__" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat64___call__" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::ExternalEMDHandler< double > * >(argp1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ExternalEMDHandlerFloat64___call__" "', argument " "2"" of type '" "double""'");
-  } 
+  }
   arg2 = static_cast< double >(val2);
   if (obj2) {
     ecode3 = SWIG_AsVal_double(obj2, &val3);
     if (!SWIG_IsOK(ecode3)) {
       SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ExternalEMDHandlerFloat64___call__" "', argument " "3"" of type '" "double""'");
-    } 
+    }
     arg3 = static_cast< double >(val3);
   }
   {
     try {
-      (arg1)->operator ()(arg2,arg3); 
+      (arg1)->operator ()(arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -17111,16 +17111,16 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate1d__SWIG_0(PyObject
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat64_evaluate1d" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat64_evaluate1d" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::ExternalEMDHandler< double > * >(argp1);
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
       NPY_DOUBLE,
@@ -17132,7 +17132,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate1d__SWIG_0(PyObject
   }
   {
     try {
-      wasserstein_ExternalEMDHandler_Sl_double_Sg__npy_evaluate1d__SWIG_0(arg1,arg2,arg3); 
+      wasserstein_ExternalEMDHandler_Sl_double_Sg__npy_evaluate1d__SWIG_0(arg1,arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -17159,7 +17159,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate1d__SWIG_0(PyObject
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   return resultobj;
@@ -17167,7 +17167,7 @@ fail:
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   return NULL;
@@ -17184,16 +17184,16 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate2d__SWIG_0(PyObject
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat64_evaluate2d" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat64_evaluate2d" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::ExternalEMDHandler< double > * >(argp1);
   {
     npy_intp size[2] = {
-      -1, -1 
+      -1, -1
     };
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1], NPY_DOUBLE,
       &is_new_object2);
@@ -17205,7 +17205,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate2d__SWIG_0(PyObject
   }
   {
     try {
-      wasserstein_ExternalEMDHandler_Sl_double_Sg__npy_evaluate2d__SWIG_0(arg1,arg2,arg3,arg4); 
+      wasserstein_ExternalEMDHandler_Sl_double_Sg__npy_evaluate2d__SWIG_0(arg1,arg2,arg3,arg4);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -17232,7 +17232,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate2d__SWIG_0(PyObject
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   return resultobj;
@@ -17240,7 +17240,7 @@ fail:
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   return NULL;
@@ -17260,16 +17260,16 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate1d__SWIG_1(PyObject
   int is_new_object2 = 0 ;
   PyArrayObject *array4 = NULL ;
   int is_new_object4 = 0 ;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat64_evaluate1d" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat64_evaluate1d" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::ExternalEMDHandler< double > * >(argp1);
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
       NPY_DOUBLE,
@@ -17281,7 +17281,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate1d__SWIG_1(PyObject
   }
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array4 = obj_to_array_contiguous_allow_conversion(swig_obj[2],
       NPY_DOUBLE,
@@ -17293,7 +17293,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate1d__SWIG_1(PyObject
   }
   {
     try {
-      wasserstein_ExternalEMDHandler_Sl_double_Sg__npy_evaluate1d__SWIG_1(arg1,arg2,arg3,arg4,arg5); 
+      wasserstein_ExternalEMDHandler_Sl_double_Sg__npy_evaluate1d__SWIG_1(arg1,arg2,arg3,arg4,arg5);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -17320,13 +17320,13 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate1d__SWIG_1(PyObject
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   return resultobj;
@@ -17334,13 +17334,13 @@ fail:
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   return NULL;
@@ -17352,7 +17352,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate1d(PyObject *self, 
   PyObject *argv[4] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "ExternalEMDHandlerFloat64_evaluate1d", 0, 3, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -17394,7 +17394,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate1d(PyObject *self, 
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'ExternalEMDHandlerFloat64_evaluate1d'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -17419,16 +17419,16 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate2d__SWIG_1(PyObject
   int is_new_object2 = 0 ;
   PyArrayObject *array5 = NULL ;
   int is_new_object5 = 0 ;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat64_evaluate2d" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat64_evaluate2d" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::ExternalEMDHandler< double > * >(argp1);
   {
     npy_intp size[2] = {
-      -1, -1 
+      -1, -1
     };
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1], NPY_DOUBLE,
       &is_new_object2);
@@ -17440,7 +17440,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate2d__SWIG_1(PyObject
   }
   {
     npy_intp size[2] = {
-      -1, -1 
+      -1, -1
     };
     array5 = obj_to_array_contiguous_allow_conversion(swig_obj[2], NPY_DOUBLE,
       &is_new_object5);
@@ -17452,7 +17452,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate2d__SWIG_1(PyObject
   }
   {
     try {
-      wasserstein_ExternalEMDHandler_Sl_double_Sg__npy_evaluate2d__SWIG_1(arg1,arg2,arg3,arg4,arg5,arg6,arg7); 
+      wasserstein_ExternalEMDHandler_Sl_double_Sg__npy_evaluate2d__SWIG_1(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -17479,13 +17479,13 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate2d__SWIG_1(PyObject
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object5 && array5)
     {
-      Py_DECREF(array5); 
+      Py_DECREF(array5);
     }
   }
   return resultobj;
@@ -17493,13 +17493,13 @@ fail:
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object5 && array5)
     {
-      Py_DECREF(array5); 
+      Py_DECREF(array5);
     }
   }
   return NULL;
@@ -17524,16 +17524,16 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate2d__SWIG_2(PyObject
   int is_new_object5 = 0 ;
   PyArrayObject *array7 = NULL ;
   int is_new_object7 = 0 ;
-  
+
   if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat64_evaluate2d" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat64_evaluate2d" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::ExternalEMDHandler< double > * >(argp1);
   {
     npy_intp size[2] = {
-      -1, -1 
+      -1, -1
     };
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1], NPY_DOUBLE,
       &is_new_object2);
@@ -17545,7 +17545,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate2d__SWIG_2(PyObject
   }
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array5 = obj_to_array_contiguous_allow_conversion(swig_obj[2],
       NPY_DOUBLE,
@@ -17557,7 +17557,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate2d__SWIG_2(PyObject
   }
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array7 = obj_to_array_contiguous_allow_conversion(swig_obj[3],
       NPY_DOUBLE,
@@ -17569,7 +17569,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate2d__SWIG_2(PyObject
   }
   {
     try {
-      wasserstein_ExternalEMDHandler_Sl_double_Sg__npy_evaluate2d__SWIG_2(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8); 
+      wasserstein_ExternalEMDHandler_Sl_double_Sg__npy_evaluate2d__SWIG_2(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -17596,19 +17596,19 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate2d__SWIG_2(PyObject
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object5 && array5)
     {
-      Py_DECREF(array5); 
+      Py_DECREF(array5);
     }
   }
   {
     if (is_new_object7 && array7)
     {
-      Py_DECREF(array7); 
+      Py_DECREF(array7);
     }
   }
   return resultobj;
@@ -17616,19 +17616,19 @@ fail:
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object5 && array5)
     {
-      Py_DECREF(array5); 
+      Py_DECREF(array5);
     }
   }
   {
     if (is_new_object7 && array7)
     {
-      Py_DECREF(array7); 
+      Py_DECREF(array7);
     }
   }
   return NULL;
@@ -17640,7 +17640,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate2d(PyObject *self, 
   PyObject *argv[5] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "ExternalEMDHandlerFloat64_evaluate2d", 0, 4, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -17715,7 +17715,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate2d(PyObject *self, 
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'ExternalEMDHandlerFloat64_evaluate2d'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -17747,18 +17747,18 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate1d_symmetric(PyObje
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"emds",  (char *)"event_weights",  (char *)"upper_triangular",  NULL 
+    (char *)"self",  (char *)"emds",  (char *)"event_weights",  (char *)"upper_triangular",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO|O:ExternalEMDHandlerFloat64_evaluate1d_symmetric", kwnames, &obj0, &obj1, &obj2, &obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat64_evaluate1d_symmetric" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat64_evaluate1d_symmetric" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::ExternalEMDHandler< double > * >(argp1);
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array2 = obj_to_array_contiguous_allow_conversion(obj1,
       NPY_DOUBLE,
@@ -17770,7 +17770,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate1d_symmetric(PyObje
   }
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array4 = obj_to_array_contiguous_allow_conversion(obj2,
       NPY_DOUBLE,
@@ -17784,12 +17784,12 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate1d_symmetric(PyObje
     ecode6 = SWIG_AsVal_bool(obj3, &val6);
     if (!SWIG_IsOK(ecode6)) {
       SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "ExternalEMDHandlerFloat64_evaluate1d_symmetric" "', argument " "6"" of type '" "bool""'");
-    } 
+    }
     arg6 = static_cast< bool >(val6);
   }
   {
     try {
-      wasserstein_ExternalEMDHandler_Sl_double_Sg__npy_evaluate1d_symmetric(arg1,arg2,arg3,arg4,arg5,arg6); 
+      wasserstein_ExternalEMDHandler_Sl_double_Sg__npy_evaluate1d_symmetric(arg1,arg2,arg3,arg4,arg5,arg6);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -17816,13 +17816,13 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat64_evaluate1d_symmetric(PyObje
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   return resultobj;
@@ -17830,13 +17830,13 @@ fail:
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   return NULL;
@@ -17865,29 +17865,29 @@ SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerLogFloat64(PyObject *SWIGUNUSED
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   char * kwnames[] = {
-    (char *)"nbins",  (char *)"axis_min",  (char *)"axis_max",  NULL 
+    (char *)"nbins",  (char *)"axis_min",  (char *)"axis_max",  NULL
   };
   wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:new_Histogram1DHandlerLogFloat64", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
   ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_Histogram1DHandlerLogFloat64" "', argument " "1"" of type '" "unsigned int""'");
-  } 
+  }
   arg1 = static_cast< unsigned int >(val1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_Histogram1DHandlerLogFloat64" "', argument " "2"" of type '" "double""'");
-  } 
+  }
   arg2 = static_cast< double >(val2);
   ecode3 = SWIG_AsVal_double(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_Histogram1DHandlerLogFloat64" "', argument " "3"" of type '" "double""'");
-  } 
+  }
   arg3 = static_cast< double >(val3);
   {
     try {
-      result = (wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *)new wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double >(arg1,arg2,arg3); 
+      result = (wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *)new wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double >(arg1,arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -17923,17 +17923,17 @@ SWIGINTERN PyObject *_wrap_delete_Histogram1DHandlerLogFloat64(PyObject *SWIGUNU
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Histogram1DHandlerLogFloat64" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Histogram1DHandlerLogFloat64" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -17970,17 +17970,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat64_nbins(PyObject *SWIGUNUS
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   unsigned int result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64_nbins" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64_nbins" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > * >(argp1);
   {
     try {
-      result = (unsigned int)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *)arg1)->nbins(); 
+      result = (unsigned int)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *)arg1)->nbins();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -18017,17 +18017,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat64_axis_min(PyObject *SWIGU
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   double result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64_axis_min" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64_axis_min" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > * >(argp1);
   {
     try {
-      result = (double)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *)arg1)->axis_min(); 
+      result = (double)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *)arg1)->axis_min();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -18064,17 +18064,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat64_axis_max(PyObject *SWIGU
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   double result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64_axis_max" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64_axis_max" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > * >(argp1);
   {
     try {
-      result = (double)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *)arg1)->axis_max(); 
+      result = (double)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *)arg1)->axis_max();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -18111,17 +18111,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat64_description(PyObject *SW
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64_description" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64_description" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > * >(argp1);
   {
     try {
-      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *)arg1)->description(); 
+      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *)arg1)->description();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -18162,26 +18162,26 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat64_hist_vals_vars_vec(PyObj
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"overflows",  NULL 
+    (char *)"self",  (char *)"overflows",  NULL
   };
   std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > result;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:Histogram1DHandlerLogFloat64_hist_vals_vars_vec", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64_hist_vals_vars_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64_hist_vals_vars_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_bool(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Histogram1DHandlerLogFloat64_hist_vals_vars_vec" "', argument " "2"" of type '" "bool""'");
-    } 
+    }
     arg2 = static_cast< bool >(val2);
   }
   {
     try {
-      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *)arg1)->hist_vals_vars(arg2); 
+      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *)arg1)->hist_vals_vars(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -18218,17 +18218,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat64_bin_centers_vec(PyObject
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< double,std::allocator< double > > result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64_bin_centers_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64_bin_centers_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > * >(argp1);
   {
     try {
-      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *)arg1)->bin_centers(); 
+      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *)arg1)->bin_centers();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -18265,17 +18265,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat64_bin_edges_vec(PyObject *
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< double,std::allocator< double > > result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64_bin_edges_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64_bin_edges_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > * >(argp1);
   {
     try {
-      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *)arg1)->bin_edges(); 
+      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *)arg1)->bin_edges();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -18316,27 +18316,27 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat64___iadd__(PyObject *SWIGU
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"other",  NULL 
+    (char *)"self",  (char *)"other",  NULL
   };
   wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double >::Transform,double > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:Histogram1DHandlerLogFloat64___iadd__", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64___iadd__" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64___iadd__" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Histogram1DHandlerLogFloat64___iadd__" "', argument " "2"" of type '" "wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double >::Transform,double > const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Histogram1DHandlerLogFloat64___iadd__" "', argument " "2"" of type '" "wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double >::Transform,double > const &""'");
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Histogram1DHandlerLogFloat64___iadd__" "', argument " "2"" of type '" "wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double >::Transform,double > const &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Histogram1DHandlerLogFloat64___iadd__" "', argument " "2"" of type '" "wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double >::Transform,double > const &""'");
   }
   arg2 = reinterpret_cast< wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double >::Transform,double > * >(argp2);
   {
     try {
-      result = (wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double >::Transform,double > *) &(arg1)->operator +=((wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double >::Transform,double > const &)*arg2); 
+      result = (wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double >::Transform,double > *) &(arg1)->operator +=((wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double >::Transform,double > const &)*arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -18373,17 +18373,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat64___repr__(PyObject *SWIGU
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64___repr__" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64___repr__" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > * >(argp1);
   {
     try {
-      result = wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_double_Sg____repr__((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *)arg1); 
+      result = wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_double_Sg____repr__((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > const *)arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -18423,7 +18423,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat64_bin_centers(PyObject *SW
   double *data_temp2 = NULL ;
   std::ptrdiff_t dim_temp2 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -18432,12 +18432,12 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat64_bin_centers(PyObject *SW
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64_bin_centers" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64_bin_centers" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > * >(argp1);
   {
     try {
-      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_double_Sg__npy_bin_centers(arg1,arg2,arg3); 
+      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_double_Sg__npy_bin_centers(arg1,arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -18463,25 +18463,25 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat64_bin_centers(PyObject *SW
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -18500,7 +18500,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat64_bin_edges(PyObject *SWIG
   double *data_temp2 = NULL ;
   std::ptrdiff_t dim_temp2 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -18509,12 +18509,12 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat64_bin_edges(PyObject *SWIG
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64_bin_edges" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64_bin_edges" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > * >(argp1);
   {
     try {
-      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_double_Sg__npy_bin_edges(arg1,arg2,arg3); 
+      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_double_Sg__npy_bin_edges(arg1,arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -18540,25 +18540,25 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat64_bin_edges(PyObject *SWIG
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -18586,9 +18586,9 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat64_hist_vals_vars(PyObject 
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"overflows",  NULL 
+    (char *)"self",  (char *)"overflows",  NULL
   };
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -18600,19 +18600,19 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat64_hist_vals_vars(PyObject 
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:Histogram1DHandlerLogFloat64_hist_vals_vars", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64_hist_vals_vars" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat64_hist_vals_vars" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,double > * >(argp1);
   if (obj1) {
     ecode6 = SWIG_AsVal_bool(obj1, &val6);
     if (!SWIG_IsOK(ecode6)) {
       SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "Histogram1DHandlerLogFloat64_hist_vals_vars" "', argument " "6"" of type '" "bool""'");
-    } 
+    }
     arg6 = static_cast< bool >(val6);
   }
   {
     try {
-      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_double_Sg__npy_hist_vals_vars(arg1,arg2,arg3,arg4,arg5,arg6); 
+      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_double_Sg__npy_hist_vals_vars(arg1,arg2,arg3,arg4,arg5,arg6);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -18638,48 +18638,48 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat64_hist_vals_vars(PyObject 
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   {
     npy_intp dims[1] = {
-      *arg5 
+      *arg5
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg4));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg4), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg4), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -18714,29 +18714,29 @@ SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerFloat64(PyObject *SWIGUNUSEDPAR
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   char * kwnames[] = {
-    (char *)"nbins",  (char *)"axis_min",  (char *)"axis_max",  NULL 
+    (char *)"nbins",  (char *)"axis_min",  (char *)"axis_max",  NULL
   };
   wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:new_Histogram1DHandlerFloat64", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
   ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_Histogram1DHandlerFloat64" "', argument " "1"" of type '" "unsigned int""'");
-  } 
+  }
   arg1 = static_cast< unsigned int >(val1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_Histogram1DHandlerFloat64" "', argument " "2"" of type '" "double""'");
-  } 
+  }
   arg2 = static_cast< double >(val2);
   ecode3 = SWIG_AsVal_double(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_Histogram1DHandlerFloat64" "', argument " "3"" of type '" "double""'");
-  } 
+  }
   arg3 = static_cast< double >(val3);
   {
     try {
-      result = (wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > *)new wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double >(arg1,arg2,arg3); 
+      result = (wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > *)new wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double >(arg1,arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -18772,17 +18772,17 @@ SWIGINTERN PyObject *_wrap_delete_Histogram1DHandlerFloat64(PyObject *SWIGUNUSED
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_double_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Histogram1DHandlerFloat64" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Histogram1DHandlerFloat64" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -18819,17 +18819,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat64_nbins(PyObject *SWIGUNUSEDP
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   unsigned int result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64_nbins" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64_nbins" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > * >(argp1);
   {
     try {
-      result = (unsigned int)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *)arg1)->nbins(); 
+      result = (unsigned int)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *)arg1)->nbins();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -18866,17 +18866,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat64_axis_min(PyObject *SWIGUNUS
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   double result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64_axis_min" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64_axis_min" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > * >(argp1);
   {
     try {
-      result = (double)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *)arg1)->axis_min(); 
+      result = (double)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *)arg1)->axis_min();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -18913,17 +18913,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat64_axis_max(PyObject *SWIGUNUS
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   double result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64_axis_max" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64_axis_max" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > * >(argp1);
   {
     try {
-      result = (double)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *)arg1)->axis_max(); 
+      result = (double)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *)arg1)->axis_max();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -18960,17 +18960,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat64_description(PyObject *SWIGU
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64_description" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64_description" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > * >(argp1);
   {
     try {
-      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *)arg1)->description(); 
+      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *)arg1)->description();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -19011,26 +19011,26 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat64_hist_vals_vars_vec(PyObject
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"overflows",  NULL 
+    (char *)"self",  (char *)"overflows",  NULL
   };
   std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > result;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:Histogram1DHandlerFloat64_hist_vals_vars_vec", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64_hist_vals_vars_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64_hist_vals_vars_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_bool(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Histogram1DHandlerFloat64_hist_vals_vars_vec" "', argument " "2"" of type '" "bool""'");
-    } 
+    }
     arg2 = static_cast< bool >(val2);
   }
   {
     try {
-      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *)arg1)->hist_vals_vars(arg2); 
+      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *)arg1)->hist_vals_vars(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -19067,17 +19067,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat64_bin_centers_vec(PyObject *S
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< double,std::allocator< double > > result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64_bin_centers_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64_bin_centers_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > * >(argp1);
   {
     try {
-      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *)arg1)->bin_centers(); 
+      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *)arg1)->bin_centers();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -19114,17 +19114,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat64_bin_edges_vec(PyObject *SWI
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< double,std::allocator< double > > result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64_bin_edges_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64_bin_edges_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > * >(argp1);
   {
     try {
-      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *)arg1)->bin_edges(); 
+      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *)arg1)->bin_edges();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -19165,27 +19165,27 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat64___iadd__(PyObject *SWIGUNUS
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"other",  NULL 
+    (char *)"self",  (char *)"other",  NULL
   };
   wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double >::Transform,double > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:Histogram1DHandlerFloat64___iadd__", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_double_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64___iadd__" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64___iadd__" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_double_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Histogram1DHandlerFloat64___iadd__" "', argument " "2"" of type '" "wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double >::Transform,double > const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Histogram1DHandlerFloat64___iadd__" "', argument " "2"" of type '" "wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double >::Transform,double > const &""'");
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Histogram1DHandlerFloat64___iadd__" "', argument " "2"" of type '" "wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double >::Transform,double > const &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Histogram1DHandlerFloat64___iadd__" "', argument " "2"" of type '" "wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double >::Transform,double > const &""'");
   }
   arg2 = reinterpret_cast< wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double >::Transform,double > * >(argp2);
   {
     try {
-      result = (wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double >::Transform,double > *) &(arg1)->operator +=((wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double >::Transform,double > const &)*arg2); 
+      result = (wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double >::Transform,double > *) &(arg1)->operator +=((wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double >::Transform,double > const &)*arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -19222,17 +19222,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat64___repr__(PyObject *SWIGUNUS
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64___repr__" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64___repr__" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > * >(argp1);
   {
     try {
-      result = wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_double_Sg____repr__((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *)arg1); 
+      result = wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_double_Sg____repr__((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > const *)arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -19272,7 +19272,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat64_bin_centers(PyObject *SWIGU
   double *data_temp2 = NULL ;
   std::ptrdiff_t dim_temp2 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -19281,12 +19281,12 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat64_bin_centers(PyObject *SWIGU
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64_bin_centers" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64_bin_centers" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > * >(argp1);
   {
     try {
-      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_double_Sg__npy_bin_centers(arg1,arg2,arg3); 
+      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_double_Sg__npy_bin_centers(arg1,arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -19312,25 +19312,25 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat64_bin_centers(PyObject *SWIGU
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -19349,7 +19349,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat64_bin_edges(PyObject *SWIGUNU
   double *data_temp2 = NULL ;
   std::ptrdiff_t dim_temp2 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -19358,12 +19358,12 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat64_bin_edges(PyObject *SWIGUNU
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64_bin_edges" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64_bin_edges" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > * >(argp1);
   {
     try {
-      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_double_Sg__npy_bin_edges(arg1,arg2,arg3); 
+      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_double_Sg__npy_bin_edges(arg1,arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -19389,25 +19389,25 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat64_bin_edges(PyObject *SWIGUNU
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -19435,9 +19435,9 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat64_hist_vals_vars(PyObject *SW
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"overflows",  NULL 
+    (char *)"self",  (char *)"overflows",  NULL
   };
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -19449,19 +19449,19 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat64_hist_vals_vars(PyObject *SW
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:Histogram1DHandlerFloat64_hist_vals_vars", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64_hist_vals_vars" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat64_hist_vals_vars" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,double > * >(argp1);
   if (obj1) {
     ecode6 = SWIG_AsVal_bool(obj1, &val6);
     if (!SWIG_IsOK(ecode6)) {
       SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "Histogram1DHandlerFloat64_hist_vals_vars" "', argument " "6"" of type '" "bool""'");
-    } 
+    }
     arg6 = static_cast< bool >(val6);
   }
   {
     try {
-      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_double_Sg__npy_hist_vals_vars(arg1,arg2,arg3,arg4,arg5,arg6); 
+      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_double_Sg__npy_hist_vals_vars(arg1,arg2,arg3,arg4,arg5,arg6);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -19487,48 +19487,48 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat64_hist_vals_vars(PyObject *SW
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   {
     npy_intp dims[1] = {
-      *arg5 
+      *arg5
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg4));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg4), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg4), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -19554,17 +19554,17 @@ SWIGINTERN PyObject *_wrap_delete_EMDBaseFloat32(PyObject *SWIGUNUSEDPARM(self),
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EMDBaseFloat32" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EMDBaseFloat32" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -19601,17 +19601,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_R(PyObject *SWIGUNUSEDPARM(self), PyOb
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   float result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_R" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_R" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      result = (float)((wasserstein::EMDBase< float > const *)arg1)->R(); 
+      result = (float)((wasserstein::EMDBase< float > const *)arg1)->R();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -19648,17 +19648,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_beta(PyObject *SWIGUNUSEDPARM(self), P
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   float result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_beta" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_beta" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      result = (float)((wasserstein::EMDBase< float > const *)arg1)->beta(); 
+      result = (float)((wasserstein::EMDBase< float > const *)arg1)->beta();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -19699,23 +19699,23 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_set_R(PyObject *SWIGUNUSEDPARM(self), 
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"R",  NULL 
+    (char *)"self",  (char *)"R",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:EMDBaseFloat32_set_R", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_set_R" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_set_R" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   ecode2 = SWIG_AsVal_float(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDBaseFloat32_set_R" "', argument " "2"" of type '" "float""'");
-  } 
+  }
   arg2 = static_cast< float >(val2);
   {
     try {
-      (arg1)->set_R(arg2); 
+      (arg1)->set_R(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -19756,23 +19756,23 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_set_beta(PyObject *SWIGUNUSEDPARM(self
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"beta",  NULL 
+    (char *)"self",  (char *)"beta",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:EMDBaseFloat32_set_beta", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_set_beta" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_set_beta" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   ecode2 = SWIG_AsVal_float(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDBaseFloat32_set_beta" "', argument " "2"" of type '" "float""'");
-  } 
+  }
   arg2 = static_cast< float >(val2);
   {
     try {
-      (arg1)->set_beta(arg2); 
+      (arg1)->set_beta(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -19821,39 +19821,39 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_set_network_simplex_params(PyObject *S
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  NULL 
+    (char *)"self",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|OOO:EMDBaseFloat32_set_network_simplex_params", kwnames, &obj0, &obj1, &obj2, &obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_set_network_simplex_params" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_set_network_simplex_params" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_size_t(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDBaseFloat32_set_network_simplex_params" "', argument " "2"" of type '" "std::size_t""'");
-    } 
+    }
     arg2 = static_cast< std::size_t >(val2);
   }
   if (obj2) {
     ecode3 = SWIG_AsVal_float(obj2, &val3);
     if (!SWIG_IsOK(ecode3)) {
       SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "EMDBaseFloat32_set_network_simplex_params" "', argument " "3"" of type '" "float""'");
-    } 
+    }
     arg3 = static_cast< float >(val3);
   }
   if (obj3) {
     ecode4 = SWIG_AsVal_float(obj3, &val4);
     if (!SWIG_IsOK(ecode4)) {
       SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "EMDBaseFloat32_set_network_simplex_params" "', argument " "4"" of type '" "float""'");
-    } 
+    }
     arg4 = static_cast< float >(val4);
   }
   {
     try {
-      (arg1)->set_network_simplex_params(arg2,arg3,arg4); 
+      (arg1)->set_network_simplex_params(arg2,arg3,arg4);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -19890,17 +19890,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_norm(PyObject *SWIGUNUSEDPARM(self), P
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_norm" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_norm" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      result = (bool)((wasserstein::EMDBase< float > const *)arg1)->norm(); 
+      result = (bool)((wasserstein::EMDBase< float > const *)arg1)->norm();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -19941,23 +19941,23 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_set_norm(PyObject *SWIGUNUSEDPARM(self
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"norm",  NULL 
+    (char *)"self",  (char *)"norm",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:EMDBaseFloat32_set_norm", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_set_norm" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_set_norm" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   ecode2 = SWIG_AsVal_bool(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDBaseFloat32_set_norm" "', argument " "2"" of type '" "bool""'");
-  } 
+  }
   arg2 = static_cast< bool >(val2);
   {
     try {
-      (arg1)->set_norm(arg2); 
+      (arg1)->set_norm(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -19994,17 +19994,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_do_timing(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_do_timing" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_do_timing" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      result = (bool)((wasserstein::EMDBase< float > const *)arg1)->do_timing(); 
+      result = (bool)((wasserstein::EMDBase< float > const *)arg1)->do_timing();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -20045,23 +20045,23 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_set_do_timing(PyObject *SWIGUNUSEDPARM
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"timing",  NULL 
+    (char *)"self",  (char *)"timing",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:EMDBaseFloat32_set_do_timing", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_set_do_timing" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_set_do_timing" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   ecode2 = SWIG_AsVal_bool(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDBaseFloat32_set_do_timing" "', argument " "2"" of type '" "bool""'");
-  } 
+  }
   arg2 = static_cast< bool >(val2);
   {
     try {
-      (arg1)->set_do_timing(arg2); 
+      (arg1)->set_do_timing(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -20098,17 +20098,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_external_dists(PyObject *SWIGUNUSEDPAR
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_external_dists" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_external_dists" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      result = (bool)((wasserstein::EMDBase< float > const *)arg1)->external_dists(); 
+      result = (bool)((wasserstein::EMDBase< float > const *)arg1)->external_dists();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -20149,23 +20149,23 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_set_external_dists(PyObject *SWIGUNUSE
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"exdists",  NULL 
+    (char *)"self",  (char *)"exdists",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:EMDBaseFloat32_set_external_dists", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_set_external_dists" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_set_external_dists" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   ecode2 = SWIG_AsVal_bool(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDBaseFloat32_set_external_dists" "', argument " "2"" of type '" "bool""'");
-  } 
+  }
   arg2 = static_cast< bool >(val2);
   {
     try {
-      (arg1)->set_external_dists(arg2); 
+      (arg1)->set_external_dists(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -20202,17 +20202,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_n0(PyObject *SWIGUNUSEDPARM(self), PyO
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   wasserstein::index_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_n0" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_n0" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      result = ((wasserstein::EMDBase< float > const *)arg1)->n0(); 
+      result = ((wasserstein::EMDBase< float > const *)arg1)->n0();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -20249,17 +20249,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_n1(PyObject *SWIGUNUSEDPARM(self), PyO
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   wasserstein::index_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_n1" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_n1" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      result = ((wasserstein::EMDBase< float > const *)arg1)->n1(); 
+      result = ((wasserstein::EMDBase< float > const *)arg1)->n1();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -20296,17 +20296,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_extra(PyObject *SWIGUNUSEDPARM(self), 
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   wasserstein::ExtraParticle result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_extra" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_extra" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      result = (wasserstein::ExtraParticle)((wasserstein::EMDBase< float > const *)arg1)->extra(); 
+      result = (wasserstein::ExtraParticle)((wasserstein::EMDBase< float > const *)arg1)->extra();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -20343,17 +20343,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_emd(PyObject *SWIGUNUSEDPARM(self), Py
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   float result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_emd" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_emd" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      result = (float)((wasserstein::EMDBase< float > const *)arg1)->emd(); 
+      result = (float)((wasserstein::EMDBase< float > const *)arg1)->emd();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -20390,17 +20390,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_status(PyObject *SWIGUNUSEDPARM(self),
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   wasserstein::EMDStatus result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_status" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_status" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      result = (wasserstein::EMDStatus)((wasserstein::EMDBase< float > const *)arg1)->status(); 
+      result = (wasserstein::EMDStatus)((wasserstein::EMDBase< float > const *)arg1)->status();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -20437,17 +20437,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_weightdiff(PyObject *SWIGUNUSEDPARM(se
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   float result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_weightdiff" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_weightdiff" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      result = (float)((wasserstein::EMDBase< float > const *)arg1)->weightdiff(); 
+      result = (float)((wasserstein::EMDBase< float > const *)arg1)->weightdiff();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -20484,17 +20484,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_scale(PyObject *SWIGUNUSEDPARM(self), 
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   float result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_scale" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_scale" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      result = (float)((wasserstein::EMDBase< float > const *)arg1)->scale(); 
+      result = (float)((wasserstein::EMDBase< float > const *)arg1)->scale();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -20531,17 +20531,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_n_iter(PyObject *SWIGUNUSEDPARM(self),
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::size_t result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_n_iter" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_n_iter" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      result = ((wasserstein::EMDBase< float > const *)arg1)->n_iter(); 
+      result = ((wasserstein::EMDBase< float > const *)arg1)->n_iter();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -20578,17 +20578,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_dists_vec(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< float,std::allocator< float > > result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_dists_vec" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_dists_vec" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      result = ((wasserstein::EMDBase< float > const *)arg1)->dists(); 
+      result = ((wasserstein::EMDBase< float > const *)arg1)->dists();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -20625,17 +20625,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_flows_vec(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< float,std::allocator< float > > result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_flows_vec" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_flows_vec" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      result = ((wasserstein::EMDBase< float > const *)arg1)->flows(); 
+      result = ((wasserstein::EMDBase< float > const *)arg1)->flows();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -20677,26 +20677,26 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_flow__SWIG_0(PyObject *SWIGUNUSEDPARM(
   ptrdiff_t val3 ;
   int ecode3 = 0 ;
   float result;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_flow" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_flow" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDBaseFloat32_flow" "', argument " "2"" of type '" "wasserstein::index_type""'");
-  } 
+  }
   arg2 = static_cast< wasserstein::index_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "EMDBaseFloat32_flow" "', argument " "3"" of type '" "wasserstein::index_type""'");
-  } 
+  }
   arg3 = static_cast< wasserstein::index_type >(val3);
   {
     try {
-      result = (float)((wasserstein::EMDBase< float > const *)arg1)->flow(arg2,arg3); 
+      result = (float)((wasserstein::EMDBase< float > const *)arg1)->flow(arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -20735,21 +20735,21 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_flow__SWIG_1(PyObject *SWIGUNUSEDPARM(
   size_t val2 ;
   int ecode2 = 0 ;
   float result;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_flow" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_flow" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDBaseFloat32_flow" "', argument " "2"" of type '" "std::size_t""'");
-  } 
+  }
   arg2 = static_cast< std::size_t >(val2);
   {
     try {
-      result = (float)((wasserstein::EMDBase< float > const *)arg1)->flow(arg2); 
+      result = (float)((wasserstein::EMDBase< float > const *)arg1)->flow(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -20784,7 +20784,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_flow(PyObject *self, PyObject *args) {
   PyObject *argv[4] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "EMDBaseFloat32_flow", 0, 3, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -20823,7 +20823,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_flow(PyObject *self, PyObject *args) {
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'EMDBaseFloat32_flow'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -20840,17 +20840,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_node_potentials(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::pair< std::vector< float,std::allocator< float > >,std::vector< float,std::allocator< float > > > result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_node_potentials" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_node_potentials" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      result = ((wasserstein::EMDBase< float > const *)arg1)->node_potentials(); 
+      result = ((wasserstein::EMDBase< float > const *)arg1)->node_potentials();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -20887,17 +20887,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_duration(PyObject *SWIGUNUSEDPARM(self
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   double result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_duration" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_duration" "', argument " "1"" of type '" "wasserstein::EMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      result = (double)((wasserstein::EMDBase< float > const *)arg1)->duration(); 
+      result = (double)((wasserstein::EMDBase< float > const *)arg1)->duration();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -20933,17 +20933,17 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_clear(PyObject *SWIGUNUSEDPARM(self), 
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_clear" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_clear" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      (arg1)->clear(); 
+      (arg1)->clear();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -20985,7 +20985,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_flows(PyObject *SWIGUNUSEDPARM(self), 
   std::ptrdiff_t dim1_temp2 ;
   std::ptrdiff_t dim2_temp2 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim1_temp2;
@@ -20995,12 +20995,12 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_flows(PyObject *SWIGUNUSEDPARM(self), 
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_flows" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_flows" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      wasserstein_EMDBase_Sl_float_Sg__npy_flows(arg1,arg2,arg3,arg4); 
+      wasserstein_EMDBase_Sl_float_Sg__npy_flows(arg1,arg2,arg3,arg4);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -21026,25 +21026,25 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_flows(PyObject *SWIGUNUSEDPARM(self), 
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[2] = {
-      *arg3, *arg4 
+      *arg3, *arg4
     };
     PyObject* obj = PyArray_SimpleNewFromData(2, dims, NPY_FLOAT, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -21065,7 +21065,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_dists(PyObject *SWIGUNUSEDPARM(self), 
   std::ptrdiff_t dim1_temp2 ;
   std::ptrdiff_t dim2_temp2 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim1_temp2;
@@ -21075,12 +21075,12 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_dists(PyObject *SWIGUNUSEDPARM(self), 
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_dists" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_dists" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      wasserstein_EMDBase_Sl_float_Sg__npy_dists(arg1,arg2,arg3,arg4); 
+      wasserstein_EMDBase_Sl_float_Sg__npy_dists(arg1,arg2,arg3,arg4);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -21106,25 +21106,25 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_dists(PyObject *SWIGUNUSEDPARM(self), 
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[2] = {
-      *arg3, *arg4 
+      *arg3, *arg4
     };
     PyObject* obj = PyArray_SimpleNewFromData(2, dims, NPY_FLOAT, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -21147,7 +21147,7 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_npy_node_potentials(PyObject *SWIGUNUS
   float *data_temp4 = NULL ;
   std::ptrdiff_t dim_temp4 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -21160,12 +21160,12 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_npy_node_potentials(PyObject *SWIGUNUS
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_npy_node_potentials" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDBaseFloat32_npy_node_potentials" "', argument " "1"" of type '" "wasserstein::EMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMDBase< float > * >(argp1);
   {
     try {
-      wasserstein_EMDBase_Sl_float_Sg__npy_node_potentials(arg1,arg2,arg3,arg4,arg5); 
+      wasserstein_EMDBase_Sl_float_Sg__npy_node_potentials(arg1,arg2,arg3,arg4,arg5);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -21191,48 +21191,48 @@ SWIGINTERN PyObject *_wrap_EMDBaseFloat32_npy_node_potentials(PyObject *SWIGUNUS
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_FLOAT, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   {
     npy_intp dims[1] = {
-      *arg5 
+      *arg5
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_FLOAT, (void*)(*arg4));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg4), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg4), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -21254,17 +21254,17 @@ SWIGINTERN PyObject *_wrap_delete_PairwiseEMDBaseFloat32(PyObject *SWIGUNUSEDPAR
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_PairwiseEMDBaseFloat32" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_PairwiseEMDBaseFloat32" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -21301,17 +21301,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_R(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   float result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_R" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_R" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   {
     try {
-      result = (float)((wasserstein::PairwiseEMDBase< float > const *)arg1)->R(); 
+      result = (float)((wasserstein::PairwiseEMDBase< float > const *)arg1)->R();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -21352,23 +21352,23 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_set_R(PyObject *SWIGUNUSEDPARM
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"R",  NULL 
+    (char *)"self",  (char *)"R",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:PairwiseEMDBaseFloat32_set_R", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_set_R" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_set_R" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   ecode2 = SWIG_AsVal_float(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDBaseFloat32_set_R" "', argument " "2"" of type '" "float""'");
-  } 
+  }
   arg2 = static_cast< float >(val2);
   {
     try {
-      (arg1)->set_R(arg2); 
+      (arg1)->set_R(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -21405,17 +21405,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_beta(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   float result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_beta" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_beta" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   {
     try {
-      result = (float)((wasserstein::PairwiseEMDBase< float > const *)arg1)->beta(); 
+      result = (float)((wasserstein::PairwiseEMDBase< float > const *)arg1)->beta();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -21456,23 +21456,23 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_set_beta(PyObject *SWIGUNUSEDP
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"beta",  NULL 
+    (char *)"self",  (char *)"beta",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:PairwiseEMDBaseFloat32_set_beta", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_set_beta" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_set_beta" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   ecode2 = SWIG_AsVal_float(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDBaseFloat32_set_beta" "', argument " "2"" of type '" "float""'");
-  } 
+  }
   arg2 = static_cast< float >(val2);
   {
     try {
-      (arg1)->set_beta(arg2); 
+      (arg1)->set_beta(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -21509,17 +21509,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_norm(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_norm" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_norm" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   {
     try {
-      result = (bool)((wasserstein::PairwiseEMDBase< float > const *)arg1)->norm(); 
+      result = (bool)((wasserstein::PairwiseEMDBase< float > const *)arg1)->norm();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -21560,23 +21560,23 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_set_norm(PyObject *SWIGUNUSEDP
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"norm",  NULL 
+    (char *)"self",  (char *)"norm",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:PairwiseEMDBaseFloat32_set_norm", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_set_norm" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_set_norm" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   ecode2 = SWIG_AsVal_bool(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDBaseFloat32_set_norm" "', argument " "2"" of type '" "bool""'");
-  } 
+  }
   arg2 = static_cast< bool >(val2);
   {
     try {
-      (arg1)->set_norm(arg2); 
+      (arg1)->set_norm(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -21625,39 +21625,39 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_set_network_simplex_params(PyO
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  NULL 
+    (char *)"self",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|OOO:PairwiseEMDBaseFloat32_set_network_simplex_params", kwnames, &obj0, &obj1, &obj2, &obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_set_network_simplex_params" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_set_network_simplex_params" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_size_t(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDBaseFloat32_set_network_simplex_params" "', argument " "2"" of type '" "std::size_t""'");
-    } 
+    }
     arg2 = static_cast< std::size_t >(val2);
   }
   if (obj2) {
     ecode3 = SWIG_AsVal_float(obj2, &val3);
     if (!SWIG_IsOK(ecode3)) {
       SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "PairwiseEMDBaseFloat32_set_network_simplex_params" "', argument " "3"" of type '" "float""'");
-    } 
+    }
     arg3 = static_cast< float >(val3);
   }
   if (obj3) {
     ecode4 = SWIG_AsVal_float(obj3, &val4);
     if (!SWIG_IsOK(ecode4)) {
       SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "PairwiseEMDBaseFloat32_set_network_simplex_params" "', argument " "4"" of type '" "float""'");
-    } 
+    }
     arg4 = static_cast< float >(val4);
   }
   {
     try {
-      (arg1)->set_network_simplex_params(arg2,arg3,arg4); 
+      (arg1)->set_network_simplex_params(arg2,arg3,arg4);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -21698,26 +21698,26 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_set_external_emd_handler(PyObj
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"handler",  NULL 
+    (char *)"self",  (char *)"handler",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:PairwiseEMDBaseFloat32_set_external_emd_handler", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_set_external_emd_handler" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_set_external_emd_handler" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_float_t,  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "PairwiseEMDBaseFloat32_set_external_emd_handler" "', argument " "2"" of type '" "wasserstein::ExternalEMDHandler< float > &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "PairwiseEMDBaseFloat32_set_external_emd_handler" "', argument " "2"" of type '" "wasserstein::ExternalEMDHandler< float > &""'");
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "PairwiseEMDBaseFloat32_set_external_emd_handler" "', argument " "2"" of type '" "wasserstein::ExternalEMDHandler< float > &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "PairwiseEMDBaseFloat32_set_external_emd_handler" "', argument " "2"" of type '" "wasserstein::ExternalEMDHandler< float > &""'");
   }
   arg2 = reinterpret_cast< wasserstein::ExternalEMDHandler< float > * >(argp2);
   {
     try {
-      (arg1)->set_external_emd_handler(*arg2); 
+      (arg1)->set_external_emd_handler(*arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -21754,17 +21754,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_have_external_emd_handler(PyOb
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_have_external_emd_handler" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_have_external_emd_handler" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   {
     try {
-      result = (bool)((wasserstein::PairwiseEMDBase< float > const *)arg1)->have_external_emd_handler(); 
+      result = (bool)((wasserstein::PairwiseEMDBase< float > const *)arg1)->have_external_emd_handler();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -21801,17 +21801,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_num_threads(PyObject *SWIGUNUS
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   int result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_num_threads" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_num_threads" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   {
     try {
-      result = (int)((wasserstein::PairwiseEMDBase< float > const *)arg1)->num_threads(); 
+      result = (int)((wasserstein::PairwiseEMDBase< float > const *)arg1)->num_threads();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -21852,23 +21852,23 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_set_omp_dynamic_chunksize(PyOb
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"chunksize",  NULL 
+    (char *)"self",  (char *)"chunksize",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:PairwiseEMDBaseFloat32_set_omp_dynamic_chunksize", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_set_omp_dynamic_chunksize" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_set_omp_dynamic_chunksize" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDBaseFloat32_set_omp_dynamic_chunksize" "', argument " "2"" of type '" "int""'");
-  } 
+  }
   arg2 = static_cast< int >(val2);
   {
     try {
-      (arg1)->set_omp_dynamic_chunksize(arg2); 
+      (arg1)->set_omp_dynamic_chunksize(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -21905,17 +21905,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_omp_dynamic_chunksize(PyObject
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   int result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_omp_dynamic_chunksize" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_omp_dynamic_chunksize" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   {
     try {
-      result = (int)((wasserstein::PairwiseEMDBase< float > const *)arg1)->omp_dynamic_chunksize(); 
+      result = (int)((wasserstein::PairwiseEMDBase< float > const *)arg1)->omp_dynamic_chunksize();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -21956,23 +21956,23 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_set_request_mode(PyObject *SWI
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"mode",  NULL 
+    (char *)"self",  (char *)"mode",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:PairwiseEMDBaseFloat32_set_request_mode", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_set_request_mode" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_set_request_mode" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   ecode2 = SWIG_AsVal_bool(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDBaseFloat32_set_request_mode" "', argument " "2"" of type '" "bool""'");
-  } 
+  }
   arg2 = static_cast< bool >(val2);
   {
     try {
-      (arg1)->set_request_mode(arg2); 
+      (arg1)->set_request_mode(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -22009,17 +22009,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_request_mode(PyObject *SWIGUNU
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_request_mode" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_request_mode" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   {
     try {
-      result = (bool)((wasserstein::PairwiseEMDBase< float > const *)arg1)->request_mode(); 
+      result = (bool)((wasserstein::PairwiseEMDBase< float > const *)arg1)->request_mode();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -22056,17 +22056,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_duration(PyObject *SWIGUNUSEDP
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   double result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_duration" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_duration" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   {
     try {
-      result = (double)((wasserstein::PairwiseEMDBase< float > const *)arg1)->duration(); 
+      result = (double)((wasserstein::PairwiseEMDBase< float > const *)arg1)->duration();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -22103,17 +22103,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_nevA(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   wasserstein::index_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_nevA" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_nevA" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   {
     try {
-      result = ((wasserstein::PairwiseEMDBase< float > const *)arg1)->nevA(); 
+      result = ((wasserstein::PairwiseEMDBase< float > const *)arg1)->nevA();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -22150,17 +22150,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_nevB(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   wasserstein::index_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_nevB" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_nevB" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   {
     try {
-      result = ((wasserstein::PairwiseEMDBase< float > const *)arg1)->nevB(); 
+      result = ((wasserstein::PairwiseEMDBase< float > const *)arg1)->nevB();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -22197,17 +22197,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_num_emds(PyObject *SWIGUNUSEDP
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   wasserstein::index_type result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_num_emds" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_num_emds" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   {
     try {
-      result = ((wasserstein::PairwiseEMDBase< float > const *)arg1)->num_emds(); 
+      result = ((wasserstein::PairwiseEMDBase< float > const *)arg1)->num_emds();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -22244,17 +22244,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_storage(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   wasserstein::EMDPairsStorage result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_storage" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_storage" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   {
     try {
-      result = (wasserstein::EMDPairsStorage)((wasserstein::PairwiseEMDBase< float > const *)arg1)->storage(); 
+      result = (wasserstein::EMDPairsStorage)((wasserstein::PairwiseEMDBase< float > const *)arg1)->storage();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -22291,17 +22291,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_errored(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   bool result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_errored" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_errored" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   {
     try {
-      result = (bool)((wasserstein::PairwiseEMDBase< float > const *)arg1)->errored(); 
+      result = (bool)((wasserstein::PairwiseEMDBase< float > const *)arg1)->errored();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -22338,17 +22338,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_error_messages(PyObject *SWIGU
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< std::string,std::allocator< std::string > > *result = 0 ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_error_messages" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_error_messages" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   {
     try {
-      result = (std::vector< std::string,std::allocator< std::string > > *) &((wasserstein::PairwiseEMDBase< float > const *)arg1)->error_messages(); 
+      result = (std::vector< std::string,std::allocator< std::string > > *) &((wasserstein::PairwiseEMDBase< float > const *)arg1)->error_messages();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -22389,26 +22389,26 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_emds_vec(PyObject *SWIGUNUSEDP
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"raw",  NULL 
+    (char *)"self",  (char *)"raw",  NULL
   };
   std::vector< float,std::allocator< float > > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:PairwiseEMDBaseFloat32_emds_vec", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_emds_vec" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_emds_vec" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_bool(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDBaseFloat32_emds_vec" "', argument " "2"" of type '" "bool""'");
-    } 
+    }
     arg2 = static_cast< bool >(val2);
   }
   {
     try {
-      result = (std::vector< float,std::allocator< float > > *) &(arg1)->emds(arg2); 
+      result = (std::vector< float,std::allocator< float > > *) &(arg1)->emds(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -22457,36 +22457,36 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_emd(PyObject *SWIGUNUSEDPARM(s
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"i",  (char *)"j",  (char *)"thread",  NULL 
+    (char *)"self",  (char *)"i",  (char *)"j",  (char *)"thread",  NULL
   };
   float result;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO|O:PairwiseEMDBaseFloat32_emd", kwnames, &obj0, &obj1, &obj2, &obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_emd" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_emd" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDBaseFloat32_emd" "', argument " "2"" of type '" "wasserstein::index_type""'");
-  } 
+  }
   arg2 = static_cast< wasserstein::index_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "PairwiseEMDBaseFloat32_emd" "', argument " "3"" of type '" "wasserstein::index_type""'");
-  } 
+  }
   arg3 = static_cast< wasserstein::index_type >(val3);
   if (obj3) {
     ecode4 = SWIG_AsVal_int(obj3, &val4);
     if (!SWIG_IsOK(ecode4)) {
       SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "PairwiseEMDBaseFloat32_emd" "', argument " "4"" of type '" "int""'");
-    } 
+    }
     arg4 = static_cast< int >(val4);
   }
   {
     try {
-      result = (float)(arg1)->emd(arg2,arg3,arg4); 
+      result = (float)(arg1)->emd(arg2,arg3,arg4);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -22528,7 +22528,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_emds(PyObject *SWIGUNUSEDPARM(
   std::ptrdiff_t dim1_temp2 ;
   std::ptrdiff_t dim2_temp2 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim1_temp2;
@@ -22538,12 +22538,12 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_emds(PyObject *SWIGUNUSEDPARM(
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_emds" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_emds" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   {
     try {
-      wasserstein_PairwiseEMDBase_Sl_float_Sg__npy_emds(arg1,arg2,arg3,arg4); 
+      wasserstein_PairwiseEMDBase_Sl_float_Sg__npy_emds(arg1,arg2,arg3,arg4);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -22569,25 +22569,25 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_emds(PyObject *SWIGUNUSEDPARM(
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[2] = {
-      *arg3, *arg4 
+      *arg3, *arg4
     };
     PyObject* obj = PyArray_SimpleNewFromData(2, dims, NPY_FLOAT, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -22606,7 +22606,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_raw_emds(PyObject *SWIGUNUSEDP
   float *data_temp2 = NULL ;
   std::ptrdiff_t dim_temp2 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -22615,12 +22615,12 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_raw_emds(PyObject *SWIGUNUSEDP
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDBaseT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_raw_emds" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDBaseFloat32_raw_emds" "', argument " "1"" of type '" "wasserstein::PairwiseEMDBase< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMDBase< float > * >(argp1);
   {
     try {
-      wasserstein_PairwiseEMDBase_Sl_float_Sg__raw_emds(arg1,arg2,arg3); 
+      wasserstein_PairwiseEMDBase_Sl_float_Sg__raw_emds(arg1,arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -22646,25 +22646,25 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDBaseFloat32_raw_emds(PyObject *SWIGUNUSEDP
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_FLOAT, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -22686,17 +22686,17 @@ SWIGINTERN PyObject *_wrap_delete_ExternalEMDHandlerFloat32(PyObject *SWIGUNUSED
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_float_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ExternalEMDHandlerFloat32" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ExternalEMDHandlerFloat32" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::ExternalEMDHandler< float > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -22733,17 +22733,17 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_description(PyObject *SWIGU
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat32_description" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat32_description" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::ExternalEMDHandler< float > * >(argp1);
   {
     try {
-      result = ((wasserstein::ExternalEMDHandler< float > const *)arg1)->description(); 
+      result = ((wasserstein::ExternalEMDHandler< float > const *)arg1)->description();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -22780,17 +22780,17 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_num_calls(PyObject *SWIGUNU
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::size_t result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat32_num_calls" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat32_num_calls" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::ExternalEMDHandler< float > * >(argp1);
   {
     try {
-      result = ((wasserstein::ExternalEMDHandler< float > const *)arg1)->num_calls(); 
+      result = ((wasserstein::ExternalEMDHandler< float > const *)arg1)->num_calls();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -22835,30 +22835,30 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32___call__(PyObject *SWIGUNUS
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"emd",  (char *)"weight",  NULL 
+    (char *)"self",  (char *)"emd",  (char *)"weight",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO|O:ExternalEMDHandlerFloat32___call__", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat32___call__" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat32___call__" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::ExternalEMDHandler< float > * >(argp1);
   ecode2 = SWIG_AsVal_float(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ExternalEMDHandlerFloat32___call__" "', argument " "2"" of type '" "float""'");
-  } 
+  }
   arg2 = static_cast< float >(val2);
   if (obj2) {
     ecode3 = SWIG_AsVal_float(obj2, &val3);
     if (!SWIG_IsOK(ecode3)) {
       SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ExternalEMDHandlerFloat32___call__" "', argument " "3"" of type '" "float""'");
-    } 
+    }
     arg3 = static_cast< float >(val3);
   }
   {
     try {
-      (arg1)->operator ()(arg2,arg3); 
+      (arg1)->operator ()(arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -22897,16 +22897,16 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate1d__SWIG_0(PyObject
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat32_evaluate1d" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat32_evaluate1d" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::ExternalEMDHandler< float > * >(argp1);
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
       NPY_FLOAT,
@@ -22918,7 +22918,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate1d__SWIG_0(PyObject
   }
   {
     try {
-      wasserstein_ExternalEMDHandler_Sl_float_Sg__npy_evaluate1d__SWIG_0(arg1,arg2,arg3); 
+      wasserstein_ExternalEMDHandler_Sl_float_Sg__npy_evaluate1d__SWIG_0(arg1,arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -22945,7 +22945,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate1d__SWIG_0(PyObject
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   return resultobj;
@@ -22953,7 +22953,7 @@ fail:
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   return NULL;
@@ -22970,16 +22970,16 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate2d__SWIG_0(PyObject
   int res1 = 0 ;
   PyArrayObject *array2 = NULL ;
   int is_new_object2 = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat32_evaluate2d" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat32_evaluate2d" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::ExternalEMDHandler< float > * >(argp1);
   {
     npy_intp size[2] = {
-      -1, -1 
+      -1, -1
     };
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1], NPY_FLOAT,
       &is_new_object2);
@@ -22991,7 +22991,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate2d__SWIG_0(PyObject
   }
   {
     try {
-      wasserstein_ExternalEMDHandler_Sl_float_Sg__npy_evaluate2d__SWIG_0(arg1,arg2,arg3,arg4); 
+      wasserstein_ExternalEMDHandler_Sl_float_Sg__npy_evaluate2d__SWIG_0(arg1,arg2,arg3,arg4);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -23018,7 +23018,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate2d__SWIG_0(PyObject
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   return resultobj;
@@ -23026,7 +23026,7 @@ fail:
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   return NULL;
@@ -23046,16 +23046,16 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate1d__SWIG_1(PyObject
   int is_new_object2 = 0 ;
   PyArrayObject *array4 = NULL ;
   int is_new_object4 = 0 ;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat32_evaluate1d" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat32_evaluate1d" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::ExternalEMDHandler< float > * >(argp1);
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
       NPY_FLOAT,
@@ -23067,7 +23067,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate1d__SWIG_1(PyObject
   }
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array4 = obj_to_array_contiguous_allow_conversion(swig_obj[2],
       NPY_FLOAT,
@@ -23079,7 +23079,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate1d__SWIG_1(PyObject
   }
   {
     try {
-      wasserstein_ExternalEMDHandler_Sl_float_Sg__npy_evaluate1d__SWIG_1(arg1,arg2,arg3,arg4,arg5); 
+      wasserstein_ExternalEMDHandler_Sl_float_Sg__npy_evaluate1d__SWIG_1(arg1,arg2,arg3,arg4,arg5);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -23106,13 +23106,13 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate1d__SWIG_1(PyObject
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   return resultobj;
@@ -23120,13 +23120,13 @@ fail:
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   return NULL;
@@ -23138,7 +23138,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate1d(PyObject *self, 
   PyObject *argv[4] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "ExternalEMDHandlerFloat32_evaluate1d", 0, 3, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -23180,7 +23180,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate1d(PyObject *self, 
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'ExternalEMDHandlerFloat32_evaluate1d'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -23205,16 +23205,16 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate2d__SWIG_1(PyObject
   int is_new_object2 = 0 ;
   PyArrayObject *array5 = NULL ;
   int is_new_object5 = 0 ;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat32_evaluate2d" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat32_evaluate2d" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::ExternalEMDHandler< float > * >(argp1);
   {
     npy_intp size[2] = {
-      -1, -1 
+      -1, -1
     };
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1], NPY_FLOAT,
       &is_new_object2);
@@ -23226,7 +23226,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate2d__SWIG_1(PyObject
   }
   {
     npy_intp size[2] = {
-      -1, -1 
+      -1, -1
     };
     array5 = obj_to_array_contiguous_allow_conversion(swig_obj[2], NPY_FLOAT,
       &is_new_object5);
@@ -23238,7 +23238,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate2d__SWIG_1(PyObject
   }
   {
     try {
-      wasserstein_ExternalEMDHandler_Sl_float_Sg__npy_evaluate2d__SWIG_1(arg1,arg2,arg3,arg4,arg5,arg6,arg7); 
+      wasserstein_ExternalEMDHandler_Sl_float_Sg__npy_evaluate2d__SWIG_1(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -23265,13 +23265,13 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate2d__SWIG_1(PyObject
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object5 && array5)
     {
-      Py_DECREF(array5); 
+      Py_DECREF(array5);
     }
   }
   return resultobj;
@@ -23279,13 +23279,13 @@ fail:
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object5 && array5)
     {
-      Py_DECREF(array5); 
+      Py_DECREF(array5);
     }
   }
   return NULL;
@@ -23310,16 +23310,16 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate2d__SWIG_2(PyObject
   int is_new_object5 = 0 ;
   PyArrayObject *array7 = NULL ;
   int is_new_object7 = 0 ;
-  
+
   if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat32_evaluate2d" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat32_evaluate2d" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::ExternalEMDHandler< float > * >(argp1);
   {
     npy_intp size[2] = {
-      -1, -1 
+      -1, -1
     };
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1], NPY_FLOAT,
       &is_new_object2);
@@ -23331,7 +23331,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate2d__SWIG_2(PyObject
   }
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array5 = obj_to_array_contiguous_allow_conversion(swig_obj[2],
       NPY_FLOAT,
@@ -23343,7 +23343,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate2d__SWIG_2(PyObject
   }
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array7 = obj_to_array_contiguous_allow_conversion(swig_obj[3],
       NPY_FLOAT,
@@ -23355,7 +23355,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate2d__SWIG_2(PyObject
   }
   {
     try {
-      wasserstein_ExternalEMDHandler_Sl_float_Sg__npy_evaluate2d__SWIG_2(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8); 
+      wasserstein_ExternalEMDHandler_Sl_float_Sg__npy_evaluate2d__SWIG_2(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -23382,19 +23382,19 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate2d__SWIG_2(PyObject
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object5 && array5)
     {
-      Py_DECREF(array5); 
+      Py_DECREF(array5);
     }
   }
   {
     if (is_new_object7 && array7)
     {
-      Py_DECREF(array7); 
+      Py_DECREF(array7);
     }
   }
   return resultobj;
@@ -23402,19 +23402,19 @@ fail:
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object5 && array5)
     {
-      Py_DECREF(array5); 
+      Py_DECREF(array5);
     }
   }
   {
     if (is_new_object7 && array7)
     {
-      Py_DECREF(array7); 
+      Py_DECREF(array7);
     }
   }
   return NULL;
@@ -23426,7 +23426,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate2d(PyObject *self, 
   PyObject *argv[5] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "ExternalEMDHandlerFloat32_evaluate2d", 0, 4, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -23501,7 +23501,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate2d(PyObject *self, 
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'ExternalEMDHandlerFloat32_evaluate2d'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -23533,18 +23533,18 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate1d_symmetric(PyObje
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"emds",  (char *)"event_weights",  (char *)"upper_triangular",  NULL 
+    (char *)"self",  (char *)"emds",  (char *)"event_weights",  (char *)"upper_triangular",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO|O:ExternalEMDHandlerFloat32_evaluate1d_symmetric", kwnames, &obj0, &obj1, &obj2, &obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__ExternalEMDHandlerT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat32_evaluate1d_symmetric" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ExternalEMDHandlerFloat32_evaluate1d_symmetric" "', argument " "1"" of type '" "wasserstein::ExternalEMDHandler< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::ExternalEMDHandler< float > * >(argp1);
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array2 = obj_to_array_contiguous_allow_conversion(obj1,
       NPY_FLOAT,
@@ -23556,7 +23556,7 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate1d_symmetric(PyObje
   }
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array4 = obj_to_array_contiguous_allow_conversion(obj2,
       NPY_FLOAT,
@@ -23570,12 +23570,12 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate1d_symmetric(PyObje
     ecode6 = SWIG_AsVal_bool(obj3, &val6);
     if (!SWIG_IsOK(ecode6)) {
       SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "ExternalEMDHandlerFloat32_evaluate1d_symmetric" "', argument " "6"" of type '" "bool""'");
-    } 
+    }
     arg6 = static_cast< bool >(val6);
   }
   {
     try {
-      wasserstein_ExternalEMDHandler_Sl_float_Sg__npy_evaluate1d_symmetric(arg1,arg2,arg3,arg4,arg5,arg6); 
+      wasserstein_ExternalEMDHandler_Sl_float_Sg__npy_evaluate1d_symmetric(arg1,arg2,arg3,arg4,arg5,arg6);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -23602,13 +23602,13 @@ SWIGINTERN PyObject *_wrap_ExternalEMDHandlerFloat32_evaluate1d_symmetric(PyObje
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   return resultobj;
@@ -23616,13 +23616,13 @@ fail:
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   return NULL;
@@ -23651,29 +23651,29 @@ SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerLogFloat32(PyObject *SWIGUNUSED
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   char * kwnames[] = {
-    (char *)"nbins",  (char *)"axis_min",  (char *)"axis_max",  NULL 
+    (char *)"nbins",  (char *)"axis_min",  (char *)"axis_max",  NULL
   };
   wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:new_Histogram1DHandlerLogFloat32", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
   ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_Histogram1DHandlerLogFloat32" "', argument " "1"" of type '" "unsigned int""'");
-  } 
+  }
   arg1 = static_cast< unsigned int >(val1);
   ecode2 = SWIG_AsVal_float(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_Histogram1DHandlerLogFloat32" "', argument " "2"" of type '" "float""'");
-  } 
+  }
   arg2 = static_cast< float >(val2);
   ecode3 = SWIG_AsVal_float(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_Histogram1DHandlerLogFloat32" "', argument " "3"" of type '" "float""'");
-  } 
+  }
   arg3 = static_cast< float >(val3);
   {
     try {
-      result = (wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *)new wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float >(arg1,arg2,arg3); 
+      result = (wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *)new wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float >(arg1,arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -23709,17 +23709,17 @@ SWIGINTERN PyObject *_wrap_delete_Histogram1DHandlerLogFloat32(PyObject *SWIGUNU
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_float_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Histogram1DHandlerLogFloat32" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Histogram1DHandlerLogFloat32" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -23756,17 +23756,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat32_nbins(PyObject *SWIGUNUS
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   unsigned int result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32_nbins" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32_nbins" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > * >(argp1);
   {
     try {
-      result = (unsigned int)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *)arg1)->nbins(); 
+      result = (unsigned int)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *)arg1)->nbins();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -23803,17 +23803,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat32_axis_min(PyObject *SWIGU
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   float result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32_axis_min" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32_axis_min" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > * >(argp1);
   {
     try {
-      result = (float)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *)arg1)->axis_min(); 
+      result = (float)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *)arg1)->axis_min();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -23850,17 +23850,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat32_axis_max(PyObject *SWIGU
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   float result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32_axis_max" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32_axis_max" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > * >(argp1);
   {
     try {
-      result = (float)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *)arg1)->axis_max(); 
+      result = (float)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *)arg1)->axis_max();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -23897,17 +23897,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat32_description(PyObject *SW
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32_description" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32_description" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > * >(argp1);
   {
     try {
-      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *)arg1)->description(); 
+      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *)arg1)->description();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -23948,26 +23948,26 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat32_hist_vals_vars_vec(PyObj
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"overflows",  NULL 
+    (char *)"self",  (char *)"overflows",  NULL
   };
   std::pair< std::vector< float,std::allocator< float > >,std::vector< float,std::allocator< float > > > result;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:Histogram1DHandlerLogFloat32_hist_vals_vars_vec", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32_hist_vals_vars_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32_hist_vals_vars_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_bool(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Histogram1DHandlerLogFloat32_hist_vals_vars_vec" "', argument " "2"" of type '" "bool""'");
-    } 
+    }
     arg2 = static_cast< bool >(val2);
   }
   {
     try {
-      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *)arg1)->hist_vals_vars(arg2); 
+      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *)arg1)->hist_vals_vars(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -24004,17 +24004,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat32_bin_centers_vec(PyObject
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< float,std::allocator< float > > result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32_bin_centers_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32_bin_centers_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > * >(argp1);
   {
     try {
-      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *)arg1)->bin_centers(); 
+      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *)arg1)->bin_centers();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -24051,17 +24051,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat32_bin_edges_vec(PyObject *
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< float,std::allocator< float > > result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32_bin_edges_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32_bin_edges_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > * >(argp1);
   {
     try {
-      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *)arg1)->bin_edges(); 
+      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *)arg1)->bin_edges();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -24102,27 +24102,27 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat32___iadd__(PyObject *SWIGU
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"other",  NULL 
+    (char *)"self",  (char *)"other",  NULL
   };
   wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float >::Transform,float > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:Histogram1DHandlerLogFloat32___iadd__", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_float_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32___iadd__" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32___iadd__" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_float_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Histogram1DHandlerLogFloat32___iadd__" "', argument " "2"" of type '" "wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float >::Transform,float > const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Histogram1DHandlerLogFloat32___iadd__" "', argument " "2"" of type '" "wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float >::Transform,float > const &""'");
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Histogram1DHandlerLogFloat32___iadd__" "', argument " "2"" of type '" "wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float >::Transform,float > const &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Histogram1DHandlerLogFloat32___iadd__" "', argument " "2"" of type '" "wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float >::Transform,float > const &""'");
   }
   arg2 = reinterpret_cast< wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float >::Transform,float > * >(argp2);
   {
     try {
-      result = (wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float >::Transform,float > *) &(arg1)->operator +=((wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float >::Transform,float > const &)*arg2); 
+      result = (wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float >::Transform,float > *) &(arg1)->operator +=((wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float >::Transform,float > const &)*arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -24159,17 +24159,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat32___repr__(PyObject *SWIGU
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32___repr__" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32___repr__" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > * >(argp1);
   {
     try {
-      result = wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_float_Sg____repr__((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *)arg1); 
+      result = wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_float_Sg____repr__((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > const *)arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -24209,7 +24209,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat32_bin_centers(PyObject *SW
   float *data_temp2 = NULL ;
   std::ptrdiff_t dim_temp2 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -24218,12 +24218,12 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat32_bin_centers(PyObject *SW
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32_bin_centers" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32_bin_centers" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > * >(argp1);
   {
     try {
-      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_float_Sg__npy_bin_centers(arg1,arg2,arg3); 
+      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_float_Sg__npy_bin_centers(arg1,arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -24249,25 +24249,25 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat32_bin_centers(PyObject *SW
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_FLOAT, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -24286,7 +24286,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat32_bin_edges(PyObject *SWIG
   float *data_temp2 = NULL ;
   std::ptrdiff_t dim_temp2 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -24295,12 +24295,12 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat32_bin_edges(PyObject *SWIG
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32_bin_edges" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32_bin_edges" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > * >(argp1);
   {
     try {
-      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_float_Sg__npy_bin_edges(arg1,arg2,arg3); 
+      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_float_Sg__npy_bin_edges(arg1,arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -24326,25 +24326,25 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat32_bin_edges(PyObject *SWIG
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_FLOAT, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -24372,9 +24372,9 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat32_hist_vals_vars(PyObject 
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"overflows",  NULL 
+    (char *)"self",  (char *)"overflows",  NULL
   };
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -24386,19 +24386,19 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat32_hist_vals_vars(PyObject 
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:Histogram1DHandlerLogFloat32_hist_vals_vars", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__log_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32_hist_vals_vars" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerLogFloat32_hist_vals_vars" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::log,float > * >(argp1);
   if (obj1) {
     ecode6 = SWIG_AsVal_bool(obj1, &val6);
     if (!SWIG_IsOK(ecode6)) {
       SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "Histogram1DHandlerLogFloat32_hist_vals_vars" "', argument " "6"" of type '" "bool""'");
-    } 
+    }
     arg6 = static_cast< bool >(val6);
   }
   {
     try {
-      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_float_Sg__npy_hist_vals_vars(arg1,arg2,arg3,arg4,arg5,arg6); 
+      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_log_Sc_float_Sg__npy_hist_vals_vars(arg1,arg2,arg3,arg4,arg5,arg6);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -24424,48 +24424,48 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerLogFloat32_hist_vals_vars(PyObject 
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_FLOAT, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   {
     npy_intp dims[1] = {
-      *arg5 
+      *arg5
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_FLOAT, (void*)(*arg4));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg4), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg4), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -24500,29 +24500,29 @@ SWIGINTERN PyObject *_wrap_new_Histogram1DHandlerFloat32(PyObject *SWIGUNUSEDPAR
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   char * kwnames[] = {
-    (char *)"nbins",  (char *)"axis_min",  (char *)"axis_max",  NULL 
+    (char *)"nbins",  (char *)"axis_min",  (char *)"axis_max",  NULL
   };
   wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:new_Histogram1DHandlerFloat32", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
   ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_Histogram1DHandlerFloat32" "', argument " "1"" of type '" "unsigned int""'");
-  } 
+  }
   arg1 = static_cast< unsigned int >(val1);
   ecode2 = SWIG_AsVal_float(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_Histogram1DHandlerFloat32" "', argument " "2"" of type '" "float""'");
-  } 
+  }
   arg2 = static_cast< float >(val2);
   ecode3 = SWIG_AsVal_float(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_Histogram1DHandlerFloat32" "', argument " "3"" of type '" "float""'");
-  } 
+  }
   arg3 = static_cast< float >(val3);
   {
     try {
-      result = (wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *)new wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float >(arg1,arg2,arg3); 
+      result = (wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *)new wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float >(arg1,arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -24558,17 +24558,17 @@ SWIGINTERN PyObject *_wrap_delete_Histogram1DHandlerFloat32(PyObject *SWIGUNUSED
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_float_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Histogram1DHandlerFloat32" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Histogram1DHandlerFloat32" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -24605,17 +24605,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat32_nbins(PyObject *SWIGUNUSEDP
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   unsigned int result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32_nbins" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32_nbins" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > * >(argp1);
   {
     try {
-      result = (unsigned int)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *)arg1)->nbins(); 
+      result = (unsigned int)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *)arg1)->nbins();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -24652,17 +24652,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat32_axis_min(PyObject *SWIGUNUS
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   float result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32_axis_min" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32_axis_min" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > * >(argp1);
   {
     try {
-      result = (float)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *)arg1)->axis_min(); 
+      result = (float)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *)arg1)->axis_min();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -24699,17 +24699,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat32_axis_max(PyObject *SWIGUNUS
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   float result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32_axis_max" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32_axis_max" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > * >(argp1);
   {
     try {
-      result = (float)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *)arg1)->axis_max(); 
+      result = (float)((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *)arg1)->axis_max();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -24746,17 +24746,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat32_description(PyObject *SWIGU
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32_description" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32_description" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > * >(argp1);
   {
     try {
-      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *)arg1)->description(); 
+      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *)arg1)->description();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -24797,26 +24797,26 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat32_hist_vals_vars_vec(PyObject
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"overflows",  NULL 
+    (char *)"self",  (char *)"overflows",  NULL
   };
   std::pair< std::vector< float,std::allocator< float > >,std::vector< float,std::allocator< float > > > result;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:Histogram1DHandlerFloat32_hist_vals_vars_vec", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32_hist_vals_vars_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32_hist_vals_vars_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_bool(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Histogram1DHandlerFloat32_hist_vals_vars_vec" "', argument " "2"" of type '" "bool""'");
-    } 
+    }
     arg2 = static_cast< bool >(val2);
   }
   {
     try {
-      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *)arg1)->hist_vals_vars(arg2); 
+      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *)arg1)->hist_vals_vars(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -24853,17 +24853,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat32_bin_centers_vec(PyObject *S
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< float,std::allocator< float > > result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32_bin_centers_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32_bin_centers_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > * >(argp1);
   {
     try {
-      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *)arg1)->bin_centers(); 
+      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *)arg1)->bin_centers();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -24900,17 +24900,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat32_bin_edges_vec(PyObject *SWI
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< float,std::allocator< float > > result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32_bin_edges_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32_bin_edges_vec" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > * >(argp1);
   {
     try {
-      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *)arg1)->bin_edges(); 
+      result = ((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *)arg1)->bin_edges();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -24951,27 +24951,27 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat32___iadd__(PyObject *SWIGUNUS
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"other",  NULL 
+    (char *)"self",  (char *)"other",  NULL
   };
   wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float >::Transform,float > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:Histogram1DHandlerFloat32___iadd__", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_float_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32___iadd__" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32___iadd__" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_float_t,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Histogram1DHandlerFloat32___iadd__" "', argument " "2"" of type '" "wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float >::Transform,float > const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Histogram1DHandlerFloat32___iadd__" "', argument " "2"" of type '" "wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float >::Transform,float > const &""'");
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Histogram1DHandlerFloat32___iadd__" "', argument " "2"" of type '" "wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float >::Transform,float > const &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Histogram1DHandlerFloat32___iadd__" "', argument " "2"" of type '" "wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float >::Transform,float > const &""'");
   }
   arg2 = reinterpret_cast< wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float >::Transform,float > * >(argp2);
   {
     try {
-      result = (wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float >::Transform,float > *) &(arg1)->operator +=((wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float >::Transform,float > const &)*arg2); 
+      result = (wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float >::Transform,float > *) &(arg1)->operator +=((wasserstein::Histogram1DHandler< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float >::Transform,float > const &)*arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -25008,17 +25008,17 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat32___repr__(PyObject *SWIGUNUS
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32___repr__" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32___repr__" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > * >(argp1);
   {
     try {
-      result = wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_float_Sg____repr__((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *)arg1); 
+      result = wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_float_Sg____repr__((wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > const *)arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -25058,7 +25058,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat32_bin_centers(PyObject *SWIGU
   float *data_temp2 = NULL ;
   std::ptrdiff_t dim_temp2 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -25067,12 +25067,12 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat32_bin_centers(PyObject *SWIGU
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32_bin_centers" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32_bin_centers" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > * >(argp1);
   {
     try {
-      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_float_Sg__npy_bin_centers(arg1,arg2,arg3); 
+      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_float_Sg__npy_bin_centers(arg1,arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -25098,25 +25098,25 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat32_bin_centers(PyObject *SWIGU
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_FLOAT, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -25135,7 +25135,7 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat32_bin_edges(PyObject *SWIGUNU
   float *data_temp2 = NULL ;
   std::ptrdiff_t dim_temp2 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -25144,12 +25144,12 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat32_bin_edges(PyObject *SWIGUNU
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32_bin_edges" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32_bin_edges" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > * >(argp1);
   {
     try {
-      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_float_Sg__npy_bin_edges(arg1,arg2,arg3); 
+      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_float_Sg__npy_bin_edges(arg1,arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -25175,25 +25175,25 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat32_bin_edges(PyObject *SWIGUNU
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_FLOAT, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -25221,9 +25221,9 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat32_hist_vals_vars(PyObject *SW
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"overflows",  NULL 
+    (char *)"self",  (char *)"overflows",  NULL
   };
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -25235,19 +25235,19 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat32_hist_vals_vars(PyObject *SW
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:Histogram1DHandlerFloat32_hist_vals_vars", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__Histogram1DHandlerT_boost__histogram__axis__transform__id_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32_hist_vals_vars" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram1DHandlerFloat32_hist_vals_vars" "', argument " "1"" of type '" "wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::Histogram1DHandler< boost::histogram::axis::transform::id,float > * >(argp1);
   if (obj1) {
     ecode6 = SWIG_AsVal_bool(obj1, &val6);
     if (!SWIG_IsOK(ecode6)) {
       SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "Histogram1DHandlerFloat32_hist_vals_vars" "', argument " "6"" of type '" "bool""'");
-    } 
+    }
     arg6 = static_cast< bool >(val6);
   }
   {
     try {
-      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_float_Sg__npy_hist_vals_vars(arg1,arg2,arg3,arg4,arg5,arg6); 
+      wasserstein_Histogram1DHandler_Sl_boost_histogram_axis_transform_id_Sc_float_Sg__npy_hist_vals_vars(arg1,arg2,arg3,arg4,arg5,arg6);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -25273,48 +25273,48 @@ SWIGINTERN PyObject *_wrap_Histogram1DHandlerFloat32_hist_vals_vars(PyObject *SW
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_FLOAT, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   {
     npy_intp dims[1] = {
-      *arg5 
+      *arg5
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_FLOAT, (void*)(*arg4));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg4), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg4), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -25349,29 +25349,29 @@ SWIGINTERN PyObject *_wrap_new_CorrelationDimensionFloat32(PyObject *SWIGUNUSEDP
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   char * kwnames[] = {
-    (char *)"nbins",  (char *)"axis_min",  (char *)"axis_max",  NULL 
+    (char *)"nbins",  (char *)"axis_min",  (char *)"axis_max",  NULL
   };
   wasserstein::CorrelationDimension< float > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:new_CorrelationDimensionFloat32", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
   ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_CorrelationDimensionFloat32" "', argument " "1"" of type '" "unsigned int""'");
-  } 
+  }
   arg1 = static_cast< unsigned int >(val1);
   ecode2 = SWIG_AsVal_float(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_CorrelationDimensionFloat32" "', argument " "2"" of type '" "float""'");
-  } 
+  }
   arg2 = static_cast< float >(val2);
   ecode3 = SWIG_AsVal_float(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_CorrelationDimensionFloat32" "', argument " "3"" of type '" "float""'");
-  } 
+  }
   arg3 = static_cast< float >(val3);
   {
     try {
-      result = (wasserstein::CorrelationDimension< float > *)new wasserstein::CorrelationDimension< float >(arg1,arg2,arg3); 
+      result = (wasserstein::CorrelationDimension< float > *)new wasserstein::CorrelationDimension< float >(arg1,arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -25412,26 +25412,26 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat32_corrdims_vec(PyObject *SW
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"eps",  NULL 
+    (char *)"self",  (char *)"eps",  NULL
   };
   std::pair< std::vector< float,std::allocator< float > >,std::vector< float,std::allocator< float > > > result;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:CorrelationDimensionFloat32_corrdims_vec", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat32_corrdims_vec" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat32_corrdims_vec" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::CorrelationDimension< float > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_float(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "CorrelationDimensionFloat32_corrdims_vec" "', argument " "2"" of type '" "float""'");
-    } 
+    }
     arg2 = static_cast< float >(val2);
   }
   {
     try {
-      result = ((wasserstein::CorrelationDimension< float > const *)arg1)->corrdims(arg2); 
+      result = ((wasserstein::CorrelationDimension< float > const *)arg1)->corrdims(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -25468,17 +25468,17 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat32_corrdim_bins_vec(PyObject
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< float,std::allocator< float > > result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat32_corrdim_bins_vec" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat32_corrdim_bins_vec" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::CorrelationDimension< float > * >(argp1);
   {
     try {
-      result = ((wasserstein::CorrelationDimension< float > const *)arg1)->corrdim_bins(); 
+      result = ((wasserstein::CorrelationDimension< float > const *)arg1)->corrdim_bins();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -25515,17 +25515,17 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat32_cumulative_vals_vars_vec(
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::pair< std::vector< float,std::allocator< float > >,std::vector< float,std::allocator< float > > > result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat32_cumulative_vals_vars_vec" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat32_cumulative_vals_vars_vec" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::CorrelationDimension< float > * >(argp1);
   {
     try {
-      result = ((wasserstein::CorrelationDimension< float > const *)arg1)->cumulative_vals_vars(); 
+      result = ((wasserstein::CorrelationDimension< float > const *)arg1)->cumulative_vals_vars();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -25562,17 +25562,17 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat32___repr__(PyObject *SWIGUN
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat32___repr__" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat32___repr__" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::CorrelationDimension< float > * >(argp1);
   {
     try {
-      result = wasserstein_CorrelationDimension_Sl_float_Sg____repr__((wasserstein::CorrelationDimension< float > const *)arg1); 
+      result = wasserstein_CorrelationDimension_Sl_float_Sg____repr__((wasserstein::CorrelationDimension< float > const *)arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -25612,7 +25612,7 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat32_corrdim_bins(PyObject *SW
   float *data_temp2 = NULL ;
   std::ptrdiff_t dim_temp2 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -25621,12 +25621,12 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat32_corrdim_bins(PyObject *SW
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat32_corrdim_bins" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat32_corrdim_bins" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::CorrelationDimension< float > * >(argp1);
   {
     try {
-      wasserstein_CorrelationDimension_Sl_float_Sg__npy_corrdim_bins(arg1,arg2,arg3); 
+      wasserstein_CorrelationDimension_Sl_float_Sg__npy_corrdim_bins(arg1,arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -25652,25 +25652,25 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat32_corrdim_bins(PyObject *SW
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_FLOAT, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -25693,7 +25693,7 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat32_corrdims(PyObject *SWIGUN
   float *data_temp4 = NULL ;
   std::ptrdiff_t dim_temp4 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -25706,12 +25706,12 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat32_corrdims(PyObject *SWIGUN
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat32_corrdims" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat32_corrdims" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::CorrelationDimension< float > * >(argp1);
   {
     try {
-      wasserstein_CorrelationDimension_Sl_float_Sg__npy_corrdims(arg1,arg2,arg3,arg4,arg5); 
+      wasserstein_CorrelationDimension_Sl_float_Sg__npy_corrdims(arg1,arg2,arg3,arg4,arg5);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -25737,48 +25737,48 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat32_corrdims(PyObject *SWIGUN
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_FLOAT, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   {
     npy_intp dims[1] = {
-      *arg5 
+      *arg5
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_FLOAT, (void*)(*arg4));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg4), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg4), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -25801,7 +25801,7 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat32_cumulative_vals_vars(PyOb
   float *data_temp4 = NULL ;
   std::ptrdiff_t dim_temp4 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -25814,12 +25814,12 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat32_cumulative_vals_vars(PyOb
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat32_cumulative_vals_vars" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat32_cumulative_vals_vars" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::CorrelationDimension< float > * >(argp1);
   {
     try {
-      wasserstein_CorrelationDimension_Sl_float_Sg__npy_cumulative_vals_vars(arg1,arg2,arg3,arg4,arg5); 
+      wasserstein_CorrelationDimension_Sl_float_Sg__npy_cumulative_vals_vars(arg1,arg2,arg3,arg4,arg5);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -25845,48 +25845,48 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat32_cumulative_vals_vars(PyOb
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_FLOAT, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   {
     npy_intp dims[1] = {
-      *arg5 
+      *arg5
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_FLOAT, (void*)(*arg4));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg4), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg4), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -25901,17 +25901,17 @@ SWIGINTERN PyObject *_wrap_delete_CorrelationDimensionFloat32(PyObject *SWIGUNUS
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_float_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_CorrelationDimensionFloat32" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_CorrelationDimensionFloat32" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::CorrelationDimension< float > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -25967,29 +25967,29 @@ SWIGINTERN PyObject *_wrap_new_CorrelationDimensionFloat64(PyObject *SWIGUNUSEDP
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   char * kwnames[] = {
-    (char *)"nbins",  (char *)"axis_min",  (char *)"axis_max",  NULL 
+    (char *)"nbins",  (char *)"axis_min",  (char *)"axis_max",  NULL
   };
   wasserstein::CorrelationDimension< double > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:new_CorrelationDimensionFloat64", kwnames, &obj0, &obj1, &obj2)) SWIG_fail;
   ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_CorrelationDimensionFloat64" "', argument " "1"" of type '" "unsigned int""'");
-  } 
+  }
   arg1 = static_cast< unsigned int >(val1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_CorrelationDimensionFloat64" "', argument " "2"" of type '" "double""'");
-  } 
+  }
   arg2 = static_cast< double >(val2);
   ecode3 = SWIG_AsVal_double(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_CorrelationDimensionFloat64" "', argument " "3"" of type '" "double""'");
-  } 
+  }
   arg3 = static_cast< double >(val3);
   {
     try {
-      result = (wasserstein::CorrelationDimension< double > *)new wasserstein::CorrelationDimension< double >(arg1,arg2,arg3); 
+      result = (wasserstein::CorrelationDimension< double > *)new wasserstein::CorrelationDimension< double >(arg1,arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -26030,26 +26030,26 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_corrdims_vec(PyObject *SW
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"eps",  NULL 
+    (char *)"self",  (char *)"eps",  NULL
   };
   std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > result;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:CorrelationDimensionFloat64_corrdims_vec", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_corrdims_vec" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_corrdims_vec" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_double(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "CorrelationDimensionFloat64_corrdims_vec" "', argument " "2"" of type '" "double""'");
-    } 
+    }
     arg2 = static_cast< double >(val2);
   }
   {
     try {
-      result = ((wasserstein::CorrelationDimension< double > const *)arg1)->corrdims(arg2); 
+      result = ((wasserstein::CorrelationDimension< double > const *)arg1)->corrdims(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -26086,17 +26086,17 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_corrdim_bins_vec(PyObject
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::vector< double,std::allocator< double > > result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_corrdim_bins_vec" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_corrdim_bins_vec" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
   {
     try {
-      result = ((wasserstein::CorrelationDimension< double > const *)arg1)->corrdim_bins(); 
+      result = ((wasserstein::CorrelationDimension< double > const *)arg1)->corrdim_bins();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -26133,17 +26133,17 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_cumulative_vals_vars_vec(
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::pair< std::vector< double,std::allocator< double > >,std::vector< double,std::allocator< double > > > result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_cumulative_vals_vars_vec" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_cumulative_vals_vars_vec" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
   {
     try {
-      result = ((wasserstein::CorrelationDimension< double > const *)arg1)->cumulative_vals_vars(); 
+      result = ((wasserstein::CorrelationDimension< double > const *)arg1)->cumulative_vals_vars();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -26180,17 +26180,17 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64___repr__(PyObject *SWIGUN
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64___repr__" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64___repr__" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
   {
     try {
-      result = wasserstein_CorrelationDimension_Sl_double_Sg____repr__((wasserstein::CorrelationDimension< double > const *)arg1); 
+      result = wasserstein_CorrelationDimension_Sl_double_Sg____repr__((wasserstein::CorrelationDimension< double > const *)arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -26230,7 +26230,7 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_corrdim_bins(PyObject *SW
   double *data_temp2 = NULL ;
   std::ptrdiff_t dim_temp2 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -26239,12 +26239,12 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_corrdim_bins(PyObject *SW
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_corrdim_bins" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_corrdim_bins" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
   {
     try {
-      wasserstein_CorrelationDimension_Sl_double_Sg__npy_corrdim_bins(arg1,arg2,arg3); 
+      wasserstein_CorrelationDimension_Sl_double_Sg__npy_corrdim_bins(arg1,arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -26270,25 +26270,25 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_corrdim_bins(PyObject *SW
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -26311,7 +26311,7 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_corrdims(PyObject *SWIGUN
   double *data_temp4 = NULL ;
   std::ptrdiff_t dim_temp4 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -26324,12 +26324,12 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_corrdims(PyObject *SWIGUN
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_corrdims" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_corrdims" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
   {
     try {
-      wasserstein_CorrelationDimension_Sl_double_Sg__npy_corrdims(arg1,arg2,arg3,arg4,arg5); 
+      wasserstein_CorrelationDimension_Sl_double_Sg__npy_corrdims(arg1,arg2,arg3,arg4,arg5);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -26355,48 +26355,48 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_corrdims(PyObject *SWIGUN
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   {
     npy_intp dims[1] = {
-      *arg5 
+      *arg5
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg4));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg4), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg4), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -26419,7 +26419,7 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_cumulative_vals_vars(PyOb
   double *data_temp4 = NULL ;
   std::ptrdiff_t dim_temp4 ;
   PyObject *swig_obj[1] ;
-  
+
   {
     arg2 = &data_temp2;
     arg3 = &dim_temp2;
@@ -26432,12 +26432,12 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_cumulative_vals_vars(PyOb
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_cumulative_vals_vars" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CorrelationDimensionFloat64_cumulative_vals_vars" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
   {
     try {
-      wasserstein_CorrelationDimension_Sl_double_Sg__npy_cumulative_vals_vars(arg1,arg2,arg3,arg4,arg5); 
+      wasserstein_CorrelationDimension_Sl_double_Sg__npy_cumulative_vals_vars(arg1,arg2,arg3,arg4,arg5);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -26463,48 +26463,48 @@ SWIGINTERN PyObject *_wrap_CorrelationDimensionFloat64_cumulative_vals_vars(PyOb
   resultobj = SWIG_Py_Void();
   {
     npy_intp dims[1] = {
-      *arg3 
+      *arg3
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg2));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg2), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg2), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   {
     npy_intp dims[1] = {
-      *arg5 
+      *arg5
     };
     PyObject* obj = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void*)(*arg4));
     PyArrayObject* array = (PyArrayObject*) obj;
-    
+
     if (!array) SWIG_fail;
-    
+
 #ifdef SWIGPY_USE_CAPSULE
     PyObject* cap = PyCapsule_New((void*)(*arg4), SWIGPY_CAPSULE_NAME, free_cap);
 #else
     PyObject* cap = PyCObject_FromVoidPtr((void*)(*arg4), free);
 #endif
-    
+
 #if NPY_API_VERSION < 0x00000007
     PyArray_BASE(array) = cap;
 #else
     PyArray_SetBaseObject(array,cap);
 #endif
-    
+
     resultobj = SWIG_Python_AppendOutput(resultobj,obj);
   }
   return resultobj;
@@ -26519,17 +26519,17 @@ SWIGINTERN PyObject *_wrap_delete_CorrelationDimensionFloat64(PyObject *SWIGUNUS
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__CorrelationDimensionT_double_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_CorrelationDimensionFloat64" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_CorrelationDimensionFloat64" "', argument " "1"" of type '" "wasserstein::CorrelationDimension< double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::CorrelationDimension< double > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -26605,70 +26605,70 @@ SWIGINTERN PyObject *_wrap_new_EMDFloat64(PyObject *SWIGUNUSEDPARM(self), PyObje
   PyObject * obj6 = 0 ;
   PyObject * obj7 = 0 ;
   char * kwnames[] = {
-    (char *)"R",  (char *)"beta",  (char *)"norm",  (char *)"do_timing",  (char *)"external_dists",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  NULL 
+    (char *)"R",  (char *)"beta",  (char *)"norm",  (char *)"do_timing",  (char *)"external_dists",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  NULL
   };
   wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|OOOOOOOO:new_EMDFloat64", kwnames, &obj0, &obj1, &obj2, &obj3, &obj4, &obj5, &obj6, &obj7)) SWIG_fail;
   if (obj0) {
     ecode1 = SWIG_AsVal_double(obj0, &val1);
     if (!SWIG_IsOK(ecode1)) {
       SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_EMDFloat64" "', argument " "1"" of type '" "double""'");
-    } 
+    }
     arg1 = static_cast< double >(val1);
   }
   if (obj1) {
     ecode2 = SWIG_AsVal_double(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_EMDFloat64" "', argument " "2"" of type '" "double""'");
-    } 
+    }
     arg2 = static_cast< double >(val2);
   }
   if (obj2) {
     ecode3 = SWIG_AsVal_bool(obj2, &val3);
     if (!SWIG_IsOK(ecode3)) {
       SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_EMDFloat64" "', argument " "3"" of type '" "bool""'");
-    } 
+    }
     arg3 = static_cast< bool >(val3);
   }
   if (obj3) {
     ecode4 = SWIG_AsVal_bool(obj3, &val4);
     if (!SWIG_IsOK(ecode4)) {
       SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_EMDFloat64" "', argument " "4"" of type '" "bool""'");
-    } 
+    }
     arg4 = static_cast< bool >(val4);
   }
   if (obj4) {
     ecode5 = SWIG_AsVal_bool(obj4, &val5);
     if (!SWIG_IsOK(ecode5)) {
       SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_EMDFloat64" "', argument " "5"" of type '" "bool""'");
-    } 
+    }
     arg5 = static_cast< bool >(val5);
   }
   if (obj5) {
     ecode6 = SWIG_AsVal_size_t(obj5, &val6);
     if (!SWIG_IsOK(ecode6)) {
       SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_EMDFloat64" "', argument " "6"" of type '" "std::size_t""'");
-    } 
+    }
     arg6 = static_cast< std::size_t >(val6);
   }
   if (obj6) {
     ecode7 = SWIG_AsVal_double(obj6, &val7);
     if (!SWIG_IsOK(ecode7)) {
       SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "new_EMDFloat64" "', argument " "7"" of type '" "double""'");
-    } 
+    }
     arg7 = static_cast< double >(val7);
   }
   if (obj7) {
     ecode8 = SWIG_AsVal_double(obj7, &val8);
     if (!SWIG_IsOK(ecode8)) {
       SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "new_EMDFloat64" "', argument " "8"" of type '" "double""'");
-    } 
+    }
     arg8 = static_cast< double >(val8);
   }
   {
     try {
-      result = (wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *)new wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8); 
+      result = (wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *)new wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -26704,17 +26704,17 @@ SWIGINTERN PyObject *_wrap_delete_EMDFloat64(PyObject *SWIGUNUSEDPARM(self), PyO
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_double_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EMDFloat64" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EMDFloat64" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -26755,26 +26755,26 @@ SWIGINTERN PyObject *_wrap_EMDFloat64_description(PyObject *SWIGUNUSEDPARM(self)
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"write_preprocessors",  NULL 
+    (char *)"self",  (char *)"write_preprocessors",  NULL
   };
   std::string result;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:EMDFloat64_description", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__EMDT_double_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat64_description" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat64_description" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_bool(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDFloat64_description" "', argument " "2"" of type '" "bool""'");
-    } 
+    }
     arg2 = static_cast< bool >(val2);
   }
   {
     try {
-      result = ((wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *)arg1)->description(arg2); 
+      result = ((wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *)arg1)->description(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -26811,17 +26811,17 @@ SWIGINTERN PyObject *_wrap_EMDFloat64___repr__(PyObject *SWIGUNUSEDPARM(self), P
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_double_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat64___repr__" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat64___repr__" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > * >(argp1);
   {
     try {
-      result = wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg____repr__((wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *)arg1); 
+      result = wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg____repr__((wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *)arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -26857,17 +26857,17 @@ SWIGINTERN PyObject *_wrap_EMDFloat64_preprocess_CenterWeightedCentroid(PyObject
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_double_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat64_preprocess_CenterWeightedCentroid" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat64_preprocess_CenterWeightedCentroid" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > * >(argp1);
   {
     try {
-      wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__preprocess_CenterWeightedCentroid(arg1); 
+      wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__preprocess_CenterWeightedCentroid(arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -26921,16 +26921,16 @@ SWIGINTERN PyObject *_wrap_EMDFloat64___call____SWIG_1(PyObject *SWIGUNUSEDPARM(
   PyArrayObject *array9 = NULL ;
   int is_new_object9 = 0 ;
   double result;
-  
+
   if ((nobjs < 5) || (nobjs > 5)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_double_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat64___call__" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat64___call__" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > * >(argp1);
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
       NPY_DOUBLE,
@@ -26942,7 +26942,7 @@ SWIGINTERN PyObject *_wrap_EMDFloat64___call____SWIG_1(PyObject *SWIGUNUSEDPARM(
   }
   {
     npy_intp size[2] = {
-      -1, -1 
+      -1, -1
     };
     array4 = obj_to_array_contiguous_allow_conversion(swig_obj[2], NPY_DOUBLE,
       &is_new_object4);
@@ -26954,7 +26954,7 @@ SWIGINTERN PyObject *_wrap_EMDFloat64___call____SWIG_1(PyObject *SWIGUNUSEDPARM(
   }
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array7 = obj_to_array_contiguous_allow_conversion(swig_obj[3],
       NPY_DOUBLE,
@@ -26966,7 +26966,7 @@ SWIGINTERN PyObject *_wrap_EMDFloat64___call____SWIG_1(PyObject *SWIGUNUSEDPARM(
   }
   {
     npy_intp size[2] = {
-      -1, -1 
+      -1, -1
     };
     array9 = obj_to_array_contiguous_allow_conversion(swig_obj[4], NPY_DOUBLE,
       &is_new_object9);
@@ -26978,7 +26978,7 @@ SWIGINTERN PyObject *_wrap_EMDFloat64___call____SWIG_1(PyObject *SWIGUNUSEDPARM(
   }
   {
     try {
-      result = (double)wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__operator_Sp__SP___SWIG_1(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11); 
+      result = (double)wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__operator_Sp__SP___SWIG_1(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -27005,25 +27005,25 @@ SWIGINTERN PyObject *_wrap_EMDFloat64___call____SWIG_1(PyObject *SWIGUNUSEDPARM(
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   {
     if (is_new_object7 && array7)
     {
-      Py_DECREF(array7); 
+      Py_DECREF(array7);
     }
   }
   {
     if (is_new_object9 && array9)
     {
-      Py_DECREF(array9); 
+      Py_DECREF(array9);
     }
   }
   return resultobj;
@@ -27031,25 +27031,25 @@ fail:
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   {
     if (is_new_object7 && array7)
     {
-      Py_DECREF(array7); 
+      Py_DECREF(array7);
     }
   }
   {
     if (is_new_object9 && array9)
     {
-      Py_DECREF(array9); 
+      Py_DECREF(array9);
     }
   }
   return NULL;
@@ -27075,16 +27075,16 @@ SWIGINTERN PyObject *_wrap_EMDFloat64___call____SWIG_2(PyObject *SWIGUNUSEDPARM(
   PyArrayObject *array6 = NULL ;
   int is_new_object6 = 0 ;
   double result;
-  
+
   if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_double_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat64___call__" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat64___call__" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > * >(argp1);
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
       NPY_DOUBLE,
@@ -27096,7 +27096,7 @@ SWIGINTERN PyObject *_wrap_EMDFloat64___call____SWIG_2(PyObject *SWIGUNUSEDPARM(
   }
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array4 = obj_to_array_contiguous_allow_conversion(swig_obj[2],
       NPY_DOUBLE,
@@ -27108,7 +27108,7 @@ SWIGINTERN PyObject *_wrap_EMDFloat64___call____SWIG_2(PyObject *SWIGUNUSEDPARM(
   }
   {
     npy_intp size[2] = {
-      -1, -1 
+      -1, -1
     };
     array6 = obj_to_array_contiguous_allow_conversion(swig_obj[3], NPY_DOUBLE,
       &is_new_object6);
@@ -27120,7 +27120,7 @@ SWIGINTERN PyObject *_wrap_EMDFloat64___call____SWIG_2(PyObject *SWIGUNUSEDPARM(
   }
   {
     try {
-      result = (double)wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__operator_Sp__SP___SWIG_2(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8); 
+      result = (double)wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__operator_Sp__SP___SWIG_2(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -27147,19 +27147,19 @@ SWIGINTERN PyObject *_wrap_EMDFloat64___call____SWIG_2(PyObject *SWIGUNUSEDPARM(
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   {
     if (is_new_object6 && array6)
     {
-      Py_DECREF(array6); 
+      Py_DECREF(array6);
     }
   }
   return resultobj;
@@ -27167,19 +27167,19 @@ fail:
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   {
     if (is_new_object6 && array6)
     {
-      Py_DECREF(array6); 
+      Py_DECREF(array6);
     }
   }
   return NULL;
@@ -27191,7 +27191,7 @@ SWIGINTERN PyObject *_wrap_EMDFloat64___call__(PyObject *self, PyObject *args) {
   PyObject *argv[6] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "EMDFloat64___call__", 0, 5, argv))) SWIG_fail;
   --argc;
   if (argc == 4) {
@@ -27259,7 +27259,7 @@ SWIGINTERN PyObject *_wrap_EMDFloat64___call__(PyObject *self, PyObject *args) {
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'EMDFloat64___call__'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -27315,70 +27315,70 @@ SWIGINTERN PyObject *_wrap_new_EMDFloat32(PyObject *SWIGUNUSEDPARM(self), PyObje
   PyObject * obj6 = 0 ;
   PyObject * obj7 = 0 ;
   char * kwnames[] = {
-    (char *)"R",  (char *)"beta",  (char *)"norm",  (char *)"do_timing",  (char *)"external_dists",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  NULL 
+    (char *)"R",  (char *)"beta",  (char *)"norm",  (char *)"do_timing",  (char *)"external_dists",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  NULL
   };
   wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|OOOOOOOO:new_EMDFloat32", kwnames, &obj0, &obj1, &obj2, &obj3, &obj4, &obj5, &obj6, &obj7)) SWIG_fail;
   if (obj0) {
     ecode1 = SWIG_AsVal_float(obj0, &val1);
     if (!SWIG_IsOK(ecode1)) {
       SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_EMDFloat32" "', argument " "1"" of type '" "float""'");
-    } 
+    }
     arg1 = static_cast< float >(val1);
   }
   if (obj1) {
     ecode2 = SWIG_AsVal_float(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_EMDFloat32" "', argument " "2"" of type '" "float""'");
-    } 
+    }
     arg2 = static_cast< float >(val2);
   }
   if (obj2) {
     ecode3 = SWIG_AsVal_bool(obj2, &val3);
     if (!SWIG_IsOK(ecode3)) {
       SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_EMDFloat32" "', argument " "3"" of type '" "bool""'");
-    } 
+    }
     arg3 = static_cast< bool >(val3);
   }
   if (obj3) {
     ecode4 = SWIG_AsVal_bool(obj3, &val4);
     if (!SWIG_IsOK(ecode4)) {
       SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_EMDFloat32" "', argument " "4"" of type '" "bool""'");
-    } 
+    }
     arg4 = static_cast< bool >(val4);
   }
   if (obj4) {
     ecode5 = SWIG_AsVal_bool(obj4, &val5);
     if (!SWIG_IsOK(ecode5)) {
       SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_EMDFloat32" "', argument " "5"" of type '" "bool""'");
-    } 
+    }
     arg5 = static_cast< bool >(val5);
   }
   if (obj5) {
     ecode6 = SWIG_AsVal_size_t(obj5, &val6);
     if (!SWIG_IsOK(ecode6)) {
       SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_EMDFloat32" "', argument " "6"" of type '" "std::size_t""'");
-    } 
+    }
     arg6 = static_cast< std::size_t >(val6);
   }
   if (obj6) {
     ecode7 = SWIG_AsVal_float(obj6, &val7);
     if (!SWIG_IsOK(ecode7)) {
       SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "new_EMDFloat32" "', argument " "7"" of type '" "float""'");
-    } 
+    }
     arg7 = static_cast< float >(val7);
   }
   if (obj7) {
     ecode8 = SWIG_AsVal_float(obj7, &val8);
     if (!SWIG_IsOK(ecode8)) {
       SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "new_EMDFloat32" "', argument " "8"" of type '" "float""'");
-    } 
+    }
     arg8 = static_cast< float >(val8);
   }
   {
     try {
-      result = (wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *)new wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8); 
+      result = (wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *)new wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -27414,17 +27414,17 @@ SWIGINTERN PyObject *_wrap_delete_EMDFloat32(PyObject *SWIGUNUSEDPARM(self), PyO
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_float_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EMDFloat32" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EMDFloat32" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -27465,26 +27465,26 @@ SWIGINTERN PyObject *_wrap_EMDFloat32_description(PyObject *SWIGUNUSEDPARM(self)
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"write_preprocessors",  NULL 
+    (char *)"self",  (char *)"write_preprocessors",  NULL
   };
   std::string result;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:EMDFloat32_description", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__EMDT_float_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat32_description" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat32_description" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_bool(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDFloat32_description" "', argument " "2"" of type '" "bool""'");
-    } 
+    }
     arg2 = static_cast< bool >(val2);
   }
   {
     try {
-      result = ((wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *)arg1)->description(arg2); 
+      result = ((wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *)arg1)->description(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -27521,17 +27521,17 @@ SWIGINTERN PyObject *_wrap_EMDFloat32___repr__(PyObject *SWIGUNUSEDPARM(self), P
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_float_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat32___repr__" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat32___repr__" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > * >(argp1);
   {
     try {
-      result = wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg____repr__((wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *)arg1); 
+      result = wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg____repr__((wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > const *)arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -27567,17 +27567,17 @@ SWIGINTERN PyObject *_wrap_EMDFloat32_preprocess_CenterWeightedCentroid(PyObject
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_float_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat32_preprocess_CenterWeightedCentroid" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat32_preprocess_CenterWeightedCentroid" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > * >(argp1);
   {
     try {
-      wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__preprocess_CenterWeightedCentroid(arg1); 
+      wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__preprocess_CenterWeightedCentroid(arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -27631,16 +27631,16 @@ SWIGINTERN PyObject *_wrap_EMDFloat32___call____SWIG_1(PyObject *SWIGUNUSEDPARM(
   PyArrayObject *array9 = NULL ;
   int is_new_object9 = 0 ;
   float result;
-  
+
   if ((nobjs < 5) || (nobjs > 5)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_float_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat32___call__" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat32___call__" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > * >(argp1);
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
       NPY_FLOAT,
@@ -27652,7 +27652,7 @@ SWIGINTERN PyObject *_wrap_EMDFloat32___call____SWIG_1(PyObject *SWIGUNUSEDPARM(
   }
   {
     npy_intp size[2] = {
-      -1, -1 
+      -1, -1
     };
     array4 = obj_to_array_contiguous_allow_conversion(swig_obj[2], NPY_FLOAT,
       &is_new_object4);
@@ -27664,7 +27664,7 @@ SWIGINTERN PyObject *_wrap_EMDFloat32___call____SWIG_1(PyObject *SWIGUNUSEDPARM(
   }
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array7 = obj_to_array_contiguous_allow_conversion(swig_obj[3],
       NPY_FLOAT,
@@ -27676,7 +27676,7 @@ SWIGINTERN PyObject *_wrap_EMDFloat32___call____SWIG_1(PyObject *SWIGUNUSEDPARM(
   }
   {
     npy_intp size[2] = {
-      -1, -1 
+      -1, -1
     };
     array9 = obj_to_array_contiguous_allow_conversion(swig_obj[4], NPY_FLOAT,
       &is_new_object9);
@@ -27688,7 +27688,7 @@ SWIGINTERN PyObject *_wrap_EMDFloat32___call____SWIG_1(PyObject *SWIGUNUSEDPARM(
   }
   {
     try {
-      result = (float)wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__operator_Sp__SP___SWIG_1(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11); 
+      result = (float)wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__operator_Sp__SP___SWIG_1(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -27715,25 +27715,25 @@ SWIGINTERN PyObject *_wrap_EMDFloat32___call____SWIG_1(PyObject *SWIGUNUSEDPARM(
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   {
     if (is_new_object7 && array7)
     {
-      Py_DECREF(array7); 
+      Py_DECREF(array7);
     }
   }
   {
     if (is_new_object9 && array9)
     {
-      Py_DECREF(array9); 
+      Py_DECREF(array9);
     }
   }
   return resultobj;
@@ -27741,25 +27741,25 @@ fail:
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   {
     if (is_new_object7 && array7)
     {
-      Py_DECREF(array7); 
+      Py_DECREF(array7);
     }
   }
   {
     if (is_new_object9 && array9)
     {
-      Py_DECREF(array9); 
+      Py_DECREF(array9);
     }
   }
   return NULL;
@@ -27785,16 +27785,16 @@ SWIGINTERN PyObject *_wrap_EMDFloat32___call____SWIG_2(PyObject *SWIGUNUSEDPARM(
   PyArrayObject *array6 = NULL ;
   int is_new_object6 = 0 ;
   float result;
-  
+
   if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_float_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat32___call__" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDFloat32___call__" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance > * >(argp1);
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
       NPY_FLOAT,
@@ -27806,7 +27806,7 @@ SWIGINTERN PyObject *_wrap_EMDFloat32___call____SWIG_2(PyObject *SWIGUNUSEDPARM(
   }
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array4 = obj_to_array_contiguous_allow_conversion(swig_obj[2],
       NPY_FLOAT,
@@ -27818,7 +27818,7 @@ SWIGINTERN PyObject *_wrap_EMDFloat32___call____SWIG_2(PyObject *SWIGUNUSEDPARM(
   }
   {
     npy_intp size[2] = {
-      -1, -1 
+      -1, -1
     };
     array6 = obj_to_array_contiguous_allow_conversion(swig_obj[3], NPY_FLOAT,
       &is_new_object6);
@@ -27830,7 +27830,7 @@ SWIGINTERN PyObject *_wrap_EMDFloat32___call____SWIG_2(PyObject *SWIGUNUSEDPARM(
   }
   {
     try {
-      result = (float)wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__operator_Sp__SP___SWIG_2(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8); 
+      result = (float)wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__operator_Sp__SP___SWIG_2(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -27857,19 +27857,19 @@ SWIGINTERN PyObject *_wrap_EMDFloat32___call____SWIG_2(PyObject *SWIGUNUSEDPARM(
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   {
     if (is_new_object6 && array6)
     {
-      Py_DECREF(array6); 
+      Py_DECREF(array6);
     }
   }
   return resultobj;
@@ -27877,19 +27877,19 @@ fail:
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   {
     if (is_new_object6 && array6)
     {
-      Py_DECREF(array6); 
+      Py_DECREF(array6);
     }
   }
   return NULL;
@@ -27901,7 +27901,7 @@ SWIGINTERN PyObject *_wrap_EMDFloat32___call__(PyObject *self, PyObject *args) {
   PyObject *argv[6] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "EMDFloat32___call__", 0, 5, argv))) SWIG_fail;
   --argc;
   if (argc == 4) {
@@ -27969,7 +27969,7 @@ SWIGINTERN PyObject *_wrap_EMDFloat32___call__(PyObject *self, PyObject *args) {
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'EMDFloat32___call__'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -28025,70 +28025,70 @@ SWIGINTERN PyObject *_wrap_new_EMDYPhiFloat64(PyObject *SWIGUNUSEDPARM(self), Py
   PyObject * obj6 = 0 ;
   PyObject * obj7 = 0 ;
   char * kwnames[] = {
-    (char *)"R",  (char *)"beta",  (char *)"norm",  (char *)"do_timing",  (char *)"external_dists",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  NULL 
+    (char *)"R",  (char *)"beta",  (char *)"norm",  (char *)"do_timing",  (char *)"external_dists",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  NULL
   };
   wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|OOOOOOOO:new_EMDYPhiFloat64", kwnames, &obj0, &obj1, &obj2, &obj3, &obj4, &obj5, &obj6, &obj7)) SWIG_fail;
   if (obj0) {
     ecode1 = SWIG_AsVal_double(obj0, &val1);
     if (!SWIG_IsOK(ecode1)) {
       SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_EMDYPhiFloat64" "', argument " "1"" of type '" "double""'");
-    } 
+    }
     arg1 = static_cast< double >(val1);
   }
   if (obj1) {
     ecode2 = SWIG_AsVal_double(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_EMDYPhiFloat64" "', argument " "2"" of type '" "double""'");
-    } 
+    }
     arg2 = static_cast< double >(val2);
   }
   if (obj2) {
     ecode3 = SWIG_AsVal_bool(obj2, &val3);
     if (!SWIG_IsOK(ecode3)) {
       SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_EMDYPhiFloat64" "', argument " "3"" of type '" "bool""'");
-    } 
+    }
     arg3 = static_cast< bool >(val3);
   }
   if (obj3) {
     ecode4 = SWIG_AsVal_bool(obj3, &val4);
     if (!SWIG_IsOK(ecode4)) {
       SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_EMDYPhiFloat64" "', argument " "4"" of type '" "bool""'");
-    } 
+    }
     arg4 = static_cast< bool >(val4);
   }
   if (obj4) {
     ecode5 = SWIG_AsVal_bool(obj4, &val5);
     if (!SWIG_IsOK(ecode5)) {
       SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_EMDYPhiFloat64" "', argument " "5"" of type '" "bool""'");
-    } 
+    }
     arg5 = static_cast< bool >(val5);
   }
   if (obj5) {
     ecode6 = SWIG_AsVal_size_t(obj5, &val6);
     if (!SWIG_IsOK(ecode6)) {
       SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_EMDYPhiFloat64" "', argument " "6"" of type '" "std::size_t""'");
-    } 
+    }
     arg6 = static_cast< std::size_t >(val6);
   }
   if (obj6) {
     ecode7 = SWIG_AsVal_double(obj6, &val7);
     if (!SWIG_IsOK(ecode7)) {
       SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "new_EMDYPhiFloat64" "', argument " "7"" of type '" "double""'");
-    } 
+    }
     arg7 = static_cast< double >(val7);
   }
   if (obj7) {
     ecode8 = SWIG_AsVal_double(obj7, &val8);
     if (!SWIG_IsOK(ecode8)) {
       SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "new_EMDYPhiFloat64" "', argument " "8"" of type '" "double""'");
-    } 
+    }
     arg8 = static_cast< double >(val8);
   }
   {
     try {
-      result = (wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *)new wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8); 
+      result = (wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *)new wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -28124,17 +28124,17 @@ SWIGINTERN PyObject *_wrap_delete_EMDYPhiFloat64(PyObject *SWIGUNUSEDPARM(self),
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_double_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EMDYPhiFloat64" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EMDYPhiFloat64" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -28175,26 +28175,26 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat64_description(PyObject *SWIGUNUSEDPARM(s
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"write_preprocessors",  NULL 
+    (char *)"self",  (char *)"write_preprocessors",  NULL
   };
   std::string result;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:EMDYPhiFloat64_description", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__EMDT_double_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat64_description" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat64_description" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_bool(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDYPhiFloat64_description" "', argument " "2"" of type '" "bool""'");
-    } 
+    }
     arg2 = static_cast< bool >(val2);
   }
   {
     try {
-      result = ((wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *)arg1)->description(arg2); 
+      result = ((wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *)arg1)->description(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -28231,17 +28231,17 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat64___repr__(PyObject *SWIGUNUSEDPARM(self
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_double_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat64___repr__" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat64___repr__" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > * >(argp1);
   {
     try {
-      result = wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg____repr__((wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *)arg1); 
+      result = wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg____repr__((wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *)arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -28277,17 +28277,17 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat64_preprocess_CenterWeightedCentroid(PyOb
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_double_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat64_preprocess_CenterWeightedCentroid" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat64_preprocess_CenterWeightedCentroid" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > * >(argp1);
   {
     try {
-      wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__preprocess_CenterWeightedCentroid(arg1); 
+      wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__preprocess_CenterWeightedCentroid(arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -28341,16 +28341,16 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat64___call____SWIG_1(PyObject *SWIGUNUSEDP
   PyArrayObject *array9 = NULL ;
   int is_new_object9 = 0 ;
   double result;
-  
+
   if ((nobjs < 5) || (nobjs > 5)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_double_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat64___call__" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat64___call__" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > * >(argp1);
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
       NPY_DOUBLE,
@@ -28362,7 +28362,7 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat64___call____SWIG_1(PyObject *SWIGUNUSEDP
   }
   {
     npy_intp size[2] = {
-      -1, -1 
+      -1, -1
     };
     array4 = obj_to_array_contiguous_allow_conversion(swig_obj[2], NPY_DOUBLE,
       &is_new_object4);
@@ -28374,7 +28374,7 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat64___call____SWIG_1(PyObject *SWIGUNUSEDP
   }
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array7 = obj_to_array_contiguous_allow_conversion(swig_obj[3],
       NPY_DOUBLE,
@@ -28386,7 +28386,7 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat64___call____SWIG_1(PyObject *SWIGUNUSEDP
   }
   {
     npy_intp size[2] = {
-      -1, -1 
+      -1, -1
     };
     array9 = obj_to_array_contiguous_allow_conversion(swig_obj[4], NPY_DOUBLE,
       &is_new_object9);
@@ -28398,7 +28398,7 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat64___call____SWIG_1(PyObject *SWIGUNUSEDP
   }
   {
     try {
-      result = (double)wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__operator_Sp__SP___SWIG_1(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11); 
+      result = (double)wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__operator_Sp__SP___SWIG_1(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -28425,25 +28425,25 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat64___call____SWIG_1(PyObject *SWIGUNUSEDP
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   {
     if (is_new_object7 && array7)
     {
-      Py_DECREF(array7); 
+      Py_DECREF(array7);
     }
   }
   {
     if (is_new_object9 && array9)
     {
-      Py_DECREF(array9); 
+      Py_DECREF(array9);
     }
   }
   return resultobj;
@@ -28451,25 +28451,25 @@ fail:
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   {
     if (is_new_object7 && array7)
     {
-      Py_DECREF(array7); 
+      Py_DECREF(array7);
     }
   }
   {
     if (is_new_object9 && array9)
     {
-      Py_DECREF(array9); 
+      Py_DECREF(array9);
     }
   }
   return NULL;
@@ -28495,16 +28495,16 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat64___call____SWIG_2(PyObject *SWIGUNUSEDP
   PyArrayObject *array6 = NULL ;
   int is_new_object6 = 0 ;
   double result;
-  
+
   if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_double_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat64___call__" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat64___call__" "', argument " "1"" of type '" "wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > * >(argp1);
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
       NPY_DOUBLE,
@@ -28516,7 +28516,7 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat64___call____SWIG_2(PyObject *SWIGUNUSEDP
   }
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array4 = obj_to_array_contiguous_allow_conversion(swig_obj[2],
       NPY_DOUBLE,
@@ -28528,7 +28528,7 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat64___call____SWIG_2(PyObject *SWIGUNUSEDP
   }
   {
     npy_intp size[2] = {
-      -1, -1 
+      -1, -1
     };
     array6 = obj_to_array_contiguous_allow_conversion(swig_obj[3], NPY_DOUBLE,
       &is_new_object6);
@@ -28540,7 +28540,7 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat64___call____SWIG_2(PyObject *SWIGUNUSEDP
   }
   {
     try {
-      result = (double)wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__operator_Sp__SP___SWIG_2(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8); 
+      result = (double)wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__operator_Sp__SP___SWIG_2(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -28567,19 +28567,19 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat64___call____SWIG_2(PyObject *SWIGUNUSEDP
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   {
     if (is_new_object6 && array6)
     {
-      Py_DECREF(array6); 
+      Py_DECREF(array6);
     }
   }
   return resultobj;
@@ -28587,19 +28587,19 @@ fail:
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   {
     if (is_new_object6 && array6)
     {
-      Py_DECREF(array6); 
+      Py_DECREF(array6);
     }
   }
   return NULL;
@@ -28611,7 +28611,7 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat64___call__(PyObject *self, PyObject *arg
   PyObject *argv[6] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "EMDYPhiFloat64___call__", 0, 5, argv))) SWIG_fail;
   --argc;
   if (argc == 4) {
@@ -28679,7 +28679,7 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat64___call__(PyObject *self, PyObject *arg
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'EMDYPhiFloat64___call__'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -28735,70 +28735,70 @@ SWIGINTERN PyObject *_wrap_new_EMDYPhiFloat32(PyObject *SWIGUNUSEDPARM(self), Py
   PyObject * obj6 = 0 ;
   PyObject * obj7 = 0 ;
   char * kwnames[] = {
-    (char *)"R",  (char *)"beta",  (char *)"norm",  (char *)"do_timing",  (char *)"external_dists",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  NULL 
+    (char *)"R",  (char *)"beta",  (char *)"norm",  (char *)"do_timing",  (char *)"external_dists",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  NULL
   };
   wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|OOOOOOOO:new_EMDYPhiFloat32", kwnames, &obj0, &obj1, &obj2, &obj3, &obj4, &obj5, &obj6, &obj7)) SWIG_fail;
   if (obj0) {
     ecode1 = SWIG_AsVal_float(obj0, &val1);
     if (!SWIG_IsOK(ecode1)) {
       SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_EMDYPhiFloat32" "', argument " "1"" of type '" "float""'");
-    } 
+    }
     arg1 = static_cast< float >(val1);
   }
   if (obj1) {
     ecode2 = SWIG_AsVal_float(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_EMDYPhiFloat32" "', argument " "2"" of type '" "float""'");
-    } 
+    }
     arg2 = static_cast< float >(val2);
   }
   if (obj2) {
     ecode3 = SWIG_AsVal_bool(obj2, &val3);
     if (!SWIG_IsOK(ecode3)) {
       SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_EMDYPhiFloat32" "', argument " "3"" of type '" "bool""'");
-    } 
+    }
     arg3 = static_cast< bool >(val3);
   }
   if (obj3) {
     ecode4 = SWIG_AsVal_bool(obj3, &val4);
     if (!SWIG_IsOK(ecode4)) {
       SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_EMDYPhiFloat32" "', argument " "4"" of type '" "bool""'");
-    } 
+    }
     arg4 = static_cast< bool >(val4);
   }
   if (obj4) {
     ecode5 = SWIG_AsVal_bool(obj4, &val5);
     if (!SWIG_IsOK(ecode5)) {
       SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_EMDYPhiFloat32" "', argument " "5"" of type '" "bool""'");
-    } 
+    }
     arg5 = static_cast< bool >(val5);
   }
   if (obj5) {
     ecode6 = SWIG_AsVal_size_t(obj5, &val6);
     if (!SWIG_IsOK(ecode6)) {
       SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_EMDYPhiFloat32" "', argument " "6"" of type '" "std::size_t""'");
-    } 
+    }
     arg6 = static_cast< std::size_t >(val6);
   }
   if (obj6) {
     ecode7 = SWIG_AsVal_float(obj6, &val7);
     if (!SWIG_IsOK(ecode7)) {
       SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "new_EMDYPhiFloat32" "', argument " "7"" of type '" "float""'");
-    } 
+    }
     arg7 = static_cast< float >(val7);
   }
   if (obj7) {
     ecode8 = SWIG_AsVal_float(obj7, &val8);
     if (!SWIG_IsOK(ecode8)) {
       SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "new_EMDYPhiFloat32" "', argument " "8"" of type '" "float""'");
-    } 
+    }
     arg8 = static_cast< float >(val8);
   }
   {
     try {
-      result = (wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *)new wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8); 
+      result = (wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *)new wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -28834,17 +28834,17 @@ SWIGINTERN PyObject *_wrap_delete_EMDYPhiFloat32(PyObject *SWIGUNUSEDPARM(self),
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_float_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EMDYPhiFloat32" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_EMDYPhiFloat32" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -28885,26 +28885,26 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat32_description(PyObject *SWIGUNUSEDPARM(s
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"write_preprocessors",  NULL 
+    (char *)"self",  (char *)"write_preprocessors",  NULL
   };
   std::string result;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:EMDYPhiFloat32_description", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__EMDT_float_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat32_description" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat32_description" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_bool(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "EMDYPhiFloat32_description" "', argument " "2"" of type '" "bool""'");
-    } 
+    }
     arg2 = static_cast< bool >(val2);
   }
   {
     try {
-      result = ((wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *)arg1)->description(arg2); 
+      result = ((wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *)arg1)->description(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -28941,17 +28941,17 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat32___repr__(PyObject *SWIGUNUSEDPARM(self
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_float_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat32___repr__" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat32___repr__" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > * >(argp1);
   {
     try {
-      result = wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg____repr__((wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *)arg1); 
+      result = wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg____repr__((wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > const *)arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -28987,17 +28987,17 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat32_preprocess_CenterWeightedCentroid(PyOb
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_float_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat32_preprocess_CenterWeightedCentroid" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat32_preprocess_CenterWeightedCentroid" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > * >(argp1);
   {
     try {
-      wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__preprocess_CenterWeightedCentroid(arg1); 
+      wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__preprocess_CenterWeightedCentroid(arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -29051,16 +29051,16 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat32___call____SWIG_1(PyObject *SWIGUNUSEDP
   PyArrayObject *array9 = NULL ;
   int is_new_object9 = 0 ;
   float result;
-  
+
   if ((nobjs < 5) || (nobjs > 5)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_float_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat32___call__" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat32___call__" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > * >(argp1);
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
       NPY_FLOAT,
@@ -29072,7 +29072,7 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat32___call____SWIG_1(PyObject *SWIGUNUSEDP
   }
   {
     npy_intp size[2] = {
-      -1, -1 
+      -1, -1
     };
     array4 = obj_to_array_contiguous_allow_conversion(swig_obj[2], NPY_FLOAT,
       &is_new_object4);
@@ -29084,7 +29084,7 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat32___call____SWIG_1(PyObject *SWIGUNUSEDP
   }
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array7 = obj_to_array_contiguous_allow_conversion(swig_obj[3],
       NPY_FLOAT,
@@ -29096,7 +29096,7 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat32___call____SWIG_1(PyObject *SWIGUNUSEDP
   }
   {
     npy_intp size[2] = {
-      -1, -1 
+      -1, -1
     };
     array9 = obj_to_array_contiguous_allow_conversion(swig_obj[4], NPY_FLOAT,
       &is_new_object9);
@@ -29108,7 +29108,7 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat32___call____SWIG_1(PyObject *SWIGUNUSEDP
   }
   {
     try {
-      result = (float)wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__operator_Sp__SP___SWIG_1(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11); 
+      result = (float)wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__operator_Sp__SP___SWIG_1(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -29135,25 +29135,25 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat32___call____SWIG_1(PyObject *SWIGUNUSEDP
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   {
     if (is_new_object7 && array7)
     {
-      Py_DECREF(array7); 
+      Py_DECREF(array7);
     }
   }
   {
     if (is_new_object9 && array9)
     {
-      Py_DECREF(array9); 
+      Py_DECREF(array9);
     }
   }
   return resultobj;
@@ -29161,25 +29161,25 @@ fail:
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   {
     if (is_new_object7 && array7)
     {
-      Py_DECREF(array7); 
+      Py_DECREF(array7);
     }
   }
   {
     if (is_new_object9 && array9)
     {
-      Py_DECREF(array9); 
+      Py_DECREF(array9);
     }
   }
   return NULL;
@@ -29205,16 +29205,16 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat32___call____SWIG_2(PyObject *SWIGUNUSEDP
   PyArrayObject *array6 = NULL ;
   int is_new_object6 = 0 ;
   float result;
-  
+
   if ((nobjs < 4) || (nobjs > 4)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__EMDT_float_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat32___call__" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "EMDYPhiFloat32___call__" "', argument " "1"" of type '" "wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance > * >(argp1);
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array2 = obj_to_array_contiguous_allow_conversion(swig_obj[1],
       NPY_FLOAT,
@@ -29226,7 +29226,7 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat32___call____SWIG_2(PyObject *SWIGUNUSEDP
   }
   {
     npy_intp size[1] = {
-      -1 
+      -1
     };
     array4 = obj_to_array_contiguous_allow_conversion(swig_obj[2],
       NPY_FLOAT,
@@ -29238,7 +29238,7 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat32___call____SWIG_2(PyObject *SWIGUNUSEDP
   }
   {
     npy_intp size[2] = {
-      -1, -1 
+      -1, -1
     };
     array6 = obj_to_array_contiguous_allow_conversion(swig_obj[3], NPY_FLOAT,
       &is_new_object6);
@@ -29250,7 +29250,7 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat32___call____SWIG_2(PyObject *SWIGUNUSEDP
   }
   {
     try {
-      result = (float)wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__operator_Sp__SP___SWIG_2(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8); 
+      result = (float)wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__operator_Sp__SP___SWIG_2(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -29277,19 +29277,19 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat32___call____SWIG_2(PyObject *SWIGUNUSEDP
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   {
     if (is_new_object6 && array6)
     {
-      Py_DECREF(array6); 
+      Py_DECREF(array6);
     }
   }
   return resultobj;
@@ -29297,19 +29297,19 @@ fail:
   {
     if (is_new_object2 && array2)
     {
-      Py_DECREF(array2); 
+      Py_DECREF(array2);
     }
   }
   {
     if (is_new_object4 && array4)
     {
-      Py_DECREF(array4); 
+      Py_DECREF(array4);
     }
   }
   {
     if (is_new_object6 && array6)
     {
-      Py_DECREF(array6); 
+      Py_DECREF(array6);
     }
   }
   return NULL;
@@ -29321,7 +29321,7 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat32___call__(PyObject *self, PyObject *arg
   PyObject *argv[6] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "EMDYPhiFloat32___call__", 0, 5, argv))) SWIG_fail;
   --argc;
   if (argc == 4) {
@@ -29389,7 +29389,7 @@ SWIGINTERN PyObject *_wrap_EMDYPhiFloat32___call__(PyObject *self, PyObject *arg
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'EMDYPhiFloat32___call__'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -29470,115 +29470,115 @@ SWIGINTERN PyObject *_wrap_new_PairwiseEMDFloat64(PyObject *SWIGUNUSEDPARM(self)
   PyObject * obj12 = 0 ;
   PyObject * obj13 = 0 ;
   char * kwnames[] = {
-    (char *)"R",  (char *)"beta",  (char *)"norm",  (char *)"num_threads",  (char *)"print_every",  (char *)"verbose",  (char *)"request_mode",  (char *)"store_sym_emds_raw",  (char *)"throw_on_error",  (char *)"omp_dynamic_chunksize",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  (char *)"os",  NULL 
+    (char *)"R",  (char *)"beta",  (char *)"norm",  (char *)"num_threads",  (char *)"print_every",  (char *)"verbose",  (char *)"request_mode",  (char *)"store_sym_emds_raw",  (char *)"throw_on_error",  (char *)"omp_dynamic_chunksize",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  (char *)"os",  NULL
   };
   wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|OOOOOOOOOOOOOO:new_PairwiseEMDFloat64", kwnames, &obj0, &obj1, &obj2, &obj3, &obj4, &obj5, &obj6, &obj7, &obj8, &obj9, &obj10, &obj11, &obj12, &obj13)) SWIG_fail;
   if (obj0) {
     ecode1 = SWIG_AsVal_double(obj0, &val1);
     if (!SWIG_IsOK(ecode1)) {
       SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_PairwiseEMDFloat64" "', argument " "1"" of type '" "double""'");
-    } 
+    }
     arg1 = static_cast< double >(val1);
   }
   if (obj1) {
     ecode2 = SWIG_AsVal_double(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_PairwiseEMDFloat64" "', argument " "2"" of type '" "double""'");
-    } 
+    }
     arg2 = static_cast< double >(val2);
   }
   if (obj2) {
     ecode3 = SWIG_AsVal_bool(obj2, &val3);
     if (!SWIG_IsOK(ecode3)) {
       SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_PairwiseEMDFloat64" "', argument " "3"" of type '" "bool""'");
-    } 
+    }
     arg3 = static_cast< bool >(val3);
   }
   if (obj3) {
     ecode4 = SWIG_AsVal_int(obj3, &val4);
     if (!SWIG_IsOK(ecode4)) {
       SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_PairwiseEMDFloat64" "', argument " "4"" of type '" "int""'");
-    } 
+    }
     arg4 = static_cast< int >(val4);
   }
   if (obj4) {
     ecode5 = SWIG_AsVal_ptrdiff_t(obj4, &val5);
     if (!SWIG_IsOK(ecode5)) {
       SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_PairwiseEMDFloat64" "', argument " "5"" of type '" "wasserstein::index_type""'");
-    } 
+    }
     arg5 = static_cast< wasserstein::index_type >(val5);
   }
   if (obj5) {
     ecode6 = SWIG_AsVal_unsigned_SS_int(obj5, &val6);
     if (!SWIG_IsOK(ecode6)) {
       SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_PairwiseEMDFloat64" "', argument " "6"" of type '" "unsigned int""'");
-    } 
+    }
     arg6 = static_cast< unsigned int >(val6);
   }
   if (obj6) {
     ecode7 = SWIG_AsVal_bool(obj6, &val7);
     if (!SWIG_IsOK(ecode7)) {
       SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "new_PairwiseEMDFloat64" "', argument " "7"" of type '" "bool""'");
-    } 
+    }
     arg7 = static_cast< bool >(val7);
   }
   if (obj7) {
     ecode8 = SWIG_AsVal_bool(obj7, &val8);
     if (!SWIG_IsOK(ecode8)) {
       SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "new_PairwiseEMDFloat64" "', argument " "8"" of type '" "bool""'");
-    } 
+    }
     arg8 = static_cast< bool >(val8);
   }
   if (obj8) {
     ecode9 = SWIG_AsVal_bool(obj8, &val9);
     if (!SWIG_IsOK(ecode9)) {
       SWIG_exception_fail(SWIG_ArgError(ecode9), "in method '" "new_PairwiseEMDFloat64" "', argument " "9"" of type '" "bool""'");
-    } 
+    }
     arg9 = static_cast< bool >(val9);
   }
   if (obj9) {
     ecode10 = SWIG_AsVal_unsigned_SS_int(obj9, &val10);
     if (!SWIG_IsOK(ecode10)) {
       SWIG_exception_fail(SWIG_ArgError(ecode10), "in method '" "new_PairwiseEMDFloat64" "', argument " "10"" of type '" "unsigned int""'");
-    } 
+    }
     arg10 = static_cast< unsigned int >(val10);
   }
   if (obj10) {
     ecode11 = SWIG_AsVal_size_t(obj10, &val11);
     if (!SWIG_IsOK(ecode11)) {
       SWIG_exception_fail(SWIG_ArgError(ecode11), "in method '" "new_PairwiseEMDFloat64" "', argument " "11"" of type '" "std::size_t""'");
-    } 
+    }
     arg11 = static_cast< std::size_t >(val11);
   }
   if (obj11) {
     ecode12 = SWIG_AsVal_double(obj11, &val12);
     if (!SWIG_IsOK(ecode12)) {
       SWIG_exception_fail(SWIG_ArgError(ecode12), "in method '" "new_PairwiseEMDFloat64" "', argument " "12"" of type '" "double""'");
-    } 
+    }
     arg12 = static_cast< double >(val12);
   }
   if (obj12) {
     ecode13 = SWIG_AsVal_double(obj12, &val13);
     if (!SWIG_IsOK(ecode13)) {
       SWIG_exception_fail(SWIG_ArgError(ecode13), "in method '" "new_PairwiseEMDFloat64" "', argument " "13"" of type '" "double""'");
-    } 
+    }
     arg13 = static_cast< double >(val13);
   }
   if (obj13) {
     res14 = SWIG_ConvertPtr(obj13, &argp14, SWIGTYPE_p_std__ostream,  0 );
     if (!SWIG_IsOK(res14)) {
-      SWIG_exception_fail(SWIG_ArgError(res14), "in method '" "new_PairwiseEMDFloat64" "', argument " "14"" of type '" "std::ostream &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res14), "in method '" "new_PairwiseEMDFloat64" "', argument " "14"" of type '" "std::ostream &""'");
     }
     if (!argp14) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_PairwiseEMDFloat64" "', argument " "14"" of type '" "std::ostream &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_PairwiseEMDFloat64" "', argument " "14"" of type '" "std::ostream &""'");
     }
     arg14 = reinterpret_cast< std::ostream * >(argp14);
   }
   {
     try {
-      result = (wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *)new wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double >(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,*arg14); 
+      result = (wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *)new wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double >(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,*arg14);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -29614,17 +29614,17 @@ SWIGINTERN PyObject *_wrap_delete_PairwiseEMDFloat64(PyObject *SWIGUNUSEDPARM(se
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_PairwiseEMDFloat64" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_PairwiseEMDFloat64" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -29661,17 +29661,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat64_description(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat64_description" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat64_description" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > * >(argp1);
   {
     try {
-      result = ((wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > const *)arg1)->description(); 
+      result = ((wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > const *)arg1)->description();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -29712,25 +29712,25 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat64_clear(PyObject *SWIGUNUSEDPARM(sel
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"free_memory",  NULL 
+    (char *)"self",  (char *)"free_memory",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:PairwiseEMDFloat64_clear", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat64_clear" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat64_clear" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_bool(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDFloat64_clear" "', argument " "2"" of type '" "bool""'");
-    } 
+    }
     arg2 = static_cast< bool >(val2);
   }
   {
     try {
-      (arg1)->clear(arg2); 
+      (arg1)->clear(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -29768,21 +29768,21 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat64_init__SWIG_0(PyObject *SWIGUNUSEDP
   int res1 = 0 ;
   ptrdiff_t val2 ;
   int ecode2 = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat64_init" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat64_init" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDFloat64_init" "', argument " "2"" of type '" "wasserstein::index_type""'");
-  } 
+  }
   arg2 = static_cast< wasserstein::index_type >(val2);
   {
     try {
-      (arg1)->init(arg2); 
+      (arg1)->init(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -29823,26 +29823,26 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat64_init__SWIG_1(PyObject *SWIGUNUSEDP
   int ecode2 = 0 ;
   ptrdiff_t val3 ;
   int ecode3 = 0 ;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat64_init" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat64_init" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDFloat64_init" "', argument " "2"" of type '" "wasserstein::index_type""'");
-  } 
+  }
   arg2 = static_cast< wasserstein::index_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "PairwiseEMDFloat64_init" "', argument " "3"" of type '" "wasserstein::index_type""'");
-  } 
+  }
   arg3 = static_cast< wasserstein::index_type >(val3);
   {
     try {
-      (arg1)->init(arg2,arg3); 
+      (arg1)->init(arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -29877,7 +29877,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat64_init(PyObject *self, PyObject *arg
   PyObject *argv[4] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "PairwiseEMDFloat64_init", 0, 3, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -29916,7 +29916,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat64_init(PyObject *self, PyObject *arg
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'PairwiseEMDFloat64_init'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -29932,12 +29932,12 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat64_compute(PyObject *SWIGUNUSEDPARM(s
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat64_compute" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat64_compute" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > * >(argp1);
   {
@@ -29946,7 +29946,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat64_compute(PyObject *SWIGUNUSEDPARM(s
         SWIG_PYTHON_THREAD_BEGIN_ALLOW;
         (arg1)->compute();
         SWIG_PYTHON_THREAD_END_ALLOW;
-      } 
+      }
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -29983,17 +29983,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat64___repr__(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat64___repr__" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat64___repr__" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > * >(argp1);
   {
     try {
-      result = wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_double_Sg____repr__((wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > const *)arg1); 
+      result = wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_double_Sg____repr__((wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > const *)arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -30029,17 +30029,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat64_preprocess_CenterWeightedCentroid(
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat64_preprocess_CenterWeightedCentroid" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat64_preprocess_CenterWeightedCentroid" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > * >(argp1);
   {
     try {
-      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_double_Sg__preprocess_CenterWeightedCentroid(arg1); 
+      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_double_Sg__preprocess_CenterWeightedCentroid(arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -30075,17 +30075,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat64__reset_B_events(PyObject *SWIGUNUS
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat64__reset_B_events" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat64__reset_B_events" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > * >(argp1);
   {
     try {
-      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_double_Sg___reset_B_events(arg1); 
+      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_double_Sg___reset_B_events(arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -30136,13 +30136,13 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat64__add_event(PyObject *SWIGUNUSEDPAR
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"weights",  (char *)"coords",  (char *)"event_weight",  NULL 
+    (char *)"self",  (char *)"weights",  (char *)"coords",  (char *)"event_weight",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO|O:PairwiseEMDFloat64__add_event", kwnames, &obj0, &obj1, &obj2, &obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat64__add_event" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat64__add_event" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,double > * >(argp1);
   {
@@ -30165,12 +30165,12 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat64__add_event(PyObject *SWIGUNUSEDPAR
     ecode7 = SWIG_AsVal_double(obj3, &val7);
     if (!SWIG_IsOK(ecode7)) {
       SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "PairwiseEMDFloat64__add_event" "', argument " "7"" of type '" "double""'");
-    } 
+    }
     arg7 = static_cast< double >(val7);
   }
   {
     try {
-      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_double_Sg___add_event(arg1,arg2,arg3,arg4,arg5,arg6,arg7); 
+      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_double_Sg___add_event(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -30271,115 +30271,115 @@ SWIGINTERN PyObject *_wrap_new_PairwiseEMDFloat32(PyObject *SWIGUNUSEDPARM(self)
   PyObject * obj12 = 0 ;
   PyObject * obj13 = 0 ;
   char * kwnames[] = {
-    (char *)"R",  (char *)"beta",  (char *)"norm",  (char *)"num_threads",  (char *)"print_every",  (char *)"verbose",  (char *)"request_mode",  (char *)"store_sym_emds_raw",  (char *)"throw_on_error",  (char *)"omp_dynamic_chunksize",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  (char *)"os",  NULL 
+    (char *)"R",  (char *)"beta",  (char *)"norm",  (char *)"num_threads",  (char *)"print_every",  (char *)"verbose",  (char *)"request_mode",  (char *)"store_sym_emds_raw",  (char *)"throw_on_error",  (char *)"omp_dynamic_chunksize",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  (char *)"os",  NULL
   };
   wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|OOOOOOOOOOOOOO:new_PairwiseEMDFloat32", kwnames, &obj0, &obj1, &obj2, &obj3, &obj4, &obj5, &obj6, &obj7, &obj8, &obj9, &obj10, &obj11, &obj12, &obj13)) SWIG_fail;
   if (obj0) {
     ecode1 = SWIG_AsVal_float(obj0, &val1);
     if (!SWIG_IsOK(ecode1)) {
       SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_PairwiseEMDFloat32" "', argument " "1"" of type '" "float""'");
-    } 
+    }
     arg1 = static_cast< float >(val1);
   }
   if (obj1) {
     ecode2 = SWIG_AsVal_float(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_PairwiseEMDFloat32" "', argument " "2"" of type '" "float""'");
-    } 
+    }
     arg2 = static_cast< float >(val2);
   }
   if (obj2) {
     ecode3 = SWIG_AsVal_bool(obj2, &val3);
     if (!SWIG_IsOK(ecode3)) {
       SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_PairwiseEMDFloat32" "', argument " "3"" of type '" "bool""'");
-    } 
+    }
     arg3 = static_cast< bool >(val3);
   }
   if (obj3) {
     ecode4 = SWIG_AsVal_int(obj3, &val4);
     if (!SWIG_IsOK(ecode4)) {
       SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_PairwiseEMDFloat32" "', argument " "4"" of type '" "int""'");
-    } 
+    }
     arg4 = static_cast< int >(val4);
   }
   if (obj4) {
     ecode5 = SWIG_AsVal_ptrdiff_t(obj4, &val5);
     if (!SWIG_IsOK(ecode5)) {
       SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_PairwiseEMDFloat32" "', argument " "5"" of type '" "wasserstein::index_type""'");
-    } 
+    }
     arg5 = static_cast< wasserstein::index_type >(val5);
   }
   if (obj5) {
     ecode6 = SWIG_AsVal_unsigned_SS_int(obj5, &val6);
     if (!SWIG_IsOK(ecode6)) {
       SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_PairwiseEMDFloat32" "', argument " "6"" of type '" "unsigned int""'");
-    } 
+    }
     arg6 = static_cast< unsigned int >(val6);
   }
   if (obj6) {
     ecode7 = SWIG_AsVal_bool(obj6, &val7);
     if (!SWIG_IsOK(ecode7)) {
       SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "new_PairwiseEMDFloat32" "', argument " "7"" of type '" "bool""'");
-    } 
+    }
     arg7 = static_cast< bool >(val7);
   }
   if (obj7) {
     ecode8 = SWIG_AsVal_bool(obj7, &val8);
     if (!SWIG_IsOK(ecode8)) {
       SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "new_PairwiseEMDFloat32" "', argument " "8"" of type '" "bool""'");
-    } 
+    }
     arg8 = static_cast< bool >(val8);
   }
   if (obj8) {
     ecode9 = SWIG_AsVal_bool(obj8, &val9);
     if (!SWIG_IsOK(ecode9)) {
       SWIG_exception_fail(SWIG_ArgError(ecode9), "in method '" "new_PairwiseEMDFloat32" "', argument " "9"" of type '" "bool""'");
-    } 
+    }
     arg9 = static_cast< bool >(val9);
   }
   if (obj9) {
     ecode10 = SWIG_AsVal_unsigned_SS_int(obj9, &val10);
     if (!SWIG_IsOK(ecode10)) {
       SWIG_exception_fail(SWIG_ArgError(ecode10), "in method '" "new_PairwiseEMDFloat32" "', argument " "10"" of type '" "unsigned int""'");
-    } 
+    }
     arg10 = static_cast< unsigned int >(val10);
   }
   if (obj10) {
     ecode11 = SWIG_AsVal_size_t(obj10, &val11);
     if (!SWIG_IsOK(ecode11)) {
       SWIG_exception_fail(SWIG_ArgError(ecode11), "in method '" "new_PairwiseEMDFloat32" "', argument " "11"" of type '" "std::size_t""'");
-    } 
+    }
     arg11 = static_cast< std::size_t >(val11);
   }
   if (obj11) {
     ecode12 = SWIG_AsVal_float(obj11, &val12);
     if (!SWIG_IsOK(ecode12)) {
       SWIG_exception_fail(SWIG_ArgError(ecode12), "in method '" "new_PairwiseEMDFloat32" "', argument " "12"" of type '" "float""'");
-    } 
+    }
     arg12 = static_cast< float >(val12);
   }
   if (obj12) {
     ecode13 = SWIG_AsVal_float(obj12, &val13);
     if (!SWIG_IsOK(ecode13)) {
       SWIG_exception_fail(SWIG_ArgError(ecode13), "in method '" "new_PairwiseEMDFloat32" "', argument " "13"" of type '" "float""'");
-    } 
+    }
     arg13 = static_cast< float >(val13);
   }
   if (obj13) {
     res14 = SWIG_ConvertPtr(obj13, &argp14, SWIGTYPE_p_std__ostream,  0 );
     if (!SWIG_IsOK(res14)) {
-      SWIG_exception_fail(SWIG_ArgError(res14), "in method '" "new_PairwiseEMDFloat32" "', argument " "14"" of type '" "std::ostream &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res14), "in method '" "new_PairwiseEMDFloat32" "', argument " "14"" of type '" "std::ostream &""'");
     }
     if (!argp14) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_PairwiseEMDFloat32" "', argument " "14"" of type '" "std::ostream &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_PairwiseEMDFloat32" "', argument " "14"" of type '" "std::ostream &""'");
     }
     arg14 = reinterpret_cast< std::ostream * >(argp14);
   }
   {
     try {
-      result = (wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > *)new wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float >(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,*arg14); 
+      result = (wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > *)new wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float >(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,*arg14);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -30415,17 +30415,17 @@ SWIGINTERN PyObject *_wrap_delete_PairwiseEMDFloat32(PyObject *SWIGUNUSEDPARM(se
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_PairwiseEMDFloat32" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_PairwiseEMDFloat32" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -30462,17 +30462,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat32_description(PyObject *SWIGUNUSEDPA
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat32_description" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat32_description" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > * >(argp1);
   {
     try {
-      result = ((wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > const *)arg1)->description(); 
+      result = ((wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > const *)arg1)->description();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -30513,25 +30513,25 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat32_clear(PyObject *SWIGUNUSEDPARM(sel
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"free_memory",  NULL 
+    (char *)"self",  (char *)"free_memory",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:PairwiseEMDFloat32_clear", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat32_clear" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat32_clear" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_bool(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDFloat32_clear" "', argument " "2"" of type '" "bool""'");
-    } 
+    }
     arg2 = static_cast< bool >(val2);
   }
   {
     try {
-      (arg1)->clear(arg2); 
+      (arg1)->clear(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -30569,21 +30569,21 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat32_init__SWIG_0(PyObject *SWIGUNUSEDP
   int res1 = 0 ;
   ptrdiff_t val2 ;
   int ecode2 = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat32_init" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat32_init" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDFloat32_init" "', argument " "2"" of type '" "wasserstein::index_type""'");
-  } 
+  }
   arg2 = static_cast< wasserstein::index_type >(val2);
   {
     try {
-      (arg1)->init(arg2); 
+      (arg1)->init(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -30624,26 +30624,26 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat32_init__SWIG_1(PyObject *SWIGUNUSEDP
   int ecode2 = 0 ;
   ptrdiff_t val3 ;
   int ecode3 = 0 ;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat32_init" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat32_init" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDFloat32_init" "', argument " "2"" of type '" "wasserstein::index_type""'");
-  } 
+  }
   arg2 = static_cast< wasserstein::index_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "PairwiseEMDFloat32_init" "', argument " "3"" of type '" "wasserstein::index_type""'");
-  } 
+  }
   arg3 = static_cast< wasserstein::index_type >(val3);
   {
     try {
-      (arg1)->init(arg2,arg3); 
+      (arg1)->init(arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -30678,7 +30678,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat32_init(PyObject *self, PyObject *arg
   PyObject *argv[4] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "PairwiseEMDFloat32_init", 0, 3, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -30717,7 +30717,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat32_init(PyObject *self, PyObject *arg
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'PairwiseEMDFloat32_init'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -30733,12 +30733,12 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat32_compute(PyObject *SWIGUNUSEDPARM(s
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat32_compute" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat32_compute" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > * >(argp1);
   {
@@ -30747,7 +30747,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat32_compute(PyObject *SWIGUNUSEDPARM(s
         SWIG_PYTHON_THREAD_BEGIN_ALLOW;
         (arg1)->compute();
         SWIG_PYTHON_THREAD_END_ALLOW;
-      } 
+      }
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -30784,17 +30784,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat32___repr__(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat32___repr__" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat32___repr__" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > * >(argp1);
   {
     try {
-      result = wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_float_Sg____repr__((wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > const *)arg1); 
+      result = wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_float_Sg____repr__((wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > const *)arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -30830,17 +30830,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat32_preprocess_CenterWeightedCentroid(
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat32_preprocess_CenterWeightedCentroid" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat32_preprocess_CenterWeightedCentroid" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > * >(argp1);
   {
     try {
-      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_float_Sg__preprocess_CenterWeightedCentroid(arg1); 
+      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_float_Sg__preprocess_CenterWeightedCentroid(arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -30876,17 +30876,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat32__reset_B_events(PyObject *SWIGUNUS
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat32__reset_B_events" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat32__reset_B_events" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > * >(argp1);
   {
     try {
-      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_float_Sg___reset_B_events(arg1); 
+      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_float_Sg___reset_B_events(arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -30937,13 +30937,13 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat32__add_event(PyObject *SWIGUNUSEDPAR
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"weights",  (char *)"coords",  (char *)"event_weight",  NULL 
+    (char *)"self",  (char *)"weights",  (char *)"coords",  (char *)"event_weight",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO|O:PairwiseEMDFloat32__add_event", kwnames, &obj0, &obj1, &obj2, &obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArrayEvent_wasserstein__EuclideanArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat32__add_event" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDFloat32__add_event" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArrayEvent,wasserstein::EuclideanArrayDistance >,float > * >(argp1);
   {
@@ -30966,12 +30966,12 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDFloat32__add_event(PyObject *SWIGUNUSEDPAR
     ecode7 = SWIG_AsVal_float(obj3, &val7);
     if (!SWIG_IsOK(ecode7)) {
       SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "PairwiseEMDFloat32__add_event" "', argument " "7"" of type '" "float""'");
-    } 
+    }
     arg7 = static_cast< float >(val7);
   }
   {
     try {
-      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_float_Sg___add_event(arg1,arg2,arg3,arg4,arg5,arg6,arg7); 
+      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArrayEvent_Sc_wasserstein_EuclideanArrayDistance_Sg__Sc_float_Sg___add_event(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -31072,115 +31072,115 @@ SWIGINTERN PyObject *_wrap_new_PairwiseEMDYPhiFloat64(PyObject *SWIGUNUSEDPARM(s
   PyObject * obj12 = 0 ;
   PyObject * obj13 = 0 ;
   char * kwnames[] = {
-    (char *)"R",  (char *)"beta",  (char *)"norm",  (char *)"num_threads",  (char *)"print_every",  (char *)"verbose",  (char *)"request_mode",  (char *)"store_sym_emds_raw",  (char *)"throw_on_error",  (char *)"omp_dynamic_chunksize",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  (char *)"os",  NULL 
+    (char *)"R",  (char *)"beta",  (char *)"norm",  (char *)"num_threads",  (char *)"print_every",  (char *)"verbose",  (char *)"request_mode",  (char *)"store_sym_emds_raw",  (char *)"throw_on_error",  (char *)"omp_dynamic_chunksize",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  (char *)"os",  NULL
   };
   wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|OOOOOOOOOOOOOO:new_PairwiseEMDYPhiFloat64", kwnames, &obj0, &obj1, &obj2, &obj3, &obj4, &obj5, &obj6, &obj7, &obj8, &obj9, &obj10, &obj11, &obj12, &obj13)) SWIG_fail;
   if (obj0) {
     ecode1 = SWIG_AsVal_double(obj0, &val1);
     if (!SWIG_IsOK(ecode1)) {
       SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_PairwiseEMDYPhiFloat64" "', argument " "1"" of type '" "double""'");
-    } 
+    }
     arg1 = static_cast< double >(val1);
   }
   if (obj1) {
     ecode2 = SWIG_AsVal_double(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_PairwiseEMDYPhiFloat64" "', argument " "2"" of type '" "double""'");
-    } 
+    }
     arg2 = static_cast< double >(val2);
   }
   if (obj2) {
     ecode3 = SWIG_AsVal_bool(obj2, &val3);
     if (!SWIG_IsOK(ecode3)) {
       SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_PairwiseEMDYPhiFloat64" "', argument " "3"" of type '" "bool""'");
-    } 
+    }
     arg3 = static_cast< bool >(val3);
   }
   if (obj3) {
     ecode4 = SWIG_AsVal_int(obj3, &val4);
     if (!SWIG_IsOK(ecode4)) {
       SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_PairwiseEMDYPhiFloat64" "', argument " "4"" of type '" "int""'");
-    } 
+    }
     arg4 = static_cast< int >(val4);
   }
   if (obj4) {
     ecode5 = SWIG_AsVal_ptrdiff_t(obj4, &val5);
     if (!SWIG_IsOK(ecode5)) {
       SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_PairwiseEMDYPhiFloat64" "', argument " "5"" of type '" "wasserstein::index_type""'");
-    } 
+    }
     arg5 = static_cast< wasserstein::index_type >(val5);
   }
   if (obj5) {
     ecode6 = SWIG_AsVal_unsigned_SS_int(obj5, &val6);
     if (!SWIG_IsOK(ecode6)) {
       SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_PairwiseEMDYPhiFloat64" "', argument " "6"" of type '" "unsigned int""'");
-    } 
+    }
     arg6 = static_cast< unsigned int >(val6);
   }
   if (obj6) {
     ecode7 = SWIG_AsVal_bool(obj6, &val7);
     if (!SWIG_IsOK(ecode7)) {
       SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "new_PairwiseEMDYPhiFloat64" "', argument " "7"" of type '" "bool""'");
-    } 
+    }
     arg7 = static_cast< bool >(val7);
   }
   if (obj7) {
     ecode8 = SWIG_AsVal_bool(obj7, &val8);
     if (!SWIG_IsOK(ecode8)) {
       SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "new_PairwiseEMDYPhiFloat64" "', argument " "8"" of type '" "bool""'");
-    } 
+    }
     arg8 = static_cast< bool >(val8);
   }
   if (obj8) {
     ecode9 = SWIG_AsVal_bool(obj8, &val9);
     if (!SWIG_IsOK(ecode9)) {
       SWIG_exception_fail(SWIG_ArgError(ecode9), "in method '" "new_PairwiseEMDYPhiFloat64" "', argument " "9"" of type '" "bool""'");
-    } 
+    }
     arg9 = static_cast< bool >(val9);
   }
   if (obj9) {
     ecode10 = SWIG_AsVal_unsigned_SS_int(obj9, &val10);
     if (!SWIG_IsOK(ecode10)) {
       SWIG_exception_fail(SWIG_ArgError(ecode10), "in method '" "new_PairwiseEMDYPhiFloat64" "', argument " "10"" of type '" "unsigned int""'");
-    } 
+    }
     arg10 = static_cast< unsigned int >(val10);
   }
   if (obj10) {
     ecode11 = SWIG_AsVal_size_t(obj10, &val11);
     if (!SWIG_IsOK(ecode11)) {
       SWIG_exception_fail(SWIG_ArgError(ecode11), "in method '" "new_PairwiseEMDYPhiFloat64" "', argument " "11"" of type '" "std::size_t""'");
-    } 
+    }
     arg11 = static_cast< std::size_t >(val11);
   }
   if (obj11) {
     ecode12 = SWIG_AsVal_double(obj11, &val12);
     if (!SWIG_IsOK(ecode12)) {
       SWIG_exception_fail(SWIG_ArgError(ecode12), "in method '" "new_PairwiseEMDYPhiFloat64" "', argument " "12"" of type '" "double""'");
-    } 
+    }
     arg12 = static_cast< double >(val12);
   }
   if (obj12) {
     ecode13 = SWIG_AsVal_double(obj12, &val13);
     if (!SWIG_IsOK(ecode13)) {
       SWIG_exception_fail(SWIG_ArgError(ecode13), "in method '" "new_PairwiseEMDYPhiFloat64" "', argument " "13"" of type '" "double""'");
-    } 
+    }
     arg13 = static_cast< double >(val13);
   }
   if (obj13) {
     res14 = SWIG_ConvertPtr(obj13, &argp14, SWIGTYPE_p_std__ostream,  0 );
     if (!SWIG_IsOK(res14)) {
-      SWIG_exception_fail(SWIG_ArgError(res14), "in method '" "new_PairwiseEMDYPhiFloat64" "', argument " "14"" of type '" "std::ostream &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res14), "in method '" "new_PairwiseEMDYPhiFloat64" "', argument " "14"" of type '" "std::ostream &""'");
     }
     if (!argp14) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_PairwiseEMDYPhiFloat64" "', argument " "14"" of type '" "std::ostream &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_PairwiseEMDYPhiFloat64" "', argument " "14"" of type '" "std::ostream &""'");
     }
     arg14 = reinterpret_cast< std::ostream * >(argp14);
   }
   {
     try {
-      result = (wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *)new wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double >(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,*arg14); 
+      result = (wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *)new wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double >(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,*arg14);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -31216,17 +31216,17 @@ SWIGINTERN PyObject *_wrap_delete_PairwiseEMDYPhiFloat64(PyObject *SWIGUNUSEDPAR
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_PairwiseEMDYPhiFloat64" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_PairwiseEMDYPhiFloat64" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -31263,17 +31263,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat64_description(PyObject *SWIGUNUS
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat64_description" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat64_description" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > * >(argp1);
   {
     try {
-      result = ((wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > const *)arg1)->description(); 
+      result = ((wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > const *)arg1)->description();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -31314,25 +31314,25 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat64_clear(PyObject *SWIGUNUSEDPARM
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"free_memory",  NULL 
+    (char *)"self",  (char *)"free_memory",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:PairwiseEMDYPhiFloat64_clear", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat64_clear" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat64_clear" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_bool(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDYPhiFloat64_clear" "', argument " "2"" of type '" "bool""'");
-    } 
+    }
     arg2 = static_cast< bool >(val2);
   }
   {
     try {
-      (arg1)->clear(arg2); 
+      (arg1)->clear(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -31370,21 +31370,21 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat64_init__SWIG_0(PyObject *SWIGUNU
   int res1 = 0 ;
   ptrdiff_t val2 ;
   int ecode2 = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat64_init" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat64_init" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDYPhiFloat64_init" "', argument " "2"" of type '" "wasserstein::index_type""'");
-  } 
+  }
   arg2 = static_cast< wasserstein::index_type >(val2);
   {
     try {
-      (arg1)->init(arg2); 
+      (arg1)->init(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -31425,26 +31425,26 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat64_init__SWIG_1(PyObject *SWIGUNU
   int ecode2 = 0 ;
   ptrdiff_t val3 ;
   int ecode3 = 0 ;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat64_init" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat64_init" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDYPhiFloat64_init" "', argument " "2"" of type '" "wasserstein::index_type""'");
-  } 
+  }
   arg2 = static_cast< wasserstein::index_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "PairwiseEMDYPhiFloat64_init" "', argument " "3"" of type '" "wasserstein::index_type""'");
-  } 
+  }
   arg3 = static_cast< wasserstein::index_type >(val3);
   {
     try {
-      (arg1)->init(arg2,arg3); 
+      (arg1)->init(arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -31479,7 +31479,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat64_init(PyObject *self, PyObject 
   PyObject *argv[4] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "PairwiseEMDYPhiFloat64_init", 0, 3, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -31518,7 +31518,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat64_init(PyObject *self, PyObject 
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'PairwiseEMDYPhiFloat64_init'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -31534,12 +31534,12 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat64_compute(PyObject *SWIGUNUSEDPA
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat64_compute" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat64_compute" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > * >(argp1);
   {
@@ -31548,7 +31548,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat64_compute(PyObject *SWIGUNUSEDPA
         SWIG_PYTHON_THREAD_BEGIN_ALLOW;
         (arg1)->compute();
         SWIG_PYTHON_THREAD_END_ALLOW;
-      } 
+      }
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -31585,17 +31585,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat64___repr__(PyObject *SWIGUNUSEDP
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat64___repr__" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat64___repr__" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > * >(argp1);
   {
     try {
-      result = wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_double_Sg____repr__((wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > const *)arg1); 
+      result = wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_double_Sg____repr__((wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > const *)arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -31631,17 +31631,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat64_preprocess_CenterWeightedCentr
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat64_preprocess_CenterWeightedCentroid" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat64_preprocess_CenterWeightedCentroid" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > * >(argp1);
   {
     try {
-      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_double_Sg__preprocess_CenterWeightedCentroid(arg1); 
+      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_double_Sg__preprocess_CenterWeightedCentroid(arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -31677,17 +31677,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat64__reset_B_events(PyObject *SWIG
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat64__reset_B_events" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat64__reset_B_events" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > * >(argp1);
   {
     try {
-      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_double_Sg___reset_B_events(arg1); 
+      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_double_Sg___reset_B_events(arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -31738,13 +31738,13 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat64__add_event(PyObject *SWIGUNUSE
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"weights",  (char *)"coords",  (char *)"event_weight",  NULL 
+    (char *)"self",  (char *)"weights",  (char *)"coords",  (char *)"event_weight",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO|O:PairwiseEMDYPhiFloat64__add_event", kwnames, &obj0, &obj1, &obj2, &obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_double_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_double_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat64__add_event" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat64__add_event" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< double,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,double > * >(argp1);
   {
@@ -31767,12 +31767,12 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat64__add_event(PyObject *SWIGUNUSE
     ecode7 = SWIG_AsVal_double(obj3, &val7);
     if (!SWIG_IsOK(ecode7)) {
       SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "PairwiseEMDYPhiFloat64__add_event" "', argument " "7"" of type '" "double""'");
-    } 
+    }
     arg7 = static_cast< double >(val7);
   }
   {
     try {
-      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_double_Sg___add_event(arg1,arg2,arg3,arg4,arg5,arg6,arg7); 
+      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_double_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_double_Sg___add_event(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -31873,115 +31873,115 @@ SWIGINTERN PyObject *_wrap_new_PairwiseEMDYPhiFloat32(PyObject *SWIGUNUSEDPARM(s
   PyObject * obj12 = 0 ;
   PyObject * obj13 = 0 ;
   char * kwnames[] = {
-    (char *)"R",  (char *)"beta",  (char *)"norm",  (char *)"num_threads",  (char *)"print_every",  (char *)"verbose",  (char *)"request_mode",  (char *)"store_sym_emds_raw",  (char *)"throw_on_error",  (char *)"omp_dynamic_chunksize",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  (char *)"os",  NULL 
+    (char *)"R",  (char *)"beta",  (char *)"norm",  (char *)"num_threads",  (char *)"print_every",  (char *)"verbose",  (char *)"request_mode",  (char *)"store_sym_emds_raw",  (char *)"throw_on_error",  (char *)"omp_dynamic_chunksize",  (char *)"n_iter_max",  (char *)"epsilon_large_factor",  (char *)"epsilon_small_factor",  (char *)"os",  NULL
   };
   wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *result = 0 ;
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|OOOOOOOOOOOOOO:new_PairwiseEMDYPhiFloat32", kwnames, &obj0, &obj1, &obj2, &obj3, &obj4, &obj5, &obj6, &obj7, &obj8, &obj9, &obj10, &obj11, &obj12, &obj13)) SWIG_fail;
   if (obj0) {
     ecode1 = SWIG_AsVal_float(obj0, &val1);
     if (!SWIG_IsOK(ecode1)) {
       SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_PairwiseEMDYPhiFloat32" "', argument " "1"" of type '" "float""'");
-    } 
+    }
     arg1 = static_cast< float >(val1);
   }
   if (obj1) {
     ecode2 = SWIG_AsVal_float(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_PairwiseEMDYPhiFloat32" "', argument " "2"" of type '" "float""'");
-    } 
+    }
     arg2 = static_cast< float >(val2);
   }
   if (obj2) {
     ecode3 = SWIG_AsVal_bool(obj2, &val3);
     if (!SWIG_IsOK(ecode3)) {
       SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_PairwiseEMDYPhiFloat32" "', argument " "3"" of type '" "bool""'");
-    } 
+    }
     arg3 = static_cast< bool >(val3);
   }
   if (obj3) {
     ecode4 = SWIG_AsVal_int(obj3, &val4);
     if (!SWIG_IsOK(ecode4)) {
       SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_PairwiseEMDYPhiFloat32" "', argument " "4"" of type '" "int""'");
-    } 
+    }
     arg4 = static_cast< int >(val4);
   }
   if (obj4) {
     ecode5 = SWIG_AsVal_ptrdiff_t(obj4, &val5);
     if (!SWIG_IsOK(ecode5)) {
       SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_PairwiseEMDYPhiFloat32" "', argument " "5"" of type '" "wasserstein::index_type""'");
-    } 
+    }
     arg5 = static_cast< wasserstein::index_type >(val5);
   }
   if (obj5) {
     ecode6 = SWIG_AsVal_unsigned_SS_int(obj5, &val6);
     if (!SWIG_IsOK(ecode6)) {
       SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_PairwiseEMDYPhiFloat32" "', argument " "6"" of type '" "unsigned int""'");
-    } 
+    }
     arg6 = static_cast< unsigned int >(val6);
   }
   if (obj6) {
     ecode7 = SWIG_AsVal_bool(obj6, &val7);
     if (!SWIG_IsOK(ecode7)) {
       SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "new_PairwiseEMDYPhiFloat32" "', argument " "7"" of type '" "bool""'");
-    } 
+    }
     arg7 = static_cast< bool >(val7);
   }
   if (obj7) {
     ecode8 = SWIG_AsVal_bool(obj7, &val8);
     if (!SWIG_IsOK(ecode8)) {
       SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "new_PairwiseEMDYPhiFloat32" "', argument " "8"" of type '" "bool""'");
-    } 
+    }
     arg8 = static_cast< bool >(val8);
   }
   if (obj8) {
     ecode9 = SWIG_AsVal_bool(obj8, &val9);
     if (!SWIG_IsOK(ecode9)) {
       SWIG_exception_fail(SWIG_ArgError(ecode9), "in method '" "new_PairwiseEMDYPhiFloat32" "', argument " "9"" of type '" "bool""'");
-    } 
+    }
     arg9 = static_cast< bool >(val9);
   }
   if (obj9) {
     ecode10 = SWIG_AsVal_unsigned_SS_int(obj9, &val10);
     if (!SWIG_IsOK(ecode10)) {
       SWIG_exception_fail(SWIG_ArgError(ecode10), "in method '" "new_PairwiseEMDYPhiFloat32" "', argument " "10"" of type '" "unsigned int""'");
-    } 
+    }
     arg10 = static_cast< unsigned int >(val10);
   }
   if (obj10) {
     ecode11 = SWIG_AsVal_size_t(obj10, &val11);
     if (!SWIG_IsOK(ecode11)) {
       SWIG_exception_fail(SWIG_ArgError(ecode11), "in method '" "new_PairwiseEMDYPhiFloat32" "', argument " "11"" of type '" "std::size_t""'");
-    } 
+    }
     arg11 = static_cast< std::size_t >(val11);
   }
   if (obj11) {
     ecode12 = SWIG_AsVal_float(obj11, &val12);
     if (!SWIG_IsOK(ecode12)) {
       SWIG_exception_fail(SWIG_ArgError(ecode12), "in method '" "new_PairwiseEMDYPhiFloat32" "', argument " "12"" of type '" "float""'");
-    } 
+    }
     arg12 = static_cast< float >(val12);
   }
   if (obj12) {
     ecode13 = SWIG_AsVal_float(obj12, &val13);
     if (!SWIG_IsOK(ecode13)) {
       SWIG_exception_fail(SWIG_ArgError(ecode13), "in method '" "new_PairwiseEMDYPhiFloat32" "', argument " "13"" of type '" "float""'");
-    } 
+    }
     arg13 = static_cast< float >(val13);
   }
   if (obj13) {
     res14 = SWIG_ConvertPtr(obj13, &argp14, SWIGTYPE_p_std__ostream,  0 );
     if (!SWIG_IsOK(res14)) {
-      SWIG_exception_fail(SWIG_ArgError(res14), "in method '" "new_PairwiseEMDYPhiFloat32" "', argument " "14"" of type '" "std::ostream &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res14), "in method '" "new_PairwiseEMDYPhiFloat32" "', argument " "14"" of type '" "std::ostream &""'");
     }
     if (!argp14) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_PairwiseEMDYPhiFloat32" "', argument " "14"" of type '" "std::ostream &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_PairwiseEMDYPhiFloat32" "', argument " "14"" of type '" "std::ostream &""'");
     }
     arg14 = reinterpret_cast< std::ostream * >(argp14);
   }
   {
     try {
-      result = (wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *)new wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float >(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,*arg14); 
+      result = (wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *)new wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float >(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,*arg14);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -32017,17 +32017,17 @@ SWIGINTERN PyObject *_wrap_delete_PairwiseEMDYPhiFloat32(PyObject *SWIGUNUSEDPAR
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, SWIG_POINTER_DISOWN |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_PairwiseEMDYPhiFloat32" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_PairwiseEMDYPhiFloat32" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > * >(argp1);
   {
     try {
-      delete arg1; 
+      delete arg1;
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -32064,17 +32064,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat32_description(PyObject *SWIGUNUS
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat32_description" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat32_description" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > * >(argp1);
   {
     try {
-      result = ((wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > const *)arg1)->description(); 
+      result = ((wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > const *)arg1)->description();
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -32115,25 +32115,25 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat32_clear(PyObject *SWIGUNUSEDPARM
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"free_memory",  NULL 
+    (char *)"self",  (char *)"free_memory",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|O:PairwiseEMDYPhiFloat32_clear", kwnames, &obj0, &obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat32_clear" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat32_clear" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > * >(argp1);
   if (obj1) {
     ecode2 = SWIG_AsVal_bool(obj1, &val2);
     if (!SWIG_IsOK(ecode2)) {
       SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDYPhiFloat32_clear" "', argument " "2"" of type '" "bool""'");
-    } 
+    }
     arg2 = static_cast< bool >(val2);
   }
   {
     try {
-      (arg1)->clear(arg2); 
+      (arg1)->clear(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -32171,21 +32171,21 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat32_init__SWIG_0(PyObject *SWIGUNU
   int res1 = 0 ;
   ptrdiff_t val2 ;
   int ecode2 = 0 ;
-  
+
   if ((nobjs < 2) || (nobjs > 2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat32_init" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat32_init" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDYPhiFloat32_init" "', argument " "2"" of type '" "wasserstein::index_type""'");
-  } 
+  }
   arg2 = static_cast< wasserstein::index_type >(val2);
   {
     try {
-      (arg1)->init(arg2); 
+      (arg1)->init(arg2);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -32226,26 +32226,26 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat32_init__SWIG_1(PyObject *SWIGUNU
   int ecode2 = 0 ;
   ptrdiff_t val3 ;
   int ecode3 = 0 ;
-  
+
   if ((nobjs < 3) || (nobjs > 3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat32_init" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat32_init" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > * >(argp1);
   ecode2 = SWIG_AsVal_ptrdiff_t(swig_obj[1], &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PairwiseEMDYPhiFloat32_init" "', argument " "2"" of type '" "wasserstein::index_type""'");
-  } 
+  }
   arg2 = static_cast< wasserstein::index_type >(val2);
   ecode3 = SWIG_AsVal_ptrdiff_t(swig_obj[2], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "PairwiseEMDYPhiFloat32_init" "', argument " "3"" of type '" "wasserstein::index_type""'");
-  } 
+  }
   arg3 = static_cast< wasserstein::index_type >(val3);
   {
     try {
-      (arg1)->init(arg2,arg3); 
+      (arg1)->init(arg2,arg3);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -32280,7 +32280,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat32_init(PyObject *self, PyObject 
   PyObject *argv[4] = {
     0
   };
-  
+
   if (!(argc = SWIG_Python_UnpackTuple(args, "PairwiseEMDYPhiFloat32_init", 0, 3, argv))) SWIG_fail;
   --argc;
   if (argc == 2) {
@@ -32319,7 +32319,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat32_init(PyObject *self, PyObject 
       }
     }
   }
-  
+
 fail:
   SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'PairwiseEMDYPhiFloat32_init'.\n"
     "  Possible C/C++ prototypes are:\n"
@@ -32335,12 +32335,12 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat32_compute(PyObject *SWIGUNUSEDPA
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat32_compute" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat32_compute" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > * >(argp1);
   {
@@ -32349,7 +32349,7 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat32_compute(PyObject *SWIGUNUSEDPA
         SWIG_PYTHON_THREAD_BEGIN_ALLOW;
         (arg1)->compute();
         SWIG_PYTHON_THREAD_END_ALLOW;
-      } 
+      }
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -32386,17 +32386,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat32___repr__(PyObject *SWIGUNUSEDP
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
   std::string result;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat32___repr__" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat32___repr__" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > const *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > * >(argp1);
   {
     try {
-      result = wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_float_Sg____repr__((wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > const *)arg1); 
+      result = wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_float_Sg____repr__((wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > const *)arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -32432,17 +32432,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat32_preprocess_CenterWeightedCentr
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat32_preprocess_CenterWeightedCentroid" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat32_preprocess_CenterWeightedCentroid" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > * >(argp1);
   {
     try {
-      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_float_Sg__preprocess_CenterWeightedCentroid(arg1); 
+      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_float_Sg__preprocess_CenterWeightedCentroid(arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -32478,17 +32478,17 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat32__reset_B_events(PyObject *SWIG
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject *swig_obj[1] ;
-  
+
   if (!args) SWIG_fail;
   swig_obj[0] = args;
   res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat32__reset_B_events" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat32__reset_B_events" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > * >(argp1);
   {
     try {
-      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_float_Sg___reset_B_events(arg1); 
+      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_float_Sg___reset_B_events(arg1);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -32539,13 +32539,13 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat32__add_event(PyObject *SWIGUNUSE
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
   char * kwnames[] = {
-    (char *)"self",  (char *)"weights",  (char *)"coords",  (char *)"event_weight",  NULL 
+    (char *)"self",  (char *)"weights",  (char *)"coords",  (char *)"event_weight",  NULL
   };
-  
+
   if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO|O:PairwiseEMDYPhiFloat32__add_event", kwnames, &obj0, &obj1, &obj2, &obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_wasserstein__PairwiseEMDT_wasserstein__EMDT_float_wasserstein__DefaultArray2Event_wasserstein__YPhiArrayDistance_wasserstein__DefaultNetworkSimplex_t_float_t, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat32__add_event" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "PairwiseEMDYPhiFloat32__add_event" "', argument " "1"" of type '" "wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > *""'");
   }
   arg1 = reinterpret_cast< wasserstein::PairwiseEMD< wasserstein::EMD< float,wasserstein::DefaultArray2Event,wasserstein::YPhiArrayDistance >,float > * >(argp1);
   {
@@ -32568,12 +32568,12 @@ SWIGINTERN PyObject *_wrap_PairwiseEMDYPhiFloat32__add_event(PyObject *SWIGUNUSE
     ecode7 = SWIG_AsVal_float(obj3, &val7);
     if (!SWIG_IsOK(ecode7)) {
       SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "PairwiseEMDYPhiFloat32__add_event" "', argument " "7"" of type '" "float""'");
-    } 
+    }
     arg7 = static_cast< float >(val7);
   }
   {
     try {
-      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_float_Sg___add_event(arg1,arg2,arg3,arg4,arg5,arg6,arg7); 
+      wasserstein_PairwiseEMD_Sl_wasserstein_EMD_Sl_float_Sc_wasserstein_DefaultArray2Event_Sc_wasserstein_YPhiArrayDistance_Sg__Sc_float_Sg___add_event(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
     }
     /*@SWIG:/usr/local/Cellar/swig/4.0.2/share/swig/4.0.2/typemaps/exception.swg,58,SWIG_CATCH_STDEXCEPT@*/  /* catching std::exception  */
     catch (std::invalid_argument& e) {
@@ -34108,7 +34108,7 @@ SWIG_InitializeModule(void *clientdata) {
   size_t i;
   swig_module_info *module_head, *iter;
   int init;
-  
+
   /* check to see if the circular list has been setup, if not, set it up */
   if (swig_module.next==0) {
     /* Initialize the swig_module */
@@ -34119,7 +34119,7 @@ SWIG_InitializeModule(void *clientdata) {
   } else {
     init = 0;
   }
-  
+
   /* Try and load any already created modules */
   module_head = SWIG_GetModule(clientdata);
   if (!module_head) {
@@ -34136,18 +34136,18 @@ SWIG_InitializeModule(void *clientdata) {
       }
       iter=iter->next;
     } while (iter!= module_head);
-    
+
     /* otherwise we must add our module into the list */
     swig_module.next = module_head->next;
     module_head->next = &swig_module;
   }
-  
+
   /* When multiple interpreters are used, a module could have already been initialized in
        a different interpreter, but not yet have a pointer in this interpreter.
        In this case, we do not want to continue adding types... everything should be
        set up already */
   if (init == 0) return;
-  
+
   /* Now work on filling in swig_module.types */
 #ifdef SWIGRUNTIME_DEBUG
   printf("SWIG_InitializeModule: size %lu\n", (unsigned long)swig_module.size);
@@ -34156,11 +34156,11 @@ SWIG_InitializeModule(void *clientdata) {
     swig_type_info *type = 0;
     swig_type_info *ret;
     swig_cast_info *cast;
-    
+
 #ifdef SWIGRUNTIME_DEBUG
     printf("SWIG_InitializeModule: type %lu %s\n", (unsigned long)i, swig_module.type_initial[i]->name);
 #endif
-    
+
     /* if there is another module already loaded */
     if (swig_module.next != &swig_module) {
       type = SWIG_MangledTypeQueryModule(swig_module.next, &swig_module, swig_module.type_initial[i]->name);
@@ -34179,7 +34179,7 @@ SWIG_InitializeModule(void *clientdata) {
     } else {
       type = swig_module.type_initial[i];
     }
-    
+
     /* Insert casting types */
     cast = swig_module.cast_initial[i];
     while (cast->type) {
@@ -34210,7 +34210,7 @@ SWIG_InitializeModule(void *clientdata) {
           if (!ocast) ret = 0;
         }
       }
-      
+
       if (!ret) {
 #ifdef SWIGRUNTIME_DEBUG
         printf("SWIG_InitializeModule: adding cast %s\n", cast->type->name);
@@ -34227,7 +34227,7 @@ SWIG_InitializeModule(void *clientdata) {
     swig_module.types[i] = type;
   }
   swig_module.types[i] = 0;
-  
+
 #ifdef SWIGRUNTIME_DEBUG
   printf("**** SWIG_InitializeModule: Cast List ******\n");
   for (i = 0; i < swig_module.size; ++i) {
@@ -34255,10 +34255,10 @@ SWIG_PropagateClientData(void) {
   size_t i;
   swig_cast_info *equiv;
   static int init_run = 0;
-  
+
   if (init_run) return;
   init_run = 1;
-  
+
   for (i = 0; i < swig_module.size; i++) {
     if (swig_module.types[i]->clientdata) {
       equiv = swig_module.types[i]->cast;
@@ -34286,28 +34286,28 @@ SWIG_PropagateClientData(void) {
 #ifdef __cplusplus
 extern "C" {
 #endif
-  
+
   /* Python-specific SWIG API */
 #define SWIG_newvarlink()                             SWIG_Python_newvarlink()
 #define SWIG_addvarlink(p, name, get_attr, set_attr)  SWIG_Python_addvarlink(p, name, get_attr, set_attr)
 #define SWIG_InstallConstants(d, constants)           SWIG_Python_InstallConstants(d, constants)
-  
+
   /* -----------------------------------------------------------------------------
    * global variable support code.
    * ----------------------------------------------------------------------------- */
-  
+
   typedef struct swig_globalvar {
     char       *name;                  /* Name of global variable */
     PyObject *(*get_attr)(void);       /* Return the current value */
     int       (*set_attr)(PyObject *); /* Set the value */
     struct swig_globalvar *next;
   } swig_globalvar;
-  
+
   typedef struct swig_varlinkobject {
     PyObject_HEAD
     swig_globalvar *vars;
   } swig_varlinkobject;
-  
+
   SWIGINTERN PyObject *
   swig_varlink_repr(swig_varlinkobject *SWIGUNUSEDPARM(v)) {
 #if PY_VERSION_HEX >= 0x03000000
@@ -34316,7 +34316,7 @@ extern "C" {
     return PyString_FromString("<Swig global variables>");
 #endif
   }
-  
+
   SWIGINTERN PyObject *
   swig_varlink_str(swig_varlinkobject *v) {
 #if PY_VERSION_HEX >= 0x03000000
@@ -34354,7 +34354,7 @@ extern "C" {
 #endif
     return str;
   }
-  
+
   SWIGINTERN void
   swig_varlink_dealloc(swig_varlinkobject *v) {
     swig_globalvar *var = v->vars;
@@ -34365,7 +34365,7 @@ extern "C" {
       var = n;
     }
   }
-  
+
   SWIGINTERN PyObject *
   swig_varlink_getattr(swig_varlinkobject *v, char *n) {
     PyObject *res = NULL;
@@ -34382,7 +34382,7 @@ extern "C" {
     }
     return res;
   }
-  
+
   SWIGINTERN int
   swig_varlink_setattr(swig_varlinkobject *v, char *n, PyObject *p) {
     int res = 1;
@@ -34399,7 +34399,7 @@ extern "C" {
     }
     return res;
   }
-  
+
   SWIGINTERN PyTypeObject*
   swig_varlink_type(void) {
     static char varlink__doc__[] = "Swig var link object";
@@ -34464,7 +34464,7 @@ extern "C" {
     }
     return &varlink_type;
   }
-  
+
   /* Create a variable linking object for use later */
   SWIGINTERN PyObject *
   SWIG_Python_newvarlink(void) {
@@ -34474,8 +34474,8 @@ extern "C" {
     }
     return ((PyObject*) result);
   }
-  
-  SWIGINTERN void 
+
+  SWIGINTERN void
   SWIG_Python_addvarlink(PyObject *p, const char *name, PyObject *(*get_attr)(void), int (*set_attr)(PyObject *p)) {
     swig_varlinkobject *v = (swig_varlinkobject *) p;
     swig_globalvar *gv = (swig_globalvar *) malloc(sizeof(swig_globalvar));
@@ -34491,7 +34491,7 @@ extern "C" {
     }
     v->vars = gv;
   }
-  
+
   SWIGINTERN PyObject *
   SWIG_globals(void) {
     static PyObject *globals = 0;
@@ -34500,11 +34500,11 @@ extern "C" {
     }
     return globals;
   }
-  
+
   /* -----------------------------------------------------------------------------
    * constants/methods manipulation
    * ----------------------------------------------------------------------------- */
-  
+
   /* Install Constants */
   SWIGINTERN void
   SWIG_Python_InstallConstants(PyObject *d, swig_const_info constants[]) {
@@ -34528,11 +34528,11 @@ extern "C" {
       }
     }
   }
-  
+
   /* -----------------------------------------------------------------------------*/
   /* Fix SwigMethods to carry the callback ptrs when needed */
   /* -----------------------------------------------------------------------------*/
-  
+
   SWIGINTERN void
   SWIG_Python_FixMethods(PyMethodDef *methods,
     swig_const_info *const_table,
@@ -34548,7 +34548,7 @@ extern "C" {
         swig_const_info *ci = 0;
         const char *name = c + 10;
         for (j = 0; const_table[j].type; ++j) {
-          if (strncmp(const_table[j].name, name, 
+          if (strncmp(const_table[j].name, name,
               strlen(const_table[j].name)) == 0) {
             ci = &(const_table[j]);
             break;
@@ -34575,17 +34575,17 @@ extern "C" {
         }
       }
     }
-  } 
-  
+  }
+
   /* -----------------------------------------------------------------------------
    * Method creation and docstring support functions
    * ----------------------------------------------------------------------------- */
-  
+
   /* -----------------------------------------------------------------------------
    * Function to find the method definition with the correct docstring for the
    * proxy module as opposed to the low-level API
    * ----------------------------------------------------------------------------- */
-  
+
   SWIGINTERN PyMethodDef *SWIG_PythonGetProxyDoc(const char *name) {
     /* Find the function in the modified method table */
     size_t offset = 0;
@@ -34600,12 +34600,12 @@ extern "C" {
     /* Use the copy with the modified docstring if available */
     return found ? &SwigMethods_proxydocs[offset] : NULL;
   }
-  
+
   /* -----------------------------------------------------------------------------
    * Wrapper of PyInstanceMethod_New() used in Python 3
    * It is exported to the generated module, used for -fastproxy
    * ----------------------------------------------------------------------------- */
-  
+
   SWIGINTERN PyObject *SWIG_PyInstanceMethod_New(PyObject *SWIGUNUSEDPARM(self), PyObject *func) {
     if (PyCFunction_Check(func)) {
       PyCFunctionObject *funcobj = (PyCFunctionObject *)func;
@@ -34619,12 +34619,12 @@ extern "C" {
     return PyMethod_New(func, NULL, NULL);
 #endif
   }
-  
+
   /* -----------------------------------------------------------------------------
    * Wrapper of PyStaticMethod_New()
    * It is exported to the generated module, used for -fastproxy
    * ----------------------------------------------------------------------------- */
-  
+
   SWIGINTERN PyObject *SWIG_PyStaticMethod_New(PyObject *SWIGUNUSEDPARM(self), PyObject *func) {
     if (PyCFunction_Check(func)) {
       PyCFunctionObject *funcobj = (PyCFunctionObject *)func;
@@ -34634,7 +34634,7 @@ extern "C" {
     }
     return PyStaticMethod_New(func);
   }
-  
+
 #ifdef __cplusplus
 }
 #endif
@@ -34647,7 +34647,7 @@ extern "C" {
 extern "C"
 #endif
 
-SWIGEXPORT 
+SWIGEXPORT
 #if PY_VERSION_HEX >= 0x03000000
 PyObject*
 #else
@@ -34655,7 +34655,7 @@ void
 #endif
 SWIG_init(void) {
   PyObject *m, *d, *md, *globals;
-  
+
 #if PY_VERSION_HEX >= 0x03000000
   static struct PyModuleDef SWIG_module = {
     PyModuleDef_HEAD_INIT,
@@ -34669,7 +34669,7 @@ SWIG_init(void) {
     NULL
   };
 #endif
-  
+
 #if defined(SWIGPYTHON_BUILTIN)
   static SwigPyClientData SwigPyObject_clientdata = {
     0, 0, 0, 0, 0, 0, 0
@@ -34697,21 +34697,21 @@ SWIG_init(void) {
   PyObject *thisown_descr;
   PyObject *self = 0;
   int i;
-  
+
   (void)builtin_pytype;
   (void)builtin_base_count;
   (void)builtin_basetype;
   (void)tuple;
   (void)static_getset;
   (void)self;
-  
+
   /* Metaclass is used to implement static member variables */
   metatype = SwigPyObjectType();
   assert(metatype);
 #endif
-  
+
   (void)globals;
-  
+
   /* Create singletons now to avoid potential deadlocks with multi-threaded usage after module initialization */
   SWIG_This();
   SWIG_Python_TypeCache();
@@ -34719,24 +34719,24 @@ SWIG_init(void) {
 #ifndef SWIGPYTHON_BUILTIN
   SwigPyObject_type();
 #endif
-  
+
   /* Fix SwigMethods to carry the callback ptrs when needed */
   SWIG_Python_FixMethods(SwigMethods, swig_const_table, swig_types, swig_type_initial);
-  
+
 #if PY_VERSION_HEX >= 0x03000000
   m = PyModule_Create(&SWIG_module);
 #else
   m = Py_InitModule(SWIG_name, SwigMethods);
 #endif
-  
+
   md = d = PyModule_GetDict(m);
   (void)md;
-  
+
   SWIG_InitializeModule(0);
-  
+
 #ifdef SWIGPYTHON_BUILTIN
   swigpyobject = SwigPyObject_TypeOnce();
-  
+
   SwigPyObject_stype = SWIG_MangledTypeQuery("_p_SwigPyObject");
   assert(SwigPyObject_stype);
   cd = (SwigPyClientData*) SwigPyObject_stype->clientdata;
@@ -34751,19 +34751,19 @@ SWIG_init(void) {
     return;
 # endif
   }
-  
+
   /* All objects have a 'this' attribute */
   this_descr = PyDescr_NewGetSet(SwigPyObject_type(), &this_getset_def);
   (void)this_descr;
-  
+
   /* All objects have a 'thisown' attribute */
   thisown_descr = PyDescr_NewGetSet(SwigPyObject_type(), &thisown_getset_def);
   (void)thisown_descr;
-  
+
   public_interface = PyList_New(0);
   public_symbol = 0;
   (void)public_symbol;
-  
+
   PyDict_SetItemString(md, "__all__", public_interface);
   Py_DECREF(public_interface);
   for (i = 0; SwigMethods[i].ml_name != NULL; ++i)
@@ -34771,16 +34771,16 @@ SWIG_init(void) {
   for (i = 0; swig_const_table[i].name != 0; ++i)
   SwigPyBuiltin_AddPublicSymbol(public_interface, swig_const_table[i].name);
 #endif
-  
+
   SWIG_InstallConstants(d,swig_const_table);
-  
-  
+
+
   // thread safe initialization
   swig::container_owner_attribute();
-  
-  
+
+
   import_array();
-  
+
   globals = SWIG_globals();
   if (!globals) {
     PyErr_SetString(PyExc_TypeError, "Failure to create SWIG globals.");
@@ -34808,7 +34808,7 @@ SWIG_init(void) {
   SWIG_Python_SetConstant(d, "EMDPairsStorage_FullSymmetric",SWIG_From_int(static_cast< int >(wasserstein::EMDPairsStorage::FullSymmetric)));
   SWIG_Python_SetConstant(d, "EMDPairsStorage_FlattenedSymmetric",SWIG_From_int(static_cast< int >(wasserstein::EMDPairsStorage::FlattenedSymmetric)));
   SWIG_Python_SetConstant(d, "EMDPairsStorage_External",SWIG_From_int(static_cast< int >(wasserstein::EMDPairsStorage::External)));
-  
+
   /* Initialize threading */
   SWIG_PYTHON_INITIALIZE_THREADS;
 #if PY_VERSION_HEX >= 0x03000000
@@ -34817,4 +34817,3 @@ SWIG_init(void) {
   return;
 #endif
 }
-

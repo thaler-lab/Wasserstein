@@ -35,7 +35,7 @@ public:
   EventProducer(long num_events, unsigned print_every, EventType event_type = All) :
     num_events_(num_events),
     print_every_(print_every),
-    iEvent_(0), 
+    iEvent_(0),
     iAccept_(0),
     event_type_(event_type),
     start_(std::chrono::steady_clock::now()),
@@ -61,7 +61,7 @@ public:
   // advances the internals to the next event
   virtual bool next() = 0;
   void reset() { iEvent_ = 0; iAccept_ = 0; }
-  
+
   // accessor functions
   const std::vector<Particle> & particles() const { return particles_; }
   double weight() const { return weight_; }

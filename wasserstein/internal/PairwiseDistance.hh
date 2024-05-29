@@ -12,32 +12,32 @@
 //   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon
 //
 // Copyright (C) 2019-2022 Patrick T. Komiske III
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
-/*  _____        _____ _______          _______  _____ ______ 
+/*  _____        _____ _______          _______  _____ ______
  * |  __ \ /\   |_   _|  __ \ \        / /_   _|/ ____|  ____|
- * | |__) /  \    | | | |__) \ \  /\  / /  | | | (___ | |__   
- * |  ___/ /\ \   | | |  _  / \ \/  \/ /   | |  \___ \|  __|  
- * | |  / ____ \ _| |_| | \ \  \  /\  /   _| |_ ____) | |____ 
+ * | |__) /  \    | | | |__) \ \  /\  / /  | | | (___ | |__
+ * |  ___/ /\ \   | | |  _  / \ \/  \/ /   | |  \___ \|  __|
+ * | |  / ____ \ _| |_| | \ \  \  /\  /   _| |_ ____) | |____
  * |_| /_/    \_\_____|_|  \_\  \/  \/   |_____|_____/|______|
- *  _____ _____  _____ _______       _   _  _____ ______ 
+ *  _____ _____  _____ _______       _   _  _____ ______
  * |  __ \_   _|/ ____|__   __|/\   | \ | |/ ____|  ____|
- * | |  | || | | (___    | |  /  \  |  \| | |    | |__   
- * | |  | || |  \___ \   | | / /\ \ | . ` | |    |  __|  
- * | |__| || |_ ____) |  | |/ ____ \| |\  | |____| |____ 
+ * | |  | || | | (___    | |  /  \  |  \| | |    | |__
+ * | |  | || |  \___ \   | | / /\ \ | . ` | |    |  __|
+ * | |__| || |_ ____) |  | |/ ____ \| |\  | |____| |____
  * |_____/_____|_____/   |_/_/    \_\_| \_|\_____|______|
  */
 
@@ -69,7 +69,7 @@ public:
 
     // check that we properly have passed a derived class (must be here because derived class is incomplete)
     static_assert(std::is_base_of<PairwiseDistanceBase<PairwiseDistance, ParticleCollection, Value>,
-                                  PairwiseDistance>::value, 
+                                  PairwiseDistance>::value,
                   "Template parameter must be a derived class of PairwiseDistanceBase.");
   }
 
@@ -78,7 +78,7 @@ public:
     PairwiseDistanceBase()
   {
     set_R(R);
-    set_beta(beta);    
+    set_beta(beta);
   }
 
   // description of class

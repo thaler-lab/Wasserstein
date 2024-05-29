@@ -10,18 +10,18 @@
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link href="../../css/eftheme.css" rel="stylesheet" />
         <link href="../../css/pygmentize_friendly.css" rel="stylesheet" />
-    
+
       <script>
         // Current page data
         var mkdocs_page_name = "Utils";
         var mkdocs_page_input_path = "docs/utils.md";
         var mkdocs_page_url = "/Wasserstein/docs/utils/";
       </script>
-    
+
     <script src="../../js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
       <script src="../../js/html5shiv.min.js"></script>
-    <![endif]--> 
+    <![endif]-->
       <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -31,7 +31,7 @@
         ga('create', 'UA-122962541-3', 'Wasserstein');
         ga('send', 'pageview');
       </script>
-    
+
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -114,7 +114,7 @@
       <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../..">Wasserstein</a>
-        
+
       </nav>
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
@@ -129,7 +129,7 @@
 
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
-              
+
                 <h1 id="utils">Utils</h1>
 <hr />
 <h2 id="python">Python</h2>
@@ -154,7 +154,7 @@
 <p>Throws a <code>std::runtime_error</code> with a descriptive message if <code>status</code> is not <code>EMDStatus::Success</code>.</p>
 <h3 id="emdstatus">EMDStatus</h3>
 <p>Used to indicate the result of running the network simplex algorithm.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">enum</span> <span class="k">class</span> <span class="nc">wasserstein</span><span class="o">::</span><span class="nl">EMDStatus</span> <span class="p">:</span> <span class="kt">char</span> <span class="p">{</span> 
+<div class="codehilite"><pre><span></span><code><span class="k">enum</span> <span class="k">class</span> <span class="nc">wasserstein</span><span class="o">::</span><span class="nl">EMDStatus</span> <span class="p">:</span> <span class="kt">char</span> <span class="p">{</span>
   <span class="n">Success</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
   <span class="n">Empty</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
   <span class="n">SupplyMismatch</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
@@ -185,7 +185,7 @@
 
 <h3 id="centerweightedcentroid">CenterWeightedCentroid</h3>
 <p>Not normally instantiated directly. Used with the templated <code>preprocess</code> method of the <code>EMD</code> and <code>PairwiseEMD</code> classes to adjust all particles so that the weighted centroid is located at the origin.</p>
-              
+
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
@@ -201,7 +201,7 @@
 
   Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-          
+
         </div>
       </div>
 
@@ -211,15 +211,15 @@
 
   <div class="rst-versions" role="note" aria-label="Versions">
   <span class="rst-current-version" data-toggle="rst-current-version">
-    
+
         <span>
           <a href="https://github.com/pkomiske/Wasserstein/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
-    
-    
+
+
       <span><a href="../pairwisedistance/" style="color: #fcfcfc">&laquo; Previous</a></span>
-    
-    
+
+
   </span>
 </div>
     <script>var base_url = '../..';</script>
