@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Patrick T. Komiske III" /><link rel="canonical" href="https://pkomiske.github.io/Wasserstein/installation/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Patrick T. Komiske III" /><link rel="canonical" href="https://thaler-lab.github.io/Wasserstein/installation/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
     <title>Installation - Wasserstein</title>
     <link rel="stylesheet" href="../css/theme.css" />
@@ -129,11 +129,11 @@
 </code></pre></div>
 
 <h3 id="install-from-python-source">Install from Python source</h3>
-<p>The only reason to bother with the source code when using Wasserstein in Python is if one wants to develop some feature in the package. The Wasserstein source code can be obtained from <a href="https://github.com/pkomiske/Wasserstein">GitHub</a>. Running <code>python3 setup.py swig</code> (which requires the <code>swig</code> binary to be available on the path) will regenerate the Python wrapper code. Running <code>python3 setup.py build_ext --inplace</code> will compile the library, and <code>pip3 install -e .</code> will install a development version pointing to the current directory.</p>
+<p>The only reason to bother with the source code when using Wasserstein in Python is if one wants to develop some feature in the package. The Wasserstein source code can be obtained from <a href="https://github.com/thaler-lab/Wasserstein">GitHub</a>. Running <code>python3 setup.py swig</code> (which requires the <code>swig</code> binary to be available on the path) will regenerate the Python wrapper code. Running <code>python3 setup.py build_ext --inplace</code> will compile the library, and <code>pip3 install -e .</code> will install a development version pointing to the current directory.</p>
 <h2 id="c">C++</h2>
-<p>The Wasserstein source code can be obtained from <a href="https://github.com/pkomiske/Wasserstein">GitHub</a>. Since the library is header-only, no compilation is required to install it. The provided <code>install_wasserstein.sh</code> script can be used (on a UNIX-like system, at least) to move the requisite header files to an appropriate location such as <code>/usr/local/include</code>. If your system does not have the <a href="https://www.boost.org/">Boost libraries</a> (version 1.70.0 or newer is required to access the histogram package) available, set the second argument to <code>true</code> in order to use the provided <a href="https://www.boost.org/doc/libs/1_74_0/libs/histogram/doc/html/index.html">Boost Histogram</a> header files.</p>
+<p>The Wasserstein source code can be obtained from <a href="https://github.com/thaler-lab/Wasserstein">GitHub</a>. Since the library is header-only, no compilation is required to install it. The provided <code>install_wasserstein.sh</code> script can be used (on a UNIX-like system, at least) to move the requisite header files to an appropriate location such as <code>/usr/local/include</code>. If your system does not have the <a href="https://www.boost.org/">Boost libraries</a> (version 1.70.0 or newer is required to access the histogram package) available, set the second argument to <code>true</code> in order to use the provided <a href="https://www.boost.org/doc/libs/1_74_0/libs/histogram/doc/html/index.html">Boost Histogram</a> header files.</p>
 <p>Try the following in order to move the Wasserstein header files to an installed location, in this case <code>/usr/local/include</code>:</p>
-<div class="codehilite"><pre><span></span><code>git clone https://github.com/pkomiske/Wasserstein
+<div class="codehilite"><pre><span></span><code>git clone https://github.com/thaler-lab/Wasserstein
 <span class="nb">cd</span> Wasserstein
 chmod +x install_wasserstein.sh
 ./install_wasserstein /usr/local <span class="nb">false</span>
@@ -167,7 +167,7 @@ chmod +x install_wasserstein.sh
   <span class="rst-current-version" data-toggle="rst-current-version">
     
         <span>
-          <a href="https://github.com/pkomiske/Wasserstein/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/thaler-lab/Wasserstein/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
     
