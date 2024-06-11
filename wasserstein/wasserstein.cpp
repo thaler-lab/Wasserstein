@@ -3888,7 +3888,7 @@ namespace swig {
         size_t replacecount = (jj - ii + step - 1) / step;
         if (is.size() != replacecount) {
           char msg[1024];
-          sprintf(msg, "attempt to assign sequence of size %lu to extended slice of size %lu", (unsigned long)is.size(), (unsigned long)replacecount);
+          snprintf(msg, sizeof(msg), "attempt to assign sequence of size %lu to extended slice of size %lu", (unsigned long)is.size(), (unsigned long)replacecount);
           throw std::invalid_argument(msg);
         }
         typename Sequence::const_iterator isit = is.begin();
@@ -3904,7 +3904,7 @@ namespace swig {
       size_t replacecount = (ii - jj - step - 1) / -step;
       if (is.size() != replacecount) {
         char msg[1024];
-        sprintf(msg, "attempt to assign sequence of size %lu to extended slice of size %lu", (unsigned long)is.size(), (unsigned long)replacecount);
+        snprintf(msg, sizeof(msg), "attempt to assign sequence of size %lu to extended slice of size %lu", (unsigned long)is.size(), (unsigned long)replacecount);
         throw std::invalid_argument(msg);
       }
       typename Sequence::const_iterator isit = is.begin();
@@ -4244,7 +4244,7 @@ namespace swig
 	return swig::as<T>(item);
       } catch (const std::invalid_argument& e) {
 	char msg[1024];
-	sprintf(msg, "in sequence element %d ", (int)_index);
+	snprintf(msg, sizeof(msg), "in sequence element %d ", (int)_index);
 	if (!PyErr_Occurred()) {
 	  ::SWIG_Error(SWIG_TypeError,  swig::type_name<T>());
 	}
@@ -5968,10 +5968,10 @@ SWIGINTERN void wasserstein_PairwiseEMDBase_Sl_double_Sg__raw_emds(wasserstein::
     {
       for (i = 0; i < n-1; i++)
       {
-        sprintf(s, "%d, ", exact_dimensions[i]);
+        snprintf(s, sizeof(s), "%d, ", exact_dimensions[i]);
         strcat(dims_str,s);
       }
-      sprintf(s, " or %d", exact_dimensions[n-1]);
+      snprintf(s, sizeof(s), " or %d", exact_dimensions[n-1]);
       strcat(dims_str,s);
       PyErr_Format(PyExc_TypeError,
                    "Array must have %s dimensions.  Given array has %d dimensions",
@@ -6008,11 +6008,11 @@ SWIGINTERN void wasserstein_PairwiseEMDBase_Sl_double_Sg__raw_emds(wasserstein::
       {
         if (size[i] == -1)
         {
-          sprintf(s, "*,");
+          snprintf(s, sizeof(s), "*,");
         }
         else
         {
-          sprintf(s, "%ld,", (long int)size[i]);
+          snprintf(s, sizeof(s), "%ld,", (long int)size[i]);
         }
         strcat(desired_dims,s);
       }
@@ -6020,7 +6020,7 @@ SWIGINTERN void wasserstein_PairwiseEMDBase_Sl_double_Sg__raw_emds(wasserstein::
       desired_dims[len-1] = ']';
       for (i = 0; i < n; i++)
       {
-        sprintf(s, "%ld,", (long int)array_size(ary,i));
+        snprintf(s, sizeof(s), "%ld,", (long int)array_size(ary,i));
         strcat(actual_dims,s);
       }
       len = strlen(actual_dims);

@@ -88,14 +88,14 @@ public:
 
         char buffer[ 16 ];
 
-        std::sprintf( buffer, ":%lu", ln );
+        std::snprintf( buffer, sizeof(buffer), ":%lu", ln );
         r += buffer;
 
         unsigned long co = column();
 
         if( co )
         {
-            std::sprintf( buffer, ":%lu", co );
+            std::snprintf( buffer, sizeof(buffer), ":%lu", co );
             r += buffer;
         }
 
