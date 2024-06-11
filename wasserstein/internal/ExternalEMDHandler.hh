@@ -12,32 +12,32 @@
 //   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon
 //
 // Copyright (C) 2019-2022 Patrick T. Komiske III
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
-/*  ________   _________ ______ _____  _   _          _      
- * |  ____\ \ / /__   __|  ____|  __ \| \ | |   /\   | |     
- * | |__   \ V /   | |  | |__  | |__) |  \| |  /  \  | |     
- * |  __|   > <    | |  |  __| |  _  /| . ` | / /\ \ | |     
- * | |____ / . \   | |  | |____| | \ \| |\  |/ ____ \| |____ 
+/*  ________   _________ ______ _____  _   _          _
+ * |  ____\ \ / /__   __|  ____|  __ \| \ | |   /\   | |
+ * | |__   \ V /   | |  | |__  | |__) |  \| |  /  \  | |
+ * |  __|   > <    | |  |  __| |  _  /| . ` | / /\ \ | |
+ * | |____ / . \   | |  | |____| | \ \| |\  |/ ____ \| |____
  * |______/_/ \_\  |_|  |______|_|  \_\_| \_/_/    \_\______|
- *  ______ __  __ _____  _    _          _   _ _____  _      ______ _____  
- * |  ____|  \/  |  __ \| |  | |   /\   | \ | |  __ \| |    |  ____|  __ \ 
+ *  ______ __  __ _____  _    _          _   _ _____  _      ______ _____
+ * |  ____|  \/  |  __ \| |  | |   /\   | \ | |  __ \| |    |  ____|  __ \
  * | |__  | \  / | |  | | |__| |  /  \  |  \| | |  | | |    | |__  | |__) |
- * |  __| | |\/| | |  | |  __  | / /\ \ | . ` | |  | | |    |  __| |  _  / 
- * | |____| |  | | |__| | |  | |/ ____ \| |\  | |__| | |____| |____| | \ \ 
+ * |  __| | |\/| | |  | |  __  | / /\ \ | . ` | |  | | |    |  __| |  _  /
+ * | |____| |  | | |__| | |  | |/ ____ \| |\  | |__| | |____| |____| | \ \
  * |______|_|  |_|_____/|_|  |_/_/    \_\_| \_|_____/|______|______|_|  \_\
  */
 
@@ -106,7 +106,7 @@ public:
 
   // call emd handler on several emds at once (given as raw pointers)
   void evaluate(const Value * emds, std::size_t num_emds, const Value * weights = nullptr, std::size_t nA = 0, std::size_t nB = 0) {
-    
+
     std::lock_guard<std::mutex> handler_guard(mutex_);
     if (weights == nullptr) {
       for (std::size_t k = 0; k < num_emds; k++)
@@ -148,21 +148,21 @@ public:
   // here, weights are length nev and emds are length nev(nev-1)/2, given as raw pointers
   // note that emds must be upper triangular without the diagonal
   void evaluate_symmetric(const Value * emds, std::size_t nev, const Value * weights, bool upper_triangular = true) {
-    
+
     std::lock_guard<std::mutex> handler_guard(mutex_);
     std::size_t k(0);
     if (upper_triangular) {
       for (std::size_t i = 0; i < nev; i++) {
         for (std::size_t j = i + 1; j < nev; j++, k++)
           handle(emds[k], weights[i] * weights[j]);
-      } 
+      }
     }
 
     else {
       for (std::size_t i = 0; i < nev; i++) {
         for (std::size_t j = 0; j < i; j++, k++)
           handle(emds[k], weights[i] * weights[j]);
-      }  
+      }
     }
 
     if (k != nev*(nev - 1)/2)
@@ -172,7 +172,7 @@ public:
 
 protected:
 
-  virtual void handle(Value emd, Value weight) = 0; 
+  virtual void handle(Value emd, Value weight) = 0;
 
 private:
 

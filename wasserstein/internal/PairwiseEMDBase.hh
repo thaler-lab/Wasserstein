@@ -12,32 +12,32 @@
 //   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon
 //
 // Copyright (C) 2019-2022 Patrick T. Komiske III
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
-/*  _____        _____ _______          _______  _____ ______ 
+/*  _____        _____ _______          _______  _____ ______
  * |  __ \ /\   |_   _|  __ \ \        / /_   _|/ ____|  ____|
- * | |__) /  \    | | | |__) \ \  /\  / /  | | | (___ | |__   
- * |  ___/ /\ \   | | |  _  / \ \/  \/ /   | |  \___ \|  __|  
- * | |  / ____ \ _| |_| | \ \  \  /\  /   _| |_ ____) | |____ 
+ * | |__) /  \    | | | |__) \ \  /\  / /  | | | (___ | |__
+ * |  ___/ /\ \   | | |  _  / \ \/  \/ /   | |  \___ \|  __|
+ * | |  / ____ \ _| |_| | \ \  \  /\  /   _| |_ ____) | |____
  * |_| /_/    \_\_____|_|  \_\  \/  \/   |_____|_____/|______|
- *  ______ __  __ _____  ____           _____ ______ 
+ *  ______ __  __ _____  ____           _____ ______
  * |  ____|  \/  |  __ \|  _ \   /\    / ____|  ____|
- * | |__  | \  / | |  | | |_) | /  \  | (___ | |__   
- * |  __| | |\/| | |  | |  _ < / /\ \  \___ \|  __|  
- * | |____| |  | | |__| | |_) / ____ \ ____) | |____ 
+ * | |__  | \  / | |  | | |_) | /  \  | (___ | |__
+ * |  __| | |\/| | |  | |  _ < / /\ \  \___ \|  __|
+ * | |____| |  | | |__| | |_) / ____ \ ____) | |____
  * |______|_|  |_|_____/|____/_/    \_\_____/|______|
  */
 
@@ -74,7 +74,7 @@ protected:
   unsigned verbose_, omp_dynamic_chunksize_;
   bool request_mode_, store_sym_emds_raw_, throw_on_error_;
   std::ostream * print_stream_;
-  
+
   // variables initialized in/by constructor
   ExternalEMDHandler<Value> * handler_;
 

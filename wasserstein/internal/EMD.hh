@@ -12,22 +12,22 @@
 //   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon
 //
 // Copyright (C) 2019-2022 Patrick T. Komiske III
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
-/*  ______ __  __ _____  
+/*  ______ __  __ _____
  * |  ____|  \/  |  __ \
  * | |__  | \  / | |  | |
  * |  __| | |\/| | |  | |
@@ -87,12 +87,12 @@ public:
   // typedef base class and self
   typedef EMDBase<Value> Base;
   typedef EMD<Value, _Event, _PairwiseDistance, _NetworkSimplex> Self;
-  
+
   // gives PairwiseEMD access to private members
   template<class T, typename V>
   friend class PairwiseEMD;
 
-  // check that value_type has been consistently defined 
+  // check that value_type has been consistently defined
   static_assert(std::is_same<Value, typename Event::value_type>::value,
                 "WeightCollection and NetworkSimplex should have the same value_type.");
   static_assert(std::is_same<Value, typename PairwiseDistance::value_type>::value,
@@ -109,7 +109,7 @@ public:
                 "Second EMD template parameter should be derived from PairwiseDistanceBase<...>.");
   static_assert(std::is_base_of<WASSERSTEIN_NAMESPACE::NetworkSimplex<
                                                        typename NetworkSimplex::Value,
-                                                       typename NetworkSimplex::Arc, 
+                                                       typename NetworkSimplex::Arc,
                                                        typename NetworkSimplex::Node,
                                                        typename NetworkSimplex::Bool>,
                                 NetworkSimplex>::value,
@@ -302,11 +302,11 @@ private:
                               network_simplex().dists().begin() + n0()*n1());
   }
 
-  // returns all flows 
+  // returns all flows
   std::vector<Value> flows() const {
 
     // copy flows in the valid range
-    std::vector<Value> unscaled_flows(network_simplex().flows().begin(), 
+    std::vector<Value> unscaled_flows(network_simplex().flows().begin(),
                                       network_simplex().flows().begin() + n0()*n1());
     // unscale all values
     for (Value & f: unscaled_flows)
@@ -331,7 +331,7 @@ private:
 
   // "raw" access to EMD flow
   Value flow(std::size_t ind) const {
-    return network_simplex_.flows()[ind] * scale(); 
+    return network_simplex_.flows()[ind] * scale();
   }
 
   // access number of iterations of the network simplex solver
@@ -386,7 +386,7 @@ private:
     if(preprocessors_.size()) {
       oss << "\n  Preprocessors:\n";
       for (const auto & preproc : preprocessors_)
-        oss << "    - " << preproc->description() << '\n';  
+        oss << "    - " << preproc->description() << '\n';
     }
   }
 

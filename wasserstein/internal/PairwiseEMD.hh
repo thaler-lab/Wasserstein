@@ -12,28 +12,28 @@
 //   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon
 //
 // Copyright (C) 2019-2022 Patrick T. Komiske III
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
-/*  _____        _____ _______          _______  _____ ______ 
+/*  _____        _____ _______          _______  _____ ______
  * |  __ \ /\   |_   _|  __ \ \        / /_   _|/ ____|  ____|
- * | |__) /  \    | | | |__) \ \  /\  / /  | | | (___ | |__   
- * |  ___/ /\ \   | | |  _  / \ \/  \/ /   | |  \___ \|  __|  
- * | |  / ____ \ _| |_| | \ \  \  /\  /   _| |_ ____) | |____ 
+ * | |__) /  \    | | | |__) \ \  /\  / /  | | | (___ | |__
+ * |  ___/ /\ \   | | |  _  / \ \/  \/ /   | |  \___ \|  __|
+ * | |  / ____ \ _| |_| | \ \  \  /\  /   _| |_ ____) | |____
  * |_| /_/    \_\_____|_|  \_\  \/  \/   |_____|_____/|______|
- *   ______ __  __ _____  
+ *   ______ __  __ _____
  * |  ____|  \/  |  __ \
  * | |__  | \  / | |  | |
  * |  __| | |\/| | |  | |
@@ -193,8 +193,8 @@ public:
         << "  omp_dynamic_chunksize - " << this->omp_dynamic_chunksize() << '\n'
         << '\n'
         << (this->handler_ ? this->handler_->description() : "  Pairwise EMD distance matrix stored internally\n");
-      
-    // this will not print preprocessors if there aren't any  
+
+    // this will not print preprocessors if there aren't any
     emd_objs_[0].output_preprocessors(oss);
 
     return oss.str();
@@ -368,7 +368,7 @@ private:
     this->num_emds_ = nevA * nevB;
     if (!this->have_external_emd_handler() && !this->request_mode()) {
       this->emd_storage_ = EMDPairsStorage::Full;
-      this->emds_.resize(num_emds());  
+      this->emds_.resize(num_emds());
     }
 
     // reserve space for events
@@ -425,7 +425,7 @@ private:
 
             if (this->emd_storage_ == EMDPairsStorage::External)
               (*(this->handler_))(emd_obj.emd(), eventA.event_weight() * eventB.event_weight());
-            else this->emds_[k] = emd_obj.emd(); 
+            else this->emds_[k] = emd_obj.emd();
           }
           else {
 
@@ -478,7 +478,7 @@ private:
   }
 
   Value _evaluate_emd(index_type i, index_type j, int thread) {
-    
+
     // run and check for failure
     const Event & eventA(events_[i]), & eventB(events_[two_event_sets_ ? nevA() + j : j]);
     check_emd_status(emd_objs_[thread].compute(eventA, eventB));
@@ -550,7 +550,7 @@ private:
            << std::setw(num_emds_width) << num_emds() << "  EMDs computed  - "
            << std::setprecision(2) << std::setw(6) << double(emd_counter_)/num_emds()*100
            << "% completed - "
-           << std::setprecision(3) << emd_objs_[0].store_duration() << 's';  
+           << std::setprecision(3) << emd_objs_[0].store_duration() << 's';
     }
 
     // acquire Python GIL if in SWIG in order to check for signals and print message

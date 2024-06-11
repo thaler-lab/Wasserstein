@@ -12,39 +12,39 @@
 //   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon
 //
 // Copyright (C) 2019-2022 Patrick T. Komiske III
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
-/*   _____ ______ _   _ _______ ______ _____  
- *  / ____|  ____| \ | |__   __|  ____|  __ \ 
+/*   _____ ______ _   _ _______ ______ _____
+ *  / ____|  ____| \ | |__   __|  ____|  __ \
  * | |    | |__  |  \| |  | |  | |__  | |__) |
- * | |    |  __| | . ` |  | |  |  __| |  _  / 
- * | |____| |____| |\  |  | |  | |____| | \ \ 
+ * | |    |  __| | . ` |  | |  |  __| |  _  /
+ * | |____| |____| |\  |  | |  | |____| | \ \
  *  \_____|______|_| \_|  |_|  |______|_|  \_\
- * __          ________ _____ _____ _    _ _______ ______ _____  
- * \ \        / /  ____|_   _/ ____| |  | |__   __|  ____|  __ \ 
+ * __          ________ _____ _____ _    _ _______ ______ _____
+ * \ \        / /  ____|_   _/ ____| |  | |__   __|  ____|  __ \
  *  \ \  /\  / /| |__    | || |  __| |__| |  | |  | |__  | |  | |
  *   \ \/  \/ / |  __|   | || | |_ |  __  |  | |  |  __| | |  | |
  *    \  /\  /  | |____ _| || |__| | |  | |  | |  | |____| |__| |
- *     \/  \/   |______|_____\_____|_|  |_|  |_|  |______|_____/ 
- *   _____ ______ _   _ _______ _____   ____ _____ _____  
- *  / ____|  ____| \ | |__   __|  __ \ / __ \_   _|  __ \ 
+ *     \/  \/   |______|_____\_____|_|  |_|  |_|  |______|_____/
+ *   _____ ______ _   _ _______ _____   ____ _____ _____
+ *  / ____|  ____| \ | |__   __|  __ \ / __ \_   _|  __ \
  * | |    | |__  |  \| |  | |  | |__) | |  | || | | |  | |
  * | |    |  __| | . ` |  | |  |  _  /| |  | || | | |  | |
  * | |____| |____| |\  |  | |  | | \ \| |__| || |_| |__| |
- *  \_____|______|_| \_|  |_|  |_|  \_\\____/_____|_____/ 
+ *  \_____|______|_| \_|  |_|  |_|  \_\\____/_____|_____/
  */
 
 #ifndef WASSERSTEIN_CENTERWEIGHTEDCENTROID_HH
@@ -92,7 +92,7 @@ private:
     index_type k(0);
     for (const_iterator particle = event.particles().cbegin(), end = event.particles().cend();
          particle != end; ++particle) {
-      for (unsigned i = 0; i < dim; i++) 
+      for (unsigned i = 0; i < dim; i++)
         coords[i] += event.weights()[k] * (*particle)[i];
       k++;
     }

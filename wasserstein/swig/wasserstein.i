@@ -13,17 +13,17 @@
 //   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon
 //
 // Copyright (C) 2019-2022 Patrick T. Komiske III
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // astd::ptrdiff_t with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
@@ -118,7 +118,7 @@ def _store_events(pairwise_emd, events, event_weights, gdim, mask, dtype):
         # coords may be modified (e.g. by centering), so we always make a copy of them
         weights = np.array(event[:,0], dtype=dtype, order='C', copy=False)
         coords = np.array(event[:,1:], dtype=dtype, order='C', copy=True)
-        
+
         # ensure that the lifetime of these arrays lasts through the computation
         pairwise_emd.event_arrs.append((weights, coords))
 

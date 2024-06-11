@@ -1,5 +1,5 @@
 Wasserstein is licensed under the GPLv3 license, which is included below. The
-core algorithm of the library, the network simplex algorithm contained in 
+core algorithm of the library, the network simplex algorithm contained in
 NetworkSimplex.hh, is based on code from the LEMON graph library, which has
 been modified by Nicolas Boneel and subsequently Rémi Flamary. Their copyright
 notices appear after the GPLv3 text. Additionally, we use the Boost Histogram
@@ -736,7 +736,7 @@ Web: http://www.cs.ubc.ca/labs/imager/tr/2011/DisplacementInterpolation/
 Revisions:
 March 2015: added OpenMP parallelization
 March 2017: included Antoine Rolet's trick to make it more robust
-April 2018: IMPORTANT bug fix + uses 64bit integers (slightly slower but 
+April 2018: IMPORTANT bug fix + uses 64bit integers (slightly slower but
 less risks of overflows), updated to a newer version of the algo by LEMON,
 sparse flow by default + minor edits.
 
@@ -758,11 +758,11 @@ purpose.
 Copyright notice from full_bipartite.h
 --------------------------------------------------------------------------------
 
-This file has been adapted by Nicolas Bonneel (2013), 
+This file has been adapted by Nicolas Bonneel (2013),
 from full_graph.h from LEMON, a generic C++ optimization library,
 to implement a lightweight fully connected bipartite graph. A previous
-version of this file is used as part of the Displacement Interpolation 
-project, 
+version of this file is used as part of the Displacement Interpolation
+project,
 Web: http://www.cs.ubc.ca/labs/imager/tr/2011/DisplacementInterpolation/
 
 ** Original file Copyright Notice :

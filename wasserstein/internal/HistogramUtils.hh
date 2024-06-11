@@ -12,33 +12,33 @@
 //   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon
 //
 // Copyright (C) 2019-2022 Patrick T. Komiske III
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
 
-/*  _    _ _____  _____ _______ ____   _____ _____            __  __ 
+/*  _    _ _____  _____ _______ ____   _____ _____            __  __
  * | |  | |_   _|/ ____|__   __/ __ \ / ____|  __ \     /\   |  \/  |
  * | |__| | | | | (___    | | | |  | | |  __| |__) |   /  \  | \  / |
  * |  __  | | |  \___ \   | | | |  | | | |_ |  _  /   / /\ \ | |\/| |
  * | |  | |_| |_ ____) |  | | | |__| | |__| | | \ \  / ____ \| |  | |
  * |_|  |_|_____|_____/   |_|  \____/ \_____|_|  \_\/_/    \_\_|  |_|
- *  _    _ _______ _____ _       _____ 
+ *  _    _ _______ _____ _       _____
  * | |  | |__   __|_   _| |     / ____|
- * | |  | |  | |    | | | |    | (___  
- * | |  | |  | |    | | | |     \___ \ 
+ * | |  | |  | |    | | | |    | (___
+ * | |  | |  | |    | | | |     \___ \
  * | |__| |  | |   _| |_| |____ ____) |
- *  \____/   |_|  |_____|______|_____/ 
+ *  \____/   |_|  |_____|______|_____/
  */
 
 #ifndef WASSERSTEIN_HISTOGRAMUTILS_HH
@@ -236,7 +236,7 @@ public:
   operator+=(const Histogram1DHandler<Transform, Value> & other) {
     if (other.axis() != axis())
       throw std::invalid_argument("`other` does not have the same axis and so cannot be added");
-    
+
     hist() += other.hist();
     return *this;
   }
