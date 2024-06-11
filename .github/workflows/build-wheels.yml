@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - fix/windows-build-test-fails
 
 env:
   PYPI: 1
