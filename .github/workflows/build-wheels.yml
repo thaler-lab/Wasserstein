@@ -13,6 +13,7 @@ env:
   TWINE_PASSWORD_PYPI: ${{ secrets.TWINE_PASSWORD_PYPI }}
 
 jobs:
+<<<<<<< HEAD
   linux-test:
     runs-on: ubuntu-latest
     steps:
@@ -84,21 +85,16 @@ jobs:
       - name: Test package
         run: pytest tests
 
-  linux-build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-      - name: Build wheels and upload to PyPI
-        run: ./scripts/build-wheels-and-upload.sh sdist
-
-  macos-build:
-    runs-on: macos-13
+  builds:
+    name: ${{ matrix.os }} build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-13]
     steps:
       - name: Checkout LLVM on macOS
+        if: matrix.os == 'macos-13'
         uses: actions/checkout@v4
         with:
           repository: llvm/llvm-project
@@ -106,6 +102,7 @@ jobs:
           path: llvm-project
 
       - name: Build OpenMP on macOS
+        if: matrix.os == 'macos-13'
         env:
           MACOSX_DEPLOYMENT_TARGET: "10.9"
         working-directory: llvm-project
@@ -123,21 +120,15 @@ jobs:
 
       - name: Checkout Wasserstein
         uses: actions/checkout@v4
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-      - name: Build wheels and upload to PyPI
-        run: ./scripts/build-wheels-and-upload.sh
 
-  windows-build:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.9'
-      - name: Build wheels and upload to PyPI
-        shell: bash
-        run: ./scripts/build-wheels-and-upload.sh
+
+      - name: cibw-wheel
+        uses: pypa/cibuildwheel@v2.19
+
+      - name: Upload wheels to GH
+        uses: actions/upload-artifact@v4
+        path: wheelhouse/*.whl
