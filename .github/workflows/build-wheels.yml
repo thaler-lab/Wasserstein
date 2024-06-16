@@ -84,7 +84,6 @@ jobs:
 
   linux-build:
     runs-on: ubuntu-latest
-    needs: [linux-test, macos-test, windows-test]
     steps:
       - uses: actions/checkout@v3
       - name: Setup Python
@@ -96,7 +95,6 @@ jobs:
 
   macos-build:
     runs-on: macos-13
-    needs: [linux-test, macos-test, windows-test]
     steps:
       - name: Checkout LLVM on macOS
         uses: actions/checkout@v4
@@ -132,7 +130,6 @@ jobs:
 
   windows-build:
     runs-on: windows-latest
-    needs: [linux-test, macos-test, windows-test]
     steps:
       - uses: actions/checkout@v3
       - name: Setup Python
