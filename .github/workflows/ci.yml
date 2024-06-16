@@ -28,9 +28,9 @@ jobs:
         os: [ubuntu-latest]
         python-version: ['3.7', '3.8', '3.9', '3.10', '3.11']
         include:
-          - os: macos-latest
+          - os: macos-13
             python-version: '3.11'
-          - os: windows-latest
+          - os: windows-2019
             python-version: '3.11'
 
     steps:
@@ -43,7 +43,7 @@ jobs:
 
     # FIXME: Broken on modern libomp
     - name: Install libomp on macOS
-      if: matrix.os == 'macos-latest'
+      if: matrix.os == 'macos-13'
       run: |
         brew search libomp
         # brew install libomp

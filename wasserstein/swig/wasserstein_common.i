@@ -13,17 +13,17 @@
 //   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon
 //
 // Copyright (C) 2019-2022 Patrick T. Komiske III
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
@@ -49,7 +49,7 @@
 
 %{
 
-// include this to avoid needing to define it at compile time 
+// include this to avoid needing to define it at compile time
 #ifndef SWIG
 # define SWIG
 #endif
@@ -191,7 +191,7 @@ namespace WASSERSTEIN_NAMESPACE {
   void npy_flows(F** arr_out, std::ptrdiff_t* n0, std::ptrdiff_t* n1) {
     MALLOC_2D_VALUE_ARRAY($self->n0(), $self->n1(), F)
     memcpy(*arr_out, $self->raw_flows().data(), nbytes);
-    
+
     for (size_t i = 0; i < num_elements; i++)
       values[i] *= $self->scale();
   }
@@ -423,7 +423,7 @@ namespace WASSERSTEIN_NAMESPACE {
     // PairwiseEMDBase
     %extend PairwiseEMDBase<float> { PAIRWISEEMDBASE_NUMPY_FUNCS(float) }
     %template(PairwiseEMDBaseFloat32) PairwiseEMDBase<float>;
-    
+
     // ExternalEMDHandler
     %extend ExternalEMDHandler<float> { EXTERNAL_EMD_HANDLER_NUMPY_FUNCS(float) }
     %template(ExternalEMDHandlerFloat32) ExternalEMDHandler<float>;
@@ -437,7 +437,7 @@ namespace WASSERSTEIN_NAMESPACE {
       HISTOGRAM_1D_HANDLER_NUMPY_FUNCS(float)
     }
     %template(Histogram1DHandlerFloat32) Histogram1DHandler<boost::histogram::axis::transform::id, float>;
-    
+
     // CorrelationDimension
     %extend CorrelationDimension<float> { CORRELATION_DIMENSION_NUMPY_FUNCS(float) }
     %template(CorrelationDimensionFloat32) CorrelationDimension<float>;

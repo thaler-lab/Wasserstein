@@ -15,17 +15,17 @@
 //   - LEMON graph library https://lemon.cs.elte.hu/trac/lemon
 //
 // Copyright (C) 2019-2022 Patrick T. Komiske III
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------
@@ -69,7 +69,7 @@ SOFTWARE.
 * Revisions:
 * March 2015: added OpenMP parallelization
 * March 2017: included Antoine Rolet's trick to make it more robust
-* April 2018: IMPORTANT bug fix + uses 64bit integers (slightly slower but 
+* April 2018: IMPORTANT bug fix + uses 64bit integers (slightly slower but
 * less risks of overflows), updated to a newer version of the algo by LEMON,
 * sparse flow by default + minor edits.
 *
@@ -93,13 +93,13 @@ SOFTWARE.
 // Copyright notice from full_bipartite.h
 /* -*- mode: C++; indent-tabs-mode: nil; -*-
  *
- * This file has been adapted by Nicolas Bonneel (2013), 
+ * This file has been adapted by Nicolas Bonneel (2013),
  * from full_graph.h from LEMON, a generic C++ optimization library,
  * to implement a lightweight fully connected bipartite graph. A previous
- * version of this file is used as part of the Displacement Interpolation 
- * project, 
+ * version of this file is used as part of the Displacement Interpolation
+ * project,
  * Web: http://www.cs.ubc.ca/labs/imager/tr/2011/DisplacementInterpolation/
- * 
+ *
  *
  **** Original file Copyright Notice :
  * Copyright (C) 2003-2010
@@ -302,7 +302,7 @@ private:
   //---------------------------------------------------------------------------
   // Data storage
   //---------------------------------------------------------------------------
-  
+
   // constructor parameters
   std::size_t n_iter_max_, n_iter_;
   Value epsilon_large_, epsilon_small_;
@@ -694,7 +694,7 @@ private:
 
   // Update the tree structure
   void updateTreeStructure() {
-    Node w, u(last_succs_[u_in_]), oldrev_threads_(rev_threads_[u_out_]), 
+    Node w, u(last_succs_[u_in_]), oldrev_threads_(rev_threads_[u_out_]),
          oldsucc_nums_(succ_nums_[u_out_]), oldlast_succs_(last_succs_[u_out_]),
          right(threads_[u]), stem(u_in_), par_stem(v_in_), new_stem, last;
     v_out_ = parents_[u_out_];
@@ -775,7 +775,7 @@ private:
     if (join_ != oldrev_threads_ && v_in_ != oldrev_threads_)
       for (u = v_out_; u != up_limit_out && last_succs_[u] == oldlast_succs_; u = parents_[u])
         last_succs_[u] = oldrev_threads_;
-    else 
+    else
       for (u = v_out_; u != up_limit_out && last_succs_[u] == oldlast_succs_; u = parents_[u])
         last_succs_[u] = last_succs_[u_out_];
 

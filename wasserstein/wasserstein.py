@@ -224,7 +224,7 @@ class pairVectorDouble(object):
         return 2
     def __repr__(self):
         return str((self.first, self.second))
-    def __getitem__(self, index): 
+    def __getitem__(self, index):
         if not (index % 2):
             return self.first
         else:
@@ -310,7 +310,7 @@ class pairVectorFloat(object):
         return 2
     def __repr__(self):
         return str((self.first, self.second))
-    def __getitem__(self, index): 
+    def __getitem__(self, index):
         if not (index % 2):
             return self.first
         else:
@@ -1174,6 +1174,3 @@ def PairwiseEMDYPhi(*args, **kwargs):
         return PairwiseEMDYPhiFloat32(*args, **kwargs)
     else:
       raise TypeError('`dtype` {} not supported'.format(dtype))
-
-
-

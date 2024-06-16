@@ -1,8 +1,8 @@
 //  This file was automatically generated on Thu Feb  3 18:10:41 2022
 //  by libs/config/tools/generate.cpp
 //  Copyright John Maddock 2002-21.
-//  Use, modification and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
+//  Use, modification and distribution are subject to the
+//  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/config for the most recent version.//
@@ -199,4 +199,3 @@
    || defined(BOOST_NO_CXX20_HDR_VERSION)
 #    define BOOST_NO_CXX20
 #endif
-
