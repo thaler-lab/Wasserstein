@@ -31,13 +31,11 @@ jobs:
   macos-test:
     runs-on: macos-13
     steps:
-      - uses: actions/checkout@v3
       - name: Checkout LLVM on MacOS
         uses: actions/checkout@v4
         with:
           repository: llvm/llvm-project
           ref: release/18.x
-
       - name: Build OpenMP on MacOS
         run: |
           cd /Users/runner/work/Wasserstein/Wasserstein/openmp
@@ -46,7 +44,6 @@ jobs:
           cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$(brew --prefix) -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DLIBOMP_INSTALL_ALIASES=OFF /Users/runner/work/Wasserstein/Wasserstein/openmp
           make
           make install
-
       - name: Checkout Wasserstein
         uses: actions/checkout@v4
       - name: Setup Python
@@ -93,7 +90,21 @@ jobs:
     runs-on: macos-13
     needs: [linux-test, macos-test, windows-test]
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout LLVM on MacOS
+        uses: actions/checkout@v4
+        with:
+          repository: llvm/llvm-project
+          ref: release/18.x
+      - name: Build OpenMP on MacOS
+        run: |
+          cd /Users/runner/work/Wasserstein/Wasserstein/openmp
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$(brew --prefix) -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DLIBOMP_INSTALL_ALIASES=OFF /Users/runner/work/Wasserstein/Wasserstein/openmp
+          make
+          make install
+      - name: Checkout Wasserstein
+        uses: actions/checkout@v3
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
