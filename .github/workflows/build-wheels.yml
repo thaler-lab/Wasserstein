@@ -101,21 +101,31 @@ jobs:
     runs-on: macos-13
     needs: [linux-test, macos-test, windows-test]
     steps:
-      - name: Checkout LLVM on MacOS
+      - name: Checkout LLVM on macOS
         uses: actions/checkout@v4
         with:
           repository: llvm/llvm-project
           ref: release/18.x
-      - name: Build OpenMP on MacOS
+          path: llvm-project
+
+      - name: Build OpenMP on macOS
+        env:
+          MACOSX_DEPLOYMENT_TARGET: "10.9"
+        working-directory: llvm-project
         run: |
-          cd /Users/runner/work/Wasserstein/Wasserstein/openmp
-          mkdir build
-          cd build
-          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$(brew --prefix) -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DLIBOMP_INSTALL_ALIASES=OFF /Users/runner/work/Wasserstein/Wasserstein/openmp
-          make
-          make install
+          cmake \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_INSTALL_PREFIX=$(brew --prefix) \
+            -DCMAKE_C_COMPILER=clang \
+            -DCMAKE_CXX_COMPILER=clang++ \
+            -DLIBOMP_INSTALL_ALIASES=OFF \
+            -S openmp \
+            -B build
+          cmake --build build --parallel
+          cmake --install build
+
       - name: Checkout Wasserstein
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
