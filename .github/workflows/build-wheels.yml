@@ -39,8 +39,10 @@ jobs:
           path: llvm-project
 
       - name: Build OpenMP on macOS
+        env:
+          MACOSX_DEPLOYMENT_TARGET: "10.9"
+        working-directory: llvm-project
         run: |
-          cd llvm-project
           cmake \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_INSTALL_PREFIX=$(brew --prefix) \
@@ -49,11 +51,8 @@ jobs:
             -DLIBOMP_INSTALL_ALIASES=OFF \
             -S openmp \
             -B build
-          cmake \
-            --build build \
-            --parallel
+          cmake --build build --parallel
           cmake --install build
-          cd "$GITHUB_WORKSPACE"
 
       - name: Checkout Wasserstein
         uses: actions/checkout@v4
