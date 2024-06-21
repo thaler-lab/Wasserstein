@@ -69,7 +69,7 @@ jobs:
         run: pytest wasserstein
 
   windows-test:
-    runs-on: windows-2019
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
       - name: Setup Python
@@ -132,7 +132,7 @@ jobs:
         run: ./scripts/build-wheels-and-upload.sh
 
   windows-build:
-    runs-on: windows-2019
+    runs-on: windows-latest
     needs: [linux-test, macos-test, windows-test]
     steps:
       - uses: actions/checkout@v3
