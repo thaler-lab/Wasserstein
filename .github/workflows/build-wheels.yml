@@ -1,4 +1,4 @@
-name: Tests
+name: Builds
 
 on:
   push:
@@ -13,7 +13,7 @@ env:
   TWINE_PASSWORD_PYPI: ${{ secrets.TWINE_PASSWORD_PYPI }}
 
 jobs:
-  builds: 
+  builds:
     name: ${{ matrix.os }} build
     runs-on: ${{ matrix.os }}
     strategy:
