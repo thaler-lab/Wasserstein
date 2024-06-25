@@ -26,7 +26,7 @@ jobs:
           python3 -m pip install --extra-index-url https://test.pypi.org/simple energyflow==1.3.3a0
           python3 -m pip install .[test] pytest
       - name: Test package
-        run: pytest wasserstein
+        run: pytest tests
 
   macos-test:
     runs-on: macos-13
@@ -65,7 +65,7 @@ jobs:
           python3 -m pip install --extra-index-url https://test.pypi.org/simple energyflow==1.3.3a0
           python3 -m pip install .[test] pytest
       - name: Test package
-        run: pytest wasserstein
+        run: pytest tests
 
   windows-test:
     runs-on: windows-latest
@@ -80,7 +80,7 @@ jobs:
           python3 -m pip install --extra-index-url https://test.pypi.org/simple energyflow==1.3.3a0
           python3 -m pip install .[test] pytest
       - name: Test package
-        run: pytest wasserstein
+        run: pytest tests
 
   linux-build:
     runs-on: ubuntu-latest
