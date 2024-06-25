@@ -1,37 +1,22 @@
-name: Tests
+name: Builds
 
 on:
   push:
     branches:
       - master
-
-env:
-  PYPI: 1
-  PYPITEST: 1
-  TWINE_USERNAME: __token__
-  TWINE_PASSWORD_PYPITEST: ${{ secrets.TWINE_PASSWORD_PYPITEST }}
-  TWINE_PASSWORD_PYPI: ${{ secrets.TWINE_PASSWORD_PYPI }}
+  workflow_dispatch:
 
 jobs:
-  linux-test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-      - name: Install Python packages
-        run: |
-          python3 -m pip install --extra-index-url https://test.pypi.org/simple energyflow==1.3.3a0
-          python3 -m pip install --upgrade ".[test]" pytest
-      - name: Test package
-        run: pytest tests
-
-  macos-test:
-    runs-on: macos-13
+  builds:
+    name: ${{ matrix.os }} build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-13]
     steps:
       - name: Checkout LLVM on macOS
+        if: matrix.os == 'macos-13'
         uses: actions/checkout@v4
         with:
           repository: llvm/llvm-project
@@ -39,6 +24,7 @@ jobs:
           path: llvm-project
 
       - name: Build OpenMP on macOS
+        if: matrix.os == 'macos-13'
         env:
           MACOSX_DEPLOYMENT_TARGET: "10.9"
         working-directory: llvm-project
@@ -54,91 +40,11 @@ jobs:
           cmake --build build --parallel
           cmake --install build
 
-      - name: Checkout Wasserstein
-        uses: actions/checkout@v4
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-      - name: Install Python packages
-        run: |
-          python3 -m pip install --extra-index-url https://test.pypi.org/simple energyflow==1.3.3a0
-          python3 -m pip install --upgrade ".[test]" pytest
-      - name: Test package
-        run: pytest tests
+      - uses: actions/checkout@v4
 
-  windows-test:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-      - name: Install Python packages
-        run: |
-          python3 -m pip install --extra-index-url https://test.pypi.org/simple energyflow==1.3.3a0
-          python3 -m pip install --upgrade ".[test]" pytest
-      - name: Test package
-        run: pytest tests
+      - name: cibw-wheel
+        uses: pypa/cibuildwheel@v2.19
 
-  linux-build:
-    runs-on: ubuntu-latest
-    needs: [linux-test, macos-test, windows-test]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-      - name: Build wheels and upload to PyPI
-        run: ./scripts/build-wheels-and-upload.sh sdist
-
-  macos-build:
-    runs-on: macos-13
-    needs: [linux-test, macos-test, windows-test]
-    steps:
-      - name: Checkout LLVM on macOS
-        uses: actions/checkout@v4
-        with:
-          repository: llvm/llvm-project
-          ref: release/18.x
-          path: llvm-project
-
-      - name: Build OpenMP on macOS
-        env:
-          MACOSX_DEPLOYMENT_TARGET: "10.9"
-        working-directory: llvm-project
-        run: |
-          cmake \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_INSTALL_PREFIX=$(brew --prefix) \
-            -DCMAKE_C_COMPILER=clang \
-            -DCMAKE_CXX_COMPILER=clang++ \
-            -DLIBOMP_INSTALL_ALIASES=OFF \
-            -S openmp \
-            -B build
-          cmake --build build --parallel
-          cmake --install build
-
-      - name: Checkout Wasserstein
-        uses: actions/checkout@v4
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-      - name: Build wheels and upload to PyPI
-        run: ./scripts/build-wheels-and-upload.sh
-
-  windows-build:
-    runs-on: windows-latest
-    needs: [linux-test, macos-test, windows-test]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-      - name: Build wheels and upload to PyPI
-        shell: bash
-        run: ./scripts/build-wheels-and-upload.sh
+      - name: Upload wheels to GH
+        uses: actions/upload-artifact@v4
+        path: wheelhouse/*.whl
