@@ -73,6 +73,8 @@ jobs:
           pattern: cibw-*
           path: dist
           merge-multiple: true
+          name: Packages
+          path: wheelhouse
 
       - name: Upload package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
