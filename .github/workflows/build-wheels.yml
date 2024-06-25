@@ -39,13 +39,7 @@ jobs:
           cmake --build build --parallel
           cmake --install build
 
-      - name: Checkout Wasserstein
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.9'
+      - uses: actions/checkout@v4
 
       - name: cibw-wheel
         uses: pypa/cibuildwheel@v2.19
