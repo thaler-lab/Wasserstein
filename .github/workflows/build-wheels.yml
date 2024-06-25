@@ -47,4 +47,5 @@ jobs:
 
       - name: Upload wheels to GH
         uses: actions/upload-artifact@v4
-        path: wheelhouse/*.whl
+        with:
+          path: wheelhouse/*.whl
