@@ -5,13 +5,6 @@ on:
     branches:
       - master
 
-env:
-  PYPI: 1
-  PYPITEST: 1
-  TWINE_USERNAME: __token__
-  TWINE_PASSWORD_PYPITEST: ${{ secrets.TWINE_PASSWORD_PYPITEST }}
-  TWINE_PASSWORD_PYPI: ${{ secrets.TWINE_PASSWORD_PYPI }}
-
 jobs:
   builds:
     name: ${{ matrix.os }} build
