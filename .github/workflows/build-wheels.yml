@@ -40,11 +40,14 @@ jobs:
           cmake --build build --parallel
           cmake --install build
 
-      - uses: actions/checkout@v4
+      - name: Checkout Wasserstein repo
+        uses: actions/checkout@v4
 
       - name: cibw-wheel
         uses: pypa/cibuildwheel@v2.19
 
       - name: Upload wheels to GH
         uses: actions/upload-artifact@v4
-        path: wheelhouse/*.whl
+        with:
+          name: cibw-wheels-${{ matrix.os }}
+          path: wheelhouse/*.whl
