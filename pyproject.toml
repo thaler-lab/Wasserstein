@@ -11,7 +11,7 @@ skip = "pp* *musllinux*"
 test-skip = "*i686 *win32 *-macosx_arm64"
 before-test = "pip install cython; pip install --extra-index-url https://test.pypi.org/simple energyflow==1.3.3a0"
 test-command = "pytest {package}"
-test-requires = ["pytest", "numpy", "pot", "energyflow", "scipy!=1.14.0"]
+test-requires = ["pytest", "numpy", "pot", "energyflow"]
 
 #FIXME delete with closure of https://github.com/thaler-lab/Wasserstein/issues/13
 [tool.cibuildwheel.macos]
