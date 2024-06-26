@@ -842,7 +842,7 @@ def _store_events(pairwise_emd, events, event_weights, gdim, mask, dtype):
 # sometimes, e.g. in the case of a single particle, they may not
 # weights are never modified due to internal copying
 # coords may be modified (e.g. by centering), so we always make a copy of them
-        weights = np.array(event[:,0], dtype=dtype, order='C', copy=False)
+        weights = np.asarray(event[:,0], dtype=dtype, order='C')
         coords = np.array(event[:,1:], dtype=dtype, order='C', copy=True)
 
 # ensure that the lifetime of these arrays lasts through the computation
