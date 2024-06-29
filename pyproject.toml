@@ -1,10 +1,10 @@
 [build-system]
 requires = [
-    "setuptools>=42",
+    "scikit-build-core",
     "oldest-supported-numpy; python_version < '3.9'",
     "numpy>=2.0.0; python_version >= '3.9'",
 ]
-build-backend = "setuptools.build_meta"
+build-backend = "scikit_build_core.build"
 
 
 [tool.cibuildwheel]
