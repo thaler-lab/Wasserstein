@@ -1,0 +1,39 @@
+cmake_minimum_required(VERSION 3.20...3.29)
+# 3.20 is the minimum requirement for LLVM
+# https://www.llvm.org/docs/CMake.html#quick-start
+
+project(
+	Wasserstein
+	VERSION 1.1.0
+	LANGUAGES CXX)
+
+set(src "wasserstein")
+set(wasserstein_src "wasserstein/wasserstein.cpp")
+
+add_library(wasserstein SHARED ${wasserstein_src})
+
+find_package(
+	OpenMP
+	REQUIRED)
+
+find_package(
+	Python
+	COMPONENTS Interpreter Development.Module
+	REQUIRED)
+
+include(FindSWIG)
+include(UseSWIG)
+
+swig_add_library(
+	swig_wasserstein
+	LANGUAGE python
+	SOURCES "wasserstein/swig/wasserstein.i" "wasserstein/wasserstein.cpp")
+if(WIN32)
+	set_property(TARGET wasserstein 
+		PROPERTY SUFFIX ".${Python_SOABI}.pyd")
+else()
+	set_property(TARGET wasserstein
+		PROPERTY SUFFIX ".${Python_SOABI}${CMAKE_SHARED_MODULE_SUFFIX}")
+endif()
+
+target_link_libraries(wasserstein PUBLIC OpenMP::OpenMP_CXX)
