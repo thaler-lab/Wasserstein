@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - build/skbc
   workflow_dispatch:
 
 jobs:
