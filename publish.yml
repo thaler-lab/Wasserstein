@@ -1,0 +1,23 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+
+jobs:
+  pypi-publish:
+    name: Upload release to PyPI
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/Wasserstein
+    permissions:
+      id-token: write
+    steps:
+      - name: Download wheels from GH
+        uses: actions/download-artifact@v4
+        with:
+          name: Packages
+          path: wheelhouse
+
+      - name: Upload package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
