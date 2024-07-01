@@ -72,6 +72,7 @@ else:
         omp_cxxflags.insert(0, '-Xpreprocessor')
         libs = ['omp']
         ldflags = ['-Wl,-rpath,/usr/local/lib']
+        includes.append('/opt/homebrew/include')
 
     # Linux
     elif platform.system() == 'Linux':
