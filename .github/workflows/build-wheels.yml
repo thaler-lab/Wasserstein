@@ -13,10 +13,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-13]
+        os: [ubuntu-latest, windows-latest, macos-13, macos-latest]
     steps:
       - name: Checkout LLVM on macOS
-        if: matrix.os == 'macos-13'
+        if: >-
+            matrix.os == 'macos-13'
+            || matrix.os == 'macos-latest'
         uses: actions/checkout@v4
         with:
           repository: llvm/llvm-project
@@ -24,7 +26,9 @@ jobs:
           path: llvm-project
 
       - name: Build OpenMP on macOS
-        if: matrix.os == 'macos-13'
+        if: >-
+            matrix.os == 'macos-13'
+            || matrix.os == 'macos-latest'
         env:
           MACOSX_DEPLOYMENT_TARGET: "10.9"
         working-directory: llvm-project
