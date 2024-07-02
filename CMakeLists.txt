@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.20...3.29)
 # https://www.llvm.org/docs/CMake.html#quick-start
 
 project(
-	Wasserstein
-	VERSION 1.1.0
+        ${SKBUILD_PROJECT_NAME}
+	VERSION ${SKBUILD_PROJECT_VERSION}
 	LANGUAGES CXX)
 
 set(src "wasserstein")
