@@ -17,7 +17,7 @@ find_package(
 
 find_package(
 	Python
-	COMPONENTS Interpreter Development.Module
+	COMPONENTS Interpreter Development.Module NumPy
 	REQUIRED)
 
 include(FindSWIG REQUIRED VERSION 4)
