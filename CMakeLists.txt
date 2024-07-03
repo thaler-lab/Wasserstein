@@ -8,6 +8,7 @@ project(
 	LANGUAGES CXX)
 
 add_library(wasserstein OBJECT "wasserstein/wasserstein.cpp")
+target_include_directories(wasserstein PUBLIC "{CMAKE_CURRENT_SOURCE_DIR}")
 
 find_package(
 	OpenMP
