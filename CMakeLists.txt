@@ -20,8 +20,10 @@ find_package(
 	COMPONENTS Interpreter Development.Module
 	REQUIRED)
 
-include(FindSWIG)
+include(FindSWIG REQUIRED VERSION 4)
 include(UseSWIG)
+
+message(STATUS "Found SWIG ${SWIG_VERSION}")
 
 swig_add_library(
 	swig_wasserstein
