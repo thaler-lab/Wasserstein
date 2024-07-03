@@ -23,16 +23,17 @@ include(UseSWIG)
 
 swig_add_library(
 	swig_wasserstein
+        TYPE MODULE
 	LANGUAGE python
 	SOURCES "wasserstein/swig/wasserstein.i" "wasserstein/wasserstein.cpp")
 if(WIN32)
-	set_property(TARGET wasserstein 
+	set_property(TARGET swig_wasserstein 
 		PROPERTY SUFFIX ".${Python_SOABI}.pyd")
 else()
-	set_property(TARGET wasserstein
+	set_property(TARGET swig_wasserstein
 		PROPERTY SUFFIX ".${Python_SOABI}${CMAKE_SHARED_MODULE_SUFFIX}")
 endif()
 
-target_link_libraries(wasserstein PUBLIC OpenMP::OpenMP_CXX Python::Module)
+target_link_libraries(swig_wasserstein PUBLIC OpenMP::OpenMP_CXX Python::Module)
 
-install(TARGETS wasserstein DESTINATION .)
+install(TARGETS swig_wasserstein DESTINATION .)
