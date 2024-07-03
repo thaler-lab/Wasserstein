@@ -9,6 +9,7 @@ project(
 
 add_library(wasserstein OBJECT "wasserstein/wasserstein.cpp")
 target_include_directories(wasserstein PUBLIC "{CMAKE_CURRENT_SOURCE_DIR}")
+target_compile_options(wasserstein PUBLIC -ffast-math)
 
 find_package(
 	OpenMP
