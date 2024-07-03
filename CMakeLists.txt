@@ -34,6 +34,6 @@ else()
 		PROPERTY SUFFIX ".${Python_SOABI}${CMAKE_SHARED_MODULE_SUFFIX}")
 endif()
 
-target_link_libraries(swig_wasserstein PUBLIC wasserstein OpenMP::OpenMP_CXX Python::Module)
+target_link_libraries(swig_wasserstein PUBLIC wasserstein OpenMP::OpenMP_CXX Python::Module Python::NumPy)
 
 install(TARGETS swig_wasserstein DESTINATION .)
