@@ -25,6 +25,7 @@ include(UseSWIG)
 
 message(STATUS "Found SWIG ${SWIG_VERSION}")
 
+set_property(SOURCE "wasserstein/swig/wasserstein.i" PROPERTY CPLUSPLUS ON)
 swig_add_library(
 	swig_wasserstein
         TYPE MODULE
@@ -33,7 +34,7 @@ swig_add_library(
 target_property(SOURCE "wasserstein/swig/wasserstein.i" PROPERTY SWIG_COMPILE_OPTIONS -fastproxy -w511 -keyword)
 
 if(WIN32)
-	set_property(TARGET swig_wasserstein 
+	set_property(TARGET swig_wasserstein
 		PROPERTY SUFFIX ".${Python_SOABI}.pyd")
 else()
 	set_property(TARGET swig_wasserstein
