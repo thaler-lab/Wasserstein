@@ -7,10 +7,7 @@ project(
 	VERSION ${SKBUILD_PROJECT_VERSION}
 	LANGUAGES CXX)
 
-set(src "wasserstein")
-set(wasserstein_src "wasserstein/wasserstein.cpp")
-
-add_library(wasserstein SHARED ${wasserstein_src})
+add_library(wasserstein SHARED "wasserstein/wasserstein.cpp")
 
 find_package(
 	OpenMP
