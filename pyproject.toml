@@ -1,35 +1,82 @@
 [build-system]
-requires = [
-    "scikit-build-core",
-    "swig",
-    "oldest-supported-numpy; python_version < '3.9'",
-    "numpy>=2.0.0; python_version >= '3.9'",
-]
-build-backend = "scikit_build_core.build"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "wasserstein"
-description = "Python/C++ library for computing Wasserstein distances efficiently."
+dynamic = ["version"]
+description = "Python package wrapping C++ code for computing Wasserstein distances"
 readme = "README.md"
-license.file = "LICENSE"
-requires-python = ">=3.7"
-version = "1.1.0"
+license = "GPL-3.0"
+requires-python = "\n>= 3.7"
+authors = [
+    { name = "Patrick T. Komiske III", email = "pkomiske@mit.edu" },
+]
+keywords = [
+    "distance",
+    "earth mover's distance",
+    "emd",
+    "energy mover's distance",
+    "fastjet",
+    "fjcontrib",
+    "hidden geometry",
+    "infrared safety",
+    "irc-safe",
+    "metric",
+    "optimal transport",
+    "ot",
+    "particle physics",
+    "wasserstein",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Natural Language :: English",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Unix",
+    "Programming Language :: C++",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "numpy >= 1.12.0",
+    "wurlitzer >= 2.0.0",
+]
+
+[project.optional-dependencies]
+test = [
+    "coverage",
+    "energyflow",
+    "pot",
+    "pytest",
+]
 
 [project.urls]
-Homepage = "https://github.com/thaler-lab/wasserstein"
-Documentation = "https://thaler-lab.github.io/Wasserstein"
-"Bug Tracker" = "https://github.com/thaler-lab/wasserstein/issues"
+Changelog = "https://github.com/thaler-lab/Wasserstein/blob/master/CHANGELOG.md"
+Documentation = "https://thaler-lab.github.io/Wasserstein/"
+Homepage = "https://github.com/thaler-lab/Wasserstein"
+Issues = "https://github.com/thaler-lab/Wasserstein/issues"
 
-[tool.cibuildwheel]
-skip = "pp* *musllinux*"
-test-skip = "*i686 *win32 *-macosx_arm64"
-before-test = "pip install cython; pip install git+https://github.com/thaler-lab/EnergyFlow.git"
-test-command = "pytest {package}"
-test-requires = ["pytest", "numpy", "pot", "energyflow"]
+[tool.hatch.version]
+path = "wasserstein/__init__.py"
 
-#FIXME delete with closure of https://github.com/thaler-lab/Wasserstein/issues/13
-[tool.cibuildwheel.macos]
-archs = "x86_64 arm64"
-
-[tool.scikit-build]
-cmake.version = ">=3.20"
+[tool.hatch.build.targets.sdist]
+include = [
+    "/wasserstein",
+]
