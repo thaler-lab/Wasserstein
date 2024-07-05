@@ -23,7 +23,7 @@ find_package(
 include(FindSWIG REQUIRED)
 include(UseSWIG)
 
-message(STATUS "Found SWIG ${SWIG_VERSION}")
+message(STATUS "Working directory is ${CMAKE_CURRENT_SOURCE_DIR}")
 
 set_property(SOURCE "wasserstein/swig/wasserstein.i" PROPERTY CPLUSPLUS ON)
 swig_add_library(
