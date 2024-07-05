@@ -78,4 +78,5 @@ Documentation = "https://thaler-lab.github.io/Wasserstein/"
 Homepage = "https://github.com/thaler-lab/Wasserstein"
 Issues = "https://github.com/thaler-lab/Wasserstein/issues"
 
-
+[tool.scikit-build]
+cmake.version = ">=3.20"
