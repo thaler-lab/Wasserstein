@@ -20,7 +20,7 @@ find_package(
 	COMPONENTS Interpreter Development.Module NumPy
 	REQUIRED)
 
-include(FindSWIG REQUIRED VERSION 4)
+include(FindSWIG REQUIRED)
 include(UseSWIG)
 
 message(STATUS "Found SWIG ${SWIG_VERSION}")
@@ -31,7 +31,7 @@ swig_add_library(
         TYPE MODULE
 	LANGUAGE python
 	SOURCES "wasserstein/swig/wasserstein.i" "wasserstein/wasserstein.cpp")
-target_property(SOURCE "wasserstein/swig/wasserstein.i" PROPERTY SWIG_COMPILE_OPTIONS -fastproxy -w511 -keyword)
+set_property(SOURCE "wasserstein/swig/wasserstein.i" PROPERTY SWIG_COMPILE_OPTIONS -fastproxy -w511 -keyword)
 
 if(WIN32)
 	set_property(TARGET swig_wasserstein
