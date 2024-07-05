@@ -12,7 +12,6 @@ name = "wasserstein"
 dynamic = ["version"]
 description = "Python package wrapping C++ code for computing Wasserstein distances"
 readme = "README.md"
-license = "LICENSE"
 requires-python = ">= 3.7"
 authors = [
     { name = "Patrick T. Komiske III", email = "pkomiske@mit.edu" },
