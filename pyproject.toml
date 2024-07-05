@@ -9,7 +9,7 @@ build-backend = "scikit_build_core.build"
 
 [project]
 name = "wasserstein"
-dynamic = ["version"]
+version = "1.1.0"
 description = "Python package wrapping C++ code for computing Wasserstein distances"
 readme = "README.md"
 license.file = "LICENSE"
