@@ -71,7 +71,7 @@ else:
     if platform.system() == 'Darwin':
         omp_cxxflags.insert(0, '-Xpreprocessor')
         libs = ['omp']
-        ldflags = ['-Wl,-rpath,/usr/local/lib']
+        ldflags = ['-Wl,-rpath,/usr/local/lib', '-L/opt/homebrew/lib', '-Wl,-rpath,/opt/homebrew/lib']
         includes.append('/opt/homebrew/include')
 
     # Linux
