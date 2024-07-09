@@ -8,7 +8,7 @@ project(
 	LANGUAGES CXX)
 
 add_library(wasserstein OBJECT "wasserstein/wasserstein.cpp")
-target_include_directories(wasserstein PUBLIC "{CMAKE_CURRENT_SOURCE_DIR}" "{CMAKE_CURRENT_SOURCE_DIR}/wasserstein")
+target_include_directories(wasserstein PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/wasserstein")
 target_compile_options(wasserstein PUBLIC -ffast-math)
 
 find_package(
@@ -20,12 +20,12 @@ find_package(
 	COMPONENTS Interpreter Development.Module NumPy
 	REQUIRED)
 
-include_directories(${PYTHON_INCLUDE_DIRS})
+include_directories(${Python_INCLUDE_DIRS})
 include(FindSWIG REQUIRED)
 include(UseSWIG)
 
 message(STATUS "Working directory is ${CMAKE_CURRENT_SOURCE_DIR}")
-message(STATUS "Python.h (hopefully) included at ${PYTHON_INCLUDE_DIRS}")
+message(STATUS "Python.h (hopefully) included at ${Python_INCLUDE_DIRS}")
 set_property(SOURCE "wasserstein/swig/wasserstein.i" PROPERTY CPLUSPLUS ON)
 swig_add_library(
 	swig_wasserstein
@@ -49,6 +49,6 @@ target_link_libraries(
 	OpenMP::OpenMP_CXX
 	Python::Module
 	Python::NumPy
-	${PYTHON_LIBRARIES})
+	${Python_LIBRARIES})
 
 install(TARGETS swig_wasserstein DESTINATION .)
