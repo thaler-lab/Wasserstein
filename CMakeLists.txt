@@ -26,13 +26,14 @@ include(UseSWIG)
 
 message(STATUS "Working directory is ${CMAKE_CURRENT_SOURCE_DIR}")
 message(STATUS "Python.h (hopefully) included at ${Python_INCLUDE_DIRS}")
+
 set_property(SOURCE "wasserstein/swig/wasserstein.i" PROPERTY CPLUSPLUS ON)
 swig_add_library(
 	swig_wasserstein
         TYPE MODULE
 	LANGUAGE python
 	SOURCES "wasserstein/swig/wasserstein.i" "wasserstein/wasserstein.cpp")
-set_property(SOURCE "wasserstein/swig/wasserstein.i" PROPERTY SWIG_COMPILE_OPTIONS -fastproxy -w511 -keyword)
+set_property(TARGET "swig_wasserstein" PROPERTY SWIG_COMPILE_OPTIONS -fastproxy -w511 -keyword)
 
 if(WIN32)
 	set_property(TARGET swig_wasserstein
