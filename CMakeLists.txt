@@ -48,7 +48,6 @@ target_link_libraries(
 	wasserstein
 	OpenMP::OpenMP_CXX
 	Python::Module
-	Python::NumPy
-	${Python_LIBRARIES})
+	Python::NumPy)
 
 install(TARGETS swig_wasserstein DESTINATION .)
