@@ -25,7 +25,6 @@ include(FindSWIG REQUIRED)
 include(UseSWIG)
 
 message(STATUS "Working directory is ${CMAKE_CURRENT_SOURCE_DIR}")
-message(STATUS "NumPy (hopefully) included at ${Python_NumPy_INCLUDE_DIRS}")
 
 set_property(SOURCE "wasserstein/swig/wasserstein.i" PROPERTY CPLUSPLUS ON)
 swig_add_library(
@@ -47,6 +46,7 @@ target_link_libraries(
 	swig_wasserstein
 	PUBLIC
 	wasserstein
+	wasserstein/internal
 	OpenMP::OpenMP_CXX
 	Python::Module
 	Python::NumPy)
