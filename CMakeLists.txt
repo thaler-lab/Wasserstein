@@ -35,7 +35,7 @@ swig_add_library(
 	SOURCES "wasserstein/swig/wasserstein.i" "wasserstein/wasserstein.cpp")
 set_property(TARGET "swig_wasserstein" PROPERTY SWIG_COMPILE_OPTIONS -fastproxy -w511 -keyword)
 
-target_include_directories(swig_wasserstein PUBLIC ${wasserstein_SOURCE_DIR})
+target_include_directories(swig_wasserstein PUBLIC ../internal)
 
 if(WIN32)
 	set_property(TARGET swig_wasserstein
@@ -49,7 +49,6 @@ target_link_libraries(
 	swig_wasserstein
 	PUBLIC
 	wasserstein
-	wasserstein/internal
 	OpenMP::OpenMP_CXX
 	Python::Module
 	Python::NumPy)
