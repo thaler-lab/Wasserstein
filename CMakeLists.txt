@@ -8,7 +8,7 @@ project(
 	LANGUAGES CXX)
 
 add_library(wasserstein OBJECT "wasserstein/wasserstein.cpp")
-target_include_directories(wasserstein PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}" "${Python_NumPy_INCLUDE_DIRS}")
+target_include_directories(wasserstein PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 target_compile_options(wasserstein PUBLIC -ffast-math)
 
 find_package(
@@ -20,7 +20,7 @@ find_package(
 	COMPONENTS Interpreter Development.Module NumPy
 	REQUIRED)
 
-include_directories(${Python_INCLUDE_DIRS})
+include_directories(${Python_INCLUDE_DIRS} ${Python_NumPy_INCLUDE_DIRS})
 include(FindSWIG REQUIRED)
 include(UseSWIG)
 
