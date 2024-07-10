@@ -24,6 +24,8 @@ include_directories(${Python_INCLUDE_DIRS} ${Python_NumPy_INCLUDE_DIRS})
 include(FindSWIG REQUIRED)
 include(UseSWIG)
 
+message(STATUS "Working directory is ${CMAKE_CURRENT_SOURCE_DIR}")
+
 set_property(SOURCE "wasserstein/swig/wasserstein.i" PROPERTY CPLUSPLUS ON)
 swig_add_library(
 	swig_wasserstein
@@ -33,6 +35,7 @@ swig_add_library(
 target_include_directories(swig_wasserstein PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/wasserstein" "${CMAKE_CURRENT_SOURCE_DIR}/wasserstein/internal")
 set_property(TARGET "swig_wasserstein" PROPERTY SWIG_COMPILE_OPTIONS -fastproxy -w511 -keyword)
 
+message(STATUS "Working directory is ${CMAKE_CURRENT_SOURCE_DIR}")
 
 if(WIN32)
 	set_property(TARGET swig_wasserstein
