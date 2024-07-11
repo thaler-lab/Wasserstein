@@ -7,10 +7,6 @@ project(
 	VERSION ${SKBUILD_PROJECT_VERSION}
 	LANGUAGES CXX)
 
-add_library(wasserstein OBJECT "wasserstein/wasserstein.cpp")
-target_include_directories(wasserstein PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
-target_compile_options(wasserstein PUBLIC -ffast-math)
-
 find_package(
 	OpenMP
 	REQUIRED)
@@ -24,6 +20,10 @@ include(FindSWIG REQUIRED)
 include(UseSWIG)
 
 message(STATUS "Working directory is ${CMAKE_CURRENT_SOURCE_DIR}")
+
+add_library(wasserstein OBJECT "wasserstein/wasserstein.cpp")
+target_include_directories(wasserstein PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
+target_compile_options(wasserstein PUBLIC -ffast-math)
 
 set_property(SOURCE "wasserstein/swig/wasserstein.i" PROPERTY CPLUSPLUS ON)
 swig_add_library(
