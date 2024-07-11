@@ -80,3 +80,14 @@ Issues = "https://github.com/thaler-lab/Wasserstein/issues"
 
 [tool.scikit-build]
 cmake.version = ">=3.20"
+
+[tool.cibuildwheel]
+skip = "pp* *musllinux*"
+test-skip = "*i686 *win32 *-macosx_arm64"
+before-test = "pip install cython; pip install git+https://github.com/thaler-lab/EnergyFlow.git"
+test-command = "pytest {package}"
+test-requires = ["pytest", "numpy", "pot", "energyflow"]
+
+#FIXME delete with closure of https://github.com/thaler-lab/Wasserstein/issues/13
+[tool.cibuildwheel.macos]
+archs = "x86_64 arm64"
