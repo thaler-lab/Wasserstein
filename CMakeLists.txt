@@ -20,7 +20,6 @@ find_package(
 	COMPONENTS Interpreter Development.Module NumPy
 	REQUIRED)
 
-include_directories(${Python_INCLUDE_DIRS} ${Python_NumPy_INCLUDE_DIRS})
 include(FindSWIG REQUIRED)
 include(UseSWIG)
 
