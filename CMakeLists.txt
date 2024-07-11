@@ -24,6 +24,7 @@ message(STATUS "Working directory is ${CMAKE_CURRENT_SOURCE_DIR}")
 add_library(wasserstein OBJECT "wasserstein/wasserstein.cpp")
 target_include_directories(wasserstein PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 target_compile_options(wasserstein PUBLIC -ffast-math)
+target_link_libraries(wasserstein PUBLIC Python::Module)
 
 set_property(SOURCE "wasserstein/swig/wasserstein.i" PROPERTY CPLUSPLUS ON)
 swig_add_library(
