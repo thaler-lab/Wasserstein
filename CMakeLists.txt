@@ -32,7 +32,7 @@ swig_add_library(
         TYPE MODULE
 	LANGUAGE python
 	SOURCES "wasserstein/swig/wasserstein.i")
-target_include_directories(swig_wasserstein PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/wasserstein" "${CMAKE_CURRENT_SOURCE_DIR}/wasserstein/internal")
+target_include_directories(wasserstein PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/wasserstein" "${CMAKE_CURRENT_SOURCE_DIR}/wasserstein/internal")
 set_property(TARGET "swig_wasserstein" PROPERTY SWIG_COMPILE_OPTIONS -fastproxy -w511 -keyword)
 
 message(STATUS "Working directory is ${CMAKE_CURRENT_SOURCE_DIR}")
