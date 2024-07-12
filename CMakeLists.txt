@@ -7,6 +7,13 @@ project(
 	VERSION ${SKBUILD_PROJECT_VERSION}
 	LANGUAGES CXX)
 
+set(
+	CMAKE_CXX_STANDARD
+	14
+	CACHE STRING "The C++ standard to compile with, 14+")
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 find_package(
 	OpenMP
 	REQUIRED)
