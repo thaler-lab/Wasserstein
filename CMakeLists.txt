@@ -31,30 +31,30 @@ message(STATUS "Working directory is ${CMAKE_CURRENT_SOURCE_DIR}")
 set_property(SOURCE "wasserstein/swig/wasserstein.i" PROPERTY CPLUSPLUS ON)
 set_property(SOURCE "wasserstein/swig/wasserstein.i" PROPERTY SWIG_MODULE_NAME _wasserstein_omp)
 swig_add_library(
-	swig_wasserstein
+	_wasserstein_omp
         TYPE MODULE
 	LANGUAGE python
 	SOURCES "wasserstein/swig/wasserstein.i")
-set_property(TARGET swig_wasserstein PROPERTY SWIG_COMPILE_OPTIONS -fastproxy -w511 -keyword)
-set_property(TARGET swig_wasserstein PROPERTY SWIG_USE_TARGET_INCLUDE_DIRECTORIES ON)
-target_include_directories(swig_wasserstein PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
-target_compile_options(swig_wasserstein PUBLIC -ffast-math -fPIC)
+set_property(TARGET _wasserstein_omp PROPERTY SWIG_COMPILE_OPTIONS -fastproxy -w511 -keyword)
+set_property(TARGET _wasserstein_omp PROPERTY SWIG_USE_TARGET_INCLUDE_DIRECTORIES ON)
+target_include_directories(_wasserstein_omp PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
+target_compile_options(_wasserstein_omp PUBLIC -ffast-math -fPIC)
 
 message(STATUS "Working directory is ${CMAKE_CURRENT_SOURCE_DIR}")
 
 if(WIN32)
-	set_property(TARGET swig_wasserstein
+	set_property(TARGET _wasserstein_omp
 		PROPERTY SUFFIX ".${Python_SOABI}.pyd")
 else()
-	set_property(TARGET swig_wasserstein
+	set_property(TARGET _wasserstein_omp
 		PROPERTY SUFFIX ".${Python_SOABI}${CMAKE_SHARED_MODULE_SUFFIX}")
 endif()
 
 target_link_libraries(
-	swig_wasserstein
+	_wasserstein_omp
 	PUBLIC
 	OpenMP::OpenMP_CXX
 	Python::Module
 	Python::NumPy)
 
-install(TARGETS swig_wasserstein DESTINATION .)
+install(TARGETS _wasserstein_omp DESTINATION .)
