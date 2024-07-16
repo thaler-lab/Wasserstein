@@ -29,6 +29,7 @@ include(UseSWIG)
 message(STATUS "Working directory is ${CMAKE_CURRENT_SOURCE_DIR}")
 
 set_property(SOURCE "wasserstein/swig/wasserstein.i" PROPERTY CPLUSPLUS ON)
+set_property(SOURCE "wasserstein/swig/wasserstein.i" PROPERTY SWIG_MODULE_NAME _wasserstein_omp)
 swig_add_library(
 	swig_wasserstein
         TYPE MODULE
