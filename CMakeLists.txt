@@ -57,4 +57,4 @@ target_link_libraries(
 	Python::Module
 	Python::NumPy)
 
-install(TARGETS wasserstein DESTINATION .)
+install(TARGETS wasserstein DESTINATION wasserstein/omp)
