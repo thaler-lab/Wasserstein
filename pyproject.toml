@@ -80,6 +80,9 @@ Issues = "https://github.com/thaler-lab/Wasserstein/issues"
 
 [tool.scikit-build]
 cmake.version = ">=3.20"
+wheel.exclude = [
+    "**.hh",
+    "**.i"]
 
 [tool.cibuildwheel]
 skip = "pp* *musllinux*"
