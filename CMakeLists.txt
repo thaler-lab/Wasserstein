@@ -59,3 +59,7 @@ target_link_libraries(
 	Python::NumPy)
 
 install(TARGETS wasserstein DESTINATION wasserstein/omp)
+
+get_property(support_files TARGET wasserstein PROPERTY SWIG_SUPPORT_FILES)
+message(STATUS "${support_files}")
+install(FILES "${support_files}" DESTINATION wasserstein)
