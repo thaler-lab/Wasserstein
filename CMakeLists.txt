@@ -23,6 +23,7 @@ find_package(
 	COMPONENTS Interpreter Development.Module NumPy
 	REQUIRED)
 
+set(UseSWIG_MODULE_VERSION 2)
 find_package(SWIG REQUIRED)
 include(UseSWIG)
 
