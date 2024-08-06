@@ -76,7 +76,9 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
-        python -m pip install --upgrade --verbose -Ccmake.verbose=1 -Clogging.level=INFO ".[test]"
+        python -m pip install --upgrade ".[test]"
+        python -m pip uninstall --yes wasserstein
+        python -m pip install --upgrade --verbose -Ccmake.verbose=1 -Clogging.level=INFO .
         # FIXME: c.f. https://github.com/thaler-lab/Wasserstein/issues/46
         python -m pip uninstall --yes EnergyFlow
         python -m pip install "git+https://github.com/thaler-lab/EnergyFlow.git"
