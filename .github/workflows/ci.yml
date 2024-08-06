@@ -89,4 +89,4 @@ jobs:
     - name: Test with pytest and coverage
       # FIXME: Running with coverage causes failures
       run: |
-        pytest tests
+        pytest -x tests
