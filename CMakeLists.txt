@@ -61,7 +61,7 @@ target_link_libraries(
 	OpenMP::OpenMP_CXX
 	Python::Module
 	Python::NumPy)
- 
+
 install(TARGETS wasserstein DESTINATION wasserstein/omp)
 
 get_property(support_files TARGET wasserstein PROPERTY SWIG_SUPPORT_FILES)
