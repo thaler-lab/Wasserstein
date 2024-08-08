@@ -14,6 +14,10 @@ set(
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Linking to OpenMP will be outside the source tree, so include it in INSTALL_RPATH anyway
+# Repair steps will bundle it as needed.
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH ON)
+
 find_package(
 	OpenMP
 	REQUIRED)
@@ -57,7 +61,7 @@ target_link_libraries(
 	OpenMP::OpenMP_CXX
 	Python::Module
 	Python::NumPy)
-
+ 
 install(TARGETS wasserstein DESTINATION wasserstein/omp)
 
 get_property(support_files TARGET wasserstein PROPERTY SWIG_SUPPORT_FILES)
