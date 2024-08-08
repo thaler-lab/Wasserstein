@@ -5,8 +5,12 @@ on:
     branches:
       - master
   workflow_dispatch:
+  release:
+    types:
+      - published
 
 jobs:
+#TODO SDIST
   builds:
     name: ${{ matrix.runs-on }} build
     runs-on: ${{ matrix.runs-on }}
@@ -54,6 +58,7 @@ jobs:
 
   pypi-publish:
     name: Upload release to PyPI
+    needs: #TODO
     runs-on: ubuntu-latest
     if: github.event_name == 'release' && github.event.action == 'published'
     environment:
