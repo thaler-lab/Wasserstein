@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-  pull_request:
     branches:
     - master
+  pull_request:
   # Run weekly at 1:23 UTC
   schedule:
   - cron: '23 1 * * 0'
