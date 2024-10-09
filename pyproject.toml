@@ -17,6 +17,7 @@ requires-python = ">= 3.7"
 authors = [
     { name = "Patrick T. Komiske III", email = "pkomiske@mit.edu" },
 ]
+maintainers = [ { name = "Jordan Ashley", email = "jordan.ashley@cern.ch" } ]
 keywords = [
     "distance",
     "earth mover's distance",
