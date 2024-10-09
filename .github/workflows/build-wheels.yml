@@ -10,8 +10,22 @@ on:
       - published
 
 jobs:
-#TODO SDIST
-  builds:
+  make_sdist:
+    name: Make SDist
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build SDist
+        run: pipx run build --sdist
+
+      - name: Upload SDist to GH
+        uses: actions/upload-artifact@v4
+        with:
+          name: cibw-sdist
+          path: dist/*.tar.gz
+
+  build_wheels:
     name: ${{ matrix.runs-on }} build
     runs-on: ${{ matrix.runs-on }}
     strategy:
@@ -58,7 +72,7 @@ jobs:
 
   pypi-publish:
     name: Upload release to PyPI
-    needs: #TODO
+    needs: [make_sdist, build_wheels]
     runs-on: ubuntu-latest
     if: github.event_name == 'release' && github.event.action == 'published'
     environment:
@@ -73,8 +87,6 @@ jobs:
           pattern: cibw-*
           path: dist
           merge-multiple: true
-          name: Packages
-          path: wheelhouse
 
       - name: Upload package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
