@@ -28,9 +28,9 @@
 import wasserstein.config
 
 if wasserstein.config.openmp():
-	from ._wasserstein_omp import *
+	from .omp._wasserstein import *
 else:
-	from ._wasserstein_noomp import *
+	from .noomp._wasserstein import *
 
 # check that openmp selection is consistent
 if wasserstein.config.openmp() != cvar.COMPILED_WITH_OPENMP:
