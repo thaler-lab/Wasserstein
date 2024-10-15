@@ -43,6 +43,10 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
+    - name: Install the latest version of uv
+      if: matrix.python-version != '3.7'
+      uses: astral-sh/setup-uv@v3
+
     - name: Checkout LLVM on macOS
       if: >-
           matrix.os == 'macos-13'
@@ -73,12 +77,21 @@ jobs:
         cmake --install build
 
     - name: Install dependencies
+      if: matrix.python-version == '3.7'
       run: |
         python -m pip install --upgrade pip setuptools wheel
         python -m pip install --upgrade ".[test]"
         # FIXME: c.f. https://github.com/thaler-lab/Wasserstein/issues/46
         python -m pip uninstall --yes EnergyFlow
         python -m pip install "git+https://github.com/thaler-lab/EnergyFlow.git"
+
+    - name: Install dependencies
+      if: matrix.python-version != '3.7'
+      run: |
+        uv pip install --system --upgrade ".[test]"
+        # FIXME: c.f. https://github.com/thaler-lab/Wasserstein/issues/46
+        uv pip uninstall --system EnergyFlow
+        uv pip install --system "git+https://github.com/thaler-lab/EnergyFlow.git"
 
     - name: List installed Python packages
       run: python -m pip list
