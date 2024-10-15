@@ -62,7 +62,7 @@
 #include <cstring>
 
 // the main library headers
-#include "wasserstein/Wasserstein.hh"
+#include "src/wasserstein/Wasserstein.hh"
 
 using WASSERSTEIN_NAMESPACE::DefaultNetworkSimplex;
 
@@ -312,15 +312,15 @@ namespace WASSERSTEIN_NAMESPACE {
 } // namespace WASSERSTEIN_NAMESPACE
 
 // include EMD utilities
-%include "wasserstein/internal/EMDUtils.hh" // this must come first
-%include "wasserstein/internal/CenterWeightedCentroid.hh"
-%include "wasserstein/internal/CorrelationDimension.hh"
-%include "wasserstein/internal/EMD.hh"
-%include "wasserstein/internal/EMDBase.hh"
-%include "wasserstein/internal/ExternalEMDHandler.hh"
-%include "wasserstein/internal/HistogramUtils.hh"
-%include "wasserstein/internal/PairwiseEMDBase.hh"
-%include "wasserstein/internal/PairwiseEMD.hh"
+%include "src/wasserstein/internal/EMDUtils.hh" // this must come first
+%include "src/wasserstein/internal/CenterWeightedCentroid.hh"
+%include "src/wasserstein/internal/CorrelationDimension.hh"
+%include "src/wasserstein/internal/EMD.hh"
+%include "src/wasserstein/internal/EMDBase.hh"
+%include "src/wasserstein/internal/ExternalEMDHandler.hh"
+%include "src/wasserstein/internal/HistogramUtils.hh"
+%include "src/wasserstein/internal/PairwiseEMDBase.hh"
+%include "src/wasserstein/internal/PairwiseEMD.hh"
 
 namespace WASSERSTEIN_NAMESPACE {
 

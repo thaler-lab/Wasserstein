@@ -33,13 +33,13 @@ include(UseSWIG)
 
 message(STATUS "Working directory is ${CMAKE_CURRENT_SOURCE_DIR}")
 
-set_property(SOURCE "wasserstein/swig/wasserstein.i" PROPERTY CPLUSPLUS ON)
-set_property(SOURCE "wasserstein/swig/wasserstein.i" PROPERTY SWIG_MODULE_NAME wasserstein)
+set_property(SOURCE "src/wasserstein/swig/wasserstein.i" PROPERTY CPLUSPLUS ON)
+set_property(SOURCE "src/wasserstein/swig/wasserstein.i" PROPERTY SWIG_MODULE_NAME wasserstein)
 swig_add_library(
 	wasserstein
         TYPE MODULE
 	LANGUAGE python
-	SOURCES "wasserstein/swig/wasserstein.i")
+	SOURCES "src/wasserstein/swig/wasserstein.i")
 set_property(TARGET wasserstein PROPERTY SWIG_COMPILE_OPTIONS -fastproxy -w511 -keyword)
 set_property(TARGET wasserstein PROPERTY SWIG_USE_TARGET_INCLUDE_DIRECTORIES ON)
 target_include_directories(wasserstein PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
