@@ -89,8 +89,7 @@ wheel.exclude = [
     "**.i"]
 
 [tool.cibuildwheel]
-skip = "pp* *musllinux*"
-test-skip = "*i686 *win32 *-macosx_arm64"
+skip = "pp* *musllinux* cp313-*"
 before-test = "pip install cython; pip install git+https://github.com/thaler-lab/EnergyFlow.git"
 test-command = "pytest {package}"
 test-requires = ["pytest", "numpy", "pot", "energyflow"]
