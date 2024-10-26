@@ -75,6 +75,7 @@ jobs:
     needs: [make_sdist, build_wheels]
     runs-on: ubuntu-latest
     if: github.event_name == 'release' && github.event.action == 'published'
+    # Restrict to the environment set for the trusted publisher
     environment:
       name: pypi
       url: https://pypi.org/p/Wasserstein
