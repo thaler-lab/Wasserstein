@@ -5,20 +5,36 @@ on:
     branches:
       - master
   workflow_dispatch:
+  release:
+    types:
+      - published
 
 jobs:
-  builds:
-    name: ${{ matrix.os }} build
-    runs-on: ${{ matrix.os }}
+  make_sdist:
+    name: Make SDist
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build SDist
+        run: pipx run build --sdist
+
+      - name: Upload SDist to GH
+        uses: actions/upload-artifact@v4
+        with:
+          name: cibw-sdist
+          path: dist/*.tar.gz
+
+  build_wheels:
+    name: ${{ matrix.runs-on }} build
+    runs-on: ${{ matrix.runs-on }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-13, macos-latest]
+        runs-on: [ubuntu-latest, windows-latest, macos-13]
     steps:
       - name: Checkout LLVM on macOS
-        if: >-
-            matrix.os == 'macos-13'
-            || matrix.os == 'macos-latest'
+        if: runner.os == 'macOS'
         uses: actions/checkout@v4
         with:
           repository: llvm/llvm-project
@@ -26,9 +42,7 @@ jobs:
           path: llvm-project
 
       - name: Build OpenMP on macOS
-        if: >-
-            matrix.os == 'macos-13'
-            || matrix.os == 'macos-latest'
+        if: runner.os == 'macOS'
         env:
           MACOSX_DEPLOYMENT_TARGET: "10.9"
         working-directory: llvm-project
@@ -53,5 +67,30 @@ jobs:
       - name: Upload wheels to GH
         uses: actions/upload-artifact@v4
         with:
-          name: cibw-wheels-${{ matrix.os }}
+          name: cibw-wheels-${{ matrix.runs-on }}
           path: wheelhouse/*.whl
+
+  pypi-publish:
+    name: Upload release to PyPI
+    needs: [make_sdist, build_wheels]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release' && github.event.action == 'published'
+    # Restrict to the environment set for the trusted publisher
+    environment:
+      name: pypi
+      url: https://pypi.org/p/Wasserstein
+    permissions:
+      id-token: write
+    steps:
+      - name: Download wheels from GH
+        uses: actions/download-artifact@v4
+        with:
+          pattern: cibw-*
+          path: dist
+          merge-multiple: true
+
+      - name: Upload package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          print-hash: true
+          attestations: true
