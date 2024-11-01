@@ -102,7 +102,11 @@ version = "${version}"
 '''
 
 [tool.cibuildwheel]
+build-frontend = "build[uv]"
 skip = "pp* *musllinux* cp313-*"
 before-test = "pip install cython"
-test-command = "pytest {package}"
+test-extras = "test"
+test-command = "pytest {project}/tests"
 test-requires = ["pytest", "numpy", "pot", "energyflow"]
+environment.PIP_ONLY_BINARY = "numpy"
+environment.PIP_PREFER_BINARY = "1"
