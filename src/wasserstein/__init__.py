@@ -37,18 +37,12 @@ $$  /   \$$ |\$$$$$$$ |$$$$$$$  |$$$$$$$  |\$$$$$$$\ $$ |      $$$$$$$  |  \$$$$
 ------------------------------------------------------------------------
 """
 
-# basic package info
-__author__  = 'Patrick T. Komiske III'
-__email__   = 'pkomiske@gmail.com'
-__license__ = 'GPLv3'
-__version__ = '1.1.0'
-
-from . import config
-from .config import *
+from wasserstein import config
+from wasserstein.config import *
+from wasserstein._version import version as __version__
 
 # these are all attributes of wasserstein submodule that should be top-level visible
 __all__ = [
-
     # primary functionality with variable dtype
     'EMD', 'EMDYPhi',
     'PairwiseEMD', 'PairwiseEMDYPhi',
@@ -90,7 +84,7 @@ __all__ = [
 # enables lazy importing of wasserstein submodule
 def __getattr__(name):
     if name in __all__:
-        from . import wasserstein
+        from wasserstein import wasserstein
         attr = getattr(wasserstein, name)
         globals()[name] = attr
         return attr
@@ -98,9 +92,9 @@ def __getattr__(name):
     # handle specially grabbing the submodule
     elif name == 'wasserstein':
         import importlib
-        wasserstein = importlib.import_module('.wasserstein', __name__)
-        globals()['wasserstein'] = wasserstein
-        return wasserstein
+        _wasserstein = importlib.import_module('wasserstein.wasserstein')
+        globals()['wasserstein'] = _wasserstein
+        return _wasserstein
 
     raise AttributeError(f'module `{__name__}` has no attribute `{name}`')
 
@@ -109,9 +103,6 @@ def __dir__():
     return __all__ + [
         'wasserstein',
         'config',
-        '__author__',
-        '__email__',
-        '__license__',
         '__version__',
         '__doc__',
         '__name__',
