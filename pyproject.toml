@@ -68,7 +68,7 @@ dependencies = [
 [project.optional-dependencies]
 test = [
     "coverage",
-    "energyflow",
+    "energyflow >= 1.3.4",
     "pot",
     "pytest",
 ]
@@ -90,6 +90,6 @@ wheel.exclude = [
 
 [tool.cibuildwheel]
 skip = "pp* *musllinux* cp313-*"
-before-test = "pip install cython; pip install git+https://github.com/thaler-lab/EnergyFlow.git"
+before-test = "pip install cython"
 test-command = "pytest {package}"
 test-requires = ["pytest", "numpy", "pot", "energyflow"]
