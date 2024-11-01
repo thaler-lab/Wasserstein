@@ -9,7 +9,7 @@ build-backend = "scikit_build_core.build"
 
 [project]
 name = "wasserstein"
-version = "1.1.0"
+dynamic = ["version"]
 description = "Python package wrapping C++ code for computing Wasserstein distances"
 readme = "README.md"
 license.file = "LICENSE"
@@ -87,6 +87,19 @@ cmake.version = ">=3.20"
 wheel.exclude = [
     "**.hh",
     "**.i"]
+metadata.version.provider = "scikit_build_core.metadata.setuptools_scm"
+build.verbose = true
+logging.level = "INFO"
+
+[tool.setuptools_scm]
+# Ignore the commit hash in version
+local_scheme = "no-local-version"
+
+[[tool.scikit-build.generate]]
+path = "wasserstein/_version.py"
+template = '''
+version = "${version}"
+'''
 
 [tool.cibuildwheel]
 skip = "pp* *musllinux* cp313-*"
