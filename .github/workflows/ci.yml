@@ -47,7 +47,7 @@ jobs:
 
     - name: Install the latest version of uv
       if: matrix.python-version != '3.7'
-      uses: astral-sh/setup-uv@v3
+      uses: astral-sh/setup-uv@v4
 
     - name: Checkout LLVM on macOS
       if: >-
