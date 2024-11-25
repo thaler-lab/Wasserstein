@@ -66,7 +66,7 @@ jobs:
           fetch-depth: 0
 
       - name: cibw-wheel
-        uses: pypa/cibuildwheel@v2.21
+        uses: pypa/cibuildwheel@v2.22
 
       - name: Upload wheels to GH
         uses: actions/upload-artifact@v4
